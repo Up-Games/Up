@@ -51,7 +51,7 @@ typedef enum {
 
 + (UPUnitFunction *)unitFunctionWithType:(UPUnitFunctionType)type;
 - (instancetype)initWithType:(UPUnitFunctionType)type;
-- (Float)valueForInput:(Float)input;
+- (UPFloat)valueForInput:(UPFloat)input;
 
 @end
 

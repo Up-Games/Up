@@ -7,7 +7,7 @@
 #import <UpKit/UPUnitFunction.hpp>
 
 @interface UPUnitFunction ()
-@property UP::UnitFunction inner;
+@property UP::UPUnitFunction inner;
 @end
 
 @implementation UPUnitFunction
@@ -20,11 +20,11 @@
 - (instancetype)initWithType:(UPUnitFunctionType)type
 {
     self = [super init];
-    self.inner = UP::UnitFunction(type);
+    self.inner = UP::UPUnitFunction(type);
     return self;
 }
 
-- (Float)valueForInput:(Float)input
+- (UPFloat)valueForInput:(UPFloat)input
 {
     return self.inner.value_for_t(input);
 }

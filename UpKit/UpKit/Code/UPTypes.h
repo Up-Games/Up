@@ -6,7 +6,10 @@
 #ifndef UP_TYPES_H
 #define UP_TYPES_H
 
-typedef float Unit;
-typedef float Float;
+#import <stdint.h>
+
+typedef float UPUnit;
+typedef float UPFloat;
+typedef double UPTick;
 
 #endif  // UP_TYPES_H

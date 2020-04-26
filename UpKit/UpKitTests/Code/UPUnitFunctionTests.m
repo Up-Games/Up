@@ -14,14 +14,14 @@
 - (void)testZeroUnitFunction
 {
     UPUnitFunction *fn = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeDefault];
-    Float value = [fn valueForInput:0.0f];
+    UPFloat value = [fn valueForInput:0.0f];
     XCTAssert(value == 0.0f, "Value should be 0.0");
 }
 
 - (void)testOneUnitFunction
 {
     UPUnitFunction *fn = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeDefault];
-    Float value = [fn valueForInput:1.0f];
+    UPFloat value = [fn valueForInput:1.0f];
     XCTAssert(value == 1.0f, "Value should be 1.0");
 }
 
