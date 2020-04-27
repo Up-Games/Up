@@ -17,9 +17,6 @@
 - (id)initWithInterval:(UPTick)interval block:(void (^)(void))block;
 {
     self = [super init];
-    if (!self) {
-        return nil;
-    }
     
     self.interval = interval;
     self.block = block;
