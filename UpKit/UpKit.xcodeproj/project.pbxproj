@@ -10,12 +10,14 @@
 		5DEBE0122454C6CF00016047 /* UPAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0102454C6CF00016047 /* UPAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DEBE0132454C6CF00016047 /* UPAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE0112454C6CF00016047 /* UPAnimator.mm */; };
 		5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0172454CAFC00016047 /* UPMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DEBE01A2454E3AC00016047 /* UPColor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0192454E3AC00016047 /* UPColor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DEBE01A2454E3AC00016047 /* UPColor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0192454E3AC00016047 /* UPColor.hpp */; };
 		5DEBE01C2454E46700016047 /* UPColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE01B2454E46700016047 /* UPColor.cpp */; };
 		5DEBE0202454F1D200016047 /* UIColor+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE01E2454F1D200016047 /* UIColor+UP.h */; };
 		5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE01F2454F1D200016047 /* UIColor+UP.mm */; };
 		5DEBE0232454F21800016047 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DEBE0222454F21800016047 /* UIKit.framework */; };
 		5DEBE0242454F22700016047 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DEBE0152454C77700016047 /* QuartzCore.framework */; };
+		5DEBE02D245716F900016047 /* UPStringTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE02B245716F900016047 /* UPStringTools.cpp */; };
+		5DEBE02E245716F900016047 /* UPStringTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE02C245716F900016047 /* UPStringTools.h */; };
 		5DF8A8E02454835F00751E2E /* UPTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DFE6222245376D100D9CA0B /* UPTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF8A8E22454846500751E2E /* UPUnitFunction.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DF8A8E12454846500751E2E /* UPUnitFunction.hpp */; };
 		5DF8A8E42454847A00751E2E /* UPUnitFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8A8E32454847A00751E2E /* UPUnitFunction.cpp */; };
@@ -48,6 +50,8 @@
 		5DEBE01E2454F1D200016047 /* UIColor+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+UP.h"; sourceTree = "<group>"; };
 		5DEBE01F2454F1D200016047 /* UIColor+UP.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIColor+UP.mm"; sourceTree = "<group>"; };
 		5DEBE0222454F21800016047 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5DEBE02B245716F900016047 /* UPStringTools.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UPStringTools.cpp; sourceTree = "<group>"; };
+		5DEBE02C245716F900016047 /* UPStringTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPStringTools.h; sourceTree = "<group>"; };
 		5DF8A8E12454846500751E2E /* UPUnitFunction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UPUnitFunction.hpp; sourceTree = "<group>"; };
 		5DF8A8E32454847A00751E2E /* UPUnitFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPUnitFunction.cpp; sourceTree = "<group>"; };
 		5DF8A8E52454892B00751E2E /* UPUnitFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPUnitFunction.h; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 			children = (
 				5DEBE01E2454F1D200016047 /* UIColor+UP.h */,
 				5DEBE01F2454F1D200016047 /* UIColor+UP.mm */,
+				5DEBE02B245716F900016047 /* UPStringTools.cpp */,
+				5DEBE02C245716F900016047 /* UPStringTools.h */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -191,6 +197,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DEBE02E245716F900016047 /* UPStringTools.h in Headers */,
 				5DFE62282453D11100D9CA0B /* UPMath.h in Headers */,
 				5DF8A8E02454835F00751E2E /* UPTypes.h in Headers */,
 				5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */,
@@ -305,6 +312,7 @@
 				5DEBE01C2454E46700016047 /* UPColor.cpp in Sources */,
 				5DEBE0132454C6CF00016047 /* UPAnimator.mm in Sources */,
 				5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */,
+				5DEBE02D245716F900016047 /* UPStringTools.cpp in Sources */,
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5DF8A8E42454847A00751E2E /* UPUnitFunction.cpp in Sources */,
 			);
