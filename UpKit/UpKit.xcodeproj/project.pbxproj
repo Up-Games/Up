@@ -7,15 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5DD71D3F245770FF00F3F9E2 /* UIView+UPLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D3E245770FF00F3F9E2 /* UIView+UPLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DD71D412457711F00F3F9E2 /* UIView+UPLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D402457711F00F3F9E2 /* UIView+UPLayout.m */; };
+		5DD71D3F245770FF00F3F9E2 /* UIView+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D3E245770FF00F3F9E2 /* UIView+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DD71D412457711F00F3F9E2 /* UIView+UP.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D402457711F00F3F9E2 /* UIView+UP.m */; };
 		5DD71D442457731700F3F9E2 /* UPLayoutRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D422457731700F3F9E2 /* UPLayoutRule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71D452457731700F3F9E2 /* UPLayoutRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D432457731700F3F9E2 /* UPLayoutRule.m */; };
 		5DD71D472457748000F3F9E2 /* UPLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D462457748000F3F9E2 /* UPLayoutTests.m */; };
 		5DD71D4A2457824A00F3F9E2 /* UPGeometry.c in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D482457824A00F3F9E2 /* UPGeometry.c */; };
 		5DD71D4B2457824A00F3F9E2 /* UPGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D492457824A00F3F9E2 /* UPGeometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DD71D982457988000F3F9E2 /* UPDeferredBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D962457988000F3F9E2 /* UPDeferredBlock.h */; };
+		5DD71D982457988000F3F9E2 /* UPDeferredBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D962457988000F3F9E2 /* UPDeferredBlock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71D992457988000F3F9E2 /* UPDeferredBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D972457988000F3F9E2 /* UPDeferredBlock.m */; };
+		5DD71D9C2457AFB200F3F9E2 /* UPShapeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D9A2457AFB200F3F9E2 /* UPShapeView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DD71D9D2457AFB200F3F9E2 /* UPShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D9B2457AFB200F3F9E2 /* UPShapeView.m */; };
 		5DEBE0122454C6CF00016047 /* UPAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0102454C6CF00016047 /* UPAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DEBE0132454C6CF00016047 /* UPAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE0112454C6CF00016047 /* UPAnimator.mm */; };
 		5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0172454CAFC00016047 /* UPMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -50,8 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5DD71D3E245770FF00F3F9E2 /* UIView+UPLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+UPLayout.h"; sourceTree = "<group>"; };
-		5DD71D402457711F00F3F9E2 /* UIView+UPLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UPLayout.m"; sourceTree = "<group>"; };
+		5DD71D3E245770FF00F3F9E2 /* UIView+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+UP.h"; sourceTree = "<group>"; };
+		5DD71D402457711F00F3F9E2 /* UIView+UP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UP.m"; sourceTree = "<group>"; };
 		5DD71D422457731700F3F9E2 /* UPLayoutRule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLayoutRule.h; sourceTree = "<group>"; };
 		5DD71D432457731700F3F9E2 /* UPLayoutRule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutRule.m; sourceTree = "<group>"; };
 		5DD71D462457748000F3F9E2 /* UPLayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutTests.m; sourceTree = "<group>"; };
@@ -60,6 +62,8 @@
 		5DD71D4C2457832400F3F9E2 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		5DD71D962457988000F3F9E2 /* UPDeferredBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDeferredBlock.h; sourceTree = "<group>"; };
 		5DD71D972457988000F3F9E2 /* UPDeferredBlock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPDeferredBlock.m; sourceTree = "<group>"; };
+		5DD71D9A2457AFB200F3F9E2 /* UPShapeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPShapeView.h; sourceTree = "<group>"; };
+		5DD71D9B2457AFB200F3F9E2 /* UPShapeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPShapeView.m; sourceTree = "<group>"; };
 		5DEBE0102454C6CF00016047 /* UPAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPAnimator.h; sourceTree = "<group>"; };
 		5DEBE0112454C6CF00016047 /* UPAnimator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAnimator.mm; sourceTree = "<group>"; };
 		5DEBE0152454C77700016047 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -124,8 +128,8 @@
 				5DEBE01F2454F1D200016047 /* UIColor+UP.mm */,
 				5DEBE02B245716F900016047 /* UPStringTools.cpp */,
 				5DEBE02C245716F900016047 /* UPStringTools.h */,
-				5DD71D3E245770FF00F3F9E2 /* UIView+UPLayout.h */,
-				5DD71D402457711F00F3F9E2 /* UIView+UPLayout.m */,
+				5DD71D3E245770FF00F3F9E2 /* UIView+UP.h */,
+				5DD71D402457711F00F3F9E2 /* UIView+UP.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -202,6 +206,8 @@
 				5DD71D432457731700F3F9E2 /* UPLayoutRule.m */,
 				5DEBE0172454CAFC00016047 /* UPMacros.h */,
 				5DFE62272453D11100D9CA0B /* UPMath.h */,
+				5DD71D9A2457AFB200F3F9E2 /* UPShapeView.h */,
+				5DD71D9B2457AFB200F3F9E2 /* UPShapeView.m */,
 				5DFE6222245376D100D9CA0B /* UPTypes.h */,
 				5DF8A8E32454847A00751E2E /* UPUnitFunction.cpp */,
 				5DF8A8E52454892B00751E2E /* UPUnitFunction.h */,
@@ -230,6 +236,7 @@
 				5DD71D982457988000F3F9E2 /* UPDeferredBlock.h in Headers */,
 				5DFE62282453D11100D9CA0B /* UPMath.h in Headers */,
 				5DF8A8E02454835F00751E2E /* UPTypes.h in Headers */,
+				5DD71D9C2457AFB200F3F9E2 /* UPShapeView.h in Headers */,
 				5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */,
 				5DF8A8E22454846500751E2E /* UPUnitFunction.hpp in Headers */,
 				5DEBE01A2454E3AC00016047 /* UPColor.hpp in Headers */,
@@ -239,7 +246,7 @@
 				5DEBE0202454F1D200016047 /* UIColor+UP.h in Headers */,
 				5DFE6219245364C700D9CA0B /* UpKit.h in Headers */,
 				5DD71D442457731700F3F9E2 /* UPLayoutRule.h in Headers */,
-				5DD71D3F245770FF00F3F9E2 /* UIView+UPLayout.h in Headers */,
+				5DD71D3F245770FF00F3F9E2 /* UIView+UP.h in Headers */,
 				5DF8A8E72454892C00751E2E /* UPUnitFunction.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,12 +353,13 @@
 				5DD71D992457988000F3F9E2 /* UPDeferredBlock.m in Sources */,
 				5DEBE0132454C6CF00016047 /* UPAnimator.mm in Sources */,
 				5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */,
-				5DD71D412457711F00F3F9E2 /* UIView+UPLayout.m in Sources */,
+				5DD71D412457711F00F3F9E2 /* UIView+UP.m in Sources */,
 				5DD71D452457731700F3F9E2 /* UPLayoutRule.m in Sources */,
 				5DD71D4A2457824A00F3F9E2 /* UPGeometry.c in Sources */,
 				5DEBE02D245716F900016047 /* UPStringTools.cpp in Sources */,
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5DF8A8E42454847A00751E2E /* UPUnitFunction.cpp in Sources */,
+				5DD71D9D2457AFB200F3F9E2 /* UPShapeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -108,6 +108,18 @@ UP_STATIC_INLINE CGPoint up_lerp_points(CGPoint a, CGPoint b, UPUnit f)
     return CGPointMake(a.x + ((b.x - a.x) * f), a.y + ((b.y - a.y) * f));
 }
 
+UP_STATIC_INLINE CGSize up_lerp_sizes(CGSize a, CGSize b, UPUnit f)
+{
+    return CGSizeMake(a.width + ((b.width - a.width) * f), a.height + ((b.height - a.height) * f));
+}
+
+UP_STATIC_INLINE CGRect up_lerp_rects(CGRect a, CGRect b, UPUnit f)
+{
+    CGPoint p = up_lerp_points(a.origin, b.origin, f);
+    CGSize s = up_lerp_sizes(a.size, b.size, f);
+    return CGRectMake(p.x, p.y, s.width, s.height);
+}
+
 UP_STATIC_INLINE CGAffineTransform up_lerp_transforms(CGAffineTransform a, CGAffineTransform b, UPUnit f)
 {
     CGFloat fa = a.a + ((b.a - a.a) * f);

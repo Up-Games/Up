@@ -38,6 +38,8 @@
 
 @property (nonatomic) CADisplayLink *displayLink;
 @property (nonatomic) NSMutableArray<UPAnimator *> *animators;
+@property (nonatomic) NSMutableArray<UPAnimator *> *animatorsToAdd;
+@property (nonatomic) NSMutableArray<UPAnimator *> *animatorsToRemove;
 
 - (void)addAnimator:(UPAnimator *)animator;
 - (void)removeAnimator:(UPAnimator *)animator;
@@ -61,13 +63,15 @@
     self = [super init];
 
     self.animators = [NSMutableArray array];
+    self.animatorsToAdd = [NSMutableArray array];
+    self.animatorsToRemove = [NSMutableArray array];
 
     return self;
 }
 
 - (void)addAnimator:(UPAnimator *)animator
 {
-    [self.animators addObject:animator];
+    [self.animatorsToAdd addObject:animator];
 
     if (self.displayLink) {
         return;
@@ -79,19 +83,24 @@
 
 - (void)removeAnimator:(UPAnimator *)animator
 {
-    [self.animators removeObject:animator];
-
-    if (self.animators.count == 0) {
-        [self.displayLink invalidate];
-        self.displayLink = nil;
-    }
+    [self.animatorsToRemove addObject:animator];
 }
 
 - (void)_tick:(CADisplayLink *)sender
 {
+    [self.animatorsToRemove removeAllObjects];
     UPTick currentTick = CACurrentMediaTime();
     for (UPAnimator *animator in self.animators) {
         [animator _step:currentTick];
+    }
+    [self.animators addObjectsFromArray:self.animatorsToAdd];
+    [self.animatorsToAdd removeAllObjects];
+    for (UPAnimator *animator in self.animatorsToRemove) {
+        [self.animators removeObject:animator];
+    }
+    if (self.animators.count == 0) {
+        [self.displayLink invalidate];
+        self.displayLink = nil;
     }
 }
 
@@ -100,6 +109,16 @@
 // ================================================================================================
 
 @implementation UPAnimator
+
++ (UPAnimator *)animatorWithDuration:(CFTimeInterval)duration
+                    unitFunctionType:(UPUnitFunctionType)unitFunctionType
+                             applier:(UPAnimatorApplier)applier
+                          completion:(UPAnimatorCompletion)completion
+{
+    return [self animatorWithDuration:duration unitFunction:[UPUnitFunction unitFunctionWithType:unitFunctionType]
+                          repeatCount:1 rebounds:NO autostart:YES
+                              applier:applier completion:completion];
+}
 
 + (UPAnimator *)animatorWithDuration:(UPTick)duration
                         unitFunction:(UPUnitFunction *)unitFunction

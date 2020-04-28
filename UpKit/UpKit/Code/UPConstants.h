@@ -22,6 +22,6 @@ UP_STATIC_CONST UPFloat UPFloatFour =   4.0f;
 UP_STATIC_CONST UPFloat UPFloatFive =   5.0f;
 UP_STATIC_CONST UPFloat UPFloatTen =   10.0f;
 
-UP_STATIC_CONST UPFloat UPEpsilon = 0.001f;
+UP_STATIC_CONST UPFloat UPEpsilon = 0.01f;
 
 #endif  // UP_CONSTANTS_H

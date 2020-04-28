@@ -44,7 +44,8 @@ UPUnit unchecked_unit_curve_value(UPUnit input_value, UPFloat exponent, UPUnit e
 class UPUnitFunction {
 public:
     static constexpr UPFloat DefaultEaseExponent = UPFloatFour;
-    static constexpr UPFloat c1 = 1.70158;
+//    static constexpr UPFloat c1 = 1.70158;
+    static constexpr UPFloat c1 = 1.98;
     static constexpr UPFloat c2 = c1 * 1.525;
     static constexpr UPFloat c3 = c1 + UPUnitOne;
     static constexpr UPFloat c4 = c2 + UPUnitOne;

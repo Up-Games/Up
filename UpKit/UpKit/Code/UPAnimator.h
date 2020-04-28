@@ -18,6 +18,11 @@ typedef void (^UPAnimatorCompletion)(UPAnimator *animator, BOOL completed);
 @property (nonatomic, readonly) BOOL running;
 
 + (UPAnimator *)animatorWithDuration:(CFTimeInterval)duration
+                    unitFunctionType:(UPUnitFunctionType)unitFunctionType
+                             applier:(UPAnimatorApplier)applier
+                          completion:(UPAnimatorCompletion)completion;
+
++ (UPAnimator *)animatorWithDuration:(CFTimeInterval)duration
                         unitFunction:(UPUnitFunction *)unitFunction
                              applier:(UPAnimatorApplier)applier
                           completion:(UPAnimatorCompletion)completion;

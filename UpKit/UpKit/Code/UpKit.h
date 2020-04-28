@@ -13,10 +13,12 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 
 #import <UpKit/UPAnimator.h>
 #import <UpKit/UPConstants.h>
+#import <UpKit/UPDeferredBlock.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPLayoutRule.h>
 #import <UpKit/UPMath.h>
+#import <UpKit/UPShapeView.h>
 #import <UpKit/UPTypes.h>
 #import <UpKit/UPUnitFunction.h>
 
-#import <UpKit/UIView+UPLayout.h>
+#import <UpKit/UIView+UP.h>
