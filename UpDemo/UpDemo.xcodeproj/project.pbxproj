@@ -18,8 +18,6 @@
 		5DD71D8224578DE300F3F9E2 /* UpDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D8124578DE300F3F9E2 /* UpDemoUITests.m */; };
 		5DD71D9324578E0C00F3F9E2 /* UpKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD71D9224578E0C00F3F9E2 /* UpKit.framework */; };
 		5DD71D9424578E0C00F3F9E2 /* UpKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD71D9224578E0C00F3F9E2 /* UpKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DD71E8F2459C5EC00F3F9E2 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD71E8E2459C5EC00F3F9E2 /* pop.framework */; };
-		5DD71E902459C5EC00F3F9E2 /* pop.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD71E8E2459C5EC00F3F9E2 /* pop.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +44,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5DD71E902459C5EC00F3F9E2 /* pop.framework in Embed Frameworks */,
 				5DD71D9424578E0C00F3F9E2 /* UpKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -83,7 +80,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DD71E8F2459C5EC00F3F9E2 /* pop.framework in Frameworks */,
 				5DD71D9324578E0C00F3F9E2 /* UpKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

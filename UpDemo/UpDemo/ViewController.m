@@ -4,12 +4,11 @@
 //
 
 #import <UpKit/UpKit.h>
-#import <pop/POP.h>
 
 #import "ViewController.h"
 
 @interface ViewController ()
-@property (nonatomic) UPView *v1;
+@property (nonatomic) UIView *v1;
 @end
 
 @implementation ViewController
@@ -21,7 +20,7 @@
 //    CGRect screenBounds = [[UIScreen mainScreen] bounds];
 //    CGRect referenceFrame = CGRectInset(screenBounds, 36, 100);
     
-    self.v1 = [[UPView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
+    self.v1 = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
 //    self.v1.layer.cornerRadius
     self.v1.backgroundColor = [UIColor orangeColor];
 //    self.v1.shapeFillColor = [UIColor orangeColor];
@@ -50,9 +49,6 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleTap:)];
     [self.view addGestureRecognizer:tap];
     
-    [UIView animateWithDuration:0.2 animations:^{
-    }];
-    
 }
 
 - (void)viewDidLayoutSubviews
@@ -73,16 +69,24 @@
 
 //    POPDecayAnimation *anim = [POPDecayAnimation animationWithPropertyNamed:kPOPLayerPositionX];
 //    anim.velocity = @(1000.0);
-    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPViewFrame];
+//    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPViewFrame];
 //    POPBasicAnimation *anim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewFrame];
 //    anim.duration = 0.5;
 //    anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    anim.fromValue = [NSValue valueWithCGRect:self.v1.frame];
-    anim.toValue = [NSValue valueWithCGRect:CGRectMake(x, y, w, h)];
-    anim.completionBlock = ^(POPAnimation *anim, BOOL finished) {
-        NSLog(@"done: %@", finished ? @"Y" : @"N");
-    };
-    [self.v1 pop_addAnimation:anim forKey:@"frame"];
+//    anim.fromValue = [NSValue valueWithCGRect:self.v1.frame];
+//    anim.toValue = [NSValue valueWithCGRect:CGRectMake(x, y, w, h)];
+//    anim.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+//        NSLog(@"done: %@", finished ? @"Y" : @"N");
+//    };
+//    [self.v1 pop_addAnimation:anim forKey:@"frame"];
+
+    [self animateView:self.v1 toFrame:CGRectMake(x, y, w, h) withTuning:^(POPSpringAnimation *anim, int cornerIndex, CGFloat dragCoefficient) {
+        anim.dynamicsMass       = 100;
+        anim.dynamicsFriction   = 37;
+        anim.dynamicsTension    = 2;
+        anim.springBounciness   = AGKInterpolate(5, 12, dragCoefficient);
+        anim.springSpeed        = AGKInterpolate(4, 7, dragCoefficient);
+    }];
 
 //    UPViewState *state1 = [self.v1 currentState];
 //    UPViewState *state2 = [[UPViewState alloc] init];
@@ -101,6 +105,48 @@
 //
 //    }];
 //    [animator start];
+}
+
+- (CGFloat)longestDistanceOfPointsInQuad:(AGKQuad)quad toPoint:(CGPoint)point
+{
+    CGFloat longest = 0.0;
+    for(int cornerIndex = 0; cornerIndex < 4; cornerIndex++) {
+        CGPoint currentCornerPoint = AGKQuadGetPointForCorner(quad, AGKQuadCornerForCornerIndex(cornerIndex));
+        CGFloat distance = fabs(CGPointLengthBetween_AGK(point, currentCornerPoint));
+        if (distance > longest) {
+            longest = distance;
+        }
+    }
+    return longest;
+}
+
+- (void)animateView:(UIView *)view toFrame:(CGRect)frame withTuning:(void(^)(POPSpringAnimation *anim, int cornerIndex, CGFloat dragCoefficient))tuning
+{
+    [view.layer ensureAnchorPointIsSetToZero];
+
+    CGPoint currentCenter = up_rect_center(view.frame);
+    AGKQuad desiredQuad = AGKQuadMakeWithCGRect(frame);
+    AGKQuad innerQuad = [view.layer.superlayer convertAGKQuad:desiredQuad toLayer:self.view.layer];
+    NSArray *cornersForProperties = @[kPOPLayerAGKQuadTopLeft, kPOPLayerAGKQuadTopRight, kPOPLayerAGKQuadBottomRight, kPOPLayerAGKQuadBottomLeft];
+    CGFloat longestDistanceFromCenter = [self longestDistanceOfPointsInQuad:innerQuad toPoint:currentCenter];
+
+    for(int cornerIndex = 0; cornerIndex < 4; cornerIndex++) {
+        NSString *propertyName = cornersForProperties[cornerIndex];
+
+        POPSpringAnimation *anim = [view.layer pop_animationForKey:propertyName];
+        if (anim == nil) {
+            anim = [POPSpringAnimation animation];
+            anim.property = [POPAnimatableProperty AGKPropertyWithName:propertyName];
+            [view.layer pop_addAnimation:anim forKey:propertyName];
+        }
+
+        CGPoint currentCornerPoint = AGKQuadGetPointForCorner(innerQuad, AGKQuadCornerForCornerIndex(cornerIndex));
+        CGFloat distance = fabs(CGPointLengthBetween_AGK(currentCenter, currentCornerPoint));
+        CGFloat dragCoefficient = AGKRemapToZeroOne(distance, longestDistanceFromCenter, 0);
+
+        anim.toValue = [NSValue valueWithCGPoint:AGKQuadGetPointForCorner(desiredQuad, AGKQuadCornerForCornerIndex(cornerIndex))];
+        tuning(anim, cornerIndex, dragCoefficient);
+    }
 }
 
 @end
