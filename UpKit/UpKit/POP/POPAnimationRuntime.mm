@@ -121,9 +121,9 @@ POPValueType POPSelectValueType(id obj, const POPValueType *types, size_t length
   return kPOPValueUnknown;
 }
 
-const POPValueType kPOPAnimatableAllTypes[12] = {kPOPValueInteger, kPOPValueFloat, kPOPValuePoint, kPOPValueSize, kPOPValueRect, kPOPValueEdgeInsets, kPOPValueAffineTransform, kPOPValueTransform, kPOPValueRange, kPOPValueColor, kPOPValueSCNVector3, kPOPValueSCNVector4};
+const POPValueType kPOPAnimatableAllTypes[12] = {kPOPValueInteger, kPOPValueFloat, kPOPValuePoint, kPOPValueSize, kPOPValueRect, kPOPValueEdgeInsets, kPOPValueAffineTransform, kPOPValueTransform, kPOPValueRange, kPOPValueColor};
 
-const POPValueType kPOPAnimatableSupportTypes[10] = {kPOPValueInteger, kPOPValueFloat, kPOPValuePoint, kPOPValueSize, kPOPValueRect, kPOPValueEdgeInsets, kPOPValueColor, kPOPValueSCNVector3, kPOPValueSCNVector4};
+const POPValueType kPOPAnimatableSupportTypes[10] = {kPOPValueInteger, kPOPValueFloat, kPOPValuePoint, kPOPValueSize, kPOPValueRect, kPOPValueEdgeInsets, kPOPValueColor};
 
 NSString *POPValueTypeToString(POPValueType t)
 {
@@ -150,10 +150,6 @@ NSString *POPValueTypeToString(POPValueType t)
       return @"CFRange";
     case kPOPValueColor:
       return @"CGColorRef";
-    case kPOPValueSCNVector3:
-      return @"SCNVector3";
-    case kPOPValueSCNVector4:
-      return @"SCNVector4";
     default:
       return nil;
   }
