@@ -8,7 +8,7 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-@property (nonatomic) UIView *v1;
+@property (nonatomic) UPView *v1;
 @end
 
 @implementation ViewController
@@ -20,7 +20,7 @@
 //    CGRect screenBounds = [[UIScreen mainScreen] bounds];
 //    CGRect referenceFrame = CGRectInset(screenBounds, 36, 100);
     
-    self.v1 = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
+    self.v1 = [[UPView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
 //    self.v1.layer.cornerRadius
     self.v1.backgroundColor = [UIColor orangeColor];
 //    self.v1.shapeFillColor = [UIColor orangeColor];
@@ -48,6 +48,10 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleTap:)];
     [self.view addGestureRecognizer:tap];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+    }];
+    
 }
 
 - (void)viewDidLayoutSubviews
@@ -57,23 +61,23 @@
 
 - (void)_handleTap:(UITapGestureRecognizer *)tap
 {
-    UPViewState *state1 = [self.v1 currentState];
-    UPViewState *state2 = [[UPViewState alloc] init];
-    
-    CGFloat w = arc4random_uniform(200) + 100;
-    CGFloat h = arc4random_uniform(200) + 100;
-    CGFloat x = arc4random_uniform(375 - w);
-    CGFloat y = arc4random_uniform(812 - h);
-
-    state2.frame = CGRectMake(x, y, w, h);
-    UPAnimator *animator = [UPAnimator animatorWithDuration:0.5 unitFunctionType:UPUnitFunctionTypeEaseOutBack
-                                                    applier:^(UPAnimator *animator, UPUnit fraction) {
-        [self.v1 applyInterpolatedWithStartState:state1 endState:state2 fraction:fraction];
-
-    } completion:^(UPAnimator *animator, BOOL completed) {
-
-    }];
-    [animator start];
+//    UPViewState *state1 = [self.v1 currentState];
+//    UPViewState *state2 = [[UPViewState alloc] init];
+//    
+//    CGFloat w = arc4random_uniform(200) + 100;
+//    CGFloat h = arc4random_uniform(200) + 100;
+//    CGFloat x = arc4random_uniform(375 - w);
+//    CGFloat y = arc4random_uniform(812 - h);
+//
+//    state2.frame = CGRectMake(x, y, w, h);
+//    UPAnimator *animator = [UPAnimator animatorWithDuration:0.5 unitFunctionType:UPUnitFunctionTypeEaseOutBack
+//                                                    applier:^(UPAnimator *animator, UPUnit fraction) {
+//        [self.v1 applyInterpolatedWithStartState:state1 endState:state2 fraction:fraction];
+//
+//    } completion:^(UPAnimator *animator, BOOL completed) {
+//
+//    }];
+//    [animator start];
 }
 
 @end
