@@ -17,17 +17,17 @@
 
 enum POPValueType
 {
-  kPOPValueUnknown = 0,
-  kPOPValueInteger,
-  kPOPValueFloat,
-  kPOPValuePoint,
-  kPOPValueSize,
-  kPOPValueRect,
-  kPOPValueEdgeInsets,
-  kPOPValueAffineTransform,
-  kPOPValueTransform,
-  kPOPValueRange,
-  kPOPValueColor,
+    kPOPValueUnknown = 0,
+    kPOPValueInteger,
+    kPOPValueFloat,
+    kPOPValuePoint,
+    kPOPValueSize,
+    kPOPValueRect,
+    kPOPValueEdgeInsets,
+    kPOPValueAffineTransform,
+    kPOPValueTransform,
+    kPOPValueRange,
+    kPOPValueColor,
 };
 
 using namespace POP;

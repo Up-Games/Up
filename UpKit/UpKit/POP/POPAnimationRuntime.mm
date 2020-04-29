@@ -22,47 +22,47 @@
 #import "POPVector.h"
 
 static Boolean pointerEqual(const void *ptr1, const void *ptr2) {
-  return ptr1 == ptr2;
+    return ptr1 == ptr2;
 }
 
 static CFHashCode pointerHash(const void *ptr) {
-  return (CFHashCode)(ptr);
+    return (CFHashCode)(ptr);
 }
 
 CFMutableDictionaryRef POPDictionaryCreateMutableWeakPointerToWeakPointer(NSUInteger capacity)
 {
-  CFDictionaryKeyCallBacks kcb = kCFTypeDictionaryKeyCallBacks;
+    CFDictionaryKeyCallBacks kcb = kCFTypeDictionaryKeyCallBacks;
 
-  // weak, pointer keys
-  kcb.retain = NULL;
-  kcb.release = NULL;
-  kcb.equal = pointerEqual;
-  kcb.hash = pointerHash;
+    // weak, pointer keys
+    kcb.retain = NULL;
+    kcb.release = NULL;
+    kcb.equal = pointerEqual;
+    kcb.hash = pointerHash;
 
-  CFDictionaryValueCallBacks vcb = kCFTypeDictionaryValueCallBacks;
+    CFDictionaryValueCallBacks vcb = kCFTypeDictionaryValueCallBacks;
 
-  // weak, pointer values
-  vcb.retain = NULL;
-  vcb.release = NULL;
-  vcb.equal = pointerEqual;
+    // weak, pointer values
+    vcb.retain = NULL;
+    vcb.release = NULL;
+    vcb.equal = pointerEqual;
 
-  return CFDictionaryCreateMutable(NULL, capacity, &kcb, &vcb);
+    return CFDictionaryCreateMutable(NULL, capacity, &kcb, &vcb);
 }
 
 CFMutableDictionaryRef POPDictionaryCreateMutableWeakPointerToStrongObject(NSUInteger capacity)
 {
-  CFDictionaryKeyCallBacks kcb = kCFTypeDictionaryKeyCallBacks;
+    CFDictionaryKeyCallBacks kcb = kCFTypeDictionaryKeyCallBacks;
 
-  // weak, pointer keys
-  kcb.retain = NULL;
-  kcb.release = NULL;
-  kcb.equal = pointerEqual;
-  kcb.hash = pointerHash;
+    // weak, pointer keys
+    kcb.retain = NULL;
+    kcb.release = NULL;
+    kcb.equal = pointerEqual;
+    kcb.hash = pointerHash;
 
-  // strong, object values
-  CFDictionaryValueCallBacks vcb = kCFTypeDictionaryValueCallBacks;
+    // strong, object values
+    CFDictionaryValueCallBacks vcb = kCFTypeDictionaryValueCallBacks;
 
-  return CFDictionaryCreateMutable(NULL, capacity, &kcb, &vcb);
+    return CFDictionaryCreateMutable(NULL, capacity, &kcb, &vcb);
 }
 
 static bool FBCompareTypeEncoding(const char *objctype, POPValueType type)
@@ -102,160 +102,184 @@ static bool FBCompareTypeEncoding(const char *objctype, POPValueType type)
 
 POPValueType POPSelectValueType(const char *objctype, const POPValueType *types, size_t length)
 {
-  if (NULL != objctype) {
-    for (size_t idx = 0; idx < length; idx++) {
-      if (FBCompareTypeEncoding(objctype, types[idx]))
-        return types[idx];
+    if (NULL != objctype) {
+        for (size_t idx = 0; idx < length; idx++) {
+            if (FBCompareTypeEncoding(objctype, types[idx])) {
+                return types[idx];
+            }
+        }
     }
-  }
-  return kPOPValueUnknown;
+    return kPOPValueUnknown;
 }
 
 POPValueType POPSelectValueType(id obj, const POPValueType *types, size_t length)
 {
-  if ([obj isKindOfClass:[NSValue class]]) {
-    return POPSelectValueType([obj objCType], types, length);
-  } else if (NULL != POPCGColorWithColor(obj)) {
-    return kPOPValueColor;
-  }
-  return kPOPValueUnknown;
+    if ([obj isKindOfClass:[NSValue class]]) {
+        return POPSelectValueType([obj objCType], types, length);
+    }
+    else if (NULL != POPCGColorWithColor(obj)) {
+        return kPOPValueColor;
+    }
+    return kPOPValueUnknown;
 }
 
-const POPValueType kPOPAnimatableAllTypes[12] = {kPOPValueInteger, kPOPValueFloat, kPOPValuePoint, kPOPValueSize, kPOPValueRect, kPOPValueEdgeInsets, kPOPValueAffineTransform, kPOPValueTransform, kPOPValueRange, kPOPValueColor};
+const POPValueType kPOPAnimatableAllTypes[12] = {
+    kPOPValueInteger,
+    kPOPValueFloat,
+    kPOPValuePoint,
+    kPOPValueSize,
+    kPOPValueRect,
+    kPOPValueEdgeInsets,
+    kPOPValueAffineTransform,
+    kPOPValueTransform,
+    kPOPValueRange,
+    kPOPValueColor
+};
 
-const POPValueType kPOPAnimatableSupportTypes[10] = {kPOPValueInteger, kPOPValueFloat, kPOPValuePoint, kPOPValueSize, kPOPValueRect, kPOPValueEdgeInsets, kPOPValueColor};
+const POPValueType kPOPAnimatableSupportTypes[10] = {
+    kPOPValueInteger,
+    kPOPValueFloat,
+    kPOPValuePoint,
+    kPOPValueSize,
+    kPOPValueRect,
+    kPOPValueEdgeInsets,
+    kPOPValueColor
+};
 
 NSString *POPValueTypeToString(POPValueType t)
 {
-  switch (t) {
+    switch (t) {
     case kPOPValueUnknown:
-      return @"unknown";
+        return @"unknown";
     case kPOPValueInteger:
-      return @"int";
+        return @"int";
     case kPOPValueFloat:
-      return @"CGFloat";
+        return @"CGFloat";
     case kPOPValuePoint:
-      return @"CGPoint";
+        return @"CGPoint";
     case kPOPValueSize:
-      return @"CGSize";
+        return @"CGSize";
     case kPOPValueRect:
-      return @"CGRect";
+        return @"CGRect";
     case kPOPValueEdgeInsets:
-      return @"UIEdgeInsets";
+        return @"UIEdgeInsets";
     case kPOPValueAffineTransform:
-      return @"CGAffineTransform";
+        return @"CGAffineTransform";
     case kPOPValueTransform:
-      return @"CATransform3D";
+        return @"CATransform3D";
     case kPOPValueRange:
-      return @"CFRange";
+        return @"CFRange";
     case kPOPValueColor:
-      return @"CGColorRef";
-    default:
-      return nil;
-  }
+        return @"CGColorRef";
+    }
+    return nil;
 }
 
 id POPBox(VectorConstRef vec, POPValueType type, bool force)
 {
-  if (NULL == vec)
-    return nil;
-  
-  switch (type) {
-    case kPOPValueInteger:
-    case kPOPValueFloat:
-      return @(vec->data()[0]);
-      break;
-    case kPOPValuePoint:
-      return [NSValue valueWithCGPoint:vec->cg_point()];
-      break;
-    case kPOPValueSize:
-      return [NSValue valueWithCGSize:vec->cg_size()];
-      break;
-    case kPOPValueRect:
-      return [NSValue valueWithCGRect:vec->cg_rect()];
-      break;
-    case kPOPValueEdgeInsets:
-      return [NSValue valueWithUIEdgeInsets:vec->ui_edge_insets()];
-      break;
-    case kPOPValueColor: {
-      return (__bridge_transfer id)vec->cg_color();
-      break;
+    if (!vec) {
+        return nil;
     }
-    default:
-      return force ? [NSValue valueWithCGPoint:vec->cg_point()] : nil;
-      break;
-  }
+
+    switch (type) {
+        case kPOPValueInteger:
+        case kPOPValueFloat:
+            return @(vec->data()[0]);
+        case kPOPValuePoint:
+            return [NSValue valueWithCGPoint:vec->cg_point()];
+        case kPOPValueSize:
+            return [NSValue valueWithCGSize:vec->cg_size()];
+        case kPOPValueRect:
+            return [NSValue valueWithCGRect:vec->cg_rect()];
+        case kPOPValueEdgeInsets:
+            return [NSValue valueWithUIEdgeInsets:vec->ui_edge_insets()];
+        case kPOPValueColor: {
+            return (__bridge_transfer id)vec->cg_color();
+        }
+        default:
+            return force ? [NSValue valueWithCGPoint:vec->cg_point()] : nil;
+    }
+    
+    return nil;
 }
 
 static VectorRef vectorize(id value, POPValueType type)
 {
-  Vector *vec = NULL;
+    Vector *vec = NULL;
 
-  switch (type) {
-    case kPOPValueInteger:
-    case kPOPValueFloat:
+    switch (type) {
+        case kPOPValueUnknown:
+            // no-op
+            break;
+        case kPOPValueInteger:
+        case kPOPValueFloat:
 #if CGFLOAT_IS_DOUBLE
-      vec = Vector::new_cg_float([value doubleValue]);
+            vec = Vector::new_cg_float([value doubleValue]);
 #else
-      vec = Vector::new_cg_float([value floatValue]);
+            vec = Vector::new_cg_float([value floatValue]);
 #endif
-      break;
-    case kPOPValuePoint:
-      vec = Vector::new_cg_point([value CGPointValue]);
-      break;
-    case kPOPValueSize:
-      vec = Vector::new_cg_size([value CGSizeValue]);
-      break;
-    case kPOPValueRect:
-      vec = Vector::new_cg_rect([value CGRectValue]);
-      break;
-    case kPOPValueEdgeInsets:
-      vec = Vector::new_ui_edge_insets([value UIEdgeInsetsValue]);
-      break;
-    case kPOPValueAffineTransform:
-      vec = Vector::new_cg_affine_transform([value CGAffineTransformValue]);
-      break;
-    case kPOPValueColor:
-      vec = Vector::new_cg_color(POPCGColorWithColor(value));
-      break;
-    default:
-      break;
-  }
-  
-  return VectorRef(vec);
+            break;
+        case kPOPValuePoint:
+            vec = Vector::new_cg_point([value CGPointValue]);
+            break;
+        case kPOPValueSize:
+            vec = Vector::new_cg_size([value CGSizeValue]);
+            break;
+        case kPOPValueRect:
+            vec = Vector::new_cg_rect([value CGRectValue]);
+            break;
+        case kPOPValueEdgeInsets:
+            vec = Vector::new_ui_edge_insets([value UIEdgeInsetsValue]);
+            break;
+        case kPOPValueAffineTransform:
+            vec = Vector::new_cg_affine_transform([value CGAffineTransformValue]);
+            break;
+        case kPOPValueTransform:
+            // no-op
+            break;
+        case kPOPValueRange:
+            // no-op
+            break;
+        case kPOPValueColor:
+            vec = Vector::new_cg_color(POPCGColorWithColor(value));
+            break;
+    }
+
+    return VectorRef(vec);
 }
 
 VectorRef POPUnbox(id value, POPValueType &animationType, NSUInteger &count, bool validate)
 {
-  if (nil == value) {
-    count = 0;
-    return VectorRef(NULL);
-  }
-
-  // determine type of value
-  POPValueType valueType = POPSelectValueType(value, kPOPAnimatableSupportTypes, POP_ARRAY_COUNT(kPOPAnimatableSupportTypes));
-
-  // handle unknown types
-  if (kPOPValueUnknown == valueType) {
-    NSString *valueDesc = [[value class] description];
-    [NSException raise:@"Unsuported value" format:@"Animating %@ values is not supported", valueDesc];
-  }
-
-  // vectorize
-  VectorRef vec = vectorize(value, valueType);
-
-  if (kPOPValueUnknown == animationType || 0 == count) {
-    // update animation type based on value type
-    animationType = valueType;
-    if (NULL != vec) {
-      count = vec->size();
+    if (nil == value) {
+        count = 0;
+        return VectorRef(NULL);
     }
-  } else if (validate) {
-    // allow for mismatched types, so long as vector size matches
-    if (count != vec->size()) {
-      [NSException raise:@"Invalid value" format:@"%@ should be of type %@", value, POPValueTypeToString(animationType)];
+
+    // determine type of value
+    POPValueType valueType = POPSelectValueType(value, kPOPAnimatableSupportTypes, POP_ARRAY_COUNT(kPOPAnimatableSupportTypes));
+
+    // handle unknown types
+    if (kPOPValueUnknown == valueType) {
+        NSString *valueDesc = [[value class] description];
+        [NSException raise:@"Unsuported value" format:@"Animating %@ values is not supported", valueDesc];
     }
-  }
+
+    // vectorize
+    VectorRef vec = vectorize(value, valueType);
+
+    if (kPOPValueUnknown == animationType || 0 == count) {
+        // update animation type based on value type
+        animationType = valueType;
+        if (NULL != vec) {
+            count = vec->size();
+        }
+    }
+    else if (validate) {
+        // allow for mismatched types, so long as vector size matches
+        if (count != vec->size()) {
+            [NSException raise:@"Invalid value" format:@"%@ should be of type %@", value, POPValueTypeToString(animationType)];
+        }
+    }
   
-  return vec;
+    return vec;
 }
