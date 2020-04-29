@@ -66,6 +66,8 @@
 		5DD71D9E2458DA3A00F3F9E2 /* UPView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPView.h; sourceTree = "<group>"; };
 		5DD71D9F2458DA3A00F3F9E2 /* UPView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPView.mm; sourceTree = "<group>"; };
 		5DD71DA22458F39200F3F9E2 /* UPAny.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UPAny.hpp; sourceTree = "<group>"; };
+		5DD71E882459C4CA00F3F9E2 /* libpop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libpop.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DD71E8A2459C5A800F3F9E2 /* pop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = pop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DEBE0102454C6CF00016047 /* UPAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPAnimator.h; sourceTree = "<group>"; };
 		5DEBE0112454C6CF00016047 /* UPAnimator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAnimator.mm; sourceTree = "<group>"; };
 		5DEBE0152454C77700016047 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -116,6 +118,8 @@
 		5DEBE0142454C77700016047 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5DD71E8A2459C5A800F3F9E2 /* pop.framework */,
+				5DD71E882459C4CA00F3F9E2 /* libpop.a */,
 				5DD71D4C2457832400F3F9E2 /* Accelerate.framework */,
 				5DEBE0222454F21800016047 /* UIKit.framework */,
 				5DEBE0152454C77700016047 /* QuartzCore.framework */,

@@ -4,6 +4,7 @@
 //
 
 #import <UpKit/UpKit.h>
+#import <pop/POP.h>
 
 #import "ViewController.h"
 
@@ -61,6 +62,28 @@
 
 - (void)_handleTap:(UITapGestureRecognizer *)tap
 {
+//    POPBasicAnimation *anim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+//    anim.duration = 2;
+//    [self.v1 pop_addAnimation:anim forKey:@"alpha"];
+
+    CGFloat w = arc4random_uniform(200) + 100;
+    CGFloat h = arc4random_uniform(200) + 100;
+    CGFloat x = arc4random_uniform(375 - w);
+    CGFloat y = arc4random_uniform(812 - h);
+
+//    POPDecayAnimation *anim = [POPDecayAnimation animationWithPropertyNamed:kPOPLayerPositionX];
+//    anim.velocity = @(1000.0);
+    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPViewFrame];
+//    POPBasicAnimation *anim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewFrame];
+//    anim.duration = 0.5;
+//    anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    anim.fromValue = [NSValue valueWithCGRect:self.v1.frame];
+    anim.toValue = [NSValue valueWithCGRect:CGRectMake(x, y, w, h)];
+    anim.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        NSLog(@"done: %@", finished ? @"Y" : @"N");
+    };
+    [self.v1 pop_addAnimation:anim forKey:@"frame"];
+
 //    UPViewState *state1 = [self.v1 currentState];
 //    UPViewState *state2 = [[UPViewState alloc] init];
 //    

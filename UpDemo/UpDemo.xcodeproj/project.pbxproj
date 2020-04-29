@@ -18,6 +18,8 @@
 		5DD71D8224578DE300F3F9E2 /* UpDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D8124578DE300F3F9E2 /* UpDemoUITests.m */; };
 		5DD71D9324578E0C00F3F9E2 /* UpKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD71D9224578E0C00F3F9E2 /* UpKit.framework */; };
 		5DD71D9424578E0C00F3F9E2 /* UpKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD71D9224578E0C00F3F9E2 /* UpKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5DD71E8F2459C5EC00F3F9E2 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD71E8E2459C5EC00F3F9E2 /* pop.framework */; };
+		5DD71E902459C5EC00F3F9E2 /* pop.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD71E8E2459C5EC00F3F9E2 /* pop.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				5DD71E902459C5EC00F3F9E2 /* pop.framework in Embed Frameworks */,
 				5DD71D9424578E0C00F3F9E2 /* UpKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -72,6 +75,7 @@
 		5DD71D8324578DE300F3F9E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DD71D9024578DF900F3F9E2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5DD71D9224578E0C00F3F9E2 /* UpKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UpKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DD71E8E2459C5EC00F3F9E2 /* pop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = pop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DD71E8F2459C5EC00F3F9E2 /* pop.framework in Frameworks */,
 				5DD71D9324578E0C00F3F9E2 /* UpKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,6 +165,7 @@
 		5DD71D8F24578DF900F3F9E2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5DD71E8E2459C5EC00F3F9E2 /* pop.framework */,
 				5DD71D9224578E0C00F3F9E2 /* UpKit.framework */,
 				5DD71D9024578DF900F3F9E2 /* UIKit.framework */,
 			);
