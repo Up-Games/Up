@@ -65,7 +65,6 @@ NSString * const kPOPShapeLayerStrokeColor = @"shapeLayer.strokeColor";
 NSString * const kPOPShapeLayerFillColor = @"shapeLayer.fillColor";
 NSString * const kPOPShapeLayerLineWidth = @"shapeLayer.lineWidth";
 NSString * const kPOPShapeLayerLineDashPhase = @"shapeLayer.lineDashPhase";
-//NSString * const kPOPShapeLayerPath = @"shapeLayer.path";
 
 // NSLayoutConstraint
 NSString * const kPOPLayoutConstraintConstant = @"layoutConstraint.constant";
@@ -107,39 +106,6 @@ NSString * const kPOPTabBarBarTintColor = kPOPNavigationBarBarTintColor;
 
 // UILabel
 NSString * const kPOPLabelTextColor = @"label.textColor";
-
-#if SCENEKIT_SDK_AVAILABLE
-
-// SceneKit
-NSString * const kPOPSCNNodePosition = @"scnode.position";
-NSString * const kPOPSCNNodePositionX = @"scnnode.position.x";
-NSString * const kPOPSCNNodePositionY = @"scnnode.position.y";
-NSString * const kPOPSCNNodePositionZ = @"scnnode.position.z";
-NSString * const kPOPSCNNodeTranslation = @"scnnode.translation";
-NSString * const kPOPSCNNodeTranslationX = @"scnnode.translation.x";
-NSString * const kPOPSCNNodeTranslationY = @"scnnode.translation.y";
-NSString * const kPOPSCNNodeTranslationZ = @"scnnode.translation.z";
-NSString * const kPOPSCNNodeRotation = @"scnnode.rotation";
-NSString * const kPOPSCNNodeRotationX = @"scnnode.rotation.x";
-NSString * const kPOPSCNNodeRotationY = @"scnnode.rotation.y";
-NSString * const kPOPSCNNodeRotationZ = @"scnnode.rotation.z";
-NSString * const kPOPSCNNodeRotationW = @"scnnode.rotation.w";
-NSString * const kPOPSCNNodeEulerAngles = @"scnnode.eulerAngles";
-NSString * const kPOPSCNNodeEulerAnglesX = @"scnnode.eulerAngles.x";
-NSString * const kPOPSCNNodeEulerAnglesY = @"scnnode.eulerAngles.y";
-NSString * const kPOPSCNNodeEulerAnglesZ = @"scnnode.eulerAngles.z";
-NSString * const kPOPSCNNodeOrientation = @"scnnode.orientation";
-NSString * const kPOPSCNNodeOrientationX = @"scnnode.orientation.x";
-NSString * const kPOPSCNNodeOrientationY = @"scnnode.orientation.y";
-NSString * const kPOPSCNNodeOrientationZ = @"scnnode.orientation.z";
-NSString * const kPOPSCNNodeOrientationW = @"scnnode.orientation.w";
-NSString * const kPOPSCNNodeScale = @"scnnode.scale";
-NSString * const kPOPSCNNodeScaleX = @"scnnode.scale.x";
-NSString * const kPOPSCNNodeScaleY = @"scnnode.scale.y";
-NSString * const kPOPSCNNodeScaleZ = @"scnnode.scale.z";
-NSString * const kPOPSCNNodeScaleXY = @"scnnode.scale.xy";
-
-#endif
 
 /**
  State structure internal to static animatable property.
@@ -541,16 +507,6 @@ static POPStaticAnimatablePropertyState _staticStates[] =
     },
     0.01
   },
-
-//  {kPOPShapeLayerPath,
-//    ^(CAShapeLayer *obj, CGFloat values[]) {
-//        values[0] = obj.path;
-//    },
-//    ^(CAShapeLayer *obj, const CGFloat values[]) {
-//        obj.path = values[0];
-//    },
-//    0.01
-//  },
 
   {kPOPLayoutConstraintConstant,
     ^(NSLayoutConstraint *obj, CGFloat values[]) {

@@ -8,7 +8,7 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-@property (nonatomic) UIView *v1;
+@property (nonatomic) UPShapeView *v1;
 @end
 
 @implementation ViewController
@@ -20,35 +20,39 @@
 //    CGRect screenBounds = [[UIScreen mainScreen] bounds];
 //    CGRect referenceFrame = CGRectInset(screenBounds, 36, 100);
     
-    self.v1 = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
-//    self.v1.layer.cornerRadius
-    self.v1.backgroundColor = [UIColor orangeColor];
-//    self.v1.shapeFillColor = [UIColor orangeColor];
+    self.v1 = [[UPShapeView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
+    self.v1.shapeFillColor = [UIColor orangeColor];
 //    self.v1.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:referenceFrame hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalTop];
     [self.view addSubview:self.v1];
 
-//    CGMutablePathRef path = CGPathCreateMutable();
-//    CGPathMoveToPoint(path, NULL, 0, 0);
-//    CGPathAddLineToPoint(path, NULL, 0, 100);
-//    CGPathAddLineToPoint(path, NULL, 100, 100);
-//    CGPathAddLineToPoint(path, NULL, 100, 0);
-//    CGPathCloseSubpath(path);
-//
-//    UIBezierPath *shape = [UIBezierPath bezierPathWithCGPath:path];
-//    self.v1.shape = shape;
-//
-//    CGMutablePathRef path2 = CGPathCreateMutable();
-//    CGPathMoveToPoint(path2, NULL, 0, 0);
-//    CGPathAddLineToPoint(path2, NULL, 0, 200);
-//    CGPathAddLineToPoint(path2, NULL, 200, 200);
-//    CGPathAddLineToPoint(path2, NULL, 200, 0);
-//    CGPathCloseSubpath(path2);
-//    UIBezierPath *shape2 = [UIBezierPath bezierPathWithCGPath:path2];
-//
+    UIBezierPath *shape1 = [UIBezierPath bezierPath];
+    [shape1 moveToPoint:CGPointMake(0, 200)];
+    [shape1 addLineToPoint:CGPointMake(100, 200)];
+    [shape1 addLineToPoint:CGPointMake(50, 300)];
+    [shape1 closePath];
+    [shape1 moveToPoint:CGPointMake(0, 300)];
+    [shape1 addQuadCurveToPoint:CGPointMake(100, 300) controlPoint:CGPointMake(50, 400)];
+    [shape1 closePath];
+    [shape1 moveToPoint:CGPointMake(100, 200)];
+    [shape1 addCurveToPoint:CGPointMake(200, 200) controlPoint1:CGPointMake(125, 300) controlPoint2:CGPointMake(175, 100)];
+    [shape1 closePath];
+    self.v1.shape = shape1;
+
+    UIBezierPath *shape2 = [UIBezierPath bezierPath];
+    [shape2 moveToPoint:CGPointMake(0, 200)];
+    [shape2 addLineToPoint:CGPointMake(100, 200)];
+    [shape2 addLineToPoint:CGPointMake(50, 50)];
+    [shape2 closePath];
+    [shape2 moveToPoint:CGPointMake(0, 300)];
+    [shape2 addQuadCurveToPoint:CGPointMake(100, 300) controlPoint:CGPointMake(50, 400)];
+    [shape2 closePath];
+    [shape2 moveToPoint:CGPointMake(100, 200)];
+    [shape2 addCurveToPoint:CGPointMake(200, 200) controlPoint1:CGPointMake(125, 300) controlPoint2:CGPointMake(175, 100)];
+    [shape2 closePath];
     
+
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleTap:)];
     [self.view addGestureRecognizer:tap];
-    
 }
 
 - (void)viewDidLayoutSubviews
@@ -130,7 +134,7 @@
     NSArray *cornersForProperties = @[kPOPLayerAGKQuadTopLeft, kPOPLayerAGKQuadTopRight, kPOPLayerAGKQuadBottomRight, kPOPLayerAGKQuadBottomLeft];
     CGFloat longestDistanceFromCenter = [self longestDistanceOfPointsInQuad:innerQuad toPoint:currentCenter];
 
-    for(int cornerIndex = 0; cornerIndex < 4; cornerIndex++) {
+    for (int cornerIndex = 0; cornerIndex < 4; cornerIndex++) {
         NSString *propertyName = cornersForProperties[cornerIndex];
 
         POPSpringAnimation *anim = [view.layer pop_animationForKey:propertyName];

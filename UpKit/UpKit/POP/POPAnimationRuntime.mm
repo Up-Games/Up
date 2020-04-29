@@ -70,47 +70,21 @@ static bool FBCompareTypeEncoding(const char *objctype, POPValueType type)
   switch (type)
   {
     case kPOPValueFloat:
-      return (strcmp(objctype, @encode(float)) == 0
-              || strcmp(objctype, @encode(double)) == 0
-              );
-
+      return strcmp(objctype, @encode(float)) == 0;
     case kPOPValuePoint:
-      return (strcmp(objctype, @encode(CGPoint)) == 0
-#if !TARGET_OS_IPHONE
-              || strcmp(objctype, @encode(NSPoint)) == 0
-#endif
-              );
-
+      return strcmp(objctype, @encode(CGPoint)) == 0;
     case kPOPValueSize:
-      return (strcmp(objctype, @encode(CGSize)) == 0
-#if !TARGET_OS_IPHONE
-              || strcmp(objctype, @encode(NSSize)) == 0
-#endif
-              );
-
+      return strcmp(objctype, @encode(CGSize)) == 0;
     case kPOPValueRect:
-      return (strcmp(objctype, @encode(CGRect)) == 0
-#if !TARGET_OS_IPHONE
-              || strcmp(objctype, @encode(NSRect)) == 0
-#endif
-              );
+      return strcmp(objctype, @encode(CGRect)) == 0;
     case kPOPValueEdgeInsets:
-#if TARGET_OS_IPHONE
       return strcmp(objctype, @encode(UIEdgeInsets)) == 0;
-#else
-      return false;
-#endif
-      
     case kPOPValueAffineTransform:
       return strcmp(objctype, @encode(CGAffineTransform)) == 0;
-
     case kPOPValueTransform:
       return strcmp(objctype, @encode(CATransform3D)) == 0;
-
     case kPOPValueRange:
-      return strcmp(objctype, @encode(CFRange)) == 0
-      || strcmp(objctype, @encode (NSRange)) == 0;
-
+      return strcmp(objctype, @encode(CFRange)) == 0 || strcmp(objctype, @encode (NSRange)) == 0;
     case kPOPValueInteger:
       return (strcmp(objctype, @encode(int)) == 0
               || strcmp(objctype, @encode(unsigned int)) == 0
@@ -121,21 +95,6 @@ static bool FBCompareTypeEncoding(const char *objctype, POPValueType type)
               || strcmp(objctype, @encode(long long)) == 0
               || strcmp(objctype, @encode(unsigned long long)) == 0
               );
-      
-    case kPOPValueSCNVector3:
-#if SCENEKIT_SDK_AVAILABLE
-      return strcmp(objctype, @encode(SCNVector3)) == 0;
-#else
-      return false;
-#endif
-      
-    case kPOPValueSCNVector4:
-#if SCENEKIT_SDK_AVAILABLE
-      return strcmp(objctype, @encode(SCNVector4)) == 0;
-#else
-      return false;
-#endif
-      
     default:
       return false;
   }
@@ -219,25 +178,13 @@ id POPBox(VectorConstRef vec, POPValueType type, bool force)
     case kPOPValueRect:
       return [NSValue valueWithCGRect:vec->cg_rect()];
       break;
-#if TARGET_OS_IPHONE
     case kPOPValueEdgeInsets:
       return [NSValue valueWithUIEdgeInsets:vec->ui_edge_insets()];
       break;
-#endif
     case kPOPValueColor: {
       return (__bridge_transfer id)vec->cg_color();
       break;
     }
-#if SCENEKIT_SDK_AVAILABLE
-    case kPOPValueSCNVector3: {
-      return [NSValue valueWithSCNVector3:vec->scn_vector3()];
-      break;
-    }
-    case kPOPValueSCNVector4: {
-      return [NSValue valueWithSCNVector4:vec->scn_vector4()];
-      break;
-    }
-#endif
     default:
       return force ? [NSValue valueWithCGPoint:vec->cg_point()] : nil;
       break;
@@ -275,14 +222,6 @@ static VectorRef vectorize(id value, POPValueType type)
     case kPOPValueColor:
       vec = Vector::new_cg_color(POPCGColorWithColor(value));
       break;
-#if SCENEKIT_SDK_AVAILABLE
-    case kPOPValueSCNVector3:
-      vec = Vector::new_scn_vector3([value SCNVector3Value]);
-      break;
-    case kPOPValueSCNVector4:
-      vec = Vector::new_scn_vector4([value SCNVector4Value]);
-      break;
-#endif
     default:
       break;
   }
