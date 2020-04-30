@@ -59,7 +59,7 @@ CGColorRef POPCGColorWithColor(id color)
     else if ([color isKindOfClass:[UIColor class]]) {
         return [color CGColor];
     }
-    return nil;
+    return NULL;
 }
 
 void POPUIColorGetRGBAComponents(UIColor *color, CGFloat components[])

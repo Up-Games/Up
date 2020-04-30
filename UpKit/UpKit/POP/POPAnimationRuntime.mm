@@ -67,37 +67,38 @@ CFMutableDictionaryRef POPDictionaryCreateMutableWeakPointerToStrongObject(NSUIn
 
 static bool FBCompareTypeEncoding(const char *objctype, POPValueType type)
 {
-  switch (type)
-  {
+  switch (type) {
     case kPOPValueFloat:
-      return strcmp(objctype, @encode(float)) == 0;
+        return strcmp(objctype, @encode(float)) == 0;
     case kPOPValuePoint:
-      return strcmp(objctype, @encode(CGPoint)) == 0;
+        return strcmp(objctype, @encode(CGPoint)) == 0;
     case kPOPValueSize:
-      return strcmp(objctype, @encode(CGSize)) == 0;
+        return strcmp(objctype, @encode(CGSize)) == 0;
     case kPOPValueRect:
-      return strcmp(objctype, @encode(CGRect)) == 0;
+        return strcmp(objctype, @encode(CGRect)) == 0;
     case kPOPValueEdgeInsets:
-      return strcmp(objctype, @encode(UIEdgeInsets)) == 0;
+        return strcmp(objctype, @encode(UIEdgeInsets)) == 0;
     case kPOPValueAffineTransform:
-      return strcmp(objctype, @encode(CGAffineTransform)) == 0;
+        return strcmp(objctype, @encode(CGAffineTransform)) == 0;
     case kPOPValueTransform:
-      return strcmp(objctype, @encode(CATransform3D)) == 0;
+        return strcmp(objctype, @encode(CATransform3D)) == 0;
     case kPOPValueRange:
-      return strcmp(objctype, @encode(CFRange)) == 0 || strcmp(objctype, @encode (NSRange)) == 0;
+        return strcmp(objctype, @encode(CFRange)) == 0 || strcmp(objctype, @encode (NSRange)) == 0;
     case kPOPValueInteger:
-      return (strcmp(objctype, @encode(int)) == 0
-              || strcmp(objctype, @encode(unsigned int)) == 0
-              || strcmp(objctype, @encode(short)) == 0
-              || strcmp(objctype, @encode(unsigned short)) == 0
-              || strcmp(objctype, @encode(long)) == 0
-              || strcmp(objctype, @encode(unsigned long)) == 0
-              || strcmp(objctype, @encode(long long)) == 0
-              || strcmp(objctype, @encode(unsigned long long)) == 0
-              );
-    default:
-      return false;
+        return (strcmp(objctype, @encode(int)) == 0
+            || strcmp(objctype, @encode(unsigned int)) == 0
+            || strcmp(objctype, @encode(short)) == 0
+            || strcmp(objctype, @encode(unsigned short)) == 0
+            || strcmp(objctype, @encode(long)) == 0
+            || strcmp(objctype, @encode(unsigned long)) == 0
+            || strcmp(objctype, @encode(long long)) == 0
+            || strcmp(objctype, @encode(unsigned long long)) == 0
+        );
+      case kPOPValueUnknown:
+      case kPOPValueColor:
+          return false;
   }
+    return false;
 }
 
 POPValueType POPSelectValueType(const char *objctype, const POPValueType *types, size_t length)
@@ -117,7 +118,7 @@ POPValueType POPSelectValueType(id obj, const POPValueType *types, size_t length
     if ([obj isKindOfClass:[NSValue class]]) {
         return POPSelectValueType([obj objCType], types, length);
     }
-    else if (NULL != POPCGColorWithColor(obj)) {
+    else if (POPCGColorWithColor(obj) != NULL) {
         return kPOPValueColor;
     }
     return kPOPValueUnknown;
@@ -149,28 +150,28 @@ const POPValueType kPOPAnimatableSupportTypes[10] = {
 NSString *POPValueTypeToString(POPValueType t)
 {
     switch (t) {
-    case kPOPValueUnknown:
-        return @"unknown";
-    case kPOPValueInteger:
-        return @"int";
-    case kPOPValueFloat:
-        return @"CGFloat";
-    case kPOPValuePoint:
-        return @"CGPoint";
-    case kPOPValueSize:
-        return @"CGSize";
-    case kPOPValueRect:
-        return @"CGRect";
-    case kPOPValueEdgeInsets:
-        return @"UIEdgeInsets";
-    case kPOPValueAffineTransform:
-        return @"CGAffineTransform";
-    case kPOPValueTransform:
-        return @"CATransform3D";
-    case kPOPValueRange:
-        return @"CFRange";
-    case kPOPValueColor:
-        return @"CGColorRef";
+        case kPOPValueUnknown:
+            return @"unknown";
+        case kPOPValueInteger:
+            return @"int";
+        case kPOPValueFloat:
+            return @"CGFloat";
+        case kPOPValuePoint:
+            return @"CGPoint";
+        case kPOPValueSize:
+            return @"CGSize";
+        case kPOPValueRect:
+            return @"CGRect";
+        case kPOPValueEdgeInsets:
+            return @"UIEdgeInsets";
+        case kPOPValueAffineTransform:
+            return @"CGAffineTransform";
+        case kPOPValueTransform:
+            return @"CATransform3D";
+        case kPOPValueRange:
+            return @"CFRange";
+        case kPOPValueColor:
+            return @"CGColorRef";
     }
     return nil;
 }
