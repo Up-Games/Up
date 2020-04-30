@@ -16,42 +16,43 @@
 @end
 
 @implementation POPCustomAnimation
-@synthesize currentTime = _currentTime;
-@synthesize elapsedTime = _elapsedTime;
-@synthesize animate = _animate;
+@dynamic elapsedTime;
 
 + (instancetype)animationWithBlock:(BOOL(^)(id target, POPCustomAnimation *))block
 {
-  POPCustomAnimation *b = [[self alloc] _init];
-  b.animate = block;
-  return b;
+    POPCustomAnimation *b = [[self alloc] _init];
+    b.animate = block;
+    return b;
 }
 
 - (id)_init
 {
-  self = [super _init];
-  if (nil != self) {
+    self = [super _init];
     _state->type = kPOPAnimationCustom;
-  }
-  return self;
+    return self;
 }
 
 - (CFTimeInterval)beginTime
 {
-  POPAnimationState *s = POPAnimationGetState(self);
-  return s->startTime > 0 ? s->startTime : s->beginTime;
+    POPAnimationState *s = POPAnimationGetState(self);
+    return s->startTime > 0 ? s->startTime : s->beginTime;
 }
 
-- (BOOL)_advance:(id)object currentTime:(CFTimeInterval)currentTime elapsedTime:(CFTimeInterval)elapsedTime
+- (BOOL)_advance:(id)object currentTime:(CFTimeInterval)currentTime intervalTime:(CFTimeInterval)intervalTime
 {
-  _currentTime = currentTime;
-  _elapsedTime = elapsedTime;
-  return _animate(object, self);
+    _currentTime = currentTime;
+    _intervalTime = intervalTime;
+    return _animate(object, self);
 }
 
 - (void)_appendDescription:(NSMutableString *)s debug:(BOOL)debug
 {
-  [s appendFormat:@"; elapsedTime = %f; currentTime = %f;", _elapsedTime, _currentTime];
+    [s appendFormat:@"; intervalTime = %f; currentTime = %f; elapsedTime = %f;", _intervalTime, _currentTime, self.elapsedTime];
+}
+
+- (CFTimeInterval)elapsedTime
+{
+    return _currentTime - self.beginTime;
 }
 
 @end
@@ -61,15 +62,13 @@
  */
 @implementation POPCustomAnimation (NSCopying)
 
-- (instancetype)copyWithZone:(NSZone *)zone {
-  
-  POPCustomAnimation *copy = [super copyWithZone:zone];
-  
-  if (copy) {
-    copy.animate = self.animate;
-  }
-  
-  return copy;
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    POPCustomAnimation *copy = [super copyWithZone:zone];
+    if (copy) {
+        copy.animate = self.animate;
+    }
+    return copy;
 }
 
 @end

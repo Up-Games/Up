@@ -174,7 +174,7 @@ POPAnimationState *POPAnimationGetState(POPAnimation *a)
   return a->_state;
 }
 
-- (BOOL)_advance:(id)object currentTime:(CFTimeInterval)currentTime elapsedTime:(CFTimeInterval)elapsedTime
+- (BOOL)_advance:(id)object currentTime:(CFTimeInterval)currentTime intervalTime:(CFTimeInterval)intervalTime
 {
   return YES;
 }

@@ -60,7 +60,7 @@ typedef void (^POPAnimationDidApplyBlock)(POPAnimation *anim);
 /**
  Return YES to indicate animation should continue animating.
  */
-- (BOOL)_advance:(id)object currentTime:(CFTimeInterval)currentTime elapsedTime:(CFTimeInterval)elapsedTime;
+- (BOOL)_advance:(id)object currentTime:(CFTimeInterval)currentTime intervalTime:(CFTimeInterval)intervalTime;
 
 /**
  Subclass override point to append animation description.
@@ -436,7 +436,7 @@ struct _POPAnimationState
         break;
       }
       case kPOPAnimationCustom: {
-        customFinished = [self _advance:obj currentTime:time elapsedTime:dt] ? false : true;
+        customFinished = [self _advance:obj currentTime:time intervalTime:dt] ? false : true;
         advanced = true;
         break;
       }

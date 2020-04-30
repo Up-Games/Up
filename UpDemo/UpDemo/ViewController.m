@@ -50,9 +50,25 @@
     [shape2 addCurveToPoint:CGPointMake(200, 200) controlPoint1:CGPointMake(125, 300) controlPoint2:CGPointMake(175, 100)];
     [shape2 closePath];
     
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        POPCustomAnimation *anim = [POPCustomAnimation animationWithBlock:^BOOL(id target, POPCustomAnimation *animation) {
+            NSLog(@"fraction: %.2f : %@", animation.elapsedTime, target);
+            if (animation.elapsedTime > 3) {
+                return NO;
+            }
+            return YES;
+        }];
+        anim.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+            NSLog(@"done: %@", finished ? @"Y" : @"N");
+        };
+        [self.v1 pop_addAnimation:anim forKey:@"custom"];
+    });
+
 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleTap:)];
     [self.view addGestureRecognizer:tap];
+
+    
 }
 
 - (void)viewDidLayoutSubviews
