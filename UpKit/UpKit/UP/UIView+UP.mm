@@ -61,6 +61,28 @@
     return [value quadOffsetsValue];
 }
 
+CFTimeInterval UPDefaultBloopDuration = 0.375;
+
+- (void)bloopToFrame:(CGRect)frame
+{
+    [self bloopWithDuration:UPDefaultBloopDuration toPosition:up_rect_center(frame) size:frame.size];
+}
+
+- (void)bloopWithDuration:(UPTick)duration toFrame:(CGRect)frame
+{
+    [self bloopWithDuration:duration toPosition:up_rect_center(frame) size:frame.size];
+}
+
+- (void)bloopToPosition:(CGPoint)position
+{
+    [self bloopWithDuration:UPDefaultBloopDuration toPosition:position size:self.bounds.size];
+}
+
+- (void)bloopToPosition:(CGPoint)position size:(CGSize)size
+{
+    [self bloopWithDuration:UPDefaultBloopDuration toPosition:position size:size];
+}
+
 - (void)bloopWithDuration:(UPTick)duration toPosition:(CGPoint)position size:(CGSize)size
 {
     static constexpr CGFloat _Divisor = M_PI * 0.75;

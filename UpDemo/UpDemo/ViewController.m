@@ -18,7 +18,6 @@
     [super viewDidLoad];
 
     self.v1 = [[UPShapeView alloc] initWithFrame:CGRectMake(157.5, 100, 72, 90)];
-//    self.v1.shapeFillColor = [UIColor orangeColor];
     self.v1.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:self.v1];
     self.v1.clipsToBounds = NO;
@@ -34,8 +33,17 @@
         return;
     }
 
-    CGPoint point = [tap locationInView:self.view];
-    [self.v1 bloopWithDuration:0.4 toPosition:point size:CGSizeMake(72, 90)];
+    static BOOL flag;
+    
+    if (flag) {
+        [self.v1 bloopToFrame:CGRectMake(50, 50, 144, 180)];
+    }
+    else {
+        CGPoint point = [tap locationInView:self.view];
+        [self.v1 bloopToPosition:point size:CGSizeMake(72, 90)];
+    
+    }
+    flag = !flag;
 }
 
 @end

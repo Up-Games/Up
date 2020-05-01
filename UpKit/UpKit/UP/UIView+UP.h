@@ -18,9 +18,13 @@
 
 @property (nonatomic) UPQuadOffsets quadOffsets;
 
+extern CFTimeInterval UPDefaultBloopDuration;
+
+- (void)bloopToFrame:(CGRect)frame;
+- (void)bloopWithDuration:(UPTick)duration toFrame:(CGRect)frame;
+- (void)bloopToPosition:(CGPoint)position;
+- (void)bloopToPosition:(CGPoint)position size:(CGSize)size;
 - (void)bloopWithDuration:(UPTick)duration toPosition:(CGPoint)position size:(CGSize)size;
-//- (void)bloopToFrame:(CGRect)frame;
-//- (void)bloopToOrigin:(CGPoint)origin;
 
 @end
 
