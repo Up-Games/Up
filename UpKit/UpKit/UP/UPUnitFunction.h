@@ -49,6 +49,8 @@ typedef enum {
 
 @interface UPUnitFunction : NSObject
 
+@property (nonatomic, readonly) UPUnitFunctionType type;
+
 + (UPUnitFunction *)unitFunctionWithType:(UPUnitFunctionType)type;
 - (instancetype)initWithType:(UPUnitFunctionType)type;
 - (UPFloat)valueForInput:(UPFloat)input;

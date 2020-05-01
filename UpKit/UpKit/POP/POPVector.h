@@ -20,9 +20,11 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/NSException.h>
 
-#import "POPDefines.h"
+#import <UpKit/POPDefines.h>
 
 #import <UIKit/UIKit.h>
+
+#import <UpKit/UPGeometry.h>
 
 namespace POP {
 
@@ -266,16 +268,105 @@ namespace POP {
   template<typename T>
   const typename Vector4<T>::_data Vector4<T>::_v = { &Vector4<T>::x, &Vector4<T>::y, &Vector4<T>::z, &Vector4<T>::w };
 
-  /** Convenience typedefs */
-  typedef Vector2<float> Vector2f;
-  typedef Vector2<double> Vector2d;
-  typedef Vector2<CGFloat> Vector2r;
-  typedef Vector3<float> Vector3f;
-  typedef Vector3<double> Vector3d;
-  typedef Vector3<CGFloat> Vector3r;
-  typedef Vector4<float> Vector4f;
-  typedef Vector4<double> Vector4d;
-  typedef Vector4<CGFloat> Vector4r;
+    /** Fixed eight-size vector class */
+    template <typename T>
+    struct Vector8
+    {
+    private:
+      typedef T Vector8<T>::* const _data[8];
+      static const _data _v;
+
+    public:
+      T a;
+      T b;
+      T c;
+      T d;
+      T e;
+      T f;
+      T g;
+      T h;
+
+      // Zero vector
+      static const Vector8 Zero() { return Vector8(0); };
+
+      // Constructors
+      Vector8() {}
+      explicit Vector8(T v) : a(v), b(v), c(v), d(v), e(v), f(v), g(v), h(v) {};
+      Vector8(T a0, T b0, T c0, T d0, T e0, T f0, T g0, T h0) :
+          a(a0), b(b0), c(c0), d(d0), e(e0), f(f0), g(g0), h(h0) {};
+
+      // Index operators
+      const T& operator[](size_t i) const { return this->*_v[i]; }
+      T& operator[](size_t i) { return this->*_v[i]; }
+      const T& operator()(size_t i) const { return this->*_v[i]; }
+      T& operator()(size_t i) { return this->*_v[i]; }
+
+      // Backing data
+      T * data() { return &(this->*_v[0]); }
+      const T * data() const { return &(this->*_v[0]); }
+
+      // Size
+      inline size_t size() const { return 8; }
+
+      // Assignment
+      Vector8 &operator= (T v) { a = v; b = v; c = v; d = v; e = v; f = v; g = v; h = v; return *this;}
+
+      // Negation
+      Vector8 operator- (void) const { return Vector8<T>(-a, -b, -c, -d, -e, -f, -g, -h); }
+
+      // Equality
+      bool operator== (T v) const { return (a == v && b == v && c = v, d = v); }
+      bool operator== (const Vector8 &v) const {
+          return (a == v.a && b == v.b && c == v.c && d == v.d && e == v.e && f == v.f && g == v.g && h == v.h);
+      }
+
+      // Inequality
+      bool operator!= (T v) const {return (a != v || b != v || c != v || d != v || e != v || f != v || g != v || h != v); }
+      bool operator!= (const Vector8 &v) const {
+          return (a != v.a || b != v.b || c != v.c || d != v.d || e != v.e || f != v.f || g != v.g || h != v.h);
+      }
+
+      // Scalar Math
+      Vector8 operator+ (T v) const { return Vector8(a + v, b + v, c + v, d + v, e + v, f + v, g + v, h + v); }
+      Vector8 operator- (T v) const { return Vector8(a - v, b - v, c - v, d - v, e - v, f - v, g - v, h - v); }
+      Vector8 operator* (T v) const { return Vector8(a * v, b * v, c * v, d * v, e * v, f * v, g * v, h * v); }
+      Vector8 operator/ (T v) const { return Vector8(a / v, b / v, c / v, d / v); }
+      Vector8 &operator+= (T v) { a += v; b += v; c += v; d += v; e += v; f += v; g += v; h += v; return *this; };
+      Vector8 &operator-= (T v) { a -= v; b -= v; c -= v; d -= v; e -= v; f -= v; g -= v; h -= v; return *this; };
+      Vector8 &operator*= (T v) { a *= v; b *= v; c *= v; d *= v; e *= v; f *= v; g *= v; h *= v; return *this; };
+      Vector8 &operator/= (T v) { a /= v; b /= v; c /= v; d /= v; e /= v; f /= v; g /= v; h /= v; return *this; };
+
+      // Vector Math
+      Vector8 operator+ (const Vector8 &v) const { return Vector8(a + v.a, b + v.b, c + v.c, d + v.d, e + v.e, f + v.f, g + v.g, h + v.h); }
+      Vector8 operator- (const Vector8 &v) const { return Vector8(a - v.a, b - v.b, c - v.c, d - v.d, e - v.e, f - v.f, g - v.g, h - v.h); }
+      Vector8 &operator+= (const Vector8 &v) { a += v.a; b += v.b; c += v.c; d += v.d; e += v.e; f += v.f; g += v.g; h += v.h; return *this; };
+      Vector8 &operator-= (const Vector8 &v) { a -= v.a; b -= v.b; c -= v.c; d -= v.d; e -= v.e; f -= v.f; g -= v.g; h -= v.h; return *this; };
+
+      // Norms
+      CGFloat norm() const { return sqrtr(squaredNorm()); }
+      CGFloat squaredNorm() const { return a * a + b * b + c * c + d * d + e * e + f * f + g * g + h * h; }
+
+      // Cast
+      template<typename U> Vector8<U> cast() const { return Vector8<U>(a, b, c, d, e, f, g, h); }
+    };
+
+    template<typename T>
+    const typename Vector8<T>::_data Vector8<T>::_v = {
+      &Vector8<T>::a, &Vector8<T>::b, &Vector8<T>::c, &Vector8<T>::d, &Vector8<T>::e, &Vector8<T>::f, &Vector8<T>::g, &Vector8<T>::h
+    };
+
+    /** Convenience typedefs */
+    typedef Vector2<float> Vector2f;
+    typedef Vector2<double> Vector2d;
+    typedef Vector2<CGFloat> Vector2r;
+    typedef Vector3<float> Vector3f;
+    typedef Vector3<double> Vector3d;
+    typedef Vector3<CGFloat> Vector3r;
+    typedef Vector4<float> Vector4f;
+    typedef Vector4<double> Vector4d;
+    typedef Vector4<CGFloat> Vector4r;
+    typedef Vector8<double> Vector8d;
+    typedef Vector8<CGFloat> Vector8r;
 
   /** Variable-sized vector class */
   class Vector
@@ -299,6 +390,9 @@ namespace POP {
     // Creates a variable size vector given a static vector and count.
     static Vector *new_vector(NSUInteger count, Vector4r vec);
 
+    // Creates a variable size vector given a static vector and count.
+    static Vector *new_vector(NSUInteger count, Vector8r vec);
+
     // Size of vector
     NSUInteger size() const { return _count; }
 
@@ -311,6 +405,9 @@ namespace POP {
 
     // Vector4r support
     Vector4r vector4r() const;
+
+    // Vector8r support
+    Vector8r vector8r() const;
 
     // CGFloat support
     static Vector *new_cg_float(CGFloat f);
@@ -339,6 +436,10 @@ namespace POP {
     CGColorRef cg_color() const CF_RETURNS_RETAINED;
     static Vector *new_cg_color(CGColorRef color);
 
+      // UPQuadOffsets support
+      UPQuadOffsets up_quad_offsets() const;
+      static Vector *new_up_quad_offsets(const UPQuadOffsets &q);
+
     // operator overloads
     CGFloat &operator[](size_t i) const {
       NSCAssert(size() > i, @"unexpected vector size:%lu", (unsigned long)size());
@@ -357,6 +458,13 @@ namespace POP {
 
     // Operator overloads
     template<typename U> Vector& operator= (const Vector4<U>& other) {
+      size_t count = MIN(_count, other.size());
+      for (size_t i = 0; i < count; i++) {
+        _values[i] = other[i];
+      }
+      return *this;
+    }
+    template<typename U> Vector& operator= (const Vector8<U>& other) {
       size_t count = MIN(_count, other.size());
       for (size_t i = 0; i < count; i++) {
         _values[i] = other[i];

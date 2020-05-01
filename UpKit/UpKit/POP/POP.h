@@ -23,6 +23,7 @@
 #import <UpKit/POPCustomAnimation.h>
 #import <UpKit/POPDecayAnimation.h>
 #import <UpKit/POPLayerExtras.h>
+#import <UpKit/POPPathAnimation.h>
 #import <UpKit/POPPropertyAnimation.h>
 #import <UpKit/POPSpringAnimation.h>
 #import <UpKit/POPVector.h>

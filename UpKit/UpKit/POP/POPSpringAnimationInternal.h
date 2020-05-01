@@ -14,7 +14,7 @@
 
 struct _POPSpringAnimationState : _POPPropertyAnimationState
 {
-  SpringSolver4d *solver;
+  SpringSolver8d *solver;
   CGFloat springSpeed;
   CGFloat springBounciness; // normalized springiness
   CGFloat dynamicsTension;  // tension
@@ -91,11 +91,11 @@ struct _POPSpringAnimationState : _POPPropertyAnimationState
 
     CFTimeInterval localTime = time - startTime;
 
-    Vector4d value = vector4d(currentVec);
-    Vector4d toValue = vector4d(toVec);
-    Vector4d velocity = vector4d(velocityVec);
+    Vector8d value = vector8d(currentVec);
+    Vector8d toValue = vector8d(toVec);
+    Vector8d velocity = vector8d(velocityVec);
 
-    SSState4d state;
+    SSState8d state;
     state.p = toValue - value;
 
     // the solver assumes a spring of size zero

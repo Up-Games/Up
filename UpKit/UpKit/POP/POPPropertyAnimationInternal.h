@@ -87,23 +87,23 @@ struct _POPPropertyAnimationState : _POPAnimationState
     return 0 != roundingFactor;
   }
 
-  bool hasValue() {
+  bool hasValue() const {
     return 0 != valueCount;
   }
 
-  bool isDone() {
-    // inherit done
-    if (_POPAnimationState::isDone()) {
-      return true;
-    }
+    bool isDone() const {
+        // inherit done
+        if (_POPAnimationState::isDone()) {
+            return true;
+        }
 
-    // consider an animation with no values done
-    if (!hasValue() && !isCustom()) {
-      return true;
-    }
+        // consider an animation with no values done
+        if (!hasValue() && !isCustom()) {
+            return true;
+        }
 
-    return false;
-  }
+        return false;
+    }
 
   // returns a copy of the currentVec, rounding if needed
   VectorRef currentValue() {
@@ -162,17 +162,27 @@ struct _POPPropertyAnimationState : _POPAnimationState
     delegateProgress();
   }
 
-  void computeProgress() {
-    if (!canProgress()) {
-      return;
-    }
+    void computeProgress() {
+        if (!canProgress()) {
+            return;
+        }
 
-    static ComputeProgressFunctor<Vector4r> func;
-    Vector4r v = vector4(currentVec);
-    Vector4r f = vector4(fromVec);
-    Vector4r t = vector4(toVec);
-    progress = func(v, f, t);
-  }
+        if (currentVec->size() <= 4) {
+            static ComputeProgressFunctor<Vector4r> func;
+            Vector4r v = vector4(currentVec);
+            Vector4r f = vector4(fromVec);
+            Vector4r t = vector4(toVec);
+            progress = func(v, f, t);
+        }
+        else {
+            static ComputeProgressFunctor<Vector8r> func;
+            Vector8r v = vector8(currentVec);
+            Vector8r f = vector8(fromVec);
+            Vector8r t = vector8(toVec);
+            progress = func(v, f, t);
+        }
+
+    }
 
   void delegateProgress() {
     if (!canProgress()) {
@@ -196,26 +206,46 @@ struct _POPPropertyAnimationState : _POPAnimationState
     }
 
     if (!didReachToValue) {
-      bool didReachToValue = false;
-      if (0 == valueCount) {
-        didReachToValue = true;
-      } else {
-        Vector4r distance = toVec->vector4r();
-        distance -= currentVec->vector4r();
-
-        if (0 == distance.squaredNorm()) {
-          didReachToValue = true;
-        } else {
-          // components
-          if (distanceVec) {
+        bool didReachToValue = false;
+        if (valueCount == 0) {
             didReachToValue = true;
-            const CGFloat *distanceValues = distanceVec->data();
-            for (NSUInteger idx = 0; idx < valueCount; idx++) {
-              didReachToValue &= (signbit(distance[idx]) != signbit(distanceValues[idx]));
-            }
-          }
         }
-      }
+        else if (toVec->size() <= 4 && currentVec->size() <= 4) {
+            Vector4r distance = toVec->vector4r();
+            distance -= currentVec->vector4r();
+
+            if (distance.squaredNorm() == 0) {
+                didReachToValue = true;
+            }
+            else {
+                // components
+                if (distanceVec) {
+                    didReachToValue = true;
+                    const CGFloat *distanceValues = distanceVec->data();
+                    for (NSUInteger idx = 0; idx < valueCount; idx++) {
+                        didReachToValue &= (signbit(distance[idx]) != signbit(distanceValues[idx]));
+                    }
+                }
+            }
+        }
+        else {
+            Vector8r distance = toVec->vector8r();
+            distance -= currentVec->vector8r();
+
+            if (distance.squaredNorm() == 0) {
+                didReachToValue = true;
+            }
+            else {
+                // components
+                if (distanceVec) {
+                    didReachToValue = true;
+                    const CGFloat *distanceValues = distanceVec->data();
+                    for (NSUInteger idx = 0; idx < valueCount; idx++) {
+                        didReachToValue &= (signbit(distance[idx]) != signbit(distanceValues[idx]));
+                    }
+                }
+            }
+        }
 
       if (didReachToValue) {
         handleDidReachToValue();
@@ -306,11 +336,21 @@ struct _POPPropertyAnimationState : _POPAnimationState
       VectorRef fromVec2 = NULL != currentVec ? currentVec : fromVec;
 
       if (fromVec2 && toVec) {
-        Vector4r distance = toVec->vector4r();
-        distance -= fromVec2->vector4r();
+        if (valueCount <= 4) {
+            Vector4r distance = toVec->vector4r();
+            distance -= fromVec2->vector4r();
 
-        if (0 != distance.squaredNorm()) {
-          distanceVec = VectorRef(Vector::new_vector(valueCount, distance));
+            if (distance.squaredNorm() != 0) {
+                distanceVec = VectorRef(Vector::new_vector(valueCount, distance));
+            }
+        }
+        else {
+            Vector8r distance = toVec->vector8r();
+            distance -= fromVec2->vector8r();
+
+            if (distance.squaredNorm() != 0) {
+                distanceVec = VectorRef(Vector::new_vector(valueCount, distance));
+            }
         }
       }
     }

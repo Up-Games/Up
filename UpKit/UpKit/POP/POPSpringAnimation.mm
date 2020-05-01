@@ -37,7 +37,7 @@
 {
   self = [super _init];
   if (nil != self) {
-    __state->solver = new SpringSolver4d(1, 1, 1);
+    __state->solver = new SpringSolver8d(1, 1, 1);
     __state->updatedDynamicsThreshold();
     __state->updatedBouncinessAndSpeed();
   }
@@ -106,20 +106,20 @@ FB_PROPERTY_GET(POPSpringAnimationState, springBounciness, CGFloat);
   }
 }
 
-- (SpringSolver4d *)solver
-{
-  return __state->solver;
-}
-
-- (void)setSolver:(SpringSolver4d *)aSolver
-{
-  if (aSolver != __state->solver) {
-    if (__state->solver) {
-      delete(__state->solver);
-    }
-    __state->solver = aSolver;
-  }
-}
+//- (SpringSolver8d *)solver
+//{
+//  return __state->solver;
+//}
+//
+//- (void)setSolver:(SpringSolver8d *)aSolver
+//{
+//  if (aSolver != __state->solver) {
+//    if (__state->solver) {
+//      delete(__state->solver);
+//    }
+//    __state->solver = aSolver;
+//  }
+//}
 
 #pragma mark - Utility
 

@@ -15,6 +15,7 @@
 #import "POPCGUtils.h"
 #import "POPDefines.h"
 #import "POPLayerExtras.h"
+#import "UIView+UP.h"
 
 // common threshold definitions
 static CGFloat const kPOPThresholdColor = 0.01;
@@ -80,6 +81,7 @@ NSString * const kPOPViewScaleXY = @"view.scaleXY";
 NSString * const kPOPViewScaleY = @"view.scaleY";
 NSString * const kPOPViewSize = kPOPLayerSize;
 NSString * const kPOPViewTintColor = @"view.tintColor";
+NSString * const kPOPViewQuadOffsets = @"view.quadOffsets";
 
 // UIScrollView
 NSString * const kPOPScrollViewContentOffset = @"scrollView.contentOffset";
@@ -599,6 +601,16 @@ static POPStaticAnimatablePropertyState _staticStates[] =
     },
     kPOPThresholdColor
   },
+
+    {kPOPViewQuadOffsets,
+      ^(UIView *obj, CGFloat values[]) {
+        values_from_quadOffsets(values, obj.quadOffsets);
+      },
+      ^(UIView *obj, const CGFloat values[]) {
+        obj.quadOffsets = values_to_quadOffsets(values);
+      },
+      kPOPThresholdPoint
+    },
 
   /* UIScrollView */
 

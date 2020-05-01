@@ -45,12 +45,15 @@ class UPUnitFunction {
 public:
     static constexpr UPFloat DefaultEaseExponent = UPFloatFour;
     static constexpr UPFloat c1 = 1.70158;
-//    static constexpr UPFloat c1 = 1.98;
     static constexpr UPFloat c2 = c1 * 1.525;
     static constexpr UPFloat c3 = c1 + UPUnitOne;
     static constexpr UPFloat c4 = c2 + UPUnitOne;
     static constexpr UPFloat c5 = (UPUnitTwo * M_PI) / 3;
     static constexpr UPFloat c6 = (UPUnitTwo * M_PI) / 4.5;
+    static constexpr UPFloat cb1 = 1.05;
+    static constexpr UPFloat cb3 = cb1 + UPUnitOne;
+    static constexpr UPFloat cb2 = cb1 * 1.525;
+    static constexpr UPFloat cb4 = cb2 + UPUnitOne;
 
     UPUnitFunction() {}
     UPUnitFunction(UPUnitFunctionType type);
@@ -86,10 +89,12 @@ public:
     static UPUnit circ_inout_value_for_t(UPUnit t) {
         return t < UPUnitHalf ? (UPUnitOne - sqrtf(UPUnitOne - pow(UPUnitTwo * t, UPUnitTwo))) / UPUnitTwo : (sqrtf(UPUnitOne - pow(-UPUnitTwo * t + UPUnitTwo, UPUnitTwo)) + UPUnitOne) / UPUnitTwo;
     }
-    static UPUnit back_in_value_for_t(UPUnit t) { return c3 * t * t * t - c1 * t * t; }
-    static UPUnit back_out_value_for_t(UPUnit t) { return UPUnitOne + c3 * pow(t - UPUnitOne, 3) + c1 * pow(t - UPUnitOne, UPUnitTwo); }
+    static UPUnit back_in_value_for_t(UPUnit t) { return cb3 * t * t * t - cb1 * t * t; }
+    static UPUnit back_out_value_for_t(UPUnit t) { return UPUnitOne + cb3 * pow(t - UPUnitOne, 3) + cb1 * pow(t - UPUnitOne, UPUnitTwo); }
     static UPUnit back_inout_value_for_t(UPUnit t) {
-        return t < UPUnitHalf ? (powf(UPUnitTwo * t, UPUnitTwo) * ((c4) * UPUnitTwo * t - c2)) / UPUnitTwo : (powf(UPUnitTwo * t - UPUnitTwo, UPUnitTwo) * ((c4) * (t * UPUnitTwo - UPUnitTwo) + c2) + UPUnitTwo) / UPUnitTwo;
+        return t < UPUnitHalf ?
+            (powf(UPUnitTwo * t, UPUnitTwo) * ((cb4) * UPUnitTwo * t - cb2)) / UPUnitTwo :
+            (powf(UPUnitTwo * t - UPUnitTwo, UPUnitTwo) * ((cb4) * (t * UPUnitTwo - UPUnitTwo) + cb2) + UPUnitTwo) / UPUnitTwo;
     }
     static UPUnit elastic_in_value_for_t(UPUnit t) { return t == UPUnitZero ? UPUnitZero : t == UPUnitOne ? UPUnitOne : -powf(UPUnitTwo, 10 * t - 10) * sinf((t * 10 - 10.75) * c5); }
     static UPUnit elastic_out_value_for_t(UPUnit t) { return t == UPUnitZero ? UPUnitZero : t == UPUnitOne ? UPUnitOne : powf(UPUnitTwo, -10 * t) * sinf((t * 10 - 0.75) * c5) + UPUnitOne; }

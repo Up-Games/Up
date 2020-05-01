@@ -4,6 +4,7 @@
 //
 
 #import "UPShapeView.h"
+#import "POPPathAnimation.h"
 
 #define ShapeLayer() ((CAShapeLayer *)self.layer)
 
@@ -67,5 +68,13 @@
 {
     return ShapeLayer().path;
 }
+
+#pragma mark - POPPathAnimationDelegate
+
+- (void)pathAnimationUpdated:(POPPathAnimation *)animation
+{
+    self.shape = animation.interpolatedPath;
+}
+
 
 @end

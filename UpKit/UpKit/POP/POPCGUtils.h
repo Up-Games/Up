@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 
 #import <UPKit/POPDefines.h>
+#import <UPKit/UPGeometry.h>
 
 POP_EXTERN_C_BEGIN
 
@@ -32,6 +33,15 @@ NS_INLINE CGRect values_to_rect(const CGFloat values[])
 NS_INLINE UIEdgeInsets values_to_edge_insets(const CGFloat values[])
 {
   return UIEdgeInsetsMake(values[0], values[1], values[2], values[3]);
+}
+
+NS_INLINE UPQuadOffsets values_to_quadOffsets(const CGFloat values[])
+{
+    return UPQuadOffsetsMake(
+        UPOffsetMake(values[0], values[1]),
+        UPOffsetMake(values[2], values[3]),
+        UPOffsetMake(values[4], values[5]),
+        UPOffsetMake(values[6], values[7]));
 }
 
 NS_INLINE void values_from_point(CGFloat values[], CGPoint p)
@@ -60,6 +70,18 @@ NS_INLINE void values_from_edge_insets(CGFloat values[], UIEdgeInsets i)
   values[1] = i.left;
   values[2] = i.bottom;
   values[3] = i.right;
+}
+
+NS_INLINE void values_from_quadOffsets(CGFloat values[], UPQuadOffsets i)
+{
+    values[0] = i.tl.dx;
+    values[1] = i.tl.dy;
+    values[2] = i.tr.dx;
+    values[3] = i.tr.dy;
+    values[4] = i.bl.dx;
+    values[5] = i.bl.dy;
+    values[6] = i.br.dx;
+    values[7] = i.br.dy;
 }
 
 /**

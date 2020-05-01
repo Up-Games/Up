@@ -29,4 +29,10 @@
     return self.inner.value_for_t(input);
 }
 
+@dynamic type;
+- (UPUnitFunctionType)type
+{
+    return self.inner.type();
+}
+
 @end

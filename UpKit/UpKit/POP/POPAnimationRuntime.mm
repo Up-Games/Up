@@ -12,14 +12,13 @@
 #import <objc/objc.h>
 
 #import <QuartzCore/QuartzCore.h>
-
-#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
-#endif
 
 #import "POPCGUtils.h"
 #import "POPDefines.h"
 #import "POPVector.h"
+#import "UPGeometry.h"
+#import "NSValue+UP.h"
 
 static Boolean pointerEqual(const void *ptr1, const void *ptr2) {
     return ptr1 == ptr2;
@@ -97,6 +96,8 @@ static bool FBCompareTypeEncoding(const char *objctype, POPValueType type)
       case kPOPValueUnknown:
       case kPOPValueColor:
           return false;
+      case kPOPValueQuadOffsets:
+          return strcmp(objctype, @encode(UPQuadOffsets)) == 0;
   }
     return false;
 }
@@ -134,7 +135,8 @@ const POPValueType kPOPAnimatableAllTypes[12] = {
     kPOPValueAffineTransform,
     kPOPValueTransform,
     kPOPValueRange,
-    kPOPValueColor
+    kPOPValueColor,
+    kPOPValueQuadOffsets
 };
 
 const POPValueType kPOPAnimatableSupportTypes[10] = {
@@ -144,7 +146,8 @@ const POPValueType kPOPAnimatableSupportTypes[10] = {
     kPOPValueSize,
     kPOPValueRect,
     kPOPValueEdgeInsets,
-    kPOPValueColor
+    kPOPValueColor,
+    kPOPValueQuadOffsets
 };
 
 NSString *POPValueTypeToString(POPValueType t)
@@ -172,6 +175,8 @@ NSString *POPValueTypeToString(POPValueType t)
             return @"CFRange";
         case kPOPValueColor:
             return @"CGColorRef";
+        case kPOPValueQuadOffsets:
+            return @"UPQuadOffsets";
     }
     return nil;
 }
@@ -194,9 +199,10 @@ id POPBox(VectorConstRef vec, POPValueType type, bool force)
             return [NSValue valueWithCGRect:vec->cg_rect()];
         case kPOPValueEdgeInsets:
             return [NSValue valueWithUIEdgeInsets:vec->ui_edge_insets()];
-        case kPOPValueColor: {
+        case kPOPValueColor:
             return (__bridge_transfer id)vec->cg_color();
-        }
+        case kPOPValueQuadOffsets:
+            return [NSValue valueWithQuadOffsets:vec->up_quad_offsets()];
         default:
             return force ? [NSValue valueWithCGPoint:vec->cg_point()] : nil;
     }
@@ -243,6 +249,9 @@ static VectorRef vectorize(id value, POPValueType type)
             break;
         case kPOPValueColor:
             vec = Vector::new_cg_color(POPCGColorWithColor(value));
+            break;
+        case kPOPValueQuadOffsets:
+            vec = Vector::new_up_quad_offsets([value quadOffsetsValue]);
             break;
     }
 

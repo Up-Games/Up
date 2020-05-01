@@ -12,6 +12,7 @@
 #import "POPDefines.h"
 #import "POPCGUtils.h"
 #import "POPMath.h"
+#import "UPGeometry.h"
 
 namespace POP
 {
@@ -124,6 +125,31 @@ namespace POP
     return v;
   }
 
+    Vector *Vector::new_vector(NSUInteger count, Vector8r vec)
+    {
+      if (0 == count) {
+        return NULL;
+      }
+
+      Vector *v = new Vector(count);
+
+      NSCAssert(count <= 8, @"unexpected count %lu", (unsigned long)count);
+      for (NSUInteger i = 0; i < MIN(count, (NSUInteger)8); i++) {
+        v->_values[i] = vec[i];
+      }
+
+      return v;
+    }
+
+    Vector8r Vector::vector8r() const
+    {
+      Vector8r v = Vector8r::Zero();
+      for (size_t i = 0; i < _count; i++) {
+        v(i) = _values[i];
+      }
+      return v;
+    }
+
   Vector4r Vector::vector4r() const
   {
     Vector4r v = Vector4r::Zero();
@@ -234,6 +260,35 @@ namespace POP
     v->_values[5] = t.ty;
     return v;
   }
+
+    UPQuadOffsets Vector::up_quad_offsets() const
+    {
+        if (_count < 8) {
+        return UPQuadOffsetsZero;
+        }
+
+        NSCAssert(size() >= 8, @"unexpected vector size:%lu", (unsigned long)size());
+        UPQuadOffsets q;
+        q.tl = UPOffsetMake(_values[0], _values[1]);
+        q.tr = UPOffsetMake(_values[2], _values[3]);
+        q.bl = UPOffsetMake(_values[4], _values[5]);
+        q.br = UPOffsetMake(_values[6], _values[7]);
+        return q;
+    }
+
+    Vector *Vector::new_up_quad_offsets(const UPQuadOffsets &q)
+    {
+      Vector *v = new Vector(8);
+      v->_values[0] = q.tl.dx;
+      v->_values[1] = q.tl.dy;
+      v->_values[2] = q.tr.dx;
+      v->_values[3] = q.tr.dy;
+      v->_values[4] = q.bl.dx;
+      v->_values[5] = q.bl.dy;
+      v->_values[6] = q.br.dx;
+      v->_values[7] = q.br.dy;
+      return v;
+    }
 
   CGColorRef Vector::cg_color() const
   {

@@ -33,6 +33,9 @@ typedef BOOL (^POPCustomAnimationBlock)(id target, POPCustomAnimation *animation
 */
 + (instancetype)animationWithBlock:(POPCustomAnimationBlock)block;
 
+- (instancetype)initWithBlock:(POPCustomAnimationBlock)block;
+
+
 /**
  @abstract The current animation time at time of callback.
  */

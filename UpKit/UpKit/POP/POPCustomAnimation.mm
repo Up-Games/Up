@@ -25,6 +25,14 @@
     return b;
 }
 
+- (instancetype)initWithBlock:(POPCustomAnimationBlock)block
+{
+    self = [super _init];
+    _state->type = kPOPAnimationCustom;
+    self.animate = block;
+    return self;
+}
+
 - (id)_init
 {
     self = [super _init];

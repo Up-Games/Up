@@ -20,8 +20,8 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPTypes.h>
 #import <UpKit/UPUnitFunction.h>
 
+#import <UpKit/NSValue+UP.h>
 #import <UpKit/UIColor+UP.h>
 #import <UpKit/UIView+UP.h>
 
 #import <UpKit/POP.h>
-#import <UpKit/AGGeometryKit.h>

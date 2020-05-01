@@ -102,10 +102,18 @@ struct _POPDecayAnimationState : _POPPropertyAnimationState
     }
 
     // compute to value
-    VectorRef toValue(Vector::new_vector(fromValue.get()));
-    Vector4r velocity = velocityVec->vector4r();
-    decay_position(toValue->data(), velocity.data(), valueCount, duration, deceleration);
-    toVec = toValue;
+    if (fromValue->size() <= 4) {
+        VectorRef toValue(Vector::new_vector(fromValue.get()));
+        Vector4r velocity = velocityVec->vector4r();
+        decay_position(toValue->data(), velocity.data(), valueCount, duration, deceleration);
+        toVec = toValue;
+    }
+    else {
+        VectorRef toValue(Vector::new_vector(fromValue.get()));
+        Vector8r velocity = velocityVec->vector8r();
+        decay_position(toValue->data(), velocity.data(), valueCount, duration, deceleration);
+        toVec = toValue;
+    }
   }
 
   bool advance(CFTimeInterval time, CFTimeInterval dt, id obj) {

@@ -28,6 +28,7 @@ enum POPValueType
     kPOPValueTransform,
     kPOPValueRange,
     kPOPValueColor,
+    kPOPValueQuadOffsets,
 };
 
 using namespace POP;
@@ -83,6 +84,20 @@ extern VectorRef POPUnbox(id value, POPValueType &type, NSUInteger &count, bool 
 NS_INLINE Vector4r read_values(POPAnimatablePropertyReadBlock read, id obj, size_t count)
 {
   Vector4r vec = Vector4r::Zero();
+  if (0 == count)
+    return vec;
+
+  read(obj, vec.data());
+
+  return vec;
+}
+
+/**
+ Read object value and return a Vector4r.
+ */
+NS_INLINE Vector8r read_values_8(POPAnimatablePropertyReadBlock read, id obj, size_t count)
+{
+  Vector8r vec = Vector8r::Zero();
   if (0 == count)
     return vec;
 

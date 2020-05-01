@@ -8,6 +8,7 @@
  */
 
 #import <UPKit/POPPropertyAnimation.h>
+#import <UPKit/UPUnitFunction.h>
 
 /**
  @abstract A concrete basic animation class.
@@ -66,6 +67,7 @@
 /**
  @abstract A timing function defining the pacing of the animation. Defaults to nil indicating pacing according to kCAMediaTimingFunctionDefault.
  */
-@property (strong, nonatomic) CAMediaTimingFunction *timingFunction;
+//@property (strong, nonatomic) CAMediaTimingFunction *timingFunction;
+@property (strong, nonatomic) UPUnitFunction *timingFunction;
 
 @end

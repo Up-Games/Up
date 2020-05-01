@@ -14,6 +14,10 @@ namespace UP {
 class HSVF;
 class RGBF;
 
+UP_STATIC_CONST UPUnit UPUnitRecip255 = 1.0 / 255.0;
+UP_STATIC_CONST UPUnit up_from_255(uint8_t _u) { return _u * UPUnitRecip255; }
+UP_STATIC_CONST uint8_t up_to_255(UPUnit _u) { return _u * 255; }
+
 class Color8 {
 public:
     constexpr Color8() {}

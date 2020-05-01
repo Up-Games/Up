@@ -88,6 +88,20 @@ NS_INLINE Vector4d vector4d(VectorConstRef vec)
   }
 }
 
+NS_INLINE Vector8r vector8(VectorConstRef vec)
+{
+  return NULL == vec ? Vector8r::Zero() : vec->vector8r();
+}
+
+NS_INLINE Vector8d vector8d(VectorConstRef vec)
+{
+  if (NULL == vec) {
+    return Vector8d::Zero();
+  } else {
+    return vec->vector8r().cast<double>();
+  }
+}
+
 NS_INLINE bool vec_equal(VectorConstRef v1, VectorConstRef v2)
 {
   if (v1 == v2) {
@@ -114,6 +128,25 @@ struct ComputeProgressFunctor {
 template<>
 struct ComputeProgressFunctor<Vector4r> {
   CGFloat operator()(const Vector4r &value, const Vector4r &start, const Vector4r &end) const {
+    CGFloat s = (value - start).squaredNorm(); // distance from start
+    CGFloat e = (value - end).squaredNorm();   // distance from end
+    CGFloat d = (end - start).squaredNorm();   // distance from start to end
+
+    if (0 == d) {
+      return 1;
+    } else if (s > e) {
+      // s -------- p ---- e   OR   s ------- e ---- p
+      return sqrtr(s/d);
+    } else {
+      // s --- p --------- e   OR   p ---- s ------- e
+      return 1 - sqrtr(e/d);
+    }
+  }
+};
+
+template<>
+struct ComputeProgressFunctor<Vector8r> {
+  CGFloat operator()(const Vector8r &value, const Vector8r &start, const Vector8r &end) const {
     CGFloat s = (value - start).squaredNorm(); // distance from start
     CGFloat e = (value - end).squaredNorm();   // distance from end
     CGFloat d = (end - start).squaredNorm();   // distance from start to end
@@ -275,7 +308,7 @@ struct _POPAnimationState
     animationDidApplyBlock = NULL;
   }
 
-  bool isCustom() {
+  bool isCustom() const {
     return kPOPAnimationCustom == type;
   }
 
@@ -410,7 +443,7 @@ struct _POPAnimationState
   }
 
   /* virtual functions */
-  virtual bool isDone() {
+  virtual bool isDone() const {
     if (isCustom()) {
       return customFinished;
     }

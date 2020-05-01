@@ -190,10 +190,19 @@ static void updateAnimatable(id obj, POPPropertyAnimationState *anim, bool shoul
         POPAnimatablePropertyReadBlock read = anim->property.readBlock;
         if (read) {
           // compare current animation value with object value
-          Vector4r currentValue = currentVec->vector4r();
-          Vector4r objectValue = read_values(read, obj, anim->valueCount);
-          if (objectValue == currentValue) {
-            return;
+          if (currentVec->size() <= 4) {
+              Vector4r currentValue = currentVec->vector4r();
+              Vector4r objectValue = read_values(read, obj, anim->valueCount);
+              if (objectValue == currentValue) {
+                return;
+              }
+          }
+          else {
+              Vector8r currentValue = currentVec->vector8r();
+              Vector8r objectValue = read_values_8(read, obj, anim->valueCount);
+              if (objectValue == currentValue) {
+                return;
+              }
           }
         }
       }
