@@ -14,10 +14,10 @@
 		5D37CAE424605F5D002D4D6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D37CAE324605F5D002D4D6B /* Assets.xcassets */; };
 		5D37CAE724605F5D002D4D6B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D37CAE524605F5D002D4D6B /* LaunchScreen.storyboard */; };
 		5D37CAEA24605F5D002D4D6B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D37CAE924605F5D002D4D6B /* main.m */; };
-		5D37CAF5246060B1002D4D6B /* ColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D37CAF3246060B1002D4D6B /* ColorPickerViewController.m */; };
-		5D37CAF6246060B1002D4D6B /* ColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D37CAF4246060B1002D4D6B /* ColorPickerViewController.xib */; };
 		5D37CAF924606906002D4D6B /* UpKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D37CAF824606906002D4D6B /* UpKit.framework */; };
 		5D37CAFA24606906002D4D6B /* UpKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D37CAF824606906002D4D6B /* UpKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5D37CB0124608A38002D4D6B /* ColorChip.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D37CB0024608A38002D4D6B /* ColorChip.m */; };
+		5D37CB0424609B1C002D4D6B /* GameMockupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D37CB0324609B1C002D4D6B /* GameMockupView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,10 +47,11 @@
 		5D37CAE624605F5D002D4D6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D37CAE824605F5D002D4D6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D37CAE924605F5D002D4D6B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5D37CAF2246060B1002D4D6B /* ColorPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorPickerViewController.h; sourceTree = "<group>"; };
-		5D37CAF3246060B1002D4D6B /* ColorPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorPickerViewController.m; sourceTree = "<group>"; };
-		5D37CAF4246060B1002D4D6B /* ColorPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerViewController.xib; sourceTree = "<group>"; };
 		5D37CAF824606906002D4D6B /* UpKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UpKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D37CAFF24608A38002D4D6B /* ColorChip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorChip.h; sourceTree = "<group>"; };
+		5D37CB0024608A38002D4D6B /* ColorChip.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorChip.m; sourceTree = "<group>"; };
+		5D37CB0224609B1C002D4D6B /* GameMockupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameMockupView.h; sourceTree = "<group>"; };
+		5D37CB0324609B1C002D4D6B /* GameMockupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameMockupView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,18 +88,19 @@
 			children = (
 				5D37CAD724605F5A002D4D6B /* AppDelegate.h */,
 				5D37CAD824605F5A002D4D6B /* AppDelegate.m */,
+				5D37CAE324605F5D002D4D6B /* Assets.xcassets */,
+				5D37CAFF24608A38002D4D6B /* ColorChip.h */,
+				5D37CB0024608A38002D4D6B /* ColorChip.m */,
+				5D37CB0224609B1C002D4D6B /* GameMockupView.h */,
+				5D37CB0324609B1C002D4D6B /* GameMockupView.m */,
+				5D37CAE824605F5D002D4D6B /* Info.plist */,
+				5D37CAE524605F5D002D4D6B /* LaunchScreen.storyboard */,
+				5D37CAE924605F5D002D4D6B /* main.m */,
+				5D37CAE024605F5A002D4D6B /* Main.storyboard */,
 				5D37CADA24605F5A002D4D6B /* SceneDelegate.h */,
 				5D37CADB24605F5A002D4D6B /* SceneDelegate.m */,
 				5D37CADD24605F5A002D4D6B /* ViewController.h */,
 				5D37CADE24605F5A002D4D6B /* ViewController.m */,
-				5D37CAE024605F5A002D4D6B /* Main.storyboard */,
-				5D37CAE324605F5D002D4D6B /* Assets.xcassets */,
-				5D37CAE524605F5D002D4D6B /* LaunchScreen.storyboard */,
-				5D37CAE824605F5D002D4D6B /* Info.plist */,
-				5D37CAE924605F5D002D4D6B /* main.m */,
-				5D37CAF2246060B1002D4D6B /* ColorPickerViewController.h */,
-				5D37CAF3246060B1002D4D6B /* ColorPickerViewController.m */,
-				5D37CAF4246060B1002D4D6B /* ColorPickerViewController.xib */,
 			);
 			path = UpPalette;
 			sourceTree = "<group>";
@@ -171,7 +173,6 @@
 			files = (
 				5D37CAE724605F5D002D4D6B /* LaunchScreen.storyboard in Resources */,
 				5D37CAE424605F5D002D4D6B /* Assets.xcassets in Resources */,
-				5D37CAF6246060B1002D4D6B /* ColorPickerViewController.xib in Resources */,
 				5D37CAE224605F5A002D4D6B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,10 +185,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D37CADF24605F5A002D4D6B /* ViewController.m in Sources */,
-				5D37CAF5246060B1002D4D6B /* ColorPickerViewController.m in Sources */,
 				5D37CAD924605F5A002D4D6B /* AppDelegate.m in Sources */,
 				5D37CAEA24605F5D002D4D6B /* main.m in Sources */,
 				5D37CADC24605F5A002D4D6B /* SceneDelegate.m in Sources */,
+				5D37CB0424609B1C002D4D6B /* GameMockupView.m in Sources */,
+				5D37CB0124608A38002D4D6B /* ColorChip.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
