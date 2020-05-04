@@ -9,7 +9,7 @@
 #import <stdint.h>
 
 typedef float UPUnit;
-typedef float UPFloat;
+typedef double UPFloat;
 typedef double UPTick;
 
 #endif  // UP_TYPES_H

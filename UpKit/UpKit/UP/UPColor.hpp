@@ -501,16 +501,21 @@ UP_STATIC_INLINE RGB8 to_rgb8(const LCHF &c)
     return to_rgb8(to_rgbf(c));
 }
 
+UP_STATIC_INLINE UPFloat mix_channel(UPFloat a, UPFloat b, UPFloat fraction)
+{
+    return a + (fraction * (b - a));
+}
+
 UP_STATIC_INLINE RGBF mix_rgb(const RGBF &c0, const RGBF &c1, UPFloat fraction)
 {
-    UPFloat r = c0.red() + (fraction * (c1.red() - c0.red()));
-    UPFloat g = c0.green() + (fraction * (c1.green() - c0.green()));
-    UPFloat b = c0.blue() + (fraction * (c1.blue() - c0.blue()));
-    UPFloat a = c0.alpha() + (fraction * (c1.alpha() - c0.alpha()));
+    UPFloat r = mix_channel(c0.red(), c1.red(), fraction);
+    UPFloat g = mix_channel(c0.green(), c1.green(), fraction);
+    UPFloat b = mix_channel(c0.blue(), c1.blue(), fraction);
+    UPFloat a = mix_channel(c0.alpha(), c1.alpha(), fraction);
     return RGBF(r, g, b, a);
 }
 
-UP_STATIC_INLINE ColorF mix_h(const ColorF &c0, const ColorF &c1, UPFloat fraction)
+UP_STATIC_INLINE ColorF mix_hue(const ColorF &c0, const ColorF &c1, UPFloat fraction)
 {
     UPFloat hue0 = c0.channel_1();
     UPFloat hue1 = c1.channel_1();
@@ -566,6 +571,19 @@ UP_STATIC_INLINE ColorF mix_h(const ColorF &c0, const ColorF &c1, UPFloat fracti
     UPFloat alpha = (c0.channel_4() * (1.0 - fraction) + (c1.channel_4() * fraction));
 
     return ColorF(hue, sat, lbv, alpha);
+}
+
+UP_STATIC_INLINE UPFloat mix_lightness(UPFloat color, UPFloat lightness)
+{
+    if (lightness < 0) {
+        return mix_channel(0.0, color, lightness + 1);
+    }
+    else if (lightness > 0) {
+        return mix_channel(color, 1.0, lightness);
+    }
+    else {
+        return color;
+    }
 }
 
 }  // namespace UP

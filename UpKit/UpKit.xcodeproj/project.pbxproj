@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D269CB1245CDB31000B6A1D /* UIImage+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D269CAF245CDB31000B6A1D /* UIImage+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D269CB2245CDB31000B6A1D /* UIImage+UP.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D269CB0245CDB31000B6A1D /* UIImage+UP.m */; };
 		5D2CABA6245A10CB00B81332 /* TransformationMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D2CABA2245A10CB00B81332 /* TransformationMatrix.cpp */; };
 		5D2CABA7245A10CB00B81332 /* TransformationMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D2CABA3245A10CB00B81332 /* TransformationMatrix.h */; };
 		5D2CABA8245A10CB00B81332 /* FloatConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D2CABA4245A10CB00B81332 /* FloatConversion.h */; };
@@ -75,7 +77,6 @@
 		5DD71DA32458F39200F3F9E2 /* UPAny.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71DA22458F39200F3F9E2 /* UPAny.hpp */; };
 		5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0172454CAFC00016047 /* UPMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DEBE01A2454E3AC00016047 /* UPColor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0192454E3AC00016047 /* UPColor.hpp */; };
-		5DEBE01C2454E46700016047 /* UPColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE01B2454E46700016047 /* UPColor.cpp */; };
 		5DEBE0202454F1D200016047 /* UIColor+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE01E2454F1D200016047 /* UIColor+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE01F2454F1D200016047 /* UIColor+UP.mm */; };
 		5DEBE0232454F21800016047 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DEBE0222454F21800016047 /* UIKit.framework */; };
@@ -105,6 +106,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5D269CAF245CDB31000B6A1D /* UIImage+UP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UP.h"; sourceTree = "<group>"; };
+		5D269CB0245CDB31000B6A1D /* UIImage+UP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UP.m"; sourceTree = "<group>"; };
 		5D2CABA2245A10CB00B81332 /* TransformationMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransformationMatrix.cpp; sourceTree = "<group>"; };
 		5D2CABA3245A10CB00B81332 /* TransformationMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformationMatrix.h; sourceTree = "<group>"; };
 		5D2CABA4245A10CB00B81332 /* FloatConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatConversion.h; sourceTree = "<group>"; };
@@ -177,7 +180,6 @@
 		5DEBE0152454C77700016047 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5DEBE0172454CAFC00016047 /* UPMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPMacros.h; sourceTree = "<group>"; };
 		5DEBE0192454E3AC00016047 /* UPColor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UPColor.hpp; sourceTree = "<group>"; };
-		5DEBE01B2454E46700016047 /* UPColor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UPColor.cpp; sourceTree = "<group>"; };
 		5DEBE01E2454F1D200016047 /* UIColor+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+UP.h"; sourceTree = "<group>"; };
 		5DEBE01F2454F1D200016047 /* UIColor+UP.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIColor+UP.mm"; sourceTree = "<group>"; };
 		5DEBE0222454F21800016047 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -360,10 +362,11 @@
 				5D2CAC85245B53F200B81332 /* NSValue+UP.m */,
 				5DEBE01E2454F1D200016047 /* UIColor+UP.h */,
 				5DEBE01F2454F1D200016047 /* UIColor+UP.mm */,
+				5D269CAF245CDB31000B6A1D /* UIImage+UP.h */,
+				5D269CB0245CDB31000B6A1D /* UIImage+UP.m */,
 				5DD71D9E2458DA3A00F3F9E2 /* UIView+UP.h */,
 				5DD71D9F2458DA3A00F3F9E2 /* UIView+UP.mm */,
 				5DD71DA22458F39200F3F9E2 /* UPAny.hpp */,
-				5DEBE01B2454E46700016047 /* UPColor.cpp */,
 				5DEBE0192454E3AC00016047 /* UPColor.hpp */,
 				5DFE62252453CFCD00D9CA0B /* UPConstants.h */,
 				5DD71D962457988000F3F9E2 /* UPDeferredBlock.h */,
@@ -415,6 +418,7 @@
 				5D2CABC9245A12D100B81332 /* POPAnimationRuntime.h in Headers */,
 				5D2CABAB245A10F400B81332 /* POPDefines.h in Headers */,
 				5DF8A8E02454835F00751E2E /* UPTypes.h in Headers */,
+				5D269CB1245CDB31000B6A1D /* UIImage+UP.h in Headers */,
 				5D2CABF8245A13E700B81332 /* POPAnimationTracerInternal.h in Headers */,
 				5DD71D9C2457AFB200F3F9E2 /* UPShapeView.h in Headers */,
 				5D2CABF1245A13E700B81332 /* POPAnimationExtras.h in Headers */,
@@ -555,12 +559,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DEBE01C2454E46700016047 /* UPColor.cpp in Sources */,
 				5D2CABA6245A10CB00B81332 /* TransformationMatrix.cpp in Sources */,
 				5D2CABF2245A13E700B81332 /* POPBasicAnimation.mm in Sources */,
 				5D2CABC4245A12B400B81332 /* POPAnimatableProperty.mm in Sources */,
 				5D2CABB8245A11D400B81332 /* POPVector.mm in Sources */,
 				5D2CABCD245A12FB00B81332 /* POPLayerExtras.mm in Sources */,
+				5D269CB2245CDB31000B6A1D /* UIImage+UP.m in Sources */,
 				5DD71D992457988000F3F9E2 /* UPDeferredBlock.m in Sources */,
 				5D2CAC82245A554F00B81332 /* POPPathAnimation.mm in Sources */,
 				5D2CAC02245A13E700B81332 /* POPAnimationTracer.mm in Sources */,
