@@ -8,7 +8,9 @@
 
 using UP::RGBF;
 using UP::HSVF;
+using UP::LABF;
 using UP::LCHF;
+using UP::to_labf;
 using UP::to_rgbf;
 using UP::to_lchf;
 using UP::to_hsvf;
@@ -23,6 +25,7 @@ using UP::mix_lightness;
     return nil;
 }
 
+// https://stackoverflow.com/a/9177602
 + (UIColor *)colorizedColorWithGrayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness
 {
     if (lightness <= -1) {
@@ -57,61 +60,16 @@ using UP::mix_lightness;
     return outputColor;
 }
 
-@end
-
-#if 0
-// https://stackoverflow.com/a/9177602
-
-static CGFloat blend2(CGFloat a, CGFloat b, CGFloat s)
+- (CGFloat)lightness
 {
-    return (a * (1 - s)) + (b * s);
-}
-
-static CGFloat blend3(CGFloat b, CGFloat c, CGFloat w, CGFloat l)
-{
-    if (l < 0) {
-        return blend2(b, c, l + 1);
-    }
-    else if (l > 0) {
-        return blend2(c, w, l);
-    }
-    else {
-        return c;
-    }
-}
-
-static UIColor *colorizedGrayValue(CGFloat grayValue, CGFloat hueChange, CGFloat saturationChange, CGFloat lightnessChange)
-{
-    UIColor *hueRGBColor = [[UPColor colorWithHue:hueChange saturation:1.0 value:1.0 alpha:1.0] rgbColor];
-
     CGFloat r, g, b, a;
-    [hueRGBColor getRed:&r green:&g blue:&b alpha:&a];
-
-    CGFloat r2 = blend2(0.5, r, saturationChange);
-    CGFloat g2 = blend2(0.5, g, saturationChange);
-    CGFloat b2 = blend2(0.5, b, saturationChange);
-
-    UIColor *outputColor = nil;
-    if (lightnessChange <= -1) {
-        outputColor = [UIColor blackColor];
-    }
-    else if (lightnessChange >= 1) {
-        outputColor = [UIColor whiteColor];
+    BOOL ok = [self getRed:&r green:&g blue:&b alpha:&a];
+    if (!ok) {
+        return 0;
     }
 
-    else if (lightnessChange >= 0) {
-        CGFloat r3 = blend3(0, r2, 1, 2 * (1 - lightnessChange) * (grayValue - 1) + 1);
-        CGFloat g3 = blend3(0, g2, 1, 2 * (1 - lightnessChange) * (grayValue - 1) + 1);
-        CGFloat b3 = blend3(0, b2, 1, 2 * (1 - lightnessChange) * (grayValue - 1) + 1);
-        outputColor = [UIColor colorWithRed:r3 green:g3 blue:b3 alpha:1.0];
-    }
-    else {
-        CGFloat r3 = blend3(0, r2, 1, 2 * (1 + lightnessChange) * (grayValue) - 1);
-        CGFloat g3 = blend3(0, g2, 1, 2 * (1 + lightnessChange) * (grayValue) - 1);
-        CGFloat b3 = blend3(0, b2, 1, 2 * (1 + lightnessChange) * (grayValue) - 1);
-        outputColor = [UIColor colorWithRed:r3 green:g3 blue:b3 alpha:1.0];
-    }
-    
-    return outputColor;
+    LABF labf = to_labf(RGBF(r, g, b, a));
+    return labf.lightness();
 }
-#endif
+
+@end

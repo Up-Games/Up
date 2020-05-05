@@ -22,6 +22,7 @@ extern NSString *const ColorChipLightnessKey;
 
 - (instancetype)initWithName:(NSString *)name grayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithName:(NSString *)name hue:(CGFloat)hue chipA:(ColorChip *)chipA chipB:(ColorChip *)chipB fraction:(CGFloat)fraction;
 
 - (void)takeValuesFrom:(ColorChip *)chip;
 

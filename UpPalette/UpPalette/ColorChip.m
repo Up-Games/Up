@@ -45,6 +45,19 @@ NSString *const ColorChipLightnessKey = @"l";
     return self;
 }
 
+- (instancetype)initWithName:(NSString *)name hue:(CGFloat)hue chipA:(ColorChip *)chipA chipB:(ColorChip *)chipB fraction:(CGFloat)fraction
+{
+    self = [super init];
+    
+    self.name = name;
+    self.hue = hue;
+    self.grayValue = up_lerp_floats(chipA.grayValue, chipB.grayValue, fraction);
+    self.saturation = up_lerp_floats(chipA.saturation, chipB.saturation, fraction);
+    self.lightness = up_lerp_floats(chipA.lightness, chipB.lightness, fraction);
+    
+    return self;
+}
+
 - (ColorChip *)copyWithZone:(NSZone *)zone
 {
     return [[ColorChip alloc] initWithDictionary:self.dictionary];
@@ -98,6 +111,8 @@ NSString *const ColorChipLightnessKey = @"l";
 
 - (NSAttributedString *)attributedDescription
 {
+    UIColor *color = [self color];
+
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
 
     NSDictionary *nameStringAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:13]};
@@ -108,7 +123,9 @@ NSString *const ColorChipLightnessKey = @"l";
         self.grayValue, self.hue, self.saturation, self.lightness];
     [string appendAttributedString:[[NSAttributedString alloc] initWithString:chipString attributes:colorStringAttributes]];
 
-    UIColor *color = [self color];
+    NSString *lightnessString = [NSString stringWithFormat:@"   L: %3.2f", color.lightness];
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:lightnessString attributes:colorStringAttributes]];
+
     CGFloat r, g, b, a;
     [color getRed:&r green:&g blue:&b alpha:&a];
     
@@ -120,3 +137,4 @@ NSString *const ColorChipLightnessKey = @"l";
 }
 
 @end
+

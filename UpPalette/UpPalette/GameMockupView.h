@@ -8,10 +8,10 @@
 @interface GameMockupView : UIView
 
 @property (nonatomic) UIColor *hintColor;
-@property (nonatomic) UIColor *extraLightColor;
+@property (nonatomic) UIColor *thinColor;
 @property (nonatomic) UIColor *lightColor;
 @property (nonatomic) UIColor *normalColor;
-@property (nonatomic) UIColor *brightColor;
+@property (nonatomic) UIColor *thickColor;
 @property (nonatomic) UIColor *accentColor;
 @property (nonatomic) BOOL wordTrayActive;
 

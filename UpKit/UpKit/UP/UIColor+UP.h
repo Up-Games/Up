@@ -33,4 +33,6 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 
 + (UIColor *)colorizedColorWithGrayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness;
 
+- (CGFloat)lightness;
+
 @end

@@ -12,10 +12,10 @@
     self = [super initWithFrame:frame];
     
     self.hintColor = [UIColor whiteColor];
-    self.extraLightColor = [UIColor whiteColor];
+    self.thinColor = [UIColor whiteColor];
     self.lightColor = [UIColor whiteColor];
     self.normalColor = [UIColor blackColor];
-    self.brightColor = [UIColor blackColor];
+    self.thickColor = [UIColor blackColor];
     self.accentColor = [UIColor blackColor];
     
     return self;
@@ -27,9 +27,9 @@
     [self setNeedsDisplay];
 }
 
-- (void)setExtraLightColor:(UIColor *)extraLightColor
+- (void)setThinColor:(UIColor *)thinColor
 {
-    _extraLightColor = extraLightColor;
+    _thinColor = thinColor;
     [self setNeedsDisplay];
 }
 
@@ -45,9 +45,9 @@
     [self setNeedsDisplay];
 }
 
-- (void)setBrightColor:(UIColor *)brightColor
+- (void)setThickColor:(UIColor *)boldColor
 {
-    _brightColor = brightColor;
+    _thickColor = boldColor;
     [self setNeedsDisplay];
 }
 
@@ -72,29 +72,29 @@
 
     CGContextConcatCTM(context, CGAffineTransformMakeScale(0.33333, 0.33333));
     UIColor *backdropColor = self.hintColor;
-    UIColor *timeColor = self.normalColor;
-    UIColor *scoreColor = self.normalColor;
+    UIColor *timeColor = self.thickColor;
+    UIColor *scoreColor = self.thickColor;
 
-    UIColor *tileFillColor = self.brightColor;
-    UIColor *tileStrokeColor = self.brightColor;
-    UIColor *tileLetterColor = self.extraLightColor;
-    UIColor *tileScoreColor = self.extraLightColor;
+    UIColor *tileFillColor = self.normalColor;
+    UIColor *tileStrokeColor = self.normalColor;
+    UIColor *tileLetterColor = [UIColor whiteColor];
+    UIColor *tileScoreColor = [UIColor whiteColor];
 
-//    UIColor *tileFillColor = self.extraLightColor;
-//    UIColor *tileStrokeColor = self.brightColor;
-//    UIColor *tileLetterColor = self.brightColor;
-//    UIColor *tileScoreColor = self.brightColor;
+//    UIColor *tileFillColor = self.thinColor;
+//    UIColor *tileStrokeColor = self.boldColor;
+//    UIColor *tileLetterColor = self.boldColor;
+//    UIColor *tileScoreColor = self.boldColor;
 
-    UIColor *trayFillColor = self.extraLightColor;
+    UIColor *trayFillColor = self.thinColor;
     UIColor *trayStrokeColor = self.lightColor;
     UIColor *trayScoreColor = self.lightColor;
     if (self.wordTrayActive) {
-        trayFillColor = self.extraLightColor;
+        trayFillColor = [UIColor whiteColor];
         trayStrokeColor = self.accentColor;
         trayScoreColor = self.accentColor;
     }
-    UIColor *exColor = self.brightColor;
-    UIColor *trashColor = self.brightColor;
+    UIColor *exColor = self.normalColor;
+    UIColor *trashColor = self.normalColor;
 
     //// Group 2
     {
@@ -231,7 +231,7 @@
 
         //// Tile-1-Fill Drawing
         UIBezierPath* tile1FillPath = [UIBezierPath bezierPathWithRect: CGRectMake(304.2, 787.2, 213.6, 239.6)];
-        [tileFillColor setFill];
+        [self.accentColor setFill];
         [tile1FillPath fill];
 
 
@@ -249,7 +249,7 @@
         [tile1StrokePath addLineToPoint: CGPointMake(510.59, 794.41)];
         [tile1StrokePath addLineToPoint: CGPointMake(510.59, 1019.59)];
         [tile1StrokePath closePath];
-        [tileStrokeColor setFill];
+        [self.accentColor setFill];
         [tile1StrokePath fill];
 
 

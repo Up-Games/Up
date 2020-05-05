@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="180" minValue="0.0" maxValue="359" translatesAutoresizingMaskIntoConstraints="NO" id="xIT-wC-kUU">
-                                <rect key="frame" x="95" y="537" width="383" height="30"/>
+                                <rect key="frame" x="95" y="537" width="360" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="hueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="lVN-SU-WzQ"/>
@@ -34,7 +34,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Extra Light" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gx-6C-rA1">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Thin" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gx-6C-rA1">
                                 <rect key="frame" x="345" y="656" width="300" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
@@ -55,7 +55,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bright" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ne-Fu-2e8">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Thick" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ne-Fu-2e8">
                                 <rect key="frame" x="345" y="827" width="300" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
@@ -158,7 +158,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="4dn-wc-aDT">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-100" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="4dn-wc-aDT">
                                 <rect key="frame" x="853" y="769" width="360" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
@@ -192,12 +192,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="50" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6yj-Sc-0qh">
-                                <rect key="frame" x="495" y="537" width="48" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIw-hY-OC2">
+                                <rect key="frame" x="853" y="892" width="60" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8EO-2y-U53"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a0c-Xf-aac">
                                 <rect key="frame" x="1215" y="892" width="60" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -221,15 +224,30 @@
                                     <action selector="defaultButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mw6-W5-BUN"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIw-hY-OC2">
-                                <rect key="frame" x="853" y="892" width="60" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYd-a3-Gpp">
+                                <rect key="frame" x="467" y="530" width="38" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Cancel"/>
+                                <state key="normal" image="arrowtriangle.left.fill" catalog="system"/>
                                 <connections>
-                                    <action selector="cancelButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8EO-2y-U53"/>
+                                    <action selector="prevHueButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IVe-8s-upx"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QxJ-sD-QcE">
+                                <rect key="frame" x="513" y="530" width="38" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="arrowtriangle.right.fill" catalog="system">
+                                    <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="nextHueButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uj3-fO-cdn"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="50" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6yj-Sc-0qh">
+                                <rect key="frame" x="559" y="534" width="48" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -239,13 +257,9 @@
                         <outlet property="accentColorView" destination="EsR-8K-IgC" id="R4i-w2-xV1"/>
                         <outlet property="afterColorView" destination="jfo-7q-qjP" id="ise-Lo-ekg"/>
                         <outlet property="beforeColorView" destination="fBa-KY-GHE" id="fSN-Qx-KdW"/>
-                        <outlet property="brightColorLabel" destination="1Ne-Fu-2e8" id="5yk-CZ-M3O"/>
-                        <outlet property="brightColorView" destination="1fC-Yh-Yg6" id="Byv-PE-vKB"/>
                         <outlet property="cancelButton" destination="dIw-hY-OC2" id="DOW-44-0HH"/>
                         <outlet property="defaultButton" destination="N5H-Jq-4ye" id="eoh-dI-itH"/>
                         <outlet property="editColorNameLabel" destination="tBf-N5-ldI" id="pxF-ha-KZF"/>
-                        <outlet property="extraLightColorLabel" destination="3gx-6C-rA1" id="EY7-6o-KwJ"/>
-                        <outlet property="extraLightColorView" destination="BSr-QP-9nL" id="V8T-vF-MjD"/>
                         <outlet property="hintColorLabel" destination="AyJ-oC-RG3" id="wpk-VR-BVD"/>
                         <outlet property="hintColorView" destination="Lir-k2-Tkl" id="nHx-eg-1El"/>
                         <outlet property="hueSlider" destination="xIT-wC-kUU" id="jax-za-vl1"/>
@@ -258,13 +272,19 @@
                         <outlet property="lightnessLabel" destination="S4x-w5-uSi" id="rIW-Gh-JqK"/>
                         <outlet property="lightnessSlider" destination="4dn-wc-aDT" id="ain-sz-AMx"/>
                         <outlet property="lightnessValueField" destination="QxQ-MT-DTz" id="boK-fZ-wVL"/>
+                        <outlet property="nextHueButton" destination="QxJ-sD-QcE" id="mzQ-QX-7qk"/>
                         <outlet property="normalColorLabel" destination="jag-a7-vVZ" id="5sR-2q-tj3"/>
                         <outlet property="normalColorView" destination="7X3-cv-fhV" id="MdH-T2-fk4"/>
                         <outlet property="okButton" destination="a0c-Xf-aac" id="Bwm-Td-3QV"/>
+                        <outlet property="prevHueButton" destination="ZYd-a3-Gpp" id="WLs-xG-oFx"/>
                         <outlet property="saturationLabel" destination="NsD-7j-505" id="C1u-bq-2Kn"/>
                         <outlet property="saturationSlider" destination="QNx-1v-a1D" id="xnD-dD-IZ8"/>
                         <outlet property="saturationValueField" destination="Ur7-h2-XY2" id="y26-Fw-trH"/>
                         <outlet property="selectedIndicatorView" destination="cHJ-NR-rxZ" id="xe5-1J-YDu"/>
+                        <outlet property="thickColorLabel" destination="1Ne-Fu-2e8" id="WHL-sl-eCs"/>
+                        <outlet property="thickColorView" destination="1fC-Yh-Yg6" id="9RB-uN-oQO"/>
+                        <outlet property="thinColorLabel" destination="3gx-6C-rA1" id="8Qv-gG-DeZ"/>
+                        <outlet property="thinColorView" destination="BSr-QP-9nL" id="xR7-EU-enz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -272,4 +292,8 @@
             <point key="canvasLocation" x="138.79941434846265" y="137.6953125"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="arrowtriangle.left.fill" catalog="system" width="128" height="113"/>
+        <image name="arrowtriangle.right.fill" catalog="system" width="128" height="113"/>
+    </resources>
 </document>
