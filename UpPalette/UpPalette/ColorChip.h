@@ -6,16 +6,26 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-@interface ColorChip : NSObject
+extern NSString *const ColorChipNameKey;
+extern NSString *const ColorChipGrayValueKey;
+extern NSString *const ColorChipHueKey;
+extern NSString *const ColorChipSaturationKey;
+extern NSString *const ColorChipLightnessKey;
+
+@interface ColorChip : NSObject <NSCopying>
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic) CGFloat grayValue;
+@property (nonatomic) CGFloat hue;
 @property (nonatomic) CGFloat saturation;
 @property (nonatomic) CGFloat lightness;
-@property (nonatomic) CGFloat hue;
 @property (nonatomic, readonly) UIColor *color;
 
-- (instancetype)initWithName:(NSString *)name grayValue:(CGFloat)grayValue saturation:(CGFloat)saturation lightness:(CGFloat)lightness;
+- (instancetype)initWithName:(NSString *)name grayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
+- (void)takeValuesFrom:(ColorChip *)chip;
+
+- (NSDictionary *)dictionary;
 - (NSAttributedString *)attributedDescription;
 
 @end

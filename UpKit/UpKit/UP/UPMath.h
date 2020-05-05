@@ -90,9 +90,6 @@ UP_STATIC_INLINE UPFloat up_lerp_floats(UPFloat a, UPFloat b, UPUnit f)
     return a + ((b - a) * f);
 }
 
-UP_STATIC_CONST UPFloat RAD2DEG = 180.0 / M_PI;
-UP_STATIC_CONST UPFloat DEG2RAD = M_PI / 180.0;
-
 #ifdef __cplusplus
 }  // extern "C"
 #endif

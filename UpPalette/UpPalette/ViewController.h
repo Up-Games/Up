@@ -7,6 +7,8 @@
 
 @interface ViewController : UIViewController
 
++ (ViewController *)instance;
+- (void)saveColorMap;
 
 @end
 

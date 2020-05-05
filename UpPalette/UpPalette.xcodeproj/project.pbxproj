@@ -52,6 +52,7 @@
 		5D37CB0024608A38002D4D6B /* ColorChip.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorChip.m; sourceTree = "<group>"; };
 		5D37CB0224609B1C002D4D6B /* GameMockupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameMockupView.h; sourceTree = "<group>"; };
 		5D37CB0324609B1C002D4D6B /* GameMockupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameMockupView.m; sourceTree = "<group>"; };
+		5D37CB052460F3B4002D4D6B /* UpPalette.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UpPalette.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +102,7 @@
 				5D37CADB24605F5A002D4D6B /* SceneDelegate.m */,
 				5D37CADD24605F5A002D4D6B /* ViewController.h */,
 				5D37CADE24605F5A002D4D6B /* ViewController.m */,
+				5D37CB052460F3B4002D4D6B /* UpPalette.entitlements */,
 			);
 			path = UpPalette;
 			sourceTree = "<group>";
@@ -329,6 +331,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = UpPalette/UpPalette.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 784YP5V58W;
 				INFOPLIST_FILE = UpPalette/Info.plist;
@@ -346,6 +349,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = UpPalette/UpPalette.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 784YP5V58W;
 				INFOPLIST_FILE = UpPalette/Info.plist;
