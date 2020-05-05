@@ -366,7 +366,6 @@ static ViewController *_Instance;
     BOOL isMilepostHue = (hue % 15) == 0;
 
     if (isMilepostHue) {
-        NSLog(@"milepost: %d", hue);
         NSDictionary *colorChipMap = [self colorChipMapForHue:hue];
         self.hintColorChip = colorChipMap[ColorChipHint];
         self.thinColorChip = colorChipMap[ColorChipThin];
@@ -382,7 +381,6 @@ static ViewController *_Instance;
         NSDictionary *next = [self colorChipMapForHue:nextHue];
         CGFloat diff = 360 - fabs(360 - fabs(hue - prevHue));
         CGFloat fraction = diff / 15.0f;
-        NSLog(@"fraction: %.2f : %d : %d => %d", fraction, prevHue, nextHue, hue);
         self.hintColorChip = [[ColorChip alloc] initWithName:ColorChipHint hue:hue chipA:prev[ColorChipHint] chipB:next[ColorChipHint] fraction:fraction];
         self.thinColorChip = [[ColorChip alloc] initWithName:ColorChipThin hue:hue chipA:prev[ColorChipThin] chipB:next[ColorChipThin] fraction:fraction];
         self.lightColorChip = [[ColorChip alloc] initWithName:ColorChipLight hue:hue chipA:prev[ColorChipLight] chipB:next[ColorChipLight] fraction:fraction];
