@@ -10,12 +10,16 @@ NSString *const PrimaryFillKey = @"PrimaryFill";
 NSString *const InactiveFillKey = @"InactiveFill";
 NSString *const ActiveFillKey = @"ActiveFill";
 NSString *const HighlightedFillKey = @"HighlightedFill";
+NSString *const SecondaryInactiveFillKey = @"SecondaryInactiveFill";
+NSString *const SecondaryActiveFillKey = @"SecondaryActiveFill";
+NSString *const SecondaryHighlightedFillKey = @"SecondaryHighlightedFill";
 NSString *const PrimaryStrokeKey = @"PrimaryStroke";
 NSString *const InactiveStrokeKey = @"InactiveStroke";
 NSString *const ActiveStrokeKey = @"ActiveStroke";
 NSString *const HighlightedStrokeKey = @"HighlightedStroke";
 NSString *const PipingKey = @"Piping";
 NSString *const ContentKey = @"Content";
+NSString *const InactiveContentKey = @"InactiveContent";
 NSString *const InformationKey = @"Information";
 NSString *const CanvasKey = @"Canvas";
 

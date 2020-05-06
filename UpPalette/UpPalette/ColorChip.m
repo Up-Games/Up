@@ -147,8 +147,8 @@ static const CGFloat _ClearGray = -1;
 
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
 
-    NSDictionary *nameStringAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:13]};
-    NSDictionary *colorStringAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"Menlo" size:12]};
+    NSDictionary *nameStringAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:12]};
+    NSDictionary *colorStringAttributes = @{NSFontAttributeName: [UIFont monospacedSystemFontOfSize:10 weight:0]};
     [string appendAttributedString:[[NSAttributedString alloc] initWithString:self.name attributes:nameStringAttributes]];
     
     if (self.grayValue < 0) {

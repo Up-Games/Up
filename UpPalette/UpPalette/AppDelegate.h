@@ -9,11 +9,15 @@ extern NSString *const PrimaryFillKey;
 extern NSString *const InactiveFillKey;
 extern NSString *const ActiveFillKey;
 extern NSString *const HighlightedFillKey;
+extern NSString *const SecondaryInactiveFillKey;
+extern NSString *const SecondaryActiveFillKey;
+extern NSString *const SecondaryHighlightedFillKey;
 extern NSString *const PrimaryStrokeKey;
 extern NSString *const InactiveStrokeKey;
 extern NSString *const ActiveStrokeKey;
 extern NSString *const HighlightedStrokeKey;
 extern NSString *const ContentKey;
+extern NSString *const InactiveContentKey;
 extern NSString *const InformationKey;
 extern NSString *const CanvasKey;
 

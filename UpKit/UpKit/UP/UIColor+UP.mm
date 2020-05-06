@@ -9,11 +9,8 @@
 using UP::RGBF;
 using UP::HSVF;
 using UP::LABF;
-using UP::LCHF;
 using UP::to_labf;
 using UP::to_rgbf;
-using UP::to_lchf;
-using UP::to_hsvf;
 using UP::to_hsvf;
 using UP::mix_channel;
 using UP::mix_lightness;

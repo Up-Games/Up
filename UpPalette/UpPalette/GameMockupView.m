@@ -34,13 +34,17 @@
 
     UIColor *primaryFillColor = self.colors[PrimaryFillKey];
     UIColor *inactiveFillColor = self.colors[InactiveFillKey];
-    UIColor *activeFillColor = self.colors[ActiveFillKey];
+//    UIColor *activeFillColor = self.colors[ActiveFillKey];
     UIColor *highlightedFillColor = self.colors[HighlightedFillKey];
+    UIColor *secondaryInactiveFillColor = self.colors[SecondaryInactiveFillKey];
+    UIColor *secondaryActiveFillColor = self.colors[SecondaryActiveFillKey];
+    UIColor *secondaryHighlightedFillColor = self.colors[SecondaryHighlightedFillKey];
     UIColor *primaryStrokeColor = self.colors[PrimaryStrokeKey];
     UIColor *inactiveStrokeColor = self.colors[InactiveStrokeKey];
     UIColor *activeStrokeColor = self.colors[ActiveStrokeKey];
     UIColor *highlightedStrokeColor = self.colors[HighlightedStrokeKey];
     UIColor *contentColor = self.colors[ContentKey];
+    UIColor *inactiveContentColor = self.colors[InactiveContentKey];
     UIColor *informationColor = self.colors[InformationKey];
     UIColor *canvasColor = self.colors[CanvasKey];
 
@@ -246,13 +250,13 @@
         case GameStateStart:
         case GameStateTap:
         case GameStateSpell:
-            [inactiveFillColor setFill];
+            [secondaryInactiveFillColor setFill];
             break;
         case GameStateWord:
-            [activeFillColor setFill];
+            [secondaryActiveFillColor setFill];
             break;
         case GameStateSubmit:
-            [highlightedFillColor setFill];
+            [secondaryHighlightedFillColor setFill];
             break;
     }
     [trayFillPath fill];
@@ -864,10 +868,8 @@
         [tileStroke6Path closePath];
         switch (self.gameState) {
             case GameStateStart:
-                [primaryStrokeColor setFill];
-                break;
             case GameStateTap:
-                [highlightedStrokeColor setFill];
+                [primaryStrokeColor setFill];
                 break;
             case GameStateSpell:
             case GameStateWord:
@@ -922,7 +924,16 @@
     [tileLetter1Path addLineToPoint: CGPointMake(419.11, 838.06)];
     [tileLetter1Path addLineToPoint: CGPointMake(440, 910.96)];
     [tileLetter1Path closePath];
-    [contentColor setFill];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            [contentColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveContentColor setFill];
+    }
     [tileLetter1Path fill];
 
 
@@ -998,7 +1009,16 @@
     [tileLetter5Path addLineToPoint: CGPointMake(1434.11, 964.06)];
     [tileLetter5Path addLineToPoint: CGPointMake(1434.11, 838.06)];
     [tileLetter5Path closePath];
-    [contentColor setFill];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            [contentColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveContentColor setFill];
+    }
     [tileLetter5Path fill];
 
 
@@ -1019,7 +1039,16 @@
     [tileLetter6Path addLineToPoint: CGPointMake(1685.79, 964.06)];
     [tileLetter6Path addLineToPoint: CGPointMake(1721.81, 837.7)];
     [tileLetter6Path closePath];
-    [contentColor setFill];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            [contentColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveContentColor setFill];
+    }
     [tileLetter6Path fill];
 
 
@@ -1070,7 +1099,16 @@
     [tileScore1Path addCurveToPoint: CGPointMake(532.7, 1004.66) controlPoint1: CGPointMake(530.2, 997.32) controlPoint2: CGPointMake(532.7, 1000.68)];
     [tileScore1Path addCurveToPoint: CGPointMake(521.32, 1014.36) controlPoint1: CGPointMake(532.7, 1010.85) controlPoint2: CGPointMake(527.22, 1014.36)];
     [tileScore1Path closePath];
-    [contentColor setFill];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            [contentColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveContentColor setFill];
+    }
     [tileScore1Path fill];
 
 
@@ -1151,7 +1189,16 @@
     [tileScore5Path addLineToPoint: CGPointMake(1553.32, 993.62)];
     [tileScore5Path addLineToPoint: CGPointMake(1553.32, 986.42)];
     [tileScore5Path closePath];
-    [contentColor setFill];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            [contentColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveContentColor setFill];
+    }
     [tileScore5Path fill];
 
 
@@ -1167,7 +1214,16 @@
     [tileScore6Path addLineToPoint: CGPointMake(1812.65, 993.62)];
     [tileScore6Path addLineToPoint: CGPointMake(1812.65, 986.42)];
     [tileScore6Path closePath];
-    [contentColor setFill];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            [contentColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveContentColor setFill];
+    }
     [tileScore6Path fill];
 
 

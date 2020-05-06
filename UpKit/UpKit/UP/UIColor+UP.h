@@ -22,19 +22,21 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
     UPColorCategoryInactiveFill,
     UPColorCategoryActiveFill,
     UPColorCategoryHighlightedFill,
+    UPColorCategorySecondaryInactiveFill,
+    UPColorCategorySecondaryActiveFill,
+    UPColorCategorySecondaryHighlightedFill,
     UPColorCategoryPrimaryStroke,
     UPColorCategoryInactiveStroke,
     UPColorCategoryActiveStroke,
     UPColorCategoryHighlightedStroke,
-    UPColorCategoryPiping,
     UPColorCategoryContent,
+    UPColorCategoryInactiveContent,
     UPColorCategoryCanvas,
     UPColorCategoryInformation,
 
     UPColorCategoryDisabledFill,
     UPColorCategoryDisabledStroke,
     UPColorCategoryDisabledContent,
-    UPColorCategoryDisabledPiping,
 };
 
 @interface UIColor (UP)
