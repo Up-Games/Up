@@ -20,9 +20,12 @@ extern NSString *const ColorChipLightnessKey;
 @property (nonatomic) CGFloat lightness;
 @property (nonatomic, readonly) UIColor *color;
 
++ (ColorChip *)chipWithName:(NSString *)name grayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness;
++ (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue chipA:(ColorChip *)chipA chipB:(ColorChip *)chipB fraction:(CGFloat)fraction;
++ (ColorChip *)chipWithDictionary:(NSDictionary *)dictionary;
 - (instancetype)initWithName:(NSString *)name grayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness;
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (instancetype)initWithName:(NSString *)name hue:(CGFloat)hue chipA:(ColorChip *)chipA chipB:(ColorChip *)chipB fraction:(CGFloat)fraction;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 - (void)takeValuesFrom:(ColorChip *)chip;
 

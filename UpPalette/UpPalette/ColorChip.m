@@ -15,6 +15,21 @@ NSString *const ColorChipLightnessKey = @"l";
 
 @implementation ColorChip
 
++ (ColorChip *)chipWithName:(NSString *)name grayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness
+{
+    return [[ColorChip alloc] initWithName:name grayValue:grayValue hue:hue saturation:saturation lightness:lightness];
+}
+
++ (ColorChip *)chipWithDictionary:(NSDictionary *)dictionary
+{
+    return [[ColorChip alloc] initWithDictionary:dictionary];
+}
+
++ (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue chipA:(ColorChip *)chipA chipB:(ColorChip *)chipB fraction:(CGFloat)fraction
+{
+    return [[ColorChip alloc] initWithName:name hue:hue chipA:chipA chipB:chipB fraction:fraction];
+}
+
 - (instancetype)initWithName:(NSString *)name grayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness
 {
     self = [super init];
