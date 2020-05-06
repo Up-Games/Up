@@ -13,7 +13,6 @@ extern NSString *const PrimaryStrokeKey;
 extern NSString *const InactiveStrokeKey;
 extern NSString *const ActiveStrokeKey;
 extern NSString *const HighlightedStrokeKey;
-extern NSString *const PipingKey;
 extern NSString *const ContentKey;
 extern NSString *const InformationKey;
 extern NSString *const CanvasKey;

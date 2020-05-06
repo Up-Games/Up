@@ -18,7 +18,6 @@
 //UPColorCategoryInactiveStroke
 //UPColorCategoryActiveStroke
 //UPColorCategoryHighlightedStroke
-//UPColorCategoryPiping
 //UPColorCategoryContent
 //UPColorCategoryCanvas
 //UPColorCategoryInformation
@@ -50,7 +49,6 @@ static NSString *const ColorMapPathFormat = @"/Users/kocienda/Desktop/up-color-m
 @property (nonatomic) IBOutlet UILabel *inactiveStrokeColorLabel;
 @property (nonatomic) IBOutlet UILabel *activeStrokeColorLabel;
 @property (nonatomic) IBOutlet UILabel *highlightedStrokeColorLabel;
-@property (nonatomic) IBOutlet UILabel *pipingColorLabel;
 @property (nonatomic) IBOutlet UILabel *contentColorLabel;
 @property (nonatomic) IBOutlet UILabel *informationColorLabel;
 @property (nonatomic) IBOutlet UILabel *canvasColorLabel;
@@ -65,7 +63,6 @@ static NSString *const ColorMapPathFormat = @"/Users/kocienda/Desktop/up-color-m
 @property (nonatomic) IBOutlet UIView *inactiveStrokeColorView;
 @property (nonatomic) IBOutlet UIView *activeStrokeColorView;
 @property (nonatomic) IBOutlet UIView *highlightedStrokeColorView;
-@property (nonatomic) IBOutlet UIView *pipingColorView;
 @property (nonatomic) IBOutlet UIView *contentColorView;
 @property (nonatomic) IBOutlet UIView *informationColorView;
 @property (nonatomic) IBOutlet UIView *canvasColorView;
@@ -128,7 +125,7 @@ static ViewController *_Instance;
     self.colorKeys = @[
         PrimaryFillKey, InactiveFillKey, ActiveFillKey, HighlightedFillKey,
         PrimaryStrokeKey, InactiveStrokeKey, ActiveStrokeKey, HighlightedStrokeKey,
-        PipingKey, ContentKey, InformationKey, CanvasKey,
+        ContentKey, InformationKey, CanvasKey,
     ];
 
     self.colorChips = [NSMutableDictionary dictionary];
@@ -142,7 +139,6 @@ static ViewController *_Instance;
         InactiveStrokeKey: self.inactiveStrokeColorLabel,
         ActiveStrokeKey: self.activeStrokeColorLabel,
         HighlightedStrokeKey: self.highlightedStrokeColorLabel,
-        PipingKey: self.pipingColorLabel,
         ContentKey: self.contentColorLabel,
         InformationKey: self.informationColorLabel,
         CanvasKey: self.canvasColorLabel
@@ -157,15 +153,16 @@ static ViewController *_Instance;
         InactiveStrokeKey: self.inactiveStrokeColorView,
         ActiveStrokeKey: self.activeStrokeColorView,
         HighlightedStrokeKey: self.highlightedStrokeColorView,
-        PipingKey: self.pipingColorView,
         ContentKey: self.contentColorView,
         InformationKey: self.informationColorView,
         CanvasKey: self.canvasColorView
     };
 
-    [self.colorViews enumerateKeysAndObjectsUsingBlock:^(id key, id colorView, BOOL *stop) {
+    [self.colorViews enumerateKeysAndObjectsUsingBlock:^(id key, UIView *colorView, BOOL *stop) {
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
         [colorView addGestureRecognizer:tap];
+        colorView.layer.borderColor = [[UIColor colorWithWhite:0.8 alpha:1.0] CGColor];
+        colorView.layer.borderWidth = 0.5;
     }];
 
     [self loadColorMap];
@@ -194,18 +191,24 @@ static ViewController *_Instance;
 
     [self cancelEditing];
 
-
+    __block ColorChip *tappedChip = nil;
     [self.colorViews enumerateKeysAndObjectsUsingBlock:^(id key, id colorView, BOOL *stop) {
         if (tap.view == colorView) {
-            self.selectedChip = self.colorChips[key];
+            tappedChip = self.colorChips[key];
         }
     }];
 
-    CGRect frame = self.selectedIndicatorView.frame;
-    frame.origin.y = CGRectGetMidY(tap.view.frame);
-    frame.origin.y -= CGRectGetHeight(self.selectedIndicatorView.bounds) * 0.5;
-    self.selectedIndicatorView.frame = frame;
-    self.selectedIndicatorView.alpha = 1;
+    if (tappedChip.isClear) {
+        // no-op
+    }
+    else {
+        self.selectedChip = tappedChip;
+        CGRect frame = self.selectedIndicatorView.frame;
+        frame.origin.y = CGRectGetMidY(tap.view.frame);
+        frame.origin.y -= CGRectGetHeight(self.selectedIndicatorView.bounds) * 0.5;
+        self.selectedIndicatorView.frame = frame;
+        self.selectedIndicatorView.alpha = 1;
+    }
 }
 
 - (void)setSelectedChip:(ColorChip *)selectedChip
@@ -321,11 +324,10 @@ static ViewController *_Instance;
                 InactiveFillKey : [ColorChip chipWithName:InactiveFillKey grayValue:0.95 hue:0 saturation:0.6 lightness:0.45],
                 ActiveFillKey : [ColorChip chipWithName:ActiveFillKey grayValue:0.75 hue:0 saturation:0.5 lightness:0.1],
                 HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
-                /* L: 42 */ PrimaryStrokeKey : [ColorChip chipWithName:PrimaryStrokeKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
+                PrimaryStrokeKey : [ColorChip clearChipWithName:PrimaryStrokeKey],
                 InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey grayValue:0.5 hue:0 saturation:0.94 lightness:0.0],
                 ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
                 HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
-                PipingKey : [ColorChip chipWithName:PipingKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
                 ContentKey : [ColorChip chipWithName:ContentKey grayValue:1.0 hue:0 saturation:0 lightness:1.0],
                 InformationKey : [ColorChip chipWithName:InformationKey grayValue:0.38 hue:0 saturation:0.5 lightness:0.0],
                 CanvasKey : [ColorChip chipWithName:CanvasKey grayValue:0.98 hue:0 saturation:0.7 lightness:0.45],
@@ -342,7 +344,6 @@ static ViewController *_Instance;
                 InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey grayValue:0.5 hue:0 saturation:0.94 lightness:0.0],
                 ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
                 HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
-                PipingKey : [ColorChip chipWithName:PipingKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
                 ContentKey : [ColorChip chipWithName:ContentKey grayValue:1.0 hue:0 saturation:0 lightness:1.0],
                 InformationKey : [ColorChip chipWithName:InformationKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
                 CanvasKey : [ColorChip chipWithName:CanvasKey grayValue:0.12 hue:0 saturation:0.7 lightness:0.0],
@@ -358,7 +359,6 @@ static ViewController *_Instance;
                 InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey grayValue:0.5 hue:0 saturation:0.94 lightness:0.0],
                 ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
                 HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
-                PipingKey : [ColorChip chipWithName:PipingKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
                 ContentKey : [ColorChip chipWithName:ContentKey grayValue:1.0 hue:0 saturation:0 lightness:1.0],
                 InformationKey : [ColorChip chipWithName:InformationKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
                 CanvasKey : [ColorChip chipWithName:CanvasKey grayValue:0.12 hue:0 saturation:0.7 lightness:0.0],
@@ -374,7 +374,6 @@ static ViewController *_Instance;
                 InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey grayValue:0.5 hue:0 saturation:0.94 lightness:0.0],
                 ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
                 HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
-                PipingKey : [ColorChip chipWithName:PipingKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
                 ContentKey : [ColorChip chipWithName:ContentKey grayValue:1.0 hue:0 saturation:0 lightness:1.0],
                 InformationKey : [ColorChip chipWithName:InformationKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
                 CanvasKey : [ColorChip chipWithName:CanvasKey grayValue:0.12 hue:0 saturation:0.7 lightness:0.0],

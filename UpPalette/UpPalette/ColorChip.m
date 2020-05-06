@@ -13,7 +13,17 @@ NSString *const ColorChipHueKey = @"h";
 NSString *const ColorChipSaturationKey = @"s";
 NSString *const ColorChipLightnessKey = @"l";
 
+static const CGFloat _ClearGray = -1;
+
+@interface ColorChip ()
+@end
+
 @implementation ColorChip
+
++ (ColorChip *)clearChipWithName:(NSString *)name
+{
+    return [[ColorChip alloc] initWithName:name grayValue:_ClearGray hue:0 saturation:0 lightness:0];
+}
 
 + (ColorChip *)chipWithName:(NSString *)name grayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness
 {
@@ -101,10 +111,17 @@ NSString *const ColorChipLightnessKey = @"l";
         up_is_fuzzy_equal(self.lightness, other.lightness);
 }
 
+@dynamic isClear;
+- (BOOL)isClear
+{
+    return self.grayValue < 0;
+}
+
 @dynamic color;
 - (UIColor *)color
 {
-    return [UIColor colorizedColorWithGrayValue:self.grayValue hue:self.hue saturation:self.saturation lightness:self.lightness];
+    return self.grayValue < 0 ? [UIColor clearColor] :
+        [UIColor colorizedColorWithGrayValue:self.grayValue hue:self.hue saturation:self.saturation lightness:self.lightness];
 }
 
 - (NSDictionary *)dictionary
@@ -134,19 +151,24 @@ NSString *const ColorChipLightnessKey = @"l";
     NSDictionary *colorStringAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"Menlo" size:12]};
     [string appendAttributedString:[[NSAttributedString alloc] initWithString:self.name attributes:nameStringAttributes]];
     
-    NSString *chipString = [NSString stringWithFormat:@"\nchsl: %.2f, %3.0f, %.2f, %.2f",
-        self.grayValue, self.hue, self.saturation, self.lightness];
-    [string appendAttributedString:[[NSAttributedString alloc] initWithString:chipString attributes:colorStringAttributes]];
+    if (self.grayValue < 0) {
+        [string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nclear" attributes:colorStringAttributes]];
+    }
+    else {
+        NSString *chipString = [NSString stringWithFormat:@"\nchsl: %.2f, %3.0f, %.2f, %.2f",
+            self.grayValue, self.hue, self.saturation, self.lightness];
+        [string appendAttributedString:[[NSAttributedString alloc] initWithString:chipString attributes:colorStringAttributes]];
 
-    NSString *lightnessString = [NSString stringWithFormat:@"   L: %3.2f", color.lightness];
-    [string appendAttributedString:[[NSAttributedString alloc] initWithString:lightnessString attributes:colorStringAttributes]];
+        NSString *lightnessString = [NSString stringWithFormat:@"   L: %3.2f", color.lightness];
+        [string appendAttributedString:[[NSAttributedString alloc] initWithString:lightnessString attributes:colorStringAttributes]];
 
-    CGFloat r, g, b, a;
-    [color getRed:&r green:&g blue:&b alpha:&a];
-    
-    NSString *rgbString = [NSString stringWithFormat:@"\nrgba: %d, %d, %d, 1.0",
-        (int)(r * 255), (int)(g * 255), (int)(b * 255)];
-    [string appendAttributedString:[[NSAttributedString alloc] initWithString:rgbString attributes:colorStringAttributes]];
+        CGFloat r, g, b, a;
+        [color getRed:&r green:&g blue:&b alpha:&a];
+        
+        NSString *rgbString = [NSString stringWithFormat:@"\nrgba: %d, %d, %d, 1.0",
+            (int)(r * 255), (int)(g * 255), (int)(b * 255)];
+        [string appendAttributedString:[[NSAttributedString alloc] initWithString:rgbString attributes:colorStringAttributes]];
+    }
 
     return string;
 }
