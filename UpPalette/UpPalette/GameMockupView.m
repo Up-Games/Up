@@ -8,23 +8,21 @@
 
 @implementation GameMockupView
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    
-    
-    return self;
-}
-
 - (void)setColors:(NSDictionary *)colors
 {
     _colors = [colors copy];
     [self setNeedsDisplay];
 }
 
-- (void)setWordTrayActive:(BOOL)wordTrayActive
+- (void)setColorTheme:(ColorTheme)colorTheme
 {
-    _wordTrayActive = wordTrayActive;
+    _colorTheme = colorTheme;
+    [self setNeedsDisplay];
+}
+
+- (void)setGameState:(GameState)gameState
+{
+    _gameState = gameState;
     [self setNeedsDisplay];
 }
 
@@ -46,27 +44,57 @@
     UIColor *informationColor = self.colors[InformationKey];
     UIColor *canvasColor = self.colors[CanvasKey];
 
-    //// Canvas-Backdrop Drawing
-    UIBezierPath* canvasBackdropPath = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, 2436, 1125)];
+    BOOL tappablesStroke = self.colorTheme == ColorThemeStarkLight || self.colorTheme == ColorThemeStarkDark;
+
+    UIColor *wordTileFillColor = [UIColor clearColor];
+    UIColor *wordTileStrokeColor = [UIColor clearColor];
+    UIColor *wordTileContentColor = [UIColor clearColor];
+
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            wordTileFillColor = [UIColor clearColor];
+            wordTileStrokeColor = [UIColor clearColor];
+            wordTileContentColor = [UIColor clearColor];
+            break;
+        case GameStateSpell:
+            wordTileFillColor = primaryFillColor;
+            wordTileStrokeColor = primaryStrokeColor;
+            wordTileContentColor = contentColor;
+            break;
+        case GameStateWord:
+            wordTileFillColor = primaryFillColor;
+            wordTileStrokeColor = primaryStrokeColor;
+            wordTileContentColor = contentColor;
+            break;
+        case GameStateSubmit:
+            wordTileFillColor = primaryFillColor;
+            wordTileStrokeColor = primaryStrokeColor;
+            wordTileContentColor = contentColor;
+            break;
+    }
+
+    //// Canvas-Background Drawing
+    UIBezierPath* canvasBackgroundPath = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, 2436, 1125)];
     [canvasColor setFill];
-    [canvasBackdropPath fill];
+    [canvasBackgroundPath fill];
 
 
     //// Time-1 Drawing
     UIBezierPath* time1Path = [UIBezierPath bezierPath];
-    [time1Path moveToPoint: CGPointMake(755.53, 109.52)];
-    [time1Path addLineToPoint: CGPointMake(810.13, 82.92)];
-    [time1Path addLineToPoint: CGPointMake(813.13, 83.72)];
-    [time1Path addLineToPoint: CGPointMake(813.13, 200.32)];
-    [time1Path addLineToPoint: CGPointMake(839.33, 200.32)];
-    [time1Path addLineToPoint: CGPointMake(839.33, 225.31)];
-    [time1Path addLineToPoint: CGPointMake(755.13, 225.31)];
-    [time1Path addLineToPoint: CGPointMake(755.13, 200.32)];
-    [time1Path addLineToPoint: CGPointMake(783.73, 200.32)];
-    [time1Path addLineToPoint: CGPointMake(783.73, 124.92)];
-    [time1Path addLineToPoint: CGPointMake(755.93, 138.72)];
-    [time1Path addLineToPoint: CGPointMake(755.53, 138.52)];
-    [time1Path addLineToPoint: CGPointMake(755.53, 109.52)];
+    [time1Path moveToPoint: CGPointMake(753.8, 109.52)];
+    [time1Path addLineToPoint: CGPointMake(808.4, 82.92)];
+    [time1Path addLineToPoint: CGPointMake(811.4, 83.72)];
+    [time1Path addLineToPoint: CGPointMake(811.4, 200.32)];
+    [time1Path addLineToPoint: CGPointMake(837.6, 200.32)];
+    [time1Path addLineToPoint: CGPointMake(837.6, 225.31)];
+    [time1Path addLineToPoint: CGPointMake(753.4, 225.31)];
+    [time1Path addLineToPoint: CGPointMake(753.4, 200.32)];
+    [time1Path addLineToPoint: CGPointMake(782, 200.32)];
+    [time1Path addLineToPoint: CGPointMake(782, 124.92)];
+    [time1Path addLineToPoint: CGPointMake(754.2, 138.72)];
+    [time1Path addLineToPoint: CGPointMake(753.8, 138.52)];
+    [time1Path addLineToPoint: CGPointMake(753.8, 109.52)];
     [time1Path closePath];
     [informationColor setFill];
     [time1Path fill];
@@ -74,17 +102,17 @@
 
     //// Time-2 Drawing
     UIBezierPath* time2Path = [UIBezierPath bezierPath];
-    [time2Path moveToPoint: CGPointMake(872.53, 164.12)];
-    [time2Path addCurveToPoint: CGPointMake(889.92, 182.32) controlPoint1: CGPointMake(882.33, 164.12) controlPoint2: CGPointMake(889.92, 172.52)];
-    [time2Path addCurveToPoint: CGPointMake(872.53, 200.32) controlPoint1: CGPointMake(889.92, 191.92) controlPoint2: CGPointMake(882.33, 200.32)];
-    [time2Path addCurveToPoint: CGPointMake(854.93, 182.32) controlPoint1: CGPointMake(862.53, 200.32) controlPoint2: CGPointMake(854.93, 191.92)];
-    [time2Path addCurveToPoint: CGPointMake(872.53, 164.12) controlPoint1: CGPointMake(854.93, 172.52) controlPoint2: CGPointMake(862.53, 164.12)];
+    [time2Path moveToPoint: CGPointMake(870.8, 164.12)];
+    [time2Path addCurveToPoint: CGPointMake(888.2, 182.32) controlPoint1: CGPointMake(880.6, 164.12) controlPoint2: CGPointMake(888.2, 172.52)];
+    [time2Path addCurveToPoint: CGPointMake(870.8, 200.32) controlPoint1: CGPointMake(888.2, 191.92) controlPoint2: CGPointMake(880.6, 200.32)];
+    [time2Path addCurveToPoint: CGPointMake(853.2, 182.32) controlPoint1: CGPointMake(860.8, 200.32) controlPoint2: CGPointMake(853.2, 191.92)];
+    [time2Path addCurveToPoint: CGPointMake(870.8, 164.12) controlPoint1: CGPointMake(853.2, 172.52) controlPoint2: CGPointMake(860.8, 164.12)];
     [time2Path closePath];
-    [time2Path moveToPoint: CGPointMake(872.53, 108.12)];
-    [time2Path addCurveToPoint: CGPointMake(889.92, 126.12) controlPoint1: CGPointMake(882.33, 108.12) controlPoint2: CGPointMake(889.92, 116.32)];
-    [time2Path addCurveToPoint: CGPointMake(872.53, 144.32) controlPoint1: CGPointMake(889.92, 135.92) controlPoint2: CGPointMake(882.33, 144.32)];
-    [time2Path addCurveToPoint: CGPointMake(854.93, 126.12) controlPoint1: CGPointMake(862.53, 144.32) controlPoint2: CGPointMake(854.93, 135.92)];
-    [time2Path addCurveToPoint: CGPointMake(872.53, 108.12) controlPoint1: CGPointMake(854.93, 116.32) controlPoint2: CGPointMake(862.53, 108.12)];
+    [time2Path moveToPoint: CGPointMake(870.8, 108.12)];
+    [time2Path addCurveToPoint: CGPointMake(888.2, 126.12) controlPoint1: CGPointMake(880.6, 108.12) controlPoint2: CGPointMake(888.2, 116.32)];
+    [time2Path addCurveToPoint: CGPointMake(870.8, 144.32) controlPoint1: CGPointMake(888.2, 135.92) controlPoint2: CGPointMake(880.6, 144.32)];
+    [time2Path addCurveToPoint: CGPointMake(853.2, 126.12) controlPoint1: CGPointMake(860.8, 144.32) controlPoint2: CGPointMake(853.2, 135.92)];
+    [time2Path addCurveToPoint: CGPointMake(870.8, 108.12) controlPoint1: CGPointMake(853.2, 116.32) controlPoint2: CGPointMake(860.8, 108.12)];
     [time2Path closePath];
     [informationColor setFill];
     [time2Path fill];
@@ -92,24 +120,24 @@
 
     //// Time-3 Drawing
     UIBezierPath* time3Path = [UIBezierPath bezierPath];
-    [time3Path moveToPoint: CGPointMake(947.12, 227.52)];
-    [time3Path addCurveToPoint: CGPointMake(908.12, 217.12) controlPoint1: CGPointMake(930.52, 227.52) controlPoint2: CGPointMake(918.12, 223.32)];
-    [time3Path addLineToPoint: CGPointMake(905.32, 187.92)];
-    [time3Path addLineToPoint: CGPointMake(905.72, 187.72)];
-    [time3Path addCurveToPoint: CGPointMake(942.72, 202.72) controlPoint1: CGPointMake(917.92, 197.32) controlPoint2: CGPointMake(931.12, 202.72)];
-    [time3Path addCurveToPoint: CGPointMake(963.32, 186.12) controlPoint1: CGPointMake(955.12, 202.72) controlPoint2: CGPointMake(963.32, 195.92)];
-    [time3Path addCurveToPoint: CGPointMake(923.52, 159.92) controlPoint1: CGPointMake(963.32, 174.92) controlPoint2: CGPointMake(954.92, 167.52)];
-    [time3Path addLineToPoint: CGPointMake(923.52, 149.32)];
-    [time3Path addCurveToPoint: CGPointMake(961.52, 121.32) controlPoint1: CGPointMake(953.32, 138.12) controlPoint2: CGPointMake(961.52, 130.52)];
-    [time3Path addCurveToPoint: CGPointMake(944.52, 107.92) controlPoint1: CGPointMake(961.52, 113.12) controlPoint2: CGPointMake(954.72, 107.92)];
-    [time3Path addCurveToPoint: CGPointMake(908.72, 125.32) controlPoint1: CGPointMake(932.32, 107.92) controlPoint2: CGPointMake(919.72, 114.92)];
-    [time3Path addLineToPoint: CGPointMake(908.32, 125.32)];
-    [time3Path addLineToPoint: CGPointMake(908.32, 98.12)];
-    [time3Path addCurveToPoint: CGPointMake(949.32, 83.12) controlPoint1: CGPointMake(917.52, 90.12) controlPoint2: CGPointMake(932.32, 83.12)];
-    [time3Path addCurveToPoint: CGPointMake(991.12, 116.92) controlPoint1: CGPointMake(974.72, 83.12) controlPoint2: CGPointMake(991.12, 96.72)];
-    [time3Path addCurveToPoint: CGPointMake(964.12, 152.32) controlPoint1: CGPointMake(991.12, 132.12) controlPoint2: CGPointMake(982.32, 143.32)];
-    [time3Path addCurveToPoint: CGPointMake(992.92, 188.92) controlPoint1: CGPointMake(982.92, 158.72) controlPoint2: CGPointMake(992.92, 171.32)];
-    [time3Path addCurveToPoint: CGPointMake(947.12, 227.52) controlPoint1: CGPointMake(992.92, 213.32) controlPoint2: CGPointMake(971.72, 227.52)];
+    [time3Path moveToPoint: CGPointMake(945.4, 227.52)];
+    [time3Path addCurveToPoint: CGPointMake(906.4, 217.12) controlPoint1: CGPointMake(928.8, 227.52) controlPoint2: CGPointMake(916.4, 223.32)];
+    [time3Path addLineToPoint: CGPointMake(903.6, 187.92)];
+    [time3Path addLineToPoint: CGPointMake(904, 187.72)];
+    [time3Path addCurveToPoint: CGPointMake(941, 202.72) controlPoint1: CGPointMake(916.2, 197.32) controlPoint2: CGPointMake(929.4, 202.72)];
+    [time3Path addCurveToPoint: CGPointMake(961.6, 186.12) controlPoint1: CGPointMake(953.4, 202.72) controlPoint2: CGPointMake(961.6, 195.92)];
+    [time3Path addCurveToPoint: CGPointMake(921.8, 159.92) controlPoint1: CGPointMake(961.6, 174.92) controlPoint2: CGPointMake(953.2, 167.52)];
+    [time3Path addLineToPoint: CGPointMake(921.8, 149.32)];
+    [time3Path addCurveToPoint: CGPointMake(959.8, 121.32) controlPoint1: CGPointMake(951.6, 138.12) controlPoint2: CGPointMake(959.8, 130.52)];
+    [time3Path addCurveToPoint: CGPointMake(942.8, 107.92) controlPoint1: CGPointMake(959.8, 113.12) controlPoint2: CGPointMake(953, 107.92)];
+    [time3Path addCurveToPoint: CGPointMake(907, 125.32) controlPoint1: CGPointMake(930.6, 107.92) controlPoint2: CGPointMake(918, 114.92)];
+    [time3Path addLineToPoint: CGPointMake(906.6, 125.32)];
+    [time3Path addLineToPoint: CGPointMake(906.6, 98.12)];
+    [time3Path addCurveToPoint: CGPointMake(947.6, 83.12) controlPoint1: CGPointMake(915.8, 90.12) controlPoint2: CGPointMake(930.6, 83.12)];
+    [time3Path addCurveToPoint: CGPointMake(989.4, 116.92) controlPoint1: CGPointMake(973, 83.12) controlPoint2: CGPointMake(989.4, 96.72)];
+    [time3Path addCurveToPoint: CGPointMake(962.4, 152.32) controlPoint1: CGPointMake(989.4, 132.12) controlPoint2: CGPointMake(980.6, 143.32)];
+    [time3Path addCurveToPoint: CGPointMake(991.2, 188.92) controlPoint1: CGPointMake(981.2, 158.72) controlPoint2: CGPointMake(991.2, 171.32)];
+    [time3Path addCurveToPoint: CGPointMake(945.4, 227.52) controlPoint1: CGPointMake(991.2, 213.32) controlPoint2: CGPointMake(970, 227.52)];
     [time3Path closePath];
     [informationColor setFill];
     [time3Path fill];
@@ -117,17 +145,17 @@
 
     //// Time-4 Drawing
     UIBezierPath* time4Path = [UIBezierPath bezierPath];
-    [time4Path moveToPoint: CGPointMake(1070.72, 155.32)];
-    [time4Path addCurveToPoint: CGPointMake(1052.12, 108.12) controlPoint1: CGPointMake(1070.72, 123.32) controlPoint2: CGPointMake(1063.92, 108.12)];
-    [time4Path addCurveToPoint: CGPointMake(1033.92, 155.32) controlPoint1: CGPointMake(1040.52, 108.12) controlPoint2: CGPointMake(1033.92, 123.52)];
-    [time4Path addCurveToPoint: CGPointMake(1052.52, 202.51) controlPoint1: CGPointMake(1033.92, 187.12) controlPoint2: CGPointMake(1040.52, 202.51)];
-    [time4Path addCurveToPoint: CGPointMake(1070.72, 155.32) controlPoint1: CGPointMake(1064.12, 202.51) controlPoint2: CGPointMake(1070.72, 187.12)];
+    [time4Path moveToPoint: CGPointMake(1069, 155.32)];
+    [time4Path addCurveToPoint: CGPointMake(1050.4, 108.12) controlPoint1: CGPointMake(1069, 123.32) controlPoint2: CGPointMake(1062.2, 108.12)];
+    [time4Path addCurveToPoint: CGPointMake(1032.2, 155.32) controlPoint1: CGPointMake(1038.8, 108.12) controlPoint2: CGPointMake(1032.2, 123.52)];
+    [time4Path addCurveToPoint: CGPointMake(1050.8, 202.51) controlPoint1: CGPointMake(1032.2, 187.12) controlPoint2: CGPointMake(1038.8, 202.51)];
+    [time4Path addCurveToPoint: CGPointMake(1069, 155.32) controlPoint1: CGPointMake(1062.4, 202.51) controlPoint2: CGPointMake(1069, 187.12)];
     [time4Path closePath];
-    [time4Path moveToPoint: CGPointMake(1098.32, 155.32)];
-    [time4Path addCurveToPoint: CGPointMake(1052.32, 228.11) controlPoint1: CGPointMake(1098.32, 202.71) controlPoint2: CGPointMake(1080.92, 228.11)];
-    [time4Path addCurveToPoint: CGPointMake(1006.32, 155.32) controlPoint1: CGPointMake(1023.12, 228.11) controlPoint2: CGPointMake(1006.32, 202.92)];
-    [time4Path addCurveToPoint: CGPointMake(1052.32, 82.52) controlPoint1: CGPointMake(1006.32, 108.12) controlPoint2: CGPointMake(1023.72, 82.52)];
-    [time4Path addCurveToPoint: CGPointMake(1098.32, 155.32) controlPoint1: CGPointMake(1081.32, 82.52) controlPoint2: CGPointMake(1098.32, 107.72)];
+    [time4Path moveToPoint: CGPointMake(1096.6, 155.32)];
+    [time4Path addCurveToPoint: CGPointMake(1050.6, 228.11) controlPoint1: CGPointMake(1096.6, 202.71) controlPoint2: CGPointMake(1079.2, 228.11)];
+    [time4Path addCurveToPoint: CGPointMake(1004.6, 155.32) controlPoint1: CGPointMake(1021.4, 228.11) controlPoint2: CGPointMake(1004.6, 202.92)];
+    [time4Path addCurveToPoint: CGPointMake(1050.6, 82.52) controlPoint1: CGPointMake(1004.6, 108.12) controlPoint2: CGPointMake(1022, 82.52)];
+    [time4Path addCurveToPoint: CGPointMake(1096.6, 155.32) controlPoint1: CGPointMake(1079.6, 82.52) controlPoint2: CGPointMake(1096.6, 107.72)];
     [time4Path closePath];
     [informationColor setFill];
     [time4Path fill];
@@ -176,629 +204,349 @@
     [score2Path fill];
 
 
-    //// Tile-1-Fill Drawing
-    UIBezierPath* tile1FillPath = [UIBezierPath bezierPathWithRect: CGRectMake(299.5, 782.5, 223, 249)];
-    [primaryFillColor setFill];
-    [tile1FillPath fill];
-
-
-    //// Tile-1-Stroke Drawing
-    UIBezierPath* tile1StrokePath = [UIBezierPath bezierPath];
-    [tile1StrokePath moveToPoint: CGPointMake(525, 780)];
-    [tile1StrokePath addLineToPoint: CGPointMake(297, 780)];
-    [tile1StrokePath addLineToPoint: CGPointMake(297, 1034)];
-    [tile1StrokePath addLineToPoint: CGPointMake(525, 1034)];
-    [tile1StrokePath addLineToPoint: CGPointMake(525, 780)];
-    [tile1StrokePath closePath];
-    [tile1StrokePath moveToPoint: CGPointMake(520, 1029)];
-    [tile1StrokePath addLineToPoint: CGPointMake(302, 1029)];
-    [tile1StrokePath addLineToPoint: CGPointMake(302, 785)];
-    [tile1StrokePath addLineToPoint: CGPointMake(520, 785)];
-    [tile1StrokePath addLineToPoint: CGPointMake(520, 1029)];
-    [tile1StrokePath closePath];
-    [primaryStrokeColor setFill];
-    [tile1StrokePath fill];
-
-
-    //// Tile-1-Score Drawing
-    UIBezierPath* tile1ScorePath = [UIBezierPath bezierPath];
-    [tile1ScorePath moveToPoint: CGPointMake(492.32, 1014.36)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(483.38, 1012.49) controlPoint1: CGPointMake(488.47, 1014.36) controlPoint2: CGPointMake(485.74, 1013.59)];
-    [tile1ScorePath addLineToPoint: CGPointMake(482.61, 1005.48)];
-    [tile1ScorePath addLineToPoint: CGPointMake(482.71, 1005.43)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(491.45, 1008.36) controlPoint1: CGPointMake(485.59, 1007.3) controlPoint2: CGPointMake(488.62, 1008.36)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(496.54, 1004.18) controlPoint1: CGPointMake(494.48, 1008.36) controlPoint2: CGPointMake(496.54, 1006.63)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(487.08, 997.56) controlPoint1: CGPointMake(496.54, 1001.35) controlPoint2: CGPointMake(494.38, 999.43)];
-    [tile1ScorePath addLineToPoint: CGPointMake(487.08, 994.82)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(496.06, 987.76) controlPoint1: CGPointMake(494.19, 991.8) controlPoint2: CGPointMake(496.06, 990.07)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(491.98, 984.35) controlPoint1: CGPointMake(496.06, 985.7) controlPoint2: CGPointMake(494.43, 984.35)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(483.57, 987.52) controlPoint1: CGPointMake(489.05, 984.35) controlPoint2: CGPointMake(486.07, 985.75)];
-    [tile1ScorePath addLineToPoint: CGPointMake(483.48, 987.52)];
-    [tile1ScorePath addLineToPoint: CGPointMake(483.48, 981.09)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(493.13, 978.35) controlPoint1: CGPointMake(485.69, 979.7) controlPoint2: CGPointMake(489.05, 978.35)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(503.27, 986.71) controlPoint1: CGPointMake(499.33, 978.35) controlPoint2: CGPointMake(503.27, 981.71)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(496.45, 995.59) controlPoint1: CGPointMake(503.27, 990.26) controlPoint2: CGPointMake(501.11, 993.14)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(503.7, 1004.66) controlPoint1: CGPointMake(501.2, 997.32) controlPoint2: CGPointMake(503.7, 1000.68)];
-    [tile1ScorePath addCurveToPoint: CGPointMake(492.32, 1014.36) controlPoint1: CGPointMake(503.7, 1010.85) controlPoint2: CGPointMake(498.22, 1014.36)];
-    [tile1ScorePath closePath];
-    [contentColor setFill];
-    [tile1ScorePath fill];
-
-
-    //// Tile-1-Letter Drawing
-    UIBezierPath* tile1LetterPath = [UIBezierPath bezierPath];
-    [tile1LetterPath moveToPoint: CGPointMake(411, 910.96)];
-    [tile1LetterPath addLineToPoint: CGPointMake(431.9, 838.06)];
-    [tile1LetterPath addLineToPoint: CGPointMake(468.64, 838.06)];
-    [tile1LetterPath addLineToPoint: CGPointMake(468.64, 964.06)];
-    [tile1LetterPath addLineToPoint: CGPointMake(442.88, 964.06)];
-    [tile1LetterPath addLineToPoint: CGPointMake(443.06, 872.44)];
-    [tile1LetterPath addLineToPoint: CGPointMake(414.43, 964.78)];
-    [tile1LetterPath addLineToPoint: CGPointMake(406.14, 964.78)];
-    [tile1LetterPath addLineToPoint: CGPointMake(377.5, 872.62)];
-    [tile1LetterPath addLineToPoint: CGPointMake(377.86, 964.06)];
-    [tile1LetterPath addLineToPoint: CGPointMake(353.37, 964.06)];
-    [tile1LetterPath addLineToPoint: CGPointMake(353.37, 838.06)];
-    [tile1LetterPath addLineToPoint: CGPointMake(390.11, 838.06)];
-    [tile1LetterPath addLineToPoint: CGPointMake(411, 910.96)];
-    [tile1LetterPath closePath];
-    [contentColor setFill];
-    [tile1LetterPath fill];
-
-
-    //// Tile-2-Fill Drawing
-    UIBezierPath* tile2FillPath = [UIBezierPath bezierPathWithRect: CGRectMake(558.85, 782.5, 223, 249)];
-    [primaryFillColor setFill];
-    [tile2FillPath fill];
-
-
-    //// Tile-2-Stroke Drawing
-    UIBezierPath* tile2StrokePath = [UIBezierPath bezierPath];
-    [tile2StrokePath moveToPoint: CGPointMake(784.33, 780)];
-    [tile2StrokePath addLineToPoint: CGPointMake(556.33, 780)];
-    [tile2StrokePath addLineToPoint: CGPointMake(556.33, 1034)];
-    [tile2StrokePath addLineToPoint: CGPointMake(784.33, 1034)];
-    [tile2StrokePath addLineToPoint: CGPointMake(784.33, 780)];
-    [tile2StrokePath closePath];
-    [tile2StrokePath moveToPoint: CGPointMake(779.33, 1029)];
-    [tile2StrokePath addLineToPoint: CGPointMake(561.33, 1029)];
-    [tile2StrokePath addLineToPoint: CGPointMake(561.33, 785)];
-    [tile2StrokePath addLineToPoint: CGPointMake(779.33, 785)];
-    [tile2StrokePath addLineToPoint: CGPointMake(779.33, 1029)];
-    [tile2StrokePath closePath];
-    [primaryStrokeColor setFill];
-    [tile2StrokePath fill];
-
-
-    //// Tile-2-Letter Drawing
-    UIBezierPath* tile2LetterPath = [UIBezierPath bezierPath];
-    [tile2LetterPath moveToPoint: CGPointMake(627.92, 838.06)];
-    [tile2LetterPath addLineToPoint: CGPointMake(654.58, 838.06)];
-    [tile2LetterPath addLineToPoint: CGPointMake(654.58, 921.04)];
-    [tile2LetterPath addCurveToPoint: CGPointMake(670.79, 942.64) controlPoint1: CGPointMake(654.58, 935.98) controlPoint2: CGPointMake(660.7, 942.64)];
-    [tile2LetterPath addCurveToPoint: CGPointMake(686.82, 921.04) controlPoint1: CGPointMake(680.69, 942.64) controlPoint2: CGPointMake(686.82, 935.98)];
-    [tile2LetterPath addLineToPoint: CGPointMake(686.82, 838.06)];
-    [tile2LetterPath addLineToPoint: CGPointMake(712.93, 838.06)];
-    [tile2LetterPath addLineToPoint: CGPointMake(712.93, 918.34)];
-    [tile2LetterPath addCurveToPoint: CGPointMake(670.43, 966.22) controlPoint1: CGPointMake(712.93, 949.12) controlPoint2: CGPointMake(697.62, 966.22)];
-    [tile2LetterPath addCurveToPoint: CGPointMake(627.92, 918.34) controlPoint1: CGPointMake(643.05, 966.22) controlPoint2: CGPointMake(627.92, 949.12)];
-    [tile2LetterPath addLineToPoint: CGPointMake(627.92, 838.06)];
-    [tile2LetterPath closePath];
-    [contentColor setFill];
-    [tile2LetterPath fill];
-
-
-    //// Tile-2-Score Drawing
-    UIBezierPath* tile2ScorePath = [UIBezierPath bezierPath];
-    [tile2ScorePath moveToPoint: CGPointMake(746.32, 986.42)];
-    [tile2ScorePath addLineToPoint: CGPointMake(760.44, 978.26)];
-    [tile2ScorePath addLineToPoint: CGPointMake(761.07, 978.5)];
-    [tile2ScorePath addLineToPoint: CGPointMake(761.07, 1013.83)];
-    [tile2ScorePath addLineToPoint: CGPointMake(753.96, 1013.83)];
-    [tile2ScorePath addLineToPoint: CGPointMake(753.96, 989.3)];
-    [tile2ScorePath addLineToPoint: CGPointMake(746.41, 993.67)];
-    [tile2ScorePath addLineToPoint: CGPointMake(746.32, 993.62)];
-    [tile2ScorePath addLineToPoint: CGPointMake(746.32, 986.42)];
-    [tile2ScorePath closePath];
-    [contentColor setFill];
-    [tile2ScorePath fill];
-
-
-    //// Tile-3-Fill Drawing
-    UIBezierPath* tile3FillPath = [UIBezierPath bezierPathWithRect: CGRectMake(818.15, 782.5, 223, 249)];
-    [primaryFillColor setFill];
-    [tile3FillPath fill];
-
-
-    //// Tile-3-Stroke Drawing
-    UIBezierPath* tile3StrokePath = [UIBezierPath bezierPath];
-    [tile3StrokePath moveToPoint: CGPointMake(1043.67, 780)];
-    [tile3StrokePath addLineToPoint: CGPointMake(815.67, 780)];
-    [tile3StrokePath addLineToPoint: CGPointMake(815.67, 1034)];
-    [tile3StrokePath addLineToPoint: CGPointMake(1043.67, 1034)];
-    [tile3StrokePath addLineToPoint: CGPointMake(1043.67, 780)];
-    [tile3StrokePath closePath];
-    [tile3StrokePath moveToPoint: CGPointMake(1038.67, 1029)];
-    [tile3StrokePath addLineToPoint: CGPointMake(820.67, 1029)];
-    [tile3StrokePath addLineToPoint: CGPointMake(820.67, 785)];
-    [tile3StrokePath addLineToPoint: CGPointMake(1038.67, 785)];
-    [tile3StrokePath addLineToPoint: CGPointMake(1038.67, 1029)];
-    [tile3StrokePath closePath];
-    [primaryStrokeColor setFill];
-    [tile3StrokePath fill];
-
-
-    //// Tile-3-Letter Drawing
-    UIBezierPath* tile3LetterPath = [UIBezierPath bezierPath];
-    [tile3LetterPath moveToPoint: CGPointMake(946.33, 912.04)];
-    [tile3LetterPath addLineToPoint: CGPointMake(913.01, 912.04)];
-    [tile3LetterPath addLineToPoint: CGPointMake(913.01, 964.06)];
-    [tile3LetterPath addLineToPoint: CGPointMake(886.35, 964.06)];
-    [tile3LetterPath addLineToPoint: CGPointMake(886.35, 838.06)];
-    [tile3LetterPath addLineToPoint: CGPointMake(913.01, 838.06)];
-    [tile3LetterPath addLineToPoint: CGPointMake(913.01, 888.28)];
-    [tile3LetterPath addLineToPoint: CGPointMake(946.33, 888.28)];
-    [tile3LetterPath addLineToPoint: CGPointMake(946.33, 838.06)];
-    [tile3LetterPath addLineToPoint: CGPointMake(972.99, 838.06)];
-    [tile3LetterPath addLineToPoint: CGPointMake(972.99, 964.06)];
-    [tile3LetterPath addLineToPoint: CGPointMake(946.33, 964.06)];
-    [tile3LetterPath addLineToPoint: CGPointMake(946.33, 912.04)];
-    [tile3LetterPath closePath];
-    [contentColor setFill];
-    [tile3LetterPath fill];
-
-
-    //// Tile-3-Score Drawing
-    UIBezierPath* tile3ScorePath = [UIBezierPath bezierPath];
-    [tile3ScorePath moveToPoint: CGPointMake(1012.04, 1001.25)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1012.04, 984.4)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1003.44, 1001.25)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1012.04, 1001.25)];
-    [tile3ScorePath closePath];
-    [tile3ScorePath moveToPoint: CGPointMake(1018.62, 1013.83)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1011.85, 1013.83)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1011.85, 1006.63)];
-    [tile3ScorePath addLineToPoint: CGPointMake(996.62, 1006.63)];
-    [tile3ScorePath addLineToPoint: CGPointMake(996.29, 1003.32)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1009.59, 978.69)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1018.62, 978.69)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1018.62, 1001.25)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1023.04, 1001.25)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1023.04, 1006.63)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1018.62, 1006.63)];
-    [tile3ScorePath addLineToPoint: CGPointMake(1018.62, 1013.83)];
-    [tile3ScorePath closePath];
-    [contentColor setFill];
-    [tile3ScorePath fill];
-
-
-    //// Tile-4-Fill Drawing
-    UIBezierPath* tile4FillPath = [UIBezierPath bezierPathWithRect: CGRectMake(1077.5, 782.5, 223, 249)];
-    [primaryFillColor setFill];
-    [tile4FillPath fill];
-
-
-    //// Tile-4-Stroke Drawing
-    UIBezierPath* tile4StrokePath = [UIBezierPath bezierPath];
-    [tile4StrokePath moveToPoint: CGPointMake(1303, 780)];
-    [tile4StrokePath addLineToPoint: CGPointMake(1075, 780)];
-    [tile4StrokePath addLineToPoint: CGPointMake(1075, 1034)];
-    [tile4StrokePath addLineToPoint: CGPointMake(1303, 1034)];
-    [tile4StrokePath addLineToPoint: CGPointMake(1303, 780)];
-    [tile4StrokePath closePath];
-    [tile4StrokePath moveToPoint: CGPointMake(1298, 1029)];
-    [tile4StrokePath addLineToPoint: CGPointMake(1080, 1029)];
-    [tile4StrokePath addLineToPoint: CGPointMake(1080, 785)];
-    [tile4StrokePath addLineToPoint: CGPointMake(1298, 785)];
-    [tile4StrokePath addLineToPoint: CGPointMake(1298, 1029)];
-    [tile4StrokePath closePath];
-    [primaryStrokeColor setFill];
-    [tile4StrokePath fill];
-
-
-    //// Tile-4-Letter Drawing
-    UIBezierPath* tile4LetterPath = [UIBezierPath bezierPath];
-    [tile4LetterPath moveToPoint: CGPointMake(1150.28, 901.06)];
-    [tile4LetterPath addCurveToPoint: CGPointMake(1197.65, 836.08) controlPoint1: CGPointMake(1150.28, 861.1) controlPoint2: CGPointMake(1170.09, 836.08)];
-    [tile4LetterPath addCurveToPoint: CGPointMake(1225.75, 846.34) controlPoint1: CGPointMake(1209.9, 836.08) controlPoint2: CGPointMake(1219.44, 840.94)];
-    [tile4LetterPath addLineToPoint: CGPointMake(1225.75, 874.6)];
-    [tile4LetterPath addLineToPoint: CGPointMake(1225.39, 874.6)];
-    [tile4LetterPath addCurveToPoint: CGPointMake(1201.25, 860.74) controlPoint1: CGPointMake(1218.72, 867.22) controlPoint2: CGPointMake(1210.08, 860.74)];
-    [tile4LetterPath addCurveToPoint: CGPointMake(1177.65, 900.7) controlPoint1: CGPointMake(1187.92, 860.74) controlPoint2: CGPointMake(1177.65, 876.4)];
-    [tile4LetterPath addCurveToPoint: CGPointMake(1201.25, 941.38) controlPoint1: CGPointMake(1177.65, 927.34) controlPoint2: CGPointMake(1187.92, 941.38)];
-    [tile4LetterPath addCurveToPoint: CGPointMake(1226.47, 927.88) controlPoint1: CGPointMake(1210.44, 941.38) controlPoint2: CGPointMake(1219.26, 935.62)];
-    [tile4LetterPath addLineToPoint: CGPointMake(1227.01, 928.06)];
-    [tile4LetterPath addLineToPoint: CGPointMake(1224.67, 955.78)];
-    [tile4LetterPath addCurveToPoint: CGPointMake(1195.85, 966.04) controlPoint1: CGPointMake(1217.64, 961.36) controlPoint2: CGPointMake(1208.45, 966.04)];
-    [tile4LetterPath addCurveToPoint: CGPointMake(1150.28, 901.06) controlPoint1: CGPointMake(1169.73, 966.04) controlPoint2: CGPointMake(1150.28, 942.64)];
-    [tile4LetterPath closePath];
-    [contentColor setFill];
-    [tile4LetterPath fill];
-
-
-    //// Tile-4-Score Drawing
-    UIBezierPath* tile4ScorePath = [UIBezierPath bezierPath];
-    [tile4ScorePath moveToPoint: CGPointMake(1270.32, 997.22)];
-    [tile4ScorePath addCurveToPoint: CGPointMake(1273.34, 996.93) controlPoint1: CGPointMake(1271.28, 997.22) controlPoint2: CGPointMake(1272.29, 997.12)];
-    [tile4ScorePath addCurveToPoint: CGPointMake(1274.74, 990.55) controlPoint1: CGPointMake(1274.35, 994.68) controlPoint2: CGPointMake(1274.74, 992.75)];
-    [tile4ScorePath addCurveToPoint: CGPointMake(1269.89, 984.02) controlPoint1: CGPointMake(1274.74, 986.51) controlPoint2: CGPointMake(1272.82, 984.02)];
-    [tile4ScorePath addCurveToPoint: CGPointMake(1264.89, 990.74) controlPoint1: CGPointMake(1266.81, 984.02) controlPoint2: CGPointMake(1264.89, 986.75)];
-    [tile4ScorePath addCurveToPoint: CGPointMake(1270.32, 997.22) controlPoint1: CGPointMake(1264.89, 995.35) controlPoint2: CGPointMake(1267, 997.22)];
-    [tile4ScorePath closePath];
-    [tile4ScorePath moveToPoint: CGPointMake(1271.38, 1013.83)];
-    [tile4ScorePath addLineToPoint: CGPointMake(1263.4, 1013.83)];
-    [tile4ScorePath addLineToPoint: CGPointMake(1269.93, 1003.84)];
-    [tile4ScorePath addCurveToPoint: CGPointMake(1270.99, 1002.12) controlPoint1: CGPointMake(1270.32, 1003.27) controlPoint2: CGPointMake(1270.65, 1002.69)];
-    [tile4ScorePath addCurveToPoint: CGPointMake(1267.72, 1002.5) controlPoint1: CGPointMake(1269.93, 1002.4) controlPoint2: CGPointMake(1268.88, 1002.5)];
-    [tile4ScorePath addCurveToPoint: CGPointMake(1257.83, 990.98) controlPoint1: CGPointMake(1262.44, 1002.5) controlPoint2: CGPointMake(1257.83, 998.56)];
-    [tile4ScorePath addCurveToPoint: CGPointMake(1270.03, 978.16) controlPoint1: CGPointMake(1257.83, 983.83) controlPoint2: CGPointMake(1262.54, 978.16)];
-    [tile4ScorePath addCurveToPoint: CGPointMake(1281.8, 990.59) controlPoint1: CGPointMake(1277.67, 978.16) controlPoint2: CGPointMake(1281.8, 983.2)];
-    [tile4ScorePath addCurveToPoint: CGPointMake(1275.99, 1006.1) controlPoint1: CGPointMake(1281.8, 995.54) controlPoint2: CGPointMake(1279.78, 999.91)];
-    [tile4ScorePath addLineToPoint: CGPointMake(1271.38, 1013.83)];
-    [tile4ScorePath closePath];
-    [contentColor setFill];
-    [tile4ScorePath fill];
-
-
-    //// Tile-5-Fill Drawing
-    UIBezierPath* tile5FillPath = [UIBezierPath bezierPathWithRect: CGRectMake(1336.85, 782.5, 223, 249)];
-    [primaryFillColor setFill];
-    [tile5FillPath fill];
-
-
-    //// Tile-5-Stroke Drawing
-    UIBezierPath* tile5StrokePath = [UIBezierPath bezierPath];
-    [tile5StrokePath moveToPoint: CGPointMake(1562.33, 780)];
-    [tile5StrokePath addLineToPoint: CGPointMake(1334.33, 780)];
-    [tile5StrokePath addLineToPoint: CGPointMake(1334.33, 1034)];
-    [tile5StrokePath addLineToPoint: CGPointMake(1562.33, 1034)];
-    [tile5StrokePath addLineToPoint: CGPointMake(1562.33, 780)];
-    [tile5StrokePath closePath];
-    [tile5StrokePath moveToPoint: CGPointMake(1557.33, 1029)];
-    [tile5StrokePath addLineToPoint: CGPointMake(1339.33, 1029)];
-    [tile5StrokePath addLineToPoint: CGPointMake(1339.33, 785)];
-    [tile5StrokePath addLineToPoint: CGPointMake(1557.33, 785)];
-    [tile5StrokePath addLineToPoint: CGPointMake(1557.33, 1029)];
-    [tile5StrokePath closePath];
-    [primaryStrokeColor setFill];
-    [tile5StrokePath fill];
-
-
-    //// Tile-5-Letter Drawing
-    UIBezierPath* tile5LetterPath = [UIBezierPath bezierPath];
-    [tile5LetterPath moveToPoint: CGPointMake(1405.11, 838.06)];
-    [tile5LetterPath addLineToPoint: CGPointMake(1430.32, 838.06)];
-    [tile5LetterPath addLineToPoint: CGPointMake(1467.07, 906.64)];
-    [tile5LetterPath addLineToPoint: CGPointMake(1466.89, 838.06)];
-    [tile5LetterPath addLineToPoint: CGPointMake(1491.56, 838.06)];
-    [tile5LetterPath addLineToPoint: CGPointMake(1491.56, 964.42)];
-    [tile5LetterPath addLineToPoint: CGPointMake(1471.75, 964.42)];
-    [tile5LetterPath addLineToPoint: CGPointMake(1429.42, 887.38)];
-    [tile5LetterPath addLineToPoint: CGPointMake(1429.78, 964.06)];
-    [tile5LetterPath addLineToPoint: CGPointMake(1405.11, 964.06)];
-    [tile5LetterPath addLineToPoint: CGPointMake(1405.11, 838.06)];
-    [tile5LetterPath closePath];
-    [contentColor setFill];
-    [tile5LetterPath fill];
-
-
-    //// Tile-5-Score Drawing
-    UIBezierPath* tile5ScorePath = [UIBezierPath bezierPath];
-    [tile5ScorePath moveToPoint: CGPointMake(1524.32, 986.42)];
-    [tile5ScorePath addLineToPoint: CGPointMake(1538.44, 978.26)];
-    [tile5ScorePath addLineToPoint: CGPointMake(1539.07, 978.5)];
-    [tile5ScorePath addLineToPoint: CGPointMake(1539.07, 1013.83)];
-    [tile5ScorePath addLineToPoint: CGPointMake(1531.96, 1013.83)];
-    [tile5ScorePath addLineToPoint: CGPointMake(1531.96, 989.3)];
-    [tile5ScorePath addLineToPoint: CGPointMake(1524.41, 993.67)];
-    [tile5ScorePath addLineToPoint: CGPointMake(1524.32, 993.62)];
-    [tile5ScorePath addLineToPoint: CGPointMake(1524.32, 986.42)];
-    [tile5ScorePath closePath];
-    [contentColor setFill];
-    [tile5ScorePath fill];
-
-
-    //// Tile-6-Fill Drawing
-    UIBezierPath* tile6FillPath = [UIBezierPath bezierPathWithRect: CGRectMake(1596.15, 782.5, 223, 249)];
-    [primaryFillColor setFill];
-    [tile6FillPath fill];
-
-
-    //// Tile-6-Stroke Drawing
-    UIBezierPath* tile6StrokePath = [UIBezierPath bezierPath];
-    [tile6StrokePath moveToPoint: CGPointMake(1821.67, 780)];
-    [tile6StrokePath addLineToPoint: CGPointMake(1593.67, 780)];
-    [tile6StrokePath addLineToPoint: CGPointMake(1593.67, 1034)];
-    [tile6StrokePath addLineToPoint: CGPointMake(1821.67, 1034)];
-    [tile6StrokePath addLineToPoint: CGPointMake(1821.67, 780)];
-    [tile6StrokePath closePath];
-    [tile6StrokePath moveToPoint: CGPointMake(1816.67, 1029)];
-    [tile6StrokePath addLineToPoint: CGPointMake(1598.67, 1029)];
-    [tile6StrokePath addLineToPoint: CGPointMake(1598.67, 785)];
-    [tile6StrokePath addLineToPoint: CGPointMake(1816.67, 785)];
-    [tile6StrokePath addLineToPoint: CGPointMake(1816.67, 1029)];
-    [tile6StrokePath closePath];
-    [primaryStrokeColor setFill];
-    [tile6StrokePath fill];
-
-
-    //// Tile-6-Letter Drawing
-    UIBezierPath* tile6LetterPath = [UIBezierPath bezierPath];
-    [tile6LetterPath moveToPoint: CGPointMake(1719.11, 915.46)];
-    [tile6LetterPath addLineToPoint: CGPointMake(1707.22, 867.58)];
-    [tile6LetterPath addLineToPoint: CGPointMake(1694.97, 915.46)];
-    [tile6LetterPath addLineToPoint: CGPointMake(1719.11, 915.46)];
-    [tile6LetterPath closePath];
-    [tile6LetterPath moveToPoint: CGPointMake(1692.81, 837.7)];
-    [tile6LetterPath addLineToPoint: CGPointMake(1723.43, 837.7)];
-    [tile6LetterPath addLineToPoint: CGPointMake(1758.55, 964.06)];
-    [tile6LetterPath addLineToPoint: CGPointMake(1730.09, 964.06)];
-    [tile6LetterPath addLineToPoint: CGPointMake(1723.61, 937.24)];
-    [tile6LetterPath addLineToPoint: CGPointMake(1690.29, 937.24)];
-    [tile6LetterPath addLineToPoint: CGPointMake(1683.8, 964.06)];
-    [tile6LetterPath addLineToPoint: CGPointMake(1656.79, 964.06)];
-    [tile6LetterPath addLineToPoint: CGPointMake(1692.81, 837.7)];
-    [tile6LetterPath closePath];
-    [contentColor setFill];
-    [tile6LetterPath fill];
-
-
-    //// Tile-6-Score Drawing
-    UIBezierPath* tile6ScorePath = [UIBezierPath bezierPath];
-    [tile6ScorePath moveToPoint: CGPointMake(1783.65, 986.42)];
-    [tile6ScorePath addLineToPoint: CGPointMake(1797.77, 978.26)];
-    [tile6ScorePath addLineToPoint: CGPointMake(1798.4, 978.5)];
-    [tile6ScorePath addLineToPoint: CGPointMake(1798.4, 1013.83)];
-    [tile6ScorePath addLineToPoint: CGPointMake(1791.29, 1013.83)];
-    [tile6ScorePath addLineToPoint: CGPointMake(1791.29, 989.3)];
-    [tile6ScorePath addLineToPoint: CGPointMake(1783.75, 993.67)];
-    [tile6ScorePath addLineToPoint: CGPointMake(1783.65, 993.62)];
-    [tile6ScorePath addLineToPoint: CGPointMake(1783.65, 986.42)];
-    [tile6ScorePath closePath];
-    [contentColor setFill];
-    [tile6ScorePath fill];
-
-
-    //// Tile-7-Fill Drawing
-    UIBezierPath* tile7FillPath = [UIBezierPath bezierPathWithRect: CGRectMake(1855.5, 782.5, 223, 249)];
-    [primaryFillColor setFill];
-    [tile7FillPath fill];
-
-
-    //// Tile-7-Stroke Drawing
-    UIBezierPath* tile7StrokePath = [UIBezierPath bezierPath];
-    [tile7StrokePath moveToPoint: CGPointMake(2081, 780)];
-    [tile7StrokePath addLineToPoint: CGPointMake(1853, 780)];
-    [tile7StrokePath addLineToPoint: CGPointMake(1853, 1034)];
-    [tile7StrokePath addLineToPoint: CGPointMake(2081, 1034)];
-    [tile7StrokePath addLineToPoint: CGPointMake(2081, 780)];
-    [tile7StrokePath closePath];
-    [tile7StrokePath moveToPoint: CGPointMake(2076, 1029)];
-    [tile7StrokePath addLineToPoint: CGPointMake(1858, 1029)];
-    [tile7StrokePath addLineToPoint: CGPointMake(1858, 785)];
-    [tile7StrokePath addLineToPoint: CGPointMake(2076, 785)];
-    [tile7StrokePath addLineToPoint: CGPointMake(2076, 1029)];
-    [tile7StrokePath closePath];
-    [primaryStrokeColor setFill];
-    [tile7StrokePath fill];
-
-
-    //// Tile-7-Letter Drawing
-    UIBezierPath* tile7LetterPath = [UIBezierPath bezierPath];
-    [tile7LetterPath moveToPoint: CGPointMake(1966.91, 943)];
-    [tile7LetterPath addCurveToPoint: CGPointMake(1977.36, 939.58) controlPoint1: CGPointMake(1970.88, 943) controlPoint2: CGPointMake(1974.48, 941.74)];
-    [tile7LetterPath addLineToPoint: CGPointMake(1962.77, 922.66)];
-    [tile7LetterPath addLineToPoint: CGPointMake(1977.9, 911.5)];
-    [tile7LetterPath addLineToPoint: CGPointMake(1986, 921.4)];
-    [tile7LetterPath addCurveToPoint: CGPointMake(1987.63, 900.34) controlPoint1: CGPointMake(1987.09, 915.82) controlPoint2: CGPointMake(1987.63, 908.8)];
-    [tile7LetterPath addCurveToPoint: CGPointMake(1966.91, 859.3) controlPoint1: CGPointMake(1987.63, 873.52) controlPoint2: CGPointMake(1979.52, 859.3)];
-    [tile7LetterPath addCurveToPoint: CGPointMake(1946.2, 900.52) controlPoint1: CGPointMake(1954.31, 859.3) controlPoint2: CGPointMake(1946.2, 873.52)];
-    [tile7LetterPath addCurveToPoint: CGPointMake(1966.91, 943) controlPoint1: CGPointMake(1946.2, 928.24) controlPoint2: CGPointMake(1954.12, 943)];
-    [tile7LetterPath closePath];
-    [tile7LetterPath moveToPoint: CGPointMake(1999.69, 967.3)];
-    [tile7LetterPath addLineToPoint: CGPointMake(1991.95, 957.4)];
-    [tile7LetterPath addCurveToPoint: CGPointMake(1966.37, 965.68) controlPoint1: CGPointMake(1984.92, 962.62) controlPoint2: CGPointMake(1976.28, 965.68)];
-    [tile7LetterPath addCurveToPoint: CGPointMake(1919, 900.34) controlPoint1: CGPointMake(1937.55, 965.68) controlPoint2: CGPointMake(1919, 940.12)];
-    [tile7LetterPath addCurveToPoint: CGPointMake(1966.91, 835.54) controlPoint1: CGPointMake(1919, 860.92) controlPoint2: CGPointMake(1937.73, 835.54)];
-    [tile7LetterPath addCurveToPoint: CGPointMake(2014.64, 899.98) controlPoint1: CGPointMake(1996.09, 835.54) controlPoint2: CGPointMake(2014.64, 861.1)];
-    [tile7LetterPath addCurveToPoint: CGPointMake(2004.38, 943.54) controlPoint1: CGPointMake(2014.64, 917.98) controlPoint2: CGPointMake(2011.04, 932.56)];
-    [tile7LetterPath addLineToPoint: CGPointMake(2015, 956.14)];
-    [tile7LetterPath addLineToPoint: CGPointMake(1999.69, 967.3)];
-    [tile7LetterPath closePath];
-    [contentColor setFill];
-    [tile7LetterPath fill];
-
-
-    //// Tile-7-Score Drawing
-    UIBezierPath* tile7ScorePath = [UIBezierPath bezierPath];
-    [tile7ScorePath moveToPoint: CGPointMake(2048.32, 997.22)];
-    [tile7ScorePath addCurveToPoint: CGPointMake(2051.34, 996.93) controlPoint1: CGPointMake(2049.28, 997.22) controlPoint2: CGPointMake(2050.29, 997.12)];
-    [tile7ScorePath addCurveToPoint: CGPointMake(2052.74, 990.55) controlPoint1: CGPointMake(2052.35, 994.68) controlPoint2: CGPointMake(2052.74, 992.75)];
-    [tile7ScorePath addCurveToPoint: CGPointMake(2047.88, 984.02) controlPoint1: CGPointMake(2052.74, 986.51) controlPoint2: CGPointMake(2050.82, 984.02)];
-    [tile7ScorePath addCurveToPoint: CGPointMake(2042.89, 990.74) controlPoint1: CGPointMake(2044.81, 984.02) controlPoint2: CGPointMake(2042.89, 986.75)];
-    [tile7ScorePath addCurveToPoint: CGPointMake(2048.32, 997.22) controlPoint1: CGPointMake(2042.89, 995.35) controlPoint2: CGPointMake(2045, 997.22)];
-    [tile7ScorePath closePath];
-    [tile7ScorePath moveToPoint: CGPointMake(2049.38, 1013.83)];
-    [tile7ScorePath addLineToPoint: CGPointMake(2041.4, 1013.83)];
-    [tile7ScorePath addLineToPoint: CGPointMake(2047.93, 1003.84)];
-    [tile7ScorePath addCurveToPoint: CGPointMake(2048.99, 1002.12) controlPoint1: CGPointMake(2048.32, 1003.27) controlPoint2: CGPointMake(2048.65, 1002.69)];
-    [tile7ScorePath addCurveToPoint: CGPointMake(2045.72, 1002.5) controlPoint1: CGPointMake(2047.93, 1002.4) controlPoint2: CGPointMake(2046.88, 1002.5)];
-    [tile7ScorePath addCurveToPoint: CGPointMake(2035.83, 990.98) controlPoint1: CGPointMake(2040.44, 1002.5) controlPoint2: CGPointMake(2035.83, 998.56)];
-    [tile7ScorePath addCurveToPoint: CGPointMake(2048.03, 978.16) controlPoint1: CGPointMake(2035.83, 983.83) controlPoint2: CGPointMake(2040.54, 978.16)];
-    [tile7ScorePath addCurveToPoint: CGPointMake(2059.8, 990.59) controlPoint1: CGPointMake(2055.67, 978.16) controlPoint2: CGPointMake(2059.8, 983.2)];
-    [tile7ScorePath addCurveToPoint: CGPointMake(2053.99, 1006.1) controlPoint1: CGPointMake(2059.8, 995.54) controlPoint2: CGPointMake(2057.78, 999.91)];
-    [tile7ScorePath addLineToPoint: CGPointMake(2049.38, 1013.83)];
-    [tile7ScorePath closePath];
-    [contentColor setFill];
-    [tile7ScorePath fill];
-
-
     //// Tray-Fill Drawing
     UIBezierPath* trayFillPath = [UIBezierPath bezierPath];
-    [trayFillPath moveToPoint: CGPointMake(2239.16, 406.01)];
-    [trayFillPath addCurveToPoint: CGPointMake(2239.23, 379.08) controlPoint1: CGPointMake(2239.17, 397.03) controlPoint2: CGPointMake(2239.19, 388.06)];
-    [trayFillPath addLineToPoint: CGPointMake(2238.87, 379.14)];
-    [trayFillPath addCurveToPoint: CGPointMake(2238.65, 363.08) controlPoint1: CGPointMake(2238.8, 373.78) controlPoint2: CGPointMake(2238.73, 368.43)];
-    [trayFillPath addCurveToPoint: CGPointMake(2223.85, 339.43) controlPoint1: CGPointMake(2238.06, 352.59) controlPoint2: CGPointMake(2234.32, 343.73)];
-    [trayFillPath addCurveToPoint: CGPointMake(2206.92, 333.7) controlPoint1: CGPointMake(2218.34, 337.16) controlPoint2: CGPointMake(2212.72, 334.73)];
-    [trayFillPath addCurveToPoint: CGPointMake(2164.84, 327.65) controlPoint1: CGPointMake(2192.97, 331.21) controlPoint2: CGPointMake(2178.94, 328.7)];
-    [trayFillPath addCurveToPoint: CGPointMake(1718.64, 318.37) controlPoint1: CGPointMake(2016.39, 316.97) controlPoint2: CGPointMake(1867.37, 319.24)];
-    [trayFillPath addCurveToPoint: CGPointMake(1189.43, 317.99) controlPoint1: CGPointMake(1548.15, 318) controlPoint2: CGPointMake(1360.19, 317.92)];
-    [trayFillPath addCurveToPoint: CGPointMake(660.22, 318.37) controlPoint1: CGPointMake(1018.66, 317.92) controlPoint2: CGPointMake(830.71, 318)];
-    [trayFillPath addCurveToPoint: CGPointMake(214.02, 327.65) controlPoint1: CGPointMake(511.48, 319.24) controlPoint2: CGPointMake(362.47, 316.97)];
-    [trayFillPath addCurveToPoint: CGPointMake(171.94, 333.7) controlPoint1: CGPointMake(199.91, 328.7) controlPoint2: CGPointMake(185.89, 331.21)];
-    [trayFillPath addCurveToPoint: CGPointMake(155, 339.43) controlPoint1: CGPointMake(166.14, 334.73) controlPoint2: CGPointMake(160.51, 337.16)];
-    [trayFillPath addCurveToPoint: CGPointMake(140.21, 363.08) controlPoint1: CGPointMake(144.54, 343.73) controlPoint2: CGPointMake(140.8, 352.59)];
-    [trayFillPath addCurveToPoint: CGPointMake(139.98, 379.14) controlPoint1: CGPointMake(140.13, 368.43) controlPoint2: CGPointMake(140.05, 373.78)];
-    [trayFillPath addLineToPoint: CGPointMake(139.63, 379.08)];
-    [trayFillPath addCurveToPoint: CGPointMake(139.69, 406) controlPoint1: CGPointMake(139.67, 388.05) controlPoint2: CGPointMake(139.68, 397.03)];
-    [trayFillPath addCurveToPoint: CGPointMake(139.69, 609.93) controlPoint1: CGPointMake(139.34, 446.82) controlPoint2: CGPointMake(139.34, 569.11)];
-    [trayFillPath addCurveToPoint: CGPointMake(139.63, 636.85) controlPoint1: CGPointMake(139.68, 618.9) controlPoint2: CGPointMake(139.67, 627.87)];
-    [trayFillPath addLineToPoint: CGPointMake(139.98, 636.79)];
-    [trayFillPath addCurveToPoint: CGPointMake(140.21, 652.85) controlPoint1: CGPointMake(140.05, 642.15) controlPoint2: CGPointMake(140.13, 647.5)];
-    [trayFillPath addCurveToPoint: CGPointMake(155, 676.5) controlPoint1: CGPointMake(140.8, 663.34) controlPoint2: CGPointMake(144.54, 672.2)];
-    [trayFillPath addCurveToPoint: CGPointMake(171.94, 682.23) controlPoint1: CGPointMake(160.51, 678.77) controlPoint2: CGPointMake(166.14, 681.2)];
-    [trayFillPath addCurveToPoint: CGPointMake(214.02, 688.28) controlPoint1: CGPointMake(185.89, 684.72) controlPoint2: CGPointMake(199.91, 687.23)];
-    [trayFillPath addCurveToPoint: CGPointMake(660.22, 697.56) controlPoint1: CGPointMake(362.47, 698.96) controlPoint2: CGPointMake(511.48, 696.69)];
-    [trayFillPath addCurveToPoint: CGPointMake(1189.43, 697.94) controlPoint1: CGPointMake(830.71, 697.93) controlPoint2: CGPointMake(1018.66, 698.01)];
-    [trayFillPath addCurveToPoint: CGPointMake(1718.64, 697.56) controlPoint1: CGPointMake(1360.19, 698.01) controlPoint2: CGPointMake(1548.15, 697.93)];
-    [trayFillPath addCurveToPoint: CGPointMake(2164.84, 688.28) controlPoint1: CGPointMake(1867.37, 696.69) controlPoint2: CGPointMake(2016.39, 698.96)];
-    [trayFillPath addCurveToPoint: CGPointMake(2206.92, 682.23) controlPoint1: CGPointMake(2178.94, 687.23) controlPoint2: CGPointMake(2192.97, 684.72)];
-    [trayFillPath addCurveToPoint: CGPointMake(2223.85, 676.5) controlPoint1: CGPointMake(2212.72, 681.2) controlPoint2: CGPointMake(2218.34, 678.77)];
-    [trayFillPath addCurveToPoint: CGPointMake(2238.65, 652.85) controlPoint1: CGPointMake(2234.32, 672.2) controlPoint2: CGPointMake(2238.06, 663.34)];
-    [trayFillPath addCurveToPoint: CGPointMake(2238.87, 636.79) controlPoint1: CGPointMake(2238.73, 647.5) controlPoint2: CGPointMake(2238.8, 642.15)];
-    [trayFillPath addLineToPoint: CGPointMake(2239.23, 636.85)];
-    [trayFillPath addCurveToPoint: CGPointMake(2239.16, 609.92) controlPoint1: CGPointMake(2239.19, 627.87) controlPoint2: CGPointMake(2239.17, 618.9)];
-    [trayFillPath addCurveToPoint: CGPointMake(2239.16, 406.01) controlPoint1: CGPointMake(2239.52, 569.11) controlPoint2: CGPointMake(2239.52, 446.82)];
+    [trayFillPath moveToPoint: CGPointMake(2267.74, 406.01)];
+    [trayFillPath addCurveToPoint: CGPointMake(2267.8, 379.08) controlPoint1: CGPointMake(2267.75, 397.03) controlPoint2: CGPointMake(2267.76, 388.06)];
+    [trayFillPath addLineToPoint: CGPointMake(2267.45, 379.14)];
+    [trayFillPath addCurveToPoint: CGPointMake(2267.22, 363.08) controlPoint1: CGPointMake(2267.38, 373.78) controlPoint2: CGPointMake(2267.3, 368.43)];
+    [trayFillPath addCurveToPoint: CGPointMake(2252.43, 339.43) controlPoint1: CGPointMake(2266.63, 352.59) controlPoint2: CGPointMake(2262.89, 343.73)];
+    [trayFillPath addCurveToPoint: CGPointMake(2235.49, 333.7) controlPoint1: CGPointMake(2246.91, 337.16) controlPoint2: CGPointMake(2241.29, 334.73)];
+    [trayFillPath addCurveToPoint: CGPointMake(2193.41, 327.65) controlPoint1: CGPointMake(2221.54, 331.21) controlPoint2: CGPointMake(2207.51, 328.7)];
+    [trayFillPath addCurveToPoint: CGPointMake(1747.21, 318.37) controlPoint1: CGPointMake(2044.96, 316.97) controlPoint2: CGPointMake(1895.95, 319.24)];
+    [trayFillPath addCurveToPoint: CGPointMake(1218, 317.99) controlPoint1: CGPointMake(1576.72, 318) controlPoint2: CGPointMake(1388.77, 317.92)];
+    [trayFillPath addCurveToPoint: CGPointMake(688.79, 318.37) controlPoint1: CGPointMake(1047.23, 317.92) controlPoint2: CGPointMake(859.28, 318)];
+    [trayFillPath addCurveToPoint: CGPointMake(242.59, 327.65) controlPoint1: CGPointMake(540.05, 319.24) controlPoint2: CGPointMake(391.04, 316.97)];
+    [trayFillPath addCurveToPoint: CGPointMake(200.51, 333.7) controlPoint1: CGPointMake(228.49, 328.7) controlPoint2: CGPointMake(214.46, 331.21)];
+    [trayFillPath addCurveToPoint: CGPointMake(183.57, 339.43) controlPoint1: CGPointMake(194.71, 334.73) controlPoint2: CGPointMake(189.09, 337.16)];
+    [trayFillPath addCurveToPoint: CGPointMake(168.78, 363.08) controlPoint1: CGPointMake(173.11, 343.73) controlPoint2: CGPointMake(169.37, 352.59)];
+    [trayFillPath addCurveToPoint: CGPointMake(168.55, 379.14) controlPoint1: CGPointMake(168.7, 368.43) controlPoint2: CGPointMake(168.62, 373.78)];
+    [trayFillPath addLineToPoint: CGPointMake(168.2, 379.08)];
+    [trayFillPath addCurveToPoint: CGPointMake(168.26, 406) controlPoint1: CGPointMake(168.24, 388.05) controlPoint2: CGPointMake(168.25, 397.03)];
+    [trayFillPath addCurveToPoint: CGPointMake(168.26, 609.93) controlPoint1: CGPointMake(167.91, 446.82) controlPoint2: CGPointMake(167.91, 569.11)];
+    [trayFillPath addCurveToPoint: CGPointMake(168.2, 636.85) controlPoint1: CGPointMake(168.25, 618.9) controlPoint2: CGPointMake(168.24, 627.87)];
+    [trayFillPath addLineToPoint: CGPointMake(168.55, 636.79)];
+    [trayFillPath addCurveToPoint: CGPointMake(168.78, 652.85) controlPoint1: CGPointMake(168.62, 642.15) controlPoint2: CGPointMake(168.7, 647.5)];
+    [trayFillPath addCurveToPoint: CGPointMake(183.57, 676.5) controlPoint1: CGPointMake(169.37, 663.34) controlPoint2: CGPointMake(173.11, 672.2)];
+    [trayFillPath addCurveToPoint: CGPointMake(200.51, 682.23) controlPoint1: CGPointMake(189.09, 678.77) controlPoint2: CGPointMake(194.71, 681.2)];
+    [trayFillPath addCurveToPoint: CGPointMake(242.59, 688.28) controlPoint1: CGPointMake(214.46, 684.72) controlPoint2: CGPointMake(228.49, 687.23)];
+    [trayFillPath addCurveToPoint: CGPointMake(688.79, 697.56) controlPoint1: CGPointMake(391.04, 698.96) controlPoint2: CGPointMake(540.05, 696.69)];
+    [trayFillPath addCurveToPoint: CGPointMake(1218, 697.94) controlPoint1: CGPointMake(859.28, 697.93) controlPoint2: CGPointMake(1047.23, 698.01)];
+    [trayFillPath addCurveToPoint: CGPointMake(1747.21, 697.56) controlPoint1: CGPointMake(1388.77, 698.01) controlPoint2: CGPointMake(1576.72, 697.93)];
+    [trayFillPath addCurveToPoint: CGPointMake(2193.41, 688.28) controlPoint1: CGPointMake(1895.95, 696.69) controlPoint2: CGPointMake(2044.96, 698.96)];
+    [trayFillPath addCurveToPoint: CGPointMake(2235.49, 682.23) controlPoint1: CGPointMake(2207.51, 687.23) controlPoint2: CGPointMake(2221.54, 684.72)];
+    [trayFillPath addCurveToPoint: CGPointMake(2252.43, 676.5) controlPoint1: CGPointMake(2241.29, 681.2) controlPoint2: CGPointMake(2246.91, 678.77)];
+    [trayFillPath addCurveToPoint: CGPointMake(2267.22, 652.85) controlPoint1: CGPointMake(2262.89, 672.2) controlPoint2: CGPointMake(2266.63, 663.34)];
+    [trayFillPath addCurveToPoint: CGPointMake(2267.45, 636.79) controlPoint1: CGPointMake(2267.3, 647.5) controlPoint2: CGPointMake(2267.38, 642.15)];
+    [trayFillPath addLineToPoint: CGPointMake(2267.8, 636.85)];
+    [trayFillPath addCurveToPoint: CGPointMake(2267.74, 609.92) controlPoint1: CGPointMake(2267.76, 627.87) controlPoint2: CGPointMake(2267.75, 618.9)];
+    [trayFillPath addCurveToPoint: CGPointMake(2267.74, 406.01) controlPoint1: CGPointMake(2268.09, 569.11) controlPoint2: CGPointMake(2268.09, 446.82)];
     [trayFillPath closePath];
-    if (self.wordTrayActive) {
-        [activeFillColor setFill];
-    }
-    else {
-        [inactiveFillColor setFill];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+        case GameStateSpell:
+            [inactiveFillColor setFill];
+            break;
+        case GameStateWord:
+            [activeFillColor setFill];
+            break;
+        case GameStateSubmit:
+            [highlightedFillColor setFill];
+            break;
     }
     [trayFillPath fill];
 
 
     //// Tray-Stroke Drawing
     UIBezierPath* trayStrokePath = [UIBezierPath bezierPath];
-    [trayStrokePath moveToPoint: CGPointMake(2239.16, 406.01)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2239.23, 379.08) controlPoint1: CGPointMake(2239.17, 397.03) controlPoint2: CGPointMake(2239.19, 388.06)];
-    [trayStrokePath addLineToPoint: CGPointMake(2238.87, 379.14)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2238.65, 363.08) controlPoint1: CGPointMake(2238.8, 373.78) controlPoint2: CGPointMake(2238.73, 368.43)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2223.85, 339.43) controlPoint1: CGPointMake(2238.06, 352.59) controlPoint2: CGPointMake(2234.32, 343.73)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2206.92, 333.7) controlPoint1: CGPointMake(2218.34, 337.16) controlPoint2: CGPointMake(2212.72, 334.73)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2164.84, 327.65) controlPoint1: CGPointMake(2192.97, 331.21) controlPoint2: CGPointMake(2178.94, 328.7)];
-    [trayStrokePath addCurveToPoint: CGPointMake(1718.64, 318.37) controlPoint1: CGPointMake(2016.39, 316.97) controlPoint2: CGPointMake(1867.37, 319.24)];
-    [trayStrokePath addCurveToPoint: CGPointMake(1189.43, 317.99) controlPoint1: CGPointMake(1548.15, 318) controlPoint2: CGPointMake(1360.19, 317.92)];
-    [trayStrokePath addCurveToPoint: CGPointMake(660.22, 318.37) controlPoint1: CGPointMake(1018.66, 317.92) controlPoint2: CGPointMake(830.71, 318)];
-    [trayStrokePath addCurveToPoint: CGPointMake(214.02, 327.65) controlPoint1: CGPointMake(511.48, 319.24) controlPoint2: CGPointMake(362.47, 316.97)];
-    [trayStrokePath addCurveToPoint: CGPointMake(171.94, 333.7) controlPoint1: CGPointMake(199.91, 328.7) controlPoint2: CGPointMake(185.89, 331.21)];
-    [trayStrokePath addCurveToPoint: CGPointMake(155, 339.43) controlPoint1: CGPointMake(166.14, 334.73) controlPoint2: CGPointMake(160.51, 337.16)];
-    [trayStrokePath addCurveToPoint: CGPointMake(140.21, 363.08) controlPoint1: CGPointMake(144.54, 343.73) controlPoint2: CGPointMake(140.8, 352.59)];
-    [trayStrokePath addCurveToPoint: CGPointMake(139.98, 379.14) controlPoint1: CGPointMake(140.13, 368.43) controlPoint2: CGPointMake(140.05, 373.78)];
-    [trayStrokePath addLineToPoint: CGPointMake(139.63, 379.08)];
-    [trayStrokePath addCurveToPoint: CGPointMake(139.69, 406) controlPoint1: CGPointMake(139.67, 388.05) controlPoint2: CGPointMake(139.68, 397.03)];
-    [trayStrokePath addCurveToPoint: CGPointMake(139.69, 609.93) controlPoint1: CGPointMake(139.34, 446.82) controlPoint2: CGPointMake(139.34, 569.11)];
-    [trayStrokePath addCurveToPoint: CGPointMake(139.63, 636.85) controlPoint1: CGPointMake(139.68, 618.9) controlPoint2: CGPointMake(139.67, 627.87)];
-    [trayStrokePath addLineToPoint: CGPointMake(139.98, 636.79)];
-    [trayStrokePath addCurveToPoint: CGPointMake(140.21, 652.85) controlPoint1: CGPointMake(140.05, 642.15) controlPoint2: CGPointMake(140.13, 647.5)];
-    [trayStrokePath addCurveToPoint: CGPointMake(155, 676.5) controlPoint1: CGPointMake(140.8, 663.34) controlPoint2: CGPointMake(144.54, 672.2)];
-    [trayStrokePath addCurveToPoint: CGPointMake(171.94, 682.23) controlPoint1: CGPointMake(160.51, 678.77) controlPoint2: CGPointMake(166.14, 681.2)];
-    [trayStrokePath addCurveToPoint: CGPointMake(214.02, 688.28) controlPoint1: CGPointMake(185.89, 684.72) controlPoint2: CGPointMake(199.91, 687.23)];
-    [trayStrokePath addCurveToPoint: CGPointMake(660.22, 697.56) controlPoint1: CGPointMake(362.47, 698.96) controlPoint2: CGPointMake(511.48, 696.69)];
-    [trayStrokePath addCurveToPoint: CGPointMake(1189.43, 697.94) controlPoint1: CGPointMake(830.71, 697.93) controlPoint2: CGPointMake(1018.66, 698.01)];
-    [trayStrokePath addCurveToPoint: CGPointMake(1718.64, 697.56) controlPoint1: CGPointMake(1360.19, 698.01) controlPoint2: CGPointMake(1548.15, 697.93)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2164.84, 688.28) controlPoint1: CGPointMake(1867.37, 696.69) controlPoint2: CGPointMake(2016.39, 698.96)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2206.92, 682.23) controlPoint1: CGPointMake(2178.94, 687.23) controlPoint2: CGPointMake(2192.97, 684.72)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2223.85, 676.5) controlPoint1: CGPointMake(2212.72, 681.2) controlPoint2: CGPointMake(2218.34, 678.77)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2238.65, 652.85) controlPoint1: CGPointMake(2234.32, 672.2) controlPoint2: CGPointMake(2238.06, 663.34)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2238.87, 636.79) controlPoint1: CGPointMake(2238.73, 647.5) controlPoint2: CGPointMake(2238.8, 642.15)];
-    [trayStrokePath addLineToPoint: CGPointMake(2239.23, 636.85)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2239.16, 609.92) controlPoint1: CGPointMake(2239.19, 627.87) controlPoint2: CGPointMake(2239.17, 618.9)];
-    [trayStrokePath addCurveToPoint: CGPointMake(2239.16, 406.01) controlPoint1: CGPointMake(2239.52, 569.11) controlPoint2: CGPointMake(2239.52, 446.82)];
+    [trayStrokePath moveToPoint: CGPointMake(2267.74, 406.01)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2267.8, 379.08) controlPoint1: CGPointMake(2267.75, 397.03) controlPoint2: CGPointMake(2267.76, 388.06)];
+    [trayStrokePath addLineToPoint: CGPointMake(2267.45, 379.14)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2267.22, 363.08) controlPoint1: CGPointMake(2267.38, 373.78) controlPoint2: CGPointMake(2267.3, 368.43)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2252.43, 339.43) controlPoint1: CGPointMake(2266.63, 352.59) controlPoint2: CGPointMake(2262.89, 343.73)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2235.49, 333.7) controlPoint1: CGPointMake(2246.91, 337.16) controlPoint2: CGPointMake(2241.29, 334.73)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2193.41, 327.65) controlPoint1: CGPointMake(2221.54, 331.21) controlPoint2: CGPointMake(2207.51, 328.7)];
+    [trayStrokePath addCurveToPoint: CGPointMake(1747.21, 318.37) controlPoint1: CGPointMake(2044.96, 316.97) controlPoint2: CGPointMake(1895.95, 319.24)];
+    [trayStrokePath addCurveToPoint: CGPointMake(1218, 317.99) controlPoint1: CGPointMake(1576.72, 318) controlPoint2: CGPointMake(1388.77, 317.92)];
+    [trayStrokePath addCurveToPoint: CGPointMake(688.79, 318.37) controlPoint1: CGPointMake(1047.23, 317.92) controlPoint2: CGPointMake(859.28, 318)];
+    [trayStrokePath addCurveToPoint: CGPointMake(242.59, 327.65) controlPoint1: CGPointMake(540.05, 319.24) controlPoint2: CGPointMake(391.04, 316.97)];
+    [trayStrokePath addCurveToPoint: CGPointMake(200.51, 333.7) controlPoint1: CGPointMake(228.49, 328.7) controlPoint2: CGPointMake(214.46, 331.21)];
+    [trayStrokePath addCurveToPoint: CGPointMake(183.57, 339.43) controlPoint1: CGPointMake(194.71, 334.73) controlPoint2: CGPointMake(189.09, 337.16)];
+    [trayStrokePath addCurveToPoint: CGPointMake(168.78, 363.08) controlPoint1: CGPointMake(173.11, 343.73) controlPoint2: CGPointMake(169.37, 352.59)];
+    [trayStrokePath addCurveToPoint: CGPointMake(168.55, 379.14) controlPoint1: CGPointMake(168.7, 368.43) controlPoint2: CGPointMake(168.62, 373.78)];
+    [trayStrokePath addLineToPoint: CGPointMake(168.2, 379.08)];
+    [trayStrokePath addCurveToPoint: CGPointMake(168.26, 406) controlPoint1: CGPointMake(168.24, 388.05) controlPoint2: CGPointMake(168.25, 397.03)];
+    [trayStrokePath addCurveToPoint: CGPointMake(168.26, 609.93) controlPoint1: CGPointMake(167.91, 446.82) controlPoint2: CGPointMake(167.91, 569.11)];
+    [trayStrokePath addCurveToPoint: CGPointMake(168.2, 636.85) controlPoint1: CGPointMake(168.25, 618.9) controlPoint2: CGPointMake(168.24, 627.87)];
+    [trayStrokePath addLineToPoint: CGPointMake(168.55, 636.79)];
+    [trayStrokePath addCurveToPoint: CGPointMake(168.78, 652.85) controlPoint1: CGPointMake(168.62, 642.15) controlPoint2: CGPointMake(168.7, 647.5)];
+    [trayStrokePath addCurveToPoint: CGPointMake(183.57, 676.5) controlPoint1: CGPointMake(169.37, 663.34) controlPoint2: CGPointMake(173.11, 672.2)];
+    [trayStrokePath addCurveToPoint: CGPointMake(200.51, 682.23) controlPoint1: CGPointMake(189.09, 678.77) controlPoint2: CGPointMake(194.71, 681.2)];
+    [trayStrokePath addCurveToPoint: CGPointMake(242.59, 688.28) controlPoint1: CGPointMake(214.46, 684.72) controlPoint2: CGPointMake(228.49, 687.23)];
+    [trayStrokePath addCurveToPoint: CGPointMake(688.79, 697.56) controlPoint1: CGPointMake(391.04, 698.96) controlPoint2: CGPointMake(540.05, 696.69)];
+    [trayStrokePath addCurveToPoint: CGPointMake(1218, 697.94) controlPoint1: CGPointMake(859.28, 697.93) controlPoint2: CGPointMake(1047.23, 698.01)];
+    [trayStrokePath addCurveToPoint: CGPointMake(1747.21, 697.56) controlPoint1: CGPointMake(1388.77, 698.01) controlPoint2: CGPointMake(1576.72, 697.93)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2193.41, 688.28) controlPoint1: CGPointMake(1895.95, 696.69) controlPoint2: CGPointMake(2044.96, 698.96)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2235.49, 682.23) controlPoint1: CGPointMake(2207.51, 687.23) controlPoint2: CGPointMake(2221.54, 684.72)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2252.43, 676.5) controlPoint1: CGPointMake(2241.29, 681.2) controlPoint2: CGPointMake(2246.91, 678.77)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2267.22, 652.85) controlPoint1: CGPointMake(2262.89, 672.2) controlPoint2: CGPointMake(2266.63, 663.34)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2267.45, 636.79) controlPoint1: CGPointMake(2267.3, 647.5) controlPoint2: CGPointMake(2267.38, 642.15)];
+    [trayStrokePath addLineToPoint: CGPointMake(2267.8, 636.85)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2267.74, 609.92) controlPoint1: CGPointMake(2267.76, 627.87) controlPoint2: CGPointMake(2267.75, 618.9)];
+    [trayStrokePath addCurveToPoint: CGPointMake(2267.74, 406.01) controlPoint1: CGPointMake(2268.09, 569.11) controlPoint2: CGPointMake(2268.09, 446.82)];
     [trayStrokePath closePath];
-    if (self.wordTrayActive) {
-        [activeStrokeColor setStroke];
-    }
-    else {
-        [inactiveStrokeColor setStroke];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+        case GameStateSpell:
+            [inactiveStrokeColor setStroke];
+            break;
+        case GameStateWord:
+            [activeStrokeColor setStroke];
+            break;
+        case GameStateSubmit:
+            [highlightedStrokeColor setStroke];
+            break;
     }
     trayStrokePath.lineWidth = 24;
     [trayStrokePath stroke];
 
 
+    //// Word-Tile-Fill-1 Drawing
+    UIBezierPath* wordTileFill1Path = [UIBezierPath bezierPathWithRect: CGRectMake(328.5, 383.45, 223, 249)];
+    [wordTileFillColor setFill];
+    [wordTileFill1Path fill];
+
+
+    //// Word-Tile-Fill-2 Drawing
+    UIBezierPath* wordTileFill2Path = [UIBezierPath bezierPathWithRect: CGRectMake(587.85, 383.45, 223, 249)];
+    [wordTileFillColor setFill];
+    [wordTileFill2Path fill];
+
+
+    //// Word-Tile-Fill-3 Drawing
+    UIBezierPath* wordTileFill3Path = [UIBezierPath bezierPathWithRect: CGRectMake(847.15, 383.45, 223, 249)];
+    [wordTileFillColor setFill];
+    [wordTileFill3Path fill];
+
+
+    if (tappablesStroke) {
+
+        //// Word-Tile-Stroke-1 Drawing
+        UIBezierPath* wordTileStroke1Path = [UIBezierPath bezierPath];
+        [wordTileStroke1Path moveToPoint: CGPointMake(554, 380.97)];
+        [wordTileStroke1Path addLineToPoint: CGPointMake(326, 380.97)];
+        [wordTileStroke1Path addLineToPoint: CGPointMake(326, 634.97)];
+        [wordTileStroke1Path addLineToPoint: CGPointMake(554, 634.97)];
+        [wordTileStroke1Path addLineToPoint: CGPointMake(554, 380.97)];
+        [wordTileStroke1Path closePath];
+        [wordTileStroke1Path moveToPoint: CGPointMake(549, 629.96)];
+        [wordTileStroke1Path addLineToPoint: CGPointMake(331, 629.96)];
+        [wordTileStroke1Path addLineToPoint: CGPointMake(331, 385.96)];
+        [wordTileStroke1Path addLineToPoint: CGPointMake(549, 385.96)];
+        [wordTileStroke1Path addLineToPoint: CGPointMake(549, 629.96)];
+        [wordTileStroke1Path closePath];
+        [wordTileStrokeColor setFill];
+        [wordTileStroke1Path fill];
+
+
+        //// Word-Tile-Stroke-2 Drawing
+        UIBezierPath* wordTileStroke2Path = [UIBezierPath bezierPath];
+        [wordTileStroke2Path moveToPoint: CGPointMake(813.33, 380.97)];
+        [wordTileStroke2Path addLineToPoint: CGPointMake(585.33, 380.97)];
+        [wordTileStroke2Path addLineToPoint: CGPointMake(585.33, 634.97)];
+        [wordTileStroke2Path addLineToPoint: CGPointMake(813.33, 634.97)];
+        [wordTileStroke2Path addLineToPoint: CGPointMake(813.33, 380.97)];
+        [wordTileStroke2Path closePath];
+        [wordTileStroke2Path moveToPoint: CGPointMake(808.33, 629.96)];
+        [wordTileStroke2Path addLineToPoint: CGPointMake(590.33, 629.96)];
+        [wordTileStroke2Path addLineToPoint: CGPointMake(590.33, 385.96)];
+        [wordTileStroke2Path addLineToPoint: CGPointMake(808.33, 385.96)];
+        [wordTileStroke2Path addLineToPoint: CGPointMake(808.33, 629.96)];
+        [wordTileStroke2Path closePath];
+        [wordTileStrokeColor setFill];
+        [wordTileStroke2Path fill];
+
+
+        //// Word-Tile-Stroke-3 Drawing
+        UIBezierPath* wordTileStroke3Path = [UIBezierPath bezierPath];
+        [wordTileStroke3Path moveToPoint: CGPointMake(1072.67, 380.97)];
+        [wordTileStroke3Path addLineToPoint: CGPointMake(844.67, 380.97)];
+        [wordTileStroke3Path addLineToPoint: CGPointMake(844.67, 634.97)];
+        [wordTileStroke3Path addLineToPoint: CGPointMake(1072.67, 634.97)];
+        [wordTileStroke3Path addLineToPoint: CGPointMake(1072.67, 380.97)];
+        [wordTileStroke3Path closePath];
+        [wordTileStroke3Path moveToPoint: CGPointMake(1067.67, 629.96)];
+        [wordTileStroke3Path addLineToPoint: CGPointMake(849.67, 629.96)];
+        [wordTileStroke3Path addLineToPoint: CGPointMake(849.67, 385.96)];
+        [wordTileStroke3Path addLineToPoint: CGPointMake(1067.67, 385.96)];
+        [wordTileStroke3Path addLineToPoint: CGPointMake(1067.67, 629.96)];
+        [wordTileStroke3Path closePath];
+        [wordTileStrokeColor setFill];
+        [wordTileStroke3Path fill];
+    }
+
+    //// Word-Tile-Letter-1 Drawing
+    UIBezierPath* wordTileLetter1Path = [UIBezierPath bezierPath];
+    [wordTileLetter1Path moveToPoint: CGPointMake(440, 511.93)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(460.9, 439.03)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(497.64, 439.03)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(497.64, 565.02)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(471.88, 565.02)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(472.06, 473.41)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(443.43, 565.74)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(435.14, 565.74)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(406.5, 473.59)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(406.86, 565.02)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(382.37, 565.02)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(382.37, 439.03)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(419.11, 439.03)];
+    [wordTileLetter1Path addLineToPoint: CGPointMake(440, 511.93)];
+    [wordTileLetter1Path closePath];
+    [wordTileContentColor setFill];
+    [wordTileLetter1Path fill];
+
+
+    //// Word-Tile-Letter-2 Drawing
+    UIBezierPath* wordTileLetter2Path = [UIBezierPath bezierPath];
+    [wordTileLetter2Path moveToPoint: CGPointMake(710.77, 516.43)];
+    [wordTileLetter2Path addLineToPoint: CGPointMake(698.88, 468.55)];
+    [wordTileLetter2Path addLineToPoint: CGPointMake(686.64, 516.43)];
+    [wordTileLetter2Path addLineToPoint: CGPointMake(710.77, 516.43)];
+    [wordTileLetter2Path closePath];
+    [wordTileLetter2Path moveToPoint: CGPointMake(684.48, 438.67)];
+    [wordTileLetter2Path addLineToPoint: CGPointMake(715.1, 438.67)];
+    [wordTileLetter2Path addLineToPoint: CGPointMake(750.22, 565.02)];
+    [wordTileLetter2Path addLineToPoint: CGPointMake(721.76, 565.02)];
+    [wordTileLetter2Path addLineToPoint: CGPointMake(715.28, 538.21)];
+    [wordTileLetter2Path addLineToPoint: CGPointMake(681.96, 538.21)];
+    [wordTileLetter2Path addLineToPoint: CGPointMake(675.47, 565.02)];
+    [wordTileLetter2Path addLineToPoint: CGPointMake(648.45, 565.02)];
+    [wordTileLetter2Path addLineToPoint: CGPointMake(684.48, 438.67)];
+    [wordTileLetter2Path closePath];
+    [wordTileContentColor setFill];
+    [wordTileLetter2Path fill];
+
+
+    //// Word-Tile-Score-1 Drawing
+    UIBezierPath* wordTileScore1Path = [UIBezierPath bezierPath];
+    [wordTileScore1Path moveToPoint: CGPointMake(521.32, 615.32)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(512.38, 613.45) controlPoint1: CGPointMake(517.47, 615.32) controlPoint2: CGPointMake(514.74, 614.55)];
+    [wordTileScore1Path addLineToPoint: CGPointMake(511.61, 606.44)];
+    [wordTileScore1Path addLineToPoint: CGPointMake(511.71, 606.39)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(520.45, 609.32) controlPoint1: CGPointMake(514.59, 608.27) controlPoint2: CGPointMake(517.62, 609.32)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(525.54, 605.15) controlPoint1: CGPointMake(523.48, 609.32) controlPoint2: CGPointMake(525.54, 607.59)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(516.08, 598.52) controlPoint1: CGPointMake(525.54, 602.31) controlPoint2: CGPointMake(523.38, 600.39)];
+    [wordTileScore1Path addLineToPoint: CGPointMake(516.08, 595.78)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(525.06, 588.73) controlPoint1: CGPointMake(523.19, 592.76) controlPoint2: CGPointMake(525.06, 591.03)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(520.98, 585.32) controlPoint1: CGPointMake(525.06, 586.66) controlPoint2: CGPointMake(523.43, 585.32)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(512.57, 588.49) controlPoint1: CGPointMake(518.05, 585.32) controlPoint2: CGPointMake(515.07, 586.71)];
+    [wordTileScore1Path addLineToPoint: CGPointMake(512.48, 588.49)];
+    [wordTileScore1Path addLineToPoint: CGPointMake(512.48, 582.05)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(522.13, 579.32) controlPoint1: CGPointMake(514.69, 580.66) controlPoint2: CGPointMake(518.05, 579.32)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(532.27, 587.67) controlPoint1: CGPointMake(528.33, 579.32) controlPoint2: CGPointMake(532.27, 582.68)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(525.45, 596.55) controlPoint1: CGPointMake(532.27, 591.22) controlPoint2: CGPointMake(530.11, 594.1)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(532.7, 605.63) controlPoint1: CGPointMake(530.2, 598.28) controlPoint2: CGPointMake(532.7, 601.64)];
+    [wordTileScore1Path addCurveToPoint: CGPointMake(521.32, 615.32) controlPoint1: CGPointMake(532.7, 611.82) controlPoint2: CGPointMake(527.22, 615.32)];
+    [wordTileScore1Path closePath];
+    [wordTileContentColor setFill];
+    [wordTileScore1Path fill];
+
+
+    //// Word-Tile-Letter-3 Drawing
+    UIBezierPath* wordTileLetter3Path = [UIBezierPath bezierPath];
+    [wordTileLetter3Path moveToPoint: CGPointMake(915.44, 439.03)];
+    [wordTileLetter3Path addLineToPoint: CGPointMake(940.66, 439.03)];
+    [wordTileLetter3Path addLineToPoint: CGPointMake(977.4, 507.61)];
+    [wordTileLetter3Path addLineToPoint: CGPointMake(977.22, 439.03)];
+    [wordTileLetter3Path addLineToPoint: CGPointMake(1001.9, 439.03)];
+    [wordTileLetter3Path addLineToPoint: CGPointMake(1001.9, 565.38)];
+    [wordTileLetter3Path addLineToPoint: CGPointMake(982.09, 565.38)];
+    [wordTileLetter3Path addLineToPoint: CGPointMake(939.76, 488.35)];
+    [wordTileLetter3Path addLineToPoint: CGPointMake(940.12, 565.02)];
+    [wordTileLetter3Path addLineToPoint: CGPointMake(915.44, 565.02)];
+    [wordTileLetter3Path addLineToPoint: CGPointMake(915.44, 439.03)];
+    [wordTileLetter3Path closePath];
+    [wordTileContentColor setFill];
+    [wordTileLetter3Path fill];
+
+
+    //// Word-Tile-Score-2 Drawing
+    UIBezierPath* wordTileScore2Path = [UIBezierPath bezierPath];
+    [wordTileScore2Path moveToPoint: CGPointMake(775.32, 587.38)];
+    [wordTileScore2Path addLineToPoint: CGPointMake(789.44, 579.22)];
+    [wordTileScore2Path addLineToPoint: CGPointMake(790.06, 579.46)];
+    [wordTileScore2Path addLineToPoint: CGPointMake(790.06, 614.79)];
+    [wordTileScore2Path addLineToPoint: CGPointMake(782.96, 614.79)];
+    [wordTileScore2Path addLineToPoint: CGPointMake(782.96, 590.26)];
+    [wordTileScore2Path addLineToPoint: CGPointMake(775.41, 594.63)];
+    [wordTileScore2Path addLineToPoint: CGPointMake(775.32, 594.58)];
+    [wordTileScore2Path addLineToPoint: CGPointMake(775.32, 587.38)];
+    [wordTileScore2Path closePath];
+    [wordTileContentColor setFill];
+    [wordTileScore2Path fill];
+
+
+    //// Word-Tile-Score-3 Drawing
+    UIBezierPath* wordTileScore3Path = [UIBezierPath bezierPath];
+    [wordTileScore3Path moveToPoint: CGPointMake(1034.65, 587.38)];
+    [wordTileScore3Path addLineToPoint: CGPointMake(1048.78, 579.22)];
+    [wordTileScore3Path addLineToPoint: CGPointMake(1049.4, 579.46)];
+    [wordTileScore3Path addLineToPoint: CGPointMake(1049.4, 614.79)];
+    [wordTileScore3Path addLineToPoint: CGPointMake(1042.29, 614.79)];
+    [wordTileScore3Path addLineToPoint: CGPointMake(1042.29, 590.26)];
+    [wordTileScore3Path addLineToPoint: CGPointMake(1034.75, 594.63)];
+    [wordTileScore3Path addLineToPoint: CGPointMake(1034.65, 594.58)];
+    [wordTileScore3Path addLineToPoint: CGPointMake(1034.65, 587.38)];
+    [wordTileScore3Path closePath];
+    [wordTileContentColor setFill];
+    [wordTileScore3Path fill];
+
+
     //// Ex-Fill Drawing
-    UIBezierPath* exFillPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(190.85, 69.9, 180.1, 179.9)];
+    UIBezierPath* exFillPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(187.5, 69.6, 180.1, 179.9)];
     [primaryFillColor setFill];
     [exFillPath fill];
 
 
+    //// Trash-Fill Drawing
+    UIBezierPath* trashFillPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(2068.5, 69.6, 180.1, 179.9)];
+    [primaryFillColor setFill];
+    [trashFillPath fill];
+
+
     //// Ex-Stroke Drawing
     UIBezierPath* exStrokePath = [UIBezierPath bezierPath];
-    [exStrokePath moveToPoint: CGPointMake(280.85, 67.3)];
-    [exStrokePath addCurveToPoint: CGPointMake(188.35, 159.8) controlPoint1: CGPointMake(229.76, 67.3) controlPoint2: CGPointMake(188.35, 108.71)];
-    [exStrokePath addCurveToPoint: CGPointMake(280.85, 252.3) controlPoint1: CGPointMake(188.35, 210.88) controlPoint2: CGPointMake(229.76, 252.3)];
-    [exStrokePath addCurveToPoint: CGPointMake(373.35, 159.8) controlPoint1: CGPointMake(331.93, 252.3) controlPoint2: CGPointMake(373.35, 210.88)];
-    [exStrokePath addCurveToPoint: CGPointMake(280.85, 67.3) controlPoint1: CGPointMake(373.35, 108.71) controlPoint2: CGPointMake(331.93, 67.3)];
+    [exStrokePath moveToPoint: CGPointMake(277.5, 67)];
+    [exStrokePath addCurveToPoint: CGPointMake(185, 159.5) controlPoint1: CGPointMake(226.41, 67) controlPoint2: CGPointMake(185, 108.41)];
+    [exStrokePath addCurveToPoint: CGPointMake(277.5, 252) controlPoint1: CGPointMake(185, 210.59) controlPoint2: CGPointMake(226.41, 252)];
+    [exStrokePath addCurveToPoint: CGPointMake(370, 159.5) controlPoint1: CGPointMake(328.59, 252) controlPoint2: CGPointMake(370, 210.59)];
+    [exStrokePath addCurveToPoint: CGPointMake(277.5, 67) controlPoint1: CGPointMake(370, 108.41) controlPoint2: CGPointMake(328.59, 67)];
     [exStrokePath closePath];
-    [exStrokePath moveToPoint: CGPointMake(280.85, 72.3)];
-    [exStrokePath addCurveToPoint: CGPointMake(368.35, 159.8) controlPoint1: CGPointMake(329.09, 72.3) controlPoint2: CGPointMake(368.35, 111.55)];
-    [exStrokePath addCurveToPoint: CGPointMake(280.85, 247.3) controlPoint1: CGPointMake(368.35, 208.05) controlPoint2: CGPointMake(329.09, 247.3)];
-    [exStrokePath addCurveToPoint: CGPointMake(193.35, 159.8) controlPoint1: CGPointMake(232.6, 247.3) controlPoint2: CGPointMake(193.35, 208.05)];
-    [exStrokePath addCurveToPoint: CGPointMake(280.85, 72.3) controlPoint1: CGPointMake(193.35, 111.55) controlPoint2: CGPointMake(232.6, 72.3)];
+    [exStrokePath moveToPoint: CGPointMake(277.5, 72)];
+    [exStrokePath addCurveToPoint: CGPointMake(365, 159.5) controlPoint1: CGPointMake(325.75, 72) controlPoint2: CGPointMake(365, 111.25)];
+    [exStrokePath addCurveToPoint: CGPointMake(277.5, 247) controlPoint1: CGPointMake(365, 207.75) controlPoint2: CGPointMake(325.75, 247)];
+    [exStrokePath addCurveToPoint: CGPointMake(190, 159.5) controlPoint1: CGPointMake(229.25, 247) controlPoint2: CGPointMake(190, 207.75)];
+    [exStrokePath addCurveToPoint: CGPointMake(277.5, 72) controlPoint1: CGPointMake(190, 111.25) controlPoint2: CGPointMake(229.25, 72)];
     [exStrokePath closePath];
     [primaryStrokeColor setFill];
     [exStrokePath fill];
 
 
-    //// Ex-Icon Drawing
-    UIBezierPath* exIconPath = [UIBezierPath bezierPath];
-    [exIconPath moveToPoint: CGPointMake(323.88, 209.8)];
-    [exIconPath addCurveToPoint: CGPointMake(318.95, 207.76) controlPoint1: CGPointMake(322.01, 209.8) controlPoint2: CGPointMake(320.26, 209.08)];
-    [exIconPath addLineToPoint: CGPointMake(280.85, 169.66)];
-    [exIconPath addLineToPoint: CGPointMake(242.75, 207.76)];
-    [exIconPath addCurveToPoint: CGPointMake(237.81, 209.8) controlPoint1: CGPointMake(241.43, 209.08) controlPoint2: CGPointMake(239.68, 209.8)];
-    [exIconPath addCurveToPoint: CGPointMake(232.88, 207.76) controlPoint1: CGPointMake(235.95, 209.8) controlPoint2: CGPointMake(234.2, 209.08)];
-    [exIconPath addCurveToPoint: CGPointMake(232.88, 197.9) controlPoint1: CGPointMake(230.17, 205.04) controlPoint2: CGPointMake(230.17, 200.62)];
-    [exIconPath addLineToPoint: CGPointMake(270.99, 159.8)];
-    [exIconPath addLineToPoint: CGPointMake(232.88, 121.7)];
-    [exIconPath addCurveToPoint: CGPointMake(232.88, 111.84) controlPoint1: CGPointMake(230.17, 118.98) controlPoint2: CGPointMake(230.17, 114.55)];
-    [exIconPath addCurveToPoint: CGPointMake(237.81, 109.79) controlPoint1: CGPointMake(234.2, 110.52) controlPoint2: CGPointMake(235.95, 109.79)];
-    [exIconPath addCurveToPoint: CGPointMake(242.75, 111.84) controlPoint1: CGPointMake(239.68, 109.79) controlPoint2: CGPointMake(241.43, 110.52)];
-    [exIconPath addLineToPoint: CGPointMake(280.85, 149.94)];
-    [exIconPath addLineToPoint: CGPointMake(318.95, 111.84)];
-    [exIconPath addCurveToPoint: CGPointMake(323.88, 109.79) controlPoint1: CGPointMake(320.26, 110.52) controlPoint2: CGPointMake(322.01, 109.79)];
-    [exIconPath addCurveToPoint: CGPointMake(328.81, 111.84) controlPoint1: CGPointMake(325.74, 109.79) controlPoint2: CGPointMake(327.49, 110.52)];
-    [exIconPath addCurveToPoint: CGPointMake(328.81, 121.7) controlPoint1: CGPointMake(331.53, 114.55) controlPoint2: CGPointMake(331.53, 118.98)];
-    [exIconPath addLineToPoint: CGPointMake(290.71, 159.8)];
-    [exIconPath addLineToPoint: CGPointMake(328.81, 197.9)];
-    [exIconPath addCurveToPoint: CGPointMake(328.81, 207.76) controlPoint1: CGPointMake(331.53, 200.62) controlPoint2: CGPointMake(331.53, 205.04)];
-    [exIconPath addCurveToPoint: CGPointMake(323.88, 209.8) controlPoint1: CGPointMake(327.49, 209.08) controlPoint2: CGPointMake(325.74, 209.8)];
-    [exIconPath closePath];
-    [contentColor setFill];
-    [exIconPath fill];
-
-
-    //// Trash-Fill Drawing
-    UIBezierPath* trashFillPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(2083, 70.1, 180.1, 179.9)];
-    [primaryFillColor setFill];
-    [trashFillPath fill];
-
-
     //// Trash-Stroke Drawing
     UIBezierPath* trashStrokePath = [UIBezierPath bezierPath];
-    [trashStrokePath moveToPoint: CGPointMake(2173, 67.5)];
-    [trashStrokePath addCurveToPoint: CGPointMake(2080.5, 160) controlPoint1: CGPointMake(2121.91, 67.5) controlPoint2: CGPointMake(2080.5, 108.91)];
-    [trashStrokePath addCurveToPoint: CGPointMake(2173, 252.5) controlPoint1: CGPointMake(2080.5, 211.09) controlPoint2: CGPointMake(2121.91, 252.5)];
-    [trashStrokePath addCurveToPoint: CGPointMake(2265.5, 160) controlPoint1: CGPointMake(2224.09, 252.5) controlPoint2: CGPointMake(2265.5, 211.09)];
-    [trashStrokePath addCurveToPoint: CGPointMake(2173, 67.5) controlPoint1: CGPointMake(2265.5, 108.91) controlPoint2: CGPointMake(2224.09, 67.5)];
+    [trashStrokePath moveToPoint: CGPointMake(2158.5, 67)];
+    [trashStrokePath addCurveToPoint: CGPointMake(2066, 159.5) controlPoint1: CGPointMake(2107.41, 67) controlPoint2: CGPointMake(2066, 108.41)];
+    [trashStrokePath addCurveToPoint: CGPointMake(2158.5, 252) controlPoint1: CGPointMake(2066, 210.59) controlPoint2: CGPointMake(2107.41, 252)];
+    [trashStrokePath addCurveToPoint: CGPointMake(2251, 159.5) controlPoint1: CGPointMake(2209.59, 252) controlPoint2: CGPointMake(2251, 210.59)];
+    [trashStrokePath addCurveToPoint: CGPointMake(2158.5, 67) controlPoint1: CGPointMake(2251, 108.41) controlPoint2: CGPointMake(2209.59, 67)];
     [trashStrokePath closePath];
-    [trashStrokePath moveToPoint: CGPointMake(2173, 72.5)];
-    [trashStrokePath addCurveToPoint: CGPointMake(2260.5, 160) controlPoint1: CGPointMake(2221.25, 72.5) controlPoint2: CGPointMake(2260.5, 111.75)];
-    [trashStrokePath addCurveToPoint: CGPointMake(2173, 247.5) controlPoint1: CGPointMake(2260.5, 208.25) controlPoint2: CGPointMake(2221.25, 247.5)];
-    [trashStrokePath addCurveToPoint: CGPointMake(2085.5, 160) controlPoint1: CGPointMake(2124.75, 247.5) controlPoint2: CGPointMake(2085.5, 208.25)];
-    [trashStrokePath addCurveToPoint: CGPointMake(2173, 72.5) controlPoint1: CGPointMake(2085.5, 111.75) controlPoint2: CGPointMake(2124.75, 72.5)];
+    [trashStrokePath moveToPoint: CGPointMake(2158.5, 72)];
+    [trashStrokePath addCurveToPoint: CGPointMake(2246, 159.5) controlPoint1: CGPointMake(2206.75, 72) controlPoint2: CGPointMake(2246, 111.25)];
+    [trashStrokePath addCurveToPoint: CGPointMake(2158.5, 247) controlPoint1: CGPointMake(2246, 207.75) controlPoint2: CGPointMake(2206.75, 247)];
+    [trashStrokePath addCurveToPoint: CGPointMake(2071, 159.5) controlPoint1: CGPointMake(2110.25, 247) controlPoint2: CGPointMake(2071, 207.75)];
+    [trashStrokePath addCurveToPoint: CGPointMake(2158.5, 72) controlPoint1: CGPointMake(2071, 111.25) controlPoint2: CGPointMake(2110.25, 72)];
     [trashStrokePath closePath];
     [primaryStrokeColor setFill];
     [trashStrokePath fill];
@@ -806,14 +554,14 @@
 
     //// Trash-Icon-1 Drawing
     UIBezierPath* trashIcon1Path = [UIBezierPath bezierPath];
-    [trashIcon1Path moveToPoint: CGPointMake(2157.89, 200.74)];
-    [trashIcon1Path addCurveToPoint: CGPointMake(2158.22, 200.72) controlPoint1: CGPointMake(2158, 200.74) controlPoint2: CGPointMake(2158.11, 200.73)];
-    [trashIcon1Path addCurveToPoint: CGPointMake(2161.48, 196.81) controlPoint1: CGPointMake(2160.2, 200.54) controlPoint2: CGPointMake(2161.66, 198.79)];
-    [trashIcon1Path addLineToPoint: CGPointMake(2157.77, 137.43)];
-    [trashIcon1Path addCurveToPoint: CGPointMake(2153.85, 134.17) controlPoint1: CGPointMake(2157.58, 135.45) controlPoint2: CGPointMake(2155.84, 133.99)];
-    [trashIcon1Path addCurveToPoint: CGPointMake(2150.59, 138.09) controlPoint1: CGPointMake(2151.87, 134.35) controlPoint2: CGPointMake(2150.41, 136.11)];
-    [trashIcon1Path addLineToPoint: CGPointMake(2154.31, 197.47)];
-    [trashIcon1Path addCurveToPoint: CGPointMake(2157.89, 200.74) controlPoint1: CGPointMake(2154.48, 199.33) controlPoint2: CGPointMake(2156.05, 200.74)];
+    [trashIcon1Path moveToPoint: CGPointMake(2143.39, 200.24)];
+    [trashIcon1Path addCurveToPoint: CGPointMake(2143.72, 200.22) controlPoint1: CGPointMake(2143.5, 200.24) controlPoint2: CGPointMake(2143.61, 200.23)];
+    [trashIcon1Path addCurveToPoint: CGPointMake(2146.98, 196.31) controlPoint1: CGPointMake(2145.7, 200.04) controlPoint2: CGPointMake(2147.16, 198.29)];
+    [trashIcon1Path addLineToPoint: CGPointMake(2143.27, 136.93)];
+    [trashIcon1Path addCurveToPoint: CGPointMake(2139.35, 133.67) controlPoint1: CGPointMake(2143.08, 134.95) controlPoint2: CGPointMake(2141.34, 133.49)];
+    [trashIcon1Path addCurveToPoint: CGPointMake(2136.09, 137.59) controlPoint1: CGPointMake(2137.37, 133.85) controlPoint2: CGPointMake(2135.91, 135.61)];
+    [trashIcon1Path addLineToPoint: CGPointMake(2139.81, 196.97)];
+    [trashIcon1Path addCurveToPoint: CGPointMake(2143.39, 200.24) controlPoint1: CGPointMake(2139.98, 198.83) controlPoint2: CGPointMake(2141.55, 200.24)];
     [trashIcon1Path closePath];
     [contentColor setFill];
     [trashIcon1Path fill];
@@ -821,14 +569,14 @@
 
     //// Trash-Icon-2 Drawing
     UIBezierPath* trashIcon2Path = [UIBezierPath bezierPath];
-    [trashIcon2Path moveToPoint: CGPointMake(2187.54, 200.72)];
-    [trashIcon2Path addCurveToPoint: CGPointMake(2187.88, 200.74) controlPoint1: CGPointMake(2187.66, 200.73) controlPoint2: CGPointMake(2187.77, 200.74)];
-    [trashIcon2Path addCurveToPoint: CGPointMake(2191.46, 197.47) controlPoint1: CGPointMake(2189.72, 200.74) controlPoint2: CGPointMake(2191.29, 199.33)];
-    [trashIcon2Path addLineToPoint: CGPointMake(2195.17, 138.09)];
-    [trashIcon2Path addCurveToPoint: CGPointMake(2191.91, 134.17) controlPoint1: CGPointMake(2195.35, 136.11) controlPoint2: CGPointMake(2193.89, 134.35)];
-    [trashIcon2Path addCurveToPoint: CGPointMake(2188, 137.43) controlPoint1: CGPointMake(2189.92, 133.99) controlPoint2: CGPointMake(2188.18, 135.45)];
-    [trashIcon2Path addLineToPoint: CGPointMake(2184.29, 196.81)];
-    [trashIcon2Path addCurveToPoint: CGPointMake(2187.54, 200.72) controlPoint1: CGPointMake(2184.11, 198.79) controlPoint2: CGPointMake(2185.56, 200.54)];
+    [trashIcon2Path moveToPoint: CGPointMake(2173.04, 200.22)];
+    [trashIcon2Path addCurveToPoint: CGPointMake(2173.38, 200.24) controlPoint1: CGPointMake(2173.16, 200.23) controlPoint2: CGPointMake(2173.27, 200.24)];
+    [trashIcon2Path addCurveToPoint: CGPointMake(2176.96, 196.97) controlPoint1: CGPointMake(2175.22, 200.24) controlPoint2: CGPointMake(2176.79, 198.83)];
+    [trashIcon2Path addLineToPoint: CGPointMake(2180.67, 137.59)];
+    [trashIcon2Path addCurveToPoint: CGPointMake(2177.41, 133.67) controlPoint1: CGPointMake(2180.85, 135.61) controlPoint2: CGPointMake(2179.39, 133.85)];
+    [trashIcon2Path addCurveToPoint: CGPointMake(2173.5, 136.93) controlPoint1: CGPointMake(2175.42, 133.49) controlPoint2: CGPointMake(2173.68, 134.95)];
+    [trashIcon2Path addLineToPoint: CGPointMake(2169.79, 196.31)];
+    [trashIcon2Path addCurveToPoint: CGPointMake(2173.04, 200.22) controlPoint1: CGPointMake(2169.61, 198.29) controlPoint2: CGPointMake(2171.06, 200.04)];
     [trashIcon2Path closePath];
     [contentColor setFill];
     [trashIcon2Path fill];
@@ -836,13 +584,13 @@
 
     //// Trash-Icon-3 Drawing
     UIBezierPath* trashIcon3Path = [UIBezierPath bezierPath];
-    [trashIcon3Path moveToPoint: CGPointMake(2172.88, 200.74)];
-    [trashIcon3Path addCurveToPoint: CGPointMake(2176.48, 197.14) controlPoint1: CGPointMake(2174.87, 200.74) controlPoint2: CGPointMake(2176.48, 199.12)];
-    [trashIcon3Path addLineToPoint: CGPointMake(2176.48, 137.76)];
-    [trashIcon3Path addCurveToPoint: CGPointMake(2172.88, 134.16) controlPoint1: CGPointMake(2176.48, 135.77) controlPoint2: CGPointMake(2174.87, 134.16)];
-    [trashIcon3Path addCurveToPoint: CGPointMake(2169.28, 137.76) controlPoint1: CGPointMake(2170.89, 134.16) controlPoint2: CGPointMake(2169.28, 135.77)];
-    [trashIcon3Path addLineToPoint: CGPointMake(2169.28, 197.14)];
-    [trashIcon3Path addCurveToPoint: CGPointMake(2172.88, 200.74) controlPoint1: CGPointMake(2169.28, 199.12) controlPoint2: CGPointMake(2170.89, 200.74)];
+    [trashIcon3Path moveToPoint: CGPointMake(2158.38, 200.24)];
+    [trashIcon3Path addCurveToPoint: CGPointMake(2161.98, 196.64) controlPoint1: CGPointMake(2160.37, 200.24) controlPoint2: CGPointMake(2161.98, 198.62)];
+    [trashIcon3Path addLineToPoint: CGPointMake(2161.98, 137.26)];
+    [trashIcon3Path addCurveToPoint: CGPointMake(2158.38, 133.66) controlPoint1: CGPointMake(2161.98, 135.27) controlPoint2: CGPointMake(2160.37, 133.66)];
+    [trashIcon3Path addCurveToPoint: CGPointMake(2154.78, 137.26) controlPoint1: CGPointMake(2156.39, 133.66) controlPoint2: CGPointMake(2154.78, 135.27)];
+    [trashIcon3Path addLineToPoint: CGPointMake(2154.78, 196.64)];
+    [trashIcon3Path addCurveToPoint: CGPointMake(2158.38, 200.24) controlPoint1: CGPointMake(2154.78, 198.62) controlPoint2: CGPointMake(2156.39, 200.24)];
     [trashIcon3Path closePath];
     [contentColor setFill];
     [trashIcon3Path fill];
@@ -850,46 +598,590 @@
 
     //// Trash-Icon-4 Drawing
     UIBezierPath* trashIcon4Path = [UIBezierPath bezierPath];
-    [trashIcon4Path moveToPoint: CGPointMake(2167.04, 107.59)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2158.84, 115.74) controlPoint1: CGPointMake(2162.55, 107.59) controlPoint2: CGPointMake(2158.87, 111.25)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2158.83, 116.74)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2186.93, 116.74)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2186.93, 115.74)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2178.73, 107.59) controlPoint1: CGPointMake(2186.89, 111.25) controlPoint2: CGPointMake(2183.22, 107.59)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2167.04, 107.59)];
+    [trashIcon4Path moveToPoint: CGPointMake(2152.54, 107.09)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2144.34, 115.24) controlPoint1: CGPointMake(2148.05, 107.09) controlPoint2: CGPointMake(2144.37, 110.75)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2144.33, 116.24)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2172.43, 116.24)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2172.43, 115.24)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2164.23, 107.09) controlPoint1: CGPointMake(2172.39, 110.75) controlPoint2: CGPointMake(2168.72, 107.09)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2152.54, 107.09)];
     [trashIcon4Path closePath];
-    [trashIcon4Path moveToPoint: CGPointMake(2145.37, 202.43)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2145.37, 202.59)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2152.18, 209.39) controlPoint1: CGPointMake(2145.37, 206.34) controlPoint2: CGPointMake(2148.42, 209.39)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2193.58, 209.39)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2200.4, 202.59) controlPoint1: CGPointMake(2197.34, 209.39) controlPoint2: CGPointMake(2200.4, 206.34)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2200.42, 202.15)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2207.12, 126.21)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2138.65, 126.21)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2145.37, 202.43)];
+    [trashIcon4Path moveToPoint: CGPointMake(2130.87, 201.93)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2130.87, 202.09)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2137.68, 208.89) controlPoint1: CGPointMake(2130.87, 205.84) controlPoint2: CGPointMake(2133.92, 208.89)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2179.08, 208.89)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2185.9, 202.09) controlPoint1: CGPointMake(2182.84, 208.89) controlPoint2: CGPointMake(2185.9, 205.84)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2185.92, 201.65)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2192.62, 125.71)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2124.15, 125.71)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2130.87, 201.93)];
     [trashIcon4Path closePath];
-    [trashIcon4Path moveToPoint: CGPointMake(2152.18, 218.59)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2136.15, 202.84) controlPoint1: CGPointMake(2143.48, 218.59) controlPoint2: CGPointMake(2136.29, 211.53)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2129.23, 124.34)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2126.48, 124.34)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2122.68, 120.54) controlPoint1: CGPointMake(2124.39, 124.34) controlPoint2: CGPointMake(2122.68, 122.64)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2126.48, 116.74) controlPoint1: CGPointMake(2122.68, 118.45) controlPoint2: CGPointMake(2124.39, 116.74)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2151.23, 116.74)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2151.24, 115.75)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2167.04, 99.99) controlPoint1: CGPointMake(2151.26, 107.06) controlPoint2: CGPointMake(2158.35, 99.99)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2178.73, 99.99)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2194.53, 115.75) controlPoint1: CGPointMake(2187.41, 99.99) controlPoint2: CGPointMake(2194.5, 107.06)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2194.53, 116.74)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2219.28, 116.74)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2223.08, 120.54) controlPoint1: CGPointMake(2221.38, 116.74) controlPoint2: CGPointMake(2223.08, 118.45)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2219.28, 124.34) controlPoint1: CGPointMake(2223.08, 122.64) controlPoint2: CGPointMake(2221.38, 124.34)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2216.53, 124.34)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2209.62, 202.77)];
-    [trashIcon4Path addCurveToPoint: CGPointMake(2193.58, 218.59) controlPoint1: CGPointMake(2209.48, 211.53) controlPoint2: CGPointMake(2202.29, 218.59)];
-    [trashIcon4Path addLineToPoint: CGPointMake(2152.18, 218.59)];
+    [trashIcon4Path moveToPoint: CGPointMake(2137.68, 218.09)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2121.65, 202.34) controlPoint1: CGPointMake(2128.98, 218.09) controlPoint2: CGPointMake(2121.79, 211.03)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2114.73, 123.84)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2111.98, 123.84)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2108.18, 120.04) controlPoint1: CGPointMake(2109.89, 123.84) controlPoint2: CGPointMake(2108.18, 122.14)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2111.98, 116.24) controlPoint1: CGPointMake(2108.18, 117.95) controlPoint2: CGPointMake(2109.89, 116.24)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2136.73, 116.24)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2136.74, 115.25)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2152.54, 99.49) controlPoint1: CGPointMake(2136.76, 106.56) controlPoint2: CGPointMake(2143.85, 99.49)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2164.23, 99.49)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2180.03, 115.25) controlPoint1: CGPointMake(2172.91, 99.49) controlPoint2: CGPointMake(2180, 106.56)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2180.03, 116.24)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2204.78, 116.24)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2208.58, 120.04) controlPoint1: CGPointMake(2206.88, 116.24) controlPoint2: CGPointMake(2208.58, 117.95)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2204.78, 123.84) controlPoint1: CGPointMake(2208.58, 122.14) controlPoint2: CGPointMake(2206.88, 123.84)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2202.03, 123.84)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2195.12, 202.27)];
+    [trashIcon4Path addCurveToPoint: CGPointMake(2179.08, 218.09) controlPoint1: CGPointMake(2194.98, 211.03) controlPoint2: CGPointMake(2187.79, 218.09)];
+    [trashIcon4Path addLineToPoint: CGPointMake(2137.68, 218.09)];
     [trashIcon4Path closePath];
     [contentColor setFill];
     [trashIcon4Path fill];
+
+
+    //// Ex-Icon Drawing
+    UIBezierPath* exIconPath = [UIBezierPath bezierPath];
+    [exIconPath moveToPoint: CGPointMake(320.53, 209.5)];
+    [exIconPath addCurveToPoint: CGPointMake(315.6, 207.46) controlPoint1: CGPointMake(318.67, 209.5) controlPoint2: CGPointMake(316.92, 208.78)];
+    [exIconPath addLineToPoint: CGPointMake(277.5, 169.36)];
+    [exIconPath addLineToPoint: CGPointMake(239.4, 207.46)];
+    [exIconPath addCurveToPoint: CGPointMake(234.47, 209.5) controlPoint1: CGPointMake(238.08, 208.78) controlPoint2: CGPointMake(236.33, 209.5)];
+    [exIconPath addCurveToPoint: CGPointMake(229.54, 207.46) controlPoint1: CGPointMake(232.61, 209.5) controlPoint2: CGPointMake(230.86, 208.78)];
+    [exIconPath addCurveToPoint: CGPointMake(229.54, 197.6) controlPoint1: CGPointMake(226.82, 204.74) controlPoint2: CGPointMake(226.82, 200.32)];
+    [exIconPath addLineToPoint: CGPointMake(267.64, 159.5)];
+    [exIconPath addLineToPoint: CGPointMake(229.54, 121.4)];
+    [exIconPath addCurveToPoint: CGPointMake(229.54, 111.54) controlPoint1: CGPointMake(226.82, 118.68) controlPoint2: CGPointMake(226.82, 114.26)];
+    [exIconPath addCurveToPoint: CGPointMake(234.47, 109.5) controlPoint1: CGPointMake(230.86, 110.22) controlPoint2: CGPointMake(232.61, 109.5)];
+    [exIconPath addCurveToPoint: CGPointMake(239.4, 111.54) controlPoint1: CGPointMake(236.33, 109.5) controlPoint2: CGPointMake(238.08, 110.22)];
+    [exIconPath addLineToPoint: CGPointMake(277.5, 149.64)];
+    [exIconPath addLineToPoint: CGPointMake(315.6, 111.54)];
+    [exIconPath addCurveToPoint: CGPointMake(320.53, 109.5) controlPoint1: CGPointMake(316.92, 110.22) controlPoint2: CGPointMake(318.67, 109.5)];
+    [exIconPath addCurveToPoint: CGPointMake(325.46, 111.54) controlPoint1: CGPointMake(322.39, 109.5) controlPoint2: CGPointMake(324.14, 110.22)];
+    [exIconPath addCurveToPoint: CGPointMake(325.46, 121.4) controlPoint1: CGPointMake(328.18, 114.26) controlPoint2: CGPointMake(328.18, 118.68)];
+    [exIconPath addLineToPoint: CGPointMake(287.36, 159.5)];
+    [exIconPath addLineToPoint: CGPointMake(325.46, 197.6)];
+    [exIconPath addCurveToPoint: CGPointMake(325.46, 207.46) controlPoint1: CGPointMake(328.18, 200.32) controlPoint2: CGPointMake(328.18, 204.74)];
+    [exIconPath addCurveToPoint: CGPointMake(320.53, 209.5) controlPoint1: CGPointMake(324.14, 208.78) controlPoint2: CGPointMake(322.39, 209.5)];
+    [exIconPath closePath];
+    [contentColor setFill];
+    [exIconPath fill];
+
+
+    //// Tile-Fill-1 Drawing
+    UIBezierPath* tileFill1Path = [UIBezierPath bezierPathWithRect: CGRectMake(328.5, 782.5, 223, 249)];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            [primaryFillColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveFillColor setFill];
+    }
+    [tileFill1Path fill];
+
+
+    //// Tile-Fill-2 Drawing
+    UIBezierPath* tileFill2Path = [UIBezierPath bezierPathWithRect: CGRectMake(587.85, 782.5, 223, 249)];
+    [primaryFillColor setFill];
+    [tileFill2Path fill];
+
+
+    //// Tile-Fill-3 Drawing
+    UIBezierPath* tileFill3Path = [UIBezierPath bezierPathWithRect: CGRectMake(847.15, 782.5, 223, 249)];
+    [primaryFillColor setFill];
+    [tileFill3Path fill];
+
+
+    //// Tile-Fill-4 Drawing
+    UIBezierPath* tileFill4Path = [UIBezierPath bezierPathWithRect: CGRectMake(1106.5, 782.5, 223, 249)];
+    [primaryFillColor setFill];
+    [tileFill4Path fill];
+
+
+    //// Tile-Fill-5 Drawing
+    UIBezierPath* tileFill5Path = [UIBezierPath bezierPathWithRect: CGRectMake(1365.85, 782.5, 223, 249)];
+    switch (self.gameState) {
+        case GameStateStart:
+            [primaryFillColor setFill];
+            break;
+        case GameStateTap:
+            [highlightedFillColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveFillColor setFill];
+    }
+    [tileFill5Path fill];
+
+
+    //// Tile-Fill-6 Drawing
+    UIBezierPath* tileFill6Path = [UIBezierPath bezierPathWithRect: CGRectMake(1625.15, 782.5, 223, 249)];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            [primaryFillColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveFillColor setFill];
+    }
+    [tileFill6Path fill];
+
+
+    //// Tile-Fill-7 Drawing
+    UIBezierPath* tileFill7Path = [UIBezierPath bezierPathWithRect: CGRectMake(1884.5, 782.5, 223, 249)];
+    [primaryFillColor setFill];
+    [tileFill7Path fill];
+
+    if (tappablesStroke) {
+        //// Tile-Stroke-1 Drawing
+        UIBezierPath* tileStroke1Path = [UIBezierPath bezierPath];
+        [tileStroke1Path moveToPoint: CGPointMake(554, 780)];
+        [tileStroke1Path addLineToPoint: CGPointMake(326, 780)];
+        [tileStroke1Path addLineToPoint: CGPointMake(326, 1034)];
+        [tileStroke1Path addLineToPoint: CGPointMake(554, 1034)];
+        [tileStroke1Path addLineToPoint: CGPointMake(554, 780)];
+        [tileStroke1Path closePath];
+        [tileStroke1Path moveToPoint: CGPointMake(549, 1029)];
+        [tileStroke1Path addLineToPoint: CGPointMake(331, 1029)];
+        [tileStroke1Path addLineToPoint: CGPointMake(331, 785)];
+        [tileStroke1Path addLineToPoint: CGPointMake(549, 785)];
+        [tileStroke1Path addLineToPoint: CGPointMake(549, 1029)];
+        [tileStroke1Path closePath];
+        switch (self.gameState) {
+            case GameStateStart:
+            case GameStateTap:
+                [primaryStrokeColor setFill];
+                break;
+            case GameStateSpell:
+            case GameStateWord:
+            case GameStateSubmit:
+                [inactiveStrokeColor setFill];
+        }
+        [tileStroke1Path fill];
+
+
+        //// Tile-Stroke-2 Drawing
+        UIBezierPath* tileStroke2Path = [UIBezierPath bezierPath];
+        [tileStroke2Path moveToPoint: CGPointMake(813.33, 780)];
+        [tileStroke2Path addLineToPoint: CGPointMake(585.33, 780)];
+        [tileStroke2Path addLineToPoint: CGPointMake(585.33, 1034)];
+        [tileStroke2Path addLineToPoint: CGPointMake(813.33, 1034)];
+        [tileStroke2Path addLineToPoint: CGPointMake(813.33, 780)];
+        [tileStroke2Path closePath];
+        [tileStroke2Path moveToPoint: CGPointMake(808.33, 1029)];
+        [tileStroke2Path addLineToPoint: CGPointMake(590.33, 1029)];
+        [tileStroke2Path addLineToPoint: CGPointMake(590.33, 785)];
+        [tileStroke2Path addLineToPoint: CGPointMake(808.33, 785)];
+        [tileStroke2Path addLineToPoint: CGPointMake(808.33, 1029)];
+        [tileStroke2Path closePath];
+        [primaryStrokeColor setFill];
+        [tileStroke2Path fill];
+
+
+        //// Tile-Stroke-3 Drawing
+        UIBezierPath* tileStroke3Path = [UIBezierPath bezierPath];
+        [tileStroke3Path moveToPoint: CGPointMake(1072.67, 780)];
+        [tileStroke3Path addLineToPoint: CGPointMake(844.67, 780)];
+        [tileStroke3Path addLineToPoint: CGPointMake(844.67, 1034)];
+        [tileStroke3Path addLineToPoint: CGPointMake(1072.67, 1034)];
+        [tileStroke3Path addLineToPoint: CGPointMake(1072.67, 780)];
+        [tileStroke3Path closePath];
+        [tileStroke3Path moveToPoint: CGPointMake(1067.67, 1029)];
+        [tileStroke3Path addLineToPoint: CGPointMake(849.67, 1029)];
+        [tileStroke3Path addLineToPoint: CGPointMake(849.67, 785)];
+        [tileStroke3Path addLineToPoint: CGPointMake(1067.67, 785)];
+        [tileStroke3Path addLineToPoint: CGPointMake(1067.67, 1029)];
+        [tileStroke3Path closePath];
+        [primaryStrokeColor setFill];
+        [tileStroke3Path fill];
+
+
+        //// Tile-Stroke-4 Drawing
+        UIBezierPath* tileStroke4Path = [UIBezierPath bezierPath];
+        [tileStroke4Path moveToPoint: CGPointMake(1332, 780)];
+        [tileStroke4Path addLineToPoint: CGPointMake(1104, 780)];
+        [tileStroke4Path addLineToPoint: CGPointMake(1104, 1034)];
+        [tileStroke4Path addLineToPoint: CGPointMake(1332, 1034)];
+        [tileStroke4Path addLineToPoint: CGPointMake(1332, 780)];
+        [tileStroke4Path closePath];
+        [tileStroke4Path moveToPoint: CGPointMake(1327, 1029)];
+        [tileStroke4Path addLineToPoint: CGPointMake(1109, 1029)];
+        [tileStroke4Path addLineToPoint: CGPointMake(1109, 785)];
+        [tileStroke4Path addLineToPoint: CGPointMake(1327, 785)];
+        [tileStroke4Path addLineToPoint: CGPointMake(1327, 1029)];
+        [tileStroke4Path closePath];
+        [primaryStrokeColor setFill];
+        [tileStroke4Path fill];
+
+
+        //// Tile-Stroke-5 Drawing
+        UIBezierPath* tileStroke5Path = [UIBezierPath bezierPath];
+        [tileStroke5Path moveToPoint: CGPointMake(1591.33, 780)];
+        [tileStroke5Path addLineToPoint: CGPointMake(1363.33, 780)];
+        [tileStroke5Path addLineToPoint: CGPointMake(1363.33, 1034)];
+        [tileStroke5Path addLineToPoint: CGPointMake(1591.33, 1034)];
+        [tileStroke5Path addLineToPoint: CGPointMake(1591.33, 780)];
+        [tileStroke5Path closePath];
+        [tileStroke5Path moveToPoint: CGPointMake(1586.33, 1029)];
+        [tileStroke5Path addLineToPoint: CGPointMake(1368.33, 1029)];
+        [tileStroke5Path addLineToPoint: CGPointMake(1368.33, 785)];
+        [tileStroke5Path addLineToPoint: CGPointMake(1586.33, 785)];
+        [tileStroke5Path addLineToPoint: CGPointMake(1586.33, 1029)];
+        [tileStroke5Path closePath];
+        switch (self.gameState) {
+            case GameStateStart:
+                [primaryStrokeColor setFill];
+                break;
+            case GameStateTap:
+                [highlightedStrokeColor setFill];
+                break;
+            case GameStateSpell:
+            case GameStateWord:
+            case GameStateSubmit:
+                [inactiveStrokeColor setFill];
+        }
+        [tileStroke5Path fill];
+
+        //// Tile-Stroke-6 Drawing
+        UIBezierPath* tileStroke6Path = [UIBezierPath bezierPath];
+        [tileStroke6Path moveToPoint: CGPointMake(1850.67, 780)];
+        [tileStroke6Path addLineToPoint: CGPointMake(1622.67, 780)];
+        [tileStroke6Path addLineToPoint: CGPointMake(1622.67, 1034)];
+        [tileStroke6Path addLineToPoint: CGPointMake(1850.67, 1034)];
+        [tileStroke6Path addLineToPoint: CGPointMake(1850.67, 780)];
+        [tileStroke6Path closePath];
+        [tileStroke6Path moveToPoint: CGPointMake(1845.67, 1029)];
+        [tileStroke6Path addLineToPoint: CGPointMake(1627.67, 1029)];
+        [tileStroke6Path addLineToPoint: CGPointMake(1627.67, 785)];
+        [tileStroke6Path addLineToPoint: CGPointMake(1845.67, 785)];
+        [tileStroke6Path addLineToPoint: CGPointMake(1845.67, 1029)];
+        [tileStroke6Path closePath];
+        [primaryStrokeColor setFill];
+        [tileStroke6Path fill];
+
+
+        //// Tile-Stroke-7 Drawing
+        UIBezierPath* tileStroke7Path = [UIBezierPath bezierPath];
+        [tileStroke7Path moveToPoint: CGPointMake(2110, 780)];
+        [tileStroke7Path addLineToPoint: CGPointMake(1882, 780)];
+        [tileStroke7Path addLineToPoint: CGPointMake(1882, 1034)];
+        [tileStroke7Path addLineToPoint: CGPointMake(2110, 1034)];
+        [tileStroke7Path addLineToPoint: CGPointMake(2110, 780)];
+        [tileStroke7Path closePath];
+        [tileStroke7Path moveToPoint: CGPointMake(2105, 1029)];
+        [tileStroke7Path addLineToPoint: CGPointMake(1887, 1029)];
+        [tileStroke7Path addLineToPoint: CGPointMake(1887, 785)];
+        [tileStroke7Path addLineToPoint: CGPointMake(2105, 785)];
+        [tileStroke7Path addLineToPoint: CGPointMake(2105, 1029)];
+        [tileStroke7Path closePath];
+        switch (self.gameState) {
+            case GameStateStart:
+            case GameStateTap:
+                [primaryStrokeColor setFill];
+                break;
+            case GameStateSpell:
+            case GameStateWord:
+            case GameStateSubmit:
+                [inactiveStrokeColor setFill];
+        }
+        [tileStroke7Path fill];
+    }
+
+
+    //// Tile-Letter-1 Drawing
+    UIBezierPath* tileLetter1Path = [UIBezierPath bezierPath];
+    [tileLetter1Path moveToPoint: CGPointMake(440, 910.96)];
+    [tileLetter1Path addLineToPoint: CGPointMake(460.9, 838.06)];
+    [tileLetter1Path addLineToPoint: CGPointMake(497.64, 838.06)];
+    [tileLetter1Path addLineToPoint: CGPointMake(497.64, 964.06)];
+    [tileLetter1Path addLineToPoint: CGPointMake(471.88, 964.06)];
+    [tileLetter1Path addLineToPoint: CGPointMake(472.06, 872.44)];
+    [tileLetter1Path addLineToPoint: CGPointMake(443.43, 964.78)];
+    [tileLetter1Path addLineToPoint: CGPointMake(435.14, 964.78)];
+    [tileLetter1Path addLineToPoint: CGPointMake(406.5, 872.62)];
+    [tileLetter1Path addLineToPoint: CGPointMake(406.86, 964.06)];
+    [tileLetter1Path addLineToPoint: CGPointMake(382.37, 964.06)];
+    [tileLetter1Path addLineToPoint: CGPointMake(382.37, 838.06)];
+    [tileLetter1Path addLineToPoint: CGPointMake(419.11, 838.06)];
+    [tileLetter1Path addLineToPoint: CGPointMake(440, 910.96)];
+    [tileLetter1Path closePath];
+    [contentColor setFill];
+    [tileLetter1Path fill];
+
+
+    //// Tile-Letter-2 Drawing
+    UIBezierPath* tileLetter2Path = [UIBezierPath bezierPath];
+    [tileLetter2Path moveToPoint: CGPointMake(656.92, 838.06)];
+    [tileLetter2Path addLineToPoint: CGPointMake(683.58, 838.06)];
+    [tileLetter2Path addLineToPoint: CGPointMake(683.58, 921.04)];
+    [tileLetter2Path addCurveToPoint: CGPointMake(699.79, 942.64) controlPoint1: CGPointMake(683.58, 935.98) controlPoint2: CGPointMake(689.7, 942.64)];
+    [tileLetter2Path addCurveToPoint: CGPointMake(715.82, 921.04) controlPoint1: CGPointMake(709.69, 942.64) controlPoint2: CGPointMake(715.82, 935.98)];
+    [tileLetter2Path addLineToPoint: CGPointMake(715.82, 838.06)];
+    [tileLetter2Path addLineToPoint: CGPointMake(741.93, 838.06)];
+    [tileLetter2Path addLineToPoint: CGPointMake(741.93, 918.34)];
+    [tileLetter2Path addCurveToPoint: CGPointMake(699.43, 966.22) controlPoint1: CGPointMake(741.93, 949.12) controlPoint2: CGPointMake(726.62, 966.22)];
+    [tileLetter2Path addCurveToPoint: CGPointMake(656.92, 918.34) controlPoint1: CGPointMake(672.05, 966.22) controlPoint2: CGPointMake(656.92, 949.12)];
+    [tileLetter2Path addLineToPoint: CGPointMake(656.92, 838.06)];
+    [tileLetter2Path closePath];
+    [contentColor setFill];
+    [tileLetter2Path fill];
+
+
+    //// Tile-Letter-3 Drawing
+    UIBezierPath* tileLetter3Path = [UIBezierPath bezierPath];
+    [tileLetter3Path moveToPoint: CGPointMake(975.33, 912.04)];
+    [tileLetter3Path addLineToPoint: CGPointMake(942.01, 912.04)];
+    [tileLetter3Path addLineToPoint: CGPointMake(942.01, 964.06)];
+    [tileLetter3Path addLineToPoint: CGPointMake(915.35, 964.06)];
+    [tileLetter3Path addLineToPoint: CGPointMake(915.35, 838.06)];
+    [tileLetter3Path addLineToPoint: CGPointMake(942.01, 838.06)];
+    [tileLetter3Path addLineToPoint: CGPointMake(942.01, 888.28)];
+    [tileLetter3Path addLineToPoint: CGPointMake(975.33, 888.28)];
+    [tileLetter3Path addLineToPoint: CGPointMake(975.33, 838.06)];
+    [tileLetter3Path addLineToPoint: CGPointMake(1001.99, 838.06)];
+    [tileLetter3Path addLineToPoint: CGPointMake(1001.99, 964.06)];
+    [tileLetter3Path addLineToPoint: CGPointMake(975.33, 964.06)];
+    [tileLetter3Path addLineToPoint: CGPointMake(975.33, 912.04)];
+    [tileLetter3Path closePath];
+    [contentColor setFill];
+    [tileLetter3Path fill];
+
+
+    //// Tile-Letter-4 Drawing
+    UIBezierPath* tileLetter4Path = [UIBezierPath bezierPath];
+    [tileLetter4Path moveToPoint: CGPointMake(1179.28, 901.06)];
+    [tileLetter4Path addCurveToPoint: CGPointMake(1226.65, 836.08) controlPoint1: CGPointMake(1179.28, 861.1) controlPoint2: CGPointMake(1199.09, 836.08)];
+    [tileLetter4Path addCurveToPoint: CGPointMake(1254.75, 846.34) controlPoint1: CGPointMake(1238.9, 836.08) controlPoint2: CGPointMake(1248.44, 840.94)];
+    [tileLetter4Path addLineToPoint: CGPointMake(1254.75, 874.6)];
+    [tileLetter4Path addLineToPoint: CGPointMake(1254.39, 874.6)];
+    [tileLetter4Path addCurveToPoint: CGPointMake(1230.25, 860.74) controlPoint1: CGPointMake(1247.72, 867.22) controlPoint2: CGPointMake(1239.08, 860.74)];
+    [tileLetter4Path addCurveToPoint: CGPointMake(1206.65, 900.7) controlPoint1: CGPointMake(1216.92, 860.74) controlPoint2: CGPointMake(1206.65, 876.4)];
+    [tileLetter4Path addCurveToPoint: CGPointMake(1230.25, 941.38) controlPoint1: CGPointMake(1206.65, 927.34) controlPoint2: CGPointMake(1216.92, 941.38)];
+    [tileLetter4Path addCurveToPoint: CGPointMake(1255.47, 927.88) controlPoint1: CGPointMake(1239.44, 941.38) controlPoint2: CGPointMake(1248.26, 935.62)];
+    [tileLetter4Path addLineToPoint: CGPointMake(1256.01, 928.06)];
+    [tileLetter4Path addLineToPoint: CGPointMake(1253.67, 955.78)];
+    [tileLetter4Path addCurveToPoint: CGPointMake(1224.85, 966.04) controlPoint1: CGPointMake(1246.64, 961.36) controlPoint2: CGPointMake(1237.45, 966.04)];
+    [tileLetter4Path addCurveToPoint: CGPointMake(1179.28, 901.06) controlPoint1: CGPointMake(1198.73, 966.04) controlPoint2: CGPointMake(1179.28, 942.64)];
+    [tileLetter4Path closePath];
+    [contentColor setFill];
+    [tileLetter4Path fill];
+
+
+    //// Tile-Letter-5 Drawing
+    UIBezierPath* tileLetter5Path = [UIBezierPath bezierPath];
+    [tileLetter5Path moveToPoint: CGPointMake(1434.11, 838.06)];
+    [tileLetter5Path addLineToPoint: CGPointMake(1459.32, 838.06)];
+    [tileLetter5Path addLineToPoint: CGPointMake(1496.07, 906.64)];
+    [tileLetter5Path addLineToPoint: CGPointMake(1495.89, 838.06)];
+    [tileLetter5Path addLineToPoint: CGPointMake(1520.56, 838.06)];
+    [tileLetter5Path addLineToPoint: CGPointMake(1520.56, 964.42)];
+    [tileLetter5Path addLineToPoint: CGPointMake(1500.75, 964.42)];
+    [tileLetter5Path addLineToPoint: CGPointMake(1458.42, 887.38)];
+    [tileLetter5Path addLineToPoint: CGPointMake(1458.78, 964.06)];
+    [tileLetter5Path addLineToPoint: CGPointMake(1434.11, 964.06)];
+    [tileLetter5Path addLineToPoint: CGPointMake(1434.11, 838.06)];
+    [tileLetter5Path closePath];
+    [contentColor setFill];
+    [tileLetter5Path fill];
+
+
+    //// Tile-Letter-6 Drawing
+    UIBezierPath* tileLetter6Path = [UIBezierPath bezierPath];
+    [tileLetter6Path moveToPoint: CGPointMake(1748.11, 915.46)];
+    [tileLetter6Path addLineToPoint: CGPointMake(1736.22, 867.58)];
+    [tileLetter6Path addLineToPoint: CGPointMake(1723.97, 915.46)];
+    [tileLetter6Path addLineToPoint: CGPointMake(1748.11, 915.46)];
+    [tileLetter6Path closePath];
+    [tileLetter6Path moveToPoint: CGPointMake(1721.81, 837.7)];
+    [tileLetter6Path addLineToPoint: CGPointMake(1752.43, 837.7)];
+    [tileLetter6Path addLineToPoint: CGPointMake(1787.55, 964.06)];
+    [tileLetter6Path addLineToPoint: CGPointMake(1759.09, 964.06)];
+    [tileLetter6Path addLineToPoint: CGPointMake(1752.61, 937.24)];
+    [tileLetter6Path addLineToPoint: CGPointMake(1719.29, 937.24)];
+    [tileLetter6Path addLineToPoint: CGPointMake(1712.8, 964.06)];
+    [tileLetter6Path addLineToPoint: CGPointMake(1685.79, 964.06)];
+    [tileLetter6Path addLineToPoint: CGPointMake(1721.81, 837.7)];
+    [tileLetter6Path closePath];
+    [contentColor setFill];
+    [tileLetter6Path fill];
+
+
+    //// Tile-Letter-7 Drawing
+    UIBezierPath* tileLetter7Path = [UIBezierPath bezierPath];
+    [tileLetter7Path moveToPoint: CGPointMake(1995.91, 943)];
+    [tileLetter7Path addCurveToPoint: CGPointMake(2006.36, 939.58) controlPoint1: CGPointMake(1999.88, 943) controlPoint2: CGPointMake(2003.48, 941.74)];
+    [tileLetter7Path addLineToPoint: CGPointMake(1991.77, 922.66)];
+    [tileLetter7Path addLineToPoint: CGPointMake(2006.9, 911.5)];
+    [tileLetter7Path addLineToPoint: CGPointMake(2015, 921.4)];
+    [tileLetter7Path addCurveToPoint: CGPointMake(2016.63, 900.34) controlPoint1: CGPointMake(2016.09, 915.82) controlPoint2: CGPointMake(2016.63, 908.8)];
+    [tileLetter7Path addCurveToPoint: CGPointMake(1995.91, 859.3) controlPoint1: CGPointMake(2016.63, 873.52) controlPoint2: CGPointMake(2008.52, 859.3)];
+    [tileLetter7Path addCurveToPoint: CGPointMake(1975.2, 900.52) controlPoint1: CGPointMake(1983.31, 859.3) controlPoint2: CGPointMake(1975.2, 873.52)];
+    [tileLetter7Path addCurveToPoint: CGPointMake(1995.91, 943) controlPoint1: CGPointMake(1975.2, 928.24) controlPoint2: CGPointMake(1983.12, 943)];
+    [tileLetter7Path closePath];
+    [tileLetter7Path moveToPoint: CGPointMake(2028.69, 967.3)];
+    [tileLetter7Path addLineToPoint: CGPointMake(2020.95, 957.4)];
+    [tileLetter7Path addCurveToPoint: CGPointMake(1995.37, 965.68) controlPoint1: CGPointMake(2013.92, 962.62) controlPoint2: CGPointMake(2005.28, 965.68)];
+    [tileLetter7Path addCurveToPoint: CGPointMake(1948, 900.34) controlPoint1: CGPointMake(1966.55, 965.68) controlPoint2: CGPointMake(1948, 940.12)];
+    [tileLetter7Path addCurveToPoint: CGPointMake(1995.91, 835.54) controlPoint1: CGPointMake(1948, 860.92) controlPoint2: CGPointMake(1966.73, 835.54)];
+    [tileLetter7Path addCurveToPoint: CGPointMake(2043.64, 899.98) controlPoint1: CGPointMake(2025.09, 835.54) controlPoint2: CGPointMake(2043.64, 861.1)];
+    [tileLetter7Path addCurveToPoint: CGPointMake(2033.38, 943.54) controlPoint1: CGPointMake(2043.64, 917.98) controlPoint2: CGPointMake(2040.04, 932.56)];
+    [tileLetter7Path addLineToPoint: CGPointMake(2044, 956.14)];
+    [tileLetter7Path addLineToPoint: CGPointMake(2028.69, 967.3)];
+    [tileLetter7Path closePath];
+    [contentColor setFill];
+    [tileLetter7Path fill];
+
+
+    //// Tile-Score-1 Drawing
+    UIBezierPath* tileScore1Path = [UIBezierPath bezierPath];
+    [tileScore1Path moveToPoint: CGPointMake(521.32, 1014.36)];
+    [tileScore1Path addCurveToPoint: CGPointMake(512.38, 1012.49) controlPoint1: CGPointMake(517.47, 1014.36) controlPoint2: CGPointMake(514.74, 1013.59)];
+    [tileScore1Path addLineToPoint: CGPointMake(511.61, 1005.48)];
+    [tileScore1Path addLineToPoint: CGPointMake(511.71, 1005.43)];
+    [tileScore1Path addCurveToPoint: CGPointMake(520.45, 1008.36) controlPoint1: CGPointMake(514.59, 1007.3) controlPoint2: CGPointMake(517.62, 1008.36)];
+    [tileScore1Path addCurveToPoint: CGPointMake(525.54, 1004.18) controlPoint1: CGPointMake(523.48, 1008.36) controlPoint2: CGPointMake(525.54, 1006.63)];
+    [tileScore1Path addCurveToPoint: CGPointMake(516.08, 997.56) controlPoint1: CGPointMake(525.54, 1001.35) controlPoint2: CGPointMake(523.38, 999.43)];
+    [tileScore1Path addLineToPoint: CGPointMake(516.08, 994.82)];
+    [tileScore1Path addCurveToPoint: CGPointMake(525.06, 987.76) controlPoint1: CGPointMake(523.19, 991.8) controlPoint2: CGPointMake(525.06, 990.07)];
+    [tileScore1Path addCurveToPoint: CGPointMake(520.98, 984.35) controlPoint1: CGPointMake(525.06, 985.7) controlPoint2: CGPointMake(523.43, 984.35)];
+    [tileScore1Path addCurveToPoint: CGPointMake(512.57, 987.52) controlPoint1: CGPointMake(518.05, 984.35) controlPoint2: CGPointMake(515.07, 985.75)];
+    [tileScore1Path addLineToPoint: CGPointMake(512.48, 987.52)];
+    [tileScore1Path addLineToPoint: CGPointMake(512.48, 981.09)];
+    [tileScore1Path addCurveToPoint: CGPointMake(522.13, 978.35) controlPoint1: CGPointMake(514.69, 979.7) controlPoint2: CGPointMake(518.05, 978.35)];
+    [tileScore1Path addCurveToPoint: CGPointMake(532.27, 986.71) controlPoint1: CGPointMake(528.33, 978.35) controlPoint2: CGPointMake(532.27, 981.71)];
+    [tileScore1Path addCurveToPoint: CGPointMake(525.45, 995.59) controlPoint1: CGPointMake(532.27, 990.26) controlPoint2: CGPointMake(530.11, 993.14)];
+    [tileScore1Path addCurveToPoint: CGPointMake(532.7, 1004.66) controlPoint1: CGPointMake(530.2, 997.32) controlPoint2: CGPointMake(532.7, 1000.68)];
+    [tileScore1Path addCurveToPoint: CGPointMake(521.32, 1014.36) controlPoint1: CGPointMake(532.7, 1010.85) controlPoint2: CGPointMake(527.22, 1014.36)];
+    [tileScore1Path closePath];
+    [contentColor setFill];
+    [tileScore1Path fill];
+
+
+    //// Tile-Score-2 Drawing
+    UIBezierPath* tileScore2Path = [UIBezierPath bezierPath];
+    [tileScore2Path moveToPoint: CGPointMake(775.32, 986.42)];
+    [tileScore2Path addLineToPoint: CGPointMake(789.44, 978.26)];
+    [tileScore2Path addLineToPoint: CGPointMake(790.07, 978.5)];
+    [tileScore2Path addLineToPoint: CGPointMake(790.07, 1013.83)];
+    [tileScore2Path addLineToPoint: CGPointMake(782.96, 1013.83)];
+    [tileScore2Path addLineToPoint: CGPointMake(782.96, 989.3)];
+    [tileScore2Path addLineToPoint: CGPointMake(775.41, 993.67)];
+    [tileScore2Path addLineToPoint: CGPointMake(775.32, 993.62)];
+    [tileScore2Path addLineToPoint: CGPointMake(775.32, 986.42)];
+    [tileScore2Path closePath];
+    [contentColor setFill];
+    [tileScore2Path fill];
+
+
+    //// Tile-Score-3 Drawing
+    UIBezierPath* tileScore3Path = [UIBezierPath bezierPath];
+    [tileScore3Path moveToPoint: CGPointMake(1041.04, 1001.25)];
+    [tileScore3Path addLineToPoint: CGPointMake(1041.04, 984.4)];
+    [tileScore3Path addLineToPoint: CGPointMake(1032.44, 1001.25)];
+    [tileScore3Path addLineToPoint: CGPointMake(1041.04, 1001.25)];
+    [tileScore3Path closePath];
+    [tileScore3Path moveToPoint: CGPointMake(1047.62, 1013.83)];
+    [tileScore3Path addLineToPoint: CGPointMake(1040.85, 1013.83)];
+    [tileScore3Path addLineToPoint: CGPointMake(1040.85, 1006.63)];
+    [tileScore3Path addLineToPoint: CGPointMake(1025.62, 1006.63)];
+    [tileScore3Path addLineToPoint: CGPointMake(1025.29, 1003.32)];
+    [tileScore3Path addLineToPoint: CGPointMake(1038.59, 978.69)];
+    [tileScore3Path addLineToPoint: CGPointMake(1047.62, 978.69)];
+    [tileScore3Path addLineToPoint: CGPointMake(1047.62, 1001.25)];
+    [tileScore3Path addLineToPoint: CGPointMake(1052.04, 1001.25)];
+    [tileScore3Path addLineToPoint: CGPointMake(1052.04, 1006.63)];
+    [tileScore3Path addLineToPoint: CGPointMake(1047.62, 1006.63)];
+    [tileScore3Path addLineToPoint: CGPointMake(1047.62, 1013.83)];
+    [tileScore3Path closePath];
+    [contentColor setFill];
+    [tileScore3Path fill];
+
+
+    //// Tile-Score-4 Drawing
+    UIBezierPath* tileScore4Path = [UIBezierPath bezierPath];
+    [tileScore4Path moveToPoint: CGPointMake(1299.41, 1014.36)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1290.48, 1012.49) controlPoint1: CGPointMake(1295.57, 1014.36) controlPoint2: CGPointMake(1292.83, 1013.59)];
+    [tileScore4Path addLineToPoint: CGPointMake(1289.71, 1005.48)];
+    [tileScore4Path addLineToPoint: CGPointMake(1289.81, 1005.43)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1298.55, 1008.36) controlPoint1: CGPointMake(1292.69, 1007.3) controlPoint2: CGPointMake(1295.72, 1008.36)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1303.64, 1004.18) controlPoint1: CGPointMake(1301.58, 1008.36) controlPoint2: CGPointMake(1303.64, 1006.63)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1294.18, 997.56) controlPoint1: CGPointMake(1303.64, 1001.35) controlPoint2: CGPointMake(1301.48, 999.43)];
+    [tileScore4Path addLineToPoint: CGPointMake(1294.18, 994.82)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1303.16, 987.76) controlPoint1: CGPointMake(1301.29, 991.8) controlPoint2: CGPointMake(1303.16, 990.07)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1299.08, 984.35) controlPoint1: CGPointMake(1303.16, 985.7) controlPoint2: CGPointMake(1301.53, 984.35)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1290.67, 987.52) controlPoint1: CGPointMake(1296.15, 984.35) controlPoint2: CGPointMake(1293.17, 985.75)];
+    [tileScore4Path addLineToPoint: CGPointMake(1290.58, 987.52)];
+    [tileScore4Path addLineToPoint: CGPointMake(1290.58, 981.09)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1300.23, 978.35) controlPoint1: CGPointMake(1292.79, 979.7) controlPoint2: CGPointMake(1296.15, 978.35)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1310.37, 986.71) controlPoint1: CGPointMake(1306.43, 978.35) controlPoint2: CGPointMake(1310.37, 981.71)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1303.55, 995.59) controlPoint1: CGPointMake(1310.37, 990.26) controlPoint2: CGPointMake(1308.2, 993.14)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1310.8, 1004.66) controlPoint1: CGPointMake(1308.3, 997.32) controlPoint2: CGPointMake(1310.8, 1000.68)];
+    [tileScore4Path addCurveToPoint: CGPointMake(1299.41, 1014.36) controlPoint1: CGPointMake(1310.8, 1010.85) controlPoint2: CGPointMake(1305.32, 1014.36)];
+    [tileScore4Path closePath];
+    [contentColor setFill];
+    [tileScore4Path fill];
+
+
+    //// Tile-Score-5 Drawing
+    UIBezierPath* tileScore5Path = [UIBezierPath bezierPath];
+    [tileScore5Path moveToPoint: CGPointMake(1553.32, 986.42)];
+    [tileScore5Path addLineToPoint: CGPointMake(1567.44, 978.26)];
+    [tileScore5Path addLineToPoint: CGPointMake(1568.07, 978.5)];
+    [tileScore5Path addLineToPoint: CGPointMake(1568.07, 1013.83)];
+    [tileScore5Path addLineToPoint: CGPointMake(1560.96, 1013.83)];
+    [tileScore5Path addLineToPoint: CGPointMake(1560.96, 989.3)];
+    [tileScore5Path addLineToPoint: CGPointMake(1553.41, 993.67)];
+    [tileScore5Path addLineToPoint: CGPointMake(1553.32, 993.62)];
+    [tileScore5Path addLineToPoint: CGPointMake(1553.32, 986.42)];
+    [tileScore5Path closePath];
+    [contentColor setFill];
+    [tileScore5Path fill];
+
+
+    //// Tile-Score-6 Drawing
+    UIBezierPath* tileScore6Path = [UIBezierPath bezierPath];
+    [tileScore6Path moveToPoint: CGPointMake(1812.65, 986.42)];
+    [tileScore6Path addLineToPoint: CGPointMake(1826.77, 978.26)];
+    [tileScore6Path addLineToPoint: CGPointMake(1827.4, 978.5)];
+    [tileScore6Path addLineToPoint: CGPointMake(1827.4, 1013.83)];
+    [tileScore6Path addLineToPoint: CGPointMake(1820.29, 1013.83)];
+    [tileScore6Path addLineToPoint: CGPointMake(1820.29, 989.3)];
+    [tileScore6Path addLineToPoint: CGPointMake(1812.75, 993.67)];
+    [tileScore6Path addLineToPoint: CGPointMake(1812.65, 993.62)];
+    [tileScore6Path addLineToPoint: CGPointMake(1812.65, 986.42)];
+    [tileScore6Path closePath];
+    [contentColor setFill];
+    [tileScore6Path fill];
+
+
+    //// Tile-Score-7 Drawing
+    UIBezierPath* tileScore7Path = [UIBezierPath bezierPath];
+    [tileScore7Path moveToPoint: CGPointMake(2077.32, 997.22)];
+    [tileScore7Path addCurveToPoint: CGPointMake(2080.34, 996.93) controlPoint1: CGPointMake(2078.28, 997.22) controlPoint2: CGPointMake(2079.29, 997.12)];
+    [tileScore7Path addCurveToPoint: CGPointMake(2081.74, 990.55) controlPoint1: CGPointMake(2081.35, 994.68) controlPoint2: CGPointMake(2081.74, 992.75)];
+    [tileScore7Path addCurveToPoint: CGPointMake(2076.88, 984.02) controlPoint1: CGPointMake(2081.74, 986.51) controlPoint2: CGPointMake(2079.82, 984.02)];
+    [tileScore7Path addCurveToPoint: CGPointMake(2071.89, 990.74) controlPoint1: CGPointMake(2073.81, 984.02) controlPoint2: CGPointMake(2071.89, 986.75)];
+    [tileScore7Path addCurveToPoint: CGPointMake(2077.32, 997.22) controlPoint1: CGPointMake(2071.89, 995.35) controlPoint2: CGPointMake(2074, 997.22)];
+    [tileScore7Path closePath];
+    [tileScore7Path moveToPoint: CGPointMake(2078.38, 1013.83)];
+    [tileScore7Path addLineToPoint: CGPointMake(2070.4, 1013.83)];
+    [tileScore7Path addLineToPoint: CGPointMake(2076.93, 1003.84)];
+    [tileScore7Path addCurveToPoint: CGPointMake(2077.99, 1002.12) controlPoint1: CGPointMake(2077.32, 1003.27) controlPoint2: CGPointMake(2077.65, 1002.69)];
+    [tileScore7Path addCurveToPoint: CGPointMake(2074.72, 1002.5) controlPoint1: CGPointMake(2076.93, 1002.4) controlPoint2: CGPointMake(2075.88, 1002.5)];
+    [tileScore7Path addCurveToPoint: CGPointMake(2064.83, 990.98) controlPoint1: CGPointMake(2069.44, 1002.5) controlPoint2: CGPointMake(2064.83, 998.56)];
+    [tileScore7Path addCurveToPoint: CGPointMake(2077.03, 978.16) controlPoint1: CGPointMake(2064.83, 983.83) controlPoint2: CGPointMake(2069.54, 978.16)];
+    [tileScore7Path addCurveToPoint: CGPointMake(2088.8, 990.59) controlPoint1: CGPointMake(2084.67, 978.16) controlPoint2: CGPointMake(2088.8, 983.2)];
+    [tileScore7Path addCurveToPoint: CGPointMake(2082.99, 1006.1) controlPoint1: CGPointMake(2088.8, 995.54) controlPoint2: CGPointMake(2086.78, 999.91)];
+    [tileScore7Path addLineToPoint: CGPointMake(2078.38, 1013.83)];
+    [tileScore7Path closePath];
+    [contentColor setFill];
+    [tileScore7Path fill];
 }
 
 @end

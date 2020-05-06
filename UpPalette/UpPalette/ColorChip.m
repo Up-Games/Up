@@ -137,8 +137,8 @@ static const CGFloat _ClearGray = -1;
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@: [%.2f, %3.0f, %.2f, %.2f]",
-        self.name, self.grayValue, self.hue, self.saturation, self.lightness];
+    return [NSString stringWithFormat:@"%@: [%.2f, %.2f, %.2f]",
+        self.name, self.grayValue, self.saturation, self.lightness];
 }
 
 - (NSAttributedString *)attributedDescription
@@ -155,8 +155,8 @@ static const CGFloat _ClearGray = -1;
         [string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nclear" attributes:colorStringAttributes]];
     }
     else {
-        NSString *chipString = [NSString stringWithFormat:@"\nchsl: %.2f, %3.0f, %.2f, %.2f",
-            self.grayValue, self.hue, self.saturation, self.lightness];
+        NSString *chipString = [NSString stringWithFormat:@"\nchsl: %.2f, %.2f, %.2f",
+            self.grayValue, self.saturation, self.lightness];
         [string appendAttributedString:[[NSAttributedString alloc] initWithString:chipString attributes:colorStringAttributes]];
 
         NSString *lightnessString = [NSString stringWithFormat:@"   L: %3.2f", color.lightness];

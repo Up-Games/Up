@@ -99,7 +99,6 @@ static NSString *const ColorMapPathFormat = @"/Users/kocienda/Desktop/up-color-m
 @property (nonatomic) IBOutlet UIButton *nextHueButton;
 
 - (IBAction)hueChanged:(UISlider *)sender;
-- (IBAction)wordTrayActiveChanged:(UISwitch *)sender;
 
 @end
 
@@ -320,17 +319,17 @@ static ViewController *_Instance;
     switch (self.colorTheme) {
         case ColorThemeLight: {
             self.defaultColorMap = @{
-                /* L: 42 */ PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
-                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey grayValue:0.95 hue:0 saturation:0.6 lightness:0.45],
-                ActiveFillKey : [ColorChip chipWithName:ActiveFillKey grayValue:0.75 hue:0 saturation:0.5 lightness:0.1],
-                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
+                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
+                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey grayValue:0.86 hue:0 saturation:0.6 lightness:0.38],
+                ActiveFillKey : [ColorChip chipWithName:ActiveFillKey grayValue:0.73 hue:0 saturation:0.6 lightness:0.42],
+                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey grayValue:0.76 hue:0 saturation:1.0 lightness:0.0],
                 PrimaryStrokeKey : [ColorChip clearChipWithName:PrimaryStrokeKey],
-                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey grayValue:0.5 hue:0 saturation:0.94 lightness:0.0],
-                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
-                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
+                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey grayValue:0.88 hue:0 saturation:0.81 lightness:0.0],
+                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey grayValue:0.6 hue:0 saturation:1.0 lightness:0.0],
+                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey grayValue:0.5 hue:0 saturation:1.0 lightness:0.0],
                 ContentKey : [ColorChip chipWithName:ContentKey grayValue:1.0 hue:0 saturation:0 lightness:1.0],
-                InformationKey : [ColorChip chipWithName:InformationKey grayValue:0.38 hue:0 saturation:0.5 lightness:0.0],
-                CanvasKey : [ColorChip chipWithName:CanvasKey grayValue:0.98 hue:0 saturation:0.7 lightness:0.45],
+                InformationKey : [ColorChip chipWithName:InformationKey grayValue:0.43 hue:0 saturation:0.47 lightness:0.0],
+                CanvasKey : [ColorChip chipWithName:CanvasKey grayValue:0.92 hue:0 saturation:0.50 lightness:0.54],
             };
             break;
         }
@@ -532,11 +531,6 @@ static ViewController *_Instance;
     [self updateColors];
 }
 
-- (IBAction)wordTrayActiveChanged:(UISwitch *)sender
-{
-    self.gameMockupView.wordTrayActive = sender.on;
-}
-
 - (IBAction)okButtonPressed:(UIButton *)sender
 {
     if (![self.selectedChip isEqual:self.savedChip]) {
@@ -600,6 +594,11 @@ static ViewController *_Instance;
     [self loadColorMap];
     [self updateHue:self.hue];
     [self updateColors];
+}
+
+- (IBAction)gameStateChanged:(UISegmentedControl *)sender
+{
+    self.gameMockupView.gameState = sender.selectedSegmentIndex;
 }
 
 @end
