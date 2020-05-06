@@ -862,7 +862,18 @@
         [tileStroke6Path addLineToPoint: CGPointMake(1845.67, 785)];
         [tileStroke6Path addLineToPoint: CGPointMake(1845.67, 1029)];
         [tileStroke6Path closePath];
-        [primaryStrokeColor setFill];
+        switch (self.gameState) {
+            case GameStateStart:
+                [primaryStrokeColor setFill];
+                break;
+            case GameStateTap:
+                [highlightedStrokeColor setFill];
+                break;
+            case GameStateSpell:
+            case GameStateWord:
+            case GameStateSubmit:
+                [inactiveStrokeColor setFill];
+        }
         [tileStroke6Path fill];
 
 

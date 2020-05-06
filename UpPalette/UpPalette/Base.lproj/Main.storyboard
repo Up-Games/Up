@@ -323,7 +323,7 @@
                                     <segment title="Submit"/>
                                 </segments>
                                 <connections>
-                                    <action selector="gameStateChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="9e0-YR-vPW"/>
+                                    <action selector="gameStateChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="wBA-6B-IVd"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>

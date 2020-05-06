@@ -22,12 +22,12 @@ static const CGFloat _ClearGray = -1;
 
 + (ColorChip *)clearChipWithName:(NSString *)name
 {
-    return [[ColorChip alloc] initWithName:name grayValue:_ClearGray hue:0 saturation:0 lightness:0];
+    return [[ColorChip alloc] initWithName:name hue:0 grayValue:_ClearGray saturation:0 lightness:0];
 }
 
-+ (ColorChip *)chipWithName:(NSString *)name grayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness
++ (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue grayValue:(CGFloat)grayValue  saturation:(CGFloat)saturation lightness:(CGFloat)lightness
 {
-    return [[ColorChip alloc] initWithName:name grayValue:grayValue hue:hue saturation:saturation lightness:lightness];
+    return [[ColorChip alloc] initWithName:name hue:hue grayValue:grayValue saturation:saturation lightness:lightness];
 }
 
 + (ColorChip *)chipWithDictionary:(NSDictionary *)dictionary
@@ -40,13 +40,13 @@ static const CGFloat _ClearGray = -1;
     return [[ColorChip alloc] initWithName:name hue:hue chipA:chipA chipB:chipB fraction:fraction];
 }
 
-- (instancetype)initWithName:(NSString *)name grayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness
+- (instancetype)initWithName:(NSString *)name hue:(CGFloat)hue grayValue:(CGFloat)grayValue  saturation:(CGFloat)saturation lightness:(CGFloat)lightness
 {
     self = [super init];
     
     self.name = name;
-    self.grayValue = grayValue;
     self.hue = hue;
+    self.grayValue = grayValue;
     self.saturation = saturation;
     self.lightness = lightness;
     
