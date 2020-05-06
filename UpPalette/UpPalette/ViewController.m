@@ -5,49 +5,72 @@
 
 #import <UpKit/UpKit.h>
 
+#import "AppDelegate.h"
 #import "ColorChip.h"
 #import "GameMockupView.h"
 #import "ViewController.h"
 
-static NSString *const ColorMapPath = @"/Users/kocienda/Desktop/up-color-map.json";
-static NSString *const ColorChipHint = @"Hint";
-static NSString *const ColorChipThin = @"Thin";
-static NSString *const ColorChipLight = @"Light";
-static NSString *const ColorChipNormal = @"Normal";
-static NSString *const ColorChipThick = @"Thick";
-static NSString *const ColorChipAccent = @"Accent";
+//UPColorCategoryPrimaryFill
+//UPColorCategoryInactiveFill
+//UPColorCategoryActiveFill
+//UPColorCategoryHighlightedFill
+//UPColorCategoryPrimaryStroke
+//UPColorCategoryInactiveStroke
+//UPColorCategoryActiveStroke
+//UPColorCategoryHighlightedStroke
+//UPColorCategoryPiping
+//UPColorCategoryContent
+//UPColorCategoryCanvas
+//UPColorCategoryInformation
+
+static NSString *const ColorMapPathFormat = @"/Users/kocienda/Desktop/up-color-map-%@.json";
 
 
 @interface ViewController ()
 
-@property (nonatomic) CGFloat hue;
-@property (nonatomic) ColorChip *hintColorChip;
-@property (nonatomic) ColorChip *thinColorChip;
-@property (nonatomic) ColorChip *lightColorChip;
-@property (nonatomic) ColorChip *normalColorChip;
-@property (nonatomic) ColorChip *thickColorChip;
-@property (nonatomic) ColorChip *accentColorChip;
-@property (nonatomic) ColorChip *selectedChip;
-@property (nonatomic) ColorChip *savedChip;
+@property (nonatomic) NSArray *colorKeys;
 
+@property (nonatomic) ColorTheme colorTheme;
 @property (nonatomic) NSMutableDictionary *colorMap;
 @property (nonatomic) NSDictionary *defaultColorMap;
 
+@property (nonatomic) CGFloat hue;
+
+@property (nonatomic) NSMutableDictionary *colorChips;
+@property (nonatomic) ColorChip *selectedChip;
+@property (nonatomic) ColorChip *savedChip;
+
 @property (nonatomic) GameMockupView *gameMockupView;
 
-@property (nonatomic) IBOutlet UILabel *hintColorLabel;
-@property (nonatomic) IBOutlet UILabel *thinColorLabel;
-@property (nonatomic) IBOutlet UILabel *lightColorLabel;
-@property (nonatomic) IBOutlet UILabel *normalColorLabel;
-@property (nonatomic) IBOutlet UILabel *thickColorLabel;
-@property (nonatomic) IBOutlet UILabel *accentColorLabel;
+@property (nonatomic) IBOutlet UILabel *primaryFillColorLabel;
+@property (nonatomic) IBOutlet UILabel *inactiveFillColorLabel;
+@property (nonatomic) IBOutlet UILabel *activeFillColorLabel;
+@property (nonatomic) IBOutlet UILabel *highlightedFillColorLabel;
+@property (nonatomic) IBOutlet UILabel *primaryStrokeColorLabel;
+@property (nonatomic) IBOutlet UILabel *inactiveStrokeColorLabel;
+@property (nonatomic) IBOutlet UILabel *activeStrokeColorLabel;
+@property (nonatomic) IBOutlet UILabel *highlightedStrokeColorLabel;
+@property (nonatomic) IBOutlet UILabel *pipingColorLabel;
+@property (nonatomic) IBOutlet UILabel *contentColorLabel;
+@property (nonatomic) IBOutlet UILabel *informationColorLabel;
+@property (nonatomic) IBOutlet UILabel *canvasColorLabel;
 
-@property (nonatomic) IBOutlet UIView *hintColorView;
-@property (nonatomic) IBOutlet UIView *thinColorView;
-@property (nonatomic) IBOutlet UIView *lightColorView;
-@property (nonatomic) IBOutlet UIView *normalColorView;
-@property (nonatomic) IBOutlet UIView *thickColorView;
-@property (nonatomic) IBOutlet UIView *accentColorView;
+@property (nonatomic) NSDictionary *colorLabels;
+
+@property (nonatomic) IBOutlet UIView *primaryFillColorView;
+@property (nonatomic) IBOutlet UIView *inactiveFillColorView;
+@property (nonatomic) IBOutlet UIView *activeFillColorView;
+@property (nonatomic) IBOutlet UIView *highlightedFillColorView;
+@property (nonatomic) IBOutlet UIView *primaryStrokeColorView;
+@property (nonatomic) IBOutlet UIView *inactiveStrokeColorView;
+@property (nonatomic) IBOutlet UIView *activeStrokeColorView;
+@property (nonatomic) IBOutlet UIView *highlightedStrokeColorView;
+@property (nonatomic) IBOutlet UIView *pipingColorView;
+@property (nonatomic) IBOutlet UIView *contentColorView;
+@property (nonatomic) IBOutlet UIView *informationColorView;
+@property (nonatomic) IBOutlet UIView *canvasColorView;
+
+@property (nonatomic) NSDictionary *colorViews;
 
 @property (nonatomic) IBOutlet UIView *selectedIndicatorView;
 
@@ -97,47 +120,56 @@ static ViewController *_Instance;
     [super viewDidLoad];
     
     _Instance = self;
-    
-    self.defaultColorMap = @{
-        ColorChipHint: [[ColorChip alloc] initWithName:ColorChipHint grayValue:0.98 hue:0 saturation:0.7 lightness:0.45],
-        ColorChipThin : [[ColorChip alloc] initWithName:ColorChipThin grayValue:0.95 hue:0 saturation:0.6 lightness:0.45],
-        ColorChipLight : [[ColorChip alloc] initWithName:ColorChipLight grayValue:0.75 hue:0 saturation:0.5 lightness:0.1],
-        ColorChipNormal : [[ColorChip alloc] initWithName:ColorChipNormal grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
-        ColorChipThick : [[ColorChip alloc] initWithName:ColorChipThick grayValue:0.45 hue:0 saturation:0.4 lightness:0.0],
-        ColorChipAccent : [[ColorChip alloc] initWithName:ColorChipAccent grayValue:0.5 hue:0 saturation:0.94 lightness:0.0]
-    };
-
-    [self loadColorMap];
 
     self.gameMockupView = [[GameMockupView alloc] initWithFrame:CGRectMake(0, 0, 812, 375)];
     self.gameMockupView.layer.borderWidth = 1;
     [self.view addSubview:self.self.gameMockupView];
-    
-    {
+
+    self.colorKeys = @[
+        PrimaryFillKey, InactiveFillKey, ActiveFillKey, HighlightedFillKey,
+        PrimaryStrokeKey, InactiveStrokeKey, ActiveStrokeKey, HighlightedStrokeKey,
+        PipingKey, ContentKey, InformationKey, CanvasKey,
+    ];
+
+    self.colorChips = [NSMutableDictionary dictionary];
+
+    self.colorLabels = @{
+        PrimaryFillKey: self.primaryFillColorLabel,
+        InactiveFillKey: self.inactiveFillColorLabel,
+        ActiveFillKey: self.activeFillColorLabel,
+        HighlightedFillKey: self.highlightedFillColorLabel,
+        PrimaryStrokeKey: self.primaryStrokeColorLabel,
+        InactiveStrokeKey: self.inactiveStrokeColorLabel,
+        ActiveStrokeKey: self.activeStrokeColorLabel,
+        HighlightedStrokeKey: self.highlightedStrokeColorLabel,
+        PipingKey: self.pipingColorLabel,
+        ContentKey: self.contentColorLabel,
+        InformationKey: self.informationColorLabel,
+        CanvasKey: self.canvasColorLabel
+    };
+
+    self.colorViews = @{
+        PrimaryFillKey: self.primaryFillColorView,
+        InactiveFillKey: self.inactiveFillColorView,
+        ActiveFillKey: self.activeFillColorView,
+        HighlightedFillKey: self.highlightedFillColorView,
+        PrimaryStrokeKey: self.primaryStrokeColorView,
+        InactiveStrokeKey: self.inactiveStrokeColorView,
+        ActiveStrokeKey: self.activeStrokeColorView,
+        HighlightedStrokeKey: self.highlightedStrokeColorView,
+        PipingKey: self.pipingColorView,
+        ContentKey: self.contentColorView,
+        InformationKey: self.informationColorView,
+        CanvasKey: self.canvasColorView
+    };
+
+    [self.colorViews enumerateKeysAndObjectsUsingBlock:^(id key, id colorView, BOOL *stop) {
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [self.hintColorView addGestureRecognizer:tap];
-    }
-    {
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [self.thinColorView addGestureRecognizer:tap];
-    }
-    {
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [self.lightColorView addGestureRecognizer:tap];
-    }
-    {
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [self.normalColorView addGestureRecognizer:tap];
-    }
-    {
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [self.thickColorView addGestureRecognizer:tap];
-    }
-    {
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [self.accentColorView addGestureRecognizer:tap];
-    }
-    
+        [colorView addGestureRecognizer:tap];
+    }];
+
+    [self loadColorMap];
+
     self.hueSlider.value = 225;
     [self hueChanged:self.hueSlider];
     
@@ -149,8 +181,8 @@ static ViewController *_Instance;
 
 - (void)viewDidLayoutSubviews
 {
-    CGRect layoutRect1 = CGRectInset(self.view.bounds, 0, 64);
-    self.gameMockupView.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:layoutRect1 hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalTop];
+    CGRect layoutRect1 = CGRectInset(self.view.bounds, 38, 66);
+    self.gameMockupView.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:layoutRect1 hLayout:UPLayoutHorizontalRight vLayout:UPLayoutVerticalTop];
     [self.gameMockupView layoutWithRule];
 }
 
@@ -162,27 +194,14 @@ static ViewController *_Instance;
 
     [self cancelEditing];
 
+
+    [self.colorViews enumerateKeysAndObjectsUsingBlock:^(id key, id colorView, BOOL *stop) {
+        if (tap.view == colorView) {
+            self.selectedChip = self.colorChips[key];
+        }
+    }];
+
     CGRect frame = self.selectedIndicatorView.frame;
-
-    if (tap.view == self.hintColorView) {
-        self.selectedChip = self.hintColorChip;
-    }
-    else if (tap.view == self.thinColorView) {
-        self.selectedChip = self.thinColorChip;
-    }
-    else if (tap.view == self.lightColorView) {
-        self.selectedChip = self.lightColorChip;
-    }
-    else if (tap.view == self.normalColorView) {
-        self.selectedChip = self.normalColorChip;
-    }
-    else if (tap.view == self.thickColorView) {
-        self.selectedChip = self.thickColorChip;
-    }
-    else if (tap.view == self.accentColorView) {
-        self.selectedChip = self.accentColorChip;
-    }
-
     frame.origin.y = CGRectGetMidY(tap.view.frame);
     frame.origin.y -= CGRectGetHeight(self.selectedIndicatorView.bounds) * 0.5;
     self.selectedIndicatorView.frame = frame;
@@ -194,10 +213,10 @@ static ViewController *_Instance;
     _selectedChip = selectedChip;
     if (selectedChip) {
         self.savedChip = [selectedChip copy];
-        self.editColorNameLabel.text = self.selectedChip.name;
-        self.editColorNameLabel.enabled = YES;
         self.hueSlider.enabled = NO;
         self.hueValueField.enabled = NO;
+        self.editColorNameLabel.text = self.selectedChip.name;
+        self.editColorNameLabel.enabled = YES;
         self.inputGrayLabel.enabled = YES;
         self.inputGraySlider.enabled = YES;
         self.inputGrayValueField.enabled = YES;
@@ -245,18 +264,34 @@ static ViewController *_Instance;
     }
 }
 
+- (NSString *)stringForColorTheme:(ColorTheme)colorTheme
+{
+    switch (colorTheme) {
+        case ColorThemeLight:
+            return ColorThemeLightKey;
+        case ColorThemeDark:
+            return ColorThemeDarkKey;
+        case ColorThemeStarkLight:
+            return ColorThemeStarkLightKey;
+        case ColorThemeStarkDark:
+            return ColorThemeStarkDarkKey;
+    }
+    return ColorThemeLightKey;
+}
+
 - (void)loadColorMap
 {
-    NSData *data = [NSData dataWithContentsOfFile:ColorMapPath];
+    [self setDefaultColorMap];
+
+    NSString *pathName = [NSString stringWithFormat:ColorMapPathFormat, [self stringForColorTheme:self.colorTheme]];
+    NSData *data = [NSData dataWithContentsOfFile:pathName];
     if (!data) {
-        [self setDefaultColorMap];
-        return;
+        self.colorMap = [NSMutableDictionary dictionary];
     }
     NSError *error = nil;
     self.colorMap = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers|NSJSONReadingMutableLeaves error:&error];
     if (error) {
-        [self setDefaultColorMap];
-        return;
+        self.colorMap = [NSMutableDictionary dictionary];
     }
 }
 
@@ -268,12 +303,67 @@ static ViewController *_Instance;
         NSLog(@"*** error saving color map: %@", error.localizedDescription);
         return;
     }
-    [data writeToFile:ColorMapPath atomically:YES];
+    NSString *pathName = [NSString stringWithFormat:ColorMapPathFormat, [self stringForColorTheme:self.colorTheme]];
+    [data writeToFile:pathName atomically:YES];
 }
 
 - (void)setDefaultColorMap
 {
-    self.colorMap = [NSMutableDictionary dictionary];
+    switch (self.colorTheme) {
+        case ColorThemeLight: {
+            self.defaultColorMap = @{
+                PrimaryFillKey: [[ColorChip alloc] initWithName:PrimaryFillKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
+                InactiveFillKey : [[ColorChip alloc] initWithName:InactiveFillKey grayValue:0.95 hue:0 saturation:0.6 lightness:0.45],
+                ActiveFillKey : [[ColorChip alloc] initWithName:ActiveFillKey grayValue:0.75 hue:0 saturation:0.5 lightness:0.1],
+                HighlightedFillKey : [[ColorChip alloc] initWithName:HighlightedFillKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
+                PrimaryStrokeKey : [[ColorChip alloc] initWithName:PrimaryStrokeKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
+                InactiveStrokeKey : [[ColorChip alloc] initWithName:InactiveStrokeKey grayValue:0.5 hue:0 saturation:0.94 lightness:0.0],
+                ActiveStrokeKey : [[ColorChip alloc] initWithName:ActiveStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
+                HighlightedStrokeKey : [[ColorChip alloc] initWithName:HighlightedStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
+                PipingKey : [[ColorChip alloc] initWithName:PipingKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
+                ContentKey : [[ColorChip alloc] initWithName:ContentKey grayValue:1.0 hue:0 saturation:0 lightness:1.0],
+                InformationKey : [[ColorChip alloc] initWithName:InformationKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
+                CanvasKey : [[ColorChip alloc] initWithName:CanvasKey grayValue:0.98 hue:0 saturation:0.7 lightness:0.45],
+            };
+            break;
+        }
+        case ColorThemeDark:
+            self.defaultColorMap = @{
+                PrimaryFillKey: [[ColorChip alloc] initWithName:PrimaryFillKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
+                InactiveFillKey : [[ColorChip alloc] initWithName:InactiveFillKey grayValue:0.95 hue:0 saturation:0.6 lightness:0.45],
+                ActiveFillKey : [[ColorChip alloc] initWithName:ActiveFillKey grayValue:0.75 hue:0 saturation:0.5 lightness:0.1],
+                HighlightedFillKey : [[ColorChip alloc] initWithName:HighlightedFillKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
+                PrimaryStrokeKey : [[ColorChip alloc] initWithName:PrimaryStrokeKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
+                InactiveStrokeKey : [[ColorChip alloc] initWithName:InactiveStrokeKey grayValue:0.5 hue:0 saturation:0.94 lightness:0.0],
+                ActiveStrokeKey : [[ColorChip alloc] initWithName:ActiveStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
+                HighlightedStrokeKey : [[ColorChip alloc] initWithName:HighlightedStrokeKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
+                PipingKey : [[ColorChip alloc] initWithName:PipingKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
+                ContentKey : [[ColorChip alloc] initWithName:ContentKey grayValue:1.0 hue:0 saturation:0 lightness:1.0],
+                InformationKey : [[ColorChip alloc] initWithName:InformationKey grayValue:0.5 hue:0 saturation:0.75 lightness:0.0],
+                CanvasKey : [[ColorChip alloc] initWithName:CanvasKey grayValue:0.12 hue:0 saturation:0.7 lightness:0.0],
+            };
+            break;
+        case ColorThemeStarkLight:
+            self.defaultColorMap = @{
+                PrimaryFillKey: [[ColorChip alloc] initWithName:PrimaryFillKey grayValue:0.98 hue:0 saturation:0.7 lightness:0.45],
+                InactiveFillKey : [[ColorChip alloc] initWithName:InactiveFillKey grayValue:0.95 hue:0 saturation:0.6 lightness:0.45],
+                ActiveFillKey : [[ColorChip alloc] initWithName:ActiveFillKey grayValue:0.75 hue:0 saturation:0.5 lightness:0.1],
+                HighlightedFillKey : [[ColorChip alloc] initWithName:HighlightedFillKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
+                PrimaryStrokeKey : [[ColorChip alloc] initWithName:PrimaryStrokeKey grayValue:0.45 hue:0 saturation:0.4 lightness:0.0],
+                InactiveStrokeKey : [[ColorChip alloc] initWithName:InactiveStrokeKey grayValue:0.5 hue:0 saturation:0.94 lightness:0.0]
+            };
+            break;
+        case ColorThemeStarkDark:
+            self.defaultColorMap = @{
+                PrimaryFillKey: [[ColorChip alloc] initWithName:PrimaryFillKey grayValue:0.98 hue:0 saturation:0.7 lightness:0.45],
+                InactiveFillKey : [[ColorChip alloc] initWithName:InactiveFillKey grayValue:0.95 hue:0 saturation:0.6 lightness:0.45],
+                ActiveFillKey : [[ColorChip alloc] initWithName:ActiveFillKey grayValue:0.75 hue:0 saturation:0.5 lightness:0.1],
+                HighlightedFillKey : [[ColorChip alloc] initWithName:HighlightedFillKey grayValue:0.43 hue:0 saturation:0.675 lightness:0.0],
+                PrimaryStrokeKey : [[ColorChip alloc] initWithName:PrimaryStrokeKey grayValue:0.45 hue:0 saturation:0.4 lightness:0.0],
+                InactiveStrokeKey : [[ColorChip alloc] initWithName:InactiveStrokeKey grayValue:0.5 hue:0 saturation:0.94 lightness:0.0]
+            };
+            break;
+    }
 }
 
 - (NSDictionary *)colorChipMapForHue:(int)hue
@@ -282,97 +372,38 @@ static ViewController *_Instance;
     NSString *key = [NSString stringWithFormat:@"%d", hue];
     NSDictionary *map = self.colorMap[key];
     if (map) {
-        {
-            ColorChip *chip = [[ColorChip alloc] initWithDictionary:map[ColorChipHint]];
+        for (NSString *key in self.colorKeys) {
+            ColorChip *chip = [[ColorChip alloc] initWithDictionary:map[key]];
             if (!chip) {
-                chip = [self.defaultColorMap[ColorChipHint] copy];
+                chip = [self.defaultColorMap[key] copy];
                 chip.hue = hue;
             }
-            colorChipMap[ColorChipHint] = chip;
-        }
-        {
-            ColorChip *chip = [[ColorChip alloc] initWithDictionary:map[ColorChipThin]];
-            if (!chip) {
-                chip = [self.defaultColorMap[ColorChipThin] copy];
-                chip.hue = hue;
-            }
-            colorChipMap[ColorChipThin] = chip;
-        }
-        {
-            ColorChip *chip = [[ColorChip alloc] initWithDictionary:map[ColorChipLight]];
-            if (!chip) {
-                chip = [self.defaultColorMap[ColorChipLight] copy];
-                chip.hue = hue;
-            }
-            colorChipMap[ColorChipLight] = chip;
-        }
-        {
-            ColorChip *chip = [[ColorChip alloc] initWithDictionary:map[ColorChipNormal]];
-            if (!chip) {
-                chip = [self.defaultColorMap[ColorChipNormal] copy];
-                chip.hue = hue;
-            }
-            colorChipMap[ColorChipNormal] = chip;
-        }
-        {
-            ColorChip *chip = [[ColorChip alloc] initWithDictionary:map[ColorChipThick]];
-            if (!chip) {
-                chip = [self.defaultColorMap[ColorChipThick] copy];
-                chip.hue = hue;
-            }
-            colorChipMap[ColorChipThick] = chip;
-        }
-        {
-            ColorChip *chip = [[ColorChip alloc] initWithDictionary:map[ColorChipAccent]];
-            if (!chip) {
-                chip = [self.defaultColorMap[ColorChipAccent] copy];
-                chip.hue = hue;
-            }
-            colorChipMap[ColorChipAccent] = chip;
+            colorChipMap[key] = chip;
         }
     }
     else {
-        ColorChip *chip;
-        
-        chip = [self.defaultColorMap[ColorChipHint] copy];
-        chip.hue = hue;
-        colorChipMap[ColorChipHint] = chip;
-
-        chip = [self.defaultColorMap[ColorChipThin] copy];
-        chip.hue = hue;
-        colorChipMap[ColorChipThin] = chip;
-
-        chip = [self.defaultColorMap[ColorChipLight] copy];
-        chip.hue = hue;
-        colorChipMap[ColorChipLight] = chip;
-
-        chip = [self.defaultColorMap[ColorChipNormal] copy];
-        chip.hue = hue;
-        colorChipMap[ColorChipNormal] = chip;
-
-        chip = [self.defaultColorMap[ColorChipThick] copy];
-        chip.hue = hue;
-        colorChipMap[ColorChipThick] = chip;
-
-        chip = [self.defaultColorMap[ColorChipAccent] copy];
-        chip.hue = hue;
-        colorChipMap[ColorChipAccent] = chip;
+        for (NSString *key in self.colorKeys) {
+            ColorChip *chip = [self.defaultColorMap[key] copy];
+            chip.hue = hue;
+            colorChipMap[key] = chip;
+        }
     }
     return colorChipMap;
 }
 
 - (void)updateHue:(int)hue
 {
+    self.hue = hue;
+
     BOOL isMilepostHue = (hue % 15) == 0;
+
+    [self.colorChips removeAllObjects];
 
     if (isMilepostHue) {
         NSDictionary *colorChipMap = [self colorChipMapForHue:hue];
-        self.hintColorChip = colorChipMap[ColorChipHint];
-        self.thinColorChip = colorChipMap[ColorChipThin];
-        self.lightColorChip = colorChipMap[ColorChipLight];
-        self.normalColorChip = colorChipMap[ColorChipNormal];
-        self.thickColorChip = colorChipMap[ColorChipThick];
-        self.accentColorChip = colorChipMap[ColorChipAccent];
+        for (NSString *key in self.colorKeys) {
+            self.colorChips[key] = colorChipMap[key];
+        }
     }
     else {
         int prevHue = [self prevHue];
@@ -381,12 +412,9 @@ static ViewController *_Instance;
         NSDictionary *next = [self colorChipMapForHue:nextHue];
         CGFloat diff = 360 - fabs(360 - fabs(hue - prevHue));
         CGFloat fraction = diff / 15.0f;
-        self.hintColorChip = [[ColorChip alloc] initWithName:ColorChipHint hue:hue chipA:prev[ColorChipHint] chipB:next[ColorChipHint] fraction:fraction];
-        self.thinColorChip = [[ColorChip alloc] initWithName:ColorChipThin hue:hue chipA:prev[ColorChipThin] chipB:next[ColorChipThin] fraction:fraction];
-        self.lightColorChip = [[ColorChip alloc] initWithName:ColorChipLight hue:hue chipA:prev[ColorChipLight] chipB:next[ColorChipLight] fraction:fraction];
-        self.normalColorChip = [[ColorChip alloc] initWithName:ColorChipNormal hue:hue chipA:prev[ColorChipNormal] chipB:next[ColorChipNormal] fraction:fraction];
-        self.thickColorChip = [[ColorChip alloc] initWithName:ColorChipThick hue:hue chipA:prev[ColorChipThick] chipB:next[ColorChipThick] fraction:fraction];
-        self.accentColorChip = [[ColorChip alloc] initWithName:ColorChipAccent hue:hue chipA:prev[ColorChipAccent] chipB:next[ColorChipAccent] fraction:fraction];
+        for (NSString *key in self.colorKeys) {
+            self.colorChips[key] = [[ColorChip alloc] initWithName:key hue:hue chipA:prev[key] chipB:next[key] fraction:fraction];
+        }
     }
     
     [self updateColors];
@@ -400,26 +428,15 @@ static ViewController *_Instance;
         self.afterColorView.backgroundColor = self.selectedChip.color;
     }
 
-    self.hintColorLabel.attributedText = [self.hintColorChip attributedDescription];
-    self.thinColorLabel.attributedText = [self.thinColorChip attributedDescription];
-    self.lightColorLabel.attributedText = [self.lightColorChip attributedDescription];
-    self.normalColorLabel.attributedText = [self.normalColorChip attributedDescription];
-    self.thickColorLabel.attributedText = [self.thickColorChip attributedDescription];
-    self.accentColorLabel.attributedText = [self.accentColorChip attributedDescription];
-
-    self.hintColorView.backgroundColor = self.hintColorChip.color;
-    self.thinColorView.backgroundColor = self.thinColorChip.color;
-    self.lightColorView.backgroundColor = self.lightColorChip.color;
-    self.normalColorView.backgroundColor = self.normalColorChip.color;
-    self.thickColorView.backgroundColor = self.thickColorChip.color;
-    self.accentColorView.backgroundColor = self.accentColorChip.color;
-
-    self.gameMockupView.hintColor = self.hintColorChip.color;
-    self.gameMockupView.thinColor = self.thinColorChip.color;
-    self.gameMockupView.lightColor = self.lightColorChip.color;
-    self.gameMockupView.normalColor = self.normalColorChip.color;
-    self.gameMockupView.thickColor = self.thickColorChip.color;
-    self.gameMockupView.accentColor = self.accentColorChip.color;
+    NSMutableDictionary *colors = [NSMutableDictionary dictionary];
+    for (NSString *key in self.colorKeys) {
+        ColorChip *chip = self.colorChips[key];
+        UIColor *color = chip.color;
+        [self.colorLabels[key] setAttributedText:chip.attributedDescription];
+        [self.colorViews[key] setBackgroundColor:color];
+        colors[key] = color;
+    }
+    self.gameMockupView.colors = colors;
 }
 
 - (IBAction)hueChanged:(UISlider *)sender
@@ -557,6 +574,16 @@ static ViewController *_Instance;
     self.selectedChip = nil;
     self.savedChip = nil;
     self.selectedIndicatorView.alpha = 0;
+}
+
+- (IBAction)colorThemeChanged:(UISegmentedControl *)sender
+{
+    [self saveColorMap];
+    [self.colorMap removeAllObjects];
+    self.colorTheme = sender.selectedSegmentIndex;
+    [self loadColorMap];
+    [self updateHue:self.hue];
+    [self updateColors];
 }
 
 @end

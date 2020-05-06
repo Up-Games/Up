@@ -18,9 +18,37 @@ using UP::to_hsvf;
 using UP::mix_channel;
 using UP::mix_lightness;
 
+static UPColorStyle _ThemeStyle = UPColorStyleDefault;
+static UPColorModifier _ThemeModifier = UPColorModifierNone;
+
 @implementation UIColor (UP)
 
-+ (UIColor *)colorWithHue:(CGFloat)hue category:(UPColorCategory)category
++ (void)setThemeStyle:(UPColorStyle)style
+{
+    _ThemeStyle = style;
+}
+
++ (UPColorStyle)themeStyle
+{
+    return _ThemeStyle;
+}
+
++ (void)setThemeModifier:(UPColorModifier)modifier
+{
+    _ThemeModifier = modifier;
+}
+
++ (UPColorModifier)themeModifier
+{
+    return _ThemeModifier;
+}
+
++ (UIColor *)themeColorWithHue:(CGFloat)hue category:(UPColorCategory)category
+{
+    return nil;
+}
+
++ (UIColor *)themeColorWithHue:(CGFloat)hue category:(UPColorCategory)category style:(UPColorStyle)style modifier:(UPColorModifier)modifier
 {
     return nil;
 }

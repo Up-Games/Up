@@ -7,12 +7,22 @@
 
 @interface GameMockupView : UIView
 
-@property (nonatomic) UIColor *hintColor;
-@property (nonatomic) UIColor *thinColor;
-@property (nonatomic) UIColor *lightColor;
-@property (nonatomic) UIColor *normalColor;
-@property (nonatomic) UIColor *thickColor;
-@property (nonatomic) UIColor *accentColor;
+//@property (nonatomic) UIColor *primaryFillColor;
+//@property (nonatomic) UIColor *inactiveFillColor;
+//@property (nonatomic) UIColor *activeFillColor;
+//@property (nonatomic) UIColor *highlightedFillColor;
+//@property (nonatomic) UIColor *primaryStrokeColor;
+//@property (nonatomic) UIColor *inactiveStrokeColor;
+//@property (nonatomic) UIColor *activeStrokeColor;
+//@property (nonatomic) UIColor *highlightedStrokeColor;
+//@property (nonatomic) UIColor *pipingColor;
+//@property (nonatomic) UIColor *contentColor;
+//@property (nonatomic) UIColor *canvasColor;
+//@property (nonatomic) UIColor *informationColor;
+
+@property (nonatomic, copy) NSDictionary *colors;
+
+
 @property (nonatomic) BOOL wordTrayActive;
 
 @end

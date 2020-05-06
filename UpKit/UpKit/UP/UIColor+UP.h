@@ -12,24 +12,41 @@ typedef NS_ENUM(NSInteger, UPColorStyle) {
 };
 
 typedef NS_ENUM(NSInteger, UPColorModifier) {
-    UPColorModifierDefault,
-    UPColorModifierQuark,
-    UPColorModifierStark,
+    UPColorModifierNone =  0,
+    UPColorModifierQuark = 1 << 0,
+    UPColorModifierStark = 1 << 1,
 };
 
 typedef NS_ENUM(NSInteger, UPColorCategory) {
-    UPColorCategoryDefault,
-    UPColorCategoryBackdrop,
+    UPColorCategoryPrimaryFill,
+    UPColorCategoryInactiveFill,
+    UPColorCategoryActiveFill,
+    UPColorCategoryHighlightedFill,
+    UPColorCategoryPrimaryStroke,
+    UPColorCategoryInactiveStroke,
+    UPColorCategoryActiveStroke,
+    UPColorCategoryHighlightedStroke,
+    UPColorCategoryPiping,
+    UPColorCategoryContent,
+    UPColorCategoryCanvas,
+    UPColorCategoryInformation,
+
+    UPColorCategoryDisabledFill,
+    UPColorCategoryDisabledStroke,
     UPColorCategoryDisabledContent,
-    UPColorCategorySecondaryContent,
-    UPColorCategoryPrimaryContent,
-    UPColorCategoryHighlight,
-    UPColorCategoryAccent,
+    UPColorCategoryDisabledPiping,
 };
 
 @interface UIColor (UP)
 
-+ (UIColor *)colorWithHue:(CGFloat)hue category:(UPColorCategory)category;
++ (void)setThemeStyle:(UPColorStyle)style;
++ (UPColorStyle)themeStyle;
+
++ (void)setThemeModifier:(UPColorModifier)modifier;
++ (UPColorModifier)themeModifier;
+
++ (UIColor *)themeColorWithHue:(CGFloat)hue category:(UPColorCategory)category;
++ (UIColor *)themeColorWithHue:(CGFloat)hue category:(UPColorCategory)category style:(UPColorStyle)style modifier:(UPColorModifier)modifier;
 
 + (UIColor *)colorizedColorWithGrayValue:(CGFloat)grayValue hue:(CGFloat)hue saturation:(CGFloat)saturation lightness:(CGFloat)lightness;
 
