@@ -274,8 +274,8 @@
                                 <segments>
                                     <segment title="Light"/>
                                     <segment title="Dark"/>
-                                    <segment title="Stark Light"/>
-                                    <segment title="Stark Dark"/>
+                                    <segment title="Light Stark"/>
+                                    <segment title="Dark Stark"/>
                                 </segments>
                                 <connections>
                                     <action selector="colorThemeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Ywo-Pp-IrU"/>

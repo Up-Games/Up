@@ -48,7 +48,7 @@
     UIColor *informationColor = self.colors[InformationKey];
     UIColor *canvasColor = self.colors[CanvasKey];
 
-    BOOL tappablesStroke = self.colorTheme == ColorThemeStarkLight || self.colorTheme == ColorThemeStarkDark;
+    BOOL tappablesStroke = self.colorTheme == ColorThemeLightStark || self.colorTheme == ColorThemeDarkStark;
 
     UIColor *wordTileFillColor = [UIColor clearColor];
     UIColor *wordTileStrokeColor = [UIColor clearColor];

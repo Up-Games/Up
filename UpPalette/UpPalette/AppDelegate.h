@@ -23,14 +23,14 @@ extern NSString *const CanvasKey;
 
 extern NSString *const ColorThemeLightKey;
 extern NSString *const ColorThemeDarkKey;
-extern NSString *const ColorThemeStarkLightKey;
-extern NSString *const ColorThemeStarkDarkKey;
+extern NSString *const ColorThemeLightStarkKey;
+extern NSString *const ColorThemeDarkStarkKey;
 
 typedef NS_ENUM(NSInteger, ColorTheme) {
     ColorThemeLight,
     ColorThemeDark,
-    ColorThemeStarkLight,
-    ColorThemeStarkDark,
+    ColorThemeLightStark,
+    ColorThemeDarkStark,
 };
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

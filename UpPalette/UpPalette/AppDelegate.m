@@ -25,8 +25,8 @@ NSString *const CanvasKey = @"Canvas";
 
 NSString *const ColorThemeLightKey = @"Light";
 NSString *const ColorThemeDarkKey = @"Dark";
-NSString *const ColorThemeStarkLightKey = @"StarkLight";
-NSString *const ColorThemeStarkDarkKey = @"StarkDark";
+NSString *const ColorThemeLightStarkKey = @"LightStark";
+NSString *const ColorThemeDarkStarkKey = @"DarkStark";
 
 @interface AppDelegate ()
 
