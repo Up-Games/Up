@@ -9,6 +9,7 @@
 using UP::RGBF;
 using UP::HSVF;
 using UP::LABF;
+using UP::LCHF;
 using UP::to_labf;
 using UP::to_rgbf;
 using UP::to_hsvf;
@@ -65,7 +66,7 @@ static UPColorModifier _ThemeModifier = UPColorModifierNone;
                       mix_channel(0.5, rgbf1.green(), saturation),
                       mix_channel(0.5, rgbf1.blue(), saturation),
                       1.0);
-    
+
     UIColor *outputColor = nil;
     if (lightness >= 0) {
         const UPFloat factor = 2 * (1 - lightness) * (grayValue - 1) + 1;
@@ -81,7 +82,7 @@ static UPColorModifier _ThemeModifier = UPColorModifierNone;
         CGFloat b3 = mix_lightness(rgbf2.blue(), factor);
         outputColor = [UIColor colorWithRed:r3 green:g3 blue:b3 alpha:1.0];
     }
-    
+
     return outputColor;
 }
 

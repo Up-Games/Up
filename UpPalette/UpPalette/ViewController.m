@@ -323,12 +323,12 @@ static ViewController *_Instance;
     switch (self.colorTheme) {
         case ColorThemeLight: {
             self.defaultColorMap = @{
-                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 grayValue:0.43 saturation:0.675 lightness:0.0],
+                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 grayValue:0.30 saturation:0.7 lightness:0.0],
                 InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 grayValue:0.86 saturation:0.6 lightness:0.38],
                 ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 grayValue:0.73 saturation:0.6 lightness:0.42],
                 SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 grayValue:0.76 saturation:1.0 lightness:0.0],
-                SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 grayValue:0.86 saturation:0.6 lightness:0.38],
-                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 grayValue:0.73 saturation:0.6 lightness:0.42],
+                SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 grayValue:0.94 saturation:0.35 lightness:0.40],
+                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 grayValue:0.85 saturation:0.35 lightness:0.40],
                 HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 grayValue:0.76 saturation:1.0 lightness:0.0],
                 PrimaryStrokeKey : [ColorChip clearChipWithName:PrimaryStrokeKey],
                 InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 grayValue:0.88 saturation:0.81 lightness:0.0],
@@ -336,27 +336,27 @@ static ViewController *_Instance;
                 HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 grayValue:0.5 saturation:1.0 lightness:0.0],
                 ContentKey : [ColorChip chipWithName:ContentKey hue:0 grayValue:1.0 saturation:0 lightness:1.0],
                 InactiveContentKey : [ColorChip chipWithName:ContentKey hue:0 grayValue:1.0 saturation:0 lightness:1.0],
-                InformationKey : [ColorChip chipWithName:InformationKey hue:0 grayValue:0.43 saturation:0.47 lightness:0.0],
+                InformationKey : [ColorChip chipWithName:InformationKey hue:0 grayValue:0.30 saturation:0.50 lightness:0.0],
                 CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 grayValue:0.92 saturation:0.50 lightness:0.54],
             };
             break;
         }
         case ColorThemeDark:
             self.defaultColorMap = @{
-                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 grayValue:0.80 saturation:1.0 lightness:0.0],
-                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 grayValue:0.40 saturation:0.68 lightness:0.0],
+                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 grayValue:0.8 saturation:1.0 lightness:0.0],
+                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 grayValue:0.40 saturation:0.15 lightness:0.0],
                 ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 grayValue:0.65 saturation:0.68 lightness:0.1],
-                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 grayValue:0.96 saturation:1.0 lightness:0.0],
+                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 grayValue:1.0 saturation:1.0 lightness:0.0],
                 SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 grayValue:0.10 saturation:0.65 lightness:0.0],
-                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 grayValue:0.40 saturation:0.55 lightness:0.1],
-                SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 grayValue:0.97 saturation:1.0 lightness:0.0],
+                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 grayValue:0.25 saturation:0.55 lightness:0.1],
+                SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 grayValue:0.45 saturation:0.70 lightness:0.0],
                 PrimaryStrokeKey : [ColorChip clearChipWithName:PrimaryStrokeKey],
-                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 grayValue:0.50 saturation:0.3 lightness:0.0],
-                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 grayValue:0.5 saturation:0.75 lightness:0.0],
+                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 grayValue:0.56 saturation:0.3 lightness:0.0],
+                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 grayValue:0.77 saturation:0.77 lightness:0.0],
                 HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 grayValue:0.95 saturation:1.0 lightness:0.0],
                 ContentKey : [ColorChip chipWithName:ContentKey hue:0 grayValue:0.0 saturation:0 lightness:0],
                 InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 grayValue:0.0 saturation:0 lightness:0.0],
-                InformationKey : [ColorChip chipWithName:InformationKey hue:0 grayValue:0.85 saturation:1.0 lightness:0.0],
+                InformationKey : [ColorChip chipWithName:InformationKey hue:0 grayValue:0.94 saturation:0.5 lightness:0.0],
                 CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 grayValue:0.12 saturation:0.7 lightness:0.0],
             };
             break;
