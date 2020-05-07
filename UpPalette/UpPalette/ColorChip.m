@@ -8,12 +8,14 @@
 #import "ColorChip.h"
 
 NSString *const ColorChipNameKey = @"n";
-NSString *const ColorChipGrayValueKey = @"g";
+NSString *const ColorChipGrayKey = @"g";
 NSString *const ColorChipHueKey = @"h";
 NSString *const ColorChipSaturationKey = @"s";
 NSString *const ColorChipLightnessKey = @"l";
+NSString *const ColorChipTargetLABLightnessKey = @"L*";
 
 static const CGFloat _ClearGray = -1;
+static const CGFloat _NotATarget = -1;
 
 @interface ColorChip ()
 @end
@@ -22,12 +24,22 @@ static const CGFloat _ClearGray = -1;
 
 + (ColorChip *)clearChipWithName:(NSString *)name
 {
-    return [[ColorChip alloc] initWithName:name hue:0 grayValue:_ClearGray saturation:0 lightness:0];
+    return [[ColorChip alloc] initWithName:name hue:0 gray:_ClearGray saturation:0 lightness:0 targetLABLightness:0];
 }
 
-+ (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue grayValue:(CGFloat)grayValue  saturation:(CGFloat)saturation lightness:(CGFloat)lightness
++ (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue gray:(CGFloat)gray saturation:(CGFloat)saturation
+    lightness:(CGFloat)lightness
 {
-    return [[ColorChip alloc] initWithName:name hue:hue grayValue:grayValue saturation:saturation lightness:lightness];
+    return [[ColorChip alloc] initWithName:name hue:hue gray:gray saturation:saturation lightness:lightness
+        targetLABLightness:_NotATarget];
+}
+
+
++ (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue gray:(CGFloat)gray saturation:(CGFloat)saturation
+    lightness:(CGFloat)lightness targetLABLightness:(CGFloat)targetLABLightness
+{
+    return [[ColorChip alloc] initWithName:name hue:hue gray:gray saturation:saturation lightness:lightness
+        targetLABLightness:targetLABLightness];
 }
 
 + (ColorChip *)chipWithDictionary:(NSDictionary *)dictionary
@@ -35,20 +47,23 @@ static const CGFloat _ClearGray = -1;
     return [[ColorChip alloc] initWithDictionary:dictionary];
 }
 
-+ (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue chipA:(ColorChip *)chipA chipB:(ColorChip *)chipB fraction:(CGFloat)fraction
++ (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue targetLABLightness:(CGFloat)targetLABLightness
+    chipA:(ColorChip *)chipA chipB:(ColorChip *)chipB fraction:(CGFloat)fraction
 {
-    return [[ColorChip alloc] initWithName:name hue:hue chipA:chipA chipB:chipB fraction:fraction];
+    return [[ColorChip alloc] initWithName:name hue:hue targetLABLightness:targetLABLightness chipA:chipA chipB:chipB fraction:fraction];
 }
 
-- (instancetype)initWithName:(NSString *)name hue:(CGFloat)hue grayValue:(CGFloat)grayValue  saturation:(CGFloat)saturation lightness:(CGFloat)lightness
+- (instancetype)initWithName:(NSString *)name hue:(CGFloat)hue gray:(CGFloat)gray  saturation:(CGFloat)saturation
+    lightness:(CGFloat)lightness targetLABLightness:(CGFloat)targetLABLightness
 {
     self = [super init];
     
     self.name = name;
     self.hue = hue;
-    self.grayValue = grayValue;
+    self.gray = gray;
     self.saturation = saturation;
     self.lightness = lightness;
+    self.targetLABLightness = targetLABLightness;
     
     return self;
 }
@@ -62,23 +77,26 @@ static const CGFloat _ClearGray = -1;
     self = [super init];
     
     self.name = dictionary[ColorChipNameKey];
-    self.grayValue = [dictionary[ColorChipGrayValueKey] floatValue];
+    self.hue = [dictionary[ColorChipHueKey] floatValue];
+    self.gray = [dictionary[ColorChipGrayKey] floatValue];
     self.saturation = [dictionary[ColorChipSaturationKey] floatValue];
     self.lightness = [dictionary[ColorChipLightnessKey] floatValue];
-    self.hue = [dictionary[ColorChipHueKey] floatValue];
+    self.targetLABLightness = [dictionary[ColorChipTargetLABLightnessKey] floatValue];
     
     return self;
 }
 
-- (instancetype)initWithName:(NSString *)name hue:(CGFloat)hue chipA:(ColorChip *)chipA chipB:(ColorChip *)chipB fraction:(CGFloat)fraction
+- (instancetype)initWithName:(NSString *)name hue:(CGFloat)hue targetLABLightness:(CGFloat)targetLABLightness
+    chipA:(ColorChip *)chipA chipB:(ColorChip *)chipB fraction:(CGFloat)fraction
 {
     self = [super init];
     
     self.name = name;
     self.hue = hue;
-    self.grayValue = up_lerp_floats(chipA.grayValue, chipB.grayValue, fraction);
+    self.gray = up_lerp_floats(chipA.gray, chipB.gray, fraction);
     self.saturation = up_lerp_floats(chipA.saturation, chipB.saturation, fraction);
     self.lightness = up_lerp_floats(chipA.lightness, chipB.lightness, fraction);
+    self.targetLABLightness = targetLABLightness;
     
     return self;
 }
@@ -91,10 +109,11 @@ static const CGFloat _ClearGray = -1;
 - (void)takeValuesFrom:(ColorChip *)chip
 {
     self.name = chip.name;
-    self.grayValue = chip.grayValue;
+    self.gray = chip.gray;
     self.hue = chip.hue;
     self.saturation = chip.saturation;
     self.lightness = chip.lightness;
+    self.targetLABLightness = chip.targetLABLightness;
 }
 
 - (BOOL)isEqual:(id)object
@@ -103,47 +122,76 @@ static const CGFloat _ClearGray = -1;
         return NO;
     }
     
+    static const float _Epsilon = 0.001;
+    
     ColorChip *other = (ColorChip *)object;
     return [self.name isEqualToString:other.name] &&
-        up_is_fuzzy_equal(self.grayValue, other.grayValue) &&
-        up_is_fuzzy_equal(self.hue, other.hue) &&
-        up_is_fuzzy_equal(self.saturation, other.saturation) &&
-        up_is_fuzzy_equal(self.lightness, other.lightness);
+        up_is_fuzzy_equal_with_epsilon(self.gray, other.gray, _Epsilon) &&
+        up_is_fuzzy_equal_with_epsilon(self.hue, other.hue, _Epsilon) &&
+        up_is_fuzzy_equal_with_epsilon(self.saturation, other.saturation, _Epsilon) &&
+        up_is_fuzzy_equal_with_epsilon(self.lightness, other.lightness, _Epsilon) &&
+        up_is_fuzzy_equal(self.targetLABLightness, other.targetLABLightness);
 }
 
 @dynamic isClear;
 - (BOOL)isClear
 {
-    return self.grayValue < 0;
+    return self.gray < 0;
 }
 
 @dynamic color;
 - (UIColor *)color
 {
-    return self.grayValue < 0 ? [UIColor clearColor] :
-        [UIColor colorizedColorWithGrayValue:self.grayValue hue:self.hue saturation:self.saturation lightness:self.lightness];
+    return self.isClear ? [UIColor clearColor] :
+        [UIColor colorizedGray:self.gray hue:self.hue saturation:self.saturation lightness:self.lightness];
+}
+
+- (ColorChip *)chipWithTargetLABLightness
+{
+    if (self.isClear) {
+        return self;
+    }
+    UIColor *unadjustedColor = self.color;
+    if (self.targetLABLightness == _NotATarget || up_is_fuzzy_equal(unadjustedColor.LABLightness, self.targetLABLightness)) {
+        return self;
+    }
+    CGFloat unadjustedLABLightness = unadjustedColor.LABLightness;
+    CGFloat deltaGray = unadjustedLABLightness > self.targetLABLightness ? -0.0001 : 0.0001;
+    UIColor *adjustedColor = unadjustedColor;
+    CGFloat adjustedGray = self.gray;
+    do {
+        adjustedGray += deltaGray;
+        adjustedColor = [UIColor colorizedGray:adjustedGray hue:self.hue saturation:self.saturation lightness:self.lightness];
+        CGFloat adjustedLABLightness = adjustedColor.LABLightness;
+        if (up_is_fuzzy_equal_with_epsilon(adjustedLABLightness, self.targetLABLightness, 0.05)) {
+            return [ColorChip chipWithName:self.name hue:self.hue gray:adjustedGray saturation:self.saturation
+                lightness:self.lightness targetLABLightness:self.targetLABLightness];
+        }
+    } while (adjustedGray >= 0 && adjustedGray <= 1);
+    return self;
 }
 
 - (NSDictionary *)dictionary
 {
     return @{
         ColorChipNameKey : self.name,
-        ColorChipGrayValueKey : @(self.grayValue),
+        ColorChipGrayKey : @(self.gray),
         ColorChipHueKey : @(self.hue),
         ColorChipSaturationKey : @(self.saturation),
         ColorChipLightnessKey : @(self.lightness),
+        ColorChipTargetLABLightnessKey : @(self.targetLABLightness),
     };
 }
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@: [%.2f, %.2f, %.2f]",
-        self.name, self.grayValue, self.saturation, self.lightness];
+    return [NSString stringWithFormat:@"%@: [%.2f, %.2f, %.2f / %.2f]",
+        self.name, self.gray, self.saturation, self.lightness, self.targetLABLightness];
 }
 
 - (NSAttributedString *)attributedDescription
 {
-    UIColor *color = [self color];
+    UIColor *color = self.color;
 
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
 
@@ -151,15 +199,15 @@ static const CGFloat _ClearGray = -1;
     NSDictionary *colorStringAttributes = @{NSFontAttributeName: [UIFont monospacedSystemFontOfSize:10 weight:0]};
     [string appendAttributedString:[[NSAttributedString alloc] initWithString:self.name attributes:nameStringAttributes]];
     
-    if (self.grayValue < 0) {
+    if (self.gray < 0) {
         [string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nclear" attributes:colorStringAttributes]];
     }
     else {
-        NSString *chipString = [NSString stringWithFormat:@"\nchsl: %.2f, %.2f, %.2f",
-            self.grayValue, self.saturation, self.lightness];
+        NSString *chipString = [NSString stringWithFormat:@"\nchip: %.2f, %.2f, %.2f / %.0f",
+            self.gray, self.saturation, self.lightness, self.targetLABLightness];
         [string appendAttributedString:[[NSAttributedString alloc] initWithString:chipString attributes:colorStringAttributes]];
 
-        NSString *lightnessString = [NSString stringWithFormat:@"   L: %3.2f", color.lightness];
+        NSString *lightnessString = [NSString stringWithFormat:@"; L*: %3.2f", color.LABLightness];
         [string appendAttributedString:[[NSAttributedString alloc] initWithString:lightnessString attributes:colorStringAttributes]];
 
         CGFloat r, g, b, a;
