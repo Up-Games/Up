@@ -10,7 +10,6 @@ extern NSString *const ColorChipNameKey;
 extern NSString *const ColorChipGrayKey;
 extern NSString *const ColorChipHueKey;
 extern NSString *const ColorChipSaturationKey;
-extern NSString *const ColorChipLightnessKey;
 extern NSString *const ColorChipTargetLABLightnessKey;
 
 @interface ColorChip : NSObject <NSCopying>
@@ -18,17 +17,15 @@ extern NSString *const ColorChipTargetLABLightnessKey;
 @property (nonatomic) CGFloat gray;
 @property (nonatomic) CGFloat hue;
 @property (nonatomic) CGFloat saturation;
-@property (nonatomic) CGFloat lightness;
 @property (nonatomic) CGFloat targetLABLightness;
 @property (nonatomic, readonly) BOOL isClear;
 @property (nonatomic, readonly) UIColor *color;
 
 + (ColorChip *)clearChipWithName:(NSString *)name;
 
++ (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue gray:(CGFloat)gray saturation:(CGFloat)saturation;
 + (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue gray:(CGFloat)gray saturation:(CGFloat)saturation
-    lightness:(CGFloat)lightness;
-+ (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue gray:(CGFloat)gray saturation:(CGFloat)saturation
-    lightness:(CGFloat)lightness targetLABLightness:(CGFloat)targetLABLightness;
+    targetLABLightness:(CGFloat)targetLABLightness;
 
 + (ColorChip *)chipWithName:(NSString *)name hue:(CGFloat)hue targetLABLightness:(CGFloat)targetLABLightness
     chipA:(ColorChip *)chipA chipB:(ColorChip *)chipB fraction:(CGFloat)fraction;
@@ -36,7 +33,7 @@ extern NSString *const ColorChipTargetLABLightnessKey;
 + (ColorChip *)chipWithDictionary:(NSDictionary *)dictionary;
 
 - (instancetype)initWithName:(NSString *)name hue:(CGFloat)hue gray:(CGFloat)gray saturation:(CGFloat)saturation
-    lightness:(CGFloat)lightness targetLABLightness:(CGFloat)targetLABLightness;
+    targetLABLightness:(CGFloat)targetLABLightness;
 
 - (instancetype)initWithName:(NSString *)name hue:(CGFloat)hue targetLABLightness:(CGFloat)targetLABLightness
     chipA:(ColorChip *)chipA chipB:(ColorChip *)chipB fraction:(CGFloat)fraction;

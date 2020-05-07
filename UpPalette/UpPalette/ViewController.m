@@ -72,9 +72,9 @@ static NSString *const ColorMapPathFormat = @"/Users/kocienda/Desktop/up-color-m
 
 @property (nonatomic) IBOutlet UILabel *editColorNameLabel;
 
-@property (nonatomic) IBOutlet UILabel *inputGrayLabel;
-@property (nonatomic) IBOutlet UISlider *inputGraySlider;
-@property (nonatomic) IBOutlet UITextField *inputGrayField;
+@property (nonatomic) IBOutlet UILabel *grayLabel;
+@property (nonatomic) IBOutlet UISlider *graySlider;
+@property (nonatomic) IBOutlet UITextField *grayValueField;
 
 @property (nonatomic) IBOutlet UILabel *saturationLabel;
 @property (nonatomic) IBOutlet UISlider *saturationSlider;
@@ -188,7 +188,7 @@ static ViewController *_Instance;
 
 - (void)viewDidLayoutSubviews
 {
-    CGRect layoutRect1 = CGRectInset(self.view.bounds, 38, 66);
+    CGRect layoutRect1 = CGRectInset(self.view.bounds, 38, 78);
     self.gameMockupView.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:layoutRect1 hLayout:UPLayoutHorizontalRight vLayout:UPLayoutVerticalTop];
     [self.gameMockupView layoutWithRule];
 }
@@ -233,9 +233,9 @@ static ViewController *_Instance;
         self.nextHueButton.enabled = NO;
         self.editColorNameLabel.text = self.selectedChip.name;
         self.editColorNameLabel.enabled = YES;
-        self.inputGrayLabel.enabled = YES;
-        self.inputGraySlider.enabled = YES;
-        self.inputGrayField.enabled = YES;
+        self.grayLabel.enabled = YES;
+        self.graySlider.enabled = YES;
+        self.grayValueField.enabled = YES;
         self.saturationLabel.enabled = YES;
         self.saturationSlider.enabled = YES;
         self.saturationValueField.enabled = YES;
@@ -250,15 +250,15 @@ static ViewController *_Instance;
         self.startColorView.backgroundColor = self.selectedChip.color;
         self.adjustedColorView.backgroundColor = self.selectedChip.color;
         
-        self.inputGraySlider.value = self.selectedChip.gray * 100;
-        [self inputGraySliderChanged:self.inputGraySlider];
+        self.lightnessSlider.value = [self.defaultColorMap[self.selectedChip.name] targetLABLightness];
+        [self lightnessSliderChanged:self.lightnessSlider];
+        
+        self.graySlider.value = self.selectedChip.gray * 100;
+        [self inputGraySliderChanged:self.graySlider];
 
         self.saturationSlider.value = self.selectedChip.saturation * 100;
         [self saturationSliderChanged:self.saturationSlider];
 
-        self.lightnessSlider.value = self.selectedChip.lightness * 100;
-        [self lightnessSliderChanged:self.lightnessSlider];
-        
         self.startColorLabel.attributedText = [self.selectedChip attributedDescription];
     }
     else {
@@ -270,9 +270,9 @@ static ViewController *_Instance;
         self.hueValueField.enabled = YES;
         self.prevHueButton.enabled = YES;
         self.nextHueButton.enabled = YES;
-        self.inputGrayLabel.enabled = NO;
-        self.inputGraySlider.enabled = NO;
-        self.inputGrayField.enabled = NO;
+        self.grayLabel.enabled = NO;
+        self.graySlider.enabled = NO;
+        self.grayValueField.enabled = NO;
         self.saturationLabel.enabled = NO;
         self.saturationSlider.enabled = NO;
         self.saturationValueField.enabled = NO;
@@ -341,79 +341,79 @@ static ViewController *_Instance;
     switch (self.colorTheme) {
         case ColorThemeLight: {
             self.defaultColorMap = @{
-                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.33 saturation:0.7 lightness:0.0 targetLABLightness:29],
-                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.91 saturation:0.6 lightness:0.0 targetLABLightness:91],
-                ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.85 saturation:0.6 lightness:0.0 targetLABLightness:82],
-                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:0.76 saturation:1.0 lightness:0.0 targetLABLightness:68],
-                SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.95 saturation:0.35 lightness:0.0 targetLABLightness:95],
-                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.85 saturation:0.35 lightness:0.0 targetLABLightness:84],
-                SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.76 saturation:1.0 lightness:0.0 targetLABLightness:75],
+                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.33 saturation:0.7 targetLABLightness:29],
+                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.91 saturation:0.6 targetLABLightness:91],
+                ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.85 saturation:0.6 targetLABLightness:82],
+                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:0.76 saturation:1.0 targetLABLightness:68],
+                SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.95 saturation:0.35 targetLABLightness:95],
+                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.85 saturation:0.35 targetLABLightness:84],
+                SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.76 saturation:1.0 targetLABLightness:75],
                 PrimaryStrokeKey : [ColorChip clearChipWithName:PrimaryStrokeKey],
-                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.88 saturation:0.35 lightness:0.0 targetLABLightness:85],
-                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.68 saturation:0.8 lightness:0.0 targetLABLightness:60],
-                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:0. saturation:1.0 lightness:0.0 targetLABLightness:38],
-                ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:1.0 saturation:0 lightness:1.0],
-                InactiveContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:1.0 saturation:0 lightness:1.0],
-                InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.30 saturation:0.50 lightness:0.0 targetLABLightness:28],
-                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.99 saturation:0.35 lightness:0.0 targetLABLightness:99],
+                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.88 saturation:0.35 targetLABLightness:85],
+                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.68 saturation:0.8 targetLABLightness:60],
+                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:0. saturation:1.0 targetLABLightness:38],
+                ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:1.0 saturation:0],
+                InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 gray:1.0 saturation:0],
+                InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.30 saturation:0.50 targetLABLightness:28],
+                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.99 saturation:0.35 targetLABLightness:99],
             };
             break;
         }
         case ColorThemeDark:
             self.defaultColorMap = @{
-                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.8 saturation:0.9 lightness:0.0 targetLABLightness:77],
-                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.40 saturation:0.15 lightness:0.0 targetLABLightness:40],
-                ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.65 saturation:0.68 lightness:0.1],
-                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:1.0 saturation:1.0 lightness:0.0],
-                SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.25 saturation:0.25 lightness:0.0 targetLABLightness:23],
-                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.33 saturation:0.55 lightness:0.0 targetLABLightness:31],
-                SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.44 saturation:0.70 lightness:0.0 targetLABLightness:42],
+                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.8 saturation:0.9 targetLABLightness:77],
+                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.40 saturation:0.15 targetLABLightness:40],
+                ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.65 saturation:0.68 targetLABLightness:60],
+                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:1.0 saturation:1.0],
+                SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.25 saturation:0.25 targetLABLightness:23],
+                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.33 saturation:0.55 targetLABLightness:31],
+                SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.44 saturation:0.70 targetLABLightness:42],
                 PrimaryStrokeKey : [ColorChip clearChipWithName:PrimaryStrokeKey],
-                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.56 saturation:0.3 lightness:0.0 targetLABLightness:53],
-                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.77 saturation:0.77 lightness:0.0 targetLABLightness:71],
-                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:1.0 saturation:1.0 lightness:0.0],
-                ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:0.0 saturation:0 lightness:0],
-                InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 gray:0.0 saturation:0 lightness:0.0],
-                InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.85 saturation:0.9 lightness:0.0 targetLABLightness:80],
-                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.12 saturation:0.7 lightness:0.0 targetLABLightness:9],
+                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.56 saturation:0.3 targetLABLightness:53],
+                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.77 saturation:0.77 targetLABLightness:71],
+                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:1.0 saturation:1.0],
+                ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:0.0 saturation:0],
+                InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 gray:0.0 saturation:0],
+                InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.85 saturation:0.9 targetLABLightness:80],
+                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.12 saturation:0.7 targetLABLightness:9],
             };
             break;
         case ColorThemeLightStark:
             self.defaultColorMap = @{
-                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.98 saturation:0.68 lightness:0.0 targetLABLightness:99],
-                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.95 saturation:0.6 lightness:0.45 targetLABLightness:97],
-                ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.75 saturation:0.5 lightness:0.1],
-                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:0.83 saturation:0.85 lightness:0.0 targetLABLightness:80],
-                SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.98 saturation:0.4 lightness:0.0 targetLABLightness:99],
-                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.93 saturation:0.55 lightness:0.0 targetLABLightness:92],
-                SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.90 saturation:1.0 lightness:0.0 targetLABLightness:86],
-                PrimaryStrokeKey : [ColorChip chipWithName:PrimaryStrokeKey hue:0 gray:0.2 saturation:0.85 lightness:0.0 targetLABLightness:18],
-                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.90 saturation:0.40 lightness:0.0 targetLABLightness:87],
-                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.75 saturation:0.75 lightness:0.0 targetLABLightness:70],
-                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:0.52 saturation:1.0 lightness:0.0 targetLABLightness:45],
-                ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:0.2 saturation:0.85 lightness:0.0 targetLABLightness:18],
-                InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 gray:0.8 saturation:0.45 lightness:0.0 targetLABLightness:80],
-                InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.2 saturation:0.75 lightness:0.0 targetLABLightness:18],
-                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.98 saturation:0.50 lightness:0.54 targetLABLightness:99],
+                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.98 saturation:0.68 targetLABLightness:99],
+                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.97 saturation:0.6 targetLABLightness:96.5],
+                ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.8 saturation:0.5 targetLABLightness:80],
+                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:0.83 saturation:0.85 targetLABLightness:80],
+                SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.98 saturation:0.4 targetLABLightness:99],
+                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.93 saturation:0.55 targetLABLightness:92],
+                SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.90 saturation:1.0 targetLABLightness:86],
+                PrimaryStrokeKey : [ColorChip chipWithName:PrimaryStrokeKey hue:0 gray:0.2 saturation:0.85 targetLABLightness:18],
+                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.90 saturation:0.40 targetLABLightness:87],
+                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.75 saturation:0.75 targetLABLightness:70],
+                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:0.52 saturation:1.0 targetLABLightness:45],
+                ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:0.2 saturation:0.85 targetLABLightness:18],
+                InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 gray:0.8 saturation:0.45 targetLABLightness:80],
+                InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.2 saturation:0.75 targetLABLightness:18],
+                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.98 saturation:0.50 targetLABLightness:99],
             };
             break;
         case ColorThemeDarkStark:
             self.defaultColorMap = @{
-                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.12 saturation:0.68 lightness:0.0 targetLABLightness:8],
-                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.10 saturation:0.25 lightness:0.0 targetLABLightness:8],
-                ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.10 saturation:0.5 lightness:0.1 targetLABLightness:15],
-                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:0.47 saturation:1.0 lightness:0.0 targetLABLightness:45],
-                SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.12 saturation:0.68 lightness:0.0 targetLABLightness:8],
-                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.10 saturation:0.5 lightness:0.1 targetLABLightness:15],
-                SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.47 saturation:1.0 lightness:0.0 targetLABLightness:45],
-                PrimaryStrokeKey : [ColorChip chipWithName:PrimaryStrokeKey hue:0 gray:0.80 saturation:0.68 lightness:0.0 targetLABLightness:77],
-                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.55 saturation:0.15 lightness:0.0 targetLABLightness:50],
-                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.83 saturation:0.60 lightness:0.0 targetLABLightness:80],
-                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:0.95 saturation:1.0 lightness:0 targetLABLightness:95],
-                ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:1.00 saturation:1.0 lightness:0.0],
-                InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 gray:0.37 saturation:0.2 lightness:0 targetLABLightness:37],
-                InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:1.00 saturation:1.0 lightness:0.0],
-                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.12 saturation:0.68 lightness:0.0 targetLABLightness:8],
+                PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.12 saturation:0.68 targetLABLightness:8],
+                InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.10 saturation:0.25 targetLABLightness:8],
+                ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.10 saturation:0.5 targetLABLightness:15],
+                HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:0.47 saturation:1.0 targetLABLightness:45],
+                SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.12 saturation:0.68 targetLABLightness:8],
+                SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.20 saturation:0.5 targetLABLightness:15],
+                SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.47 saturation:1.0 targetLABLightness:45],
+                PrimaryStrokeKey : [ColorChip chipWithName:PrimaryStrokeKey hue:0 gray:0.80 saturation:0.68 targetLABLightness:77],
+                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.55 saturation:0.15 targetLABLightness:50],
+                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.83 saturation:0.60 targetLABLightness:80],
+                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:0.95 saturation:1.0 targetLABLightness:95],
+                ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:1.00 saturation:1.0],
+                InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 gray:0.37 saturation:0.2 targetLABLightness:37],
+                InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:1.00 saturation:1.0],
+                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.12 saturation:0.68 targetLABLightness:8],
             };
             break;
     }
@@ -556,7 +556,7 @@ static ViewController *_Instance;
 - (IBAction)inputGraySliderChanged:(UISlider *)sender
 {
     int value = roundf(sender.value);
-    self.inputGrayField.text = [NSString stringWithFormat:@"%d", value];
+    self.grayValueField.text = [NSString stringWithFormat:@"%d", value];
     self.selectedChip.gray = (float)value / 100;
     [self updateColors];
 }
@@ -573,7 +573,8 @@ static ViewController *_Instance;
 {
     int value = roundf(sender.value);
     self.lightnessValueField.text = [NSString stringWithFormat:@"%d", value];
-    self.selectedChip.lightness = (float)value / 100;
+    ColorChip *chip = self.defaultColorMap[self.selectedChip.name];
+    chip.targetLABLightness = (float)value;
     [self updateColors];
 }
 
