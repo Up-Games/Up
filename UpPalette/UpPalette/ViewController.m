@@ -123,10 +123,6 @@ static ViewController *_Instance;
     
     _Instance = self;
 
-    [UIColor setThemeStyle:UPColorStyleLightStark];
-    UIColor *testColor = [UIColor themeColorWithHue:148 category:UPColorCategoryPrimaryStroke];
-    NSLog(@"testColor: %@", testColor);
-
     self.gameMockupView = [[GameMockupView alloc] initWithFrame:CGRectMake(0, 0, 812, 375)];
     self.gameMockupView.layer.borderWidth = 1;
     [self.view addSubview:self.self.gameMockupView];
