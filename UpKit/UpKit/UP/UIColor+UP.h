@@ -9,15 +9,12 @@ typedef NS_ENUM(NSInteger, UPColorStyle) {
     UPColorStyleDefault,
     UPColorStyleLight,
     UPColorStyleDark,
-};
-
-typedef NS_ENUM(NSInteger, UPColorModifier) {
-    UPColorModifierNone =  0,
-    UPColorModifierQuark = 1 << 0,
-    UPColorModifierStark = 1 << 1,
+    UPColorStyleLightStark,
+    UPColorStyleDarkStark,
 };
 
 typedef NS_ENUM(NSInteger, UPColorCategory) {
+    UPColorCategoryDefault,
     UPColorCategoryPrimaryFill,
     UPColorCategoryInactiveFill,
     UPColorCategoryActiveFill,
@@ -31,8 +28,8 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
     UPColorCategoryHighlightedStroke,
     UPColorCategoryContent,
     UPColorCategoryInactiveContent,
-    UPColorCategoryCanvas,
     UPColorCategoryInformation,
+    UPColorCategoryCanvas,
 
     UPColorCategoryDisabledFill,
     UPColorCategoryDisabledStroke,
@@ -44,11 +41,7 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 + (void)setThemeStyle:(UPColorStyle)style;
 + (UPColorStyle)themeStyle;
 
-+ (void)setThemeModifier:(UPColorModifier)modifier;
-+ (UPColorModifier)themeModifier;
-
 + (UIColor *)themeColorWithHue:(CGFloat)hue category:(UPColorCategory)category;
-+ (UIColor *)themeColorWithHue:(CGFloat)hue category:(UPColorCategory)category style:(UPColorStyle)style modifier:(UPColorModifier)modifier;
 
 + (UIColor *)colorizedGray:(CGFloat)gray hue:(CGFloat)hue saturation:(CGFloat)saturation;
 

@@ -9,7 +9,6 @@
 using UP::RGBF;
 using UP::HSVF;
 using UP::LABF;
-using UP::LCHF;
 using UP::to_labf;
 using UP::to_rgbf;
 using UP::to_hsvf;
@@ -17,7 +16,8 @@ using UP::mix_channel;
 using UP::mix_lightness;
 
 static UPColorStyle _ThemeStyle = UPColorStyleDefault;
-static UPColorModifier _ThemeModifier = UPColorModifierNone;
+
+#include "UPThemeColors.c"
 
 @implementation UIColor (UP)
 
@@ -31,24 +31,16 @@ static UPColorModifier _ThemeModifier = UPColorModifierNone;
     return _ThemeStyle;
 }
 
-+ (void)setThemeModifier:(UPColorModifier)modifier
-{
-    _ThemeModifier = modifier;
-}
-
-+ (UPColorModifier)themeModifier
-{
-    return _ThemeModifier;
-}
-
 + (UIColor *)themeColorWithHue:(CGFloat)hue category:(UPColorCategory)category
 {
-    return nil;
-}
-
-+ (UIColor *)themeColorWithHue:(CGFloat)hue category:(UPColorCategory)category style:(UPColorStyle)style modifier:(UPColorModifier)modifier
-{
-    return nil;
+    static const size_t ColorsPerHue = 15;
+    static const size_t HueCount = 360;
+    size_t themeOffset = (_ThemeStyle == UPColorStyleDefault ? 0 : (size_t)_ThemeStyle - 1) * HueCount;
+    size_t hueOffset = (hue * ColorsPerHue);
+    size_t categoryOffset = (category == UPColorCategoryDefault ? 0 : (size_t)category - 1);
+    size_t idx = (themeOffset * ColorsPerHue) + hueOffset + categoryOffset;
+    _UPRGBColorComponents c = _UPThemeColorComponents[idx];
+    return [UIColor colorWithRed:c.r green:c.g blue:c.b alpha:c.a];
 }
 
 // https://stackoverflow.com/a/9177602

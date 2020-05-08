@@ -17,7 +17,6 @@ NSString *const PrimaryStrokeKey = @"PrimaryStroke";
 NSString *const InactiveStrokeKey = @"InactiveStroke";
 NSString *const ActiveStrokeKey = @"ActiveStroke";
 NSString *const HighlightedStrokeKey = @"HighlightedStroke";
-NSString *const PipingKey = @"Piping";
 NSString *const ContentKey = @"Content";
 NSString *const InactiveContentKey = @"InactiveContent";
 NSString *const InformationKey = @"Information";
