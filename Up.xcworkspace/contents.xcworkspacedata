@@ -5,6 +5,9 @@
       location = "group:UpKit/UpKit.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:UPSpell/UPSpell.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:UpDemo/UpDemo.xcodeproj">
    </FileRef>
    <FileRef

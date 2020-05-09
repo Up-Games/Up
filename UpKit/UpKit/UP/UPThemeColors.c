@@ -2,13 +2,13 @@
 // Generated code for Up Games colors
 // DO NOT EDIT
 //
-typedef struct _UPRGBColorComponents 
+typedef struct 
 { 
     CGFloat r;
     CGFloat g;
     CGFloat b;
     CGFloat a;
-};
+} _UPRGBColorComponents;
 //
 
 static _UPRGBColorComponents _UPThemeColorComponents[] = {

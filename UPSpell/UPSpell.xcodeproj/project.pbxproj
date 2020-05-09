@@ -1,0 +1,519 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5DF9DF5C2466165700B2199D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5B2466165700B2199D /* AppDelegate.m */; };
+		5DF9DF5F2466165700B2199D /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5E2466165700B2199D /* SceneDelegate.m */; };
+		5DF9DF622466165700B2199D /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF612466165700B2199D /* ViewController.mm */; };
+		5DF9DF652466165700B2199D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5DF9DF632466165700B2199D /* Main.storyboard */; };
+		5DF9DF672466165800B2199D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DF9DF662466165800B2199D /* Assets.xcassets */; };
+		5DF9DF6A2466165800B2199D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5DF9DF682466165800B2199D /* LaunchScreen.storyboard */; };
+		5DF9DF6D2466165800B2199D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF6C2466165800B2199D /* main.m */; };
+		5DF9DF772466165800B2199D /* UPSpellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF762466165800B2199D /* UPSpellTests.m */; };
+		5DF9DF8C2466168500B2199D /* UpKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DF9DF8B2466168500B2199D /* UpKit.framework */; };
+		5DF9DF8D2466168500B2199D /* UpKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DF9DF8B2466168500B2199D /* UpKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5DF9DF9324661B5F00B2199D /* UPTile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF8F24661B5F00B2199D /* UPTile.mm */; };
+		5DF9DF9424661B5F00B2199D /* UPTileTray.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF9224661B5F00B2199D /* UPTileTray.mm */; };
+		5DF9DF9724661BC900B2199D /* UPGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF9624661BC900B2199D /* UPGame.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5DF9DF732466165800B2199D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DF9DF4F2466165700B2199D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5DF9DF562466165700B2199D;
+			remoteInfo = UPSpell;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5DF9DF8E2466168500B2199D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5DF9DF8D2466168500B2199D /* UpKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5DF9DF572466165700B2199D /* UP Spell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UP Spell.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DF9DF5A2466165700B2199D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5DF9DF5B2466165700B2199D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5DF9DF5D2466165700B2199D /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		5DF9DF5E2466165700B2199D /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		5DF9DF602466165700B2199D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		5DF9DF612466165700B2199D /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		5DF9DF642466165700B2199D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5DF9DF662466165800B2199D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5DF9DF692466165800B2199D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5DF9DF6B2466165800B2199D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5DF9DF6C2466165800B2199D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5DF9DF722466165800B2199D /* UPSpellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UPSpellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DF9DF762466165800B2199D /* UPSpellTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPSpellTests.m; sourceTree = "<group>"; };
+		5DF9DF782466165800B2199D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5DF9DF8B2466168500B2199D /* UpKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UpKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DF9DF8F24661B5F00B2199D /* UPTile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTile.mm; sourceTree = "<group>"; };
+		5DF9DF9024661B5F00B2199D /* UPTileTray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTileTray.h; sourceTree = "<group>"; };
+		5DF9DF9124661B5F00B2199D /* UPTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTile.h; sourceTree = "<group>"; };
+		5DF9DF9224661B5F00B2199D /* UPTileTray.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTileTray.mm; sourceTree = "<group>"; };
+		5DF9DF9524661BC900B2199D /* UPGame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGame.h; sourceTree = "<group>"; };
+		5DF9DF9624661BC900B2199D /* UPGame.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGame.mm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5DF9DF542466165700B2199D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DF9DF8C2466168500B2199D /* UpKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DF9DF6F2466165800B2199D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5DF9DF4E2466165700B2199D = {
+			isa = PBXGroup;
+			children = (
+				5DF9DF592466165700B2199D /* UPSpell */,
+				5DF9DF752466165800B2199D /* UPSpellTests */,
+				5DF9DF582466165700B2199D /* Products */,
+				5DF9DF8A2466168500B2199D /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		5DF9DF582466165700B2199D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5DF9DF572466165700B2199D /* UP Spell.app */,
+				5DF9DF722466165800B2199D /* UPSpellTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5DF9DF592466165700B2199D /* UPSpell */ = {
+			isa = PBXGroup;
+			children = (
+				5DF9DF9524661BC900B2199D /* UPGame.h */,
+				5DF9DF9624661BC900B2199D /* UPGame.mm */,
+				5DF9DF9124661B5F00B2199D /* UPTile.h */,
+				5DF9DF8F24661B5F00B2199D /* UPTile.mm */,
+				5DF9DF9024661B5F00B2199D /* UPTileTray.h */,
+				5DF9DF9224661B5F00B2199D /* UPTileTray.mm */,
+				5DF9DF5A2466165700B2199D /* AppDelegate.h */,
+				5DF9DF5B2466165700B2199D /* AppDelegate.m */,
+				5DF9DF5D2466165700B2199D /* SceneDelegate.h */,
+				5DF9DF5E2466165700B2199D /* SceneDelegate.m */,
+				5DF9DF602466165700B2199D /* ViewController.h */,
+				5DF9DF612466165700B2199D /* ViewController.mm */,
+				5DF9DF632466165700B2199D /* Main.storyboard */,
+				5DF9DF662466165800B2199D /* Assets.xcassets */,
+				5DF9DF682466165800B2199D /* LaunchScreen.storyboard */,
+				5DF9DF6B2466165800B2199D /* Info.plist */,
+				5DF9DF6C2466165800B2199D /* main.m */,
+			);
+			path = UPSpell;
+			sourceTree = "<group>";
+		};
+		5DF9DF752466165800B2199D /* UPSpellTests */ = {
+			isa = PBXGroup;
+			children = (
+				5DF9DF762466165800B2199D /* UPSpellTests.m */,
+				5DF9DF782466165800B2199D /* Info.plist */,
+			);
+			path = UPSpellTests;
+			sourceTree = "<group>";
+		};
+		5DF9DF8A2466168500B2199D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5DF9DF8B2466168500B2199D /* UpKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5DF9DF562466165700B2199D /* UPSpell */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5DF9DF7B2466165800B2199D /* Build configuration list for PBXNativeTarget "UPSpell" */;
+			buildPhases = (
+				5DF9DF532466165700B2199D /* Sources */,
+				5DF9DF542466165700B2199D /* Frameworks */,
+				5DF9DF552466165700B2199D /* Resources */,
+				5DF9DF8E2466168500B2199D /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UPSpell;
+			productName = UPSpell;
+			productReference = 5DF9DF572466165700B2199D /* UP Spell.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5DF9DF712466165800B2199D /* UPSpellTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5DF9DF7E2466165800B2199D /* Build configuration list for PBXNativeTarget "UPSpellTests" */;
+			buildPhases = (
+				5DF9DF6E2466165800B2199D /* Sources */,
+				5DF9DF6F2466165800B2199D /* Frameworks */,
+				5DF9DF702466165800B2199D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5DF9DF742466165800B2199D /* PBXTargetDependency */,
+			);
+			name = UPSpellTests;
+			productName = UPSpellTests;
+			productReference = 5DF9DF722466165800B2199D /* UPSpellTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5DF9DF4F2466165700B2199D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = "Up-Games";
+				TargetAttributes = {
+					5DF9DF562466165700B2199D = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
+					5DF9DF712466165800B2199D = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 5DF9DF562466165700B2199D;
+					};
+				};
+			};
+			buildConfigurationList = 5DF9DF522466165700B2199D /* Build configuration list for PBXProject "UPSpell" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5DF9DF4E2466165700B2199D;
+			productRefGroup = 5DF9DF582466165700B2199D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5DF9DF562466165700B2199D /* UPSpell */,
+				5DF9DF712466165800B2199D /* UPSpellTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5DF9DF552466165700B2199D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DF9DF6A2466165800B2199D /* LaunchScreen.storyboard in Resources */,
+				5DF9DF672466165800B2199D /* Assets.xcassets in Resources */,
+				5DF9DF652466165700B2199D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DF9DF702466165800B2199D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5DF9DF532466165700B2199D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DF9DF9724661BC900B2199D /* UPGame.mm in Sources */,
+				5DF9DF9424661B5F00B2199D /* UPTileTray.mm in Sources */,
+				5DF9DF9324661B5F00B2199D /* UPTile.mm in Sources */,
+				5DF9DF622466165700B2199D /* ViewController.mm in Sources */,
+				5DF9DF5C2466165700B2199D /* AppDelegate.m in Sources */,
+				5DF9DF6D2466165800B2199D /* main.m in Sources */,
+				5DF9DF5F2466165700B2199D /* SceneDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DF9DF6E2466165800B2199D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DF9DF772466165800B2199D /* UPSpellTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5DF9DF742466165800B2199D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5DF9DF562466165700B2199D /* UPSpell */;
+			targetProxy = 5DF9DF732466165800B2199D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5DF9DF632466165700B2199D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5DF9DF642466165700B2199D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5DF9DF682466165800B2199D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5DF9DF692466165800B2199D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5DF9DF792466165800B2199D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		5DF9DF7A2466165800B2199D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5DF9DF7C2466165800B2199D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 784YP5V58W;
+				INFOPLIST_FILE = UPSpell/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = games.up.UPSpell;
+				PRODUCT_NAME = "UP Spell";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5DF9DF7D2466165800B2199D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 784YP5V58W;
+				INFOPLIST_FILE = UPSpell/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = games.up.UPSpell;
+				PRODUCT_NAME = "UP Spell";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5DF9DF7F2466165800B2199D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 784YP5V58W;
+				INFOPLIST_FILE = UPSpellTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = games.up.UPSpellTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UPSpell.app/UPSpell";
+			};
+			name = Debug;
+		};
+		5DF9DF802466165800B2199D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 784YP5V58W;
+				INFOPLIST_FILE = UPSpellTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = games.up.UPSpellTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UPSpell.app/UPSpell";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5DF9DF522466165700B2199D /* Build configuration list for PBXProject "UPSpell" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DF9DF792466165800B2199D /* Debug */,
+				5DF9DF7A2466165800B2199D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5DF9DF7B2466165800B2199D /* Build configuration list for PBXNativeTarget "UPSpell" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DF9DF7C2466165800B2199D /* Debug */,
+				5DF9DF7D2466165800B2199D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5DF9DF7E2466165800B2199D /* Build configuration list for PBXNativeTarget "UPSpellTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DF9DF7F2466165800B2199D /* Debug */,
+				5DF9DF802466165800B2199D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5DF9DF4F2466165700B2199D /* Project object */;
+}

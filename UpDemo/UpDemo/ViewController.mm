@@ -23,14 +23,32 @@
 {
     [super viewDidLoad];
 
+    UPLexicon *lexicon = [UPLexicon instanceForLanguage:UPLexiconLanguageEnglish];
+    
+    NSString *word1 = @"foo";
+    NSLog(@"contains: %@", [lexicon containsWord:word1] ? @"Y" : @"N");
+
+    NSString *word2 = @"fooa";
+    NSLog(@"contains: %@", [lexicon containsWord:word2] ? @"Y" : @"N");
+
+    NSArray *initialLetters = [lexicon initialLetters];
+    NSMutableString *string = [NSMutableString string];
+    for (NSNumber *n in initialLetters) {
+        char32_t c = n.intValue;
+        NSString *s = UP::ns_str(c);
+        [string appendString:s];
+        [string appendString:@" "];
+    }
+    NSLog(@"initialLetters: %@", string);
+
 //    self.v1 = [[UPShapeView alloc] initWithFrame:CGRectMake(157.5, 100, 72, 90)];
-    self.v1 = [[UPShapeView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+//    self.v1 = [[UPShapeView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
 //    self.v2 = [[UPShapeView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
 //    self.v3 = [[UPShapeView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
 //    self.v1.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:self.v1];
-    [self.view addSubview:self.v2];
-    [self.view addSubview:self.v3];
+//    [self.view addSubview:self.v1];
+//    [self.view addSubview:self.v2];
+//    [self.view addSubview:self.v3];
   
 //    self.image = [UIImage imageNamed:@"up-games-logo-colorizable"];
 //    self.imageView = [[UIImageView alloc] initWithImage:self.image];
@@ -39,8 +57,8 @@
 
     
 
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleTap:)];
-    [self.view addGestureRecognizer:tap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleTap:)];
+//    [self.view addGestureRecognizer:tap];
 
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        [self colorize];
