@@ -98,6 +98,15 @@
 		5DF9DF432465B35700B2199D /* UPLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF412465B35700B2199D /* UPLexicon.mm */; };
 		5DF9DF452465BA5200B2199D /* UPLexiconTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF442465BA5200B2199D /* UPLexiconTests.m */; };
 		5DF9DF992466412B00B2199D /* UPRandom.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9DF982466412B00B2199D /* UPRandom.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DF9DFA124676B5800B2199D /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DFA024676B5800B2199D /* main.mm */; };
+		5DF9DFA524676B9C00B2199D /* UPLexicon.h in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF402465B35700B2199D /* UPLexicon.h */; };
+		5DF9DFA624676B9C00B2199D /* UPLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF412465B35700B2199D /* UPLexicon.mm */; };
+		5DF9DFA724676B9C00B2199D /* UPLexiconEntry.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF362465AC1800B2199D /* UPLexiconEntry.hpp */; };
+		5DF9DFA824676B9C00B2199D /* UPLexiconNGram.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF302465A78F00B2199D /* UPLexiconNGram.hpp */; };
+		5DF9DFA924676B9C00B2199D /* UPMacros.h in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE0172454CAFC00016047 /* UPMacros.h */; };
+		5DF9DFAA24676B9C00B2199D /* UPRandom.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF982466412B00B2199D /* UPRandom.hpp */; };
+		5DF9DFAB24676B9C00B2199D /* UPStringTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE02B245716F900016047 /* UPStringTools.cpp */; };
+		5DF9DFAC24676B9C00B2199D /* UPStringTools.h in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE02C245716F900016047 /* UPStringTools.h */; };
 		5DFE6212245364C700D9CA0B /* UpKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFE6208245364C700D9CA0B /* UpKit.framework */; };
 		5DFE6219245364C700D9CA0B /* UpKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DFE620B245364C700D9CA0B /* UpKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DFE62262453CFCD00D9CA0B /* UPConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DFE62252453CFCD00D9CA0B /* UPConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -113,6 +122,18 @@
 			remoteInfo = UpKit;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5DF9DF9C24676B5700B2199D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5D269CAF245CDB31000B6A1D /* UIImage+UP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UP.h"; sourceTree = "<group>"; };
@@ -208,6 +229,8 @@
 		5DF9DF412465B35700B2199D /* UPLexicon.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPLexicon.mm; sourceTree = "<group>"; };
 		5DF9DF442465BA5200B2199D /* UPLexiconTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLexiconTests.m; sourceTree = "<group>"; };
 		5DF9DF982466412B00B2199D /* UPRandom.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UPRandom.hpp; sourceTree = "<group>"; };
+		5DF9DF9E24676B5700B2199D /* UPLexiconTool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UPLexiconTool; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DF9DFA024676B5800B2199D /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		5DFE6208245364C700D9CA0B /* UpKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UpKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DFE620B245364C700D9CA0B /* UpKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpKit.h; sourceTree = "<group>"; };
 		5DFE620C245364C700D9CA0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -219,6 +242,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5DF9DF9B24676B5700B2199D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5DFE6205245364C700D9CA0B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -353,11 +383,20 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		5DF9DF9F24676B5800B2199D /* UPLexiconTool */ = {
+			isa = PBXGroup;
+			children = (
+				5DF9DFA024676B5800B2199D /* main.mm */,
+			);
+			path = UPLexiconTool;
+			sourceTree = "<group>";
+		};
 		5DFE61FE245364C700D9CA0B = {
 			isa = PBXGroup;
 			children = (
 				5DFE620A245364C700D9CA0B /* UpKit */,
 				5DFE6215245364C700D9CA0B /* UpKitTests */,
+				5DF9DF9F24676B5800B2199D /* UPLexiconTool */,
 				5DFE6209245364C700D9CA0B /* Products */,
 				5DEBE0142454C77700016047 /* Frameworks */,
 			);
@@ -368,6 +407,7 @@
 			children = (
 				5DFE6208245364C700D9CA0B /* UpKit.framework */,
 				5DFE6211245364C700D9CA0B /* UpKitTests.xctest */,
+				5DF9DF9E24676B5700B2199D /* UPLexiconTool */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -512,6 +552,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		5DF9DF9D24676B5700B2199D /* UPLexiconTool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5DF9DFA424676B5800B2199D /* Build configuration list for PBXNativeTarget "UPLexiconTool" */;
+			buildPhases = (
+				5DF9DF9A24676B5700B2199D /* Sources */,
+				5DF9DF9B24676B5700B2199D /* Frameworks */,
+				5DF9DF9C24676B5700B2199D /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UPLexiconTool;
+			productName = UPLexiconTool;
+			productReference = 5DF9DF9E24676B5700B2199D /* UPLexiconTool */;
+			productType = "com.apple.product-type.tool";
+		};
 		5DFE6207245364C700D9CA0B /* UpKit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5DFE621C245364C700D9CA0B /* Build configuration list for PBXNativeTarget "UpKit" */;
@@ -558,6 +615,9 @@
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Up Games";
 				TargetAttributes = {
+					5DF9DF9D24676B5700B2199D = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
 					5DFE6207245364C700D9CA0B = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -581,6 +641,7 @@
 			targets = (
 				5DFE6207245364C700D9CA0B /* UpKit */,
 				5DFE6210245364C700D9CA0B /* UpKitTests */,
+				5DF9DF9D24676B5700B2199D /* UPLexiconTool */,
 			);
 		};
 /* End PBXProject section */
@@ -605,6 +666,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5DF9DF9A24676B5700B2199D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DF9DFA524676B9C00B2199D /* UPLexicon.h in Sources */,
+				5DF9DFA624676B9C00B2199D /* UPLexicon.mm in Sources */,
+				5DF9DFA724676B9C00B2199D /* UPLexiconEntry.hpp in Sources */,
+				5DF9DFA824676B9C00B2199D /* UPLexiconNGram.hpp in Sources */,
+				5DF9DFA924676B9C00B2199D /* UPMacros.h in Sources */,
+				5DF9DFAA24676B9C00B2199D /* UPRandom.hpp in Sources */,
+				5DF9DFAB24676B9C00B2199D /* UPStringTools.cpp in Sources */,
+				5DF9DFAC24676B9C00B2199D /* UPStringTools.h in Sources */,
+				5DF9DFA124676B5800B2199D /* main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5DFE6204245364C700D9CA0B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -663,6 +740,30 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5DF9DFA224676B5800B2199D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 784YP5V58W;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5DF9DFA324676B5800B2199D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 784YP5V58W;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		5DFE621A245364C700D9CA0B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -873,6 +974,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5DF9DFA424676B5800B2199D /* Build configuration list for PBXNativeTarget "UPLexiconTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DF9DFA224676B5800B2199D /* Debug */,
+				5DF9DFA324676B5800B2199D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5DFE6202245364C700D9CA0B /* Build configuration list for PBXProject "UpKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

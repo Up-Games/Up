@@ -44,6 +44,13 @@ public:
         return (uint_32() % (lt_hi - gte_lo)) + gte_lo;
     }
 
+    uint32_t uint32_in_range(uint32_t gte_lo, uint32_t lte_hi) {
+        if (gte_lo >= lte_hi) {
+            return gte_lo;
+        }
+        return (uint_32() % (lte_hi - gte_lo + 1)) + gte_lo;
+    }
+
     float unit() {
         return (float)uint_32() / std::numeric_limits<uint32_t>::max();
     }

@@ -29,7 +29,11 @@ namespace UP {
 
 class Lexicon {
 public:
-    enum { TopEntriesCount = 2000 };
+    enum {
+        TopBigramsCount = 250,
+        TopTrigramsCount = 1000,
+        TopQuadgramsCount = 2000,
+    };
 
     Lexicon() {}
     Lexicon(const std::string &words_file_path, const std::string &metadata_file_path = "");

@@ -32,7 +32,7 @@ template <class T> bool operator<(const LexiconEntry<T> &a, const LexiconEntry<T
 }
 
 template <class T> inline std::ostream &operator<<(std::ostream &os, const LexiconEntry<T> &e) {
-    return os << e.datum << ") " << e.count << ": " << e.frequency;
+    return os << e.datum << ") " << e.frequency;
 }
 
 template <class T> using LexiconEntryVector = std::vector<LexiconEntry<T>>;
@@ -52,11 +52,12 @@ template <class T> LexiconEntryVector<T> top_entries(const std::set<LexiconEntry
 }
 
 template <class T> void to_json(nlohmann::json &j, const LexiconEntry<T> &e) {
-    j = nlohmann::json{{"d", e.datum}, {"f", e.frequency}};
+    j = nlohmann::json{{"d", e.datum}, {"c", e.count}, {"f", e.frequency}};
 }
 
 template <class T> void from_json(const nlohmann::json &j, LexiconEntry<T> &e) {
     j.at("d").get_to(e.datum);
+    j.at("c").get_to(e.count);
     j.at("f").get_to(e.frequency);
 }
 

@@ -11,10 +11,31 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
 @end
 
 @implementation ViewController
+
+- (void)printTiles:(UPTileTray *)tray
+{
+    NSMutableString *string = [NSMutableString string];
+    for (size_t idx = 0; idx < UP::TileCount; idx++) {
+        UPTile *tile = [tray tileAtIndex:idx];
+        NSString *s = UP::ns_str(tile.glyph);
+        [string appendString:s];
+        [string appendString:@" "];
+    }
+    NSLog(@"tray: %@", string);
+}
+
+- (void)markRandom:(UPTileTray *)tray
+{
+    uint32_t marks = UP::Random::gameplay_instance().uint32_in_range(3, 7);
+    NSLog(@"mark: %d", marks);
+    while ([tray countMarked] < marks) {
+        uint32_t m = UP::Random::gameplay_instance().uint32_between(0, 7);
+        [tray markAtIndex:m];
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -25,56 +46,20 @@
     UP::Random::gameplay_instance().seed({seed});
 
     UPTileTray *tray = [[UPTileTray alloc] init];
+
+    [tray markAll];
+    [tray sentinelizeMarked];
+    [tray fill];
+    [self printTiles:tray];
     
-    for (int i = 0; i < 20; i++) {
-        [tray markAll];
+    for (int idx = 0; idx < 20; idx++) {
+        [self markRandom:tray];
         [tray sentinelizeMarked];
         [tray fill];
-
-        NSMutableString *string = [NSMutableString string];
-        for (size_t idx = 0; idx < UP::TileCount; idx++) {
-            UPTile *tile = [tray tileAtIndex:idx];
-            NSString *s = UP::ns_str(tile.glyph);
-            [string appendString:s];
-            [string appendString:@" "];
-        }
-        NSLog(@"tray [%2d]: %@", i, string);
+        [self printTiles:tray];
     }
+    
 }
 
 
 @end
-
-#if 0
-std::vector<char32_t> Lexicon::initial_letters() const
-{
-    std::vector<char32_t> result;
-    switch (random_int_less_than(10)) {
-        default:
-        case 0: {
-            random_bigram().add_to(result);
-            random_bigram().add_to(result);
-            random_bigram().add_to(result);
-            result.push_back(random_letter());
-            break;
-        }
-        case 1: {
-            random_trigram().add_to(result);
-            random_bigram().add_to(result);
-            random_bigram().add_to(result);
-            break;
-        }
-    }
-    return result;
-}
-- (NSArray *)initialLetters
-{
-    NSMutableArray *result = [NSMutableArray array];
-    std::vector v = inner->initial_letters();
-    for (const auto c : v) {
-        [result addObject:@(uint32_t(c))];
-    }
-    return result;
-}
-
-#endif

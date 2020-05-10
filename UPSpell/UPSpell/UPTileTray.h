@@ -17,6 +17,7 @@
 - (void)markAll;
 - (void)unmarkAll;
 - (void)sentinelizeMarked;
+- (size_t)countMarked;
 
 @end
 

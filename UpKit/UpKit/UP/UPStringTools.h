@@ -6,11 +6,7 @@
 #ifndef UP_STRING_TOOLS_H
 #define UP_STRING_TOOLS_H
 
-#ifndef UP_STANDALONE_HEADER
 #import <UPKit/UPMacros.h>
-#else
-#import "UPMacros.h"
-#endif
 
 #if __OBJC__
 #import <Foundation/Foundation.h>

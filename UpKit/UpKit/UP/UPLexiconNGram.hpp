@@ -9,9 +9,9 @@
 #import <iostream>
 #import <string>
 
-#import "UPRandom.hpp"
-#import "UPStringTools.h"
-#import "json.hpp"
+#import <UpKit/UPRandom.hpp>
+#import <UpKit/UPStringTools.h>
+#import <UpKit/json.hpp>
 
 namespace UP {
 
@@ -34,9 +34,10 @@ template <size_t S> struct LexiconNGram
     }
 
     LexiconNGram shuffled() const {
-        LexiconNGram s = *this;
-        std::shuffle(s.text.begin(), s.text.end(), Random::gameplay_instance().g());
-        return s;
+        return *this;
+//        LexiconNGram s = *this;
+//        std::shuffle(s.text.begin(), s.text.end(), Random::gameplay_instance().g());
+//        return s;
     }
 
     void push_back(char32_t c) {
@@ -89,7 +90,7 @@ template <size_t S> bool operator<(const LexiconNGram<S> &a, const LexiconNGram<
 }
 
 template <size_t S> std::ostream &operator<<(std::ostream &os, const LexiconNGram<S> &n) {
-    return os << n.text;
+    return os << cpp_str(n.text);
 }
 
 } // namescape UP

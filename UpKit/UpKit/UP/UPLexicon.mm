@@ -139,23 +139,20 @@ bool Lexicon::load_frequencies()
 
     auto bv = j["top_bigrams"];
     for (auto e : bv) {
-        auto entry = e.get<LexiconEntry<Bigram>>();
-        m_top_bigrams.push_back(entry);
-        m_top_bigrams_sum += entry.frequency;
+        m_top_bigrams.push_back(e.get<LexiconEntry<Bigram>>());
+        m_top_bigrams_sum += m_top_bigrams.back().frequency;
     }
 
     auto tv = j["top_trigrams"];
     for (auto e : tv) {
-        auto entry = e.get<LexiconEntry<Trigram>>();
-        m_top_trigrams.push_back(entry);
-        m_top_trigrams_sum += entry.frequency;
+        m_top_trigrams.push_back(e.get<LexiconEntry<Trigram>>());
+        m_top_trigrams_sum += m_top_trigrams.back().frequency;
     }
 
     auto qv = j["top_quadgrams"];
     for (auto e : qv) {
-        auto entry = e.get<LexiconEntry<Quadgram>>();
-        m_top_quadgrams.push_back(entry);
-        m_top_quadgrams_sum += entry.frequency;
+        m_top_quadgrams.push_back(e.get<LexiconEntry<Quadgram>>());
+        m_top_quadgrams_sum += m_top_quadgrams.back().frequency;
     }
 
     return true;
@@ -269,7 +266,7 @@ void Lexicon::calculate_frequencies()
     for (auto &entry : bigram_frequencies) {
         entry.frequency = (float)entry.count / total_bigrams;
     }
-    m_top_bigrams = top_entries(bigram_frequencies, TopEntriesCount);
+    m_top_bigrams = top_entries(bigram_frequencies, TopBigramsCount);
     m_top_bigrams_sum = 0;
     for (const auto &entry : m_top_bigrams) {
         m_top_bigrams_sum += entry.frequency;
@@ -283,7 +280,7 @@ void Lexicon::calculate_frequencies()
     for (auto &entry : trigram_frequencies) {
         entry.frequency = (float)entry.count / total_trigrams;
     }
-    m_top_trigrams = top_entries(trigram_frequencies, TopEntriesCount);
+    m_top_trigrams = top_entries(trigram_frequencies, TopTrigramsCount);
     m_top_trigrams_sum = 0;
     for (const auto &entry : m_top_trigrams) {
         m_top_trigrams_sum += entry.frequency;
@@ -297,7 +294,7 @@ void Lexicon::calculate_frequencies()
     for (auto &entry : quadgram_frequencies) {
         entry.frequency = (float)entry.count / total_quadgrams;
     }
-    m_top_quadgrams = top_entries(quadgram_frequencies, TopEntriesCount);
+    m_top_quadgrams = top_entries(quadgram_frequencies, TopQuadgramsCount);
     m_top_quadgrams_sum = 0;
     for (const auto &entry : m_top_quadgrams) {
         m_top_quadgrams_sum += entry.frequency;

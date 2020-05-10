@@ -18,13 +18,32 @@ using UP::MarkedArray;
 
 static bool accept_tile_array(const TileArray &tiles)
 {
+    // ensure there are between two and five vowels
+    // ensure that if there's a 'Q', there's also a 'U'
     int vowel_count = 0;
+    bool has_q = false;
+    bool has_u = false;
     for (const auto &tile : tiles) {
         if (Lexicon::is_vowel(tile.glyph())) {
             vowel_count++;
         }
+        if (tile.glyph() == U'Q') {
+            has_q = true;
+        }
+        else if (tile.glyph() == U'U') {
+            has_u = true;
+        }
     }
-    return vowel_count >= 1 && vowel_count <= 5;
+    
+    if (vowel_count < 1 || vowel_count > 5) {
+        return false;
+    }
+    
+    if (has_q && !has_u) {
+        return false;
+    }
+    
+    return true;
 }
 
 template <class N>
@@ -215,15 +234,11 @@ static void sentinelize_marked(TileArray &tiles, const MarkedArray &marked)
 {
     Lexicon &lexicon = Game::instance().lexicon();
     Random &random = Random::gameplay_instance();
-    size_t count = 0;
-    for (const auto &mark : m_marked) {
-        if (mark) {
-            count++;
-        }
-    }
-    sentinelize_marked(m_tiles, m_marked);
+
+    size_t count = [self countMarked];
 
     while (1) {
+        sentinelize_marked(m_tiles, m_marked);
         switch (count) {
             case 2:
                 fill_two(m_tiles, random, lexicon);
@@ -281,6 +296,17 @@ static void sentinelize_marked(TileArray &tiles, const MarkedArray &marked)
         }
         idx++;
     }
+}
+
+- (size_t)countMarked
+{
+    size_t count = 0;
+    for (const auto &mark : m_marked) {
+        if (mark) {
+            count++;
+        }
+    }
+    return count;
 }
 
 @end
