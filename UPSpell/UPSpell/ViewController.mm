@@ -41,23 +41,31 @@
 {
     [super viewDidLoad];
 
-    int seed = CFAbsoluteTimeGetCurrent();
-    NSLog(@"seed: %d", seed);
-    UP::Random::gameplay_instance().seed({seed});
+    UP::Random rng = UP::Random::general_instance();
 
-    UPTileTray *tray = [[UPTileTray alloc] init];
+//    UP::GameCode code1("upm-1000");
+    UP::GameCode code1 = UP::GameCode::random();
+    NSLog(@"code1: %s", code1.string().c_str());
+    NSLog(@"code1: %d", code1.value());
+    NSLog(@"code1: %s", UP::GameCode(code1.value()).string().c_str());
 
-    [tray markAll];
-    [tray sentinelizeMarked];
-    [tray fill];
-    [self printTiles:tray];
-    
-    for (int idx = 0; idx < 20; idx++) {
-        [self markRandom:tray];
-        [tray sentinelizeMarked];
-        [tray fill];
-        [self printTiles:tray];
-    }
+//    int seed = CFAbsoluteTimeGetCurrent();
+//    NSLog(@"seed: %d", seed);
+//    UP::Random::gameplay_instance().seed({seed});
+//
+//    UPTileTray *tray = [[UPTileTray alloc] init];
+//
+//    [tray markAll];
+//    [tray sentinelizeMarked];
+//    [tray fill];
+//    [self printTiles:tray];
+//
+//    for (int idx = 0; idx < 20; idx++) {
+//        [self markRandom:tray];
+//        [tray sentinelizeMarked];
+//        [tray fill];
+//        [self printTiles:tray];
+//    }
     
 }
 

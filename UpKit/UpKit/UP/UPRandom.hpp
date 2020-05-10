@@ -7,7 +7,9 @@
 #define UP_RANDOM_HPP
 
 #import <limits>
+#import <mutex>
 #import <random>
+#import <iostream>
 
 namespace UP {
 
@@ -23,6 +25,12 @@ public:
 
     static Random &general_instance() {
         static Random r;
+        static std::once_flag flag1;
+        std::call_once(flag1, [](){
+            std::uniform_int_distribution<int> dist(0, 2047);
+            std::random_device rd;
+            r.seed({ dist(rd), dist(rd), dist(rd) });
+        });
         return r;
     }
 
