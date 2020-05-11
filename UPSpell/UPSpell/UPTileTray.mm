@@ -39,7 +39,7 @@ static void sentinelize_marked(TileArray &tiles, const MarkedArray &marked)
 - (UPTile *)tileAtIndex:(size_t)index
 {
     const auto tile = m_tiles[index];
-    return [UPTile tileWithGlyph:tile.glyph() score:tile.score() multiplier:tile.multiplier()];
+    return [UPTile tileWithGlyph:tile.glyph() multiplier:tile.multiplier()];
 }
 
 - (void)fill
@@ -77,13 +77,7 @@ static void sentinelize_marked(TileArray &tiles, const MarkedArray &marked)
 
 - (void)sentinelizeMarked
 {
-    size_t idx = 0;
-    for (const auto &mark : m_marked) {
-        if (mark) {
-            m_tiles[idx] = UP::Tile::sentinel();
-        }
-        idx++;
-    }
+    sentinelize_marked(m_tiles, m_marked);
 }
 
 - (size_t)countMarked

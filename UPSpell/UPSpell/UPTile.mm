@@ -13,17 +13,15 @@
 
 @implementation UPTile
 
-+ (UPTile *)tileWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier
++ (UPTile *)tileWithGlyph:(char32_t)glyph multiplier:(int)multiplier
 {
-    return [[UPTile alloc] initWithGlyph:glyph score:score multiplier:multiplier];
+    return [[UPTile alloc] initWithGlyph:glyph multiplier:multiplier];
 }
 
-- (instancetype)initWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier
+- (instancetype)initWithGlyph:(char32_t)glyph multiplier:(int)multiplier
 {
     self = [super init];
-    
-    inner = UP::Tile(glyph, score, multiplier);
-    
+    inner = UP::Tile(glyph, multiplier);
     return self;
 }
 
