@@ -1,19 +1,19 @@
 //
-//  UPLexicon.hpp
+//  UPLexicon.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_LEXICON_HPP
-#define UP_LEXICON_HPP
+#ifndef UP_LEXICON_H
+#define UP_LEXICON_H
 
-#if __cplusplus
+#ifdef __cplusplus
 
 #import <mutex>
 #import <string>
 #import <unordered_set>
 #import <vector>
 
-#import <UpKit/UPRandom.hpp>
+#import <UpKit/UPRandom.h>
 
 typedef enum {
     UPLexiconLanguageEnglish,
@@ -52,4 +52,4 @@ private:
 
 #endif  // __cplusplus
 
-#endif  // UP_LEXICON_HPP
+#endif  // UP_LEXICON_H

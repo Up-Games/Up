@@ -1,10 +1,10 @@
 //
-//  UPLetterSequence.hpp
+//  UPLetterSequence.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_LETTER_SEQUENCE_HPP
-#define UP_LETTER_SEQUENCE_HPP
+#ifndef UP_LETTER_SEQUENCE_H
+#define UP_LETTER_SEQUENCE_H
 
 #if __cplusplus
 
@@ -12,9 +12,9 @@
 #import <iostream>
 #import <vector>
 
-#import <UpKit/UPLexicon.hpp>
 #import <UpKit/UPGameCode.h>
-#import <UpKit/UPRandom.hpp>
+#import <UpKit/UPLexicon.h>
+#import <UpKit/UPRandom.h>
 #import <UpKit/UPStringTools.h>
 
 namespace UP {
@@ -64,4 +64,4 @@ private:
 
 #endif  // __cplusplus
 
-#endif  // UP_LETTER_SEQUENCE_HPP
+#endif  // UP_LETTER_SEQUENCE_H

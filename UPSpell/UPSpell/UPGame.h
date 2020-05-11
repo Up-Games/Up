@@ -3,11 +3,11 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#if __OBJC__
+#ifdef __OBJC__
 #import <Foundation/Foundation.h>
 #endif  // __OBJC__
 
-#if __cplusplus
+#ifdef __cplusplus
 
 #import <UpKit/UpKit.h>
 
@@ -43,7 +43,7 @@ private:
 
 #endif  // __cplusplus
 
-#if __OBJC__
+#ifdef __OBJC__
 
 @class UPLexicon;
 

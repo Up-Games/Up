@@ -11,7 +11,7 @@ using namespace UP;
 
 int main()
 {
-    Lexicon lex = Lexicon("en-lexicon.txt", "en-lexicon.json");
+    //Lexicon lex = Lexicon("en-lexicon.txt", "en-lexicon.json");
 
     return 0;
 }

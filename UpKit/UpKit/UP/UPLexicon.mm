@@ -7,8 +7,8 @@
 #import <sstream>
 #import <ios>
 
-#import "UPLexicon.hpp"
-#import "UPRandom.hpp"
+#import "UPLexicon.h"
+#import "UPRandom.h"
 #import "UPStringTools.h"
 
 const size_t UPLexiconLanguageCount = 1;

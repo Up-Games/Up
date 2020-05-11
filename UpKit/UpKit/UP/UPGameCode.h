@@ -12,7 +12,7 @@
 #import <string>
 
 #import <UPKit/UPMacros.h>
-#import <UPKit/UPRandom.hpp>
+#import <UPKit/UPRandom.h>
 
 namespace UP {
 

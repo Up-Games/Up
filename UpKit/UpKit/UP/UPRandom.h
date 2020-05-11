@@ -1,10 +1,10 @@
 //
-//  UPRandom.hpp
+//  UPRandom.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_RANDOM_HPP
-#define UP_RANDOM_HPP
+#ifndef UP_RANDOM_H
+#define UP_RANDOM_H
 
 #if __cplusplus
 
@@ -83,4 +83,4 @@ private:
 
 #endif  // __cplusplus
 
-#endif // UP_RANDOM_HPP
+#endif // UP_RANDOM_H
