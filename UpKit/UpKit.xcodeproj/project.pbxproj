@@ -93,10 +93,7 @@
 		5DF8A8E72454892C00751E2E /* UPUnitFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF8A8E52454892B00751E2E /* UPUnitFunction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8A8E62454892C00751E2E /* UPUnitFunction.mm */; };
 		5DF8A8EC24548D9700751E2E /* UPUnitFunctionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.m */; };
-		5DF9DF312465A78F00B2199D /* UPLexiconNGram.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9DF302465A78F00B2199D /* UPLexiconNGram.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF9DF342465A83100B2199D /* json.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9DF332465A83100B2199D /* json.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DF9DF392465AC1800B2199D /* UPLexiconEntry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9DF362465AC1800B2199D /* UPLexiconEntry.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DF9DF3E2465B0BE00B2199D /* en-lexicon.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DF9DF3C2465B0BE00B2199D /* en-lexicon.json */; };
 		5DF9DF3F2465B0BE00B2199D /* en-lexicon.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5DF9DF3D2465B0BE00B2199D /* en-lexicon.txt */; };
 		5DF9DF422465B35700B2199D /* UPLexicon.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9DF402465B35700B2199D /* UPLexicon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF9DF432465B35700B2199D /* UPLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF412465B35700B2199D /* UPLexicon.mm */; };
@@ -105,8 +102,6 @@
 		5DF9DFA124676B5800B2199D /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DFA024676B5800B2199D /* main.mm */; };
 		5DF9DFA524676B9C00B2199D /* UPLexicon.h in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF402465B35700B2199D /* UPLexicon.h */; };
 		5DF9DFA624676B9C00B2199D /* UPLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF412465B35700B2199D /* UPLexicon.mm */; };
-		5DF9DFA724676B9C00B2199D /* UPLexiconEntry.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF362465AC1800B2199D /* UPLexiconEntry.hpp */; };
-		5DF9DFA824676B9C00B2199D /* UPLexiconNGram.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF302465A78F00B2199D /* UPLexiconNGram.hpp */; };
 		5DF9DFA924676B9C00B2199D /* UPMacros.h in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE0172454CAFC00016047 /* UPMacros.h */; };
 		5DF9DFAA24676B9C00B2199D /* UPRandom.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF982466412B00B2199D /* UPRandom.hpp */; };
 		5DF9DFAB24676B9C00B2199D /* UPStringTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE02B245716F900016047 /* UPStringTools.cpp */; };
@@ -228,10 +223,7 @@
 		5DF8A8E52454892B00751E2E /* UPUnitFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPUnitFunction.h; sourceTree = "<group>"; };
 		5DF8A8E62454892C00751E2E /* UPUnitFunction.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPUnitFunction.mm; sourceTree = "<group>"; };
 		5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPUnitFunctionTests.m; sourceTree = "<group>"; };
-		5DF9DF302465A78F00B2199D /* UPLexiconNGram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UPLexiconNGram.hpp; sourceTree = "<group>"; };
 		5DF9DF332465A83100B2199D /* json.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = json.hpp; sourceTree = "<group>"; };
-		5DF9DF362465AC1800B2199D /* UPLexiconEntry.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UPLexiconEntry.hpp; sourceTree = "<group>"; };
-		5DF9DF3C2465B0BE00B2199D /* en-lexicon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "en-lexicon.json"; sourceTree = "<group>"; };
 		5DF9DF3D2465B0BE00B2199D /* en-lexicon.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "en-lexicon.txt"; sourceTree = "<group>"; };
 		5DF9DF402465B35700B2199D /* UPLexicon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLexicon.h; sourceTree = "<group>"; };
 		5DF9DF412465B35700B2199D /* UPLexicon.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPLexicon.mm; sourceTree = "<group>"; };
@@ -385,7 +377,6 @@
 		5DF9DF3B2465B09E00B2199D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5DF9DF3C2465B0BE00B2199D /* en-lexicon.json */,
 				5DF9DF3D2465B0BE00B2199D /* en-lexicon.txt */,
 			);
 			path = Resources;
@@ -468,8 +459,6 @@
 				5DA4CF1A24687F55006AE391 /* UPLetterSequence.hpp */,
 				5DF9DF402465B35700B2199D /* UPLexicon.h */,
 				5DF9DF412465B35700B2199D /* UPLexicon.mm */,
-				5DF9DF362465AC1800B2199D /* UPLexiconEntry.hpp */,
-				5DF9DF302465A78F00B2199D /* UPLexiconNGram.hpp */,
 				5DEBE0172454CAFC00016047 /* UPMacros.h */,
 				5DFE62272453D11100D9CA0B /* UPMath.h */,
 				5DF9DF982466412B00B2199D /* UPRandom.hpp */,
@@ -503,7 +492,6 @@
 			files = (
 				5D2CABA7245A10CB00B81332 /* TransformationMatrix.h in Headers */,
 				5DF9DF422465B35700B2199D /* UPLexicon.h in Headers */,
-				5DF9DF312465A78F00B2199D /* UPLexiconNGram.hpp in Headers */,
 				5D2CAC07245A13E700B81332 /* POPSpringAnimationInternal.h in Headers */,
 				5DD71DA32458F39200F3F9E2 /* UPAny.hpp in Headers */,
 				5DEBE02E245716F900016047 /* UPStringTools.h in Headers */,
@@ -519,7 +507,6 @@
 				5D269CB1245CDB31000B6A1D /* UIImage+UP.h in Headers */,
 				5D2CABF8245A13E700B81332 /* POPAnimationTracerInternal.h in Headers */,
 				5DD71D9C2457AFB200F3F9E2 /* UPShapeView.h in Headers */,
-				5DF9DF392465AC1800B2199D /* UPLexiconEntry.hpp in Headers */,
 				5D2CABF1245A13E700B81332 /* POPAnimationExtras.h in Headers */,
 				5D2CAC03245A13E700B81332 /* POPCustomAnimation.h in Headers */,
 				5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */,
@@ -666,7 +653,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DF9DF3F2465B0BE00B2199D /* en-lexicon.txt in Resources */,
-				5DF9DF3E2465B0BE00B2199D /* en-lexicon.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,8 +672,6 @@
 			files = (
 				5DF9DFA524676B9C00B2199D /* UPLexicon.h in Sources */,
 				5DF9DFA624676B9C00B2199D /* UPLexicon.mm in Sources */,
-				5DF9DFA724676B9C00B2199D /* UPLexiconEntry.hpp in Sources */,
-				5DF9DFA824676B9C00B2199D /* UPLexiconNGram.hpp in Sources */,
 				5DF9DFA924676B9C00B2199D /* UPMacros.h in Sources */,
 				5DF9DFAA24676B9C00B2199D /* UPRandom.hpp in Sources */,
 				5DF9DFAB24676B9C00B2199D /* UPStringTools.cpp in Sources */,

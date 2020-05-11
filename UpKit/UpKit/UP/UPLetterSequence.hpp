@@ -11,9 +11,9 @@
 #import <vector>
 
 #import <UpKit/UPLexicon.h>
-#import <UpKit/UPLexiconNGram.hpp>
 #import <UpKit/UPGameCode.h>
 #import <UpKit/UPRandom.hpp>
+#import <UpKit/UPStringTools.h>
 
 namespace UP {
     
