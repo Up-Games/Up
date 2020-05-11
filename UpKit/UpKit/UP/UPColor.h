@@ -1,10 +1,10 @@
 //
-//  UPColor.hpp
+//  UPColor.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_COLOR_HPP
-#define UP_COLOR_HPP
+#ifndef UP_COLOR_H
+#define UP_COLOR_H
 
 #include <UpKit/UPMath.h>
 #include <UpKit/UPTypes.h>

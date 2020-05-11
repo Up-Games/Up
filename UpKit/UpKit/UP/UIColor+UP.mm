@@ -1,10 +1,10 @@
 //
-//  UIColor+UP.m
+//  UIColor+UP.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
 #import "UIColor+UP.h"
-#import "UPColor.hpp"
+#import "UPColor.h"
 
 using UP::RGBF;
 using UP::HSVF;
