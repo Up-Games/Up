@@ -3,9 +3,9 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <mutex>
 #import <random>
-#import <sstream>
-#import <ios>
+#import <string>
 
 #import "UPLexicon.h"
 #import "UPRandom.h"
@@ -53,7 +53,7 @@ void Lexicon::set_language(UPLexiconLanguage language)
         NSLog(@"*** error reading lexicon: %@", error.localizedDescription);
     }
     else {
-        g_instance = new Lexicon(cpp_str(contents));
+        g_instance = new Lexicon(cpp_u32str(contents));
         g_language = language;
     }
 }
@@ -63,22 +63,33 @@ Lexicon &Lexicon::instance()
     return *g_instance;
 }
 
-Lexicon::Lexicon(const std::string &contents)
+Lexicon::Lexicon(std::u32string &&contents) : m_contents(std::move(contents))
 {
-    if (contents.length() == 0) {
+    if (m_contents.length() == 0) {
         return;
     }
-    std::istringstream iss(contents);
-    for (std::string line; std::getline(iss, line); ) {
-        std::u32string word(cpp_u32str(line));
-        m_words.insert(word);
-        m_word_list.push_back(word);
+    static constexpr char32_t newline = U'\n';
+    static constexpr char32_t colon = U':';
+    const char32_t *ptr = m_contents.data();
+    size_t start = 0;
+    std::u32string_view key;
+    for (size_t count = 0; count < m_contents.length(); count++) {
+        char32_t c = m_contents[count];
+        if (c == colon) {
+            key = std::u32string_view(ptr + start, count - start);
+            start = count + 1;
+        }
+        else if (c == newline) {
+            std::u32string_view word(ptr + start, count - start);
+            if (key.length() == 0) {
+                key = word;
+            }
+            start = count + 1;
+            m_lookup.emplace(key, word);
+            m_keys.push_back(key);
+            key = std::u32string_view();
+        }
     }
-}
-
-bool Lexicon::contains(const std::u32string &word)
-{
-    return m_words.find(word) != m_words.end();
 }
 
 bool Lexicon::is_vowel(char32_t c) {
@@ -91,12 +102,6 @@ bool Lexicon::is_vowel(char32_t c) {
             return true;
     }
     return false;
-}
-
-std::u32string Lexicon::random_word(Random &r) const
-{
-    uint32_t idx = r.uint32_between(0, (uint32_t)m_words.size());
-    return m_word_list[idx];
 }
 
 } // namespace UP

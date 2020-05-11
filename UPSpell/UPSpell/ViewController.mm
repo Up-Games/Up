@@ -45,6 +45,9 @@ using UP::GameCode;
     [super viewDidLoad];
 
 //    UP::Random rng = UP::Random::general_instance();
+//    for (int i = 0; i < 100; i++) {
+//        NSLog(@"%d", rng.uint32_between(1, 4));
+//    }
 
     GameCode code = GameCode::random();
 //    GameCode code = GameCode("WPQ-2701");

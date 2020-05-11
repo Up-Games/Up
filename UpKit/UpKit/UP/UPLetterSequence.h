@@ -50,10 +50,10 @@ private:
         auto &lexicon = Lexicon::instance();
         auto &random = Random::gameplay_instance();
         
-        std::u32string word = lexicon.random_word(random);
-        std::cout << "w: " << cpp_str(word) << std::endl;
-        std::shuffle(word.begin(), word.end(), random.g());
-        std::copy(word.begin(), word.end(), std::back_inserter(m_letters));
+        std::u32string key = lexicon.random_key(random);
+        std::cout << "w: " << cpp_str(key) << std::endl;
+        std::shuffle(key.begin(), key.end(), random.g());
+        std::copy(key.begin(), key.end(), std::back_inserter(m_letters));
     }
 
     GameCode m_game_code;

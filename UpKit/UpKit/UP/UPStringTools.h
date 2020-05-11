@@ -31,6 +31,9 @@ UP_STATIC_INLINE std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> &ut
 UP_STATIC_INLINE std::string cpp_str(const std::u32string &str) {
     return utf8_char32_conv().to_bytes(str);
 }
+UP_STATIC_INLINE std::string cpp_str(const std::u32string_view &str) {
+    return cpp_str(std::u32string(str));
+}
 UP_STATIC_INLINE std::u32string cpp_u32str(const std::string &str) {
     return utf8_char32_conv().from_bytes(str);
 }
