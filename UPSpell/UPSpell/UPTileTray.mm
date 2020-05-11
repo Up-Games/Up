@@ -3,7 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#import <UpKit/UPLexicon.h>
+#import <UpKit/UPLexicon.hpp>
 #import <UpKit/UPRandom.hpp>
 
 #import "UPGame.h"

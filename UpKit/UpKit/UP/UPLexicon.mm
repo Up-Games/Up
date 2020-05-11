@@ -3,24 +3,23 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#import "UPLexicon.h"
-#import "UPStringTools.h"
-
-#if __cplusplus
-
 #import <random>
 #import <sstream>
 #import <ios>
 
-#import "UPLexicon.h"
+#import "UPLexicon.hpp"
 #import "UPRandom.hpp"
 #import "UPStringTools.h"
 
-const NSUInteger UPLexiconLanguageCount = 1;
+const size_t UPLexiconLanguageCount = 1;
+
+// A class to help NSBundle find us.
+@interface UPLexiconDummy : NSObject
+@end
+@implementation UPLexiconDummy
+@end
 
 namespace UP {
-
-std::mutex Lexicon::g_mutex;
 
 static NSString *lexicon_file_name(UPLexiconLanguage language)
 {
@@ -30,16 +29,22 @@ static NSString *lexicon_file_name(UPLexiconLanguage language)
     }
 }
 
-static Lexicon *_Instance;
+static Lexicon *g_instance;
+static UPLexiconLanguage g_language;
+static std::mutex g_mutex;
 
 void Lexicon::set_language(UPLexiconLanguage language)
 {
-    std::lock_guard<std::mutex> guard(Lexicon::g_mutex);
-    if (_Instance) {
-        delete _Instance;
-        _Instance = nullptr;
+    std::lock_guard<std::mutex> guard(g_mutex);
+    bool has_instance = (g_instance != nullptr);
+    if (has_instance && g_language == language) {
+        return;
     }
-    NSBundle *upkitBundle = [NSBundle bundleForClass:[UPLexicon class]];
+    if (has_instance) {
+        delete g_instance;
+        g_instance = nullptr;
+    }
+    NSBundle *upkitBundle = [NSBundle bundleForClass:[UPLexiconDummy class]];
     NSString *fileName = lexicon_file_name(language);
     NSString *wordsFilePath = [upkitBundle pathForResource:fileName ofType:@"txt"];
     NSError *error;
@@ -48,13 +53,14 @@ void Lexicon::set_language(UPLexiconLanguage language)
         NSLog(@"*** error reading lexicon: %@", error.localizedDescription);
     }
     else {
-        _Instance = new Lexicon(cpp_str(contents));
+        g_instance = new Lexicon(cpp_str(contents));
+        g_language = language;
     }
 }
 
 Lexicon &Lexicon::instance()
 {
-    return *_Instance;
+    return *g_instance;
 }
 
 Lexicon::Lexicon(const std::string &contents)
@@ -94,32 +100,3 @@ std::u32string Lexicon::random_word(Random &r) const
 }
 
 } // namespace UP
-
-#endif  // __cplusplus
-
-// =========================================================================================================================================
-
-@interface UPLexicon ()
-@end
-
-@implementation UPLexicon
-
-//+ (UPLexicon *)instanceForLanguage:(UPLexiconLanguage)language
-//{
-//    return [[UPLexicon alloc] initForLanguage:language];
-//}
-//
-//- (instancetype)initForLanguage:(UPLexiconLanguage)language
-//{
-//    self = [super init];
-//    self.language = language;
-//    return self;
-//}
-//
-//- (BOOL)containsWord:(NSString *)word
-//{
-//    UP::Lexicon &lexicon = UP::Lexicon::instance_for_language(self.language);
-//    return lexicon.contains(UP::cpp_u32str(word));
-//}
-
-@end

@@ -16,7 +16,6 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPGameCode.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPLayoutRule.h>
-#import <UpKit/UPLexicon.h>
 #import <UpKit/UPMath.h>
 #import <UpKit/UPShapeView.h>
 #import <UpKit/UPStringTools.h>
@@ -30,8 +29,7 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 
 #import <UpKit/POP.h>
 
-#if __cplusplus
 #import <UpKit/UPLetterSequence.hpp>
+#import <UpKit/UPLexicon.hpp>
 #import <UpKit/UPRandom.hpp>
 #import <UpKit/json.hpp>
-#endif  // __cplusplus

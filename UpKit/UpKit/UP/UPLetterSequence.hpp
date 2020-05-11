@@ -6,11 +6,13 @@
 #ifndef UP_LETTER_SEQUENCE_HPP
 #define UP_LETTER_SEQUENCE_HPP
 
+#if __cplusplus
+
 #import <algorithm>
 #import <iostream>
 #import <vector>
 
-#import <UpKit/UPLexicon.h>
+#import <UpKit/UPLexicon.hpp>
 #import <UpKit/UPGameCode.h>
 #import <UpKit/UPRandom.hpp>
 #import <UpKit/UPStringTools.h>
@@ -59,5 +61,7 @@ private:
 };
     
 }  // namespace UP
+
+#endif  // __cplusplus
 
 #endif  // UP_LETTER_SEQUENCE_HPP

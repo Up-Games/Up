@@ -79,6 +79,7 @@
 		5DD71DA02458DA3A00F3F9E2 /* UIView+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D9E2458DA3A00F3F9E2 /* UIView+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71DA12458DA3A00F3F9E2 /* UIView+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D9F2458DA3A00F3F9E2 /* UIView+UP.mm */; };
 		5DD71DA32458F39200F3F9E2 /* UPAny.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71DA22458F39200F3F9E2 /* UPAny.hpp */; };
+		5DD9C29724699E340080F768 /* UPGameCodeTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DD9C29624699E340080F768 /* UPGameCodeTests.mm */; };
 		5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0172454CAFC00016047 /* UPMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DEBE01A2454E3AC00016047 /* UPColor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0192454E3AC00016047 /* UPColor.hpp */; };
 		5DEBE0202454F1D200016047 /* UIColor+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE01E2454F1D200016047 /* UIColor+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -95,12 +96,12 @@
 		5DF8A8EC24548D9700751E2E /* UPUnitFunctionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.m */; };
 		5DF9DF342465A83100B2199D /* json.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9DF332465A83100B2199D /* json.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF9DF3F2465B0BE00B2199D /* en-lexicon.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5DF9DF3D2465B0BE00B2199D /* en-lexicon.txt */; };
-		5DF9DF422465B35700B2199D /* UPLexicon.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9DF402465B35700B2199D /* UPLexicon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DF9DF422465B35700B2199D /* UPLexicon.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9DF402465B35700B2199D /* UPLexicon.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF9DF432465B35700B2199D /* UPLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF412465B35700B2199D /* UPLexicon.mm */; };
-		5DF9DF452465BA5200B2199D /* UPLexiconTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF442465BA5200B2199D /* UPLexiconTests.m */; };
+		5DF9DF452465BA5200B2199D /* UPLexiconTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF442465BA5200B2199D /* UPLexiconTests.mm */; };
 		5DF9DF992466412B00B2199D /* UPRandom.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9DF982466412B00B2199D /* UPRandom.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF9DFA124676B5800B2199D /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DFA024676B5800B2199D /* main.mm */; };
-		5DF9DFA524676B9C00B2199D /* UPLexicon.h in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF402465B35700B2199D /* UPLexicon.h */; };
+		5DF9DFA524676B9C00B2199D /* UPLexicon.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF402465B35700B2199D /* UPLexicon.hpp */; };
 		5DF9DFA624676B9C00B2199D /* UPLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF412465B35700B2199D /* UPLexicon.mm */; };
 		5DF9DFA924676B9C00B2199D /* UPMacros.h in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE0172454CAFC00016047 /* UPMacros.h */; };
 		5DF9DFAA24676B9C00B2199D /* UPRandom.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF982466412B00B2199D /* UPRandom.hpp */; };
@@ -210,6 +211,7 @@
 		5DD71DA22458F39200F3F9E2 /* UPAny.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UPAny.hpp; sourceTree = "<group>"; };
 		5DD71E882459C4CA00F3F9E2 /* libpop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libpop.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DD71E8A2459C5A800F3F9E2 /* pop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = pop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DD9C29624699E340080F768 /* UPGameCodeTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameCodeTests.mm; sourceTree = "<group>"; };
 		5DEBE0152454C77700016047 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5DEBE0172454CAFC00016047 /* UPMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPMacros.h; sourceTree = "<group>"; };
 		5DEBE0192454E3AC00016047 /* UPColor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UPColor.hpp; sourceTree = "<group>"; };
@@ -225,9 +227,9 @@
 		5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPUnitFunctionTests.m; sourceTree = "<group>"; };
 		5DF9DF332465A83100B2199D /* json.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = json.hpp; sourceTree = "<group>"; };
 		5DF9DF3D2465B0BE00B2199D /* en-lexicon.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "en-lexicon.txt"; sourceTree = "<group>"; };
-		5DF9DF402465B35700B2199D /* UPLexicon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLexicon.h; sourceTree = "<group>"; };
+		5DF9DF402465B35700B2199D /* UPLexicon.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UPLexicon.hpp; sourceTree = "<group>"; };
 		5DF9DF412465B35700B2199D /* UPLexicon.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPLexicon.mm; sourceTree = "<group>"; };
-		5DF9DF442465BA5200B2199D /* UPLexiconTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLexiconTests.m; sourceTree = "<group>"; };
+		5DF9DF442465BA5200B2199D /* UPLexiconTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPLexiconTests.mm; sourceTree = "<group>"; };
 		5DF9DF982466412B00B2199D /* UPRandom.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UPRandom.hpp; sourceTree = "<group>"; };
 		5DF9DF9E24676B5700B2199D /* UPLexiconTool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UPLexiconTool; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF9DFA024676B5800B2199D /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
@@ -351,9 +353,10 @@
 		5DF8A8ED24548DD600751E2E /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.m */,
+				5DD9C29624699E340080F768 /* UPGameCodeTests.mm */,
 				5DD71D462457748000F3F9E2 /* UPLayoutTests.m */,
-				5DF9DF442465BA5200B2199D /* UPLexiconTests.m */,
+				5DF9DF442465BA5200B2199D /* UPLexiconTests.mm */,
+				5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.m */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -457,7 +460,7 @@
 				5DD71D432457731700F3F9E2 /* UPLayoutRule.m */,
 				5DA4CF1924687F55006AE391 /* UPLetterSequence.cpp */,
 				5DA4CF1A24687F55006AE391 /* UPLetterSequence.hpp */,
-				5DF9DF402465B35700B2199D /* UPLexicon.h */,
+				5DF9DF402465B35700B2199D /* UPLexicon.hpp */,
 				5DF9DF412465B35700B2199D /* UPLexicon.mm */,
 				5DEBE0172454CAFC00016047 /* UPMacros.h */,
 				5DFE62272453D11100D9CA0B /* UPMath.h */,
@@ -491,7 +494,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D2CABA7245A10CB00B81332 /* TransformationMatrix.h in Headers */,
-				5DF9DF422465B35700B2199D /* UPLexicon.h in Headers */,
+				5DF9DF422465B35700B2199D /* UPLexicon.hpp in Headers */,
 				5D2CAC07245A13E700B81332 /* POPSpringAnimationInternal.h in Headers */,
 				5DD71DA32458F39200F3F9E2 /* UPAny.hpp in Headers */,
 				5DEBE02E245716F900016047 /* UPStringTools.h in Headers */,
@@ -670,7 +673,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DF9DFA524676B9C00B2199D /* UPLexicon.h in Sources */,
+				5DF9DFA524676B9C00B2199D /* UPLexicon.hpp in Sources */,
 				5DF9DFA624676B9C00B2199D /* UPLexicon.mm in Sources */,
 				5DF9DFA924676B9C00B2199D /* UPMacros.h in Sources */,
 				5DF9DFAA24676B9C00B2199D /* UPRandom.hpp in Sources */,
@@ -723,7 +726,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DF9DF452465BA5200B2199D /* UPLexiconTests.m in Sources */,
+				5DF9DF452465BA5200B2199D /* UPLexiconTests.mm in Sources */,
+				5DD9C29724699E340080F768 /* UPGameCodeTests.mm in Sources */,
 				5DD71D472457748000F3F9E2 /* UPLayoutTests.m in Sources */,
 				5DF8A8EC24548D9700751E2E /* UPUnitFunctionTests.m in Sources */,
 			);

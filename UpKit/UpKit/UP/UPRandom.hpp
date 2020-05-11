@@ -6,6 +6,8 @@
 #ifndef UP_RANDOM_HPP
 #define UP_RANDOM_HPP
 
+#if __cplusplus
+
 #import <iterator>
 #import <limits>
 #import <mutex>
@@ -78,5 +80,7 @@ private:
 };
 
 } // namescape UP
+
+#endif  // __cplusplus
 
 #endif // UP_RANDOM_HPP

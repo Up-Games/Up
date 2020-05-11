@@ -47,7 +47,7 @@ using UP::GameCode;
 //    UP::Random rng = UP::Random::general_instance();
 
     GameCode code = GameCode::random();
-//    GameCode code = GameCode("CKK-5620");
+//    GameCode code = GameCode("WPQ-2701");
     NSLog(@"code: %s", code.string().c_str());
     NSLog(@"code: %d", code.value());
 

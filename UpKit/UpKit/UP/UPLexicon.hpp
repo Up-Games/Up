@@ -1,20 +1,14 @@
 //
-//  UPLexicon.h
+//  UPLexicon.hpp
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_LEXICON_H
-#define UP_LEXICON_H
-
-#if __OBJC__
-#import <Foundation/Foundation.h>
-#endif  // __OBJC__
+#ifndef UP_LEXICON_HPP
+#define UP_LEXICON_HPP
 
 #if __cplusplus
 
-#import <map>
 #import <mutex>
-#import <set>
 #import <string>
 #import <unordered_set>
 #import <vector>
@@ -52,30 +46,10 @@ private:
 
     std::unordered_set<std::u32string> m_words;
     std::vector<std::u32string> m_word_list;
-    
-    static std::mutex g_mutex;
 };
 
 } // namescape UP
 
 #endif  // __cplusplus
 
-
-#if __OBJC__
-
-@interface UPLexicon : NSObject
-
-@property (nonatomic) UPLexiconLanguage language;
-
-//+ (UPLexicon *)instanceForLanguage:(UPLexiconLanguage)language;
-//
-//- (instancetype)init NS_UNAVAILABLE;
-//
-//- (BOOL)containsWord:(NSString *)word;
-
-@end
-
-#endif  // __OBJC__
-
-
-#endif // UP_LEXICON_H
+#endif  // UP_LEXICON_HPP

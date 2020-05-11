@@ -7,11 +7,11 @@
 #import <Foundation/Foundation.h>
 #endif  // __OBJC__
 
-
 #if __cplusplus
 
 #import <string>
 
+#import <UPKit/UPMacros.h>
 #import <UPKit/UPRandom.hpp>
 
 namespace UP {
@@ -20,21 +20,10 @@ class GameCode {
 public:
     static constexpr size_t StringLength = 8;
     static constexpr size_t Permutations = 26 * 26 * 26 * 10 * 10 * 10 * 10;  // 175,760,000
-    static constexpr uint32_t Letter1Factor = 26 * 26; // big-endian ;-)
-    static constexpr uint32_t Letter2Factor = 26;
-    static constexpr uint32_t Letter3Factor = 1;
-    static constexpr uint32_t Number1Factor = 1000;
-    static constexpr uint32_t Number2Factor = 100;
-    static constexpr uint32_t Number3Factor = 10;
-    static constexpr uint32_t Number4Factor = 1;
-
-    static constexpr uint32_t Letter1Max = Letter1Factor * 'Z';
-    static constexpr uint32_t Letter2Max = Letter2Factor * 'Z';
-    static constexpr uint32_t Letter3Max = Letter3Factor * 'Z';
-    static constexpr uint32_t LetterSpaceMax = 26 * 26 * 26;
 
     static constexpr const char *DefaultCharString = "AAA-0000";
     static constexpr uint32_t DefaultValue = 0;
+    static constexpr size_t MaxValue = Permutations - 1;
 
     GameCode() : m_string(DefaultCharString), m_value(DefaultValue) {}
     GameCode(const std::string &str) : m_string(validate(str)), m_value(parse_string(m_string)) {}
@@ -48,6 +37,19 @@ public:
     std::string string() const { return m_string; }
 
 private:
+    static constexpr uint32_t Letter1Factor = 26 * 26; // big-endian ;-)
+    static constexpr uint32_t Letter2Factor = 26;
+    static constexpr uint32_t Letter3Factor = 1;
+    static constexpr uint32_t Number1Factor = 1000;
+    static constexpr uint32_t Number2Factor = 100;
+    static constexpr uint32_t Number3Factor = 10;
+    static constexpr uint32_t Number4Factor = 1;
+
+    static constexpr uint32_t Letter1Max = Letter1Factor * 'Z';
+    static constexpr uint32_t Letter2Max = Letter2Factor * 'Z';
+    static constexpr uint32_t Letter3Max = Letter3Factor * 'Z';
+    static constexpr uint32_t LetterSpaceMax = 26 * 26 * 26;
+
     static constexpr char validate_letter(char c) {
         if (c >= 'a' && c <= 'z') {
             return c - 32;
@@ -136,13 +138,23 @@ private:
     uint32_t m_value;
 };
 
+UP_STATIC_INLINE bool operator==(const GameCode &a, const GameCode &b) { return a.value() == b.value(); }
+UP_STATIC_INLINE bool operator!=(const GameCode &a, const GameCode &b) { return !(a == b); }
+
 }  // namespace UP
 
 #endif  // __cplusplus
 
+// =========================================================================================================================================
 
 #if __OBJC__
 @interface UPGameCode : NSObject
+
++ (UPGameCode *)randomGameCode;
++ (UPGameCode *)gameCodeWithString:(NSString *)string;
++ (UPGameCode *)gameCodeWithValue:(uint32_t)value;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 #endif  // __OBJC__
