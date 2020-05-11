@@ -6,9 +6,12 @@
 #ifndef UP_RANDOM_HPP
 #define UP_RANDOM_HPP
 
+#import <iterator>
 #import <limits>
 #import <mutex>
 #import <random>
+#import <sstream>
+
 #import <iostream>
 
 namespace UP {
@@ -27,7 +30,7 @@ public:
         static Random r;
         static std::once_flag flag1;
         std::call_once(flag1, [](){
-            std::uniform_int_distribution<int> dist(0, 2047);
+            std::uniform_int_distribution<int> dist(0, 511);
             std::random_device rd;
             r.seed({ dist(rd), dist(rd), dist(rd) });
         });
@@ -35,7 +38,14 @@ public:
     }
 
     std::mt19937 &g() { return m_g; }
-    void seed(std::seed_seq sseq) { m_g.seed(sseq); }
+
+    void seed(std::seed_seq sseq) {
+        m_g.seed(sseq);
+    }
+    
+    void seed_value(uint32_t value) {
+        m_g.seed(value);
+    }
 
     uint32_t uint_32() {
         return m_g();

@@ -63,6 +63,8 @@
 		5D2CAC82245A554F00B81332 /* POPPathAnimation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D2CAC80245A554F00B81332 /* POPPathAnimation.mm */; };
 		5D2CAC84245B538B00B81332 /* NSValue+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D2CAC83245B538B00B81332 /* NSValue+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D2CAC86245B53F200B81332 /* NSValue+UP.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2CAC85245B53F200B81332 /* NSValue+UP.m */; };
+		5DA4CF1B24687F55006AE391 /* UPLetterSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DA4CF1924687F55006AE391 /* UPLetterSequence.cpp */; };
+		5DA4CF1C24687F55006AE391 /* UPLetterSequence.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5DA4CF1A24687F55006AE391 /* UPLetterSequence.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7324678F4000D9D1FF /* UPGameCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7424678F4000D9D1FF /* UPGameCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameCode.mm */; };
 		5DD71D442457731700F3F9E2 /* UPLayoutRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D422457731700F3F9E2 /* UPLayoutRule.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -194,6 +196,8 @@
 		5D2CAC80245A554F00B81332 /* POPPathAnimation.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = POPPathAnimation.mm; sourceTree = "<group>"; };
 		5D2CAC83245B538B00B81332 /* NSValue+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSValue+UP.h"; sourceTree = "<group>"; };
 		5D2CAC85245B53F200B81332 /* NSValue+UP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValue+UP.m"; sourceTree = "<group>"; };
+		5DA4CF1924687F55006AE391 /* UPLetterSequence.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UPLetterSequence.cpp; sourceTree = "<group>"; };
+		5DA4CF1A24687F55006AE391 /* UPLetterSequence.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UPLetterSequence.hpp; sourceTree = "<group>"; };
 		5DBADB7124678F4000D9D1FF /* UPGameCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameCode.h; sourceTree = "<group>"; };
 		5DBADB7224678F4000D9D1FF /* UPGameCode.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameCode.mm; sourceTree = "<group>"; };
 		5DD71D422457731700F3F9E2 /* UPLayoutRule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLayoutRule.h; sourceTree = "<group>"; };
@@ -460,6 +464,8 @@
 				5DFE620B245364C700D9CA0B /* UpKit.h */,
 				5DD71D422457731700F3F9E2 /* UPLayoutRule.h */,
 				5DD71D432457731700F3F9E2 /* UPLayoutRule.m */,
+				5DA4CF1924687F55006AE391 /* UPLetterSequence.cpp */,
+				5DA4CF1A24687F55006AE391 /* UPLetterSequence.hpp */,
 				5DF9DF402465B35700B2199D /* UPLexicon.h */,
 				5DF9DF412465B35700B2199D /* UPLexicon.mm */,
 				5DF9DF362465AC1800B2199D /* UPLexiconEntry.hpp */,
@@ -517,6 +523,7 @@
 				5D2CABF1245A13E700B81332 /* POPAnimationExtras.h in Headers */,
 				5D2CAC03245A13E700B81332 /* POPCustomAnimation.h in Headers */,
 				5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */,
+				5DA4CF1C24687F55006AE391 /* UPLetterSequence.hpp in Headers */,
 				5DD71DA02458DA3A00F3F9E2 /* UIView+UP.h in Headers */,
 				5D2CABA8245A10CB00B81332 /* FloatConversion.h in Headers */,
 				5D2CABD3245A138F00B81332 /* POPAnimatorPrivate.h in Headers */,
@@ -712,6 +719,7 @@
 				5DEBE02D245716F900016047 /* UPStringTools.cpp in Sources */,
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5D2CABB3245A114B00B81332 /* POPMath.mm in Sources */,
+				5DA4CF1B24687F55006AE391 /* UPLetterSequence.cpp in Sources */,
 				5DF9DF432465B35700B2199D /* UPLexicon.mm in Sources */,
 				5D2CAC04245A13E700B81332 /* POPSpringAnimation.mm in Sources */,
 				5D2CAC05245A13E700B81332 /* POPAnimationExtras.mm in Sources */,

@@ -9,6 +9,8 @@
 
 #if __cplusplus
 
+#import <UpKit/UpKit.h>
+
 namespace UP {
 
 class Game {
@@ -18,13 +20,23 @@ public:
         return _Instance;
     }
 
-    void set_language(UPLexiconLanguage language) { m_language = language; }
-    Lexicon &lexicon() const { return Lexicon::instance_for_language(m_language); }
+    void configure(UPLexiconLanguage language, const GameCode &game_code) {
+        m_language = language;
+        m_game_code = game_code;
+        Lexicon::set_language(m_language);
+        m_letter_sequence.set_game_code(m_game_code);
+    }
 
+    GameCode game_code() const { return m_game_code; }
+    Lexicon &lexicon() { return Lexicon::instance(); }
+    LetterSequence &letter_sequence() { return m_letter_sequence; }
+    
 private:
     Game() : m_language(UPLexiconLanguageEnglish) {}
 
     UPLexiconLanguage m_language;
+    GameCode m_game_code;
+    LetterSequence m_letter_sequence;
 };
 
 }  // namespace UP

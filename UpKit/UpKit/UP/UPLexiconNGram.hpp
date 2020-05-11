@@ -9,7 +9,6 @@
 #import <iostream>
 #import <string>
 
-#import <UpKit/UPRandom.hpp>
 #import <UpKit/UPStringTools.h>
 #import <UpKit/json.hpp>
 
@@ -31,13 +30,6 @@ template <size_t S> struct LexiconNGram
 
     LexiconNGram(const LexiconNGram &o, char32_t c) : text(o.text), size(o.size) {
         push_back(c);
-    }
-
-    LexiconNGram shuffled() const {
-        return *this;
-//        LexiconNGram s = *this;
-//        std::shuffle(s.text.begin(), s.text.end(), Random::gameplay_instance().g());
-//        return s;
     }
 
     void push_back(char32_t c) {

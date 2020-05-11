@@ -31,6 +31,7 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/POP.h>
 
 #if __cplusplus
+#import <UpKit/UPLetterSequence.hpp>
 #import <UpKit/UPLexiconEntry.hpp>
 #import <UpKit/UPLexiconNGram.hpp>
 #import <UpKit/UPRandom.hpp>

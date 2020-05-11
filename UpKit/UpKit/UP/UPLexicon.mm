@@ -33,7 +33,7 @@ namespace UP {
 
 std::mutex Lexicon::g_mutex;
 
-static NSString *up_lexicon_file_name(UPLexiconLanguage language)
+static NSString *lexicon_file_name(UPLexiconLanguage language)
 {
     switch (language) {
         case UPLexiconLanguageEnglish:
@@ -65,19 +65,21 @@ void write_file(const std::string &file, const std::string &contents)
     os.close();
 }
 
-Lexicon &Lexicon::instance_for_language(UPLexiconLanguage language)
+static Lexicon *_Instance;
+
+void Lexicon::set_language(UPLexiconLanguage language)
 {
-    static Lexicon *lexicons[UPLexiconLanguageCount];
     std::lock_guard<std::mutex> guard(Lexicon::g_mutex);
-    size_t idx = (size_t)language;
-    if (!lexicons[idx]) {
-        NSBundle *upkitBundle = [NSBundle bundleForClass:[UPLexicon class]];
-        NSString *fileName = up_lexicon_file_name(language);
-        NSString *wordsFilePath = [upkitBundle pathForResource:fileName ofType:@"txt"];
-        NSString *metadataFilePath = [upkitBundle pathForResource:fileName ofType:@"json"];
-        lexicons[idx] = new Lexicon(cpp_str(wordsFilePath), cpp_str(metadataFilePath));
-    }
-    return *lexicons[idx];
+    NSBundle *upkitBundle = [NSBundle bundleForClass:[UPLexicon class]];
+    NSString *fileName = lexicon_file_name(language);
+    NSString *wordsFilePath = [upkitBundle pathForResource:fileName ofType:@"txt"];
+    NSString *metadataFilePath = [upkitBundle pathForResource:fileName ofType:@"json"];
+    _Instance = new Lexicon(cpp_str(wordsFilePath), cpp_str(metadataFilePath));
+}
+
+Lexicon &Lexicon::instance()
+{
+    return *_Instance;
 }
 
 Lexicon::Lexicon(const std::string &words_file_path, const std::string &metadata_file_path)
@@ -108,7 +110,9 @@ bool Lexicon::load_words()
     }
     std::istringstream iss(contents);
     for (std::string line; std::getline(iss, line); ) {
-        m_words.emplace(cpp_u32str(line));
+        std::u32string word(cpp_u32str(line));
+        m_words.insert(word);
+        m_word_list.push_back(word);
     }
     return true;
 }
@@ -301,11 +305,11 @@ void Lexicon::calculate_frequencies()
     }
 }
 
-char32_t Lexicon::random_letter() const
+char32_t Lexicon::random_letter(Random &r) const
 {
     static int count = 0;
     count++;
-    float f = Random::gameplay_instance().unit();
+    float f = r.unit();
     float t = 0;
     for (const auto &entry : m_letter_frequencies) {
         t += entry.frequency;
@@ -316,10 +320,10 @@ char32_t Lexicon::random_letter() const
     return '-';
 }
 
-char32_t Lexicon::random_consonant() const
+char32_t Lexicon::random_consonant(Random &r) const
 {
     while (1) {
-        char32_t c = random_letter();
+        char32_t c = random_letter(r);
         if (is_consonant(c)) {
             return c;
         }
@@ -327,10 +331,10 @@ char32_t Lexicon::random_consonant() const
     return 'S';
 }
 
-char32_t Lexicon::random_vowel() const
+char32_t Lexicon::random_vowel(Random &r) const
 {
     while (1) {
-        char c = random_letter();
+        char c = random_letter(r);
         if (is_vowel(c)) {
             return c;
         }
@@ -350,14 +354,14 @@ bool Lexicon::is_vowel(char32_t c) {
     return false;
 }
 
-Unigram Lexicon::random_unigram() const
+Unigram Lexicon::random_unigram(Random &r) const
 {
-    return Unigram(random_letter());
+    return Unigram(random_letter(r));
 }
 
-Bigram Lexicon::random_bigram() const
+Bigram Lexicon::random_bigram(Random &r) const
 {
-    float f = Random::gameplay_instance().unit() * m_top_bigrams_sum;
+    float f = r.unit() * m_top_bigrams_sum;
     float t = 0;
     for (const auto &entry : m_top_bigrams) {
         t += entry.frequency;
@@ -368,9 +372,9 @@ Bigram Lexicon::random_bigram() const
     return Bigram(U"ET");
 }
 
-Trigram Lexicon::random_trigram() const
+Trigram Lexicon::random_trigram(Random &r) const
 {
-    float f = Random::gameplay_instance().unit() * m_top_trigrams_sum;
+    float f = r.unit() * m_top_trigrams_sum;
     float t = 0;
     for (const auto &entry : m_top_trigrams) {
         t += entry.frequency;
@@ -381,9 +385,9 @@ Trigram Lexicon::random_trigram() const
     return Trigram(U"ING");
 }
 
-Quadgram Lexicon::random_quadgram() const
+Quadgram Lexicon::random_quadgram(Random &r) const
 {
-    float f = Random::gameplay_instance().unit() * m_top_quadgrams_sum;
+    float f = r.unit() * m_top_quadgrams_sum;
     float t = 0;
     for (const auto &entry : m_top_quadgrams) {
         t += entry.frequency;
@@ -392,6 +396,12 @@ Quadgram Lexicon::random_quadgram() const
         }
     }
     return Quadgram(U"TION");
+}
+
+std::u32string Lexicon::random_word(Random &r) const
+{
+    uint32_t idx = r.uint32_between(0, (uint32_t)m_words.size());
+    return m_word_list[idx];
 }
 
 } // namespace UP
@@ -405,22 +415,22 @@ Quadgram Lexicon::random_quadgram() const
 
 @implementation UPLexicon
 
-+ (UPLexicon *)instanceForLanguage:(UPLexiconLanguage)language
-{
-    return [[UPLexicon alloc] initForLanguage:language];
-}
-
-- (instancetype)initForLanguage:(UPLexiconLanguage)language
-{
-    self = [super init];
-    self.language = language;
-    return self;
-}
-
-- (BOOL)containsWord:(NSString *)word
-{
-    UP::Lexicon &lexicon = UP::Lexicon::instance_for_language(self.language);
-    return lexicon.contains(UP::cpp_u32str(word));
-}
+//+ (UPLexicon *)instanceForLanguage:(UPLexiconLanguage)language
+//{
+//    return [[UPLexicon alloc] initForLanguage:language];
+//}
+//
+//- (instancetype)initForLanguage:(UPLexiconLanguage)language
+//{
+//    self = [super init];
+//    self.language = language;
+//    return self;
+//}
+//
+//- (BOOL)containsWord:(NSString *)word
+//{
+//    UP::Lexicon &lexicon = UP::Lexicon::instance_for_language(self.language);
+//    return lexicon.contains(UP::cpp_u32str(word));
+//}
 
 @end
