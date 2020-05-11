@@ -8,24 +8,13 @@
 
 #if __cplusplus
 
-#import <fstream>
-#import <iostream>
-#import <istream>
-#import <ostream>
 #import <random>
 #import <sstream>
 #import <ios>
 
-#import <float.h>
-#import <math.h>
-
-#import "json.hpp"
-
 #import "UPLexicon.h"
 #import "UPRandom.hpp"
 #import "UPStringTools.h"
-
-using nlohmann::json;
 
 const NSUInteger UPLexiconLanguageCount = 1;
 
@@ -41,20 +30,6 @@ static NSString *lexicon_file_name(UPLexiconLanguage language)
     }
 }
 
-static std::string read_utf8_string_file(const std::string &filename)
-{
-    std::string contents;
-    std::ifstream in(filename.c_str(), std::ios::in | std::ios::binary);
-    if (in) {
-        in.seekg(0, std::ios::end);
-        contents.resize(in.tellg());
-        in.seekg(0, std::ios::beg);
-        in.read(&contents[0], contents.size());
-        in.close();
-    }
-    return contents;
-}
-
 static Lexicon *_Instance;
 
 void Lexicon::set_language(UPLexiconLanguage language)
@@ -62,11 +37,19 @@ void Lexicon::set_language(UPLexiconLanguage language)
     std::lock_guard<std::mutex> guard(Lexicon::g_mutex);
     if (_Instance) {
         delete _Instance;
+        _Instance = nullptr;
     }
     NSBundle *upkitBundle = [NSBundle bundleForClass:[UPLexicon class]];
     NSString *fileName = lexicon_file_name(language);
     NSString *wordsFilePath = [upkitBundle pathForResource:fileName ofType:@"txt"];
-    _Instance = new Lexicon(cpp_str(wordsFilePath));
+    NSError *error;
+    NSString *contents = [NSString stringWithContentsOfFile:wordsFilePath encoding:NSUTF8StringEncoding error:&error];
+    if (error) {
+        NSLog(@"*** error reading lexicon: %@", error.localizedDescription);
+    }
+    else {
+        _Instance = new Lexicon(cpp_str(contents));
+    }
 }
 
 Lexicon &Lexicon::instance()
@@ -74,26 +57,10 @@ Lexicon &Lexicon::instance()
     return *_Instance;
 }
 
-Lexicon::Lexicon(const std::string &words_file_path)
-    : m_words_file_path(words_file_path)
+Lexicon::Lexicon(const std::string &contents)
 {
-    load_words();
-}
-
-bool Lexicon::contains(const std::u32string &word)
-{
-    return m_words.find(word) != m_words.end();
-}
-
-bool Lexicon::load_words()
-{
-    m_words.clear();
-    if (m_words_file_path.length() == 0) {
-        return false;
-    }
-    std::string contents(read_utf8_string_file(m_words_file_path));
     if (contents.length() == 0) {
-        return false;
+        return;
     }
     std::istringstream iss(contents);
     for (std::string line; std::getline(iss, line); ) {
@@ -101,7 +68,11 @@ bool Lexicon::load_words()
         m_words.insert(word);
         m_word_list.push_back(word);
     }
-    return true;
+}
+
+bool Lexicon::contains(const std::u32string &word)
+{
+    return m_words.find(word) != m_words.end();
 }
 
 bool Lexicon::is_vowel(char32_t c) {

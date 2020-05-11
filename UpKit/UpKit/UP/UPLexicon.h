@@ -48,11 +48,8 @@ public:
     static bool not_consonant(char32_t c) { return is_vowel(c); }
     
 private:
-    Lexicon(const std::string &words_file_path);
+    Lexicon(const std::string &);
 
-    bool load_words();
-
-    std::string m_words_file_path;
     std::unordered_set<std::u32string> m_words;
     std::vector<std::u32string> m_word_list;
     
