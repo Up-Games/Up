@@ -27,6 +27,10 @@ public:
     }
     Random(std::seed_seq sseq) : m_generator(sseq) {}
 
+    Random(Random &&) = delete;
+    Random(Random const &) = delete;
+    void operator=(Random const &) = delete;
+
     static Random &create_instance() {
         std::uniform_int_distribution<int> dist(0, 511);
         std::random_device rd;
