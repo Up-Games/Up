@@ -30,7 +30,7 @@ public:
     GameCode(uint32_t value) : m_string(format_string(validate(value))), m_value(validate(value)) {}
 
     static GameCode random() {
-        return GameCode(Random::general_instance().uint32_less_than(Permutations));
+        return GameCode(Random::instance().uint32_less_than(Permutations));
     }
 
     uint32_t value() const { return m_value; }

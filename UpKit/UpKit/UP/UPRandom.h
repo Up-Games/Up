@@ -10,6 +10,7 @@
 
 #import <iterator>
 #import <limits>
+#import <memory>
 #import <mutex>
 #import <random>
 #import <sstream>
@@ -20,15 +21,10 @@ namespace UP {
 
 class Random {
 public:
-    Random() {}
-    Random(std::seed_seq sseq) : m_g(sseq) {}
+    Random() : m_generator(std::make_shared<std::mt19937>()) {}
+    Random(std::seed_seq sseq) : m_generator(std::make_shared<std::mt19937>(sseq)) {}
 
-    static Random &gameplay_instance() {
-        static Random r;
-        return r;
-    }
-
-    static Random &general_instance() {
+    static Random &instance() {
         static Random r;
         static std::once_flag flag1;
         std::call_once(flag1, [](){
@@ -39,18 +35,18 @@ public:
         return r;
     }
 
-    std::mt19937 &g() { return m_g; }
+    std::shared_ptr<std::mt19937> generator() { return m_generator; }
 
     void seed(std::seed_seq sseq) {
-        m_g.seed(sseq);
+        m_generator->seed(sseq);
     }
     
     void seed_value(uint32_t value) {
-        m_g.seed(value);
+        m_generator->seed(value);
     }
 
     uint32_t uint_32() {
-        return m_g();
+        return (*m_generator)();
     }
 
     uint32_t uint32_less_than(uint32_t bound) {
@@ -76,7 +72,7 @@ public:
     }
 
 private:
-    std::mt19937 m_g;
+    std::shared_ptr<std::mt19937> m_generator;
 };
 
 } // namescape UP

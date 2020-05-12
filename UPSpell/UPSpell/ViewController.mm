@@ -32,10 +32,10 @@ using UP::GameCode;
 
 - (void)markRandom:(UPTileTray *)tray
 {
-    uint32_t marks = UP::Random::general_instance().uint32_in_range(3, 7);
+    uint32_t marks = UP::Random::instance().uint32_in_range(3, 7);
     //NSLog(@"mark: %d", marks);
     while ([tray countMarked] < marks) {
-        uint32_t m = UP::Random::general_instance().uint32_between(0, 7);
+        uint32_t m = UP::Random::instance().uint32_between(0, 7);
         [tray markAtIndex:m];
     }
 }
@@ -64,7 +64,7 @@ using UP::GameCode;
     [tray fill];
     [self printTiles:tray];
 
-    for (int idx = 0; idx < 200; idx++) {
+    for (int idx = 0; idx < 10; idx++) {
         [self markRandom:tray];
         [tray sentinelizeMarked];
         [tray fill];

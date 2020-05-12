@@ -32,13 +32,17 @@ public:
     
     void set_game_code(const GameCode &game_code) {
         m_game_code = game_code;
-        Random::gameplay_instance().seed_value(game_code.value());
+        m_random.seed_value(game_code.value());
         m_letters.clear();
     }
     
     char32_t next() {
         if (m_letters.size() == 0) {
-            fill();
+            auto &lexicon = Lexicon::instance();
+            std::u32string key = lexicon.random_key(m_random);
+            std::cout << "w: " << cpp_str(key) << std::endl;
+            std::shuffle(key.begin(), key.end(), *m_random.generator());
+            std::copy(key.begin(), key.end(), std::back_inserter(m_letters));
         }
         char32_t c = m_letters.back();
         m_letters.pop_back();
@@ -46,17 +50,8 @@ public:
     }
     
 private:
-    void fill() {
-        auto &lexicon = Lexicon::instance();
-        auto &random = Random::gameplay_instance();
-        
-        std::u32string key = lexicon.random_key(random);
-        std::cout << "w: " << cpp_str(key) << std::endl;
-        std::shuffle(key.begin(), key.end(), random.g());
-        std::copy(key.begin(), key.end(), std::back_inserter(m_letters));
-    }
-
     GameCode m_game_code;
+    Random m_random;
     std::vector<char32_t> m_letters;
 };
     
