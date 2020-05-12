@@ -10,7 +10,6 @@
 
 #import <iterator>
 #import <limits>
-#import <memory>
 #import <mutex>
 #import <random>
 #import <sstream>
@@ -21,32 +20,36 @@ namespace UP {
 
 class Random {
 public:
-    Random() : m_generator(std::make_shared<std::mt19937>()) {}
-    Random(std::seed_seq sseq) : m_generator(std::make_shared<std::mt19937>(sseq)) {}
+    Random() {
+        std::uniform_int_distribution<int> dist(0, 511);
+        std::random_device rd;
+        seed({ dist(rd), dist(rd), dist(rd) });
+    }
+    Random(std::seed_seq sseq) : m_generator(sseq) {}
 
-    static Random &instance() {
-        static Random r;
-        static std::once_flag flag1;
-        std::call_once(flag1, [](){
-            std::uniform_int_distribution<int> dist(0, 511);
-            std::random_device rd;
-            r.seed({ dist(rd), dist(rd), dist(rd) });
-        });
-        return r;
+    static Random &create_instance() {
+        std::uniform_int_distribution<int> dist(0, 511);
+        std::random_device rd;
+        g_instance = new Random({ dist(rd), dist(rd), dist(rd) });
+        return *g_instance;
     }
 
-    std::shared_ptr<std::mt19937> generator() { return m_generator; }
+    static Random &instance() {
+        return *g_instance;
+    }
+
+    std::mt19937 &generator() { return m_generator; }
 
     void seed(std::seed_seq sseq) {
-        m_generator->seed(sseq);
+        m_generator.seed(sseq);
     }
     
     void seed_value(uint32_t value) {
-        m_generator->seed(value);
+        m_generator.seed(value);
     }
 
     uint32_t uint_32() {
-        return (*m_generator)();
+        return m_generator();
     }
 
     uint32_t uint32_less_than(uint32_t bound) {
@@ -72,7 +75,12 @@ public:
     }
 
 private:
-    std::shared_ptr<std::mt19937> m_generator;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+    UP_STATIC_INLINE Random *g_instance;
+#pragma clang diagnostic pop
+
+    std::mt19937 m_generator;
 };
 
 } // namescape UP

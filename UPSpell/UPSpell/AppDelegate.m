@@ -4,7 +4,6 @@
 //
 
 #import "AppDelegate.h"
-#import "UPGame.h"
 
 @interface AppDelegate ()
 @end

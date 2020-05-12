@@ -1,25 +1,25 @@
 //
-//  UPGame.m
+//  UPLetterTileContext.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
 #import <UPKit/UPLexicon.h>
 
-#import "UPGame.h"
+#import "UPLetterTileContext.h"
 
 #if __OBJC__
 
-@interface UPGame ()
+@interface UPLetterTileContext ()
 @end
 
-@implementation UPGame
+@implementation UPLetterTileContext
 
-+ (UPGame *)instance
++ (UPLetterTileContext *)instance
 {
     static dispatch_once_t onceToken;
-    static UPGame *_Instance;
+    static UPLetterTileContext *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPGame alloc] _init];
+        _Instance = [[UPLetterTileContext alloc] _init];
     });
     return _Instance;
 }

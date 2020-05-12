@@ -19,10 +19,10 @@
 
 namespace UP {
     
-class LetterSequence {
+class LetterTileSequence {
 public:
-    LetterSequence() : m_game_code(GameCode()) { reset(); }
-    LetterSequence(const GameCode &game_code) : m_game_code(game_code) { reset(); }
+    LetterTileSequence() : m_game_code(GameCode()) { reset(); }
+    LetterTileSequence(const GameCode &game_code) : m_game_code(game_code) { reset(); }
     
     GameCode game_code() const { return m_game_code; }
     
@@ -41,7 +41,7 @@ public:
             auto &lexicon = Lexicon::instance();
             std::u32string key = lexicon.random_key(m_random);
             std::cout << "w: " << cpp_str(key) << std::endl;
-            std::shuffle(key.begin(), key.end(), *m_random.generator());
+            std::shuffle(key.begin(), key.end(), m_random.generator());
             std::copy(key.begin(), key.end(), std::back_inserter(m_letters));
         }
         char32_t c = m_letters.back();

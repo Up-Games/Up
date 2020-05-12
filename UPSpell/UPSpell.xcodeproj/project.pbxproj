@@ -17,9 +17,6 @@
 		5DF9DF772466165800B2199D /* UPSpellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF762466165800B2199D /* UPSpellTests.m */; };
 		5DF9DF8C2466168500B2199D /* UpKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DF9DF8B2466168500B2199D /* UpKit.framework */; };
 		5DF9DF8D2466168500B2199D /* UpKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DF9DF8B2466168500B2199D /* UpKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DF9DF9324661B5F00B2199D /* UPTile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF8F24661B5F00B2199D /* UPTile.mm */; };
-		5DF9DF9424661B5F00B2199D /* UPTileTray.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF9224661B5F00B2199D /* UPTileTray.mm */; };
-		5DF9DF9724661BC900B2199D /* UPGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF9624661BC900B2199D /* UPGame.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,12 +60,6 @@
 		5DF9DF762466165800B2199D /* UPSpellTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPSpellTests.m; sourceTree = "<group>"; };
 		5DF9DF782466165800B2199D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DF9DF8B2466168500B2199D /* UpKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UpKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DF9DF8F24661B5F00B2199D /* UPTile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTile.mm; sourceTree = "<group>"; };
-		5DF9DF9024661B5F00B2199D /* UPTileTray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTileTray.h; sourceTree = "<group>"; };
-		5DF9DF9124661B5F00B2199D /* UPTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTile.h; sourceTree = "<group>"; };
-		5DF9DF9224661B5F00B2199D /* UPTileTray.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTileTray.mm; sourceTree = "<group>"; };
-		5DF9DF9524661BC900B2199D /* UPGame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGame.h; sourceTree = "<group>"; };
-		5DF9DF9624661BC900B2199D /* UPGame.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGame.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,12 +103,6 @@
 		5DF9DF592466165700B2199D /* UPSpell */ = {
 			isa = PBXGroup;
 			children = (
-				5DF9DF9524661BC900B2199D /* UPGame.h */,
-				5DF9DF9624661BC900B2199D /* UPGame.mm */,
-				5DF9DF9124661B5F00B2199D /* UPTile.h */,
-				5DF9DF8F24661B5F00B2199D /* UPTile.mm */,
-				5DF9DF9024661B5F00B2199D /* UPTileTray.h */,
-				5DF9DF9224661B5F00B2199D /* UPTileTray.mm */,
 				5DF9DF5A2466165700B2199D /* AppDelegate.h */,
 				5DF9DF5B2466165700B2199D /* AppDelegate.m */,
 				5DF9DF5D2466165700B2199D /* SceneDelegate.h */,
@@ -251,9 +236,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DF9DF9724661BC900B2199D /* UPGame.mm in Sources */,
-				5DF9DF9424661B5F00B2199D /* UPTileTray.mm in Sources */,
-				5DF9DF9324661B5F00B2199D /* UPTile.mm in Sources */,
 				5DF9DF622466165700B2199D /* ViewController.mm in Sources */,
 				5DF9DF5C2466165700B2199D /* AppDelegate.m in Sources */,
 				5DF9DF6D2466165800B2199D /* main.m in Sources */,

@@ -1,13 +1,13 @@
 //
-//  UPTile.h
+//  UPLetterTile.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#if __OBJC__
+#ifdef __OBJC__
 #import <Foundation/Foundation.h>
 #endif  // __OBJC__
 
-#if __cplusplus
+#ifdef __cplusplus
 
 #import <UpKit/UPMacros.h>
 
@@ -15,7 +15,7 @@
 
 namespace UP {
 
-class Tile {
+class LetterTile {
 public:
     static constexpr char32_t SentinelGlyph = 0;
 
@@ -33,10 +33,10 @@ public:
         return scores[k];
     }
 
-    Tile() {}
-    Tile(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {}
+    LetterTile() {}
+    LetterTile(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {}
 
-    static Tile sentinel() { return Tile(SentinelGlyph, 0); }
+    static LetterTile sentinel() { return LetterTile(SentinelGlyph, 0); }
 
     char32_t glyph() const { return m_glyph; }
     int score() const { return score_for(glyph()) * multiplier(); }
@@ -49,35 +49,14 @@ private:
     int m_multiplier = 1;
 };
 
-UP_STATIC_INLINE bool operator==(const Tile &a, const Tile &b) {
+UP_STATIC_INLINE bool operator==(const LetterTile &a, const LetterTile &b) {
     return a.glyph() == b.glyph() && a.score() == b.score() && a.multiplier() == b.multiplier();
 }
 
-UP_STATIC_INLINE bool operator!=(const Tile &a, const Tile &b) {
+UP_STATIC_INLINE bool operator!=(const LetterTile &a, const LetterTile &b) {
     return !(a == b);
 }
-
-enum { TileCount = 7 };
-using TileArray = std::array<Tile, TileCount>;
-using MarkedArray = std::array<bool, TileCount>;
 
 }  // namespace UP
 
 #endif  // __cplusplus
-
-// =========================================================================================================================================
-
-#if __OBJC__
-
-@interface UPTile : NSObject
-@property (nonatomic, readonly) char32_t glyph;
-@property (nonatomic, readonly) int score;
-@property (nonatomic, readonly) int multiplier;
-
-+ (UPTile *)tileWithGlyph:(char32_t)glyph multiplier:(int)multiplier;
-
-- (instancetype)init NS_UNAVAILABLE;
-
-@end
-
-#endif  // __OBJC__
