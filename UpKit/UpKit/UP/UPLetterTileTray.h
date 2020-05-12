@@ -12,7 +12,7 @@
 #import <array>
 
 #import <UpKit/UPLetterTile.h>
-#import <UpKit/UPLetterTileContext.h>
+#import <UpKit/UPLetterTileSequence.h>
 
 namespace UP {
 
@@ -47,11 +47,12 @@ public:
             idx++;
         }
     }
-    void fill(LetterTileContext &ctx) {
+    void fill() {
+        auto &seq = LetterTileSequence::instance();
         sentinelize_marked();
         for (auto &tile : m_tiles) {
             if (tile.is_sentinel()) {
-                char32_t c = ctx.letter_sequence().next();
+                char32_t c = seq.next();
                 tile = LetterTile(c);
             }
         }

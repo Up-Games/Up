@@ -21,14 +21,24 @@ namespace UP {
     
 class LetterTileSequence {
 public:
-    LetterTileSequence() : m_game_code(GameCode()) { reset(); }
-    LetterTileSequence(const GameCode &game_code) : m_game_code(game_code) { reset(); }
-    
-    GameCode game_code() const { return m_game_code; }
-    
+    static LetterTileSequence &create_instance() {
+        g_instance = new LetterTileSequence();
+        return *g_instance;
+    }
+
+    static LetterTileSequence &instance() {
+        return *g_instance;
+    }
+
+    LetterTileSequence(LetterTileSequence &&) = delete;
+    LetterTileSequence(LetterTileSequence const &) = delete;
+    void operator=(LetterTileSequence const &) = delete;
+
     void reset() {
         set_game_code(game_code());
     }
+
+    GameCode game_code() const { return m_game_code; }
     
     void set_game_code(const GameCode &game_code) {
         m_game_code = game_code;
@@ -50,6 +60,13 @@ public:
     }
     
 private:
+    LetterTileSequence() : m_game_code(GameCode()) { reset(); }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+    UP_STATIC_INLINE LetterTileSequence *g_instance;
+#pragma clang diagnostic pop
+
     GameCode m_game_code;
     Random m_random;
     std::vector<char32_t> m_letters;

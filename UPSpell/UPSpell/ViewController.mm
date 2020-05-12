@@ -10,7 +10,7 @@
 
 using UP::GameCode;
 using UP::LetterTile;
-using UP::LetterTileContext;
+using UP::LetterTileSequence;
 using UP::LetterTileTray;
 
 @interface ViewController ()
@@ -45,25 +45,26 @@ using UP::LetterTileTray;
     [super viewDidLoad];
 
     UP::Random::create_instance();
+    UP::Lexicon::set_language(UPLexiconLanguageEnglish);
 
     GameCode code = GameCode::random();
 //    GameCode code = GameCode("WPQ-2701");
     NSLog(@"code: %s", code.string().c_str());
     NSLog(@"code: %d", code.value());
 
-    auto ctx = LetterTileContext();
-    ctx.configure(UPLexiconLanguageEnglish, code);
+    UP::LetterTileSequence::create_instance();
+    UP::LetterTileSequence::instance().set_game_code(code);
 
     LetterTileTray tray;
     tray.mark_all();
     tray.sentinelize_marked();
-    tray.fill(ctx);
+    tray.fill();
     [self printTiles:tray];
     
     for (int idx = 0; idx < 10; idx++) {
         [self markRandom:tray];
         tray.sentinelize_marked();
-        tray.fill(ctx);
+        tray.fill();
         [self printTiles:tray];
     }
     
