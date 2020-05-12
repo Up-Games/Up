@@ -85,6 +85,7 @@ using UP::GameCode;
 
 - (void)testGameCodeRandom
 {
+    UP::Random::create_instance();
     GameCode game_code = GameCode::random();
     XCTAssert(game_code.value() > 0, "Game code should be > 0.");
     XCTAssert(game_code.value() <= GameCode::MaxValue, "Game code should be >= GameCode::MaxValue.");
