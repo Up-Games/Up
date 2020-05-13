@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5D37CAD924605F5A002D4D6B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D37CAD824605F5A002D4D6B /* AppDelegate.m */; };
-		5D37CADC24605F5A002D4D6B /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D37CADB24605F5A002D4D6B /* SceneDelegate.m */; };
+		5D37CADC24605F5A002D4D6B /* UPSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D37CADB24605F5A002D4D6B /* UPSceneDelegate.m */; };
 		5D37CADF24605F5A002D4D6B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D37CADE24605F5A002D4D6B /* ViewController.m */; };
 		5D37CAE224605F5A002D4D6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D37CAE024605F5A002D4D6B /* Main.storyboard */; };
 		5D37CAE424605F5D002D4D6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D37CAE324605F5D002D4D6B /* Assets.xcassets */; };
@@ -38,8 +38,8 @@
 		5D37CAD424605F59002D4D6B /* UpPalette.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UpPalette.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D37CAD724605F5A002D4D6B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5D37CAD824605F5A002D4D6B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5D37CADA24605F5A002D4D6B /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		5D37CADB24605F5A002D4D6B /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		5D37CADA24605F5A002D4D6B /* UPSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSceneDelegate.h; sourceTree = "<group>"; };
+		5D37CADB24605F5A002D4D6B /* UPSceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPSceneDelegate.m; sourceTree = "<group>"; };
 		5D37CADD24605F5A002D4D6B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		5D37CADE24605F5A002D4D6B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5D37CAE124605F5A002D4D6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -98,8 +98,8 @@
 				5D37CAE524605F5D002D4D6B /* LaunchScreen.storyboard */,
 				5D37CAE924605F5D002D4D6B /* main.m */,
 				5D37CAE024605F5A002D4D6B /* Main.storyboard */,
-				5D37CADA24605F5A002D4D6B /* SceneDelegate.h */,
-				5D37CADB24605F5A002D4D6B /* SceneDelegate.m */,
+				5D37CADA24605F5A002D4D6B /* UPSceneDelegate.h */,
+				5D37CADB24605F5A002D4D6B /* UPSceneDelegate.m */,
 				5D37CADD24605F5A002D4D6B /* ViewController.h */,
 				5D37CADE24605F5A002D4D6B /* ViewController.m */,
 				5D37CB052460F3B4002D4D6B /* UpPalette.entitlements */,
@@ -189,7 +189,7 @@
 				5D37CADF24605F5A002D4D6B /* ViewController.m in Sources */,
 				5D37CAD924605F5A002D4D6B /* AppDelegate.m in Sources */,
 				5D37CAEA24605F5D002D4D6B /* main.m in Sources */,
-				5D37CADC24605F5A002D4D6B /* SceneDelegate.m in Sources */,
+				5D37CADC24605F5A002D4D6B /* UPSceneDelegate.m in Sources */,
 				5D37CB0424609B1C002D4D6B /* GameMockupView.m in Sources */,
 				5D37CB0124608A38002D4D6B /* ColorChip.m in Sources */,
 			);

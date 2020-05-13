@@ -74,4 +74,24 @@ static UPColorStyle _ThemeStyle = UPColorStyleDefault;
     return labf.lightness();
 }
 
++ (UIColor *)testColor1
+{
+    return [[UIColor orangeColor] colorWithAlphaComponent:0.5];
+}
+
++ (UIColor *)testColor2
+{
+    return [[UIColor blueColor] colorWithAlphaComponent:0.5];
+}
+
++ (UIColor *)testColor3
+{
+    return [[UIColor greenColor] colorWithAlphaComponent:0.5];
+}
+
++ (UIColor *)testColor4
+{
+    return [[UIColor purpleColor] colorWithAlphaComponent:0.5];
+}
+
 @end

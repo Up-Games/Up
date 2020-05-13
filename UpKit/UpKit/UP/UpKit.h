@@ -11,10 +11,12 @@ FOUNDATION_EXPORT double UpKitVersionNumber;
 //! Project version string for UpKit.
 FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 
+#import <UpKit/UPCenteredTextLayer.h>
 #import <UpKit/UPConstants.h>
 #import <UpKit/UPDeferredBlock.h>
 #import <UpKit/UPGameCode.h>
 #import <UpKit/UPGeometry.h>
+#import <UpKit/UPLayoutManager.h>
 #import <UpKit/UPLayoutRule.h>
 #import <UpKit/UPLetterTile.h>
 #import <UpKit/UPLetterTileSequence.h>

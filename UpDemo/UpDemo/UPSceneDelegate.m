@@ -1,15 +1,10 @@
-//
-//  SceneDelegate.m
-//  Copyright © 2020 Up Games. All rights reserved.
-//
+#import "UPSceneDelegate.h"
 
-#import "SceneDelegate.h"
-
-@interface SceneDelegate ()
+@interface UPSceneDelegate ()
 
 @end
 
-@implementation SceneDelegate
+@implementation UPSceneDelegate
 
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {

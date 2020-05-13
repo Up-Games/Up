@@ -1,11 +1,11 @@
 //
-//  SceneDelegate.h
+//  UPSceneDelegate.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface SceneDelegate : UIResponder <UIWindowSceneDelegate>
+@interface UPSceneDelegate : UIResponder <UIWindowSceneDelegate>
 
 @property (strong, nonatomic) UIWindow * window;
 

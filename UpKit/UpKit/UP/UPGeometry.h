@@ -70,7 +70,9 @@ CGRect up_rect_centered_in_rect(CGRect rectToCenter, CGRect referenceRect);
 CGRect up_rect_centered_x_in_rect(CGRect rectToCenter, CGRect referenceRect);
 CGRect up_rect_centered_y_in_rect(CGRect rectToCenter, CGRect referenceRect);
 CGRect up_rect_centered_around_point(CGRect rectToCenter, CGPoint referencePoint);
-CGPoint up_rect_center(CGRect rect);
+CGPoint up_rect_center(CGRect);
+CGFloat up_aspect_ratio_for_size(CGSize);
+CGFloat up_aspect_ratio_for_rect(CGRect);
 
 CGFloat up_bezier_quadratic(CGFloat A, CGFloat B, CGFloat C, CGFloat t);
 CGFloat up_bezier_cubic(CGFloat A, CGFloat B, CGFloat C, CGFloat D, CGFloat t);

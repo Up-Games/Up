@@ -42,9 +42,13 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 + (UPColorStyle)themeStyle;
 
 + (UIColor *)themeColorWithHue:(CGFloat)hue category:(UPColorCategory)category;
-
 + (UIColor *)colorizedGray:(CGFloat)gray hue:(CGFloat)hue saturation:(CGFloat)saturation;
 
 - (CGFloat)LABLightness;
+
++ (UIColor *)testColor1;
++ (UIColor *)testColor2;
++ (UIColor *)testColor3;
++ (UIColor *)testColor4;
 
 @end

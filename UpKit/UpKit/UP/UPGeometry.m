@@ -40,6 +40,16 @@ CGPoint up_rect_center(CGRect rect)
     return CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
 }
 
+CGFloat up_aspect_ratio_for_size(CGSize size)
+{
+    return size.width / size.height;
+}
+
+CGFloat up_aspect_ratio_for_rect(CGRect rect)
+{
+    return up_aspect_ratio_for_size(rect.size);
+}
+
 CGFloat up_bezier_mix(CGFloat a, CGFloat b, CGFloat t)
 {
     // degree 1

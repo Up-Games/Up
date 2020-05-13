@@ -1,19 +1,18 @@
 //
-//  AppDelegate.m
+//  UPAppDelegate.m
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "UPAppDelegate.h"
 
-@interface AppDelegate ()
+@interface UPAppDelegate ()
 @end
 
-@implementation AppDelegate
+@implementation UPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     return YES;
 }
-
 
 @end
