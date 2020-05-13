@@ -12,6 +12,11 @@ extern NSString * const UPLayoutManagerCanvasFrameWillChange;
 extern NSString * const UPLayoutManagerCanvasFrameDidChange;
 extern NSString * const UPLayoutManagerCanvasFrameKey;
 
+extern const CGFloat UPCanonicalCanvasWidth;
+extern const CGFloat UPCanonicalCanvasHeight;
+extern const CGSize UPCanonicalCanvasSize;
+extern const CGFloat UPCanonicalAspectRatio;
+
 typedef NS_ENUM(NSInteger, UPLayoutManagerAspectMode) {
     UPLayoutManagerAspectModeCanonical,
     UPLayoutManagerAspectModeWiderThanCanonical,
@@ -20,15 +25,11 @@ typedef NS_ENUM(NSInteger, UPLayoutManagerAspectMode) {
 
 @interface UPLayoutManager : NSObject
 
-@property (nonatomic, readonly) CGSize canonicalCanvasSize;
-@property (nonatomic, readonly) CGFloat canonicalAspectRatio;
 @property (nonatomic) CGRect canvasFrame;
 @property (nonatomic, readonly) UPLayoutManagerAspectMode aspectMode;
 @property (nonatomic, readonly) CGFloat aspectRatio;
 @property (nonatomic, readonly) CGFloat layoutScale;
 @property (nonatomic, readonly) CGRect layoutFrame;
-
-+ (UPLayoutManager *)instance;
 
 - (CGPoint)positionForKey:(UPLayoutKey)key;
 - (CGSize)sizeForKey:(UPLayoutKey)key;

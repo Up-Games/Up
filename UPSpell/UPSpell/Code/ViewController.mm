@@ -6,6 +6,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UpKit/UpKit.h>
 
+#import "UPSpellLayoutManager.h"
 #import "ViewController.h"
 #import "UIFont+UPSpell.h"
 
@@ -17,7 +18,8 @@ using UP::LetterTileTray;
 @interface ViewController ()
 @property (nonatomic) UIView *canvasView;
 @property (nonatomic) UIView *layoutView;
-@property (nonatomic) UIView *tile1;
+@property (nonatomic) UIView *tileFrameView;
+@property (nonatomic) NSMutableArray *tileViews;
 @end
 
 @implementation ViewController
@@ -81,9 +83,17 @@ using UP::LetterTileTray;
     self.layoutView.backgroundColor = [UIColor testColor2];
     [self.view addSubview:self.layoutView];
 
-//    self.tile1 = [[UIView alloc] initWithFrame:CGRectZero];
-//    self.tile1.backgroundColor = [UIColor testColor2];
-//    [self.view addSubview:self.tile1];
+    self.tileFrameView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tileFrameView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.tileFrameView];
+
+    self.tileViews = [NSMutableArray array];
+    for (int i = 0; i < UP::TileCount; i++) {
+        UIView *tileView = [[UIView alloc] initWithFrame:CGRectZero];
+        tileView.backgroundColor = [UIColor blackColor];
+        [self.view addSubview:tileView];
+        [self.tileViews addObject:tileView];
+    }
 
 //    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 200, 90)];
 //    label.font = [UIFont letterTileGlyphFontOfSize:86];
@@ -95,9 +105,23 @@ using UP::LetterTileTray;
 
 - (void)viewDidLayoutSubviews
 {
-    UPLayoutManager *layoutManager = [UPLayoutManager instance];
+    UPSpellLayoutManager *layoutManager = [UPSpellLayoutManager instance];
     self.canvasView.frame = layoutManager.canvasFrame;
     self.layoutView.frame = layoutManager.layoutFrame;
+//    self.tileFrameView.frame = layoutManager.tileFrame;
+//    NSLog(@"tile frame: %@", NSStringFromCGRect(layoutManager.tileFrame));
+//
+//    CGFloat x = CGRectGetMinX(self.tileFrameView.frame);
+//    CGFloat y = CGRectGetMinY(self.tileFrameView.frame);
+//    CGFloat widthFraction = CGRectGetWidth(UPSpellCanonicalTileLayoutFrame) / UPCanonicalCanvasWidth;
+//    CGFloat width = 68; //UPSpellCanonicalTileSize.width * layoutManager.layoutScale * widthFraction;
+//    CGFloat height = CGRectGetHeight(self.tileFrameView.frame);
+//    CGFloat gap = UPSpellCanonicalTileGap * layoutManager.layoutScale;
+//    for (UIView *view in self.tileViews) {
+//        CGRect frame = CGRectMake(x, y, width, height);
+//        view.frame = frame;
+//        x += (width + gap);
+//    }
 }
 
 @end

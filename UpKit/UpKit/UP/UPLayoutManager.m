@@ -13,7 +13,10 @@ NSString * const UPLayoutManagerCanvasFrameWillChange = @"UPLayoutManagerCanvasF
 NSString * const UPLayoutManagerCanvasFrameDidChange = @"UPLayoutManagerCanvasFrameDidChange";
 NSString * const UPLayoutManagerCanvasFrameKey = @"UPLayoutManagerCanvasFrameKey";
 
-static const CGSize UPCanonicalCanvasSize = { 1000, 530 };
+const CGFloat UPCanonicalCanvasWidth = 1000;
+const CGFloat UPCanonicalCanvasHeight = 530;
+const CGSize UPCanonicalCanvasSize = { UPCanonicalCanvasWidth, UPCanonicalCanvasHeight };
+const CGFloat UPCanonicalAspectRatio = UPCanonicalCanvasWidth / UPCanonicalCanvasHeight;
 
 @interface UPLayoutManager ()
 @property (nonatomic, readwrite) UPLayoutManagerAspectMode aspectMode;
@@ -23,28 +26,6 @@ static const CGSize UPCanonicalCanvasSize = { 1000, 530 };
 @end
 
 @implementation UPLayoutManager
-
-+ (UPLayoutManager *)instance
-{
-    static dispatch_once_t onceToken;
-    static UPLayoutManager *instance;
-    dispatch_once(&onceToken, ^{
-        instance = [[UPLayoutManager alloc] init];
-    });
-    return instance;
-}
-
-@dynamic canonicalCanvasSize;
-- (CGSize)canonicalCanvasSize
-{
-    return UPCanonicalCanvasSize;
-}
-
-@dynamic canonicalAspectRatio;
-- (CGFloat)canonicalAspectRatio
-{
-    return up_aspect_ratio_for_size(UPCanonicalCanvasSize);
-}
 
 - (void)setCanvasFrame:(CGRect)canvasFrame
 {
@@ -58,11 +39,11 @@ static const CGSize UPCanonicalCanvasSize = { 1000, 530 };
     _canvasFrame = canvasFrame;
     
     self.aspectRatio = up_aspect_ratio_for_rect(_canvasFrame);
-    if (up_is_fuzzy_equal(self.aspectRatio, self.canonicalAspectRatio)) {
+    if (up_is_fuzzy_equal(self.aspectRatio, UPCanonicalAspectRatio)) {
         self.aspectMode = UPLayoutManagerAspectModeCanonical;
         self.layoutScale = 1;
     }
-    else if (self.aspectRatio > self.canonicalAspectRatio) {
+    else if (self.aspectRatio > UPCanonicalAspectRatio) {
         self.aspectMode = UPLayoutManagerAspectModeWiderThanCanonical;
         CGFloat canvasWidth = CGRectGetWidth(_canvasFrame);
         CGFloat canvasHeight = CGRectGetHeight(_canvasFrame);
@@ -70,9 +51,11 @@ static const CGSize UPCanonicalCanvasSize = { 1000, 530 };
         CGFloat convertedHeight = CGRectGetHeight(_canvasFrame) * conversionFactor;
         self.layoutScale = convertedHeight / UPCanonicalCanvasSize.height;
         CGFloat width = round(canvasWidth * self.layoutScale);
+        
+        // layout frame is letterboxed, leaving gaps on the left and right.
         self.layoutFrame = up_rect_centered_in_rect(CGRectMake(0, 0, width, canvasHeight), _canvasFrame);
-        NSLog(@"scaled [wider]: %.2f, %.2f : (%.3f)", width, canvasHeight, self.layoutScale);
-        NSLog(@"         frame: %@", NSStringFromCGRect(self.layoutFrame));
+        NSLog(@"aspect wider: %.2f, %.2f : (%.3f)", width, canvasHeight, self.layoutScale);
+        NSLog(@"        frame: %@", NSStringFromCGRect(self.layoutFrame));
     }
     else {
         self.aspectMode = UPLayoutManagerAspectModeTallerThanCanonical;
@@ -81,10 +64,11 @@ static const CGSize UPCanonicalCanvasSize = { 1000, 530 };
         CGFloat conversionFactor = UPCanonicalCanvasSize.height / canvasHeight;
         CGFloat convertedWidth = CGRectGetWidth(_canvasFrame) * conversionFactor;
         self.layoutScale = convertedWidth / UPCanonicalCanvasSize.width;
-        CGFloat height = round(canvasHeight * self.layoutScale);
+        CGFloat height = canvasHeight;
+        // layout frame fills the canvas, and elements will layout to leave extra vertical gaps.
         self.layoutFrame = up_rect_centered_in_rect(CGRectMake(0, 0, canvasWidth, height), _canvasFrame);
-        NSLog(@"scaled [taller]: %.2f, %.2f : (%.3f)", canvasWidth, height, self.layoutScale);
-        NSLog(@"         frame: %@", NSStringFromCGRect(self.layoutFrame));
+        NSLog(@"aspect taller: %.2f, %.2f : (%.3f)", canvasWidth, height, self.layoutScale);
+        NSLog(@"        frame: %@", NSStringFromCGRect(self.layoutFrame));
     }
 
     [nc postNotificationName:UPLayoutManagerCanvasFrameDidChange object:nil userInfo:@{

@@ -6,6 +6,7 @@
 #import <UpKit/UpKit.h>
 
 #import "UPSceneDelegate.h"
+#import "UPSpellLayoutManager.h"
 
 @interface UPSceneDelegate ()
 @end
@@ -18,7 +19,7 @@
     NSLog(@"rect:  %@", NSStringFromCGRect(self.window.bounds));
     NSLog(@"safe:  %@", NSStringFromCGRect(safeAreaLayoutGuide.layoutFrame));
     
-    UPLayoutManager *layoutManager = [UPLayoutManager instance];
+    UPSpellLayoutManager *layoutManager = [UPSpellLayoutManager instance];
     layoutManager.canvasFrame = safeAreaLayoutGuide.layoutFrame;
 
     NSLog(@"mode:  %ld", (long)layoutManager.aspectMode);
