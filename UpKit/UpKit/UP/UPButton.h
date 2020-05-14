@@ -13,10 +13,13 @@
 
 + (UPButton *)button;
 
+- (void)setContentPath:(UIBezierPath *)path;
+- (void)setContentPath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
+
 - (void)setFillPath:(UIBezierPath *)path;
 - (void)setFillPath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
+
+- (void)setStrokePath:(UIBezierPath *)path;
 - (void)setStrokePath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
-- (void)setBackgroundFillPath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
-- (void)setBackgroundStrokePath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
 
 @end

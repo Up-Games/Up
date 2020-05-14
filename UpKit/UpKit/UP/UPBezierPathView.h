@@ -18,4 +18,6 @@
 + (UPBezierPathView *)bezierPathView;
 + (UPBezierPathView *)bezierPathViewWithFrame:(CGRect)frame;
 
+- (void)setNeedsPathUpdate;
+
 @end

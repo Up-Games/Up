@@ -131,7 +131,7 @@ static ViewController *_Instance;
         PrimaryFillKey, InactiveFillKey, ActiveFillKey, HighlightedFillKey,
         SecondaryInactiveFillKey, SecondaryActiveFillKey, SecondaryHighlightedFillKey,
         PrimaryStrokeKey, InactiveStrokeKey, ActiveStrokeKey, HighlightedStrokeKey,
-        InactiveContentKey, ContentKey, InformationKey, CanvasKey,
+        ContentKey, InactiveContentKey, InformationKey, CanvasKey,
     ];
 
     self.colorChips = [NSMutableDictionary dictionary];

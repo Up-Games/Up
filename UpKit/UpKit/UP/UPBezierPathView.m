@@ -17,6 +17,29 @@
 
 @implementation UPBezierPathView
 
+static NSMutableSet *_PathsNeedingUpdateSet;
+
++ (void)initialize
+{
+    // support for calling -setNeedsPathUpdate.
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _PathsNeedingUpdateSet = [NSMutableSet set];
+        CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(NULL, kCFRunLoopBeforeWaiting, YES, 0,
+            ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) {
+                if (_PathsNeedingUpdateSet.count) {
+                    NSSet *set = [_PathsNeedingUpdateSet copy];
+                    [_PathsNeedingUpdateSet removeAllObjects];
+                    for (UPBezierPathView *view in set) {
+                        [view updatePath];
+                    }
+                }
+            }
+        );
+        CFRunLoopAddObserver(CFRunLoopGetMain(), observer, kCFRunLoopCommonModes);
+    });
+}
+
 + (Class)layerClass
 {
     return [CAShapeLayer class];
@@ -112,21 +135,13 @@
 
 - (void)setNeedsPathUpdate
 {
-    self.needsPathUpdate = YES;
+    [_PathsNeedingUpdateSet addObject:self];
 }
 
 - (void)setNeedsLayout
 {
     [super setNeedsLayout];
     self.needsPathUpdate = YES;
-}
-
-- (void)layoutSubviews
-{
-    if (self.needsPathUpdate) {
-        [self _updatePath];
-    }
-    self.needsPathUpdate = NO;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size
@@ -146,7 +161,7 @@
     [self setNeedsPathUpdate];
 }
 
-- (void)_updatePath
+- (void)updatePath
 {
     if (!self.path) {
         self.effectivePath = nil;
@@ -154,66 +169,25 @@
         return;
     }
 
+    // This code could conceivably switch on -contentMode, and if I were writing
+    // a framework, I would do so. However, since I'm writing an app, and all I
+    // care about is scaling the path to fill a view's whose aspect ratio will
+    // never change, that's all this code does.
     CGRect bounds = self.bounds;
     CGFloat pathWidth = self.canonicalSize.width;
     CGFloat pathHeight = self.canonicalSize.height;
-    switch (self.contentMode) {
-        case UIViewContentModeScaleToFill: {
-            if (up_is_fuzzy_equal(CGRectGetWidth(bounds), pathWidth) && up_is_fuzzy_equal(CGRectGetHeight(bounds), pathHeight)) {
-                self.pathTransform = CGAffineTransformIdentity;
-            }
-            else {
-                CGFloat sx = pathWidth > 0 ? (CGRectGetWidth(bounds) / pathWidth) : 0;
-                CGFloat sy = pathHeight > 0 ? (CGRectGetHeight(bounds) / pathHeight) : 0;
-                self.pathTransform = CGAffineTransformMakeScale(sx, sy);
-            }
-            break;
-        }
-        case UIViewContentModeScaleAspectFit: {
-            break;
-        }
-        case UIViewContentModeScaleAspectFill: {
-            break;
-        }
-        case UIViewContentModeRedraw: {
-            break;
-        }
-        case UIViewContentModeCenter: {
-            break;
-        }
-        case UIViewContentModeTop: {
-            break;
-        }
-        case UIViewContentModeBottom: {
-            break;
-        }
-        case UIViewContentModeLeft: {
-            break;
-        }
-        case UIViewContentModeRight: {
-            break;
-        }
-        case UIViewContentModeTopLeft: {
-            break;
-        }
-        case UIViewContentModeTopRight: {
-            break;
-        }
-        case UIViewContentModeBottomLeft: {
-            break;
-        }
-        case UIViewContentModeBottomRight: {
-            break;
-        }
-    }
-
-    if (CGAffineTransformEqualToTransform(self.pathTransform, CGAffineTransformIdentity)) {
+    if (up_is_fuzzy_equal(CGRectGetWidth(bounds), pathWidth) && up_is_fuzzy_equal(CGRectGetHeight(bounds), pathHeight)) {
+        self.pathTransform = CGAffineTransformIdentity;
         self.effectivePath = self.path;
     }
     else {
+        CGFloat sx = pathWidth > 0 ? (CGRectGetWidth(bounds) / pathWidth) : 0;
+        CGFloat sy = pathHeight > 0 ? (CGRectGetHeight(bounds) / pathHeight) : 0;
+        self.pathTransform = CGAffineTransformMakeScale(sx, sy);
         self.effectivePath = [self.path copy];
         [self.effectivePath applyTransform:self.pathTransform];
     }
+
     ShapeLayer().path = self.effectivePath.CGPath;
 }
 

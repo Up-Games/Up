@@ -84,6 +84,8 @@ using UP::LetterTileTray;
 //        [self printTiles:tray];
 //    }
     
+    [UIColor setThemeStyle:UPColorStyleLightStark];
+    
     self.layout_manager = std::make_shared<UP::SpellLayoutManager>();
     self.layout_manager->set_canvas_frame([[UPSceneDelegate instance] canvasFrame]);
     
