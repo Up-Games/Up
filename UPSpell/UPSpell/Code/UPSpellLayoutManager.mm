@@ -49,6 +49,7 @@ void SpellLayoutManager::calculate()
         calculate_controls_layout_frame();
         calculate_word_tray_layout_frame();
         calculate_tiles_layout_frame();
+        calculate_controls_button_pause_layout_frame();
     }
     else {
         set_aspect_mode(AspectMode::TallerThanCanonical);
@@ -75,6 +76,7 @@ void SpellLayoutManager::calculate()
         calculate_controls_layout_frame();
         calculate_word_tray_layout_frame();
         calculate_tiles_layout_frame();
+        calculate_controls_button_pause_layout_frame();
     }
 }
 
@@ -152,6 +154,13 @@ void SpellLayoutManager::calculate_tiles_layout_frame()
         }
     }
     NSLog(@"   tiles layout frame:  %@", NSStringFromCGRect(tiles_layout_frame()));
+}
+
+void SpellLayoutManager::calculate_controls_button_pause_layout_frame()
+{
+    CGRect frame = up_rect_scaled(CanonicalRoundControlButtonPauseFrame, layout_scale());
+    set_controls_button_pause_layout_frame(frame);
+    NSLog(@"   pause button frame:  %@", NSStringFromCGRect(controls_button_pause_layout_frame()));
 }
 
 }  // namespace UP

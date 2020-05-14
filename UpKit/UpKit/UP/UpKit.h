@@ -11,12 +11,14 @@ FOUNDATION_EXPORT double UpKitVersionNumber;
 //! Project version string for UpKit.
 FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 
+#import <UpKit/UPBezierPathView.h>
+#import <UpKit/UPButton.h>
 #import <UpKit/UPCenteredTextLayer.h>
 #import <UpKit/UPConstants.h>
+#import <UpKit/UPControl.h>
 #import <UpKit/UPDeferredBlock.h>
 #import <UpKit/UPGameCode.h>
 #import <UpKit/UPGeometry.h>
-//#import <UpKit/UPLayoutManager.h>
 #import <UpKit/UPLayoutRule.h>
 #import <UpKit/UPLetterTile.h>
 #import <UpKit/UPLetterTileSequence.h>
@@ -24,7 +26,6 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPLexicon.h>
 #import <UpKit/UPMath.h>
 #import <UpKit/UPRandom.h>
-#import <UpKit/UPShapeView.h>
 #import <UpKit/UPStringTools.h>
 #import <UpKit/UPTypes.h>
 #import <UpKit/UPUnitFunction.h>

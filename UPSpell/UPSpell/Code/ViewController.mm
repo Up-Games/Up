@@ -12,6 +12,7 @@
 #import "UPSpellLayoutManager.h"
 #import "ViewController.h"
 #import "UIFont+UPSpell.h"
+#import "UPButton+UPSpell.h"
 
 using UP::GameCode;
 using UP::LetterTile;
@@ -25,6 +26,7 @@ using UP::LetterTileTray;
 @property (nonatomic) UIView *wordTrayLayoutView;
 @property (nonatomic) UIView *tilesLayoutView;
 @property (nonatomic) UIView *tileFrameView;
+@property (nonatomic) UPButton *roundControlButtonPause;
 @property (nonatomic) NSMutableArray *tileViews;
 @property (nonatomic) std::shared_ptr<UP::SpellLayoutManager> layout_manager;
 @end
@@ -105,7 +107,8 @@ using UP::LetterTileTray;
     self.tilesLayoutView.backgroundColor = [UIColor testColor3];
     [self.view addSubview:self.tilesLayoutView];
 
-    
+    self.roundControlButtonPause = [UPButton roundControlButtonPause];
+    [self.controlsLayoutView addSubview:self.roundControlButtonPause];
 
 //    self.tileFrameView = [[UIView alloc] initWithFrame:CGRectZero];
 //    self.tileFrameView.backgroundColor = [UIColor whiteColor];
@@ -134,6 +137,7 @@ using UP::LetterTileTray;
     self.controlsLayoutView.frame = self.layout_manager->controls_layout_frame();
     self.wordTrayLayoutView.frame = self.layout_manager->word_tray_layout_frame();
     self.tilesLayoutView.frame = self.layout_manager->tiles_layout_frame();
+    self.roundControlButtonPause.frame = self.layout_manager->controls_button_pause_layout_frame();
 
 //    self.tileFrameView.frame = layoutManager.tileFrame;
 //    NSLog(@"tile frame: %@", NSStringFromCGRect(layoutManager.tileFrame));

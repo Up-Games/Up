@@ -32,6 +32,9 @@ public:
     static inline constexpr CGRect CanonicalWordTrayFrame =       { 62.5, 133, 875, 182 };
     static inline constexpr CGRect CanonicalTilesLayoutFrame =    {  105, 350, 790, 116 };
 
+    static inline constexpr CGSize CanonicalRoundControlButtonSize = { 84, 84 };
+    static inline constexpr CGRect CanonicalRoundControlButtonPauseFrame = { 0, 0, 84, 84 };
+
     SpellLayoutManager() {}
 
     void set_canvas_frame(const CGRect &canvas_frame);
@@ -49,6 +52,9 @@ public:
     CGRect word_tray_layout_frame() const { return m_word_tray_layout_frame; }
     CGRect tiles_layout_frame() const { return m_tiles_layout_frame; }
 
+    CGRect controls_button_pause_layout_frame() const { return m_controls_button_pause_layout_frame; }
+
+
 private:
     void set_aspect_mode(AspectMode aspect_mode) { m_aspect_mode = aspect_mode; }
     void set_aspect_ratio(CGFloat aspect_ratio) { m_aspect_ratio = aspect_ratio; }
@@ -59,11 +65,15 @@ private:
     void set_controls_layout_frame(CGRect controls_layout_frame) { m_controls_layout_frame = controls_layout_frame; }
     void set_word_tray_layout_frame(CGRect word_tray_layout_frame) { m_word_tray_layout_frame = word_tray_layout_frame; }
     void set_tiles_layout_frame(CGRect tiles_layout_frame) { m_tiles_layout_frame = tiles_layout_frame; }
+    void set_controls_button_pause_layout_frame(CGRect controls_button_pause_layout_frame) {
+        m_controls_button_pause_layout_frame = controls_button_pause_layout_frame;
+    }
 
     void calculate();
     void calculate_controls_layout_frame();
     void calculate_word_tray_layout_frame();
     void calculate_tiles_layout_frame();
+    void calculate_controls_button_pause_layout_frame();
 
     AspectMode m_aspect_mode = AspectMode::Canonical;
     CGFloat m_aspect_ratio = CanonicalAspectRatio;
@@ -76,6 +86,8 @@ private:
     CGRect m_controls_layout_frame = CGRectZero;
     CGRect m_word_tray_layout_frame = CGRectZero;
     CGRect m_tiles_layout_frame = CGRectZero;
+
+    CGRect m_controls_button_pause_layout_frame = CGRectZero;
 };
 
 }  // namespace UP

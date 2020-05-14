@@ -41,7 +41,12 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 + (void)setThemeStyle:(UPColorStyle)style;
 + (UPColorStyle)themeStyle;
 
-+ (UIColor *)themeColorWithHue:(CGFloat)hue category:(UPColorCategory)category;
++ (void)setThemeHue:(CGFloat)hue;
++ (CGFloat)themeHue;
+
++ (UIColor *)themeColorWithCategory:(UPColorCategory)category;
++ (UIColor *)themeColorWithStyle:(UPColorStyle)style hue:(CGFloat)hue category:(UPColorCategory)category;
+
 + (UIColor *)colorizedGray:(CGFloat)gray hue:(CGFloat)hue saturation:(CGFloat)saturation;
 
 - (CGFloat)LABLightness;

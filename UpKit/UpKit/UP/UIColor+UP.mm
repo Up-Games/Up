@@ -5,6 +5,7 @@
 
 #import "UIColor+UP.h"
 #import "UPColor.h"
+#import "UPMath.h"
 
 using UP::RGBF;
 using UP::HSVF;
@@ -16,6 +17,7 @@ using UP::mix_channel;
 using UP::mix_lightness;
 
 static UPColorStyle _ThemeStyle = UPColorStyleDefault;
+static CGFloat _ThemeHue = 222;
 
 #include "UPThemeColors.c"
 
@@ -24,6 +26,7 @@ static UPColorStyle _ThemeStyle = UPColorStyleDefault;
 + (void)setThemeStyle:(UPColorStyle)style
 {
     _ThemeStyle = style;
+    // FIXME: send notification
 }
 
 + (UPColorStyle)themeStyle
@@ -31,12 +34,29 @@ static UPColorStyle _ThemeStyle = UPColorStyleDefault;
     return _ThemeStyle;
 }
 
-+ (UIColor *)themeColorWithHue:(CGFloat)hue category:(UPColorCategory)category
++ (void)setThemeHue:(CGFloat)hue;
+{
+    _ThemeHue = UPClampT(CGFloat, hue, 0, 360);
+    // FIXME: send notification
+}
+
++ (CGFloat)themeHue
+{
+    return _ThemeHue;
+}
+
++ (UIColor *)themeColorWithCategory:(UPColorCategory)category
+{
+    return [self themeColorWithStyle:_ThemeStyle hue:_ThemeHue category:category];
+}
+
++ (UIColor *)themeColorWithStyle:(UPColorStyle)style hue:(CGFloat)hue category:(UPColorCategory)category
 {
     static const size_t ColorsPerHue = 15;
     static const size_t HueCount = 360;
-    size_t themeOffset = (_ThemeStyle == UPColorStyleDefault ? 0 : (size_t)_ThemeStyle - 1) * HueCount;
-    size_t hueOffset = (hue * ColorsPerHue);
+    size_t themeOffset = (style == UPColorStyleDefault ? 0 : (size_t)style - 1) * HueCount;
+    CGFloat effectiveHue = UPClampT(CGFloat, hue, 0, 360);
+    size_t hueOffset = (effectiveHue * ColorsPerHue);
     size_t categoryOffset = (category == UPColorCategoryDefault ? 0 : (size_t)category - 1);
     size_t idx = (themeOffset * ColorsPerHue) + hueOffset + categoryOffset;
     _UPRGBColorComponents c = _UPThemeColorComponents[idx];
