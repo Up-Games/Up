@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D5216EB246C7E9E005A2E9F /* UPSpellLayoutManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216E9246C7E9E005A2E9F /* UPSpellLayoutManager.mm */; };
 		5D723116246B34C0006027A3 /* UPLetterTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D723115246B34C0006027A3 /* UPLetterTileView.m */; };
 		5D72311C246B3717006027A3 /* MalloryCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D723119246B3713006027A3 /* MalloryCond-Bold.otf */; };
 		5D72311D246B3717006027A3 /* MalloryMPNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D72311B246B3713006027A3 /* MalloryMPNrrw-Bold.otf */; };
 		5D72311E246B3717006027A3 /* MalloryNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D72311A246B3713006027A3 /* MalloryNrrw-Bold.otf */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.m */; };
-		5D723124246B56DF006027A3 /* UPSpellLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D723123246B56DF006027A3 /* UPSpellLayoutManager.m */; };
 		5DF9DF5C2466165700B2199D /* UPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5B2466165700B2199D /* UPAppDelegate.m */; };
 		5DF9DF5F2466165700B2199D /* UPSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5E2466165700B2199D /* UPSceneDelegate.m */; };
 		5DF9DF622466165700B2199D /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF612466165700B2199D /* ViewController.mm */; };
@@ -50,6 +50,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5D5216E9246C7E9E005A2E9F /* UPSpellLayoutManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellLayoutManager.mm; sourceTree = "<group>"; };
+		5D5216EA246C7E9E005A2E9F /* UPSpellLayoutManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellLayoutManager.h; sourceTree = "<group>"; };
 		5D723114246B34C0006027A3 /* UPLetterTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLetterTileView.h; sourceTree = "<group>"; };
 		5D723115246B34C0006027A3 /* UPLetterTileView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLetterTileView.m; sourceTree = "<group>"; };
 		5D723119246B3713006027A3 /* MalloryCond-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Bold.otf"; sourceTree = "<group>"; };
@@ -57,8 +59,6 @@
 		5D72311B246B3713006027A3 /* MalloryMPNrrw-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryMPNrrw-Bold.otf"; sourceTree = "<group>"; };
 		5D72311F246B3917006027A3 /* UIFont+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UPSpell.h"; sourceTree = "<group>"; };
 		5D723120246B3996006027A3 /* UIFont+UPSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+UPSpell.m"; sourceTree = "<group>"; };
-		5D723122246B56DF006027A3 /* UPSpellLayoutManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellLayoutManager.h; sourceTree = "<group>"; };
-		5D723123246B56DF006027A3 /* UPSpellLayoutManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPSpellLayoutManager.m; sourceTree = "<group>"; };
 		5DF9DF572466165700B2199D /* UP Spell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UP Spell.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF9DF5A2466165700B2199D /* UPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAppDelegate.h; sourceTree = "<group>"; };
 		5DF9DF5B2466165700B2199D /* UPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPAppDelegate.m; sourceTree = "<group>"; };
@@ -107,8 +107,8 @@
 				5D723115246B34C0006027A3 /* UPLetterTileView.m */,
 				5DF9DF5D2466165700B2199D /* UPSceneDelegate.h */,
 				5DF9DF5E2466165700B2199D /* UPSceneDelegate.m */,
-				5D723122246B56DF006027A3 /* UPSpellLayoutManager.h */,
-				5D723123246B56DF006027A3 /* UPSpellLayoutManager.m */,
+				5D5216EA246C7E9E005A2E9F /* UPSpellLayoutManager.h */,
+				5D5216E9246C7E9E005A2E9F /* UPSpellLayoutManager.mm */,
 				5DF9DF602466165700B2199D /* ViewController.h */,
 				5DF9DF612466165700B2199D /* ViewController.mm */,
 			);
@@ -279,12 +279,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D723124246B56DF006027A3 /* UPSpellLayoutManager.m in Sources */,
 				5D723121246B3996006027A3 /* UIFont+UPSpell.m in Sources */,
 				5DF9DF622466165700B2199D /* ViewController.mm in Sources */,
 				5DF9DF5C2466165700B2199D /* UPAppDelegate.m in Sources */,
 				5D723116246B34C0006027A3 /* UPLetterTileView.m in Sources */,
 				5DF9DF6D2466165800B2199D /* main.m in Sources */,
+				5D5216EB246C7E9E005A2E9F /* UPSpellLayoutManager.mm in Sources */,
 				5DF9DF5F2466165700B2199D /* UPSceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,6 +441,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 784YP5V58W;
 				INFOPLIST_FILE = UPSpell/Info.plist;
@@ -458,6 +459,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 784YP5V58W;
 				INFOPLIST_FILE = UPSpell/Info.plist;

@@ -28,6 +28,29 @@ CGRect up_rect_centered_y_in_rect(CGRect rectToCenter, CGRect referenceRect)
     return CGRectMake(CGRectGetMinX(rectToCenter), y, CGRectGetWidth(rectToCenter), CGRectGetHeight(rectToCenter));
 }
 
+CGRect up_rect_scaled_centered_in_rect(CGRect rectToCenter, CGFloat scale, CGRect referenceRect)
+{
+    CGFloat w = CGRectGetWidth(rectToCenter) * scale;
+    CGFloat h = CGRectGetHeight(rectToCenter) * scale;
+    return up_rect_centered_in_rect(CGRectMake(0, 0, w, h), referenceRect);
+}
+
+CGRect up_rect_scaled_centered_x_in_rect(CGRect rectToCenter, CGFloat scale, CGRect referenceRect)
+{
+    CGFloat y = CGRectGetMinY(referenceRect) + CGRectGetMinY(rectToCenter) * scale;
+    CGFloat w = CGRectGetWidth(rectToCenter) * scale;
+    CGFloat h = CGRectGetHeight(rectToCenter) * scale;
+    return up_rect_centered_x_in_rect(CGRectMake(0, y, w, h), referenceRect);
+}
+
+CGRect up_rect_scaled_centered_y_in_rect(CGRect rectToCenter, CGFloat scale, CGRect referenceRect)
+{
+    CGFloat x = CGRectGetMinX(referenceRect) + CGRectGetMinX(rectToCenter) * scale;
+    CGFloat w = CGRectGetWidth(rectToCenter) * scale;
+    CGFloat h = CGRectGetHeight(rectToCenter) * scale;
+    return up_rect_centered_y_in_rect(CGRectMake(x, 0, w, h), referenceRect);
+}
+
 CGRect up_rect_centered_around_point(CGRect rectToCenter, CGPoint referencePoint)
 {
     CGFloat x = referencePoint.x - (CGRectGetWidth(rectToCenter) * 0.5);

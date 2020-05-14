@@ -6,24 +6,32 @@
 #import <UpKit/UpKit.h>
 
 #import "UPSceneDelegate.h"
-#import "UPSpellLayoutManager.h"
+//#import "UPSpellLayoutManager.h"
+
+static UPSceneDelegate *_Instance;
 
 @interface UPSceneDelegate ()
 @end
 
 @implementation UPSceneDelegate
 
-- (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions
++ (UPSceneDelegate *)instance
+{
+    return _Instance;
+}
+
+@dynamic canvasFrame;
+- (CGRect)canvasFrame
 {
     UILayoutGuide *safeAreaLayoutGuide = self.window.safeAreaLayoutGuide;
     NSLog(@"rect:  %@", NSStringFromCGRect(self.window.bounds));
     NSLog(@"safe:  %@", NSStringFromCGRect(safeAreaLayoutGuide.layoutFrame));
-    
-    UPSpellLayoutManager *layoutManager = [UPSpellLayoutManager instance];
-    layoutManager.canvasFrame = safeAreaLayoutGuide.layoutFrame;
+    return safeAreaLayoutGuide.layoutFrame;
+}
 
-    NSLog(@"mode:  %ld", (long)layoutManager.aspectMode);
-    NSLog(@"ratio: %.2f", layoutManager.aspectRatio);
+- (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions
+{
+    _Instance = self;
 }
 
 - (void)sceneDidDisconnect:(UIScene *)scene

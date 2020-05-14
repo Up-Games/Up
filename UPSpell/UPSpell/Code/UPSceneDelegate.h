@@ -7,7 +7,10 @@
 
 @interface UPSceneDelegate : UIResponder <UIWindowSceneDelegate>
 
-@property (strong, nonatomic) UIWindow * window;
++ (UPSceneDelegate *)instance;
+
+@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, readonly) CGRect canvasFrame;
 
 @end
 

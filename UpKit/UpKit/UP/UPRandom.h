@@ -79,10 +79,7 @@ public:
     }
 
 private:
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wc++17-extensions"
     UP_STATIC_INLINE Random *g_instance;
-#pragma clang diagnostic pop
 
     std::mt19937 m_generator;
 };

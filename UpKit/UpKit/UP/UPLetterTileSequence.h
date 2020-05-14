@@ -62,10 +62,7 @@ public:
 private:
     LetterTileSequence() : m_game_code(GameCode()) { reset(); }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wc++17-extensions"
     UP_STATIC_INLINE LetterTileSequence *g_instance;
-#pragma clang diagnostic pop
 
     GameCode m_game_code;
     Random m_random;
