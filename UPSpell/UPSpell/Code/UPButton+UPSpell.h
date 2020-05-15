@@ -10,5 +10,7 @@
 @interface UPButton (UPSpell)
 
 + (UPButton *)roundControlButtonPause;
++ (UPButton *)roundControlButtonTrash;
++ (UPButton *)wordTray;
 
 @end

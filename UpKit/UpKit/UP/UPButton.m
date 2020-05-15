@@ -10,22 +10,23 @@
 
 @interface UPButton ()
 @property (nonatomic) NSMutableDictionary<NSNumber *, UIBezierPath *> *pathsForStates;
+@property (nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *colorsForStates;
 @property (nonatomic) UPBezierPathView *contentPathView;
 @property (nonatomic) UPBezierPathView *fillPathView;
 @property (nonatomic) UPBezierPathView *strokePathView;
 @end
 
-UP_STATIC_INLINE NSNumber * _ContentPathKey(UIControlState controlState)
+UP_STATIC_INLINE NSNumber * _ContentKey(UIControlState controlState)
 {
     return @(controlState);
 }
 
-UP_STATIC_INLINE NSNumber * _FillPathKey(UIControlState controlState)
+UP_STATIC_INLINE NSNumber * _FillKey(UIControlState controlState)
 {
     return @(UPControlStateFlag1 | controlState);
 }
 
-UP_STATIC_INLINE NSNumber * _StrokePathKey(UIControlState controlState)
+UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 {
     return @(UPControlStateFlag2 | controlState);
 }
@@ -47,6 +48,13 @@ UP_STATIC_INLINE NSNumber * _StrokePathKey(UIControlState controlState)
 {
     if (!self.pathsForStates) {
         self.pathsForStates = [NSMutableDictionary dictionary];
+    }
+}
+
+- (void)_createColorsForStatesIfNeeded
+{
+    if (!self.colorsForStates) {
+        self.colorsForStates = [NSMutableDictionary dictionary];
     }
 }
 
@@ -102,8 +110,21 @@ UP_STATIC_INLINE NSNumber * _StrokePathKey(UIControlState controlState)
 {
     [self _createPathsForStatesIfNeeded];
     [self _createContentPathViewIfNeeded];
-    NSNumber *key = _ContentPathKey(controlStates);
+    NSNumber *key = _ContentKey(controlStates);
     self.pathsForStates[key] = path;
+    [self setNeedsLayout];
+}
+
+- (void)setContentColor:(UIColor *)color
+{
+    [self setContentColor:color forControlStates:UIControlStateNormal];
+}
+
+- (void)setContentColor:(UIColor *)color forControlStates:(UIControlState)controlStates
+{
+    [self _createColorsForStatesIfNeeded];
+    NSNumber *key = _ContentKey(controlStates);
+    self.colorsForStates[key] = color;
     [self setNeedsLayout];
 }
 
@@ -116,8 +137,21 @@ UP_STATIC_INLINE NSNumber * _StrokePathKey(UIControlState controlState)
 {
     [self _createPathsForStatesIfNeeded];
     [self _createFillPathViewIfNeeded];
-    NSNumber *key = _FillPathKey(controlStates);
+    NSNumber *key = _FillKey(controlStates);
     self.pathsForStates[key] = path;
+    [self setNeedsLayout];
+}
+
+- (void)setFillColor:(UIColor *)color
+{
+    [self setFillColor:color forControlStates:UIControlStateNormal];
+}
+
+- (void)setFillColor:(UIColor *)color forControlStates:(UIControlState)controlStates
+{
+    [self _createColorsForStatesIfNeeded];
+    NSNumber *key = _FillKey(controlStates);
+    self.colorsForStates[key] = color;
     [self setNeedsLayout];
 }
 
@@ -130,8 +164,21 @@ UP_STATIC_INLINE NSNumber * _StrokePathKey(UIControlState controlState)
 {
     [self _createPathsForStatesIfNeeded];
     [self _createStrokePathViewIfNeeded];
-    NSNumber *key = _StrokePathKey(controlStates);
+    NSNumber *key = _StrokeKey(controlStates);
     self.pathsForStates[key] = path;
+    [self setNeedsLayout];
+}
+
+- (void)setStrokeColor:(UIColor *)color
+{
+    [self setStrokeColor:color forControlStates:UIControlStateNormal];
+}
+
+- (void)setStrokeColor:(UIColor *)color forControlStates:(UIControlState)controlStates
+{
+    [self _createColorsForStatesIfNeeded];
+    NSNumber *key = _StrokeKey(controlStates);
+    self.colorsForStates[key] = color;
     [self setNeedsLayout];
 }
 
@@ -153,22 +200,25 @@ UP_STATIC_INLINE NSNumber * _StrokePathKey(UIControlState controlState)
     UIControlState state = self.state;
 
     if (self.fillPathView) {
-        NSNumber *key = _FillPathKey(state);
-        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_FillPathKey(UIControlStateNormal)];
+        NSNumber *key = _FillKey(state);
+        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_FillKey(UIControlStateNormal)];
         self.fillPathView.path = path;
-        self.fillPathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
+        UIColor *color = self.colorsForStates[key] ?: self.colorsForStates[_FillKey(UIControlStateNormal)];
+        self.fillPathView.fillColor = color ? color : [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
     }
     if (self.strokePathView) {
-        NSNumber *key = _StrokePathKey(state);
-        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_StrokePathKey(UIControlStateNormal)];
+        NSNumber *key = _StrokeKey(state);
+        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_StrokeKey(UIControlStateNormal)];
         self.strokePathView.path = path;
-        self.strokePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke];
+        UIColor *color = self.colorsForStates[key] ?: self.colorsForStates[_StrokeKey(UIControlStateNormal)];
+        self.strokePathView.fillColor = color ? color : [UIColor themeColorWithCategory:UPColorCategoryContent];
     }
     if (self.contentPathView) {
-        NSNumber *key = _ContentPathKey(state);
-        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_ContentPathKey(UIControlStateNormal)];
+        NSNumber *key = _ContentKey(state);
+        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_ContentKey(UIControlStateNormal)];
         self.contentPathView.path = path;
-        self.contentPathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryContent];
+        UIColor *color = self.colorsForStates[key] ?: self.colorsForStates[_ContentKey(UIControlStateNormal)];
+        self.contentPathView.fillColor = color ? color : [UIColor themeColorWithCategory:UPColorCategoryContent];
     }
 }
 

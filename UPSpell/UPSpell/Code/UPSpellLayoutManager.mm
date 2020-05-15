@@ -39,11 +39,6 @@ void SpellLayoutManager::calculate()
         NSLog(@"        layout_frame:  %@", NSStringFromCGRect(layout_frame()));
         NSLog(@"        layout_scale:  %.3f", layout_scale());
         NSLog(@"     letterbox_insets: %@", NSStringFromUIEdgeInsets(letterbox_insets()));
-
-        calculate_controls_layout_frame();
-        calculate_word_tray_layout_frame();
-        calculate_tiles_layout_frame();
-        calculate_controls_button_pause_layout_frame();
     }
     else {
         set_aspect_mode(AspectMode::TallerThanCanonical);
@@ -66,12 +61,13 @@ void SpellLayoutManager::calculate()
         NSLog(@"         layout_frame:  %@", NSStringFromCGRect(layout_frame()));
         NSLog(@"         layout_scale:  %.3f", layout_scale());
         NSLog(@"     letterbox_insets:  %@", NSStringFromUIEdgeInsets(letterbox_insets()));
-        
-        calculate_controls_layout_frame();
-        calculate_word_tray_layout_frame();
-        calculate_tiles_layout_frame();
-        calculate_controls_button_pause_layout_frame();
     }
+
+    calculate_controls_layout_frame();
+    calculate_word_tray_frame();
+    calculate_tiles_layout_frame();
+    calculate_controls_button_pause_frame();
+    calculate_controls_button_trash_frame();
 }
 
 void SpellLayoutManager::calculate_controls_layout_frame()
@@ -99,7 +95,7 @@ void SpellLayoutManager::calculate_controls_layout_frame()
     NSLog(@"controls layout frame:   %@", NSStringFromCGRect(controls_layout_frame()));
 }
 
-void SpellLayoutManager::calculate_word_tray_layout_frame()
+void SpellLayoutManager::calculate_word_tray_frame()
 {
     switch (aspect_mode()) {
         case AspectMode::Canonical: {
@@ -150,11 +146,29 @@ void SpellLayoutManager::calculate_tiles_layout_frame()
     NSLog(@"   tiles layout frame:  %@", NSStringFromCGRect(tiles_layout_frame()));
 }
 
-void SpellLayoutManager::calculate_controls_button_pause_layout_frame()
+void SpellLayoutManager::calculate_controls_button_pause_frame()
 {
-    CGRect frame = up_rect_scaled(CanonicalRoundControlButtonPauseFrame, layout_scale());
-    set_controls_button_pause_layout_frame(up_pixel_rect(frame, screen_scale()));
-    NSLog(@"   pause button frame:  %@", NSStringFromCGRect(controls_button_pause_layout_frame()));
+    if (aspect_mode() == AspectMode::Canonical) {
+        set_controls_button_pause_frame(CanonicalRoundControlButtonPauseFrame);
+    }
+    else {
+        CGRect frame = up_rect_scaled(CanonicalRoundControlButtonPauseFrame, layout_scale());
+        set_controls_button_pause_frame(up_pixel_rect(frame, screen_scale()));
+    }
+    NSLog(@"   pause button frame:  %@", NSStringFromCGRect(controls_button_pause_frame()));
+}
+
+void SpellLayoutManager::calculate_controls_button_trash_frame()
+{
+    if (aspect_mode() == AspectMode::Canonical) {
+        set_controls_button_trash_frame(CanonicalRoundControlButtonTrashFrame);
+    }
+    else {
+        CGRect frame = up_rect_scaled(CanonicalRoundControlButtonTrashFrame, layout_scale());
+        frame.origin.x = CGRectGetWidth(controls_layout_frame()) - CGRectGetWidth(frame);
+        set_controls_button_trash_frame(up_pixel_rect(frame, screen_scale()));
+    }
+    NSLog(@"   trash button frame:  %@", NSStringFromCGRect(controls_button_trash_frame()));
 }
 
 }  // namespace UP

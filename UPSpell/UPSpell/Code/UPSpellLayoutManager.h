@@ -34,6 +34,7 @@ public:
 
     static inline constexpr CGSize CanonicalRoundControlButtonSize = { 84, 84 };
     static inline constexpr CGRect CanonicalRoundControlButtonPauseFrame = { 0, 0, 84, 84 };
+    static inline constexpr CGRect CanonicalRoundControlButtonTrashFrame = { 706, 0, 84, 84 };
 
     SpellLayoutManager() {}
 
@@ -57,7 +58,8 @@ public:
     CGRect word_tray_layout_frame() const { return m_word_tray_layout_frame; }
     CGRect tiles_layout_frame() const { return m_tiles_layout_frame; }
 
-    CGRect controls_button_pause_layout_frame() const { return m_controls_button_pause_layout_frame; }
+    CGRect controls_button_pause_frame() const { return m_controls_button_pause_frame; }
+    CGRect controls_button_trash_frame() const { return m_controls_button_trash_frame; }
 
 
 private:
@@ -70,14 +72,18 @@ private:
     void set_controls_layout_frame(CGRect controls_layout_frame) { m_controls_layout_frame = controls_layout_frame; }
     void set_word_tray_layout_frame(CGRect word_tray_layout_frame) { m_word_tray_layout_frame = word_tray_layout_frame; }
     void set_tiles_layout_frame(CGRect tiles_layout_frame) { m_tiles_layout_frame = tiles_layout_frame; }
-    void set_controls_button_pause_layout_frame(CGRect controls_button_pause_layout_frame) {
-        m_controls_button_pause_layout_frame = controls_button_pause_layout_frame;
+    void set_controls_button_pause_frame(CGRect controls_button_pause_frame) {
+        m_controls_button_pause_frame = controls_button_pause_frame;
+    }
+    void set_controls_button_trash_frame(CGRect controls_button_trash_frame) {
+        m_controls_button_trash_frame = controls_button_trash_frame;
     }
 
     void calculate_controls_layout_frame();
-    void calculate_word_tray_layout_frame();
+    void calculate_word_tray_frame();
     void calculate_tiles_layout_frame();
-    void calculate_controls_button_pause_layout_frame();
+    void calculate_controls_button_pause_frame();
+    void calculate_controls_button_trash_frame();
 
     CGFloat m_screen_scale = 2.0;
     AspectMode m_aspect_mode = AspectMode::Canonical;
@@ -92,7 +98,8 @@ private:
     CGRect m_word_tray_layout_frame = CGRectZero;
     CGRect m_tiles_layout_frame = CGRectZero;
 
-    CGRect m_controls_button_pause_layout_frame = CGRectZero;
+    CGRect m_controls_button_pause_frame = CGRectZero;
+    CGRect m_controls_button_trash_frame = CGRectZero;
 };
 
 }  // namespace UP

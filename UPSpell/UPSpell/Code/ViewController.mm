@@ -23,10 +23,11 @@ using UP::LetterTileTray;
 @property (nonatomic) UIView *canvasView;
 @property (nonatomic) UIView *layoutView;
 @property (nonatomic) UIView *controlsLayoutView;
-@property (nonatomic) UIView *wordTrayLayoutView;
+@property (nonatomic) UPButton *wordTrayView;
 @property (nonatomic) UIView *tilesLayoutView;
 @property (nonatomic) UIView *tileFrameView;
 @property (nonatomic) UPButton *roundControlButtonPause;
+@property (nonatomic) UPButton *roundControlButtonTrash;
 @property (nonatomic) NSMutableArray *tileViews;
 @property (nonatomic) std::shared_ptr<UP::SpellLayoutManager> layout_manager;
 @end
@@ -85,7 +86,7 @@ using UP::LetterTileTray;
 //        [self printTiles:tray];
 //    }
     
-    [UIColor setThemeStyle:UPColorStyleLightStark];
+    [UIColor setThemeStyle:UPColorStyleLight];
     
     self.layout_manager = std::make_shared<UP::SpellLayoutManager>();
     self.layout_manager->set_screen_scale([[UIScreen mainScreen] scale]);
@@ -93,20 +94,16 @@ using UP::LetterTileTray;
     self.layout_manager->calculate();
     
     self.canvasView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.canvasView.backgroundColor = [UIColor testColor1];
+    //self.canvasView.backgroundColor = [UIColor testColor1];
     [self.view addSubview:self.canvasView];
 
     self.layoutView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.layoutView.backgroundColor = [UIColor testColor2];
+    //self.layoutView.backgroundColor = [UIColor testColor2];
     [self.view addSubview:self.layoutView];
 
     self.controlsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.controlsLayoutView.backgroundColor = [UIColor testColor3];
+    //self.controlsLayoutView.backgroundColor = [UIColor testColor3];
     [self.view addSubview:self.controlsLayoutView];
-
-    self.wordTrayLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.wordTrayLayoutView.backgroundColor = [UIColor testColor3];
-    [self.view addSubview:self.wordTrayLayoutView];
 
     self.tilesLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tilesLayoutView.backgroundColor = [UIColor testColor3];
@@ -114,6 +111,14 @@ using UP::LetterTileTray;
 
     self.roundControlButtonPause = [UPButton roundControlButtonPause];
     [self.controlsLayoutView addSubview:self.roundControlButtonPause];
+
+    self.roundControlButtonTrash = [UPButton roundControlButtonTrash];
+    [self.controlsLayoutView addSubview:self.roundControlButtonTrash];
+
+    self.wordTrayView = [UPButton wordTray];
+    //self.wordTrayLayoutView.backgroundColor = [UIColor testColor3];
+    [self.view addSubview:self.wordTrayView];
+
 
 //    self.tileFrameView = [[UIView alloc] initWithFrame:CGRectZero];
 //    self.tileFrameView.backgroundColor = [UIColor whiteColor];
@@ -140,9 +145,10 @@ using UP::LetterTileTray;
     self.canvasView.frame = self.layout_manager->canvas_frame();
     self.layoutView.frame = self.layout_manager->layout_frame();
     self.controlsLayoutView.frame = self.layout_manager->controls_layout_frame();
-    self.wordTrayLayoutView.frame = self.layout_manager->word_tray_layout_frame();
+    self.wordTrayView.frame = self.layout_manager->word_tray_layout_frame();
     self.tilesLayoutView.frame = self.layout_manager->tiles_layout_frame();
-    self.roundControlButtonPause.frame = self.layout_manager->controls_button_pause_layout_frame();
+    self.roundControlButtonPause.frame = self.layout_manager->controls_button_pause_frame();
+    self.roundControlButtonTrash.frame = self.layout_manager->controls_button_trash_frame();
 
 //    self.tileFrameView.frame = layoutManager.tileFrame;
 //    NSLog(@"tile frame: %@", NSStringFromCGRect(layoutManager.tileFrame));
