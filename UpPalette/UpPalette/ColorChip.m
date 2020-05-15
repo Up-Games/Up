@@ -89,7 +89,7 @@ static const CGFloat _NotATarget = -1;
     
     self.name = name;
     self.hue = hue;
-    self.gray = up_lerp_floats(chipA.gray, chipB.gray, fraction);
+    self.gray = (chipA.isClear || chipB.isClear) ? _ClearGray : up_lerp_floats(chipA.gray, chipB.gray, fraction);
     self.saturation = up_lerp_floats(chipA.saturation, chipB.saturation, fraction);
     self.targetLightness = targetLightness;
     

@@ -12,7 +12,7 @@
 #import "UPSpellLayoutManager.h"
 #import "ViewController.h"
 #import "UIFont+UPSpell.h"
-#import "UPButton+UPSpell.h"
+#import "UPControl+UPSpell.h"
 
 using UP::GameCode;
 using UP::LetterTile;
@@ -23,11 +23,11 @@ using UP::LetterTileTray;
 @property (nonatomic) UIView *canvasView;
 @property (nonatomic) UIView *layoutView;
 @property (nonatomic) UIView *controlsLayoutView;
-@property (nonatomic) UPButton *wordTrayView;
+@property (nonatomic) UPControl *wordTrayView;
 @property (nonatomic) UIView *tilesLayoutView;
 @property (nonatomic) UIView *tileFrameView;
-@property (nonatomic) UPButton *roundControlButtonPause;
-@property (nonatomic) UPButton *roundControlButtonTrash;
+@property (nonatomic) UPControl *roundControlButtonPause;
+@property (nonatomic) UPControl *roundControlButtonTrash;
 @property (nonatomic) NSMutableArray *tileViews;
 @property (nonatomic) std::shared_ptr<UP::SpellLayoutManager> layout_manager;
 @end
@@ -95,7 +95,7 @@ using UP::LetterTileTray;
     self.layout_manager->calculate();
     
     self.canvasView = [[UIView alloc] initWithFrame:CGRectZero];
-    //self.canvasView.backgroundColor = [UIColor testColor1];
+    //self.canvasView.backgroundColor = [UIColor testColor3];
     [self.view addSubview:self.canvasView];
 
     self.layoutView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -103,20 +103,20 @@ using UP::LetterTileTray;
     [self.view addSubview:self.layoutView];
 
     self.controlsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
-    //self.controlsLayoutView.backgroundColor = [UIColor testColor3];
+    self.controlsLayoutView.backgroundColor = [UIColor testColor1];
     [self.view addSubview:self.controlsLayoutView];
 
     self.tilesLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tilesLayoutView.backgroundColor = [UIColor testColor3];
     [self.view addSubview:self.tilesLayoutView];
 
-    self.roundControlButtonPause = [UPButton roundControlButtonPause];
-    [self.controlsLayoutView addSubview:self.roundControlButtonPause];
+    self.roundControlButtonPause = [UPControl roundControlButtonPause];
+    [self.view addSubview:self.roundControlButtonPause];
 
-    self.roundControlButtonTrash = [UPButton roundControlButtonTrash];
-    [self.controlsLayoutView addSubview:self.roundControlButtonTrash];
+    self.roundControlButtonTrash = [UPControl roundControlButtonTrash];
+    [self.view addSubview:self.roundControlButtonTrash];
 
-    self.wordTrayView = [UPButton wordTray];
+    self.wordTrayView = [UPControl wordTray];
     //self.wordTrayLayoutView.backgroundColor = [UIColor testColor3];
     [self.view addSubview:self.wordTrayView];
 

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5D5216EB246C7E9E005A2E9F /* UPSpellLayoutManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216E9246C7E9E005A2E9F /* UPSpellLayoutManager.mm */; };
-		5D57D1FC246DB9AF00705395 /* UPButton+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D57D1FB246DB9AF00705395 /* UPButton+UPSpell.mm */; };
+		5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */; };
 		5D723116246B34C0006027A3 /* UPLetterTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D723115246B34C0006027A3 /* UPLetterTileView.m */; };
 		5D72311C246B3717006027A3 /* MalloryCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D723119246B3713006027A3 /* MalloryCond-Bold.otf */; };
 		5D72311D246B3717006027A3 /* MalloryMPNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D72311B246B3713006027A3 /* MalloryMPNrrw-Bold.otf */; };
@@ -53,8 +53,8 @@
 /* Begin PBXFileReference section */
 		5D5216E9246C7E9E005A2E9F /* UPSpellLayoutManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellLayoutManager.mm; sourceTree = "<group>"; };
 		5D5216EA246C7E9E005A2E9F /* UPSpellLayoutManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellLayoutManager.h; sourceTree = "<group>"; };
-		5D57D1FA246DB97700705395 /* UPButton+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UPButton+UPSpell.h"; sourceTree = "<group>"; };
-		5D57D1FB246DB9AF00705395 /* UPButton+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPButton+UPSpell.mm"; sourceTree = "<group>"; };
+		5D57D1FA246DB97700705395 /* UPControl+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UPControl+UPSpell.h"; sourceTree = "<group>"; };
+		5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPControl+UPSpell.mm"; sourceTree = "<group>"; };
 		5D723114246B34C0006027A3 /* UPLetterTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLetterTileView.h; sourceTree = "<group>"; };
 		5D723115246B34C0006027A3 /* UPLetterTileView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLetterTileView.m; sourceTree = "<group>"; };
 		5D723119246B3713006027A3 /* MalloryCond-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Bold.otf"; sourceTree = "<group>"; };
@@ -106,8 +106,8 @@
 				5D723120246B3996006027A3 /* UIFont+UPSpell.m */,
 				5DF9DF5A2466165700B2199D /* UPAppDelegate.h */,
 				5DF9DF5B2466165700B2199D /* UPAppDelegate.m */,
-				5D57D1FA246DB97700705395 /* UPButton+UPSpell.h */,
-				5D57D1FB246DB9AF00705395 /* UPButton+UPSpell.mm */,
+				5D57D1FA246DB97700705395 /* UPControl+UPSpell.h */,
+				5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */,
 				5D723114246B34C0006027A3 /* UPLetterTileView.h */,
 				5D723115246B34C0006027A3 /* UPLetterTileView.m */,
 				5DF9DF5D2466165700B2199D /* UPSceneDelegate.h */,
@@ -290,7 +290,7 @@
 				5D723116246B34C0006027A3 /* UPLetterTileView.m in Sources */,
 				5DF9DF6D2466165800B2199D /* main.m in Sources */,
 				5D5216EB246C7E9E005A2E9F /* UPSpellLayoutManager.mm in Sources */,
-				5D57D1FC246DB9AF00705395 /* UPButton+UPSpell.mm in Sources */,
+				5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */,
 				5DF9DF5F2466165700B2199D /* UPSceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

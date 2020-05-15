@@ -20,6 +20,8 @@ typedef NS_ENUM(NSUInteger, UPControlState) {
 @property (nonatomic) CGSize canonicalSize;
 @property(nonatomic, getter=isActive) BOOL active;
 
++ (UPControl *)control;
+
 - (void)setNormal;
 - (void)setHighlighted;
 - (void)setDisabled;

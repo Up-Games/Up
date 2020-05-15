@@ -148,26 +148,27 @@ void SpellLayoutManager::calculate_tiles_layout_frame()
 
 void SpellLayoutManager::calculate_controls_button_pause_frame()
 {
-    if (aspect_mode() == AspectMode::Canonical) {
-        set_controls_button_pause_frame(CanonicalRoundControlButtonPauseFrame);
-    }
-    else {
-        CGRect frame = up_rect_scaled(CanonicalRoundControlButtonPauseFrame, layout_scale());
-        set_controls_button_pause_frame(up_pixel_rect(frame, screen_scale()));
-    }
+    CGSize size = up_size_scaled(CanonicalRoundControlButtonSize, layout_scale());
+    CGRect frame = CGRectMake(
+        up_rect_min_x(controls_layout_frame()),
+        up_rect_min_y(controls_layout_frame()),
+        up_size_width(size),
+        up_size_height(size)
+    );
+    set_controls_button_pause_frame(up_pixel_rect(frame, screen_scale()));
     NSLog(@"   pause button frame:  %@", NSStringFromCGRect(controls_button_pause_frame()));
 }
 
 void SpellLayoutManager::calculate_controls_button_trash_frame()
 {
-    if (aspect_mode() == AspectMode::Canonical) {
-        set_controls_button_trash_frame(CanonicalRoundControlButtonTrashFrame);
-    }
-    else {
-        CGRect frame = up_rect_scaled(CanonicalRoundControlButtonTrashFrame, layout_scale());
-        frame.origin.x = CGRectGetWidth(controls_layout_frame()) - CGRectGetWidth(frame);
-        set_controls_button_trash_frame(up_pixel_rect(frame, screen_scale()));
-    }
+    CGSize size = up_size_scaled(CanonicalRoundControlButtonSize, layout_scale());
+    CGRect frame = CGRectMake(
+        up_rect_max_x(controls_layout_frame()) - up_size_width(size),
+        up_rect_min_y(controls_layout_frame()),
+        up_size_width(size),
+        up_size_height(size)
+    );
+    set_controls_button_trash_frame(up_pixel_rect(frame, screen_scale()));
     NSLog(@"   trash button frame:  %@", NSStringFromCGRect(controls_button_trash_frame()));
 }
 

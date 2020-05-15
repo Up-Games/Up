@@ -34,6 +34,13 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 @implementation UPControl
 
++ (UPControl *)control
+{
+    return [[UPControl alloc] initWithFrame:CGRectZero];
+}
+
+#pragma mark - State
+
 - (UIControlState)state
 {
     return super.state | self.additionalState;
@@ -263,6 +270,31 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
     [self setNeedsLayout];
 }
 
+#pragma mark - Tracking
+
+- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    NSLog(@"begin tracking");
+    return YES;
+}
+
+- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    NSLog(@"continue tracking");
+    return YES;
+}
+
+- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    NSLog(@"end tracking");
+}
+
+- (void)cancelTrackingWithEvent:(UIEvent *)event
+{
+    NSLog(@"cancel tracking");
+
+}
+
 #pragma mark - Layout
 
 - (void)layoutSubviews
@@ -292,7 +324,7 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
         UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_StrokeKey(UIControlStateNormal)];
         self.strokePathView.path = path;
         UIColor *color = self.colorsForStates[key] ?: self.colorsForStates[_StrokeKey(UIControlStateNormal)];
-        self.strokePathView.fillColor = color ? color : [UIColor themeColorWithCategory:UPColorCategoryContent];
+        self.strokePathView.fillColor = color ? color : [UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke];
     }
     if (self.contentPathView) {
         NSNumber *key = _ContentKey(state);

@@ -9,6 +9,13 @@
 extern "C" {
 #endif
 
+#pragma mark - Points, Sizes, and Rects
+
+CGSize up_size_scaled(CGSize size, CGFloat scale)
+{
+    return CGSizeMake(size.width * scale, size.height * scale);
+}
+
 CGRect up_rect_centered_in_rect(CGRect rectToCenter, CGRect referenceRect)
 {
     CGFloat x = CGRectGetMidX(referenceRect) - (CGRectGetWidth(rectToCenter) * 0.5);
@@ -82,6 +89,32 @@ CGFloat up_aspect_ratio_for_rect(CGRect rect)
     return up_aspect_ratio_for_size(rect.size);
 }
 
+CGPoint up_pixel_point(CGPoint point, CGFloat screen_scale)
+{
+    CGFloat x = up_round_to_screen_scale(point.x, screen_scale);
+    CGFloat y = up_round_to_screen_scale(point.y, screen_scale);
+    return CGPointMake(x, y);
+}
+
+CGSize up_pixel_size(CGSize size, CGFloat screen_scale)
+{
+    CGFloat w = up_round_to_screen_scale(size.width, screen_scale);
+    CGFloat h = up_round_to_screen_scale(size.height, screen_scale);
+    return CGSizeMake(w, h);
+}
+
+CGRect up_pixel_rect(CGRect rect, CGFloat screen_scale)
+{
+    CGFloat x = up_round_to_screen_scale(CGRectGetMinX(rect), screen_scale);
+    CGFloat y = up_round_to_screen_scale(CGRectGetMinY(rect), screen_scale);
+    CGFloat w = up_round_to_screen_scale(CGRectGetWidth(rect), screen_scale);
+    CGFloat h = up_round_to_screen_scale(CGRectGetHeight(rect), screen_scale);
+    return CGRectMake(x, y, w, h);
+}
+
+// =========================================================================================================================================
+#pragma mark - Bezier curves
+
 CGFloat up_bezier_mix(CGFloat a, CGFloat b, CGFloat t)
 {
     // degree 1
@@ -127,6 +160,9 @@ CGFloat up_bezier_sextic(CGFloat A, CGFloat B, CGFloat C, CGFloat D, CGFloat E, 
     CGFloat BCDEFG = up_bezier_quintic(B, C, D, E, F, G, t);
     return up_bezier_mix(ABCDEF, BCDEFG, t);
 }
+
+// =========================================================================================================================================
+#pragma mark - Quads
 
 CATransform3D up_transform_for_rect_to_quad(CGRect rect, UPQuadOffsets offsets)
 {
@@ -185,29 +221,6 @@ CATransform3D up_transform_for_rect_to_quad(CGRect rect, UPQuadOffsets offsets)
     CATransform3D fullTransform = CATransform3DConcat(CATransform3DConcat(transPos, transform), transNeg);
 
     return fullTransform;
-}
-
-CGPoint up_pixel_point(CGPoint point, CGFloat screen_scale)
-{
-    CGFloat x = up_round_to_screen_scale(point.x, screen_scale);
-    CGFloat y = up_round_to_screen_scale(point.y, screen_scale);
-    return CGPointMake(x, y);
-}
-
-CGSize up_pixel_size(CGSize size, CGFloat screen_scale)
-{
-    CGFloat w = up_round_to_screen_scale(size.width, screen_scale);
-    CGFloat h = up_round_to_screen_scale(size.height, screen_scale);
-    return CGSizeMake(w, h);
-}
-
-CGRect up_pixel_rect(CGRect rect, CGFloat screen_scale)
-{
-    CGFloat x = up_round_to_screen_scale(CGRectGetMinX(rect), screen_scale);
-    CGFloat y = up_round_to_screen_scale(CGRectGetMinY(rect), screen_scale);
-    CGFloat w = up_round_to_screen_scale(CGRectGetWidth(rect), screen_scale);
-    CGFloat h = up_round_to_screen_scale(CGRectGetHeight(rect), screen_scale);
-    return CGRectMake(x, y, w, h);
 }
 
 #ifdef __OBJC__

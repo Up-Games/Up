@@ -59,12 +59,28 @@ UP_STATIC_INLINE CGRect UPQuadBoundingBox(UPQuad q) {
     return CGRectMake(xmin, ymin, xmax - xmin, ymax - ymin);
 }
 
-UP_STATIC_INLINE CGFloat up_point_distance(CGPoint p1, CGPoint p2)
-{
+UP_STATIC_INLINE CGFloat up_point_distance(CGPoint p1, CGPoint p2) {
     simd_double2 s1 = simd_make_double2(p1.x, p1.y);
     simd_double2 s2 = simd_make_double2(p2.x, p2.y);
     return simd_distance(s1, s2);
 }
+
+#ifdef __cplusplus
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_point_x(CGPoint point) { return point.x; }
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_point_y(CGPoint point) { return point.y; }
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_size_width(CGSize size) { return size.width; }
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_size_height(CGSize size) { return size.height; }
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_rect_min_x(CGRect rect) { return rect.origin.x; }
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_rect_min_y(CGRect rect) { return rect.origin.y; }
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_rect_mid_x(CGRect rect) { return rect.origin.x + (rect.size.width / 2.0); }
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_rect_mid_y(CGRect rect) { return rect.origin.y + (rect.size.height / 2.0); }
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_rect_max_x(CGRect rect) { return rect.origin.x + rect.size.width; }
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_rect_max_y(CGRect rect) { return rect.origin.y + rect.size.height; }
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_rect_width(CGRect rect) { return rect.size.width; }
+UP_STATIC_INLINE_CONSTEXPR CGFloat up_rect_height(CGRect rect) { return rect.size.height; }
+#endif  // __cplusplus
+
+CGSize up_size_scaled(CGSize size, CGFloat scale);
 
 CGRect up_rect_centered_in_rect(CGRect rectToCenter, CGRect referenceRect);
 CGRect up_rect_centered_x_in_rect(CGRect rectToCenter, CGRect referenceRect);
@@ -78,6 +94,10 @@ CGPoint up_rect_center(CGRect);
 CGFloat up_aspect_ratio_for_size(CGSize);
 CGFloat up_aspect_ratio_for_rect(CGRect);
 
+CGPoint up_pixel_point(CGPoint point, CGFloat screen_scale);
+CGSize up_pixel_size(CGSize size, CGFloat screen_scale);
+CGRect up_pixel_rect(CGRect rect, CGFloat screen_scale);
+
 CGFloat up_bezier_quadratic(CGFloat A, CGFloat B, CGFloat C, CGFloat t);
 CGFloat up_bezier_cubic(CGFloat A, CGFloat B, CGFloat C, CGFloat D, CGFloat t);
 CGFloat up_bezier_quartic(CGFloat A, CGFloat B, CGFloat C, CGFloat D, CGFloat E, CGFloat t);
@@ -86,28 +106,23 @@ CGFloat up_bezier_sextic(CGFloat A, CGFloat B, CGFloat C, CGFloat D, CGFloat E, 
 
 CATransform3D up_transform_for_rect_to_quad(CGRect rect, UPQuadOffsets offsets);
 
-UP_STATIC_INLINE CGFloat up_angular_difference(CGFloat a, CGFloat b)
-{
+UP_STATIC_INLINE CGFloat up_angular_difference(CGFloat a, CGFloat b) {
     return 360.0 - fabs(360.0 - fabs(a - b));
 }
 
-UP_STATIC_INLINE CGFloat up_radian_difference(CGFloat a, CGFloat b)
-{
+UP_STATIC_INLINE CGFloat up_radian_difference(CGFloat a, CGFloat b) {
     return M_PI - fabs(M_PI - fabs(a - b));
 }
 
-UP_STATIC_INLINE double up_lerp_doubles(double a, double b, UPUnit f)
-{
+UP_STATIC_INLINE double up_lerp_doubles(double a, double b, UPUnit f) {
     return a + ((b - a) * f);
 }
 
-UP_STATIC_INLINE CGPoint up_lerp_points(CGPoint a, CGPoint b, UPUnit f)
-{
+UP_STATIC_INLINE CGPoint up_lerp_points(CGPoint a, CGPoint b, UPUnit f) {
     return CGPointMake(a.x + ((b.x - a.x) * f), a.y + ((b.y - a.y) * f));
 }
 
-UP_STATIC_INLINE CGSize up_lerp_sizes(CGSize a, CGSize b, UPUnit f)
-{
+UP_STATIC_INLINE CGSize up_lerp_sizes(CGSize a, CGSize b, UPUnit f) {
     return CGSizeMake(a.width + ((b.width - a.width) * f), a.height + ((b.height - a.height) * f));
 }
 
@@ -143,10 +158,6 @@ UP_STATIC_INLINE CGFloat up_ceil_to_screen_scale(CGFloat f, CGFloat scale)
 {
     return floor(f * scale) / scale;
 }
-
-CGPoint up_pixel_point(CGPoint point, CGFloat screen_scale);
-CGSize up_pixel_size(CGSize size, CGFloat screen_scale);
-CGRect up_pixel_rect(CGRect rect, CGFloat screen_scale);
 
 #ifdef __OBJC__
 NSString *NSStringFromUPQuad(UPQuad);

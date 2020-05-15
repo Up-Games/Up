@@ -63,8 +63,6 @@
 		5D2CAC82245A554F00B81332 /* POPPathAnimation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D2CAC80245A554F00B81332 /* POPPathAnimation.mm */; };
 		5D2CAC84245B538B00B81332 /* NSValue+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D2CAC83245B538B00B81332 /* NSValue+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D2CAC86245B53F200B81332 /* NSValue+UP.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2CAC85245B53F200B81332 /* NSValue+UP.m */; };
-		5D5216EE246D85CE005A2E9F /* UPButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5216EC246D85CE005A2E9F /* UPButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5D5216EF246D85CE005A2E9F /* UPButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216ED246D85CE005A2E9F /* UPButton.m */; };
 		5D5216F2246D87DF005A2E9F /* UPControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5216F0246D87DF005A2E9F /* UPControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D5216F3246D87DF005A2E9F /* UPControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216F1246D87DF005A2E9F /* UPControl.m */; };
 		5D723104246A1F5E006027A3 /* UPLetterTileTray.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D723100246A1F5E006027A3 /* UPLetterTileTray.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -196,8 +194,6 @@
 		5D2CAC80245A554F00B81332 /* POPPathAnimation.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = POPPathAnimation.mm; sourceTree = "<group>"; };
 		5D2CAC83245B538B00B81332 /* NSValue+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSValue+UP.h"; sourceTree = "<group>"; };
 		5D2CAC85245B53F200B81332 /* NSValue+UP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValue+UP.m"; sourceTree = "<group>"; };
-		5D5216EC246D85CE005A2E9F /* UPButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPButton.h; sourceTree = "<group>"; };
-		5D5216ED246D85CE005A2E9F /* UPButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPButton.m; sourceTree = "<group>"; };
 		5D5216F0246D87DF005A2E9F /* UPControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPControl.h; sourceTree = "<group>"; };
 		5D5216F1246D87DF005A2E9F /* UPControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPControl.m; sourceTree = "<group>"; };
 		5D723100246A1F5E006027A3 /* UPLetterTileTray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPLetterTileTray.h; sourceTree = "<group>"; };
@@ -448,8 +444,6 @@
 				5DD71DA22458F39200F3F9E2 /* UPAny.h */,
 				5DD71D9A2457AFB200F3F9E2 /* UPBezierPathView.h */,
 				5DD71D9B2457AFB200F3F9E2 /* UPBezierPathView.m */,
-				5D5216EC246D85CE005A2E9F /* UPButton.h */,
-				5D5216ED246D85CE005A2E9F /* UPButton.m */,
 				5D723110246B3355006027A3 /* UPCenteredTextLayer.h */,
 				5D723111246B3356006027A3 /* UPCenteredTextLayer.m */,
 				5DEBE0192454E3AC00016047 /* UPColor.h */,
@@ -555,7 +549,6 @@
 				5D2CAC7E245A17B700B81332 /* POP.h in Headers */,
 				5D2CABF5245A13E700B81332 /* POPAnimationPrivate.h in Headers */,
 				5DF8A8E72454892C00751E2E /* UPUnitFunction.h in Headers */,
-				5D5216EE246D85CE005A2E9F /* UPButton.h in Headers */,
 				5D2CABD1245A137900B81332 /* POPAnimator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -700,7 +693,6 @@
 				5D2CABC4245A12B400B81332 /* POPAnimatableProperty.mm in Sources */,
 				5D2CABB8245A11D400B81332 /* POPVector.mm in Sources */,
 				5D2CABCD245A12FB00B81332 /* POPLayerExtras.mm in Sources */,
-				5D5216EF246D85CE005A2E9F /* UPButton.m in Sources */,
 				5D269CB2245CDB31000B6A1D /* UIImage+UP.m in Sources */,
 				5DD71D992457988000F3F9E2 /* UPDeferredBlock.m in Sources */,
 				5D2CAC82245A554F00B81332 /* POPPathAnimation.mm in Sources */,

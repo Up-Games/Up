@@ -1,10 +1,11 @@
 //
-//  UPButton+UPSpell.mm
+//  UPControl+UPSpell.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
 #import <UpKit/UIColor+UP.h>
-#import "UPButton+UPSpell.h"
+
+#import "UPControl+UPSpell.h"
 #import "UPSpellLayoutManager.h"
 
 static UIBezierPath *_RoundControlButtonFillPath(void)
@@ -292,11 +293,11 @@ static UIBezierPath *_WordTrayStrokePath(void)
     return path;
 }
 
-@implementation UPButton (UPSpell)
+@implementation UPControl (UPSpell)
 
-+ (UPButton *)roundControlButtonPause
++ (UPControl *)roundControlButtonPause
 {
-    UPButton *button = [UPButton button];
+    UPControl *button = [UPControl control];
     button.canonicalSize = UP::SpellLayoutManager::CanonicalRoundControlButtonSize;
     [button setFillPath:_RoundControlButtonFillPath() forControlStates:UIControlStateNormal];
     [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
@@ -308,9 +309,9 @@ static UIBezierPath *_WordTrayStrokePath(void)
     return button;
 }
 
-+ (UPButton *)roundControlButtonTrash
++ (UPControl *)roundControlButtonTrash
 {
-    UPButton *button = [UPButton button];
+    UPControl *button = [UPControl control];
     button.canonicalSize = UP::SpellLayoutManager::CanonicalRoundControlButtonSize;
     [button setFillPath:_RoundControlButtonFillPath() forControlStates:UIControlStateNormal];
     [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
@@ -322,9 +323,9 @@ static UIBezierPath *_WordTrayStrokePath(void)
     return button;
 }
 
-+ (UPButton *)wordTray
++ (UPControl *)wordTray
 {
-    UPButton *button = [UPButton button];
+    UPControl *button = [UPControl control];
     button.canonicalSize = UP::SpellLayoutManager::CanonicalWordTrayFrame.size;
     [button setFillPath:_WordTrayFillPath() forControlStates:UIControlStateNormal];
     [button setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveFill] forControlStates:UIControlStateNormal];

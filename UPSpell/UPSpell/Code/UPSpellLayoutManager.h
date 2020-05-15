@@ -7,6 +7,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import <UpKit/UPGeometry.h>
 #import <UpKit/UPMacros.h>
 
 #if __cplusplus
@@ -33,8 +34,6 @@ public:
     static inline constexpr CGRect CanonicalTilesLayoutFrame =    {  105, 350, 790, 116 };
 
     static inline constexpr CGSize CanonicalRoundControlButtonSize = { 84, 84 };
-    static inline constexpr CGRect CanonicalRoundControlButtonPauseFrame = { 0, 0, 84, 84 };
-    static inline constexpr CGRect CanonicalRoundControlButtonTrashFrame = { 706, 0, 84, 84 };
 
     SpellLayoutManager() {}
 
