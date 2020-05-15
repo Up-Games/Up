@@ -87,6 +87,7 @@ using UP::LetterTileTray;
 //    }
     
     [UIColor setThemeStyle:UPColorStyleLight];
+//    [UIColor setThemeHue:0];
     
     self.layout_manager = std::make_shared<UP::SpellLayoutManager>();
     self.layout_manager->set_screen_scale([[UIScreen mainScreen] scale]);
