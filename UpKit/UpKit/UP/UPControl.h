@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger, UPControlState) {
 
 @interface UPControl : UIControl
 
+@property (nonatomic) CGSize canonicalSize;
 @property(nonatomic, getter=isActive) BOOL active;
 
 - (void)setNormal;
@@ -26,5 +27,21 @@ typedef NS_ENUM(NSUInteger, UPControlState) {
 - (void)setActive;
 
 - (void)updateControl;
+
+- (void)setContentPath:(UIBezierPath *)path;
+- (void)setContentPath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
+- (void)setContentColor:(UIColor *)color;
+- (void)setContentColor:(UIColor *)color forControlStates:(UIControlState)controlStates;
+
+- (void)setFillPath:(UIBezierPath *)path;
+- (void)setFillPath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
+- (void)setFillColor:(UIColor *)color;
+- (void)setFillColor:(UIColor *)color forControlStates:(UIControlState)controlStates;
+
+- (void)setStrokePath:(UIBezierPath *)path;
+- (void)setStrokePath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
+- (void)setStrokeColor:(UIColor *)color;
+- (void)setStrokeColor:(UIColor *)color forControlStates:(UIControlState)controlStates;
+
 
 @end
