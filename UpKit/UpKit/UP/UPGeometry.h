@@ -129,6 +129,25 @@ UP_STATIC_INLINE CGAffineTransform up_lerp_transforms(CGAffineTransform a, CGAff
     return CGAffineTransformMake(fa, fb, fc, fd, ftx, fty);
 }
 
+UP_STATIC_INLINE CGFloat up_round_to_screen_scale(CGFloat f, CGFloat scale)
+{
+    return round(f * scale) / scale;
+}
+
+UP_STATIC_INLINE CGFloat up_floor_to_screen_scale(CGFloat f, CGFloat scale)
+{
+    return floor(f * scale) / scale;
+}
+
+UP_STATIC_INLINE CGFloat up_ceil_to_screen_scale(CGFloat f, CGFloat scale)
+{
+    return floor(f * scale) / scale;
+}
+
+CGPoint up_pixel_point(CGPoint point, CGFloat screen_scale);
+CGSize up_pixel_size(CGSize size, CGFloat screen_scale);
+CGRect up_pixel_rect(CGRect rect, CGFloat screen_scale);
+
 #ifdef __OBJC__
 NSString *NSStringFromUPQuad(UPQuad);
 NSString *NSStringFromUPOffset(UPOffset);

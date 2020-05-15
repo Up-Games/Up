@@ -12,12 +12,6 @@
 
 namespace UP {
 
-void SpellLayoutManager::set_canvas_frame(const CGRect &canvas_frame)
-{
-    m_canvas_frame = canvas_frame;
-    calculate();
-}
-
 void SpellLayoutManager::calculate()
 {
     set_aspect_ratio(up_aspect_ratio_for_rect(canvas_frame()));
@@ -89,7 +83,7 @@ void SpellLayoutManager::calculate_controls_layout_frame()
         }
         case AspectMode::WiderThanCanonical: {
             CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalControlsLayoutFrame, layout_scale(), layout_frame());
-            set_controls_layout_frame(frame);
+            set_controls_layout_frame(up_pixel_rect(frame, screen_scale()));
             break;
         }
         case AspectMode::TallerThanCanonical: {
@@ -98,7 +92,7 @@ void SpellLayoutManager::calculate_controls_layout_frame()
             // Frame is moved up in the UI by 50% the letterbox inset
             // That's what looks good.
             frame.origin.y -= letterbox_insets().top * 0.5;
-            set_controls_layout_frame(frame);
+            set_controls_layout_frame(up_pixel_rect(frame, screen_scale()));
             break;
         }
     }
@@ -114,7 +108,7 @@ void SpellLayoutManager::calculate_word_tray_layout_frame()
         }
         case AspectMode::WiderThanCanonical: {
             CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalWordTrayFrame, layout_scale(), layout_frame());
-            set_word_tray_layout_frame(frame);
+            set_word_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
             break;
         }
         case AspectMode::TallerThanCanonical: {
@@ -123,7 +117,7 @@ void SpellLayoutManager::calculate_word_tray_layout_frame()
             // Frame is moved up in the UI by 20% of the letterbox inset
             // That's what looks good.
             frame.origin.y -= letterbox_insets().top * 0.2;
-            set_word_tray_layout_frame(frame);
+            set_word_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
             break;
         }
     }
@@ -140,7 +134,7 @@ void SpellLayoutManager::calculate_tiles_layout_frame()
         }
         case AspectMode::WiderThanCanonical: {
             CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalTilesLayoutFrame, layout_scale(), layout_frame());
-            set_tiles_layout_frame(frame);
+            set_tiles_layout_frame(up_pixel_rect(frame, screen_scale()));
             break;
         }
         case AspectMode::TallerThanCanonical: {
@@ -149,7 +143,7 @@ void SpellLayoutManager::calculate_tiles_layout_frame()
             // Frame is moved down in the UI by 20% of the letterbox inset
             // That's what looks good.
             frame.origin.y += letterbox_insets().top * 0.2;
-            set_tiles_layout_frame(frame);
+            set_tiles_layout_frame(up_pixel_rect(frame, screen_scale()));
             break;
         }
     }
@@ -159,7 +153,7 @@ void SpellLayoutManager::calculate_tiles_layout_frame()
 void SpellLayoutManager::calculate_controls_button_pause_layout_frame()
 {
     CGRect frame = up_rect_scaled(CanonicalRoundControlButtonPauseFrame, layout_scale());
-    set_controls_button_pause_layout_frame(frame);
+    set_controls_button_pause_layout_frame(up_pixel_rect(frame, screen_scale()));
     NSLog(@"   pause button frame:  %@", NSStringFromCGRect(controls_button_pause_layout_frame()));
 }
 

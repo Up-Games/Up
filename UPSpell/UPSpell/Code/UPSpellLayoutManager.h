@@ -37,7 +37,12 @@ public:
 
     SpellLayoutManager() {}
 
-    void set_canvas_frame(const CGRect &canvas_frame);
+    void calculate();
+
+    void set_screen_scale(CGFloat screen_scale) { m_screen_scale = screen_scale; }
+    CGFloat screen_scale() const { return m_screen_scale; }
+
+    void set_canvas_frame(CGRect canvas_frame) { m_canvas_frame = canvas_frame; }
     CGRect canvas_frame() const { return m_canvas_frame; }
     
     AspectMode aspect_mode() const { return m_aspect_mode; }
@@ -69,12 +74,12 @@ private:
         m_controls_button_pause_layout_frame = controls_button_pause_layout_frame;
     }
 
-    void calculate();
     void calculate_controls_layout_frame();
     void calculate_word_tray_layout_frame();
     void calculate_tiles_layout_frame();
     void calculate_controls_button_pause_layout_frame();
 
+    CGFloat m_screen_scale = 2.0;
     AspectMode m_aspect_mode = AspectMode::Canonical;
     CGFloat m_aspect_ratio = CanonicalAspectRatio;
     CGFloat m_aspect_scale = 1.0;

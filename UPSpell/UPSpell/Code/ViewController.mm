@@ -59,6 +59,7 @@ using UP::LetterTileTray;
 {
     [super viewDidLoad];
 
+    NSLog(@"screenScale: %.2f", [[UIScreen mainScreen] scale]);
 
 //    UP::Random::create_instance();
 //    UP::Lexicon::set_language(UPLexiconLanguageEnglish);
@@ -87,7 +88,9 @@ using UP::LetterTileTray;
     [UIColor setThemeStyle:UPColorStyleLightStark];
     
     self.layout_manager = std::make_shared<UP::SpellLayoutManager>();
+    self.layout_manager->set_screen_scale([[UIScreen mainScreen] scale]);
     self.layout_manager->set_canvas_frame([[UPSceneDelegate instance] canvasFrame]);
+    self.layout_manager->calculate();
     
     self.canvasView = [[UIView alloc] initWithFrame:CGRectZero];
     self.canvasView.backgroundColor = [UIColor testColor1];
