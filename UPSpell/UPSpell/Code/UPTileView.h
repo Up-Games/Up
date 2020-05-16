@@ -1,21 +1,21 @@
 //
-//  UPLetterTileView.h
+//  UPTileView.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-#import <UPKit/UPLetterTile.h>
+#import <UPKit/UPTile.h>
 
-@interface UPLetterTileView : UIView
+@interface UPTileView : UIView
 
-@property (nonatomic, readonly) UP::LetterTile letterTile;
+@property (nonatomic, readonly) UP::Tile tile;
 @property (nonatomic, readonly) char32_t glyph;
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) int multiplier;
 @property (nonatomic, readonly) BOOL isSentinel;
 
-+ (UPLetterTileView *)viewWithLetterTile:(const UP::LetterTile &)letterTile;
++ (UPTileView *)viewWithTile:(const UP::Tile &)tile;
 
 - (instancetype)init NS_UNAVAILABLE;
 

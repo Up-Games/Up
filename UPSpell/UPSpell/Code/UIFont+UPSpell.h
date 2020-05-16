@@ -6,8 +6,8 @@
 #import <UIKit/UIKit.h>
 
 extern NSString * const UPLetterGameplayInformationFontName;
-extern NSString * const UPLetterTileGlyphFontName;
-extern NSString * const UPLetterTileScoreFontName;
+extern NSString * const UPTileGlyphFontName;
+extern NSString * const UPTileScoreFontName;
 
 @interface UIFont (UPSpell)
 

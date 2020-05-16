@@ -15,9 +15,9 @@
 #import "UPControl+UPSpell.h"
 
 using UP::GameCode;
-using UP::LetterTile;
-using UP::LetterTileSequence;
-using UP::LetterTileTray;
+using UP::Tile;
+using UP::LetterSequence;
+using UP::TileTray;
 
 @interface ViewController ()
 @property (nonatomic) UIView *infinityView;
@@ -37,11 +37,11 @@ using UP::LetterTileTray;
 
 @implementation ViewController
 
-- (void)printTiles:(const LetterTileTray &)tray
+- (void)printTiles:(const TileTray &)tray
 {
     NSMutableString *string = [NSMutableString string];
     for (size_t idx = 0; idx < UP::TileCount; idx++) {
-        LetterTile tile = tray.tile_at_index(idx);
+        Tile tile = tray.tile_at_index(idx);
         NSString *s = UP::ns_str(tile.glyph());
         [string appendString:s];
         [string appendString:@" "];
@@ -49,7 +49,7 @@ using UP::LetterTileTray;
     NSLog(@"tray: %@", string);
 }
 
-- (void)markRandom:(LetterTileTray &)tray
+- (void)markRandom:(TileTray &)tray
 {
     uint32_t marks = UP::Random::instance().uint32_in_range(3, 7);
     //NSLog(@"mark: %d", marks);
@@ -71,10 +71,10 @@ using UP::LetterTileTray;
 //    NSLog(@"code: %s", code.string().c_str());
 //    NSLog(@"code: %d", code.value());
 //
-//    UP::LetterTileSequence::create_instance();
-//    UP::LetterTileSequence::instance().set_game_code(code);
+//    UP::LetterSequence::create_instance();
+//    UP::LetterSequence::instance().set_game_code(code);
 //
-//    LetterTileTray tray;
+//    TileTray tray;
 //    tray.mark_all();
 //    tray.sentinelize_marked();
 //    tray.fill();

@@ -1,5 +1,5 @@
 //
-//  UPLetterTileTray.h
+//  UPTileTray.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -11,20 +11,20 @@
 
 #import <array>
 
-#import <UpKit/UPLetterTile.h>
-#import <UpKit/UPLetterTileSequence.h>
+#import <UpKit/UPTile.h>
+#import <UpKit/UPLetterSequence.h>
 
 namespace UP {
 
 enum { TileCount = 7 };
-using LetterTileArray = std::array<LetterTile, TileCount>;
+using TileArray = std::array<Tile, TileCount>;
 using MarkedArray = std::array<bool, TileCount>;
 
-class LetterTileTray {
+class TileTray {
 public:
-    LetterTileTray() {}
+    TileTray() {}
     
-    LetterTile tile_at_index(size_t idx) const { return m_tiles.at(idx); }
+    Tile tile_at_index(size_t idx) const { return m_tiles.at(idx); }
     void mark_at_index(size_t idx) { m_marked.at(idx) = true; }
     void unmark_at_index(size_t idx) { m_marked.at(idx) = false; }
     void mark_all() { m_marked.fill(true); }
@@ -42,25 +42,25 @@ public:
         size_t idx = 0;
         for (const auto &mark : m_marked) {
             if (mark) {
-                m_tiles[idx] = LetterTile::sentinel();
+                m_tiles[idx] = Tile::sentinel();
             }
             idx++;
         }
     }
     void fill() {
-        auto &seq = LetterTileSequence::instance();
+        auto &seq = LetterSequence::instance();
         sentinelize_marked();
         for (auto &tile : m_tiles) {
             if (tile.is_sentinel()) {
                 char32_t c = seq.next();
-                tile = LetterTile(c);
+                tile = Tile(c);
             }
         }
         unmark_all();
     }
 
 private:
-    LetterTileArray m_tiles;
+    TileArray m_tiles;
     MarkedArray m_marked;
 };
 

@@ -21,13 +21,13 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPLabel.h>
 #import <UpKit/UPLayoutRule.h>
-#import <UpKit/UPLetterTile.h>
-#import <UpKit/UPLetterTileSequence.h>
-#import <UpKit/UPLetterTileTray.h>
+#import <UpKit/UPLetterSequence.h>
 #import <UpKit/UPLexicon.h>
 #import <UpKit/UPMath.h>
 #import <UpKit/UPRandom.h>
 #import <UpKit/UPStringTools.h>
+#import <UpKit/UPTile.h>
+#import <UpKit/UPTileTray.h>
 #import <UpKit/UPTypes.h>
 #import <UpKit/UPUnitFunction.h>
 

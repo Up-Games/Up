@@ -1,5 +1,5 @@
 //
-//  UPLetterTile.h
+//  UPTile.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -15,7 +15,7 @@
 
 namespace UP {
 
-class LetterTile {
+class Tile {
 public:
     static constexpr char32_t SentinelGlyph = 0;
 
@@ -33,10 +33,10 @@ public:
         return scores[k];
     }
 
-    LetterTile() {}
-    LetterTile(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {}
+    Tile() {}
+    Tile(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {}
 
-    static LetterTile sentinel() { return LetterTile(SentinelGlyph, 0); }
+    static Tile sentinel() { return Tile(SentinelGlyph, 0); }
 
     char32_t glyph() const { return m_glyph; }
     int score() const { return score_for(glyph()) * multiplier(); }
@@ -49,11 +49,11 @@ private:
     int m_multiplier = 1;
 };
 
-UP_STATIC_INLINE bool operator==(const LetterTile &a, const LetterTile &b) {
+UP_STATIC_INLINE bool operator==(const Tile &a, const Tile &b) {
     return a.glyph() == b.glyph() && a.score() == b.score() && a.multiplier() == b.multiplier();
 }
 
-UP_STATIC_INLINE bool operator!=(const LetterTile &a, const LetterTile &b) {
+UP_STATIC_INLINE bool operator!=(const Tile &a, const Tile &b) {
     return !(a == b);
 }
 

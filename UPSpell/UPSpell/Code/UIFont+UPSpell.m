@@ -8,8 +8,8 @@
 #import "UIFont+UPSpell.h"
 
 NSString * const UPLetterGameplayInformationFontName = @"MalloryNarrow-Bold";
-NSString * const UPLetterTileGlyphFontName = @"MalloryCondensed-Bold";
-NSString * const UPLetterTileScoreFontName = @"MalloryMPNarrow-Bold";
+NSString * const UPTileGlyphFontName = @"MalloryCondensed-Bold";
+NSString * const UPTileScoreFontName = @"MalloryMPNarrow-Bold";
 
 @interface UIFontDescriptor (UPSpell)
 + (UIFontDescriptor *)monospacedDigitFontDescriptor;
@@ -63,12 +63,12 @@ NSString * const UPLetterTileScoreFontName = @"MalloryMPNarrow-Bold";
 
 + (UIFont *)letterTileGlyphFontOfSize:(CGFloat)fontSize
 {
-    return [UIFont fontWithName:UPLetterTileGlyphFontName size:fontSize];
+    return [UIFont fontWithName:UPTileGlyphFontName size:fontSize];
 }
 
 + (UIFont *)letterTileScoreFontOfSize:(CGFloat)fontSize
 {
-    UIFont *font = [UIFont fontWithName:UPLetterTileScoreFontName size:fontSize];
+    UIFont *font = [UIFont fontWithName:UPTileScoreFontName size:fontSize];
     UIFontDescriptor *descriptor = [font fontDescriptor];
     NSDictionary *attributes = @{
         UIFontDescriptorFeatureSettingsAttribute: @[

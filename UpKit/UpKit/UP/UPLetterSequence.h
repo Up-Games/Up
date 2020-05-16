@@ -19,20 +19,20 @@
 
 namespace UP {
     
-class LetterTileSequence {
+class LetterSequence {
 public:
-    static LetterTileSequence &create_instance() {
-        g_instance = new LetterTileSequence();
+    static LetterSequence &create_instance() {
+        g_instance = new LetterSequence();
         return *g_instance;
     }
 
-    static LetterTileSequence &instance() {
+    static LetterSequence &instance() {
         return *g_instance;
     }
 
-    LetterTileSequence(LetterTileSequence &&) = delete;
-    LetterTileSequence(LetterTileSequence const &) = delete;
-    void operator=(LetterTileSequence const &) = delete;
+    LetterSequence(LetterSequence &&) = delete;
+    LetterSequence(LetterSequence const &) = delete;
+    void operator=(LetterSequence const &) = delete;
 
     void reset() {
         set_game_code(game_code());
@@ -60,9 +60,9 @@ public:
     }
     
 private:
-    LetterTileSequence() : m_game_code(GameCode()) { reset(); }
+    LetterSequence() : m_game_code(GameCode()) { reset(); }
 
-    UP_STATIC_INLINE LetterTileSequence *g_instance;
+    UP_STATIC_INLINE LetterSequence *g_instance;
 
     GameCode m_game_code;
     Random m_random;
