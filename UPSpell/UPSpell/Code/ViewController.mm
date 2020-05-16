@@ -20,6 +20,7 @@ using UP::LetterTileSequence;
 using UP::LetterTileTray;
 
 @interface ViewController ()
+@property (nonatomic) UIView *infinityView;
 @property (nonatomic) UIView *canvasView;
 @property (nonatomic) UIView *layoutView;
 @property (nonatomic) UIView *controlsLayoutView;
@@ -28,6 +29,7 @@ using UP::LetterTileTray;
 @property (nonatomic) UIView *tileFrameView;
 @property (nonatomic) UPControl *roundControlButtonPause;
 @property (nonatomic) UPControl *roundControlButtonTrash;
+@property (nonatomic) UPLabel *timeLabel;
 @property (nonatomic) NSMutableArray *tileViews;
 @property (nonatomic) std::shared_ptr<UP::SpellLayoutManager> layout_manager;
 @end
@@ -59,8 +61,6 @@ using UP::LetterTileTray;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    NSLog(@"screenScale: %.2f", [[UIScreen mainScreen] scale]);
 
 //    UP::Random::create_instance();
 //    UP::Lexicon::set_language(UPLexiconLanguageEnglish);
@@ -94,8 +94,12 @@ using UP::LetterTileTray;
     self.layout_manager->set_canvas_frame([[UPSceneDelegate instance] canvasFrame]);
     self.layout_manager->calculate();
     
+    self.infinityView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.infinityView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanvas];
+    [self.view addSubview:self.infinityView];
+    
     self.canvasView = [[UIView alloc] initWithFrame:CGRectZero];
-    //self.canvasView.backgroundColor = [UIColor testColor3];
+//    self.canvasView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanvas];
     [self.view addSubview:self.canvasView];
 
     self.layoutView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -103,11 +107,11 @@ using UP::LetterTileTray;
     [self.view addSubview:self.layoutView];
 
     self.controlsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.controlsLayoutView.backgroundColor = [UIColor testColor1];
+//    self.controlsLayoutView.backgroundColor = [UIColor testColor1];
     [self.view addSubview:self.controlsLayoutView];
 
     self.tilesLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tilesLayoutView.backgroundColor = [UIColor testColor3];
+//    self.tilesLayoutView.backgroundColor = [UIColor testColor3];
     [self.view addSubview:self.tilesLayoutView];
 
     self.roundControlButtonPause = [UPControl roundControlButtonPause];
@@ -120,6 +124,30 @@ using UP::LetterTileTray;
     //self.wordTrayLayoutView.backgroundColor = [UIColor testColor3];
     [self.view addSubview:self.wordTrayView];
 
+//    UIFont *font = [UIFont fontWithName:UPLetterGameplayInformationFontName capHeight:46.25];
+//    UIFont *font = [UIFont gameplayInformationFontOfSize:84 * self.layout_manager->layout_scale()];
+    UIFont *font = [UIFont gameplayInformationFontOfSize:self.layout_manager->game_time_label_font_size()];
+//    UIFont *font = [UIFont gameplayInformationFontWithCapHeight:46.25];
+
+    NSLog(@"=== font metrics");
+    NSLog(@"    name:       %@", font.fontName);
+    NSLog(@"    pointSize:  %.5f", font.pointSize);
+    NSLog(@"    ascender:   %.5f", font.ascender);
+    NSLog(@"    descender:  %.5f", font.descender);
+    NSLog(@"    capHeight:  %.5f", font.capHeight);
+    NSLog(@"    xHeight:    %.5f", font.xHeight);
+    NSLog(@"    lineHeight: %.5f", font.lineHeight);
+
+    self.timeLabel = [UPLabel label];
+    self.timeLabel.string = @"1:30";
+//    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+//    self.timeLabel.text = @"1:30";
+    self.timeLabel.font = font;
+    self.timeLabel.textColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
+    self.timeLabel.textAlignment = NSTextAlignmentRight;
+    self.timeLabel.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanvas];
+//    self.timeLabel.backgroundColor = [UIColor testColor3];
+    [self.view addSubview:self.timeLabel];
 
 //    self.tileFrameView = [[UIView alloc] initWithFrame:CGRectZero];
 //    self.tileFrameView.backgroundColor = [UIColor whiteColor];
@@ -143,6 +171,7 @@ using UP::LetterTileTray;
 
 - (void)viewDidLayoutSubviews
 {
+    self.infinityView.frame = self.view.bounds;
     self.canvasView.frame = self.layout_manager->canvas_frame();
     self.layoutView.frame = self.layout_manager->layout_frame();
     self.controlsLayoutView.frame = self.layout_manager->controls_layout_frame();
@@ -150,6 +179,7 @@ using UP::LetterTileTray;
     self.tilesLayoutView.frame = self.layout_manager->tiles_layout_frame();
     self.roundControlButtonPause.frame = self.layout_manager->controls_button_pause_frame();
     self.roundControlButtonTrash.frame = self.layout_manager->controls_button_trash_frame();
+    self.timeLabel.frame = self.layout_manager->game_time_label_frame();
 
 //    self.tileFrameView.frame = layoutManager.tileFrame;
 //    NSLog(@"tile frame: %@", NSStringFromCGRect(layoutManager.tileFrame));

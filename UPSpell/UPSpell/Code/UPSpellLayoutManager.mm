@@ -5,9 +5,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import <UpKit/UIFont+UP.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPMath.h>
 
+#include "UIFont+UPSpell.h"
 #include "UPSpellLayoutManager.h"
 
 namespace UP {
@@ -68,6 +70,7 @@ void SpellLayoutManager::calculate()
     calculate_tiles_layout_frame();
     calculate_controls_button_pause_frame();
     calculate_controls_button_trash_frame();
+    calculate_game_time_label_metrics();
 }
 
 void SpellLayoutManager::calculate_controls_layout_frame()
@@ -170,6 +173,21 @@ void SpellLayoutManager::calculate_controls_button_trash_frame()
     );
     set_controls_button_trash_frame(up_pixel_rect(frame, screen_scale()));
     NSLog(@"   trash button frame:  %@", NSStringFromCGRect(controls_button_trash_frame()));
+}
+
+void SpellLayoutManager::calculate_game_time_label_metrics()
+{
+    CGFloat cap_height = CanonicalGameplayInformationCapHeight * layout_scale();
+    UIFont *font = [UIFont gameplayInformationFontWithCapHeight:cap_height];
+    set_game_time_label_font_size(font.pointSize);
+    CGPoint baseline_point = up_point_scaled(CanonicalGameTimeLabelRightAlignedBaselinePointRelativeToTDC, layout_scale());
+    CGFloat w = CanonicalGameTimeLabelWidth * layout_scale();
+    CGFloat x = up_rect_mid_x(controls_layout_frame()) + baseline_point.x - w;
+    CGFloat y = up_rect_mid_y(controls_layout_frame()) - (cap_height * 1.03);
+    CGFloat h = font.lineHeight;
+    CGRect frame = CGRectMake(x, y, w, h);
+    set_game_time_label_frame(up_pixel_rect(frame, screen_scale()));
+    NSLog(@"   time label frame:    %@", NSStringFromCGRect(game_time_label_frame()));
 }
 
 }  // namespace UP

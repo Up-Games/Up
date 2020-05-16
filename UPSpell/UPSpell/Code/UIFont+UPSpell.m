@@ -7,9 +7,9 @@
 
 #import "UIFont+UPSpell.h"
 
-static NSString * const UPLetterGameplayInformationFontFontName = @"MalloryNarrow-Bold";
-static NSString * const UPLetterTileGlyphFontName = @"MalloryCondensed-Bold";
-static NSString * const UPLetterTileScoreFontName = @"MalloryMPNarrow-Bold";
+NSString * const UPLetterGameplayInformationFontName = @"MalloryNarrow-Bold";
+NSString * const UPLetterTileGlyphFontName = @"MalloryCondensed-Bold";
+NSString * const UPLetterTileScoreFontName = @"MalloryMPNarrow-Bold";
 
 @interface UIFontDescriptor (UPSpell)
 + (UIFontDescriptor *)monospacedDigitFontDescriptor;
@@ -35,7 +35,7 @@ static NSString * const UPLetterTileScoreFontName = @"MalloryMPNarrow-Bold";
 
 + (UIFont *)gameplayInformationFontOfSize:(CGFloat)fontSize
 {
-    UIFont *font = [UIFont fontWithName:UPLetterGameplayInformationFontFontName size:fontSize];
+    UIFont *font = [UIFont fontWithName:UPLetterGameplayInformationFontName size:fontSize];
     UIFontDescriptor *descriptor = [font fontDescriptor];
     NSDictionary *attributes = @{
         UIFontDescriptorFeatureSettingsAttribute: @[
@@ -51,6 +51,14 @@ static NSString * const UPLetterTileScoreFontName = @"MalloryMPNarrow-Bold";
     };
     UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
     return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
+}
+
++ (UIFont *)gameplayInformationFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPLetterGameplayInformationFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont gameplayInformationFontOfSize:pointSize];
 }
 
 + (UIFont *)letterTileGlyphFontOfSize:(CGFloat)fontSize

@@ -80,6 +80,7 @@ UP_STATIC_INLINE_CONSTEXPR CGFloat up_rect_width(CGRect rect) { return rect.size
 UP_STATIC_INLINE_CONSTEXPR CGFloat up_rect_height(CGRect rect) { return rect.size.height; }
 #endif  // __cplusplus
 
+CGPoint up_point_scaled(CGPoint point, CGFloat scale);
 CGSize up_size_scaled(CGSize size, CGFloat scale);
 
 CGRect up_rect_centered_in_rect(CGRect rectToCenter, CGRect referenceRect);

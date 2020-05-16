@@ -11,6 +11,11 @@ extern "C" {
 
 #pragma mark - Points, Sizes, and Rects
 
+CGPoint up_point_scaled(CGPoint point, CGFloat scale)
+{
+    return CGPointMake(point.x * scale, point.y * scale);
+}
+
 CGSize up_size_scaled(CGSize size, CGFloat scale)
 {
     return CGSizeMake(size.width * scale, size.height * scale);

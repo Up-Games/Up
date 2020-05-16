@@ -25,6 +25,7 @@ public:
     };
 
     static constexpr CGFloat CanonicalCanvasWidth = 1000;
+    static constexpr CGFloat CanonicalCanvasMidX = CanonicalCanvasWidth / 2;
     static constexpr CGFloat CanonicalCanvasHeight = 500;
     static constexpr CGSize CanonicalCanvasSize = { CanonicalCanvasWidth, CanonicalCanvasHeight };
     static constexpr CGFloat CanonicalAspectRatio = CanonicalCanvasWidth / CanonicalCanvasHeight;
@@ -34,6 +35,12 @@ public:
     static inline constexpr CGRect CanonicalTilesLayoutFrame =    {  105, 350, 790, 116 };
 
     static inline constexpr CGSize CanonicalRoundControlButtonSize = { 84, 84 };
+
+    static inline constexpr CGFloat CanonicalGameplayInformationCapHeight = 57;
+    static inline constexpr CGFloat CanonicalGameTimeLabelWidth =  150;
+    static inline constexpr CGPoint CanonicalGameTimeLabelRightAlignedBaselinePointRelativeToTDC =  { -60, 91.7 };
+    static inline constexpr CGPoint CanonicalGameScoreLabelRightAlignedBaselinePoint = { 694, 91.7 };
+    static inline constexpr CGFloat CanonicalGameScoreLabelWidth =  175;
 
     SpellLayoutManager() {}
 
@@ -60,6 +67,9 @@ public:
     CGRect controls_button_pause_frame() const { return m_controls_button_pause_frame; }
     CGRect controls_button_trash_frame() const { return m_controls_button_trash_frame; }
 
+    CGRect game_time_label_frame() const { return m_game_time_label_frame; }
+    CGFloat game_time_label_font_size() const { return m_game_time_label_font_size; }
+
 
 private:
     void set_aspect_mode(AspectMode aspect_mode) { m_aspect_mode = aspect_mode; }
@@ -77,12 +87,19 @@ private:
     void set_controls_button_trash_frame(CGRect controls_button_trash_frame) {
         m_controls_button_trash_frame = controls_button_trash_frame;
     }
+    void set_game_time_label_frame(CGRect game_time_label_frame) {
+        m_game_time_label_frame = game_time_label_frame;
+    }
+    void set_game_time_label_font_size(CGFloat game_time_label_font_size) {
+        m_game_time_label_font_size = game_time_label_font_size;
+    }
 
     void calculate_controls_layout_frame();
     void calculate_word_tray_frame();
     void calculate_tiles_layout_frame();
     void calculate_controls_button_pause_frame();
     void calculate_controls_button_trash_frame();
+    void calculate_game_time_label_metrics();
 
     CGFloat m_screen_scale = 2.0;
     AspectMode m_aspect_mode = AspectMode::Canonical;
@@ -99,6 +116,9 @@ private:
 
     CGRect m_controls_button_pause_frame = CGRectZero;
     CGRect m_controls_button_trash_frame = CGRectZero;
+
+    CGRect m_game_time_label_frame = CGRectZero;
+    CGFloat m_game_time_label_font_size = 0;
 };
 
 }  // namespace UP

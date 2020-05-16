@@ -17,6 +17,7 @@
 #import <codecvt>
 #import <locale>
 #import <string>
+#import <string_view>
 #import <vector>
 
 namespace UP {
@@ -52,6 +53,11 @@ UP_STATIC_INLINE std::string cpp_str(NSString *str) { return std::string([str UT
 UP_STATIC_INLINE std::u32string cpp_u32str(NSString *str) {
     return utf8_char32_conv().from_bytes(cpp_str(str));
 }
+UP_STATIC_INLINE std::string_view cpp_str_view(NSString *str) {
+    const char *s = [str UTF8String];
+    return std::string_view(s, strlen(s));
+}
+
 #endif  // __OBJC__
 
 
