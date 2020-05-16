@@ -16,6 +16,7 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPConstants.h>
 #import <UpKit/UPControl.h>
 #import <UpKit/UPDeferredBlock.h>
+#import <UpKit/UPFontMetrics.h>
 #import <UpKit/UPGameCode.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPLabel.h>

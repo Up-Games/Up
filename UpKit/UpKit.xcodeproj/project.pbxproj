@@ -76,6 +76,7 @@
 		5DC618B5246EF6CC00090E7A /* UPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC618B3246EF6CC00090E7A /* UPLabel.m */; };
 		5DC618BB246F045700090E7A /* UIFont+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B9246F045700090E7A /* UIFont+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC618BC246F045700090E7A /* UIFont+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC618BA246F045700090E7A /* UIFont+UP.mm */; };
+		5DC618BE24703A1500090E7A /* UPFontMetrics.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618BD24703A1500090E7A /* UPFontMetrics.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71D442457731700F3F9E2 /* UPLayoutRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D422457731700F3F9E2 /* UPLayoutRule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71D452457731700F3F9E2 /* UPLayoutRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D432457731700F3F9E2 /* UPLayoutRule.m */; };
 		5DD71D472457748000F3F9E2 /* UPLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D462457748000F3F9E2 /* UPLayoutTests.m */; };
@@ -211,6 +212,7 @@
 		5DC618B3246EF6CC00090E7A /* UPLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLabel.m; sourceTree = "<group>"; };
 		5DC618B9246F045700090E7A /* UIFont+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UP.h"; sourceTree = "<group>"; };
 		5DC618BA246F045700090E7A /* UIFont+UP.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIFont+UP.mm"; sourceTree = "<group>"; };
+		5DC618BD24703A1500090E7A /* UPFontMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPFontMetrics.h; sourceTree = "<group>"; };
 		5DD71D422457731700F3F9E2 /* UPLayoutRule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLayoutRule.h; sourceTree = "<group>"; };
 		5DD71D432457731700F3F9E2 /* UPLayoutRule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutRule.m; sourceTree = "<group>"; };
 		5DD71D462457748000F3F9E2 /* UPLayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutTests.m; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 				5D5216F1246D87DF005A2E9F /* UPControl.m */,
 				5DD71D962457988000F3F9E2 /* UPDeferredBlock.h */,
 				5DD71D972457988000F3F9E2 /* UPDeferredBlock.m */,
+				5DC618BD24703A1500090E7A /* UPFontMetrics.h */,
 				5DBADB7124678F4000D9D1FF /* UPGameCode.h */,
 				5DBADB7224678F4000D9D1FF /* UPGameCode.mm */,
 				5DD71D492457824A00F3F9E2 /* UPGeometry.h */,
@@ -547,6 +550,7 @@
 				5DFE62262453CFCD00D9CA0B /* UPConstants.h in Headers */,
 				5DC618BB246F045700090E7A /* UIFont+UP.h in Headers */,
 				5DD71D4B2457824A00F3F9E2 /* UPGeometry.h in Headers */,
+				5DC618BE24703A1500090E7A /* UPFontMetrics.h in Headers */,
 				5D2CAC81245A554F00B81332 /* POPPathAnimation.h in Headers */,
 				5D2CABF7245A13E700B81332 /* POPAnimationEvent.h in Headers */,
 				5DEBE0202454F1D200016047 /* UIColor+UP.h in Headers */,

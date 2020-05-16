@@ -28,6 +28,8 @@
 {
     self = [super initWithFrame:frame];
     TextLayer().contentsScale = [[UIScreen mainScreen] scale];
+    TextLayer().backgroundColor = [UIColor clearColor].CGColor;
+    self.opaque = NO;
     return self;
 }
 

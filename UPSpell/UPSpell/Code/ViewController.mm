@@ -30,6 +30,7 @@ using UP::LetterTileTray;
 @property (nonatomic) UPControl *roundControlButtonPause;
 @property (nonatomic) UPControl *roundControlButtonTrash;
 @property (nonatomic) UPLabel *timeLabel;
+@property (nonatomic) UPLabel *scoreLabel;
 @property (nonatomic) NSMutableArray *tileViews;
 @property (nonatomic) std::shared_ptr<UP::SpellLayoutManager> layout_manager;
 @end
@@ -100,10 +101,11 @@ using UP::LetterTileTray;
     
     self.canvasView = [[UIView alloc] initWithFrame:CGRectZero];
 //    self.canvasView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanvas];
+//    self.canvasView.backgroundColor = [UIColor testColor4];
     [self.view addSubview:self.canvasView];
 
     self.layoutView = [[UIView alloc] initWithFrame:CGRectZero];
-    //self.layoutView.backgroundColor = [UIColor testColor2];
+//    self.layoutView.backgroundColor = [UIColor testColor2];
     [self.view addSubview:self.layoutView];
 
     self.controlsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -121,13 +123,10 @@ using UP::LetterTileTray;
     [self.view addSubview:self.roundControlButtonTrash];
 
     self.wordTrayView = [UPControl wordTray];
-    //self.wordTrayLayoutView.backgroundColor = [UIColor testColor3];
+//    self.wordTrayView.backgroundColor = [UIColor testColor3];
     [self.view addSubview:self.wordTrayView];
 
-//    UIFont *font = [UIFont fontWithName:UPLetterGameplayInformationFontName capHeight:46.25];
-//    UIFont *font = [UIFont gameplayInformationFontOfSize:84 * self.layout_manager->layout_scale()];
-    UIFont *font = [UIFont gameplayInformationFontOfSize:self.layout_manager->game_time_label_font_size()];
-//    UIFont *font = [UIFont gameplayInformationFontWithCapHeight:46.25];
+    UIFont *font = [UIFont gameplayInformationFontOfSize:self.layout_manager->gameplay_information_font_metrics().point_size()];
 
     NSLog(@"=== font metrics");
     NSLog(@"    name:       %@", font.fontName);
@@ -138,16 +137,21 @@ using UP::LetterTileTray;
     NSLog(@"    xHeight:    %.5f", font.xHeight);
     NSLog(@"    lineHeight: %.5f", font.lineHeight);
 
+//    self.timeLabel.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanvas];
+
     self.timeLabel = [UPLabel label];
-    self.timeLabel.string = @"1:30";
-//    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-//    self.timeLabel.text = @"1:30";
+    self.timeLabel.string = @"0:17";
     self.timeLabel.font = font;
     self.timeLabel.textColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
     self.timeLabel.textAlignment = NSTextAlignmentRight;
-    self.timeLabel.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanvas];
-//    self.timeLabel.backgroundColor = [UIColor testColor3];
     [self.view addSubview:self.timeLabel];
+
+    self.scoreLabel = [UPLabel label];
+    self.scoreLabel.string = @"114";
+    self.scoreLabel.font = font;
+    self.scoreLabel.textColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
+    self.scoreLabel.textAlignment = NSTextAlignmentRight;
+    [self.view addSubview:self.scoreLabel];
 
 //    self.tileFrameView = [[UIView alloc] initWithFrame:CGRectZero];
 //    self.tileFrameView.backgroundColor = [UIColor whiteColor];
@@ -180,6 +184,7 @@ using UP::LetterTileTray;
     self.roundControlButtonPause.frame = self.layout_manager->controls_button_pause_frame();
     self.roundControlButtonTrash.frame = self.layout_manager->controls_button_trash_frame();
     self.timeLabel.frame = self.layout_manager->game_time_label_frame();
+    self.scoreLabel.frame = self.layout_manager->game_score_label_frame();
 
 //    self.tileFrameView.frame = layoutManager.tileFrame;
 //    NSLog(@"tile frame: %@", NSStringFromCGRect(layoutManager.tileFrame));
