@@ -43,6 +43,8 @@ public:
     static inline constexpr CGPoint CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTDC = {  30, 91.7 };
     static inline constexpr CGFloat CanonicalGameScoreLabelWidth =  175;
 
+    static inline constexpr CGSize CanonicalGameTileSize = { 100, 116 };
+
     SpellLayoutManager() {}
 
     void calculate();
