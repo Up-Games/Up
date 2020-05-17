@@ -74,6 +74,14 @@ void SpellLayoutManager::calculate()
     calculate_gameplay_information_font_metrics();
     calculate_game_time_label_frame();
     calculate_game_score_label_frame();
+    calculate_tile_frames();
+    calculate_tile_stroke_width();
+    calculate_tile_glyph_font_metrics();
+    calculate_tile_score_font_metrics();
+    calculate_tile_multiplier_font_metrics();
+    calculate_tile_glyph_frame();
+    calculate_tile_score_frame();
+    calculate_tile_multiplier_frame();
 }
 
 void SpellLayoutManager::calculate_controls_layout_frame()
@@ -192,7 +200,7 @@ void SpellLayoutManager::calculate_game_time_label_frame()
     CGPoint baseline_point = up_point_scaled(CanonicalGameTimeLabelRightAlignedBaselinePointRelativeToTDC, layout_scale());
     CGFloat w = CanonicalGameTimeLabelWidth * layout_scale();
     CGFloat x = up_rect_mid_x(controls_layout_frame()) + baseline_point.x - w;
-    CGFloat y = up_rect_mid_y(controls_layout_frame()) - (cap_height * 1.0);
+    CGFloat y = up_rect_mid_y(controls_layout_frame()) - cap_height;
     CGFloat h = font_metrics.line_height();
     CGRect frame = CGRectMake(x, y, w, h);
     set_game_time_label_frame(up_pixel_rect(frame, screen_scale()));
@@ -206,11 +214,79 @@ void SpellLayoutManager::calculate_game_score_label_frame()
     CGPoint baseline_point = up_point_scaled(CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTDC, layout_scale());
     CGFloat w = CanonicalGameScoreLabelWidth * layout_scale();
     CGFloat x = up_rect_mid_x(controls_layout_frame()) + baseline_point.x;
-    CGFloat y = up_rect_mid_y(controls_layout_frame()) - (cap_height * 1.0);
+    CGFloat y = up_rect_mid_y(controls_layout_frame()) - cap_height;
     CGFloat h = font_metrics.line_height();
     CGRect frame = CGRectMake(x, y, w, h);
     set_game_score_label_frame(up_pixel_rect(frame, screen_scale()));
     NSLog(@"   score label frame:   %@", NSStringFromCGRect(game_score_label_frame()));
+}
+
+void SpellLayoutManager::calculate_tile_frames()
+{
+    CGSize size = up_size_scaled(CanonicalTileSize, layout_scale());
+    CGFloat gap = CanonicalTileGap * layout_scale();
+    CGFloat x = up_rect_min_x(tiles_layout_frame());
+    CGFloat y = up_rect_min_y(tiles_layout_frame());
+    for (auto &tile_frame : m_tile_frames) {
+        CGRect r = CGRectMake(x, y, up_size_width(size), up_size_height(size));
+        tile_frame = up_pixel_rect(r, screen_scale());
+        x += up_size_width(size) + gap;
+    }
+    int idx = 0;
+    for (const auto &r : tile_frames()) {
+        NSLog(@"   tile frame [%d]:      %@", idx, NSStringFromCGRect(r));
+        idx++;
+    }
+}
+
+void SpellLayoutManager::calculate_tile_stroke_width()
+{
+    CGFloat stroke_width = CanonicalTileStrokeWidth * layout_scale();
+    set_tile_stroke_width(stroke_width);
+    NSLog(@"   tile stroke width:   %.2f", tile_stroke_width());
+}
+
+void SpellLayoutManager::calculate_tile_glyph_font_metrics()
+{
+    CGFloat cap_height = CanonicalTileGlyphCapHeight * layout_scale();
+    UIFont *font = [UIFont gameplayInformationFontWithCapHeight:cap_height];
+    set_tile_glyph_font_metrics(FontMetrics(font.fontName, font.pointSize));
+}
+
+void SpellLayoutManager::calculate_tile_score_font_metrics()
+{
+    CGFloat cap_height = CanonicalTileScoreCapHeight * layout_scale();
+    UIFont *font = [UIFont gameplayInformationFontWithCapHeight:cap_height];
+    set_tile_score_font_metrics(FontMetrics(font.fontName, font.pointSize));
+}
+
+void SpellLayoutManager::calculate_tile_multiplier_font_metrics()
+{
+    CGFloat cap_height = CanonicalTileMultiplierCapHeight * layout_scale();
+    UIFont *font = [UIFont gameplayInformationFontWithCapHeight:cap_height];
+    set_tile_multiplier_font_metrics(FontMetrics(font.fontName, font.pointSize));
+}
+
+void SpellLayoutManager::calculate_tile_glyph_frame()
+{
+    const FontMetrics &font_metrics = tile_glyph_font_metrics();
+    CGFloat x = 0;
+    CGFloat y = CanonicalTileGlyphFrameMinY * layout_scale();
+    CGFloat w = up_size_width(CanonicalTileSize) * layout_scale();
+    CGFloat h = up_size_height(CanonicalTileSize) * layout_scale();
+    CGRect frame = CGRectMake(x, y, w, h);
+    set_tile_glyph_frame(up_pixel_rect(frame, screen_scale()));
+    NSLog(@"   tile glyph frame:    %@", NSStringFromCGRect(tile_glyph_frame()));
+}
+
+void SpellLayoutManager::calculate_tile_score_frame()
+{
+    set_tile_score_frame(CGRectZero);
+}
+
+void SpellLayoutManager::calculate_tile_multiplier_frame()
+{
+    set_tile_multiplier_frame(CGRectZero);
 }
 
 }  // namespace UP

@@ -7,6 +7,8 @@
 #import "UPColor.h"
 #import "UPMath.h"
 
+NSString * const UPThemeColorsChangedNotification = @"UPThemeColorsChangedNotification";
+
 using UP::RGBF;
 using UP::HSVF;
 using UP::LABF;
@@ -26,7 +28,7 @@ static CGFloat _ThemeHue = 222;
 + (void)setThemeStyle:(UPColorStyle)style
 {
     _ThemeStyle = style;
-    // FIXME: send notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
 + (UPColorStyle)themeStyle
@@ -37,7 +39,7 @@ static CGFloat _ThemeHue = 222;
 + (void)setThemeHue:(CGFloat)hue;
 {
     _ThemeHue = UPClampT(CGFloat, hue, 0, 360);
-    // FIXME: send notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
 + (CGFloat)themeHue

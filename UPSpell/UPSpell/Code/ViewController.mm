@@ -8,11 +8,12 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UpKit/UpKit.h>
 
-#import "UPSceneDelegate.h"
-#import "UPSpellLayoutManager.h"
-#import "ViewController.h"
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
+#import "UPSceneDelegate.h"
+#import "UPSpellLayoutManager.h"
+#import "UPTileView.h"
+#import "ViewController.h"
 
 using UP::GameCode;
 using UP::Tile;
@@ -32,7 +33,6 @@ using UP::TileTray;
 @property (nonatomic) UPLabel *timeLabel;
 @property (nonatomic) UPLabel *scoreLabel;
 @property (nonatomic) NSMutableArray *tileViews;
-@property (nonatomic) std::shared_ptr<UP::SpellLayoutManager> layout_manager;
 @end
 
 @implementation ViewController
@@ -63,16 +63,16 @@ using UP::TileTray;
 {
     [super viewDidLoad];
 
-//    UP::Random::create_instance();
-//    UP::Lexicon::set_language(UPLexiconLanguageEnglish);
-//
-//    GameCode code = GameCode::random();
+    UP::Random::create_instance();
+    UP::Lexicon::set_language(UPLexiconLanguageEnglish);
+
+    GameCode code = GameCode::random();
 ////    GameCode code = GameCode("WPQ-2701");
-//    NSLog(@"code: %s", code.string().c_str());
-//    NSLog(@"code: %d", code.value());
+    NSLog(@"code: %s", code.string().c_str());
+    NSLog(@"code: %d", code.value());
 //
-//    UP::LetterSequence::create_instance();
-//    UP::LetterSequence::instance().set_game_code(code);
+    UP::LetterSequence &letter_sequence = UP::LetterSequence::create_instance();
+    letter_sequence.set_game_code(code);
 //
 //    TileTray tray;
 //    tray.mark_all();
@@ -89,11 +89,11 @@ using UP::TileTray;
     
     [UIColor setThemeStyle:UPColorStyleLight];
 //    [UIColor setThemeHue:0];
+    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::create_instance();
     
-    self.layout_manager = std::make_shared<UP::SpellLayoutManager>();
-    self.layout_manager->set_screen_scale([[UIScreen mainScreen] scale]);
-    self.layout_manager->set_canvas_frame([[UPSceneDelegate instance] canvasFrame]);
-    self.layout_manager->calculate();
+    layout_manager.set_screen_scale([[UIScreen mainScreen] scale]);
+    layout_manager.set_canvas_frame([[UPSceneDelegate instance] canvasFrame]);
+    layout_manager.calculate();
     
     self.infinityView = [[UIView alloc] initWithFrame:CGRectZero];
     self.infinityView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanvas];
@@ -126,7 +126,7 @@ using UP::TileTray;
 //    self.wordTrayView.backgroundColor = [UIColor testColor3];
     [self.view addSubview:self.wordTrayView];
 
-    UIFont *font = [UIFont gameplayInformationFontOfSize:self.layout_manager->gameplay_information_font_metrics().point_size()];
+    UIFont *font = [UIFont gameplayInformationFontOfSize:layout_manager.gameplay_information_font_metrics().point_size()];
 
     NSLog(@"=== font metrics");
     NSLog(@"    name:       %@", font.fontName);
@@ -136,8 +136,6 @@ using UP::TileTray;
     NSLog(@"    capHeight:  %.5f", font.capHeight);
     NSLog(@"    xHeight:    %.5f", font.xHeight);
     NSLog(@"    lineHeight: %.5f", font.lineHeight);
-
-//    self.timeLabel.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanvas];
 
     self.timeLabel = [UPLabel label];
     self.timeLabel.string = @"0:17";
@@ -153,53 +151,36 @@ using UP::TileTray;
     self.scoreLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.scoreLabel];
 
-//    self.tileFrameView = [[UIView alloc] initWithFrame:CGRectZero];
-//    self.tileFrameView.backgroundColor = [UIColor whiteColor];
-//    [self.view addSubview:self.tileFrameView];
-//
-//    self.tileViews = [NSMutableArray array];
-//    for (int i = 0; i < UP::TileCount; i++) {
-//        UIView *tileView = [[UIView alloc] initWithFrame:CGRectZero];
-//        tileView.backgroundColor = [UIColor blackColor];
-//        [self.view addSubview:tileView];
-//        [self.tileViews addObject:tileView];
-//    }
-
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 200, 90)];
-//    label.font = [UIFont letterTileGlyphFontOfSize:86];
-//    label.text = @"Q";
-//    label.font = [UIFont gameplayInformationFontOfSize:86];
-//    label.text = @"1:30";
-//    [self.view addSubview:label];
+    self.tileViews = [NSMutableArray array];
+    for (int i = 0; i < UP::TileCount; i++) {
+        char32_t glyph = letter_sequence.next();
+        UP::Tile tile = Tile(glyph);
+        UPTileView *tileView = [UPTileView viewWithTile:tile];
+        tileView.index = i;
+        [self.view addSubview:tileView];
+        [self.tileViews addObject:tileView];
+    }
 }
 
 - (void)viewDidLayoutSubviews
 {
+    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    
     self.infinityView.frame = self.view.bounds;
-    self.canvasView.frame = self.layout_manager->canvas_frame();
-    self.layoutView.frame = self.layout_manager->layout_frame();
-    self.controlsLayoutView.frame = self.layout_manager->controls_layout_frame();
-    self.wordTrayView.frame = self.layout_manager->word_tray_layout_frame();
-    self.tilesLayoutView.frame = self.layout_manager->tiles_layout_frame();
-    self.roundControlButtonPause.frame = self.layout_manager->controls_button_pause_frame();
-    self.roundControlButtonTrash.frame = self.layout_manager->controls_button_trash_frame();
-    self.timeLabel.frame = self.layout_manager->game_time_label_frame();
-    self.scoreLabel.frame = self.layout_manager->game_score_label_frame();
+    self.canvasView.frame = layout_manager.canvas_frame();
+    self.layoutView.frame = layout_manager.layout_frame();
+    self.controlsLayoutView.frame = layout_manager.controls_layout_frame();
+    self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
+    self.tilesLayoutView.frame = layout_manager.tiles_layout_frame();
+    self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
+    self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
+    self.timeLabel.frame = layout_manager.game_time_label_frame();
+    self.scoreLabel.frame = layout_manager.game_score_label_frame();
 
-//    self.tileFrameView.frame = layoutManager.tileFrame;
-//    NSLog(@"tile frame: %@", NSStringFromCGRect(layoutManager.tileFrame));
-//
-//    CGFloat x = CGRectGetMinX(self.tileFrameView.frame);
-//    CGFloat y = CGRectGetMinY(self.tileFrameView.frame);
-//    CGFloat widthFraction = CGRectGetWidth(UPSpellCanonicalTileLayoutFrame) / UPCanonicalCanvasWidth;
-//    CGFloat width = 68; //UPSpellCanonicalTileSize.width * layoutManager.layoutScale * widthFraction;
-//    CGFloat height = CGRectGetHeight(self.tileFrameView.frame);
-//    CGFloat gap = UPSpellCanonicalTileGap * layoutManager.layoutScale;
-//    for (UIView *view in self.tileViews) {
-//        CGRect frame = CGRectMake(x, y, width, height);
-//        view.frame = frame;
-//        x += (width + gap);
-//    }
+    const std::array<CGRect, UP::TileCount> tile_frames = layout_manager.tile_frames();
+    for (UPTileView *tileView in self.tileViews) {
+        tileView.frame = tile_frames.at(tileView.index);
+    }
 }
 
 @end

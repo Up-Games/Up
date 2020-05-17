@@ -14,6 +14,7 @@
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) int multiplier;
 @property (nonatomic, readonly) BOOL isSentinel;
+@property (nonatomic) NSUInteger index;
 
 + (UPTileView *)viewWithTile:(const UP::Tile &)tile;
 

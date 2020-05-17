@@ -57,3 +57,9 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 + (UIColor *)testColor4;
 
 @end
+
+extern NSString * const UPThemeColorsChangedNotification;
+
+@interface NSObject (UPThemeColors)
+- (void)updateThemeColors;
+@end

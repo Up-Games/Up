@@ -5,6 +5,8 @@
 
 #import <CoreText/CoreText.h>
 
+#import <UPKit/UPGeometry.h>
+
 #import "UPLabel.h"
 
 #define TextLayer() ((CATextLayer *)self.layer)

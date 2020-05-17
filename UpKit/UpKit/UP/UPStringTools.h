@@ -49,6 +49,9 @@ UP_STATIC_INLINE NSString *ns_str(char32_t c) {
     std::u32string str(1, c);
     return ns_str(str);
 }
+UP_STATIC_INLINE NSString *ns_str_with_number(int n) {
+    return [[NSString alloc] initWithFormat:@"%d", n];
+}
 UP_STATIC_INLINE std::string cpp_str(NSString *str) { return std::string([str UTF8String]); }
 UP_STATIC_INLINE std::u32string cpp_u32str(NSString *str) {
     return utf8_char32_conv().from_bytes(cpp_str(str));

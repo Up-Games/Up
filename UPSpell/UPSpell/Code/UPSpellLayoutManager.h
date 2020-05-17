@@ -10,10 +10,12 @@
 #import <UpKit/UPFontMetrics.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPMacros.h>
+#import <UpKit/UPTile.h>
+#import <UpKit/UPTileTray.h>
 
 #if __cplusplus
 
-#import <vector>
+#import <array>
 
 namespace UP {
 
@@ -43,7 +45,27 @@ public:
     static inline constexpr CGPoint CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTDC = {  30, 91.7 };
     static inline constexpr CGFloat CanonicalGameScoreLabelWidth =  175;
 
-    static inline constexpr CGSize CanonicalGameTileSize = { 100, 116 };
+    static inline constexpr CGSize CanonicalTileSize = { 100, 116 };
+    static inline constexpr CGFloat CanonicalTileStrokeWidth = 3;
+    static inline constexpr CGFloat CanonicalTileGap = 15;
+    static inline constexpr CGFloat CanonicalTileGlyphCapHeight = 57;
+    static inline constexpr CGFloat CanonicalTileGlyphFrameMinY = 27;
+    static inline constexpr CGRect CanonicalTileGlyphFrame = {
+        0, CanonicalTileGlyphFrameMinY, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize) - CanonicalTileGlyphFrameMinY
+    };
+    static inline constexpr CGFloat CanonicalTileScoreCapHeight = 19.25;
+    static inline constexpr CGPoint CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTileBottomRight = { -8, -11 };
+    static inline constexpr CGFloat CanonicalTileMultiplierCapHeight = 19.25;
+    static inline constexpr CGPoint CanonicalGameScoreLabelLeftAlignedBaselinePointRelativeToTileBottomLeft = { 8, -11 };
+
+    static SpellLayoutManager &create_instance() {
+        g_instance = new SpellLayoutManager();
+        return *g_instance;
+    }
+
+    static SpellLayoutManager &instance() {
+        return *g_instance;
+    }
 
     SpellLayoutManager() {}
 
@@ -70,14 +92,23 @@ public:
     CGRect controls_button_pause_frame() const { return m_controls_button_pause_frame; }
     CGRect controls_button_trash_frame() const { return m_controls_button_trash_frame; }
 
-    const FontMetrics &gameplay_information_font_metrics() { return m_gameplay_information_font_metrics; }
-    FontMetrics gameplay_information_font_metrics() const { return m_gameplay_information_font_metrics; }
-
+    const FontMetrics &gameplay_information_font_metrics() const { return m_gameplay_information_font_metrics; }
     CGRect game_time_label_frame() const { return m_game_time_label_frame; }
     CGRect game_score_label_frame() const { return m_game_score_label_frame; }
 
+    const std::array<CGRect, TileCount> &tile_frames() const { return m_tile_frames; }
+    CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
+
+    const FontMetrics &tile_glyph_font_metrics() const { return m_tile_glyph_font_metrics; }
+    const FontMetrics &tile_score_font_metrics() const { return m_tile_score_font_metrics; }
+    const FontMetrics &tile_multiplier_font_metrics() const { return m_tile_multiplier_font_metrics; }
+    CGRect tile_glyph_frame() const { return m_tile_glyph_frame; }
+    CGRect tile_score_frame() const { return m_tile_score_frame; }
+    CGRect tile_multipler_frame() const { return m_tile_multiplier_frame; }
 
 private:
+    UP_STATIC_INLINE SpellLayoutManager *g_instance;
+
     void set_aspect_mode(AspectMode aspect_mode) { m_aspect_mode = aspect_mode; }
     void set_aspect_ratio(CGFloat aspect_ratio) { m_aspect_ratio = aspect_ratio; }
     void set_aspect_scale(CGFloat aspect_scale) { m_aspect_scale = aspect_scale; }
@@ -96,15 +127,25 @@ private:
     void set_gameplay_information_font_metrics(const FontMetrics &gameplay_information_font_metrics) {
         m_gameplay_information_font_metrics = gameplay_information_font_metrics;
     }
-    void set_gameplay_information_font_metrics(FontMetrics &&gameplay_information_font_metrics) {
-        m_gameplay_information_font_metrics = std::move(gameplay_information_font_metrics);
-    }
     void set_game_time_label_frame(CGRect game_time_label_frame) {
         m_game_time_label_frame = game_time_label_frame;
     }
     void set_game_score_label_frame(CGRect game_score_label_frame) {
         m_game_score_label_frame = game_score_label_frame;
     }
+    void set_tile_stroke_width(CGFloat tile_stroke_width) { m_tile_stroke_width = tile_stroke_width; }
+    void set_tile_glyph_font_metrics(const FontMetrics &tile_glyph_font_metrics) {
+        m_tile_glyph_font_metrics = tile_glyph_font_metrics;
+    }
+    void set_tile_score_font_metrics(const FontMetrics &tile_score_font_metrics) {
+        m_tile_score_font_metrics = tile_score_font_metrics;
+    }
+    void set_tile_multiplier_font_metrics(const FontMetrics &tile_multiplier_font_metrics) {
+        m_tile_multiplier_font_metrics = tile_multiplier_font_metrics;
+    }
+    void set_tile_glyph_frame(CGRect tile_glyph_frame) { m_tile_glyph_frame = tile_glyph_frame; }
+    void set_tile_score_frame(CGRect tile_score_frame) { m_tile_score_frame = tile_score_frame; }
+    void set_tile_multiplier_frame(CGRect tile_multiplier_frame) { m_tile_multiplier_frame = tile_multiplier_frame; }
 
     void calculate_controls_layout_frame();
     void calculate_word_tray_frame();
@@ -114,6 +155,14 @@ private:
     void calculate_gameplay_information_font_metrics();
     void calculate_game_time_label_frame();
     void calculate_game_score_label_frame();
+    void calculate_tile_frames();
+    void calculate_tile_stroke_width();
+    void calculate_tile_glyph_font_metrics();
+    void calculate_tile_score_font_metrics();
+    void calculate_tile_multiplier_font_metrics();
+    void calculate_tile_glyph_frame();
+    void calculate_tile_score_frame();
+    void calculate_tile_multiplier_frame();
 
     CGFloat m_screen_scale = 2.0;
     AspectMode m_aspect_mode = AspectMode::Canonical;
@@ -135,6 +184,17 @@ private:
 
     CGRect m_game_time_label_frame = CGRectZero;
     CGRect m_game_score_label_frame = CGRectZero;
+
+    std::array<CGRect, TileCount> m_tile_frames;
+    CGFloat m_tile_stroke_width = 0.0;
+
+    FontMetrics m_tile_glyph_font_metrics;
+    FontMetrics m_tile_score_font_metrics;
+    FontMetrics m_tile_multiplier_font_metrics;
+
+    CGRect m_tile_glyph_frame = CGRectZero;
+    CGRect m_tile_score_frame = CGRectZero;
+    CGRect m_tile_multiplier_frame = CGRectZero;
 };
 
 }  // namespace UP
