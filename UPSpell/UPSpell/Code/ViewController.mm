@@ -87,7 +87,7 @@ using UP::TileTray;
 //        [self printTiles:tray];
 //    }
     
-    [UIColor setThemeStyle:UPColorStyleLight];
+    [UIColor setThemeStyle:UPColorStyleLightStark];
 //    [UIColor setThemeHue:0];
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::create_instance();
     

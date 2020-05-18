@@ -16,6 +16,7 @@
 #if __cplusplus
 
 #import <array>
+#import <unordered_map>
 
 namespace UP {
 
@@ -35,7 +36,7 @@ public:
 
     static inline constexpr CGRect CanonicalControlsLayoutFrame = {   92,  22, 816,  84 };
     static inline constexpr CGRect CanonicalWordTrayFrame =       { 62.5, 133, 875, 182 };
-    static inline constexpr CGRect CanonicalTilesLayoutFrame =    {  105, 350, 790, 116 };
+    static inline constexpr CGRect CanonicalTilesLayoutFrame =    {  105, 348, 790, 116 };
 
     static inline constexpr CGSize CanonicalRoundControlButtonSize = { 84, 84 };
 
@@ -45,7 +46,7 @@ public:
     static inline constexpr CGPoint CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTDC = {  30, 91.7 };
     static inline constexpr CGFloat CanonicalGameScoreLabelWidth =  175;
 
-    static inline constexpr CGSize CanonicalTileSize = { 100, 116 };
+    static inline constexpr CGSize CanonicalTileSize = { 100, 120 };
     static inline constexpr CGFloat CanonicalTileStrokeWidth = 3;
     static inline constexpr CGFloat CanonicalTileGap = 15;
     static inline constexpr CGFloat CanonicalTileGlyphCapHeight = 57;
@@ -66,8 +67,6 @@ public:
     static SpellLayoutManager &instance() {
         return *g_instance;
     }
-
-    SpellLayoutManager() {}
 
     void calculate();
 
@@ -98,17 +97,32 @@ public:
 
     const std::array<CGRect, TileCount> &tile_frames() const { return m_tile_frames; }
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
+    UIBezierPath *tile_stroke_path() const { return m_tile_stroke_path; }
 
-    const FontMetrics &tile_glyph_font_metrics() const { return m_tile_glyph_font_metrics; }
-    const FontMetrics &tile_score_font_metrics() const { return m_tile_score_font_metrics; }
-    const FontMetrics &tile_multiplier_font_metrics() const { return m_tile_multiplier_font_metrics; }
-    CGRect tile_glyph_frame() const { return m_tile_glyph_frame; }
-    CGRect tile_score_frame() const { return m_tile_score_frame; }
-    CGRect tile_multipler_frame() const { return m_tile_multiplier_frame; }
+    UIBezierPath *tile_path_for_glyph(char32_t c) const {
+        const auto it = m_canonical_tile_paths.find(c);
+        return it != m_canonical_tile_paths.end() ? it->second : nil;
+    }
+
+    UIBezierPath *tile_path_for_score(int score) const {
+        char32_t c = score + '0';
+        const auto it = m_canonical_tile_paths.find(c);
+        return it != m_canonical_tile_paths.end() ? it->second : nil;
+    }
+
+    UIBezierPath *tile_path_for_multiplier(int multiplier) const {
+        char32_t c = multiplier;
+        const auto it = m_canonical_tile_paths.find(c);
+        return it != m_canonical_tile_paths.end() ? it->second : nil;
+    }
 
 private:
-    UP_STATIC_INLINE SpellLayoutManager *g_instance;
+    SpellLayoutManager() {
+        create_canonical_tile_paths();
+    }
 
+    UP_STATIC_INLINE SpellLayoutManager *g_instance;
+    
     void set_aspect_mode(AspectMode aspect_mode) { m_aspect_mode = aspect_mode; }
     void set_aspect_ratio(CGFloat aspect_ratio) { m_aspect_ratio = aspect_ratio; }
     void set_aspect_scale(CGFloat aspect_scale) { m_aspect_scale = aspect_scale; }
@@ -134,18 +148,6 @@ private:
         m_game_score_label_frame = game_score_label_frame;
     }
     void set_tile_stroke_width(CGFloat tile_stroke_width) { m_tile_stroke_width = tile_stroke_width; }
-    void set_tile_glyph_font_metrics(const FontMetrics &tile_glyph_font_metrics) {
-        m_tile_glyph_font_metrics = tile_glyph_font_metrics;
-    }
-    void set_tile_score_font_metrics(const FontMetrics &tile_score_font_metrics) {
-        m_tile_score_font_metrics = tile_score_font_metrics;
-    }
-    void set_tile_multiplier_font_metrics(const FontMetrics &tile_multiplier_font_metrics) {
-        m_tile_multiplier_font_metrics = tile_multiplier_font_metrics;
-    }
-    void set_tile_glyph_frame(CGRect tile_glyph_frame) { m_tile_glyph_frame = tile_glyph_frame; }
-    void set_tile_score_frame(CGRect tile_score_frame) { m_tile_score_frame = tile_score_frame; }
-    void set_tile_multiplier_frame(CGRect tile_multiplier_frame) { m_tile_multiplier_frame = tile_multiplier_frame; }
 
     void calculate_controls_layout_frame();
     void calculate_word_tray_frame();
@@ -157,12 +159,6 @@ private:
     void calculate_game_score_label_frame();
     void calculate_tile_frames();
     void calculate_tile_stroke_width();
-    void calculate_tile_glyph_font_metrics();
-    void calculate_tile_score_font_metrics();
-    void calculate_tile_multiplier_font_metrics();
-    void calculate_tile_glyph_frame();
-    void calculate_tile_score_frame();
-    void calculate_tile_multiplier_frame();
 
     CGFloat m_screen_scale = 2.0;
     AspectMode m_aspect_mode = AspectMode::Canonical;
@@ -187,14 +183,10 @@ private:
 
     std::array<CGRect, TileCount> m_tile_frames;
     CGFloat m_tile_stroke_width = 0.0;
+    UIBezierPath *m_tile_stroke_path = nil;
 
-    FontMetrics m_tile_glyph_font_metrics;
-    FontMetrics m_tile_score_font_metrics;
-    FontMetrics m_tile_multiplier_font_metrics;
-
-    CGRect m_tile_glyph_frame = CGRectZero;
-    CGRect m_tile_score_frame = CGRectZero;
-    CGRect m_tile_multiplier_frame = CGRectZero;
+    std::unordered_map<char32_t, __strong UIBezierPath *> m_canonical_tile_paths;
+    void create_canonical_tile_paths();
 };
 
 }  // namespace UP

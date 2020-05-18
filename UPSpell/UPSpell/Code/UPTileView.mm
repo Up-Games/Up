@@ -4,7 +4,7 @@
 //
 
 #import <UPKit/UIColor+UP.h>
-#import <UPKit/UPLabel.h>
+#import <UPKit/UPBezierPathView.h>
 #import <UPKit/UPStringTools.h>
 
 #import "UIFont+UPSpell.h"
@@ -15,53 +15,13 @@ using UP::ns_str;
 using UP::SpellLayoutManager;
 using UP::Tile;
 
-// =========================================================================================================================================
-
-@interface UPLabel (UPTileView)
-+ (UPLabel *)glyphLabel;
-+ (UPLabel *)scoreLabel;
-+ (UPLabel *)multiplierLabel;
-@end
-
-@implementation UPLabel (UPTileView)
-
-+ (UPLabel *)glyphLabel
-{
-    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
-    UPLabel *label = [UPLabel label];
-    label.font = [UIFont tileGlyphFontOfSize:layout_manager.tile_glyph_font_metrics().point_size()];
-    label.textAlignment = NSTextAlignmentCenter;
-    return label;
-}
-
-+ (UPLabel *)scoreLabel
-{
-    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
-    UPLabel *label = [UPLabel label];
-    label.font = [UIFont tileGlyphFontOfSize:layout_manager.tile_score_font_metrics().point_size()];
-    label.textAlignment = NSTextAlignmentRight;
-    return label;
-}
-
-+ (UPLabel *)multiplierLabel
-{
-    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
-    UPLabel *label = [UPLabel label];
-    label.font = [UIFont tileGlyphFontOfSize:layout_manager.tile_multiplier_font_metrics().point_size()];
-    label.textAlignment = NSTextAlignmentLeft;
-    return label;
-}
-
-@end
-
-// =========================================================================================================================================
-
 @interface UPTileView ()
 @property (nonatomic, readwrite) UP::Tile tile;
 @property (nonatomic) UIView *fillView;
-@property (nonatomic) UPLabel *glyphLabel;
-@property (nonatomic) UPLabel *scoreLabel;
-@property (nonatomic) UPLabel *multiplierLabel;
+@property (nonatomic) UPBezierPathView *strokeView;
+@property (nonatomic) UPBezierPathView *glyphView;
+@property (nonatomic) UPBezierPathView *scoreView;
+@property (nonatomic) UPBezierPathView *multiplierView;
 @end
 
 @implementation UPTileView
@@ -76,21 +36,33 @@ using UP::Tile;
     self = [super initWithFrame:CGRectZero];
     self.tile = tile;
 
+    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
+
     self.fillView = [[UIView alloc] initWithFrame:CGRectZero];
     [self addSubview:self.fillView];
 
-    self.glyphLabel = [UPLabel glyphLabel];
-    self.glyphLabel.string = ns_str(self.tile.glyph());
-    [self addSubview:self.glyphLabel];
+    self.strokeView = [UPBezierPathView bezierPathView];
+    self.strokeView.canonicalSize = SpellLayoutManager::CanonicalTileSize;
+    self.strokeView.path = layout_manager.tile_stroke_path();
+    self.strokeView.opaque = NO;
+    self.strokeView.backgroundColor = [UIColor clearColor];
+    [self addSubview:self.strokeView];
 
-    self.scoreLabel = [UPLabel scoreLabel];
-    self.scoreLabel.string = [NSString stringWithFormat:@"%d", self.tile.score()];
-    [self addSubview:self.scoreLabel];
+    self.glyphView = [UPBezierPathView bezierPathView];
+    self.glyphView.canonicalSize = SpellLayoutManager::CanonicalTileSize;
+    self.glyphView.path = layout_manager.tile_path_for_glyph(tile.glyph());
+    [self addSubview:self.glyphView];
+
+    self.scoreView = [UPBezierPathView bezierPathView];
+    self.scoreView.canonicalSize = SpellLayoutManager::CanonicalTileSize;
+    self.scoreView.path = layout_manager.tile_path_for_score(tile.score());
+    [self addSubview:self.scoreView];
 
     if (tile.multiplier() != 1) {
-        self.multiplierLabel = [UPLabel multiplierLabel];
-        self.multiplierLabel.string = [NSString stringWithFormat:@"%dX", self.tile.multiplier()];
-        [self addSubview:self.multiplierLabel];
+        self.multiplierView = [UPBezierPathView bezierPathView];
+        self.multiplierView.canonicalSize = SpellLayoutManager::CanonicalTileSize;
+        self.multiplierView.path = layout_manager.tile_path_for_multiplier(tile.multiplier());
+        [self addSubview:self.multiplierView];
     }
 
     [self updateThemeColors];
@@ -135,14 +107,12 @@ using UP::Tile;
 
 - (void)layoutSubviews
 {
-    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
-
     CGRect bounds = self.bounds;
-    CGFloat strokeWidth = layout_manager.tile_stroke_width();
-    self.fillView.frame = CGRectInset(bounds, strokeWidth, strokeWidth);
-    self.glyphLabel.frame = layout_manager.tile_glyph_frame();
-    self.scoreLabel.frame = layout_manager.tile_score_frame();
-    self.multiplierLabel.frame = layout_manager.tile_multipler_frame();
+    self.fillView.frame = bounds;
+    self.strokeView.frame = bounds;
+    self.glyphView.frame = bounds;
+    self.scoreView.frame = bounds;
+    self.multiplierView.frame = bounds;
 }
 
 #pragma mark - Theme colors
@@ -150,7 +120,10 @@ using UP::Tile;
 - (void)updateThemeColors
 {
     self.fillView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
-    self.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke];
+    self.strokeView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke];
+    self.glyphView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryContent];
+    self.scoreView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryContent];
+    self.multiplierView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryContent];
 }
 
 @end
