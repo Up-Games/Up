@@ -8,14 +8,14 @@
 #import <UPKit/UPStringTools.h>
 
 #import "UIFont+UPSpell.h"
-#import "UPTileView.h"
+#import "UPTileControl.h"
 #import "UPSpellLayoutManager.h"
 
 using UP::ns_str;
 using UP::SpellLayoutManager;
 using UP::Tile;
 
-@interface UPTileView ()
+@interface UPTileControl ()
 @property (nonatomic, readwrite) UP::Tile tile;
 @property (nonatomic) UIView *fillView;
 @property (nonatomic) UPBezierPathView *strokeView;
@@ -24,9 +24,9 @@ using UP::Tile;
 @property (nonatomic) UPBezierPathView *multiplierView;
 @end
 
-@implementation UPTileView
+@implementation UPTileControl
 
-+ (UPTileView *)viewWithTile:(const UP::Tile &)tile
++ (UPTileControl *)viewWithTile:(const UP::Tile &)tile
 {
     return [[self alloc] _initWithTile:tile];
 }

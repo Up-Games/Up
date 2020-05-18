@@ -47,17 +47,9 @@ public:
     static inline constexpr CGFloat CanonicalGameScoreLabelWidth =  175;
 
     static inline constexpr CGSize CanonicalTileSize = { 100, 120 };
+    static inline constexpr CGRect CanonicalTileFrame = { 0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize) };
     static inline constexpr CGFloat CanonicalTileStrokeWidth = 3;
     static inline constexpr CGFloat CanonicalTileGap = 15;
-    static inline constexpr CGFloat CanonicalTileGlyphCapHeight = 57;
-    static inline constexpr CGFloat CanonicalTileGlyphFrameMinY = 27;
-    static inline constexpr CGRect CanonicalTileGlyphFrame = {
-        0, CanonicalTileGlyphFrameMinY, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize) - CanonicalTileGlyphFrameMinY
-    };
-    static inline constexpr CGFloat CanonicalTileScoreCapHeight = 19.25;
-    static inline constexpr CGPoint CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTileBottomRight = { -8, -11 };
-    static inline constexpr CGFloat CanonicalTileMultiplierCapHeight = 19.25;
-    static inline constexpr CGPoint CanonicalGameScoreLabelLeftAlignedBaselinePointRelativeToTileBottomLeft = { 8, -11 };
 
     static SpellLayoutManager &create_instance() {
         g_instance = new SpellLayoutManager();

@@ -36,7 +36,7 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 + (UPControl *)control
 {
-    return [[UPControl alloc] initWithFrame:CGRectZero];
+    return [[self alloc] initWithFrame:CGRectZero];
 }
 
 #pragma mark - State

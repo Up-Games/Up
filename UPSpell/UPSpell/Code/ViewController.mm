@@ -12,7 +12,7 @@
 #import "UPControl+UPSpell.h"
 #import "UPSceneDelegate.h"
 #import "UPSpellLayoutManager.h"
-#import "UPTileView.h"
+#import "UPTileControl.h"
 #import "ViewController.h"
 
 using UP::GameCode;
@@ -32,7 +32,7 @@ using UP::TileTray;
 @property (nonatomic) UPControl *roundControlButtonTrash;
 @property (nonatomic) UPLabel *timeLabel;
 @property (nonatomic) UPLabel *scoreLabel;
-@property (nonatomic) NSMutableArray *tileViews;
+@property (nonatomic) NSMutableArray *tileControls;
 @end
 
 @implementation ViewController
@@ -87,7 +87,7 @@ using UP::TileTray;
 //        [self printTiles:tray];
 //    }
     
-    [UIColor setThemeStyle:UPColorStyleLightStark];
+    [UIColor setThemeStyle:UPColorStyleLight];
 //    [UIColor setThemeHue:0];
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::create_instance();
     
@@ -151,14 +151,14 @@ using UP::TileTray;
     self.scoreLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.scoreLabel];
 
-    self.tileViews = [NSMutableArray array];
+    self.tileControls = [NSMutableArray array];
     for (int i = 0; i < UP::TileCount; i++) {
         char32_t glyph = letter_sequence.next();
         UP::Tile tile = Tile(glyph);
-        UPTileView *tileView = [UPTileView viewWithTile:tile];
-        tileView.index = i;
-        [self.view addSubview:tileView];
-        [self.tileViews addObject:tileView];
+        UPTileControl *tileControl = [UPTileControl controlWithTile:tile];
+        tileControl.index = i;
+        [self.view addSubview:tileControl];
+        [self.tileControls addObject:tileControl];
     }
 }
 
@@ -178,8 +178,8 @@ using UP::TileTray;
     self.scoreLabel.frame = layout_manager.game_score_label_frame();
 
     const std::array<CGRect, UP::TileCount> tile_frames = layout_manager.tile_frames();
-    for (UPTileView *tileView in self.tileViews) {
-        tileView.frame = tile_frames.at(tileView.index);
+    for (UPTileControl *tileControl in self.tileControls) {
+        tileControl.frame = tile_frames.at(tileControl.index);
     }
 }
 
