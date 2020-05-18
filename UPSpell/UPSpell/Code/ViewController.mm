@@ -13,6 +13,7 @@
 #import "UPSceneDelegate.h"
 #import "UPSpellLayoutManager.h"
 #import "UPTileControl.h"
+#import "UPTilePaths.h"
 #import "ViewController.h"
 
 using UP::GameCode;
@@ -90,6 +91,7 @@ using UP::TileTray;
     [UIColor setThemeStyle:UPColorStyleLight];
 //    [UIColor setThemeHue:0];
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::create_instance();
+    UP::TilePaths::create_instance();
     
     layout_manager.set_screen_scale([[UIScreen mainScreen] scale]);
     layout_manager.set_canvas_frame([[UPSceneDelegate instance] canvasFrame]);

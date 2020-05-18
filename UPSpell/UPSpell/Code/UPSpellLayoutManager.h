@@ -91,27 +91,8 @@ public:
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
     UIBezierPath *tile_stroke_path() const { return m_tile_stroke_path; }
 
-    UIBezierPath *tile_path_for_glyph(char32_t c) const {
-        const auto it = m_canonical_tile_paths.find(c);
-        return it != m_canonical_tile_paths.end() ? it->second : nil;
-    }
-
-    UIBezierPath *tile_path_for_score(int score) const {
-        char32_t c = score + '0';
-        const auto it = m_canonical_tile_paths.find(c);
-        return it != m_canonical_tile_paths.end() ? it->second : nil;
-    }
-
-    UIBezierPath *tile_path_for_multiplier(int multiplier) const {
-        char32_t c = multiplier;
-        const auto it = m_canonical_tile_paths.find(c);
-        return it != m_canonical_tile_paths.end() ? it->second : nil;
-    }
-
 private:
-    SpellLayoutManager() {
-        create_canonical_tile_paths();
-    }
+    SpellLayoutManager() {}
 
     UP_STATIC_INLINE SpellLayoutManager *g_instance;
     
@@ -176,9 +157,6 @@ private:
     std::array<CGRect, TileCount> m_tile_frames;
     CGFloat m_tile_stroke_width = 0.0;
     UIBezierPath *m_tile_stroke_path = nil;
-
-    std::unordered_map<char32_t, __strong UIBezierPath *> m_canonical_tile_paths;
-    void create_canonical_tile_paths();
 };
 
 }  // namespace UP
