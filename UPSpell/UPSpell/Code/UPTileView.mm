@@ -39,9 +39,11 @@ using UP::Tile;
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
 
     self.fillView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.fillView.userInteractionEnabled = NO;
     [self addSubview:self.fillView];
 
     self.strokeView = [UPBezierPathView bezierPathView];
+    self.strokeView.userInteractionEnabled = NO;
     self.strokeView.canonicalSize = SpellLayoutManager::CanonicalTileSize;
     self.strokeView.path = layout_manager.tile_stroke_path();
     self.strokeView.opaque = NO;
@@ -49,17 +51,20 @@ using UP::Tile;
     [self addSubview:self.strokeView];
 
     self.glyphView = [UPBezierPathView bezierPathView];
+    self.glyphView.userInteractionEnabled = NO;
     self.glyphView.canonicalSize = SpellLayoutManager::CanonicalTileSize;
     self.glyphView.path = layout_manager.tile_path_for_glyph(tile.glyph());
     [self addSubview:self.glyphView];
 
     self.scoreView = [UPBezierPathView bezierPathView];
+    self.scoreView.userInteractionEnabled = NO;
     self.scoreView.canonicalSize = SpellLayoutManager::CanonicalTileSize;
     self.scoreView.path = layout_manager.tile_path_for_score(tile.score());
     [self addSubview:self.scoreView];
 
     if (tile.multiplier() != 1) {
         self.multiplierView = [UPBezierPathView bezierPathView];
+        self.multiplierView.userInteractionEnabled = NO;
         self.multiplierView.canonicalSize = SpellLayoutManager::CanonicalTileSize;
         self.multiplierView.path = layout_manager.tile_path_for_multiplier(tile.multiplier());
         [self addSubview:self.multiplierView];

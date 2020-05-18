@@ -5,9 +5,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import <UPKit/UPControl.h>
 #import <UPKit/UPTile.h>
 
-@interface UPTileView : UIView
+@interface UPTileView : UPControl
 
 @property (nonatomic, readonly) UP::Tile tile;
 @property (nonatomic, readonly) char32_t glyph;
