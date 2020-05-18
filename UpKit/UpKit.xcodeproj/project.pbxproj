@@ -67,8 +67,6 @@
 		5D5216F3246D87DF005A2E9F /* UPControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216F1246D87DF005A2E9F /* UPControl.m */; };
 		5D723104246A1F5E006027A3 /* UPTileTray.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D723100246A1F5E006027A3 /* UPTileTray.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D723107246A1F5E006027A3 /* UPTile.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D723103246A1F5E006027A3 /* UPTile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5D723112246B3356006027A3 /* UPCenteredTextLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D723110246B3355006027A3 /* UPCenteredTextLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5D723113246B3356006027A3 /* UPCenteredTextLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D723111246B3356006027A3 /* UPCenteredTextLayer.m */; };
 		5DBADB7324678F4000D9D1FF /* UPGameCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7424678F4000D9D1FF /* UPGameCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameCode.mm */; };
 		5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B2246EF6CC00090E7A /* UPLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -80,7 +78,7 @@
 		5DD71D442457731700F3F9E2 /* UPLayoutRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D422457731700F3F9E2 /* UPLayoutRule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71D452457731700F3F9E2 /* UPLayoutRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D432457731700F3F9E2 /* UPLayoutRule.m */; };
 		5DD71D472457748000F3F9E2 /* UPLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D462457748000F3F9E2 /* UPLayoutTests.m */; };
-		5DD71D4A2457824A00F3F9E2 /* UPGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D482457824A00F3F9E2 /* UPGeometry.m */; };
+		5DD71D4A2457824A00F3F9E2 /* UPGeometry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D482457824A00F3F9E2 /* UPGeometry.mm */; };
 		5DD71D4B2457824A00F3F9E2 /* UPGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D492457824A00F3F9E2 /* UPGeometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71D982457988000F3F9E2 /* UPDeferredBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D962457988000F3F9E2 /* UPDeferredBlock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71D992457988000F3F9E2 /* UPDeferredBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D972457988000F3F9E2 /* UPDeferredBlock.m */; };
@@ -96,7 +94,6 @@
 		5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE01F2454F1D200016047 /* UIColor+UP.mm */; };
 		5DEBE0232454F21800016047 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DEBE0222454F21800016047 /* UIKit.framework */; };
 		5DEBE0242454F22700016047 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DEBE0152454C77700016047 /* QuartzCore.framework */; };
-		5DEBE02D245716F900016047 /* UPStringTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE02B245716F900016047 /* UPStringTools.cpp */; };
 		5DEBE02E245716F900016047 /* UPStringTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE02C245716F900016047 /* UPStringTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF8A8E02454835F00751E2E /* UPTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DFE6222245376D100D9CA0B /* UPTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF8A8E72454892C00751E2E /* UPUnitFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF8A8E52454892B00751E2E /* UPUnitFunction.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -112,7 +109,6 @@
 		5DF9DFA624676B9C00B2199D /* UPLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF412465B35700B2199D /* UPLexicon.mm */; };
 		5DF9DFA924676B9C00B2199D /* UPMacros.h in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE0172454CAFC00016047 /* UPMacros.h */; };
 		5DF9DFAA24676B9C00B2199D /* UPRandom.h in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF982466412B00B2199D /* UPRandom.h */; };
-		5DF9DFAB24676B9C00B2199D /* UPStringTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE02B245716F900016047 /* UPStringTools.cpp */; };
 		5DF9DFAC24676B9C00B2199D /* UPStringTools.h in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE02C245716F900016047 /* UPStringTools.h */; };
 		5DFE6212245364C700D9CA0B /* UpKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFE6208245364C700D9CA0B /* UpKit.framework */; };
 		5DFE6219245364C700D9CA0B /* UpKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DFE620B245364C700D9CA0B /* UpKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -203,8 +199,6 @@
 		5D5216F1246D87DF005A2E9F /* UPControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPControl.m; sourceTree = "<group>"; };
 		5D723100246A1F5E006027A3 /* UPTileTray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTileTray.h; sourceTree = "<group>"; };
 		5D723103246A1F5E006027A3 /* UPTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTile.h; sourceTree = "<group>"; };
-		5D723110246B3355006027A3 /* UPCenteredTextLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPCenteredTextLayer.h; sourceTree = "<group>"; };
-		5D723111246B3356006027A3 /* UPCenteredTextLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UPCenteredTextLayer.m; sourceTree = "<group>"; };
 		5DBADB7124678F4000D9D1FF /* UPGameCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameCode.h; sourceTree = "<group>"; };
 		5DBADB7224678F4000D9D1FF /* UPGameCode.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameCode.mm; sourceTree = "<group>"; };
 		5DC618B2246EF6CC00090E7A /* UPLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLabel.h; sourceTree = "<group>"; };
@@ -216,7 +210,7 @@
 		5DD71D422457731700F3F9E2 /* UPLayoutRule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLayoutRule.h; sourceTree = "<group>"; };
 		5DD71D432457731700F3F9E2 /* UPLayoutRule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutRule.m; sourceTree = "<group>"; };
 		5DD71D462457748000F3F9E2 /* UPLayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutTests.m; sourceTree = "<group>"; };
-		5DD71D482457824A00F3F9E2 /* UPGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UPGeometry.m; sourceTree = "<group>"; };
+		5DD71D482457824A00F3F9E2 /* UPGeometry.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGeometry.mm; sourceTree = "<group>"; };
 		5DD71D492457824A00F3F9E2 /* UPGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPGeometry.h; sourceTree = "<group>"; };
 		5DD71D4C2457832400F3F9E2 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		5DD71D962457988000F3F9E2 /* UPDeferredBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDeferredBlock.h; sourceTree = "<group>"; };
@@ -235,7 +229,6 @@
 		5DEBE01E2454F1D200016047 /* UIColor+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+UP.h"; sourceTree = "<group>"; };
 		5DEBE01F2454F1D200016047 /* UIColor+UP.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIColor+UP.mm"; sourceTree = "<group>"; };
 		5DEBE0222454F21800016047 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		5DEBE02B245716F900016047 /* UPStringTools.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UPStringTools.cpp; sourceTree = "<group>"; };
 		5DEBE02C245716F900016047 /* UPStringTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPStringTools.h; sourceTree = "<group>"; };
 		5DF8A8E52454892B00751E2E /* UPUnitFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPUnitFunction.h; sourceTree = "<group>"; };
 		5DF8A8E62454892C00751E2E /* UPUnitFunction.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPUnitFunction.mm; sourceTree = "<group>"; };
@@ -456,8 +449,6 @@
 				5DD71DA22458F39200F3F9E2 /* UPAny.h */,
 				5DD71D9A2457AFB200F3F9E2 /* UPBezierPathView.h */,
 				5DD71D9B2457AFB200F3F9E2 /* UPBezierPathView.m */,
-				5D723110246B3355006027A3 /* UPCenteredTextLayer.h */,
-				5D723111246B3356006027A3 /* UPCenteredTextLayer.m */,
 				5DEBE0192454E3AC00016047 /* UPColor.h */,
 				5DFE62252453CFCD00D9CA0B /* UPConstants.h */,
 				5D5216F0246D87DF005A2E9F /* UPControl.h */,
@@ -468,7 +459,7 @@
 				5DBADB7124678F4000D9D1FF /* UPGameCode.h */,
 				5DBADB7224678F4000D9D1FF /* UPGameCode.mm */,
 				5DD71D492457824A00F3F9E2 /* UPGeometry.h */,
-				5DD71D482457824A00F3F9E2 /* UPGeometry.m */,
+				5DD71D482457824A00F3F9E2 /* UPGeometry.mm */,
 				5DFE620B245364C700D9CA0B /* UpKit.h */,
 				5DC618B2246EF6CC00090E7A /* UPLabel.h */,
 				5DC618B3246EF6CC00090E7A /* UPLabel.m */,
@@ -480,7 +471,6 @@
 				5DEBE0172454CAFC00016047 /* UPMacros.h */,
 				5DFE62272453D11100D9CA0B /* UPMath.h */,
 				5DF9DF982466412B00B2199D /* UPRandom.h */,
-				5DEBE02B245716F900016047 /* UPStringTools.cpp */,
 				5DEBE02C245716F900016047 /* UPStringTools.h */,
 				5D723103246A1F5E006027A3 /* UPTile.h */,
 				5D723100246A1F5E006027A3 /* UPTileTray.h */,
@@ -516,7 +506,6 @@
 				5D2CABA9245A10CB00B81332 /* UnitBezier.h in Headers */,
 				5D5216F2246D87DF005A2E9F /* UPControl.h in Headers */,
 				5DD71D982457988000F3F9E2 /* UPDeferredBlock.h in Headers */,
-				5D723112246B3356006027A3 /* UPCenteredTextLayer.h in Headers */,
 				5DFE62282453D11100D9CA0B /* UPMath.h in Headers */,
 				5D2CABB5245A119C00B81332 /* POPAction.h in Headers */,
 				5D2CABC9245A12D100B81332 /* POPAnimationRuntime.h in Headers */,
@@ -695,7 +684,6 @@
 				5DF9DFA624676B9C00B2199D /* UPLexicon.mm in Sources */,
 				5DF9DFA924676B9C00B2199D /* UPMacros.h in Sources */,
 				5DF9DFAA24676B9C00B2199D /* UPRandom.h in Sources */,
-				5DF9DFAB24676B9C00B2199D /* UPStringTools.cpp in Sources */,
 				5DF9DFAC24676B9C00B2199D /* UPStringTools.h in Sources */,
 				5DF9DFA124676B5800B2199D /* main.mm in Sources */,
 			);
@@ -706,7 +694,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D2CABA6245A10CB00B81332 /* TransformationMatrix.cpp in Sources */,
-				5D723113246B3356006027A3 /* UPCenteredTextLayer.m in Sources */,
 				5D2CABF2245A13E700B81332 /* POPBasicAnimation.mm in Sources */,
 				5D2CABC4245A12B400B81332 /* POPAnimatableProperty.mm in Sources */,
 				5D2CABB8245A11D400B81332 /* POPVector.mm in Sources */,
@@ -722,8 +709,7 @@
 				5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */,
 				5D5216F3246D87DF005A2E9F /* UPControl.m in Sources */,
 				5DD71D452457731700F3F9E2 /* UPLayoutRule.m in Sources */,
-				5DD71D4A2457824A00F3F9E2 /* UPGeometry.m in Sources */,
-				5DEBE02D245716F900016047 /* UPStringTools.cpp in Sources */,
+				5DD71D4A2457824A00F3F9E2 /* UPGeometry.mm in Sources */,
 				5DC618BC246F045700090E7A /* UIFont+UP.mm in Sources */,
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5D2CABB3245A114B00B81332 /* POPMath.mm in Sources */,

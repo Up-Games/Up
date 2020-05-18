@@ -3,9 +3,6 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_COLOR_H
-#define UP_COLOR_H
-
 #include <UpKit/UPMath.h>
 #include <UpKit/UPTypes.h>
 
@@ -587,5 +584,3 @@ UP_STATIC_INLINE UPFloat mix_lightness(UPFloat color, UPFloat lightness)
 }
 
 }  // namespace UP
-
-#endif  // UP_COLOR_HPP

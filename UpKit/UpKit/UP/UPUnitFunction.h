@@ -29,9 +29,6 @@
 //  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#ifndef UP_UNITFUNCTION_H
-#define UP_UNITFUNCTION_H
-
 #if __OBJC__
 #import <Foundation/Foundation.h>
 #endif  // __OBJC__
@@ -206,5 +203,3 @@ private:
 #endif  // __OBJC__
 
 // =========================================================================================================================================
-
-#endif  // UP_UNITFUNCTION_H

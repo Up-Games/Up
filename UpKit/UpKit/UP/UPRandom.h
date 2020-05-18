@@ -3,9 +3,6 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_RANDOM_H
-#define UP_RANDOM_H
-
 #if __cplusplus
 
 #import <iterator>
@@ -87,5 +84,3 @@ private:
 } // namescape UP
 
 #endif  // __cplusplus
-
-#endif // UP_RANDOM_H

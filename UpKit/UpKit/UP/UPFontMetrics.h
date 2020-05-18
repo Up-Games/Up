@@ -3,9 +3,6 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_FONT_METRICS_H
-#define UP_FONT_METRICS_H
-
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
@@ -79,5 +76,3 @@ namespace std {
 }  // namespace std
 
 #endif  // __cplusplus
-
-#endif  // UP_FONT_METRICS_H

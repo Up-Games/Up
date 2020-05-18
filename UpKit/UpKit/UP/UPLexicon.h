@@ -3,9 +3,6 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_LEXICON_H
-#define UP_LEXICON_H
-
 #ifdef __cplusplus
 
 #import <string>
@@ -72,5 +69,3 @@ private:
 } // namescape UP
 
 #endif  // __cplusplus
-
-#endif  // UP_LEXICON_H

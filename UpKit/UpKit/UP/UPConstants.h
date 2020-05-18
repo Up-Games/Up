@@ -3,9 +3,6 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_CONSTANTS_H
-#define UP_CONSTANTS_H
-
 #import <UpKit/UPMacros.h>
 #import <UpKit/UPTypes.h>
 
@@ -26,5 +23,3 @@ UP_STATIC_CONST UPFloat UPEpsilon = 0.01f;
 
 UP_STATIC_CONST UPFloat RAD2DEG = 180.0 / M_PI;
 UP_STATIC_CONST UPFloat DEG2RAD = M_PI / 180.0;
-
-#endif  // UP_CONSTANTS_H

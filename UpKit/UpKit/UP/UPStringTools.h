@@ -3,9 +3,6 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_STRING_TOOLS_H
-#define UP_STRING_TOOLS_H
-
 #import <UPKit/UPMacros.h>
 
 #if __OBJC__
@@ -21,8 +18,6 @@
 #import <vector>
 
 namespace UP {
-
-std::vector<std::string> split(const std::string &str, char delim);
 
 UP_STATIC_INLINE std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> &utf8_char32_conv() {
     static std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv;
@@ -63,9 +58,6 @@ UP_STATIC_INLINE std::string_view cpp_str_view(NSString *str) {
 
 #endif  // __OBJC__
 
-
 }  // namespace UP
 
 #endif  // __cplusplus
-
-#endif  // UP_STRING_TOOLS_H

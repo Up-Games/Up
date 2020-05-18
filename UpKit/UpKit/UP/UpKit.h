@@ -12,7 +12,6 @@ FOUNDATION_EXPORT double UpKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 
 #import <UpKit/UPBezierPathView.h>
-#import <UpKit/UPCenteredTextLayer.h>
 #import <UpKit/UPConstants.h>
 #import <UpKit/UPControl.h>
 #import <UpKit/UPDeferredBlock.h>

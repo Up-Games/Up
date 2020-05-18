@@ -45,5 +45,4 @@ typedef NS_ENUM(NSUInteger, UPControlState) {
 - (void)setStrokeColor:(UIColor *)color;
 - (void)setStrokeColor:(UIColor *)color forControlStates:(UIControlState)controlStates;
 
-
 @end

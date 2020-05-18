@@ -3,9 +3,6 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_MATH_H
-#define UP_MATH_H
-
 #import <math.h>
 #import <stdbool.h>
 
@@ -93,5 +90,3 @@ UP_STATIC_INLINE UPFloat up_lerp_floats(UPFloat a, UPFloat b, UPUnit f)
 #ifdef __cplusplus
 }  // extern "C"
 #endif
-
-#endif  // UP_MATH_H

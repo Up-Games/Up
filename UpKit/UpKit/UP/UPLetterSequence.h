@@ -3,9 +3,6 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifndef UP_LETTER_SEQUENCE_H
-#define UP_LETTER_SEQUENCE_H
-
 #if __cplusplus
 
 #import <algorithm>
@@ -72,5 +69,3 @@ private:
 }  // namespace UP
 
 #endif  // __cplusplus
-
-#endif  // UP_LETTER_SEQUENCE_H
