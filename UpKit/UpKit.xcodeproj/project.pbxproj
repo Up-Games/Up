@@ -75,6 +75,8 @@
 		5DC618BC246F045700090E7A /* UIFont+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC618BA246F045700090E7A /* UIFont+UP.mm */; };
 		5DC618BE24703A1500090E7A /* UPFontMetrics.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618BD24703A1500090E7A /* UPFontMetrics.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC618C02470586E00090E7A /* UPLetterSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618BF2470586E00090E7A /* UPLetterSequence.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DC67DF72473069A009BCDBB /* UPGameTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC67DF52473069A009BCDBB /* UPGameTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DC67DF82473069A009BCDBB /* UPGameTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF62473069A009BCDBB /* UPGameTimer.m */; };
 		5DD71D442457731700F3F9E2 /* UPLayoutRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D422457731700F3F9E2 /* UPLayoutRule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71D452457731700F3F9E2 /* UPLayoutRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D432457731700F3F9E2 /* UPLayoutRule.m */; };
 		5DD71D472457748000F3F9E2 /* UPLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D462457748000F3F9E2 /* UPLayoutTests.m */; };
@@ -207,6 +209,8 @@
 		5DC618BA246F045700090E7A /* UIFont+UP.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIFont+UP.mm"; sourceTree = "<group>"; };
 		5DC618BD24703A1500090E7A /* UPFontMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPFontMetrics.h; sourceTree = "<group>"; };
 		5DC618BF2470586E00090E7A /* UPLetterSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPLetterSequence.h; sourceTree = "<group>"; };
+		5DC67DF52473069A009BCDBB /* UPGameTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameTimer.h; sourceTree = "<group>"; };
+		5DC67DF62473069A009BCDBB /* UPGameTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPGameTimer.m; sourceTree = "<group>"; };
 		5DD71D422457731700F3F9E2 /* UPLayoutRule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLayoutRule.h; sourceTree = "<group>"; };
 		5DD71D432457731700F3F9E2 /* UPLayoutRule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutRule.m; sourceTree = "<group>"; };
 		5DD71D462457748000F3F9E2 /* UPLayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutTests.m; sourceTree = "<group>"; };
@@ -458,6 +462,8 @@
 				5DC618BD24703A1500090E7A /* UPFontMetrics.h */,
 				5DBADB7124678F4000D9D1FF /* UPGameCode.h */,
 				5DBADB7224678F4000D9D1FF /* UPGameCode.mm */,
+				5DC67DF52473069A009BCDBB /* UPGameTimer.h */,
+				5DC67DF62473069A009BCDBB /* UPGameTimer.m */,
 				5DD71D492457824A00F3F9E2 /* UPGeometry.h */,
 				5DD71D482457824A00F3F9E2 /* UPGeometry.mm */,
 				5DFE620B245364C700D9CA0B /* UpKit.h */,
@@ -497,6 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D2CABA7245A10CB00B81332 /* TransformationMatrix.h in Headers */,
+				5DC67DF72473069A009BCDBB /* UPGameTimer.h in Headers */,
 				5DC618C02470586E00090E7A /* UPLetterSequence.h in Headers */,
 				5DF9DF422465B35700B2199D /* UPLexicon.h in Headers */,
 				5D2CAC07245A13E700B81332 /* POPSpringAnimationInternal.h in Headers */,
@@ -708,6 +715,7 @@
 				5D2CABC8245A12D100B81332 /* POPAnimationRuntime.mm in Sources */,
 				5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */,
 				5D5216F3246D87DF005A2E9F /* UPControl.m in Sources */,
+				5DC67DF82473069A009BCDBB /* UPGameTimer.m in Sources */,
 				5DD71D452457731700F3F9E2 /* UPLayoutRule.m in Sources */,
 				5DD71D4A2457824A00F3F9E2 /* UPGeometry.mm in Sources */,
 				5DC618BC246F045700090E7A /* UIFont+UP.mm in Sources */,

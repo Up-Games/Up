@@ -21,7 +21,7 @@ using UP::Tile;
 using UP::LetterSequence;
 using UP::TileTray;
 
-@interface ViewController ()
+@interface ViewController () <UPGameTimerObserver>
 @property (nonatomic) UIView *infinityView;
 @property (nonatomic) UIView *canvasView;
 @property (nonatomic) UIView *layoutView;
@@ -34,6 +34,7 @@ using UP::TileTray;
 @property (nonatomic) UPLabel *timeLabel;
 @property (nonatomic) UPLabel *scoreLabel;
 @property (nonatomic) NSMutableArray *tileControls;
+@property (nonatomic) UPGameTimer *gameTimer;
 @end
 
 @implementation ViewController
@@ -162,6 +163,10 @@ using UP::TileTray;
         [self.view addSubview:tileControl];
         [self.tileControls addObject:tileControl];
     }
+    
+    self.gameTimer = [UPGameTimer defaultGameTimer];
+    [self.gameTimer addObserver:self];
+    [self.gameTimer start];
 }
 
 - (void)viewDidLayoutSubviews
@@ -184,5 +189,28 @@ using UP::TileTray;
         tileControl.frame = tile_frames.at(tileControl.index);
     }
 }
+
+#pragma mark - UPGameTimerObserver
+
+- (void)gameTimerStarted:(UPGameTimer *)gameTimer
+{
+    NSLog(@"gameTimerStarted");
+}
+
+- (void)gameTimerStopped:(UPGameTimer *)gameTimer
+{
+    NSLog(@"gameTimerStopped");
+}
+
+- (void)gameTimerReset:(UPGameTimer *)gameTimer
+{
+    NSLog(@"gameTimerReset");
+}
+
+- (void)gameTimerPeriodicUpdate:(UPGameTimer *)gameTimer
+{
+    NSLog(@"gameTimerPeriodicUpdate: %.2f", gameTimer.remainingTime);
+}
+
 
 @end
