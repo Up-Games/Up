@@ -8,14 +8,14 @@
 
 @interface UPDeferredBlock : NSObject
 
-@property (nonatomic, readonly) UPTick interval;
+@property (nonatomic, readonly) CFTimeInterval interval;
 @property (nonatomic, copy, readonly) void (^block)(void);
 @property (nonatomic, readonly) BOOL valid;
 
-- (id)initWithInterval:(UPTick)interval block:(void (^)(void))block;
+- (id)initWithInterval:(CFTimeInterval)interval block:(void (^)(void))block;
 
 - (void)touch;
-- (void)touchWithInterval:(UPTick)interval;
+- (void)touchWithInterval:(CFTimeInterval)interval;
 - (void)invalidate;
 
 @end

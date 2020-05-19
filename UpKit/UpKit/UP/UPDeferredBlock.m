@@ -6,7 +6,7 @@
 #import "UPDeferredBlock.h"
 
 @interface UPDeferredBlock ()
-@property (nonatomic) UPTick interval;
+@property (nonatomic) CFTimeInterval interval;
 @property (nonatomic, copy) void (^block)(void);
 @property (nonatomic) NSTimer *timer;
 @property (nonatomic) BOOL valid;
@@ -14,7 +14,7 @@
 
 @implementation UPDeferredBlock
 
-- (id)initWithInterval:(UPTick)interval block:(void (^)(void))block;
+- (id)initWithInterval:(CFTimeInterval)interval block:(void (^)(void))block;
 {
     self = [super init];
     
@@ -38,7 +38,7 @@
     [self touchWithInterval:self.interval];
 }
 
-- (void)touchWithInterval:(UPTick)interval
+- (void)touchWithInterval:(CFTimeInterval)interval
 {
     if (!self.valid || !self.block || interval < 0) {
         [self invalidate];

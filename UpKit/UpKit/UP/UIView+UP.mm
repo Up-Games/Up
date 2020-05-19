@@ -68,7 +68,7 @@ CFTimeInterval UPDefaultBloopDuration = 0.375;
     [self bloopWithDuration:UPDefaultBloopDuration toPosition:up_rect_center(frame) size:frame.size];
 }
 
-- (void)bloopWithDuration:(UPTick)duration toFrame:(CGRect)frame
+- (void)bloopWithDuration:(CFTimeInterval)duration toFrame:(CGRect)frame
 {
     [self bloopWithDuration:duration toPosition:up_rect_center(frame) size:frame.size];
 }
@@ -83,7 +83,7 @@ CFTimeInterval UPDefaultBloopDuration = 0.375;
     [self bloopWithDuration:UPDefaultBloopDuration toPosition:position size:size];
 }
 
-- (void)bloopWithDuration:(UPTick)duration toPosition:(CGPoint)position size:(CGSize)size
+- (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position size:(CGSize)size
 {
     static constexpr CGFloat _Divisor = M_PI * 0.75;
     static constexpr CGFloat _TL_A = M_PI * -0.75;

@@ -10,6 +10,5 @@
 
 typedef float UPUnit;
 typedef double UPFloat;
-typedef double UPTick;
 
 #endif  // UP_TYPES_H

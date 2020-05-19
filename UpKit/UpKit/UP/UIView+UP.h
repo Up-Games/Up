@@ -21,10 +21,10 @@
 extern CFTimeInterval UPDefaultBloopDuration;
 
 - (void)bloopToFrame:(CGRect)frame;
-- (void)bloopWithDuration:(UPTick)duration toFrame:(CGRect)frame;
+- (void)bloopWithDuration:(CFTimeInterval)duration toFrame:(CGRect)frame;
 - (void)bloopToPosition:(CGPoint)position;
 - (void)bloopToPosition:(CGPoint)position size:(CGSize)size;
-- (void)bloopWithDuration:(UPTick)duration toPosition:(CGPoint)position size:(CGSize)size;
+- (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position size:(CGSize)size;
 
 @end
 
