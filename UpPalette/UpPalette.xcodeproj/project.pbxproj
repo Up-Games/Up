@@ -18,6 +18,7 @@
 		5D37CAFA24606906002D4D6B /* UpKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D37CAF824606906002D4D6B /* UpKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5D37CB0124608A38002D4D6B /* ColorChip.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D37CB0024608A38002D4D6B /* ColorChip.m */; };
 		5D37CB0424609B1C002D4D6B /* GameMockupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D37CB0324609B1C002D4D6B /* GameMockupView.m */; };
+		5D68B76F247450C800030ED4 /* ColorChipTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D68B76E247450C800030ED4 /* ColorChipTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,6 +54,8 @@
 		5D37CB0224609B1C002D4D6B /* GameMockupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameMockupView.h; sourceTree = "<group>"; };
 		5D37CB0324609B1C002D4D6B /* GameMockupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameMockupView.m; sourceTree = "<group>"; };
 		5D37CB052460F3B4002D4D6B /* UpPalette.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UpPalette.entitlements; sourceTree = "<group>"; };
+		5D68B76D247450C800030ED4 /* ColorChipTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorChipTableViewCell.h; sourceTree = "<group>"; };
+		5D68B76E247450C800030ED4 /* ColorChipTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorChipTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,17 +95,19 @@
 				5D37CAE324605F5D002D4D6B /* Assets.xcassets */,
 				5D37CAFF24608A38002D4D6B /* ColorChip.h */,
 				5D37CB0024608A38002D4D6B /* ColorChip.m */,
+				5D68B76D247450C800030ED4 /* ColorChipTableViewCell.h */,
+				5D68B76E247450C800030ED4 /* ColorChipTableViewCell.m */,
 				5D37CB0224609B1C002D4D6B /* GameMockupView.h */,
 				5D37CB0324609B1C002D4D6B /* GameMockupView.m */,
 				5D37CAE824605F5D002D4D6B /* Info.plist */,
 				5D37CAE524605F5D002D4D6B /* LaunchScreen.storyboard */,
 				5D37CAE924605F5D002D4D6B /* main.m */,
 				5D37CAE024605F5A002D4D6B /* Main.storyboard */,
+				5D37CB052460F3B4002D4D6B /* UpPalette.entitlements */,
 				5D37CADA24605F5A002D4D6B /* UPSceneDelegate.h */,
 				5D37CADB24605F5A002D4D6B /* UPSceneDelegate.m */,
 				5D37CADD24605F5A002D4D6B /* ViewController.h */,
 				5D37CADE24605F5A002D4D6B /* ViewController.m */,
-				5D37CB052460F3B4002D4D6B /* UpPalette.entitlements */,
 			);
 			path = UpPalette;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D68B76F247450C800030ED4 /* ColorChipTableViewCell.m in Sources */,
 				5D37CADF24605F5A002D4D6B /* ViewController.m in Sources */,
 				5D37CAD924605F5A002D4D6B /* AppDelegate.m in Sources */,
 				5D37CAEA24605F5D002D4D6B /* main.m in Sources */,

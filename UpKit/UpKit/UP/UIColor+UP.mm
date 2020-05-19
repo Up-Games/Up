@@ -62,7 +62,7 @@ static CGFloat _ThemeHue = 222;
         case UPColorCategoryClear:
             return [UIColor clearColor];
         default: {
-            static const size_t ColorsPerHue = 15;
+            static const size_t ColorsPerHue = 22;
             static const size_t HueCount = 360;
             size_t themeOffset = (style == UPColorStyleDefault ? 0 : (size_t)style - 1) * HueCount;
             CGFloat effectiveHue = UPClampT(CGFloat, hue, 0, 360);

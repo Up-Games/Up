@@ -187,27 +187,27 @@ static const CGFloat _NotATarget = -1;
 
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
 
-    NSDictionary *nameStringAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:12]};
-    NSDictionary *colorStringAttributes = @{NSFontAttributeName: [UIFont monospacedSystemFontOfSize:10 weight:0]};
+    NSDictionary *nameStringAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:13]};
+    NSDictionary *colorStringAttributes = @{NSFontAttributeName: [UIFont monospacedSystemFontOfSize:12 weight:0]};
     [string appendAttributedString:[[NSAttributedString alloc] initWithString:self.name attributes:nameStringAttributes]];
     
     if (self.gray < 0) {
         [string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nclear" attributes:colorStringAttributes]];
     }
     else {
-        NSString *chipString = [NSString stringWithFormat:@"\nchip: %.2f, %.2f / %.0f",
+        NSString *chipString = [NSString stringWithFormat:@"\n%.2f,%.2f/%.0f",
             self.gray, self.saturation, self.targetLightness];
         [string appendAttributedString:[[NSAttributedString alloc] initWithString:chipString attributes:colorStringAttributes]];
-
-        NSString *lightnessString = [NSString stringWithFormat:@"; L*: %3.2f", color.LABLightness];
-        [string appendAttributedString:[[NSAttributedString alloc] initWithString:lightnessString attributes:colorStringAttributes]];
 
         CGFloat r, g, b, a;
         [color getRed:&r green:&g blue:&b alpha:&a];
         
-        NSString *rgbString = [NSString stringWithFormat:@"\nrgba: %d, %d, %d, 1.0",
+        NSString *rgbString = [NSString stringWithFormat:@"; rgb(%3d,%3d,%3d)",
             (int)(r * 255), (int)(g * 255), (int)(b * 255)];
         [string appendAttributedString:[[NSAttributedString alloc] initWithString:rgbString attributes:colorStringAttributes]];
+
+        NSString *lightnessString = [NSString stringWithFormat:@"; L* %3.2f", color.LABLightness];
+        [string appendAttributedString:[[NSAttributedString alloc] initWithString:lightnessString attributes:colorStringAttributes]];
     }
 
     return string;

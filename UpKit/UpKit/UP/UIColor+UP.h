@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
     UPColorCategoryInactiveFill,
     UPColorCategoryActiveFill,
     UPColorCategoryHighlightedFill,
+    UPColorCategorySecondaryFill,  // new
     UPColorCategorySecondaryInactiveFill,
     UPColorCategorySecondaryActiveFill,
     UPColorCategorySecondaryHighlightedFill,
@@ -26,10 +27,16 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
     UPColorCategoryInactiveStroke,
     UPColorCategoryActiveStroke,
     UPColorCategoryHighlightedStroke,
+    UPColorCategorySecondaryStroke,  // new
+    UPColorCategorySecondaryInactiveStroke,  // new
+    UPColorCategorySecondaryActiveStroke,  // new
+    UPColorCategorySecondaryHighlightedStroke,  // new
     UPColorCategoryContent,
     UPColorCategoryInactiveContent,
+    UPColorCategoryActiveContent,  // new
+    UPColorCategoryHighlightedContent,  // new
     UPColorCategoryInformation,
-    UPColorCategoryCanvas,
+    UPColorCategoryInfinity,
 
     UPColorCategoryDisabledFill,
     UPColorCategoryDisabledStroke,

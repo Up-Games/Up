@@ -331,8 +331,8 @@ static UIBezierPath *_WordTrayStrokePath(void)
     [button setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveFill] forControlStates:UIControlStateNormal];
     [button setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveFill] forControlStates:UPControlStateActive];
     [button setStrokePath:_WordTrayStrokePath() forControlStates:UIControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryInactiveStroke] forControlStates:UIControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryActiveStroke] forControlStates:UPControlStateActive];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveStroke] forControlStates:UIControlStateNormal];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveStroke] forControlStates:UPControlStateActive];
     return button;
 }
 

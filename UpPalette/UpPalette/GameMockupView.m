@@ -36,6 +36,7 @@
     UIColor *inactiveFillColor = self.colors[InactiveFillKey];
 //    UIColor *activeFillColor = self.colors[ActiveFillKey];
     UIColor *highlightedFillColor = self.colors[HighlightedFillKey];
+    UIColor *secondaryFillColor = self.colors[SecondaryFillKey];
     UIColor *secondaryInactiveFillColor = self.colors[SecondaryInactiveFillKey];
     UIColor *secondaryActiveFillColor = self.colors[SecondaryActiveFillKey];
     UIColor *secondaryHighlightedFillColor = self.colors[SecondaryHighlightedFillKey];
@@ -43,10 +44,16 @@
     UIColor *inactiveStrokeColor = self.colors[InactiveStrokeKey];
     UIColor *activeStrokeColor = self.colors[ActiveStrokeKey];
     UIColor *highlightedStrokeColor = self.colors[HighlightedStrokeKey];
+    UIColor *secondaryStrokeColor = self.colors[SecondaryStrokeKey];
+    UIColor *secondaryInactiveStrokeColor = self.colors[SecondaryInactiveStrokeKey];
+    UIColor *secondaryActiveStrokeColor = self.colors[SecondaryActiveStrokeKey];
+    UIColor *secondaryHighlightedStrokeColor = self.colors[SecondaryHighlightedStrokeKey];
     UIColor *contentColor = self.colors[ContentKey];
     UIColor *inactiveContentColor = self.colors[InactiveContentKey];
+    UIColor *activeContentColor = self.colors[ActiveContentKey];
+    UIColor *highlightedContentColor = self.colors[HighlightedContentKey];
     UIColor *informationColor = self.colors[InformationKey];
-    UIColor *canvasColor = self.colors[CanvasKey];
+    UIColor *infinityColor = self.colors[InfinityKey];
 
     BOOL tappablesStroke = self.colorTheme == ColorThemeLightStark || self.colorTheme == ColorThemeDarkStark;
 
@@ -80,7 +87,7 @@
 
     //// Canvas-Background Drawing
     UIBezierPath* canvasBackgroundPath = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, 2436, 1125)];
-    [canvasColor setFill];
+    [infinityColor setFill];
     [canvasBackgroundPath fill];
 
 
@@ -304,13 +311,13 @@
         case GameStateStart:
         case GameStateTap:
         case GameStateSpell:
-            [inactiveStrokeColor setStroke];
+            [secondaryInactiveStrokeColor setStroke];
             break;
         case GameStateWord:
-            [activeStrokeColor setStroke];
+            [secondaryActiveStrokeColor setStroke];
             break;
         case GameStateSubmit:
-            [highlightedStrokeColor setStroke];
+            [secondaryHighlightedStrokeColor setStroke];
             break;
     }
     trayStrokePath.lineWidth = 24;
@@ -742,169 +749,167 @@
     [primaryFillColor setFill];
     [tileFill7Path fill];
 
-    if (tappablesStroke) {
-        //// Tile-Stroke-1 Drawing
-        UIBezierPath* tileStroke1Path = [UIBezierPath bezierPath];
-        [tileStroke1Path moveToPoint: CGPointMake(554, 780)];
-        [tileStroke1Path addLineToPoint: CGPointMake(326, 780)];
-        [tileStroke1Path addLineToPoint: CGPointMake(326, 1034)];
-        [tileStroke1Path addLineToPoint: CGPointMake(554, 1034)];
-        [tileStroke1Path addLineToPoint: CGPointMake(554, 780)];
-        [tileStroke1Path closePath];
-        [tileStroke1Path moveToPoint: CGPointMake(549, 1029)];
-        [tileStroke1Path addLineToPoint: CGPointMake(331, 1029)];
-        [tileStroke1Path addLineToPoint: CGPointMake(331, 785)];
-        [tileStroke1Path addLineToPoint: CGPointMake(549, 785)];
-        [tileStroke1Path addLineToPoint: CGPointMake(549, 1029)];
-        [tileStroke1Path closePath];
-        switch (self.gameState) {
-            case GameStateStart:
-            case GameStateTap:
-                [primaryStrokeColor setFill];
-                break;
-            case GameStateSpell:
-            case GameStateWord:
-            case GameStateSubmit:
-                [inactiveStrokeColor setFill];
-        }
-        [tileStroke1Path fill];
-
-
-        //// Tile-Stroke-2 Drawing
-        UIBezierPath* tileStroke2Path = [UIBezierPath bezierPath];
-        [tileStroke2Path moveToPoint: CGPointMake(813.33, 780)];
-        [tileStroke2Path addLineToPoint: CGPointMake(585.33, 780)];
-        [tileStroke2Path addLineToPoint: CGPointMake(585.33, 1034)];
-        [tileStroke2Path addLineToPoint: CGPointMake(813.33, 1034)];
-        [tileStroke2Path addLineToPoint: CGPointMake(813.33, 780)];
-        [tileStroke2Path closePath];
-        [tileStroke2Path moveToPoint: CGPointMake(808.33, 1029)];
-        [tileStroke2Path addLineToPoint: CGPointMake(590.33, 1029)];
-        [tileStroke2Path addLineToPoint: CGPointMake(590.33, 785)];
-        [tileStroke2Path addLineToPoint: CGPointMake(808.33, 785)];
-        [tileStroke2Path addLineToPoint: CGPointMake(808.33, 1029)];
-        [tileStroke2Path closePath];
-        [primaryStrokeColor setFill];
-        [tileStroke2Path fill];
-
-
-        //// Tile-Stroke-3 Drawing
-        UIBezierPath* tileStroke3Path = [UIBezierPath bezierPath];
-        [tileStroke3Path moveToPoint: CGPointMake(1072.67, 780)];
-        [tileStroke3Path addLineToPoint: CGPointMake(844.67, 780)];
-        [tileStroke3Path addLineToPoint: CGPointMake(844.67, 1034)];
-        [tileStroke3Path addLineToPoint: CGPointMake(1072.67, 1034)];
-        [tileStroke3Path addLineToPoint: CGPointMake(1072.67, 780)];
-        [tileStroke3Path closePath];
-        [tileStroke3Path moveToPoint: CGPointMake(1067.67, 1029)];
-        [tileStroke3Path addLineToPoint: CGPointMake(849.67, 1029)];
-        [tileStroke3Path addLineToPoint: CGPointMake(849.67, 785)];
-        [tileStroke3Path addLineToPoint: CGPointMake(1067.67, 785)];
-        [tileStroke3Path addLineToPoint: CGPointMake(1067.67, 1029)];
-        [tileStroke3Path closePath];
-        [primaryStrokeColor setFill];
-        [tileStroke3Path fill];
-
-
-        //// Tile-Stroke-4 Drawing
-        UIBezierPath* tileStroke4Path = [UIBezierPath bezierPath];
-        [tileStroke4Path moveToPoint: CGPointMake(1332, 780)];
-        [tileStroke4Path addLineToPoint: CGPointMake(1104, 780)];
-        [tileStroke4Path addLineToPoint: CGPointMake(1104, 1034)];
-        [tileStroke4Path addLineToPoint: CGPointMake(1332, 1034)];
-        [tileStroke4Path addLineToPoint: CGPointMake(1332, 780)];
-        [tileStroke4Path closePath];
-        [tileStroke4Path moveToPoint: CGPointMake(1327, 1029)];
-        [tileStroke4Path addLineToPoint: CGPointMake(1109, 1029)];
-        [tileStroke4Path addLineToPoint: CGPointMake(1109, 785)];
-        [tileStroke4Path addLineToPoint: CGPointMake(1327, 785)];
-        [tileStroke4Path addLineToPoint: CGPointMake(1327, 1029)];
-        [tileStroke4Path closePath];
-        [primaryStrokeColor setFill];
-        [tileStroke4Path fill];
-
-
-        //// Tile-Stroke-5 Drawing
-        UIBezierPath* tileStroke5Path = [UIBezierPath bezierPath];
-        [tileStroke5Path moveToPoint: CGPointMake(1591.33, 780)];
-        [tileStroke5Path addLineToPoint: CGPointMake(1363.33, 780)];
-        [tileStroke5Path addLineToPoint: CGPointMake(1363.33, 1034)];
-        [tileStroke5Path addLineToPoint: CGPointMake(1591.33, 1034)];
-        [tileStroke5Path addLineToPoint: CGPointMake(1591.33, 780)];
-        [tileStroke5Path closePath];
-        [tileStroke5Path moveToPoint: CGPointMake(1586.33, 1029)];
-        [tileStroke5Path addLineToPoint: CGPointMake(1368.33, 1029)];
-        [tileStroke5Path addLineToPoint: CGPointMake(1368.33, 785)];
-        [tileStroke5Path addLineToPoint: CGPointMake(1586.33, 785)];
-        [tileStroke5Path addLineToPoint: CGPointMake(1586.33, 1029)];
-        [tileStroke5Path closePath];
-        switch (self.gameState) {
-            case GameStateStart:
-                [primaryStrokeColor setFill];
-                break;
-            case GameStateTap:
-                [highlightedStrokeColor setFill];
-                break;
-            case GameStateSpell:
-            case GameStateWord:
-            case GameStateSubmit:
-                [inactiveStrokeColor setFill];
-        }
-        [tileStroke5Path fill];
-
-        //// Tile-Stroke-6 Drawing
-        UIBezierPath* tileStroke6Path = [UIBezierPath bezierPath];
-        [tileStroke6Path moveToPoint: CGPointMake(1850.67, 780)];
-        [tileStroke6Path addLineToPoint: CGPointMake(1622.67, 780)];
-        [tileStroke6Path addLineToPoint: CGPointMake(1622.67, 1034)];
-        [tileStroke6Path addLineToPoint: CGPointMake(1850.67, 1034)];
-        [tileStroke6Path addLineToPoint: CGPointMake(1850.67, 780)];
-        [tileStroke6Path closePath];
-        [tileStroke6Path moveToPoint: CGPointMake(1845.67, 1029)];
-        [tileStroke6Path addLineToPoint: CGPointMake(1627.67, 1029)];
-        [tileStroke6Path addLineToPoint: CGPointMake(1627.67, 785)];
-        [tileStroke6Path addLineToPoint: CGPointMake(1845.67, 785)];
-        [tileStroke6Path addLineToPoint: CGPointMake(1845.67, 1029)];
-        [tileStroke6Path closePath];
-        switch (self.gameState) {
-            case GameStateStart:
-            case GameStateTap:
-                [primaryStrokeColor setFill];
-                break;
-            case GameStateSpell:
-            case GameStateWord:
-            case GameStateSubmit:
-                [inactiveStrokeColor setFill];
-        }
-        [tileStroke6Path fill];
-
-
-        //// Tile-Stroke-7 Drawing
-        UIBezierPath* tileStroke7Path = [UIBezierPath bezierPath];
-        [tileStroke7Path moveToPoint: CGPointMake(2110, 780)];
-        [tileStroke7Path addLineToPoint: CGPointMake(1882, 780)];
-        [tileStroke7Path addLineToPoint: CGPointMake(1882, 1034)];
-        [tileStroke7Path addLineToPoint: CGPointMake(2110, 1034)];
-        [tileStroke7Path addLineToPoint: CGPointMake(2110, 780)];
-        [tileStroke7Path closePath];
-        [tileStroke7Path moveToPoint: CGPointMake(2105, 1029)];
-        [tileStroke7Path addLineToPoint: CGPointMake(1887, 1029)];
-        [tileStroke7Path addLineToPoint: CGPointMake(1887, 785)];
-        [tileStroke7Path addLineToPoint: CGPointMake(2105, 785)];
-        [tileStroke7Path addLineToPoint: CGPointMake(2105, 1029)];
-        [tileStroke7Path closePath];
-        switch (self.gameState) {
-            case GameStateStart:
-            case GameStateTap:
-                [primaryStrokeColor setFill];
-                break;
-            case GameStateSpell:
-            case GameStateWord:
-            case GameStateSubmit:
-                [inactiveStrokeColor setFill];
-        }
-        [tileStroke7Path fill];
+    //// Tile-Stroke-1 Drawing
+    UIBezierPath* tileStroke1Path = [UIBezierPath bezierPath];
+    [tileStroke1Path moveToPoint: CGPointMake(554, 780)];
+    [tileStroke1Path addLineToPoint: CGPointMake(326, 780)];
+    [tileStroke1Path addLineToPoint: CGPointMake(326, 1034)];
+    [tileStroke1Path addLineToPoint: CGPointMake(554, 1034)];
+    [tileStroke1Path addLineToPoint: CGPointMake(554, 780)];
+    [tileStroke1Path closePath];
+    [tileStroke1Path moveToPoint: CGPointMake(549, 1029)];
+    [tileStroke1Path addLineToPoint: CGPointMake(331, 1029)];
+    [tileStroke1Path addLineToPoint: CGPointMake(331, 785)];
+    [tileStroke1Path addLineToPoint: CGPointMake(549, 785)];
+    [tileStroke1Path addLineToPoint: CGPointMake(549, 1029)];
+    [tileStroke1Path closePath];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            [primaryStrokeColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveStrokeColor setFill];
     }
+    [tileStroke1Path fill];
+
+
+    //// Tile-Stroke-2 Drawing
+    UIBezierPath* tileStroke2Path = [UIBezierPath bezierPath];
+    [tileStroke2Path moveToPoint: CGPointMake(813.33, 780)];
+    [tileStroke2Path addLineToPoint: CGPointMake(585.33, 780)];
+    [tileStroke2Path addLineToPoint: CGPointMake(585.33, 1034)];
+    [tileStroke2Path addLineToPoint: CGPointMake(813.33, 1034)];
+    [tileStroke2Path addLineToPoint: CGPointMake(813.33, 780)];
+    [tileStroke2Path closePath];
+    [tileStroke2Path moveToPoint: CGPointMake(808.33, 1029)];
+    [tileStroke2Path addLineToPoint: CGPointMake(590.33, 1029)];
+    [tileStroke2Path addLineToPoint: CGPointMake(590.33, 785)];
+    [tileStroke2Path addLineToPoint: CGPointMake(808.33, 785)];
+    [tileStroke2Path addLineToPoint: CGPointMake(808.33, 1029)];
+    [tileStroke2Path closePath];
+    [primaryStrokeColor setFill];
+    [tileStroke2Path fill];
+
+
+    //// Tile-Stroke-3 Drawing
+    UIBezierPath* tileStroke3Path = [UIBezierPath bezierPath];
+    [tileStroke3Path moveToPoint: CGPointMake(1072.67, 780)];
+    [tileStroke3Path addLineToPoint: CGPointMake(844.67, 780)];
+    [tileStroke3Path addLineToPoint: CGPointMake(844.67, 1034)];
+    [tileStroke3Path addLineToPoint: CGPointMake(1072.67, 1034)];
+    [tileStroke3Path addLineToPoint: CGPointMake(1072.67, 780)];
+    [tileStroke3Path closePath];
+    [tileStroke3Path moveToPoint: CGPointMake(1067.67, 1029)];
+    [tileStroke3Path addLineToPoint: CGPointMake(849.67, 1029)];
+    [tileStroke3Path addLineToPoint: CGPointMake(849.67, 785)];
+    [tileStroke3Path addLineToPoint: CGPointMake(1067.67, 785)];
+    [tileStroke3Path addLineToPoint: CGPointMake(1067.67, 1029)];
+    [tileStroke3Path closePath];
+    [primaryStrokeColor setFill];
+    [tileStroke3Path fill];
+
+
+    //// Tile-Stroke-4 Drawing
+    UIBezierPath* tileStroke4Path = [UIBezierPath bezierPath];
+    [tileStroke4Path moveToPoint: CGPointMake(1332, 780)];
+    [tileStroke4Path addLineToPoint: CGPointMake(1104, 780)];
+    [tileStroke4Path addLineToPoint: CGPointMake(1104, 1034)];
+    [tileStroke4Path addLineToPoint: CGPointMake(1332, 1034)];
+    [tileStroke4Path addLineToPoint: CGPointMake(1332, 780)];
+    [tileStroke4Path closePath];
+    [tileStroke4Path moveToPoint: CGPointMake(1327, 1029)];
+    [tileStroke4Path addLineToPoint: CGPointMake(1109, 1029)];
+    [tileStroke4Path addLineToPoint: CGPointMake(1109, 785)];
+    [tileStroke4Path addLineToPoint: CGPointMake(1327, 785)];
+    [tileStroke4Path addLineToPoint: CGPointMake(1327, 1029)];
+    [tileStroke4Path closePath];
+    [primaryStrokeColor setFill];
+    [tileStroke4Path fill];
+
+
+    //// Tile-Stroke-5 Drawing
+    UIBezierPath* tileStroke5Path = [UIBezierPath bezierPath];
+    [tileStroke5Path moveToPoint: CGPointMake(1591.33, 780)];
+    [tileStroke5Path addLineToPoint: CGPointMake(1363.33, 780)];
+    [tileStroke5Path addLineToPoint: CGPointMake(1363.33, 1034)];
+    [tileStroke5Path addLineToPoint: CGPointMake(1591.33, 1034)];
+    [tileStroke5Path addLineToPoint: CGPointMake(1591.33, 780)];
+    [tileStroke5Path closePath];
+    [tileStroke5Path moveToPoint: CGPointMake(1586.33, 1029)];
+    [tileStroke5Path addLineToPoint: CGPointMake(1368.33, 1029)];
+    [tileStroke5Path addLineToPoint: CGPointMake(1368.33, 785)];
+    [tileStroke5Path addLineToPoint: CGPointMake(1586.33, 785)];
+    [tileStroke5Path addLineToPoint: CGPointMake(1586.33, 1029)];
+    [tileStroke5Path closePath];
+    switch (self.gameState) {
+        case GameStateStart:
+            [primaryStrokeColor setFill];
+            break;
+        case GameStateTap:
+            [highlightedStrokeColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveStrokeColor setFill];
+    }
+    [tileStroke5Path fill];
+
+    //// Tile-Stroke-6 Drawing
+    UIBezierPath* tileStroke6Path = [UIBezierPath bezierPath];
+    [tileStroke6Path moveToPoint: CGPointMake(1850.67, 780)];
+    [tileStroke6Path addLineToPoint: CGPointMake(1622.67, 780)];
+    [tileStroke6Path addLineToPoint: CGPointMake(1622.67, 1034)];
+    [tileStroke6Path addLineToPoint: CGPointMake(1850.67, 1034)];
+    [tileStroke6Path addLineToPoint: CGPointMake(1850.67, 780)];
+    [tileStroke6Path closePath];
+    [tileStroke6Path moveToPoint: CGPointMake(1845.67, 1029)];
+    [tileStroke6Path addLineToPoint: CGPointMake(1627.67, 1029)];
+    [tileStroke6Path addLineToPoint: CGPointMake(1627.67, 785)];
+    [tileStroke6Path addLineToPoint: CGPointMake(1845.67, 785)];
+    [tileStroke6Path addLineToPoint: CGPointMake(1845.67, 1029)];
+    [tileStroke6Path closePath];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            [primaryStrokeColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveStrokeColor setFill];
+    }
+    [tileStroke6Path fill];
+
+
+    //// Tile-Stroke-7 Drawing
+    UIBezierPath* tileStroke7Path = [UIBezierPath bezierPath];
+    [tileStroke7Path moveToPoint: CGPointMake(2110, 780)];
+    [tileStroke7Path addLineToPoint: CGPointMake(1882, 780)];
+    [tileStroke7Path addLineToPoint: CGPointMake(1882, 1034)];
+    [tileStroke7Path addLineToPoint: CGPointMake(2110, 1034)];
+    [tileStroke7Path addLineToPoint: CGPointMake(2110, 780)];
+    [tileStroke7Path closePath];
+    [tileStroke7Path moveToPoint: CGPointMake(2105, 1029)];
+    [tileStroke7Path addLineToPoint: CGPointMake(1887, 1029)];
+    [tileStroke7Path addLineToPoint: CGPointMake(1887, 785)];
+    [tileStroke7Path addLineToPoint: CGPointMake(2105, 785)];
+    [tileStroke7Path addLineToPoint: CGPointMake(2105, 1029)];
+    [tileStroke7Path closePath];
+    switch (self.gameState) {
+        case GameStateStart:
+        case GameStateTap:
+            [primaryStrokeColor setFill];
+            break;
+        case GameStateSpell:
+        case GameStateWord:
+        case GameStateSubmit:
+            [inactiveStrokeColor setFill];
+    }
+    [tileStroke7Path fill];
 
 
     //// Tile-Letter-1 Drawing
@@ -1011,6 +1016,8 @@
     [tileLetter5Path closePath];
     switch (self.gameState) {
         case GameStateStart:
+            [contentColor setFill];
+            break;
         case GameStateTap:
             [contentColor setFill];
             break;

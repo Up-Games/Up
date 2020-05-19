@@ -8,6 +8,7 @@
 #import "AppDelegate.h"
 #import "ColorChip.h"
 #import "GameMockupView.h"
+#import "ColorChipTableViewCell.h"
 #import "ViewController.h"
 
 static NSString *const ColorMapPathFormat = @"/Users/kocienda/Desktop/up-color-map-%@.json";
@@ -16,7 +17,7 @@ static NSString *const ExportedColorsPath = @"/System/Volumes/Data/Projects/Up-G
 static const int HueCount = 360;
 static const int MilepostHue = 15;
 
-@interface ViewController ()
+@interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic) NSArray *colorKeys;
 
@@ -33,43 +34,7 @@ static const int MilepostHue = 15;
 
 @property (nonatomic) GameMockupView *gameMockupView;
 
-@property (nonatomic) IBOutlet UILabel *primaryFillColorLabel;
-@property (nonatomic) IBOutlet UILabel *inactiveFillColorLabel;
-@property (nonatomic) IBOutlet UILabel *activeFillColorLabel;
-@property (nonatomic) IBOutlet UILabel *highlightedFillColorLabel;
-@property (nonatomic) IBOutlet UILabel *secondaryInactiveFillColorLabel;
-@property (nonatomic) IBOutlet UILabel *secondaryActiveFillColorLabel;
-@property (nonatomic) IBOutlet UILabel *secondaryHighlightedFillColorLabel;
-@property (nonatomic) IBOutlet UILabel *primaryStrokeColorLabel;
-@property (nonatomic) IBOutlet UILabel *inactiveStrokeColorLabel;
-@property (nonatomic) IBOutlet UILabel *activeStrokeColorLabel;
-@property (nonatomic) IBOutlet UILabel *highlightedStrokeColorLabel;
-@property (nonatomic) IBOutlet UILabel *contentColorLabel;
-@property (nonatomic) IBOutlet UILabel *inactiveContentColorLabel;
-@property (nonatomic) IBOutlet UILabel *informationColorLabel;
-@property (nonatomic) IBOutlet UILabel *canvasColorLabel;
-
-@property (nonatomic) NSDictionary *colorLabels;
-
-@property (nonatomic) IBOutlet UIView *primaryFillColorView;
-@property (nonatomic) IBOutlet UIView *inactiveFillColorView;
-@property (nonatomic) IBOutlet UIView *activeFillColorView;
-@property (nonatomic) IBOutlet UIView *highlightedFillColorView;
-@property (nonatomic) IBOutlet UIView *secondaryInactiveFillColorView;
-@property (nonatomic) IBOutlet UIView *secondaryActiveFillColorView;
-@property (nonatomic) IBOutlet UIView *secondaryHighlightedFillColorView;
-@property (nonatomic) IBOutlet UIView *primaryStrokeColorView;
-@property (nonatomic) IBOutlet UIView *inactiveStrokeColorView;
-@property (nonatomic) IBOutlet UIView *activeStrokeColorView;
-@property (nonatomic) IBOutlet UIView *highlightedStrokeColorView;
-@property (nonatomic) IBOutlet UIView *contentColorView;
-@property (nonatomic) IBOutlet UIView *inactiveContentColorView;
-@property (nonatomic) IBOutlet UIView *informationColorView;
-@property (nonatomic) IBOutlet UIView *canvasColorView;
-
-@property (nonatomic) NSDictionary *colorViews;
-
-@property (nonatomic) IBOutlet UIView *selectedIndicatorView;
+@property (nonatomic) IBOutlet UITableView *colorChipTableView;
 
 @property (nonatomic) IBOutlet UISlider *hueSlider;
 @property (nonatomic) IBOutlet UITextField *hueValueField;
@@ -128,66 +93,41 @@ static ViewController *_Instance;
     [self.view addSubview:self.self.gameMockupView];
 
     self.colorKeys = @[
-        PrimaryFillKey, InactiveFillKey, ActiveFillKey, HighlightedFillKey,
-        SecondaryInactiveFillKey, SecondaryActiveFillKey, SecondaryHighlightedFillKey,
-        PrimaryStrokeKey, InactiveStrokeKey, ActiveStrokeKey, HighlightedStrokeKey,
-        ContentKey, InactiveContentKey, InformationKey, CanvasKey,
+        PrimaryFillKey,
+        InactiveFillKey,
+        ActiveFillKey,
+        HighlightedFillKey,
+        SecondaryActiveFillKey,
+        SecondaryInactiveFillKey,
+        SecondaryActiveFillKey,
+        SecondaryHighlightedFillKey,
+        PrimaryStrokeKey,
+        InactiveStrokeKey,
+        ActiveStrokeKey,
+        HighlightedStrokeKey,
+        SecondaryStrokeKey,
+        SecondaryInactiveStrokeKey,
+        SecondaryActiveStrokeKey,
+        SecondaryHighlightedStrokeKey,
+        ContentKey,
+        InactiveContentKey,
+        ActiveContentKey,
+        HighlightedContentKey,
+        InformationKey,
+        InfinityKey,
     ];
 
     self.colorChips = [NSMutableDictionary dictionary];
-
-    self.colorLabels = @{
-        PrimaryFillKey: self.primaryFillColorLabel,
-        InactiveFillKey: self.inactiveFillColorLabel,
-        ActiveFillKey: self.activeFillColorLabel,
-        HighlightedFillKey: self.highlightedFillColorLabel,
-        SecondaryInactiveFillKey: self.secondaryInactiveFillColorLabel,
-        SecondaryActiveFillKey: self.secondaryActiveFillColorLabel,
-        SecondaryHighlightedFillKey: self.secondaryHighlightedFillColorLabel,
-        PrimaryStrokeKey: self.primaryStrokeColorLabel,
-        InactiveStrokeKey: self.inactiveStrokeColorLabel,
-        ActiveStrokeKey: self.activeStrokeColorLabel,
-        HighlightedStrokeKey: self.highlightedStrokeColorLabel,
-        ContentKey: self.contentColorLabel,
-        InactiveContentKey: self.inactiveContentColorLabel,
-        InformationKey: self.informationColorLabel,
-        CanvasKey: self.canvasColorLabel
-    };
-
-    self.colorViews = @{
-        PrimaryFillKey: self.primaryFillColorView,
-        InactiveFillKey: self.inactiveFillColorView,
-        ActiveFillKey: self.activeFillColorView,
-        HighlightedFillKey: self.highlightedFillColorView,
-        SecondaryInactiveFillKey: self.secondaryInactiveFillColorView,
-        SecondaryActiveFillKey: self.secondaryActiveFillColorView,
-        SecondaryHighlightedFillKey: self.secondaryHighlightedFillColorView,
-        PrimaryStrokeKey: self.primaryStrokeColorView,
-        InactiveStrokeKey: self.inactiveStrokeColorView,
-        ActiveStrokeKey: self.activeStrokeColorView,
-        HighlightedStrokeKey: self.highlightedStrokeColorView,
-        ContentKey: self.contentColorView,
-        InactiveContentKey: self.inactiveContentColorView,
-        InformationKey: self.informationColorView,
-        CanvasKey: self.canvasColorView
-    };
-
-    [self.colorViews enumerateKeysAndObjectsUsingBlock:^(id key, UIView *colorView, BOOL *stop) {
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [colorView addGestureRecognizer:tap];
-        colorView.layer.borderColor = [[UIColor colorWithWhite:0.8 alpha:1.0] CGColor];
-        colorView.layer.borderWidth = 0.5;
-    }];
 
     [self loadColorMap];
 
     self.hueSlider.value = 225;
     [self hueChanged:self.hueSlider];
     
-    self.selectedIndicatorView.layer.cornerRadius = 8;
-    self.selectedIndicatorView.backgroundColor = [UIColor blueColor];
-    self.selectedIndicatorView.alpha = 0;
     self.selectedChip = nil;
+    
+    [self.colorChipTableView registerClass:[ColorChipTableViewCell class] forCellReuseIdentifier:@"ColorChip"];
+    [self.colorChipTableView reloadData];
 }
 
 - (void)viewDidLayoutSubviews
@@ -197,33 +137,49 @@ static ViewController *_Instance;
     [self.gameMockupView layoutWithRule];
 }
 
-- (void)handleTap:(UITapGestureRecognizer *)tap
-{
-    if (tap.state != UIGestureRecognizerStateRecognized) {
-        return;
-    }
+#pragma mark - UITableViewDataSource
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.colorKeys.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ColorChipTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ColorChip"];
+    NSString *key = self.colorKeys[indexPath.row];
+    if (self.selectedChip && [self.selectedChip.name isEqualToString:key]) {
+        cell.colorChip = self.selectedChip;
+    }
+    else {
+        cell.colorChip = self.colorChips[key];
+    }
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     [self cancelEditing];
 
-    __block ColorChip *tappedChip = nil;
-    [self.colorViews enumerateKeysAndObjectsUsingBlock:^(id key, id colorView, BOOL *stop) {
-        if (tap.view == colorView) {
-            tappedChip = self.colorChips[key];
-        }
-    }];
+    NSString *key = self.colorKeys[indexPath.row];
+    ColorChip *tappedChip = self.colorChips[key];
 
     if (tappedChip.isClear) {
         // no-op
     }
     else {
         self.selectedChip = tappedChip;
-        CGRect frame = self.selectedIndicatorView.frame;
-        frame.origin.y = CGRectGetMidY(tap.view.frame);
-        frame.origin.y -= CGRectGetHeight(self.selectedIndicatorView.bounds) * 0.5;
-        self.selectedIndicatorView.frame = frame;
-        self.selectedIndicatorView.alpha = 1;
     }
 }
+
+#pragma mark -
 
 - (void)setSelectedChip:(ColorChip *)selectedChip
 {
@@ -354,17 +310,24 @@ static ViewController *_Instance;
                 InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.91 saturation:0.6 targetLightness:91],
                 ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.85 saturation:0.6 targetLightness:82],
                 HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:0.76 saturation:1.0 targetLightness:68],
+                SecondaryFillKey : [ColorChip chipWithName:SecondaryFillKey hue:0 gray:0.95 saturation:0.35 targetLightness:95],
                 SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.95 saturation:0.35 targetLightness:95],
                 SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.85 saturation:0.35 targetLightness:84],
                 SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.76 saturation:1.0 targetLightness:75],
                 PrimaryStrokeKey : [ColorChip clearChipWithName:PrimaryStrokeKey],
-                InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.88 saturation:0.35 targetLightness:85],
-                ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.68 saturation:0.8 targetLightness:60],
-                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:0. saturation:1.0 targetLightness:38],
+                InactiveStrokeKey : [ColorChip clearChipWithName:InactiveStrokeKey],
+                ActiveStrokeKey : [ColorChip clearChipWithName:ActiveStrokeKey],
+                HighlightedStrokeKey : [ColorChip clearChipWithName:HighlightedStrokeKey],
+                SecondaryStrokeKey : [ColorChip clearChipWithName:SecondaryStrokeKey],
+                SecondaryInactiveStrokeKey : [ColorChip chipWithName:SecondaryInactiveStrokeKey hue:0 gray:0.88 saturation:0.35 targetLightness:85],
+                SecondaryActiveStrokeKey : [ColorChip chipWithName:SecondaryActiveStrokeKey hue:0 gray:0.68 saturation:0.8 targetLightness:60],
+                SecondaryHighlightedStrokeKey : [ColorChip chipWithName:SecondaryHighlightedStrokeKey hue:0 gray:0. saturation:1.0 targetLightness:38],
                 ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:1.0 saturation:0],
                 InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 gray:1.0 saturation:0],
+                ActiveContentKey : [ColorChip chipWithName:ActiveContentKey hue:0 gray:1.0 saturation:0],
+                HighlightedContentKey : [ColorChip chipWithName:HighlightedContentKey hue:0 gray:1.0 saturation:0],
                 InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.30 saturation:0.50 targetLightness:28],
-                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.99 saturation:0.35 targetLightness:99],
+                InfinityKey : [ColorChip chipWithName:InfinityKey hue:0 gray:0.99 saturation:0.35 targetLightness:99],
             };
         case ColorThemeDark:
             return @{
@@ -372,6 +335,7 @@ static ViewController *_Instance;
                 InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.40 saturation:0.15 targetLightness:40],
                 ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.65 saturation:0.68 targetLightness:60],
                 HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:1.0 saturation:1.0],
+                SecondaryFillKey : [ColorChip chipWithName:SecondaryFillKey hue:0 gray:0.25 saturation:0.25 targetLightness:23],
                 SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.25 saturation:0.25 targetLightness:23],
                 SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.33 saturation:0.55 targetLightness:31],
                 SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.44 saturation:0.70 targetLightness:42],
@@ -379,10 +343,16 @@ static ViewController *_Instance;
                 InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.56 saturation:0.3 targetLightness:53],
                 ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.77 saturation:0.77 targetLightness:71],
                 HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:1.0 saturation:1.0],
+                SecondaryStrokeKey : [ColorChip clearChipWithName:SecondaryStrokeKey],
+                SecondaryInactiveStrokeKey : [ColorChip chipWithName:SecondaryInactiveStrokeKey hue:0 gray:0.56 saturation:0.3 targetLightness:53],
+                SecondaryActiveStrokeKey : [ColorChip chipWithName:SecondaryActiveStrokeKey hue:0 gray:0.77 saturation:0.77 targetLightness:71],
+                SecondaryHighlightedStrokeKey : [ColorChip chipWithName:SecondaryHighlightedStrokeKey hue:0 gray:1.0 saturation:1.0],
                 ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:0.0 saturation:0],
                 InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 gray:0.0 saturation:0],
+                ActiveContentKey : [ColorChip chipWithName:ActiveContentKey hue:0 gray:0.0 saturation:0],
+                HighlightedContentKey : [ColorChip chipWithName:HighlightedContentKey hue:0 gray:0.0 saturation:0],
                 InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.85 saturation:0.9 targetLightness:80],
-                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.12 saturation:0.7 targetLightness:9],
+                InfinityKey : [ColorChip chipWithName:InfinityKey hue:0 gray:0.12 saturation:0.7 targetLightness:9],
             };
         case ColorThemeLightStark:
             return @{
@@ -390,6 +360,7 @@ static ViewController *_Instance;
                 InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.97 saturation:0.6 targetLightness:96.5],
                 ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.8 saturation:0.5 targetLightness:80],
                 HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:0.83 saturation:0.85 targetLightness:80],
+                SecondaryFillKey : [ColorChip chipWithName:SecondaryFillKey hue:0 gray:0.98 saturation:0.4 targetLightness:99],
                 SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.98 saturation:0.4 targetLightness:99],
                 SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.93 saturation:0.55 targetLightness:92],
                 SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.90 saturation:1.0 targetLightness:86],
@@ -397,10 +368,16 @@ static ViewController *_Instance;
                 InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.90 saturation:0.40 targetLightness:87],
                 ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.75 saturation:0.75 targetLightness:70],
                 HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:0.52 saturation:1.0 targetLightness:45],
+                SecondaryStrokeKey : [ColorChip chipWithName:SecondaryStrokeKey hue:0 gray:0.2 saturation:0.85 targetLightness:18],
+                SecondaryInactiveStrokeKey : [ColorChip chipWithName:SecondaryInactiveStrokeKey hue:0 gray:0.90 saturation:0.40 targetLightness:87],
+                SecondaryActiveStrokeKey : [ColorChip chipWithName:SecondaryActiveStrokeKey hue:0 gray:0.75 saturation:0.75 targetLightness:70],
+                SecondaryHighlightedStrokeKey : [ColorChip chipWithName:SecondaryHighlightedStrokeKey hue:0 gray:0.52 saturation:1.0 targetLightness:45],
                 ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:0.2 saturation:0.85 targetLightness:18],
                 InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 gray:0.8 saturation:0.45 targetLightness:80],
+                ActiveContentKey : [ColorChip chipWithName:ActiveContentKey hue:0 gray:0.8 saturation:0.45 targetLightness:80],
+                HighlightedContentKey : [ColorChip chipWithName:HighlightedContentKey hue:0 gray:1.0 saturation:0.0 targetLightness:100],
                 InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.2 saturation:0.75 targetLightness:18],
-                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.98 saturation:0.50 targetLightness:99],
+                InfinityKey : [ColorChip chipWithName:InfinityKey hue:0 gray:0.98 saturation:0.50 targetLightness:99],
             };
         case ColorThemeDarkStark:
             return @{
@@ -408,6 +385,7 @@ static ViewController *_Instance;
                 InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.10 saturation:0.25 targetLightness:8],
                 ActiveFillKey : [ColorChip chipWithName:ActiveFillKey hue:0 gray:0.10 saturation:0.5 targetLightness:15],
                 HighlightedFillKey : [ColorChip chipWithName:HighlightedFillKey hue:0 gray:0.47 saturation:1.0 targetLightness:45],
+                SecondaryFillKey : [ColorChip chipWithName:SecondaryFillKey hue:0 gray:0.12 saturation:0.68 targetLightness:8],
                 SecondaryInactiveFillKey : [ColorChip chipWithName:SecondaryInactiveFillKey hue:0 gray:0.12 saturation:0.68 targetLightness:8],
                 SecondaryActiveFillKey : [ColorChip chipWithName:SecondaryActiveFillKey hue:0 gray:0.20 saturation:0.5 targetLightness:15],
                 SecondaryHighlightedFillKey : [ColorChip chipWithName:SecondaryHighlightedFillKey hue:0 gray:0.47 saturation:1.0 targetLightness:45],
@@ -415,10 +393,16 @@ static ViewController *_Instance;
                 InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.55 saturation:0.15 targetLightness:50],
                 ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.83 saturation:0.60 targetLightness:80],
                 HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:0.95 saturation:1.0 targetLightness:95],
+                SecondaryStrokeKey : [ColorChip chipWithName:SecondaryStrokeKey hue:0 gray:0.80 saturation:0.68 targetLightness:77],
+                SecondaryInactiveStrokeKey : [ColorChip chipWithName:SecondaryInactiveStrokeKey hue:0 gray:0.55 saturation:0.15 targetLightness:50],
+                SecondaryActiveStrokeKey : [ColorChip chipWithName:SecondaryActiveStrokeKey hue:0 gray:0.83 saturation:0.60 targetLightness:80],
+                SecondaryHighlightedStrokeKey : [ColorChip chipWithName:SecondaryHighlightedStrokeKey hue:0 gray:0.95 saturation:1.0 targetLightness:95],
                 ContentKey : [ColorChip chipWithName:ContentKey hue:0 gray:1.00 saturation:1.0],
                 InactiveContentKey : [ColorChip chipWithName:InactiveContentKey hue:0 gray:0.37 saturation:0.2 targetLightness:37],
+                ActiveContentKey : [ColorChip chipWithName:ActiveContentKey hue:0 gray:0.37 saturation:0.2 targetLightness:37],
+                HighlightedContentKey : [ColorChip chipWithName:HighlightedContentKey hue:0 gray:0.37 saturation:0.2 targetLightness:37],
                 InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:1.00 saturation:1.0],
-                CanvasKey : [ColorChip chipWithName:CanvasKey hue:0 gray:0.12 saturation:0.68 targetLightness:8],
+                InfinityKey : [ColorChip chipWithName:InfinityKey hue:0 gray:0.12 saturation:0.68 targetLightness:8],
             };
     }
     return nil;
@@ -486,8 +470,6 @@ static ViewController *_Instance;
     }
     
     [self updateColors];
-    
-    self.selectedIndicatorView.alpha = 0;
 }
 
 - (void)updateColors
@@ -499,12 +481,12 @@ static ViewController *_Instance;
         self.conformedColorLabel.attributedText = self.conformedChip.attributedDescription;
     }
 
+    [self.colorChipTableView reloadData];
+
     NSMutableDictionary *colors = [NSMutableDictionary dictionary];
     for (NSString *key in self.colorKeys) {
         ColorChip *chip = self.colorChips[key];
         UIColor *color = chip.color;
-        [self.colorLabels[key] setAttributedText:chip.attributedDescription];
-        [self.colorViews[key] setBackgroundColor:color];
         colors[key] = color;
     }
     self.gameMockupView.colors = colors;
@@ -626,7 +608,6 @@ static ViewController *_Instance;
     [self updateHue:startHue];
     [self updateColors];
     self.selectedChip = nil;
-    self.selectedIndicatorView.alpha = 0;
 }
 
 - (IBAction)conformButtonPressed:(UIButton *)sender
@@ -646,7 +627,6 @@ static ViewController *_Instance;
     }
     self.selectedChip = nil;
     self.conformedChip = nil;
-    self.selectedIndicatorView.alpha = 0;
 }
 
 - (IBAction)acceptButtonPressed:(UIButton *)sender
@@ -664,7 +644,6 @@ static ViewController *_Instance;
     }
     self.selectedChip = nil;
     self.conformedChip = nil;
-    self.selectedIndicatorView.alpha = 0;
 }
 
 - (IBAction)defaultButtonPressed:(UIButton *)sender
@@ -687,7 +666,6 @@ static ViewController *_Instance;
     [self.selectedChip takeValuesFrom:defaultChip];
     self.selectedChip = nil;
     self.editStartChip = nil;
-    self.selectedIndicatorView.alpha = 0;
     [self updateColors];
 }
 
@@ -703,7 +681,6 @@ static ViewController *_Instance;
     self.selectedChip = nil;
     self.conformedChip = nil;
     self.editStartChip = nil;
-    self.selectedIndicatorView.alpha = 0;
 }
 
 - (IBAction)colorThemeChanged:(UISegmentedControl *)sender

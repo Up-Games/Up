@@ -102,7 +102,7 @@ using UP::TileTray;
     layout_manager.calculate();
     
     self.infinityView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.infinityView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanvas];
+    self.infinityView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
     [self.view addSubview:self.infinityView];
     
     self.canvasView = [[UIView alloc] initWithFrame:CGRectZero];
