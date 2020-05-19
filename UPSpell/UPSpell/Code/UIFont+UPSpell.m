@@ -25,11 +25,11 @@ NSString * const UPGameplayInformationFontName = @"MalloryNarrow-Bold";
         UIFontDescriptorFeatureSettingsAttribute: @[
             @{
                 UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
-                UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector),
+                UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
             },
             @{
                 UIFontFeatureTypeIdentifierKey: @(35),     // Alternative Stylistic Sets
-                UIFontFeatureSelectorIdentifierKey: @(22), // Raised Colon (Lining Figures Only)
+                UIFontFeatureSelectorIdentifierKey: @(22)  // Raised Colon (Lining Figures Only)
             },
         ]
     };

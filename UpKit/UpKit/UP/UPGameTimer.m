@@ -13,10 +13,8 @@ const CFTimeInterval UPGameTimerDefaultDuration = 10;
 
 @interface UPGameTimer ()
 @property (nonatomic, readwrite) CFTimeInterval duration;
-@property (nonatomic, copy, readwrite) UPGameTimerPeriodicBlock periodicBlock;
 @property (nonatomic, readwrite) CFTimeInterval remainingTime;
 @property (nonatomic, readwrite) CFTimeInterval now;
-@property (nonatomic, readwrite) CFTimeInterval previousPeriodicTime;
 @property (nonatomic, readwrite) CFTimeInterval previousCallbackTime;
 @property (nonatomic) NSTimer *timer;
 @property (nonatomic) CFTimeInterval startTime;
@@ -27,28 +25,19 @@ const CFTimeInterval UPGameTimerDefaultDuration = 10;
 
 + (UPGameTimer *)defaultGameTimer
 {
-    return [self gameTimerWithDuration:UPGameTimerDefaultDuration periodicBlock:^BOOL(UPGameTimer *gameTimer) {
-        if (gameTimer.remainingTime <= 5) {
-            return YES;
-        }
-        if (gameTimer.elapsedSincePreviousPeriodicCallback >= 1.0 - (UPGameTimerInterval * 0.5)) {
-            return YES;
-        }
-        return NO;
-    }];
+    return [self gameTimerWithDuration:UPGameTimerDefaultDuration];
 }
 
-+ (UPGameTimer *)gameTimerWithDuration:(CFTimeInterval)duration periodicBlock:(UPGameTimerPeriodicBlock)periodicBlock
++ (UPGameTimer *)gameTimerWithDuration:(CFTimeInterval)duration
 {
-    return [[self alloc] initWithDuration:duration periodicBlock:periodicBlock];
+    return [[self alloc] initWithDuration:duration];
 }
 
-- (instancetype)initWithDuration:(CFTimeInterval)duration periodicBlock:(UPGameTimerPeriodicBlock)periodicBlock
+- (instancetype)initWithDuration:(CFTimeInterval)duration
 {
     self = [super init];
     self.duration = UPMaxT(CFTimeInterval, duration, 0.0);
-    self.periodicBlock = periodicBlock;
-    self.previousPeriodicTime = 0;
+    self.remainingTime = self.duration;
     self.previousCallbackTime = 0;
     self.observers = [NSMutableSet set];
     return self;
@@ -60,7 +49,6 @@ const CFTimeInterval UPGameTimerDefaultDuration = 10;
         return;
     }
     self.startTime = CACurrentMediaTime();
-    self.previousPeriodicTime = self.startTime;
     self.previousCallbackTime = self.startTime;
     self.remainingTime = self.duration;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:UPGameTimerInterval repeats:YES block:^(NSTimer *timer) {
@@ -68,18 +56,15 @@ const CFTimeInterval UPGameTimerDefaultDuration = 10;
         self.now = now;
         CFTimeInterval elapsed = now - self.startTime;
         self.remainingTime = UPMaxT(CFTimeInterval, self.duration - elapsed, 0.0);
-        BOOL sendUpdate = YES;
-        if (self.periodicBlock) {
-            sendUpdate = self.periodicBlock(self);
-        }
-        if (sendUpdate) {
-            for (id observer in self.observers) {
-                [observer gameTimerPeriodicUpdate:self];
-            }
-            self.previousPeriodicTime = now;
+        for (id observer in self.observers) {
+            [observer gameTimerUpdated:self];
         }
         self.previousCallbackTime = now;
-        if (self.remainingTime <= 0) {
+        if (up_is_fuzzy_zero(self.remainingTime)) {
+            self.remainingTime = 0.0;
+            for (id observer in self.observers) {
+                [observer gameTimerExpired:self];
+            }
             [self stop];
         }
     }];
@@ -112,10 +97,10 @@ const CFTimeInterval UPGameTimerDefaultDuration = 10;
     [self start];
 }
 
-@dynamic elapsedSincePreviousPeriodicCallback;
-- (CFTimeInterval)elapsedSincePreviousPeriodicCallback
+@dynamic isRunning;
+- (BOOL)isRunning
 {
-    return self.now - self.previousPeriodicTime;
+    return self.timer != nil;
 }
 
 @dynamic elapsedSincePreviousCallback;
@@ -132,6 +117,13 @@ const CFTimeInterval UPGameTimerDefaultDuration = 10;
 - (void)removeObserver:(NSObject<UPGameTimerObserver> *)observer
 {
     [self.observers removeObject:observer];
+}
+
+- (void)notifyObservers
+{
+    for (id observer in self.observers) {
+        [observer gameTimerUpdated:self];
+    }
 }
 
 @end

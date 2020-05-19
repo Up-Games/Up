@@ -34,6 +34,10 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
     UPColorCategoryDisabledFill,
     UPColorCategoryDisabledStroke,
     UPColorCategoryDisabledContent,
+
+    UPColorCategoryWhite,
+    UPColorCategoryBlack,
+    UPColorCategoryClear,
 };
 
 @interface UIColor (UP)

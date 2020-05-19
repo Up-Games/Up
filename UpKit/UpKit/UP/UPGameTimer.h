@@ -13,22 +13,18 @@ extern const CFTimeInterval UPGameTimerDefaultDuration;
 @class UPGameTimer;
 @protocol UPGameTimerObserver;
 
-typedef BOOL (^UPGameTimerPeriodicBlock)(UPGameTimer *);
-
 @interface UPGameTimer : NSObject
 
 @property (nonatomic, readonly) CFTimeInterval duration;
-@property (nonatomic, copy, readonly) UPGameTimerPeriodicBlock periodicBlock;
 @property (nonatomic, readonly) CFTimeInterval remainingTime;
 @property (nonatomic, readonly) CFTimeInterval now;
-@property (nonatomic, readonly) CFTimeInterval previousPeriodicTime;
 @property (nonatomic, readonly) CFTimeInterval previousCallbackTime;
-@property (nonatomic, readonly) CFTimeInterval elapsedSincePreviousPeriodicCallback;
 @property (nonatomic, readonly) CFTimeInterval elapsedSincePreviousCallback;
+@property (nonatomic, readonly) BOOL isRunning;
 
 + (UPGameTimer *)defaultGameTimer;
-+ (UPGameTimer *)gameTimerWithDuration:(CFTimeInterval)duration periodicBlock:(UPGameTimerPeriodicBlock)periodicBlock;
-- (instancetype)initWithDuration:(CFTimeInterval)duration periodicBlock:(UPGameTimerPeriodicBlock)periodicBlock;
++ (UPGameTimer *)gameTimerWithDuration:(CFTimeInterval)duration;
+- (instancetype)initWithDuration:(CFTimeInterval)duration;
 
 - (void)start;
 - (void)stop;
@@ -36,6 +32,7 @@ typedef BOOL (^UPGameTimerPeriodicBlock)(UPGameTimer *);
 
 - (void)addObserver:(NSObject<UPGameTimerObserver> *)observer;
 - (void)removeObserver:(NSObject<UPGameTimerObserver> *)observer;
+- (void)notifyObservers;
 
 @end
 
@@ -43,5 +40,6 @@ typedef BOOL (^UPGameTimerPeriodicBlock)(UPGameTimer *);
 - (void)gameTimerStarted:(UPGameTimer *)gameTimer;
 - (void)gameTimerStopped:(UPGameTimer *)gameTimer;
 - (void)gameTimerReset:(UPGameTimer *)gameTimer;
-- (void)gameTimerPeriodicUpdate:(UPGameTimer *)gameTimer;
+- (void)gameTimerUpdated:(UPGameTimer *)gameTimer;
+- (void)gameTimerExpired:(UPGameTimer *)gameTimer; // ran to full duration
 @end

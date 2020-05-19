@@ -90,3 +90,42 @@ UP_STATIC_INLINE UPFloat up_lerp_floats(UPFloat a, UPFloat b, UPUnit f)
 #ifdef __cplusplus
 }  // extern "C"
 #endif
+
+// =========================================================================================================================================
+// Hash goodness cribbed from Wolfgang Brehm: https://stackoverflow.com/a/50978188
+
+#ifdef __cplusplus
+
+#import <limits>
+#import <cstdint>
+
+namespace UP {
+
+template <class T>
+T xorshift(const T &n, int i) {
+    return n^(n>>i);
+}
+
+UP_STATIC_INLINE uint64_t distribute(const uint64_t &n) {
+    uint64_t p = 0x5555555555555555;     // pattern of alternating 0 and 1
+    uint64_t c = 17316035218449499591ull;// random uneven integer constant;
+    return c * xorshift(p * xorshift(n, 32), 32);
+}
+
+template <class T, class S>
+typename std::enable_if_t<std::is_unsigned<T>::value, T>
+constexpr rotl(const T n, const S i){
+    const T m = (std::numeric_limits<T>::digits - 1);
+    const T c = i & m;
+    return (n << c) | (n >> ((T(0) - c) & m));
+}
+
+template <class T>
+inline size_t hash_combine(std::size_t &seed, const T &v)
+{
+    return rotl(seed, std::numeric_limits<size_t>::digits / 3) ^ distribute(std::hash<T>{}(v));
+}
+
+}  // namespace UP
+
+#endif  // __cplusplus

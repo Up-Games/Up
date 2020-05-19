@@ -41,8 +41,11 @@ public:
     static inline constexpr CGSize CanonicalRoundControlButtonSize = { 84, 84 };
 
     static inline constexpr CGFloat CanonicalGameplayInformationCapHeight = 57;
-    static inline constexpr CGFloat CanonicalGameTimeLabelWidth =  150;
-    static inline constexpr CGPoint CanonicalGameTimeLabelRightAlignedBaselinePointRelativeToTDC =  { -60, 91.7 };
+    static inline constexpr CGFloat CanonicalGameplayInformationSuperscriptCapHeight = 39;
+    static inline constexpr CGFloat CanonicalGameplayInformationSuperscriptBaselineAdjustment = 27;
+    static inline constexpr CGFloat CanonicalGameplayInformationSuperscriptKerning = 1;
+    static inline constexpr CGFloat CanonicalGameTimeLabelWidth =  180;
+    static inline constexpr CGPoint CanonicalGameTimeLabelRightAlignedBaselinePointRelativeToTDC =  { -30, 91.7 };
     static inline constexpr CGPoint CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTDC = {  30, 91.7 };
     static inline constexpr CGFloat CanonicalGameScoreLabelWidth =  175;
 
@@ -84,6 +87,7 @@ public:
     CGRect controls_button_trash_frame() const { return m_controls_button_trash_frame; }
 
     const FontMetrics &gameplay_information_font_metrics() const { return m_gameplay_information_font_metrics; }
+    const FontMetrics &gameplay_information_superscript_font_metrics() const { return m_gameplay_information_superscript_font_metrics; }
     CGRect game_time_label_frame() const { return m_game_time_label_frame; }
     CGRect game_score_label_frame() const { return m_game_score_label_frame; }
 
@@ -114,6 +118,9 @@ private:
     void set_gameplay_information_font_metrics(const FontMetrics &gameplay_information_font_metrics) {
         m_gameplay_information_font_metrics = gameplay_information_font_metrics;
     }
+    void set_gameplay_information_superscript_font_metrics(const FontMetrics &gameplay_information_superscript_font_metrics) {
+        m_gameplay_information_superscript_font_metrics = gameplay_information_superscript_font_metrics;
+    }
     void set_game_time_label_frame(CGRect game_time_label_frame) {
         m_game_time_label_frame = game_time_label_frame;
     }
@@ -128,6 +135,7 @@ private:
     void calculate_controls_button_pause_frame();
     void calculate_controls_button_trash_frame();
     void calculate_gameplay_information_font_metrics();
+    void calculate_gameplay_information_superscript_font_metrics();
     void calculate_game_time_label_frame();
     void calculate_game_score_label_frame();
     void calculate_tile_frames();
@@ -150,6 +158,7 @@ private:
     CGRect m_controls_button_trash_frame = CGRectZero;
 
     FontMetrics m_gameplay_information_font_metrics;
+    FontMetrics m_gameplay_information_superscript_font_metrics;
 
     CGRect m_game_time_label_frame = CGRectZero;
     CGRect m_game_score_label_frame = CGRectZero;

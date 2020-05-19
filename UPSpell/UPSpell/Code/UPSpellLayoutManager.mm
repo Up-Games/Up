@@ -72,6 +72,7 @@ void SpellLayoutManager::calculate()
     calculate_controls_button_pause_frame();
     calculate_controls_button_trash_frame();
     calculate_gameplay_information_font_metrics();
+    calculate_gameplay_information_superscript_font_metrics();
     calculate_game_time_label_frame();
     calculate_game_score_label_frame();
     calculate_tile_frames();
@@ -187,6 +188,15 @@ void SpellLayoutManager::calculate_gameplay_information_font_metrics()
     set_gameplay_information_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
+void SpellLayoutManager::calculate_gameplay_information_superscript_font_metrics()
+{
+    CGFloat cap_height = CanonicalGameplayInformationSuperscriptCapHeight * layout_scale();
+    UIFont *font = [UIFont gameplayInformationFontWithCapHeight:cap_height];
+    CGFloat baseline_adjustment = CanonicalGameplayInformationSuperscriptBaselineAdjustment * layout_scale();
+    CGFloat kerning = CanonicalGameplayInformationSuperscriptKerning * layout_scale();
+    set_gameplay_information_superscript_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment, kerning));
+}
+
 void SpellLayoutManager::calculate_game_time_label_frame()
 {
     const FontMetrics &font_metrics = gameplay_information_font_metrics();
@@ -224,7 +234,7 @@ void SpellLayoutManager::calculate_tile_frames()
     CGFloat y = up_rect_min_y(tiles_layout_frame());
     for (auto &tile_frame : m_tile_frames) {
         CGRect r = CGRectMake(x, y, up_size_width(size), up_size_height(size));
-        tile_frame = r; //up_pixel_rect(r, screen_scale());
+        tile_frame = up_pixel_rect(r, screen_scale());
         x += up_size_width(size) + gap;
     }
     int idx = 0;

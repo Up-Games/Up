@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+#import <UPKit/UPMath.h>
 #import <UPKit/UPMacros.h>
 #import <UPKit/UPStringTools.h>
 
@@ -19,7 +20,7 @@ namespace UP {
 class FontMetrics {
 public:
     FontMetrics() {}
-    FontMetrics(NSString *fontName, CGFloat point_size = 1) {
+    explicit FontMetrics(NSString *fontName, CGFloat point_size = 1, CGFloat baseline_adjustment = 0, CGFloat kerning = 0) {
         UIFont *font = [UIFont fontWithName:fontName size:point_size];
         if (!font) {
             return;
@@ -31,6 +32,8 @@ public:
         m_cap_height = font.capHeight;
         m_x_height = font.xHeight;
         m_line_height = font.lineHeight;
+        m_baseline_adjustment = baseline_adjustment;
+        m_kerning = kerning;
     }
 
     std::string font_name() const { return m_font_name; }
@@ -43,6 +46,9 @@ public:
     CGFloat x_height() const { return m_x_height; }
     CGFloat line_height() const { return m_line_height; }
 
+    CGFloat baseline_adjustment() const { return m_baseline_adjustment; }
+    CGFloat kerning() const { return m_kerning; }
+
 private:
     std::string m_font_name;
     CGFloat m_point_size = 0;
@@ -51,10 +57,13 @@ private:
     CGFloat m_cap_height = 0;
     CGFloat m_x_height = 0;
     CGFloat m_line_height = 0;
+    CGFloat m_baseline_adjustment = 0;
+    CGFloat m_kerning = 0;
 };
 
 UP_STATIC_INLINE bool operator==(const FontMetrics &a, const FontMetrics &b) {
-    return a.font_name_view() == b.font_name_view();
+    return a.font_name_view() == b.font_name_view() && a.point_size() == b.point_size() &&
+         a.baseline_adjustment() == b.baseline_adjustment() && a.kerning() == b.kerning();
 }
 
 UP_STATIC_INLINE bool operator!=(const FontMetrics &a, const FontMetrics &b) {
@@ -70,7 +79,12 @@ UP_STATIC_INLINE bool operator<(const FontMetrics &a, const FontMetrics &b) {
 namespace std {
     template<> struct hash<UP::FontMetrics> {
         std::size_t operator()(const UP::FontMetrics &m) const noexcept {
-            return std::hash<std::string_view>{}(m.font_name_view());
+            CGFloat baseline_adjustment = m.baseline_adjustment();
+            CGFloat kerning = m.kerning();
+            size_t h1 = std::hash<std::string_view>{}(m.font_name_view());
+            size_t h2 = baseline_adjustment != 0 ? UP::hash_combine(h1, baseline_adjustment) : h1;
+            size_t h3 = kerning != 0 ? UP::hash_combine(h2, kerning) : h2;
+            return h3;
         }
     };
 }  // namespace std

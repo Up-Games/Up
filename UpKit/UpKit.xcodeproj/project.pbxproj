@@ -77,6 +77,8 @@
 		5DC618C02470586E00090E7A /* UPLetterSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618BF2470586E00090E7A /* UPLetterSequence.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC67DF72473069A009BCDBB /* UPGameTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC67DF52473069A009BCDBB /* UPGameTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC67DF82473069A009BCDBB /* UPGameTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF62473069A009BCDBB /* UPGameTimer.m */; };
+		5DC67DFB247367D1009BCDBB /* UPGameTimerLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC67DF9247367D1009BCDBB /* UPGameTimerLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DC67DFC247367D1009BCDBB /* UPGameTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DFA247367D1009BCDBB /* UPGameTimerLabel.m */; };
 		5DD71D442457731700F3F9E2 /* UPLayoutRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D422457731700F3F9E2 /* UPLayoutRule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71D452457731700F3F9E2 /* UPLayoutRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D432457731700F3F9E2 /* UPLayoutRule.m */; };
 		5DD71D472457748000F3F9E2 /* UPLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D462457748000F3F9E2 /* UPLayoutTests.m */; };
@@ -211,6 +213,8 @@
 		5DC618BF2470586E00090E7A /* UPLetterSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPLetterSequence.h; sourceTree = "<group>"; };
 		5DC67DF52473069A009BCDBB /* UPGameTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameTimer.h; sourceTree = "<group>"; };
 		5DC67DF62473069A009BCDBB /* UPGameTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPGameTimer.m; sourceTree = "<group>"; };
+		5DC67DF9247367D1009BCDBB /* UPGameTimerLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameTimerLabel.h; sourceTree = "<group>"; };
+		5DC67DFA247367D1009BCDBB /* UPGameTimerLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPGameTimerLabel.m; sourceTree = "<group>"; };
 		5DD71D422457731700F3F9E2 /* UPLayoutRule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLayoutRule.h; sourceTree = "<group>"; };
 		5DD71D432457731700F3F9E2 /* UPLayoutRule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutRule.m; sourceTree = "<group>"; };
 		5DD71D462457748000F3F9E2 /* UPLayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutTests.m; sourceTree = "<group>"; };
@@ -464,6 +468,8 @@
 				5DBADB7224678F4000D9D1FF /* UPGameCode.mm */,
 				5DC67DF52473069A009BCDBB /* UPGameTimer.h */,
 				5DC67DF62473069A009BCDBB /* UPGameTimer.m */,
+				5DC67DF9247367D1009BCDBB /* UPGameTimerLabel.h */,
+				5DC67DFA247367D1009BCDBB /* UPGameTimerLabel.m */,
 				5DD71D492457824A00F3F9E2 /* UPGeometry.h */,
 				5DD71D482457824A00F3F9E2 /* UPGeometry.mm */,
 				5DFE620B245364C700D9CA0B /* UpKit.h */,
@@ -561,6 +567,7 @@
 				5D2CAC08245A13E700B81332 /* POPDecayAnimation.h in Headers */,
 				5D2CAC7E245A17B700B81332 /* POP.h in Headers */,
 				5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */,
+				5DC67DFB247367D1009BCDBB /* UPGameTimerLabel.h in Headers */,
 				5D2CABF5245A13E700B81332 /* POPAnimationPrivate.h in Headers */,
 				5DF8A8E72454892C00751E2E /* UPUnitFunction.h in Headers */,
 				5D2CABD1245A137900B81332 /* POPAnimator.h in Headers */,
@@ -718,6 +725,7 @@
 				5DC67DF82473069A009BCDBB /* UPGameTimer.m in Sources */,
 				5DD71D452457731700F3F9E2 /* UPLayoutRule.m in Sources */,
 				5DD71D4A2457824A00F3F9E2 /* UPGeometry.mm in Sources */,
+				5DC67DFC247367D1009BCDBB /* UPGameTimerLabel.m in Sources */,
 				5DC618BC246F045700090E7A /* UIFont+UP.mm in Sources */,
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5D2CABB3245A114B00B81332 /* POPMath.mm in Sources */,

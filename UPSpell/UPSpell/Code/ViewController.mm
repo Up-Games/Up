@@ -5,6 +5,7 @@
 
 #import <memory>
 
+#import <CoreText/CoreText.h>
 #import <QuartzCore/QuartzCore.h>
 #import <UpKit/UpKit.h>
 
@@ -31,10 +32,12 @@ using UP::TileTray;
 @property (nonatomic) UIView *tileFrameView;
 @property (nonatomic) UPControl *roundControlButtonPause;
 @property (nonatomic) UPControl *roundControlButtonTrash;
-@property (nonatomic) UPLabel *timeLabel;
+@property (nonatomic) UPGameTimerLabel *gameTimerLabel;
 @property (nonatomic) UPLabel *scoreLabel;
 @property (nonatomic) NSMutableArray *tileControls;
 @property (nonatomic) UPGameTimer *gameTimer;
+@property (nonatomic) UIFont *gameplayInformationFont;
+@property (nonatomic) UIFont *gameplayInformationSuperscriptFont;
 @end
 
 @implementation ViewController
@@ -130,6 +133,12 @@ using UP::TileTray;
     [self.view addSubview:self.wordTrayView];
 
     UIFont *font = [UIFont gameplayInformationFontOfSize:layout_manager.gameplay_information_font_metrics().point_size()];
+    UIFont *superscriptFont = [UIFont gameplayInformationFontOfSize:layout_manager.gameplay_information_superscript_font_metrics().point_size()];
+//    NSArray *features = CFBridgingRelease(CTFontCopyFeatures((__bridge CTFontRef)(font)));
+//    NSLog(@"features: %@", features);
+
+    self.gameplayInformationFont = font;
+    self.gameplayInformationSuperscriptFont = superscriptFont;
 
     NSLog(@"=== font metrics");
     NSLog(@"    name:       %@", font.fontName);
@@ -140,17 +149,30 @@ using UP::TileTray;
     NSLog(@"    xHeight:    %.5f", font.xHeight);
     NSLog(@"    lineHeight: %.5f", font.lineHeight);
 
-    self.timeLabel = [UPLabel label];
-    self.timeLabel.string = @"0:17";
-    self.timeLabel.font = font;
-    self.timeLabel.textColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
-    self.timeLabel.textAlignment = NSTextAlignmentRight;
-    [self.view addSubview:self.timeLabel];
+    self.gameTimerLabel = [UPGameTimerLabel label];
+    self.gameTimerLabel.font = font;
+    self.gameTimerLabel.superscriptFont = superscriptFont;
+    self.gameTimerLabel.superscriptBaselineAdjustment = layout_manager.gameplay_information_superscript_font_metrics().baseline_adjustment();
+    self.gameTimerLabel.superscriptKerning = layout_manager.gameplay_information_superscript_font_metrics().kerning();
+    
+    self.gameTimer = [UPGameTimer defaultGameTimer];
+    [self.gameTimer addObserver:self.gameTimerLabel];
+    [self.gameTimer notifyObservers];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.gameTimer start];
+    });
+
+//    self.timeLabel.string = @"0:17";
+//    self.timeLabel.font = font;
+    self.gameTimerLabel.textColorCategory = UPColorCategoryInformation;
+    self.gameTimerLabel.textAlignment = NSTextAlignmentRight;
+    [self.view addSubview:self.gameTimerLabel];
 
     self.scoreLabel = [UPLabel label];
     self.scoreLabel.string = @"114";
     self.scoreLabel.font = font;
-    self.scoreLabel.textColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
+    self.scoreLabel.textColorCategory = UPColorCategoryInformation;
     self.scoreLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.scoreLabel];
 
@@ -163,10 +185,6 @@ using UP::TileTray;
         [self.view addSubview:tileControl];
         [self.tileControls addObject:tileControl];
     }
-    
-    self.gameTimer = [UPGameTimer defaultGameTimer];
-    [self.gameTimer addObserver:self];
-    [self.gameTimer start];
 }
 
 - (void)viewDidLayoutSubviews
@@ -181,7 +199,7 @@ using UP::TileTray;
     self.tilesLayoutView.frame = layout_manager.tiles_layout_frame();
     self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
     self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
-    self.timeLabel.frame = layout_manager.game_time_label_frame();
+    self.gameTimerLabel.frame = layout_manager.game_time_label_frame();
     self.scoreLabel.frame = layout_manager.game_score_label_frame();
 
     const std::array<CGRect, UP::TileCount> tile_frames = layout_manager.tile_frames();
@@ -194,22 +212,27 @@ using UP::TileTray;
 
 - (void)gameTimerStarted:(UPGameTimer *)gameTimer
 {
-    NSLog(@"gameTimerStarted");
+//    NSLog(@"gameTimerStarted");
 }
 
 - (void)gameTimerStopped:(UPGameTimer *)gameTimer
 {
-    NSLog(@"gameTimerStopped");
+//    NSLog(@"gameTimerStopped");
 }
 
 - (void)gameTimerReset:(UPGameTimer *)gameTimer
 {
-    NSLog(@"gameTimerReset");
+//    NSLog(@"gameTimerReset");
 }
 
-- (void)gameTimerPeriodicUpdate:(UPGameTimer *)gameTimer
+- (void)gameTimerUpdated:(UPGameTimer *)gameTimer
 {
-    NSLog(@"gameTimerPeriodicUpdate: %.2f", gameTimer.remainingTime);
+//    NSLog(@"gameTimerPeriodicUpdate: %.2f", gameTimer.remainingTime);
+}
+
+- (void)gameTimerExpired:(UPGameTimer *)gameTimer
+{
+//    NSLog(@"gameTimerExpired");
 }
 
 

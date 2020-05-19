@@ -12,6 +12,9 @@
 #define TextLayer() ((CATextLayer *)self.layer)
 
 @interface UPLabel ()
+@property (nonatomic) UIColor *backgroundColor;
+@property (nonatomic) UIColor *textColor;
+@property (nonatomic) Class stringClass;
 @end
 
 @implementation UPLabel
@@ -30,20 +33,61 @@
 {
     self = [super initWithFrame:frame];
     TextLayer().contentsScale = [[UIScreen mainScreen] scale];
-    TextLayer().backgroundColor = [UIColor clearColor].CGColor;
     self.opaque = NO;
+    self.backgroundColorCategory = UPColorCategoryClear;
+    self.textColorCategory = UPColorCategoryInformation;
+    [self updateThemeColors];
+    [[NSNotificationCenter defaultCenter] addObserverForName:UPThemeColorsChangedNotification object:nil queue:[NSOperationQueue mainQueue]
+        usingBlock:^(NSNotification * _Nonnull note) {
+            [self updateThemeColors];
+        }
+    ];
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @dynamic string;
 - (NSString *)string
 {
-    return (NSString *)TextLayer().string;
+    id string = TextLayer().string;
+    if ([string isKindOfClass:[NSString class]]) {
+        return (NSString *)string;
+    }
+    else if ([string isKindOfClass:[NSAttributedString class]]) {
+        return (NSString *)[string string];
+    }
+    return nil;
 }
 
 - (void)setString:(NSString *)string
 {
     TextLayer().string = string;
+    self.stringClass = [NSString class];
+    [self updateThemeColors];
+}
+
+@dynamic attributedString;
+- (NSAttributedString *)attributedString
+{
+    id string = TextLayer().string;
+    if ([string isKindOfClass:[NSString class]]) {
+        return [[NSAttributedString alloc] initWithString:string];
+    }
+    else if ([string isKindOfClass:[NSAttributedString class]]) {
+        return (NSAttributedString *)string;
+    }
+    return nil;
+}
+
+- (void)setAttributedString:(NSAttributedString *)attributedString
+{
+    TextLayer().string = attributedString;
+    self.stringClass = [NSAttributedString class];
+//    [self updateThemeColors];
 }
 
 - (void)setFont:(UIFont *)font
@@ -77,6 +121,18 @@
     TextLayer().alignmentMode = alignmentMode;
 }
 
+- (void)setBackgroundColorCategory:(UPColorCategory)backgroundColorCategory
+{
+    _backgroundColorCategory = backgroundColorCategory;
+    [self updateThemeColors];
+}
+
+- (void)setTextColorCategory:(UPColorCategory)textColorCategory
+{
+    _textColorCategory = textColorCategory;
+    [self updateThemeColors];
+}
+
 @dynamic backgroundColor;
 - (void)setBackgroundColor:(UIColor *)backgroundColor
 {
@@ -87,12 +143,27 @@
 @dynamic textColor;
 - (void)setTextColor:(UIColor *)textColor
 {
-    TextLayer().foregroundColor = textColor ? textColor.CGColor : nil;
+    if (self.stringClass == [NSString class]) {
+        TextLayer().foregroundColor = textColor ? textColor.CGColor : nil;
+    }
+    else if (self.stringClass == [NSAttributedString class]) {
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedString];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:textColor range:NSMakeRange(0, attributedString.length)];
+        TextLayer().string = attributedString;
+    }
 }
 
 - (UIColor *)textColor
 {
     return TextLayer().foregroundColor ? [UIColor colorWithCGColor:TextLayer().foregroundColor] : nil;
+}
+
+#pragma mark - Theme colors
+
+- (void)updateThemeColors
+{
+    self.backgroundColor = [UIColor themeColorWithCategory:self.backgroundColorCategory];
+    self.textColor = [UIColor themeColorWithCategory:self.textColorCategory];
 }
 
 @end

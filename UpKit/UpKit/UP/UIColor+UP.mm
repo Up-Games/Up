@@ -54,15 +54,25 @@ static CGFloat _ThemeHue = 222;
 
 + (UIColor *)themeColorWithStyle:(UPColorStyle)style hue:(CGFloat)hue category:(UPColorCategory)category
 {
-    static const size_t ColorsPerHue = 15;
-    static const size_t HueCount = 360;
-    size_t themeOffset = (style == UPColorStyleDefault ? 0 : (size_t)style - 1) * HueCount;
-    CGFloat effectiveHue = UPClampT(CGFloat, hue, 0, 360);
-    size_t hueOffset = (effectiveHue * ColorsPerHue);
-    size_t categoryOffset = (category == UPColorCategoryDefault ? 0 : (size_t)category - 1);
-    size_t idx = (themeOffset * ColorsPerHue) + hueOffset + categoryOffset;
-    _UPRGBColorComponents c = _UPThemeColorComponents[idx];
-    return [UIColor colorWithRed:c.r green:c.g blue:c.b alpha:c.a];
+    switch (category) {
+        case UPColorCategoryWhite:
+            return [UIColor whiteColor];
+        case UPColorCategoryBlack:
+            return [UIColor blackColor];
+        case UPColorCategoryClear:
+            return [UIColor clearColor];
+        default: {
+            static const size_t ColorsPerHue = 15;
+            static const size_t HueCount = 360;
+            size_t themeOffset = (style == UPColorStyleDefault ? 0 : (size_t)style - 1) * HueCount;
+            CGFloat effectiveHue = UPClampT(CGFloat, hue, 0, 360);
+            size_t hueOffset = (effectiveHue * ColorsPerHue);
+            size_t categoryOffset = (category == UPColorCategoryDefault ? 0 : (size_t)category - 1);
+            size_t idx = (themeOffset * ColorsPerHue) + hueOffset + categoryOffset;
+            _UPRGBColorComponents c = _UPThemeColorComponents[idx];
+            return [UIColor colorWithRed:c.r green:c.g blue:c.b alpha:c.a];
+        }
+    }
 }
 
 // https://stackoverflow.com/a/9177602
