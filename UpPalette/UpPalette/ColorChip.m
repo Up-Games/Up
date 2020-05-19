@@ -161,6 +161,14 @@ static const CGFloat _NotATarget = -1;
                 targetLightness:self.targetLightness];
         }
     } while (adjustedGray >= 0 && adjustedGray <= 1);
+    if (adjustedGray <= 0) {
+        return [ColorChip chipWithName:self.name hue:self.hue gray:0.0 saturation:self.saturation
+                targetLightness:0];
+    }
+    else {
+        return [ColorChip chipWithName:self.name hue:self.hue gray:1.0 saturation:self.saturation
+                targetLightness:100];
+    }
     return self;
 }
 
