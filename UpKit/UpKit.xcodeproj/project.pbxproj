@@ -69,6 +69,8 @@
 		5DA8E0372475962A008D3015 /* UPUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E035247595B8008D3015 /* UPUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E03A2475C796008D3015 /* UPAssertions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E0382475C796008D3015 /* UPAssertions.mm */; };
 		5DA8E03B2475C796008D3015 /* UPAssertions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E0392475C796008D3015 /* UPAssertions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DA8E03F2475E14D008D3015 /* UPStackTrace.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E03D2475E14D008D3015 /* UPStackTrace.h */; };
+		5DA8E0402475E14D008D3015 /* UPStackTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */; };
 		5DBADB7324678F4000D9D1FF /* UPGameCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7424678F4000D9D1FF /* UPGameCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameCode.mm */; };
 		5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B2246EF6CC00090E7A /* UPLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -207,6 +209,8 @@
 		5DA8E035247595B8008D3015 /* UPUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPUtility.h; sourceTree = "<group>"; };
 		5DA8E0382475C796008D3015 /* UPAssertions.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAssertions.mm; sourceTree = "<group>"; };
 		5DA8E0392475C796008D3015 /* UPAssertions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAssertions.h; sourceTree = "<group>"; };
+		5DA8E03D2475E14D008D3015 /* UPStackTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPStackTrace.h; sourceTree = "<group>"; };
+		5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPStackTrace.cpp; sourceTree = "<group>"; };
 		5DBADB7124678F4000D9D1FF /* UPGameCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameCode.h; sourceTree = "<group>"; };
 		5DBADB7224678F4000D9D1FF /* UPGameCode.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameCode.mm; sourceTree = "<group>"; };
 		5DC618B2246EF6CC00090E7A /* UPLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLabel.h; sourceTree = "<group>"; };
@@ -489,6 +493,8 @@
 				5DEBE0172454CAFC00016047 /* UPMacros.h */,
 				5DFE62272453D11100D9CA0B /* UPMath.h */,
 				5DF9DF982466412B00B2199D /* UPRandom.h */,
+				5DA8E03D2475E14D008D3015 /* UPStackTrace.h */,
+				5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */,
 				5DEBE02C245716F900016047 /* UPStringTools.h */,
 				5D723103246A1F5E006027A3 /* UPTile.h */,
 				5DFE6222245376D100D9CA0B /* UPTypes.h */,
@@ -549,6 +555,7 @@
 				5D2CABFC245A13E700B81332 /* POPPropertyAnimationInternal.h in Headers */,
 				5D2CABF3245A13E700B81332 /* POPDecayAnimationInternal.h in Headers */,
 				5DEBE01A2454E3AC00016047 /* UPColor.h in Headers */,
+				5DA8E03F2475E14D008D3015 /* UPStackTrace.h in Headers */,
 				5D2CABBB245A122D00B81332 /* POPSpringSolver.h in Headers */,
 				5D2CABB2245A114B00B81332 /* POPMath.h in Headers */,
 				5D2CABFE245A13E700B81332 /* POPAnimationTracer.h in Headers */,
@@ -738,6 +745,7 @@
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5D2CABB3245A114B00B81332 /* POPMath.mm in Sources */,
 				5DF9DF432465B35700B2199D /* UPLexicon.mm in Sources */,
+				5DA8E0402475E14D008D3015 /* UPStackTrace.cpp in Sources */,
 				5D2CAC04245A13E700B81332 /* POPSpringAnimation.mm in Sources */,
 				5D2CAC05245A13E700B81332 /* POPAnimationExtras.mm in Sources */,
 				5D2CAC86245B53F200B81332 /* NSValue+UP.m in Sources */,

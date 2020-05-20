@@ -3,7 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 //
-//  Based on Assertions.h from WebKit.
+//  Based (substantially) on Assertions.cpp from WebKit.
 //
 /*
  * Copyright (C) 2003-2019 Apple Inc.  All rights reserved.
@@ -40,6 +40,7 @@
 #import <Foundation/Foundation.h>
 
 #import "UPAssertions.h"
+#import "UPStackTrace.h"
 #import "UPStringTools.h"
 
 namespace UP {
@@ -141,11 +142,13 @@ static void print_call_site(const char *file, int line, const char *function)
     printf_stderr_common("%s:%d:%s\n", file, line, function);
 }
 
-void UPLogEnable(UPLogChannel *channel) {
+void UPLogEnable(UPLogChannel *channel)
+{
     channel->state = UPLogChannelOn;
 }
 
-void UPLogDisable(UPLogChannel *channel) {
+void UPLogDisable(UPLogChannel *channel)
+{
     channel->state = UPLogChannelOff;
 }
 
@@ -184,10 +187,27 @@ void UPReportArgumentAssertionFailure(const char *file, int line, const char *fu
 
 void UPCrash()
 {
-    //UPReportBacktrace();
+    UPReportBacktrace();
     *(int *)(uintptr_t)0xbbadbeef = 0;
     // More reliable, but doesn't say BBADBEEF.
     __builtin_trap();
+}
+
+void UPReportBacktrace()
+{
+    static constexpr int framesToShow = 31;
+    static constexpr int framesToSkip = 2;
+    void* samples[framesToShow + framesToSkip];
+    int frames = framesToShow + framesToSkip;
+
+    UPGetBacktrace(samples, &frames);
+    UPPrintBacktrace(samples + framesToSkip, frames - framesToSkip);
+}
+
+void UPPrintBacktrace(void** stack, int size)
+{
+    UP::StackTrace stackTrace(stack, size);
+    stackTrace.dump();
 }
 
 void UPReportFatalError(const char *file, int line, const char *function, const char *format, ...)
@@ -262,7 +282,7 @@ void UPLogAlwaysAndCrash(const char *format, ...)
     CRASH();
 }
 
-}
+}  // extern "C"
 
 #if LOG_DISABLED
 #else

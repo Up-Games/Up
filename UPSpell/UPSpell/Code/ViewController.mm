@@ -143,7 +143,7 @@ using UP::SpellGameModel;
     }
 
     LOG_CHANNEL_ON(General);
-    LOG(General, "HI!");
+    LOG(General, "HI %@", @"Ken");
     FATAL("Crash now: %d", 5);
 }
 

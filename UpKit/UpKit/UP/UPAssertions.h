@@ -2,7 +2,7 @@
 //  UPAssertions.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
-//  Based on Assertions.h from WebKit.
+//  Based (substantially) on Assertions.h from WebKit.
 //
 /*
  * Copyright (C) 2003, 2006, 2007, 2013 Apple Inc.  All rights reserved.
@@ -29,6 +29,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <stdarg.h>
 #import <stdlib.h>
 
 #ifdef NDEBUG
@@ -97,7 +98,6 @@ typedef struct {
 
 void UPLogEnable(UPLogChannel *);
 void UPLogDisable(UPLogChannel *);
-
 void UPReportNotImplementedYet(const char *file, int line, const char *function);
 void UPReportAssertionFailure(const char *file, int line, const char *function, const char *assertion);
 void UPReportAssertionFailureWithMessage(const char *file, int line, const char *function, const char *assertion, const char *format, ...);
@@ -106,18 +106,10 @@ void UPReportFatalError(const char *file, int line, const char *function, const 
 void UPReportError(const char *file, int line, const char *function, const char *format, ...);
 void UPLogVerbose(const char *file, int line, const char *function, UPLogChannel *channel, const char *format, ...);
 void UPLogAlwaysV(const char *format, va_list args);
-
 void UPLog(UPLogChannel *, const char *format, ...);
-
 void UPGetBacktrace(void **stack, int *size);
 void UPReportBacktrace(void);
 void UPPrintBacktrace(void** stack, int size);
-
-typedef void (*UPCrashHookFunction)(void);
-void UPSetCrashHook(UPCrashHookFunction);
-void UPInstallReportBacktraceOnCrashHook(void);
-
-bool UPIsDebuggerAttached(void);
 
 #if LOG_DISABLED
 #define LOG_CHANNEL_ON(channel) ((void)0)
