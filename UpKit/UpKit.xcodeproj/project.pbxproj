@@ -67,6 +67,8 @@
 		5D5216F3246D87DF005A2E9F /* UPControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216F1246D87DF005A2E9F /* UPControl.m */; };
 		5D723107246A1F5E006027A3 /* UPTile.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D723103246A1F5E006027A3 /* UPTile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E0372475962A008D3015 /* UPUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E035247595B8008D3015 /* UPUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DA8E03A2475C796008D3015 /* UPAssertions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E0382475C796008D3015 /* UPAssertions.mm */; };
+		5DA8E03B2475C796008D3015 /* UPAssertions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E0392475C796008D3015 /* UPAssertions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7324678F4000D9D1FF /* UPGameCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7424678F4000D9D1FF /* UPGameCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameCode.mm */; };
 		5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B2246EF6CC00090E7A /* UPLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -203,6 +205,8 @@
 		5D5216F1246D87DF005A2E9F /* UPControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPControl.m; sourceTree = "<group>"; };
 		5D723103246A1F5E006027A3 /* UPTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTile.h; sourceTree = "<group>"; };
 		5DA8E035247595B8008D3015 /* UPUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPUtility.h; sourceTree = "<group>"; };
+		5DA8E0382475C796008D3015 /* UPAssertions.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAssertions.mm; sourceTree = "<group>"; };
+		5DA8E0392475C796008D3015 /* UPAssertions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAssertions.h; sourceTree = "<group>"; };
 		5DBADB7124678F4000D9D1FF /* UPGameCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameCode.h; sourceTree = "<group>"; };
 		5DBADB7224678F4000D9D1FF /* UPGameCode.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameCode.mm; sourceTree = "<group>"; };
 		5DC618B2246EF6CC00090E7A /* UPLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLabel.h; sourceTree = "<group>"; };
@@ -455,6 +459,8 @@
 				5DD71D9E2458DA3A00F3F9E2 /* UIView+UP.h */,
 				5DD71D9F2458DA3A00F3F9E2 /* UIView+UP.mm */,
 				5DD71DA22458F39200F3F9E2 /* UPAny.h */,
+				5DA8E0392475C796008D3015 /* UPAssertions.h */,
+				5DA8E0382475C796008D3015 /* UPAssertions.mm */,
 				5DD71D9A2457AFB200F3F9E2 /* UPBezierPathView.h */,
 				5DD71D9B2457AFB200F3F9E2 /* UPBezierPathView.m */,
 				5DEBE0192454E3AC00016047 /* UPColor.h */,
@@ -530,6 +536,7 @@
 				5D2CABF1245A13E700B81332 /* POPAnimationExtras.h in Headers */,
 				5D2CAC03245A13E700B81332 /* POPCustomAnimation.h in Headers */,
 				5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */,
+				5DA8E03B2475C796008D3015 /* UPAssertions.h in Headers */,
 				5D723107246A1F5E006027A3 /* UPTile.h in Headers */,
 				5DD71DA02458DA3A00F3F9E2 /* UIView+UP.h in Headers */,
 				5D2CABA8245A10CB00B81332 /* FloatConversion.h in Headers */,
@@ -722,6 +729,7 @@
 				5D2CABC8245A12D100B81332 /* POPAnimationRuntime.mm in Sources */,
 				5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */,
 				5D5216F3246D87DF005A2E9F /* UPControl.m in Sources */,
+				5DA8E03A2475C796008D3015 /* UPAssertions.mm in Sources */,
 				5DC67DF82473069A009BCDBB /* UPGameTimer.m in Sources */,
 				5DD71D452457731700F3F9E2 /* UPLayoutRule.m in Sources */,
 				5DD71D4A2457824A00F3F9E2 /* UPGeometry.mm in Sources */,
@@ -926,6 +934,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = games.up.UpKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -953,6 +962,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = games.up.UpKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

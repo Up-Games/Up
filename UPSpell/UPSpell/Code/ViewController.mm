@@ -141,6 +141,10 @@ using UP::SpellGameModel;
     for (UPTileControl *tileControl in self.tileControls) {
         tileControl.frame = tile_frames.at(tileControl.index);
     }
+
+    LOG_CHANNEL_ON(General);
+    LOG(General, "HI!");
+    FATAL("Crash now: %d", 5);
 }
 
 - (void)viewDidLayoutSubviews

@@ -11,6 +11,7 @@ FOUNDATION_EXPORT double UpKitVersionNumber;
 //! Project version string for UpKit.
 FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 
+#import <UpKit/UPAssertions.h>
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPConstants.h>
 #import <UpKit/UPControl.h>

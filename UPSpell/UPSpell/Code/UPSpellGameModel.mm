@@ -21,7 +21,7 @@ void SpellGameModel::create_initial_state()
     m_states.emplace_back(Action(Opcode::INIT), player_tray(), word_tray());
 }
 
-const SpellGameModel::State &SpellGameModel::next_state(const Action &action)
+const SpellGameModel::State &SpellGameModel::apply(const Action &action)
 {
     return m_states.back();
 }

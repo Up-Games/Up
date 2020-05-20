@@ -91,7 +91,7 @@ public:
     SpellGameModel() { create_initial_state(); }
     SpellGameModel(const GameCode &game_code) : m_game_code(game_code), m_letter_sequence(game_code) { create_initial_state(); }
 
-    const State &next_state(const Action &action);
+    const State &apply(const Action &action);
 
     const TileTray &player_tray() const { return m_player_tray; }
     const TileTray &word_tray() const { return m_word_tray; }
