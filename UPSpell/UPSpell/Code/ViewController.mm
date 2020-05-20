@@ -148,9 +148,15 @@ using UP::SpellGameModel;
         char32_t glyph = letter_sequence.next();
         UP::Tile tile = Tile(glyph);
         UPTileControl *tileControl = [UPTileControl controlWithTile:tile];
+        [tileControl addTarget:self action:@selector(tileTapped:) forControlEvents:UIControlEventTouchUpInside];
         tileControl.index = i;
         [self.view addSubview:tileControl];
         [self.tileControls addObject:tileControl];
+    }
+
+    const std::array<CGRect, SpellGameModel::TileCount> tile_frames = layout_manager.tile_tray_frames();
+    for (UPTileControl *tileControl in self.tileControls) {
+        tileControl.frame = tile_frames.at(tileControl.index);
     }
 }
 
@@ -168,10 +174,28 @@ using UP::SpellGameModel;
     self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
     self.gameTimerLabel.frame = layout_manager.game_time_label_frame();
     self.scoreLabel.frame = layout_manager.game_score_label_frame();
+}
 
-    const std::array<CGRect, SpellGameModel::TileCount> tile_frames = layout_manager.tile_frames();
-    for (UPTileControl *tileControl in self.tileControls) {
-        tileControl.frame = tile_frames.at(tileControl.index);
+static int word_count = 0;
+
+- (void)tileTapped:(id)sender
+{
+    UPTileControl *tileControl = sender;
+
+    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    const std::array<CGRect, SpellGameModel::TileCount> tile_tray_frames = layout_manager.tile_tray_frames();
+    const std::array<CGRect, SpellGameModel::TileCount> word_tray_frames = layout_manager.word_tray_frames();
+    CGRect frame = tile_tray_frames.at(tileControl.index);
+    if (CGRectEqualToRect(tileControl.frame, frame)) {
+        [tileControl bloopWithDuration:0.3 toFrame:word_tray_frames.at(word_count)];
+        word_count++;
+    }
+    else {
+        [tileControl bloopWithDuration:0.3 toFrame:frame];
+        word_count--;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            tileControl.frame = frame;
+        });
     }
 }
 

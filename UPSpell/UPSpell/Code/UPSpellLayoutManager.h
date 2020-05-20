@@ -94,9 +94,11 @@ public:
     CGRect game_time_label_frame() const { return m_game_time_label_frame; }
     CGRect game_score_label_frame() const { return m_game_score_label_frame; }
 
-    const std::array<CGRect, SpellGameModel::TileCount> &tile_frames() const { return m_tile_frames; }
+    const std::array<CGRect, SpellGameModel::TileCount> &tile_tray_frames() const { return m_tile_tray_frames; }
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
     UIBezierPath *tile_stroke_path() const { return m_tile_stroke_path; }
+
+    const std::array<CGRect, SpellGameModel::TileCount> &word_tray_frames() const { return m_word_tray_frames; }
 
 private:
     SpellLayoutManager() {}
@@ -141,8 +143,9 @@ private:
     void calculate_gameplay_information_superscript_font_metrics();
     void calculate_game_time_label_frame();
     void calculate_game_score_label_frame();
-    void calculate_tile_frames();
+    void calculate_tile_tray_frames();
     void calculate_tile_stroke_width();
+    void calculate_word_tray_frames();
 
     CGFloat m_screen_scale = 2.0;
     AspectMode m_aspect_mode = AspectMode::Canonical;
@@ -166,9 +169,11 @@ private:
     CGRect m_game_time_label_frame = CGRectZero;
     CGRect m_game_score_label_frame = CGRectZero;
 
-    std::array<CGRect, SpellGameModel::TileCount> m_tile_frames;
+    std::array<CGRect, SpellGameModel::TileCount> m_tile_tray_frames;
     CGFloat m_tile_stroke_width = 0.0;
     UIBezierPath *m_tile_stroke_path = nil;
+
+    std::array<CGRect, SpellGameModel::TileCount> m_word_tray_frames;
 };
 
 }  // namespace UP

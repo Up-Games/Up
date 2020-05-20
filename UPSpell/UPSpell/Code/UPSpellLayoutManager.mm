@@ -75,8 +75,9 @@ void SpellLayoutManager::calculate()
     calculate_gameplay_information_superscript_font_metrics();
     calculate_game_time_label_frame();
     calculate_game_score_label_frame();
-    calculate_tile_frames();
+    calculate_tile_tray_frames();
     calculate_tile_stroke_width();
+    calculate_word_tray_frames();
 }
 
 void SpellLayoutManager::calculate_controls_layout_frame()
@@ -225,21 +226,21 @@ void SpellLayoutManager::calculate_game_score_label_frame()
     NSLog(@"   score label frame:   %@", NSStringFromCGRect(game_score_label_frame()));
 }
 
-void SpellLayoutManager::calculate_tile_frames()
+void SpellLayoutManager::calculate_tile_tray_frames()
 {
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
     CGFloat gap = CanonicalTileGap * layout_scale();
     CGFloat x = up_rect_min_x(tiles_layout_frame());
     CGFloat y = up_rect_min_y(tiles_layout_frame());
-    for (auto &tile_frame : m_tile_frames) {
+    for (auto &frame : m_tile_tray_frames) {
         CGRect r = CGRectMake(x, y, up_size_width(size), up_size_height(size));
-        tile_frame = up_pixel_rect(r, screen_scale());
+        frame = up_pixel_rect(r, screen_scale());
         x += up_size_width(size) + gap;
     }
     int idx = 0;
-    for (const auto &r : tile_frames()) {
-        NSLog(@"   tile frame [%d]:      %@", idx, NSStringFromCGRect(r));
+    for (const auto &r : tile_tray_frames()) {
+        NSLog(@"   tile tray frame [%d]: %@", idx, NSStringFromCGRect(r));
         idx++;
     }
 }
@@ -266,6 +267,26 @@ void SpellLayoutManager::calculate_tile_stroke_width()
     m_tile_stroke_path = path;
 
     NSLog(@"   tile stroke width:   %.2f", tile_stroke_width());
+}
+
+void SpellLayoutManager::calculate_word_tray_frames()
+{
+    CGSize canonicalSize = CanonicalTileSize;
+    CGSize size = up_size_scaled(canonicalSize, layout_scale());
+    CGFloat gap = CanonicalTileGap * layout_scale();
+    CGFloat x = up_rect_min_x(tiles_layout_frame());
+    CGFloat y = up_rect_min_y(word_tray_layout_frame());
+    for (auto &frame : m_word_tray_frames) {
+        CGRect r = CGRectMake(x, y, up_size_width(size), up_size_height(size));
+        r = up_rect_centered_y_in_rect(r, word_tray_layout_frame());
+        frame = up_pixel_rect(r, screen_scale());
+        x += up_size_width(size) + gap;
+    }
+    int idx = 0;
+    for (const auto &r : word_tray_frames()) {
+        NSLog(@"   word tray frame [%d]:  %@", idx, NSStringFromCGRect(r));
+        idx++;
+    }
 }
 
 }  // namespace UP
