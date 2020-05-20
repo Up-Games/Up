@@ -153,7 +153,7 @@ void SpellLayoutManager::calculate_player_tray_layout_frame()
             break;
         }
     }
-    NSLog(@"   tiles layout frame:  %@", NSStringFromCGRect(tiles_layout_frame()));
+    NSLog(@"   tiles layout frame:  %@", NSStringFromCGRect(player_tray_layout_frame()));
 }
 
 void SpellLayoutManager::calculate_controls_button_pause_frame()
@@ -231,8 +231,8 @@ void SpellLayoutManager::calculate_player_tray_tile_frames()
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
     CGFloat gap = CanonicalTileGap * layout_scale();
-    CGFloat x = up_rect_min_x(tiles_layout_frame());
-    CGFloat y = up_rect_min_y(tiles_layout_frame());
+    CGFloat x = up_rect_min_x(player_tray_layout_frame());
+    CGFloat y = up_rect_min_y(player_tray_layout_frame());
     for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         CGRect frame = up_pixel_rect(rect, screen_scale());
@@ -276,7 +276,7 @@ void SpellLayoutManager::calculate_word_tray_tile_frames()
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
     CGFloat gap = CanonicalTileGap * layout_scale();
-    CGFloat x = up_rect_min_x(tiles_layout_frame());
+    CGFloat x = up_rect_min_x(player_tray_layout_frame());
     CGFloat y = up_rect_min_y(word_tray_layout_frame());
     for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));

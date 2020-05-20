@@ -84,7 +84,7 @@ public:
 
     CGRect controls_layout_frame() const { return m_controls_layout_frame; }
     CGRect word_tray_layout_frame() const { return m_word_tray_layout_frame; }
-    CGRect tiles_layout_frame() const { return m_player_tray_layout_frame; }
+    CGRect player_tray_layout_frame() const { return m_player_tray_layout_frame; }
 
     CGRect controls_button_pause_frame() const { return m_controls_button_pause_frame; }
     CGRect controls_button_trash_frame() const { return m_controls_button_trash_frame; }
@@ -172,11 +172,11 @@ private:
     CGRect m_game_time_label_frame = CGRectZero;
     CGRect m_game_score_label_frame = CGRectZero;
 
-    std::array<CGRect, SpellGameModel::TileCount> m_player_tray_tile_frames;
-    std::array<CGPoint, SpellGameModel::TileCount> m_player_tray_tile_centers;
     CGFloat m_tile_stroke_width = 0.0;
     UIBezierPath *m_tile_stroke_path = nil;
 
+    std::array<CGRect, SpellGameModel::TileCount> m_player_tray_tile_frames;
+    std::array<CGPoint, SpellGameModel::TileCount> m_player_tray_tile_centers;
     std::array<CGRect, SpellGameModel::TileCount> m_word_tray_tile_frames;
     std::array<CGPoint, SpellGameModel::TileCount> m_word_tray_tile_centers;
 };

@@ -149,7 +149,7 @@ using UP::SpellGameModel;
     
     self.infinityView.frame = self.view.bounds;
     self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
-    self.tilesLayoutView.frame = layout_manager.tiles_layout_frame();
+    self.tilesLayoutView.frame = layout_manager.player_tray_layout_frame();
     self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
     self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
     self.gameTimerLabel.frame = layout_manager.game_time_label_frame();
