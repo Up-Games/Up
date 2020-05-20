@@ -144,7 +144,6 @@ using UP::SpellGameModel;
 
     LOG_CHANNEL_ON(General);
     LOG(General, "HI %@", @"Ken");
-    FATAL("Crash now: %d", 5);
 }
 
 - (void)viewDidLayoutSubviews
