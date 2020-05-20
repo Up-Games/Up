@@ -97,6 +97,12 @@ const CFTimeInterval UPGameTimerDefaultDuration = 120;
     [self start];
 }
 
+@dynamic elapsedTime;
+- (CFTimeInterval)elapsedTime
+{
+    return self.duration - self.remainingTime;
+}
+
 @dynamic isRunning;
 - (BOOL)isRunning
 {

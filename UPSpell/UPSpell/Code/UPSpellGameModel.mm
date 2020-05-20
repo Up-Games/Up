@@ -6,66 +6,94 @@
 #import <string>
 
 #import <UpKit/UPLexicon.h>
+#import <UpKit/UPUtility.h>
 
 #include "UPSpellGameModel.h"
 
 namespace UP {
 
-size_t SpellGameModel::PlayerTray::count_marked() const {
+void SpellGameModel::create_initial_state()
+{
+    player_mark_all();
+    player_fill();
+    word_clear();
+    word_update();
+    m_states.emplace_back(Action(Opcode::INIT), player_tray(), word_tray());
+}
+
+const SpellGameModel::State &SpellGameModel::next_state(const Action &action)
+{
+    return m_states.back();
+}
+
+size_t SpellGameModel::player_count_marked() const {
     size_t count = 0;
-    for (const auto &mark : m_marked) {
+    for (const auto &mark : m_player_marked) {
         if (mark) {
             count++;
         }
     }
     return count;
 }
-void SpellGameModel::PlayerTray::sentinelize_marked() {
+
+void SpellGameModel::player_sentinelize_marked() {
     size_t idx = 0;
-    for (const auto &mark : m_marked) {
+    for (const auto &mark : m_player_marked) {
         if (mark) {
-            m_tiles[idx] = Tile::sentinel();
+            m_player_tray[idx] = Tile::sentinel();
         }
         idx++;
     }
 }
-void SpellGameModel::PlayerTray::fill() {
-    sentinelize_marked();
-    for (auto &tile : m_tiles) {
+
+void SpellGameModel::player_fill() {
+    player_sentinelize_marked();
+    for (auto &tile : m_player_tray) {
         if (tile.is_sentinel()) {
-//            char32_t c = m_letter_sequence.next();
-//            tile = Tile(c);
+            char32_t c = m_letter_sequence.next();
+            tile = Tile(c);
         }
     }
-    unmark_all();
+    player_unmark_all();
 }
 
-SpellGameModel::Word::Word(const TileArray &tiles, size_t count)
+void SpellGameModel::word_insert_at(const Tile &tile, Position pos)
 {
-    char32_t chars[count];
-    for (size_t i = 0; i < count; i++) {
-        const auto &tile = tiles[i];
-        chars[i] = tile.glyph();
-        m_score += tile.score();
+    if (pos == Position::W7 || index(pos) >= word_length()) {
+        word_push_back(tile);
     }
-    m_string = std::u32string(chars, count);
+    else {
+        UP::shift_right(m_word_tray.begin() + index(pos), m_word_tray.end() - 1, 1);
+        m_word_tray[index(pos)] = tile;
+    }
 }
 
-bool SpellGameModel::WordTray::check_lexicon() const
+void SpellGameModel::word_remove_at(const Tile &tile, Position pos)
 {
+    if (pos == Position::W7 || index(pos) >= word_length()) {
+        m_word_tray[index(pos)] = Tile::sentinel();
+    }
+    else {
+        UP::shift_left(m_word_tray.begin() + index(pos), m_word_tray.end() - 1, 1);
+        m_word_tray[index(Position::W7)] = Tile::sentinel();
+    }
+}
+
+void SpellGameModel::word_update() {
+    char32_t chars[TileCount];
+    size_t count = 0;
+    m_word_score = 0;
+    for (const auto &tile : word_tray()) {
+        if (tile.is_sentinel()) {
+            break;
+        }
+        chars[count] = tile.glyph();
+        m_word_score += tile.score();
+        count++;
+    }
+    m_word_string = std::u32string(chars, count);
     Lexicon &lexicon = Lexicon::instance();
-    return lexicon.contains(word().string());
-}
-
-void SpellGameModel::WordTray::clear()
-{
-    m_tiles.fill(Tile::sentinel());
-    m_count = 0;
-}
-
-void SpellGameModel::create_initial_state()
-{
-    
+    m_word_in_lexicon = count > 0 ? lexicon.contains(m_word_string) : false;
 }
 
 }  // namespace UP

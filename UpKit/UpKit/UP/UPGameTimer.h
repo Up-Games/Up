@@ -16,6 +16,7 @@ extern const CFTimeInterval UPGameTimerDefaultDuration;
 @interface UPGameTimer : NSObject
 
 @property (nonatomic, readonly) CFTimeInterval duration;
+@property (nonatomic, readonly) CFTimeInterval elapsedTime;
 @property (nonatomic, readonly) CFTimeInterval remainingTime;
 @property (nonatomic, readonly) CFTimeInterval now;
 @property (nonatomic, readonly) CFTimeInterval previousCallbackTime;

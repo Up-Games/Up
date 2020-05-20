@@ -26,18 +26,15 @@ using UP::SpellGameModel;
 
 @interface ViewController () <UPGameTimerObserver>
 @property (nonatomic) UIView *infinityView;
-@property (nonatomic) UIView *canvasView;
-@property (nonatomic) UIView *layoutView;
-@property (nonatomic) UIView *controlsLayoutView;
 @property (nonatomic) UPControl *wordTrayView;
 @property (nonatomic) UIView *tilesLayoutView;
 @property (nonatomic) UIView *tileFrameView;
 @property (nonatomic) UPControl *roundControlButtonPause;
 @property (nonatomic) UPControl *roundControlButtonTrash;
+@property (nonatomic) UPGameTimer *gameTimer;
 @property (nonatomic) UPGameTimerLabel *gameTimerLabel;
 @property (nonatomic) UPLabel *scoreLabel;
 @property (nonatomic) NSMutableArray *tileControls;
-@property (nonatomic) UPGameTimer *gameTimer;
 @property (nonatomic) UIFont *gameplayInformationFont;
 @property (nonatomic) UIFont *gameplayInformationSuperscriptFont;
 @end
@@ -51,12 +48,13 @@ using UP::SpellGameModel;
     UP::Random::create_instance();
     UP::Lexicon::set_language(UPLexiconLanguageEnglish);
 
-    GameCode code = GameCode::random();
+    GameCode game_code = GameCode::random();
 ////    GameCode code = GameCode("WPQ-2701");
-    NSLog(@"code: %s", code.string().c_str());
-    NSLog(@"code: %d", code.value());
+    NSLog(@"code: %s", game_code.string().c_str());
+    NSLog(@"code: %d", game_code.value());
 //
-    UP::LetterSequence letter_sequence(code);
+
+    SpellGameModel model(game_code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
 //    [UIColor setThemeHue:0];
@@ -71,19 +69,6 @@ using UP::SpellGameModel;
     self.infinityView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
     [self.view addSubview:self.infinityView];
     
-    self.canvasView = [[UIView alloc] initWithFrame:CGRectZero];
-//    self.canvasView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanvas];
-//    self.canvasView.backgroundColor = [UIColor testColor4];
-    [self.view addSubview:self.canvasView];
-
-    self.layoutView = [[UIView alloc] initWithFrame:CGRectZero];
-//    self.layoutView.backgroundColor = [UIColor testColor2];
-    [self.view addSubview:self.layoutView];
-
-    self.controlsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
-//    self.controlsLayoutView.backgroundColor = [UIColor testColor1];
-    [self.view addSubview:self.controlsLayoutView];
-
     self.tilesLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
 //    self.tilesLayoutView.backgroundColor = [UIColor testColor3];
     [self.view addSubview:self.tilesLayoutView];
@@ -129,8 +114,6 @@ using UP::SpellGameModel;
         [self.gameTimer start];
     });
 
-//    self.timeLabel.string = @"0:17";
-//    self.timeLabel.font = font;
     self.gameTimerLabel.textColorCategory = UPColorCategoryInformation;
     self.gameTimerLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.gameTimerLabel];
@@ -143,17 +126,18 @@ using UP::SpellGameModel;
     [self.view addSubview:self.scoreLabel];
 
     self.tileControls = [NSMutableArray array];
-    for (int i = 0; i < SpellGameModel::TileCount; i++) {
-        char32_t glyph = letter_sequence.next();
-        UP::Tile tile = Tile(glyph);
+    size_t idx = 0;
+
+    for (const auto &tile : model.player_tray()) {
         UPTileControl *tileControl = [UPTileControl controlWithTile:tile];
         [tileControl addTarget:self action:@selector(tileTapped:) forControlEvents:UIControlEventTouchUpInside];
-        tileControl.index = i;
+        tileControl.index = idx;
         [self.view addSubview:tileControl];
         [self.tileControls addObject:tileControl];
+        idx++;
     }
 
-    const std::array<CGRect, SpellGameModel::TileCount> tile_frames = layout_manager.tile_tray_frames();
+    const std::array<CGRect, SpellGameModel::TileCount> tile_frames = layout_manager.player_tray_frames();
     for (UPTileControl *tileControl in self.tileControls) {
         tileControl.frame = tile_frames.at(tileControl.index);
     }
@@ -164,9 +148,6 @@ using UP::SpellGameModel;
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
     
     self.infinityView.frame = self.view.bounds;
-    self.canvasView.frame = layout_manager.canvas_frame();
-    self.layoutView.frame = layout_manager.layout_frame();
-    self.controlsLayoutView.frame = layout_manager.controls_layout_frame();
     self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
     self.tilesLayoutView.frame = layout_manager.tiles_layout_frame();
     self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
@@ -182,7 +163,7 @@ static int word_count = 0;
     UPTileControl *tileControl = sender;
 
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
-    const std::array<CGRect, SpellGameModel::TileCount> tile_tray_frames = layout_manager.tile_tray_frames();
+    const std::array<CGRect, SpellGameModel::TileCount> tile_tray_frames = layout_manager.player_tray_frames();
     const std::array<CGRect, SpellGameModel::TileCount> word_tray_frames = layout_manager.word_tray_frames();
     CGRect frame = tile_tray_frames.at(tileControl.index);
     if (CGRectEqualToRect(tileControl.frame, frame)) {

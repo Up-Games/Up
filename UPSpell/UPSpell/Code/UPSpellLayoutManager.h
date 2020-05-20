@@ -84,7 +84,7 @@ public:
 
     CGRect controls_layout_frame() const { return m_controls_layout_frame; }
     CGRect word_tray_layout_frame() const { return m_word_tray_layout_frame; }
-    CGRect tiles_layout_frame() const { return m_tiles_layout_frame; }
+    CGRect tiles_layout_frame() const { return m_player_tray_layout_frame; }
 
     CGRect controls_button_pause_frame() const { return m_controls_button_pause_frame; }
     CGRect controls_button_trash_frame() const { return m_controls_button_trash_frame; }
@@ -94,11 +94,14 @@ public:
     CGRect game_time_label_frame() const { return m_game_time_label_frame; }
     CGRect game_score_label_frame() const { return m_game_score_label_frame; }
 
-    const std::array<CGRect, SpellGameModel::TileCount> &tile_tray_frames() const { return m_tile_tray_frames; }
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
     UIBezierPath *tile_stroke_path() const { return m_tile_stroke_path; }
 
+    const std::array<CGRect, SpellGameModel::TileCount> &player_tray_frames() const { return m_player_tray_frames; }
+    const std::array<CGPoint, SpellGameModel::TileCount> &player_tray_centers() const { return m_player_tray_centers; }
+
     const std::array<CGRect, SpellGameModel::TileCount> &word_tray_frames() const { return m_word_tray_frames; }
+    const std::array<CGPoint, SpellGameModel::TileCount> &word_tray_centers() const { return m_word_tray_centers; }
 
 private:
     SpellLayoutManager() {}
@@ -113,7 +116,7 @@ private:
     void set_layout_scale(CGFloat layout_scale) { m_layout_scale = layout_scale; }
     void set_controls_layout_frame(CGRect controls_layout_frame) { m_controls_layout_frame = controls_layout_frame; }
     void set_word_tray_layout_frame(CGRect word_tray_layout_frame) { m_word_tray_layout_frame = word_tray_layout_frame; }
-    void set_tiles_layout_frame(CGRect tiles_layout_frame) { m_tiles_layout_frame = tiles_layout_frame; }
+    void set_player_tray_layout_frame(CGRect player_tray_layout_frame) { m_player_tray_layout_frame = player_tray_layout_frame; }
     void set_controls_button_pause_frame(CGRect controls_button_pause_frame) {
         m_controls_button_pause_frame = controls_button_pause_frame;
     }
@@ -136,14 +139,14 @@ private:
 
     void calculate_controls_layout_frame();
     void calculate_word_tray_frame();
-    void calculate_tiles_layout_frame();
+    void calculate_player_tray_layout_frame();
     void calculate_controls_button_pause_frame();
     void calculate_controls_button_trash_frame();
     void calculate_gameplay_information_font_metrics();
     void calculate_gameplay_information_superscript_font_metrics();
     void calculate_game_time_label_frame();
     void calculate_game_score_label_frame();
-    void calculate_tile_tray_frames();
+    void calculate_player_tray_frames();
     void calculate_tile_stroke_width();
     void calculate_word_tray_frames();
 
@@ -158,7 +161,7 @@ private:
     
     CGRect m_controls_layout_frame = CGRectZero;
     CGRect m_word_tray_layout_frame = CGRectZero;
-    CGRect m_tiles_layout_frame = CGRectZero;
+    CGRect m_player_tray_layout_frame = CGRectZero;
 
     CGRect m_controls_button_pause_frame = CGRectZero;
     CGRect m_controls_button_trash_frame = CGRectZero;
@@ -169,11 +172,13 @@ private:
     CGRect m_game_time_label_frame = CGRectZero;
     CGRect m_game_score_label_frame = CGRectZero;
 
-    std::array<CGRect, SpellGameModel::TileCount> m_tile_tray_frames;
+    std::array<CGRect, SpellGameModel::TileCount> m_player_tray_frames;
+    std::array<CGPoint, SpellGameModel::TileCount> m_player_tray_centers;
     CGFloat m_tile_stroke_width = 0.0;
     UIBezierPath *m_tile_stroke_path = nil;
 
     std::array<CGRect, SpellGameModel::TileCount> m_word_tray_frames;
+    std::array<CGPoint, SpellGameModel::TileCount> m_word_tray_centers;
 };
 
 }  // namespace UP

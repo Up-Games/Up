@@ -11,6 +11,7 @@
 #import <UpKit/UPMath.h>
 
 #include "UIFont+UPSpell.h"
+#include "UPSpellGameModel.h"
 #include "UPSpellLayoutManager.h"
 
 namespace UP {
@@ -68,14 +69,14 @@ void SpellLayoutManager::calculate()
 
     calculate_controls_layout_frame();
     calculate_word_tray_frame();
-    calculate_tiles_layout_frame();
+    calculate_player_tray_layout_frame();
     calculate_controls_button_pause_frame();
     calculate_controls_button_trash_frame();
     calculate_gameplay_information_font_metrics();
     calculate_gameplay_information_superscript_font_metrics();
     calculate_game_time_label_frame();
     calculate_game_score_label_frame();
-    calculate_tile_tray_frames();
+    calculate_player_tray_frames();
     calculate_tile_stroke_width();
     calculate_word_tray_frames();
 }
@@ -130,17 +131,16 @@ void SpellLayoutManager::calculate_word_tray_frame()
     NSLog(@"word tray layout frame: %@", NSStringFromCGRect(word_tray_layout_frame()));
 }
 
-
-void SpellLayoutManager::calculate_tiles_layout_frame()
+void SpellLayoutManager::calculate_player_tray_layout_frame()
 {
     switch (aspect_mode()) {
         case AspectMode::Canonical: {
-            set_tiles_layout_frame(CanonicalTilesLayoutFrame);
+            set_player_tray_layout_frame(CanonicalTilesLayoutFrame);
             break;
         }
         case AspectMode::WiderThanCanonical: {
             CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalTilesLayoutFrame, layout_scale(), layout_frame());
-            set_tiles_layout_frame(up_pixel_rect(frame, screen_scale()));
+            set_player_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
             break;
         }
         case AspectMode::TallerThanCanonical: {
@@ -149,7 +149,7 @@ void SpellLayoutManager::calculate_tiles_layout_frame()
             // Frame is moved down in the UI by 25% of the letterbox inset
             // That's what looks good.
             frame.origin.y += letterbox_insets().top * 0.25;
-            set_tiles_layout_frame(up_pixel_rect(frame, screen_scale()));
+            set_player_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
             break;
         }
     }
@@ -226,20 +226,22 @@ void SpellLayoutManager::calculate_game_score_label_frame()
     NSLog(@"   score label frame:   %@", NSStringFromCGRect(game_score_label_frame()));
 }
 
-void SpellLayoutManager::calculate_tile_tray_frames()
+void SpellLayoutManager::calculate_player_tray_frames()
 {
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
     CGFloat gap = CanonicalTileGap * layout_scale();
     CGFloat x = up_rect_min_x(tiles_layout_frame());
     CGFloat y = up_rect_min_y(tiles_layout_frame());
-    for (auto &frame : m_tile_tray_frames) {
-        CGRect r = CGRectMake(x, y, up_size_width(size), up_size_height(size));
-        frame = up_pixel_rect(r, screen_scale());
+    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
+        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
+        CGRect frame = up_pixel_rect(rect, screen_scale());
+        m_player_tray_frames[idx] = frame;
+        m_player_tray_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
         x += up_size_width(size) + gap;
     }
     int idx = 0;
-    for (const auto &r : tile_tray_frames()) {
+    for (const auto &r : player_tray_frames()) {
         NSLog(@"   tile tray frame [%d]: %@", idx, NSStringFromCGRect(r));
         idx++;
     }
@@ -276,10 +278,12 @@ void SpellLayoutManager::calculate_word_tray_frames()
     CGFloat gap = CanonicalTileGap * layout_scale();
     CGFloat x = up_rect_min_x(tiles_layout_frame());
     CGFloat y = up_rect_min_y(word_tray_layout_frame());
-    for (auto &frame : m_word_tray_frames) {
-        CGRect r = CGRectMake(x, y, up_size_width(size), up_size_height(size));
-        r = up_rect_centered_y_in_rect(r, word_tray_layout_frame());
-        frame = up_pixel_rect(r, screen_scale());
+    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
+        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
+        rect = up_rect_centered_y_in_rect(rect, word_tray_layout_frame());
+        CGRect frame = up_pixel_rect(rect, screen_scale());
+        m_word_tray_frames[idx] = frame;
+        m_word_tray_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
         x += up_size_width(size) + gap;
     }
     int idx = 0;
