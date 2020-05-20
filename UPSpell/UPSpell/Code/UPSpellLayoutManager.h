@@ -11,7 +11,10 @@
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPMacros.h>
 #import <UpKit/UPTile.h>
-#import <UpKit/UPTileTray.h>
+
+#import "UPSpellGameModel.h"
+
+//#import "UPTileTray.h"
 
 #if __cplusplus
 
@@ -91,7 +94,7 @@ public:
     CGRect game_time_label_frame() const { return m_game_time_label_frame; }
     CGRect game_score_label_frame() const { return m_game_score_label_frame; }
 
-    const std::array<CGRect, TileCount> &tile_frames() const { return m_tile_frames; }
+    const std::array<CGRect, SpellGameModel::TileCount> &tile_frames() const { return m_tile_frames; }
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
     UIBezierPath *tile_stroke_path() const { return m_tile_stroke_path; }
 
@@ -163,7 +166,7 @@ private:
     CGRect m_game_time_label_frame = CGRectZero;
     CGRect m_game_score_label_frame = CGRectZero;
 
-    std::array<CGRect, TileCount> m_tile_frames;
+    std::array<CGRect, SpellGameModel::TileCount> m_tile_frames;
     CGFloat m_tile_stroke_width = 0.0;
     UIBezierPath *m_tile_stroke_path = nil;
 };

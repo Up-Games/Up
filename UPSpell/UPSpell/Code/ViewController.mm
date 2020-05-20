@@ -12,6 +12,7 @@
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
 #import "UPSceneDelegate.h"
+#import "UPSpellGameModel.h"
 #import "UPSpellLayoutManager.h"
 #import "UPTileControl.h"
 #import "UPTilePaths.h"
@@ -20,7 +21,8 @@
 using UP::GameCode;
 using UP::Tile;
 using UP::LetterSequence;
-using UP::TileTray;
+using UP::SpellGameModel;
+//using UP::TileTray;
 
 @interface ViewController () <UPGameTimerObserver>
 @property (nonatomic) UIView *infinityView;
@@ -42,28 +44,6 @@ using UP::TileTray;
 
 @implementation ViewController
 
-- (void)printTiles:(const TileTray &)tray
-{
-    NSMutableString *string = [NSMutableString string];
-    for (size_t idx = 0; idx < UP::TileCount; idx++) {
-        Tile tile = tray.tile_at_index(idx);
-        NSString *s = UP::ns_str(tile.glyph());
-        [string appendString:s];
-        [string appendString:@" "];
-    }
-    NSLog(@"tray: %@", string);
-}
-
-- (void)markRandom:(TileTray &)tray
-{
-    uint32_t marks = UP::Random::instance().uint32_in_range(3, 7);
-    //NSLog(@"mark: %d", marks);
-    while (tray.count_marked() < marks) {
-        uint32_t m = UP::Random::instance().uint32_between(0, 7);
-        tray.mark_at_index(m);
-    }
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -78,19 +58,6 @@ using UP::TileTray;
 //
     UP::LetterSequence &letter_sequence = UP::LetterSequence::create_instance();
     letter_sequence.set_game_code(code);
-//
-//    TileTray tray;
-//    tray.mark_all();
-//    tray.sentinelize_marked();
-//    tray.fill();
-//    [self printTiles:tray];
-//
-//    for (int idx = 0; idx < 10; idx++) {
-//        [self markRandom:tray];
-//        tray.sentinelize_marked();
-//        tray.fill();
-//        [self printTiles:tray];
-//    }
     
     [UIColor setThemeStyle:UPColorStyleLight];
 //    [UIColor setThemeHue:0];
@@ -170,14 +137,14 @@ using UP::TileTray;
     [self.view addSubview:self.gameTimerLabel];
 
     self.scoreLabel = [UPLabel label];
-    self.scoreLabel.string = @"114";
+    self.scoreLabel.string = @"0";
     self.scoreLabel.font = font;
     self.scoreLabel.textColorCategory = UPColorCategoryInformation;
     self.scoreLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.scoreLabel];
 
     self.tileControls = [NSMutableArray array];
-    for (int i = 0; i < UP::TileCount; i++) {
+    for (int i = 0; i < SpellGameModel::TileCount; i++) {
         char32_t glyph = letter_sequence.next();
         UP::Tile tile = Tile(glyph);
         UPTileControl *tileControl = [UPTileControl controlWithTile:tile];
@@ -202,7 +169,7 @@ using UP::TileTray;
     self.gameTimerLabel.frame = layout_manager.game_time_label_frame();
     self.scoreLabel.frame = layout_manager.game_score_label_frame();
 
-    const std::array<CGRect, UP::TileCount> tile_frames = layout_manager.tile_frames();
+    const std::array<CGRect, SpellGameModel::TileCount> tile_frames = layout_manager.tile_frames();
     for (UPTileControl *tileControl in self.tileControls) {
         tileControl.frame = tile_frames.at(tileControl.index);
     }
