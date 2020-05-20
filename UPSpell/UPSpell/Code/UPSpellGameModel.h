@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <UpKit/UPGameCode.h>
 #import <UpKit/UPLetterSequence.h>
 #import <UpKit/UPMacros.h>
 #import <UpKit/UPTile.h>
@@ -18,13 +19,15 @@ class SpellGameModel {
 public:
     enum class Opcode: uint8_t {
         NOP,    // no-op
+        INIT,   // create the initial game state
         TAP,    // tap a tile, moving it from the player tray to the word tray
         PICK,   // long press or swipe a tile to pick it up
         DROP,   // drop a picked-up tile, leaving it where it was
-        MOVE,   // move a picked-up tile to a new position
-        SUBMIT, // tap the word tray to submit a word
-        CLEAR,  // tap the clear button to return all tiles to their positions in the player tray
-        DUMP,   // tap the dump button to get a new set of tiles
+        MOVE,   // move a picked-up tile to a new position and make space for it if needed
+        SWAP,   // swap positions of a picked-up tile and another tile
+        WORD,   // submit the tiles in the word tray as a spelled word
+        OVER,   // return the tiles in the word to their positions in the player tray
+        DUMP,   // dump player tray tiles and replace them with a new set of tiles
         QUIT    // quit the game
     };
 
@@ -56,9 +59,9 @@ public:
     using TileArray = std::array<Tile, TileCount>;
     using MarkedArray = std::array<bool, TileCount>;
 
-    class TileTray {
+    class PlayerTray {
     public:
-        TileTray() {}
+        PlayerTray() {}
         
         constexpr Tile &operator[](size_t idx) { return m_tiles[idx]; }
         constexpr const Tile &operator[](size_t idx) const { return m_tiles[idx]; }
@@ -109,14 +112,37 @@ public:
         Word m_word;
     };
 
-    void add_action(CFTimeInterval timestamp, Opcode opcode, Position pos1, Position pos2) {
-        m_actions.emplace_back(timestamp, opcode, pos1, pos2);
+    class State {
+    public:
+        State() {}
+        State(const State &state, const Action &action) {}
+
+        Action action() const { return m_action; }
+        const PlayerTray &player_tray() { return m_player_tray; }
+        const WordTray &word_tray() { return m_word_tray; }
+
+    private:
+        Action m_action;
+        PlayerTray m_player_tray;
+        WordTray m_word_tray;
+    };
+
+    SpellGameModel() { create_initial_state(); }
+    SpellGameModel(const GameCode &game_code) : m_game_code(game_code), m_letter_sequence(game_code) { create_initial_state(); }
+
+    const State &next_state(const Action &action) {
+        m_states.emplace_back(State(m_states.back(), action));
+        return m_states.back();
     }
 
-    const std::vector<Action> &actions() const { return m_actions; }
+    const std::vector<State> &states() const { return m_states; }
 
 private:
-    std::vector<Action> m_actions;
+    void create_initial_state();
+
+    GameCode m_game_code;
+    LetterSequence m_letter_sequence;
+    std::vector<State> m_states;
 };
 
 }  // namespace UP

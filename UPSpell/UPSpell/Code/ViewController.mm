@@ -56,8 +56,7 @@ using UP::SpellGameModel;
     NSLog(@"code: %s", code.string().c_str());
     NSLog(@"code: %d", code.value());
 //
-    UP::LetterSequence &letter_sequence = UP::LetterSequence::create_instance();
-    letter_sequence.set_game_code(code);
+    UP::LetterSequence letter_sequence(code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
 //    [UIColor setThemeHue:0];

@@ -11,7 +11,7 @@
 
 namespace UP {
 
-size_t SpellGameModel::TileTray::count_marked() const {
+size_t SpellGameModel::PlayerTray::count_marked() const {
     size_t count = 0;
     for (const auto &mark : m_marked) {
         if (mark) {
@@ -20,7 +20,7 @@ size_t SpellGameModel::TileTray::count_marked() const {
     }
     return count;
 }
-void SpellGameModel::TileTray::sentinelize_marked() {
+void SpellGameModel::PlayerTray::sentinelize_marked() {
     size_t idx = 0;
     for (const auto &mark : m_marked) {
         if (mark) {
@@ -29,13 +29,12 @@ void SpellGameModel::TileTray::sentinelize_marked() {
         idx++;
     }
 }
-void SpellGameModel::TileTray::fill() {
-    auto &seq = LetterSequence::instance();
+void SpellGameModel::PlayerTray::fill() {
     sentinelize_marked();
     for (auto &tile : m_tiles) {
         if (tile.is_sentinel()) {
-            char32_t c = seq.next();
-            tile = Tile(c);
+//            char32_t c = m_letter_sequence.next();
+//            tile = Tile(c);
         }
     }
     unmark_all();
@@ -62,6 +61,11 @@ void SpellGameModel::WordTray::clear()
 {
     m_tiles.fill(Tile::sentinel());
     m_count = 0;
+}
+
+void SpellGameModel::create_initial_state()
+{
+    
 }
 
 }  // namespace UP

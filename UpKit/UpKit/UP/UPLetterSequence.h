@@ -18,30 +18,10 @@ namespace UP {
     
 class LetterSequence {
 public:
-    static LetterSequence &create_instance() {
-        g_instance = new LetterSequence();
-        return *g_instance;
-    }
-
-    static LetterSequence &instance() {
-        return *g_instance;
-    }
-
-    LetterSequence(LetterSequence &&) = delete;
-    LetterSequence(LetterSequence const &) = delete;
-    void operator=(LetterSequence const &) = delete;
-
-    void reset() {
-        set_game_code(game_code());
-    }
+    LetterSequence() : m_game_code(GameCode()) { m_random.seed_value(m_game_code.value()); }
+    LetterSequence(const GameCode &game_code) : m_game_code(game_code) { m_random.seed_value(m_game_code.value()); }
 
     GameCode game_code() const { return m_game_code; }
-    
-    void set_game_code(const GameCode &game_code) {
-        m_game_code = game_code;
-        m_random.seed_value(game_code.value());
-        m_letters.clear();
-    }
     
     char32_t next() {
         if (m_letters.size() == 0) {
@@ -57,10 +37,6 @@ public:
     }
     
 private:
-    LetterSequence() : m_game_code(GameCode()) { reset(); }
-
-    UP_STATIC_INLINE LetterSequence *g_instance;
-
     GameCode m_game_code;
     Random m_random;
     std::vector<char32_t> m_letters;
