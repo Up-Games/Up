@@ -170,15 +170,14 @@ static int word_count = 0;
     const std::array<CGRect, SpellGameModel::TileCount> word_tray_tile_frames = layout_manager.word_tray_tile_frames();
     CGRect frame = tile_tray_frames.at(tileControl.index);
     if (CGRectEqualToRect(tileControl.frame, frame)) {
-        [tileControl bloopWithDuration:0.3 toFrame:word_tray_tile_frames.at(word_count)];
+        [tileControl bloopWithDuration:0.3 toFrame:word_tray_tile_frames.at(word_count) completion:nil];
         word_count++;
     }
     else {
-        [tileControl bloopWithDuration:0.3 toFrame:frame];
-        word_count--;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [tileControl bloopWithDuration:0.3 toFrame:frame completion:^(BOOL finished) {
             tileControl.frame = frame;
-        });
+        }];
+        word_count--;
     }
 }
 

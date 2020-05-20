@@ -63,27 +63,27 @@
 
 CFTimeInterval UPDefaultBloopDuration = 0.375;
 
-- (void)bloopToFrame:(CGRect)frame
+- (void)bloopToFrame:(CGRect)frame completion:(void (^)(BOOL finished))completion
 {
-    [self bloopWithDuration:UPDefaultBloopDuration toPosition:up_rect_center(frame) size:frame.size];
+    [self bloopWithDuration:UPDefaultBloopDuration toPosition:up_rect_center(frame) size:frame.size completion:completion];
 }
 
-- (void)bloopWithDuration:(CFTimeInterval)duration toFrame:(CGRect)frame
+- (void)bloopWithDuration:(CFTimeInterval)duration toFrame:(CGRect)frame completion:(void (^)(BOOL finished))completion
 {
-    [self bloopWithDuration:duration toPosition:up_rect_center(frame) size:frame.size];
+    [self bloopWithDuration:duration toPosition:up_rect_center(frame) size:frame.size completion:completion];
 }
 
-- (void)bloopToPosition:(CGPoint)position
+- (void)bloopToPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion
 {
-    [self bloopWithDuration:UPDefaultBloopDuration toPosition:position size:self.bounds.size];
+    [self bloopWithDuration:UPDefaultBloopDuration toPosition:position size:self.bounds.size completion:completion];
 }
 
-- (void)bloopToPosition:(CGPoint)position size:(CGSize)size
+- (void)bloopToPosition:(CGPoint)position size:(CGSize)size completion:(void (^)(BOOL finished))completion
 {
-    [self bloopWithDuration:UPDefaultBloopDuration toPosition:position size:size];
+    [self bloopWithDuration:UPDefaultBloopDuration toPosition:position size:size completion:completion];
 }
 
-- (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position size:(CGSize)size
+- (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position size:(CGSize)size completion:(void (^)(BOOL finished))completion
 {
     static constexpr CGFloat _Divisor = M_PI * 0.75;
     static constexpr CGFloat _TL_A = M_PI * -0.75;
@@ -152,7 +152,9 @@ CFTimeInterval UPDefaultBloopDuration = 0.375;
     move.fromValue = [NSValue valueWithCGRect:startFrame];
     move.toValue = [NSValue valueWithCGRect:CGRectOffset(endFrame, dx, dy)];
     move.completionBlock = ^(POPAnimation *anim, BOOL finished) {
-//        NSLog(@"done: %@", finished ? @"Y" : @"N");
+        if (completion) {
+            completion(finished);
+        }
     };
     [self pop_addAnimation:move forKey:@"move"];
 }

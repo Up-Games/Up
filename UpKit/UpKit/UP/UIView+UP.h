@@ -20,11 +20,11 @@
 
 extern CFTimeInterval UPDefaultBloopDuration;
 
-- (void)bloopToFrame:(CGRect)frame;
-- (void)bloopWithDuration:(CFTimeInterval)duration toFrame:(CGRect)frame;
-- (void)bloopToPosition:(CGPoint)position;
-- (void)bloopToPosition:(CGPoint)position size:(CGSize)size;
-- (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position size:(CGSize)size;
+- (void)bloopToFrame:(CGRect)frame completion:(void (^)(BOOL finished))completion;
+- (void)bloopWithDuration:(CFTimeInterval)duration toFrame:(CGRect)frame completion:(void (^)(BOOL finished))completion;
+- (void)bloopToPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion;
+- (void)bloopToPosition:(CGPoint)position size:(CGSize)size completion:(void (^)(BOOL finished))completion;
+- (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position size:(CGSize)size completion:(void (^)(BOOL finished))completion;
 
 @end
 

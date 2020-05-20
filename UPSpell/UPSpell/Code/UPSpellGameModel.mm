@@ -5,6 +5,7 @@
 
 #import <string>
 
+#import <UpKit/UPAssertions.h>
 #import <UpKit/UPLexicon.h>
 #import <UpKit/UPUtility.h>
 
@@ -26,7 +27,8 @@ const SpellGameModel::State &SpellGameModel::apply(const Action &action)
     return m_states.back();
 }
 
-size_t SpellGameModel::player_count_marked() const {
+size_t SpellGameModel::player_count_marked() const
+{
     size_t count = 0;
     for (const auto &mark : m_player_marked) {
         if (mark) {
@@ -36,7 +38,8 @@ size_t SpellGameModel::player_count_marked() const {
     return count;
 }
 
-void SpellGameModel::player_sentinelize_marked() {
+void SpellGameModel::player_sentinelize_marked()
+{
     size_t idx = 0;
     for (const auto &mark : m_player_marked) {
         if (mark) {
@@ -46,7 +49,8 @@ void SpellGameModel::player_sentinelize_marked() {
     }
 }
 
-void SpellGameModel::player_fill() {
+void SpellGameModel::player_fill()
+{
     player_sentinelize_marked();
     for (auto &tile : m_player_tray) {
         if (tile.is_sentinel()) {
@@ -79,7 +83,8 @@ void SpellGameModel::word_remove_at(const Tile &tile, Position pos)
     }
 }
 
-void SpellGameModel::word_update() {
+void SpellGameModel::word_update()
+{
     char32_t chars[TileCount];
     size_t count = 0;
     m_word_score = 0;
