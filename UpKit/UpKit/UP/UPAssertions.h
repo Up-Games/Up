@@ -142,6 +142,7 @@ NO_RETURN_DUE_TO_CRASH void UPCrash(void);
 #else
 #define UP_LOG_CHANNELS(M) \
 M(General) \
+M(LayoutManager) \
 
 UP_LOG_CHANNELS(DECLARE_LOG_CHANNEL)
 #endif

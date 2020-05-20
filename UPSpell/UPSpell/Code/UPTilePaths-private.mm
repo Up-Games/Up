@@ -58,7 +58,6 @@ void TilePaths::create_canonical_tile_paths()
     [glyphBPath addCurveToPoint: CGPointMake(68.58, 68.94) controlPoint1: CGPointMake(65.22, 58.11) controlPoint2: CGPointMake(68.58, 62.62)];
     [glyphBPath addCurveToPoint: CGPointMake(49.88, 85.25) controlPoint1: CGPointMake(68.58, 79.27) controlPoint2: CGPointMake(60.79, 85.25)];
     [glyphBPath closePath];
-    [glyphBPath fill];
     m_canonical_tile_paths[U'B'] = glyphBPath;
 
     // C

@@ -5,6 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import <UpKit/UPAssertions.h>
 #import <UpKit/UIFont+UP.h>
 #import <UpKit/UPFontMetrics.h>
 #import <UpKit/UPGeometry.h>
@@ -38,11 +39,11 @@ void SpellLayoutManager::calculate()
         m_letterbox_insets = UIEdgeInsetsMake(0, letterbox_inset, 0, letterbox_inset);
         set_layout_scale(effective_height / CanonicalCanvasHeight);
         set_layout_frame(up_rect_centered_in_rect(CGRectMake(0, 0, effective_width, effective_height), canvas_frame()));
-        NSLog(@"layout manager wider:  %.2f, %.2f", effective_width, effective_height);
-        NSLog(@"        aspect_scale:  %.3f", aspect_scale());
-        NSLog(@"        layout_frame:  %@", NSStringFromCGRect(layout_frame()));
-        NSLog(@"        layout_scale:  %.3f", layout_scale());
-        NSLog(@"     letterbox_insets: %@", NSStringFromUIEdgeInsets(letterbox_insets()));
+        LOG(LayoutManager, "layout manager wider:  %.2f, %.2f", effective_width, effective_height);
+        LOG(LayoutManager, "        aspect_scale:  %.3f", aspect_scale());
+        LOG(LayoutManager, "        layout_frame:  %@", NSStringFromCGRect(layout_frame()));
+        LOG(LayoutManager, "        layout_scale:  %.3f", layout_scale());
+        LOG(LayoutManager, "     letterbox_insets: %@", NSStringFromUIEdgeInsets(letterbox_insets()));
     }
     else {
         set_aspect_mode(AspectMode::TallerThanCanonical);
@@ -60,11 +61,11 @@ void SpellLayoutManager::calculate()
         set_layout_scale(effective_width / CanonicalCanvasWidth);
         set_layout_frame(up_rect_centered_in_rect(CGRectMake(0, 0, effective_width, effective_height), canvas_frame()));
 
-        NSLog(@"layout manager taller:  %.2f, %.2f", effective_width, effective_height);
-        NSLog(@"         aspect_scale:  %.3f", aspect_scale());
-        NSLog(@"         layout_frame:  %@", NSStringFromCGRect(layout_frame()));
-        NSLog(@"         layout_scale:  %.3f", layout_scale());
-        NSLog(@"     letterbox_insets:  %@", NSStringFromUIEdgeInsets(letterbox_insets()));
+        LOG(LayoutManager, "layout manager taller:  %.2f, %.2f", effective_width, effective_height);
+        LOG(LayoutManager, "         aspect_scale:  %.3f", aspect_scale());
+        LOG(LayoutManager, "         layout_frame:  %@", NSStringFromCGRect(layout_frame()));
+        LOG(LayoutManager, "         layout_scale:  %.3f", layout_scale());
+        LOG(LayoutManager, "     letterbox_insets:  %@", NSStringFromUIEdgeInsets(letterbox_insets()));
     }
 
     calculate_controls_layout_frame();
@@ -103,7 +104,7 @@ void SpellLayoutManager::calculate_controls_layout_frame()
             break;
         }
     }
-    NSLog(@"controls layout frame:   %@", NSStringFromCGRect(controls_layout_frame()));
+    LOG(LayoutManager, "controls layout frame:   %@", NSStringFromCGRect(controls_layout_frame()));
 }
 
 void SpellLayoutManager::calculate_word_tray_frame()
@@ -128,7 +129,7 @@ void SpellLayoutManager::calculate_word_tray_frame()
             break;
         }
     }
-    NSLog(@"word tray layout frame: %@", NSStringFromCGRect(word_tray_layout_frame()));
+    LOG(LayoutManager, "word tray layout frame: %@", NSStringFromCGRect(word_tray_layout_frame()));
 }
 
 void SpellLayoutManager::calculate_player_tray_layout_frame()
@@ -153,7 +154,7 @@ void SpellLayoutManager::calculate_player_tray_layout_frame()
             break;
         }
     }
-    NSLog(@"   tiles layout frame:  %@", NSStringFromCGRect(player_tray_layout_frame()));
+    LOG(LayoutManager, "   tiles layout frame:  %@", NSStringFromCGRect(player_tray_layout_frame()));
 }
 
 void SpellLayoutManager::calculate_controls_button_pause_frame()
@@ -166,7 +167,7 @@ void SpellLayoutManager::calculate_controls_button_pause_frame()
         up_size_height(size)
     );
     set_controls_button_pause_frame(up_pixel_rect(frame, screen_scale()));
-    NSLog(@"   pause button frame:  %@", NSStringFromCGRect(controls_button_pause_frame()));
+    LOG(LayoutManager, "   pause button frame:  %@", NSStringFromCGRect(controls_button_pause_frame()));
 }
 
 void SpellLayoutManager::calculate_controls_button_trash_frame()
@@ -179,7 +180,7 @@ void SpellLayoutManager::calculate_controls_button_trash_frame()
         up_size_height(size)
     );
     set_controls_button_trash_frame(up_pixel_rect(frame, screen_scale()));
-    NSLog(@"   trash button frame:  %@", NSStringFromCGRect(controls_button_trash_frame()));
+    LOG(LayoutManager, "   trash button frame:  %@", NSStringFromCGRect(controls_button_trash_frame()));
 }
 
 void SpellLayoutManager::calculate_gameplay_information_font_metrics()
@@ -209,7 +210,7 @@ void SpellLayoutManager::calculate_game_time_label_frame()
     CGFloat h = font_metrics.line_height();
     CGRect frame = CGRectMake(x, y, w, h);
     set_game_time_label_frame(up_pixel_rect(frame, screen_scale()));
-    NSLog(@"   time label frame:    %@", NSStringFromCGRect(game_time_label_frame()));
+    LOG(LayoutManager, "   time label frame:    %@", NSStringFromCGRect(game_time_label_frame()));
 }
 
 void SpellLayoutManager::calculate_game_score_label_frame()
@@ -223,7 +224,7 @@ void SpellLayoutManager::calculate_game_score_label_frame()
     CGFloat h = font_metrics.line_height();
     CGRect frame = CGRectMake(x, y, w, h);
     set_game_score_label_frame(up_pixel_rect(frame, screen_scale()));
-    NSLog(@"   score label frame:   %@", NSStringFromCGRect(game_score_label_frame()));
+    LOG(LayoutManager, "   score label frame:   %@", NSStringFromCGRect(game_score_label_frame()));
 }
 
 void SpellLayoutManager::calculate_player_tray_tile_frames()
@@ -242,7 +243,7 @@ void SpellLayoutManager::calculate_player_tray_tile_frames()
     }
     int idx = 0;
     for (const auto &r : player_tray_tile_frames()) {
-        NSLog(@"   tile tray frame [%d]: %@", idx, NSStringFromCGRect(r));
+        LOG(LayoutManager, "   tile tray frame [%d]: %@", idx, NSStringFromCGRect(r));
         idx++;
     }
 }
@@ -268,7 +269,7 @@ void SpellLayoutManager::calculate_tile_stroke_width()
     [path closePath];
     m_tile_stroke_path = path;
 
-    NSLog(@"   tile stroke width:   %.2f", tile_stroke_width());
+    LOG(LayoutManager, "   tile stroke width:   %.2f", tile_stroke_width());
 }
 
 void SpellLayoutManager::calculate_word_tray_tile_frames()
@@ -288,7 +289,7 @@ void SpellLayoutManager::calculate_word_tray_tile_frames()
     }
     int idx = 0;
     for (const auto &r : word_tray_tile_frames()) {
-        NSLog(@"   word tray frame [%d]:  %@", idx, NSStringFromCGRect(r));
+        LOG(LayoutManager, "   word tray frame [%d]:  %@", idx, NSStringFromCGRect(r));
         idx++;
     }
 }
