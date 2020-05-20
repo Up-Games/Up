@@ -137,7 +137,7 @@ using UP::SpellGameModel;
         idx++;
     }
 
-    const std::array<CGRect, SpellGameModel::TileCount> tile_frames = layout_manager.player_tray_frames();
+    const std::array<CGRect, SpellGameModel::TileCount> tile_frames = layout_manager.player_tray_tile_frames();
     for (UPTileControl *tileControl in self.tileControls) {
         tileControl.frame = tile_frames.at(tileControl.index);
     }
@@ -163,11 +163,11 @@ static int word_count = 0;
     UPTileControl *tileControl = sender;
 
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
-    const std::array<CGRect, SpellGameModel::TileCount> tile_tray_frames = layout_manager.player_tray_frames();
-    const std::array<CGRect, SpellGameModel::TileCount> word_tray_frames = layout_manager.word_tray_frames();
+    const std::array<CGRect, SpellGameModel::TileCount> tile_tray_frames = layout_manager.player_tray_tile_frames();
+    const std::array<CGRect, SpellGameModel::TileCount> word_tray_tile_frames = layout_manager.word_tray_tile_frames();
     CGRect frame = tile_tray_frames.at(tileControl.index);
     if (CGRectEqualToRect(tileControl.frame, frame)) {
-        [tileControl bloopWithDuration:0.3 toFrame:word_tray_frames.at(word_count)];
+        [tileControl bloopWithDuration:0.3 toFrame:word_tray_tile_frames.at(word_count)];
         word_count++;
     }
     else {

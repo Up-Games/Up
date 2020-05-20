@@ -70,15 +70,15 @@ void SpellLayoutManager::calculate()
     calculate_controls_layout_frame();
     calculate_word_tray_frame();
     calculate_player_tray_layout_frame();
+    calculate_word_tray_tile_frames();
+    calculate_player_tray_tile_frames();
     calculate_controls_button_pause_frame();
     calculate_controls_button_trash_frame();
     calculate_gameplay_information_font_metrics();
     calculate_gameplay_information_superscript_font_metrics();
     calculate_game_time_label_frame();
     calculate_game_score_label_frame();
-    calculate_player_tray_frames();
     calculate_tile_stroke_width();
-    calculate_word_tray_frames();
 }
 
 void SpellLayoutManager::calculate_controls_layout_frame()
@@ -226,7 +226,7 @@ void SpellLayoutManager::calculate_game_score_label_frame()
     NSLog(@"   score label frame:   %@", NSStringFromCGRect(game_score_label_frame()));
 }
 
-void SpellLayoutManager::calculate_player_tray_frames()
+void SpellLayoutManager::calculate_player_tray_tile_frames()
 {
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
@@ -236,12 +236,12 @@ void SpellLayoutManager::calculate_player_tray_frames()
     for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         CGRect frame = up_pixel_rect(rect, screen_scale());
-        m_player_tray_frames[idx] = frame;
-        m_player_tray_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
+        m_player_tray_tile_frames[idx] = frame;
+        m_player_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
         x += up_size_width(size) + gap;
     }
     int idx = 0;
-    for (const auto &r : player_tray_frames()) {
+    for (const auto &r : player_tray_tile_frames()) {
         NSLog(@"   tile tray frame [%d]: %@", idx, NSStringFromCGRect(r));
         idx++;
     }
@@ -271,7 +271,7 @@ void SpellLayoutManager::calculate_tile_stroke_width()
     NSLog(@"   tile stroke width:   %.2f", tile_stroke_width());
 }
 
-void SpellLayoutManager::calculate_word_tray_frames()
+void SpellLayoutManager::calculate_word_tray_tile_frames()
 {
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
@@ -282,12 +282,12 @@ void SpellLayoutManager::calculate_word_tray_frames()
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         rect = up_rect_centered_y_in_rect(rect, word_tray_layout_frame());
         CGRect frame = up_pixel_rect(rect, screen_scale());
-        m_word_tray_frames[idx] = frame;
-        m_word_tray_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
+        m_word_tray_tile_frames[idx] = frame;
+        m_word_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
         x += up_size_width(size) + gap;
     }
     int idx = 0;
-    for (const auto &r : word_tray_frames()) {
+    for (const auto &r : word_tray_tile_frames()) {
         NSLog(@"   word tray frame [%d]:  %@", idx, NSStringFromCGRect(r));
         idx++;
     }
