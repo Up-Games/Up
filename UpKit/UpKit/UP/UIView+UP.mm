@@ -6,6 +6,7 @@
 #import <objc/runtime.h>
 #import <math.h>
 
+#import "UPAssertions.h"
 #import "POP.h"
 #import "UPLayoutRule.h"
 #import "UPGeometry.h"
@@ -61,7 +62,73 @@
     return [value quadOffsetsValue];
 }
 
-#pragma mark - Fading
+#pragma mark - Slide
+
+- (void)slideWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion
+{
+    POPBasicAnimation *slide = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
+    slide.duration = duration;
+    slide.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutCirc];
+    slide.toValue = [NSValue valueWithCGPoint:position];
+    slide.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        if (completion) {
+            completion(finished);
+        }
+    };
+    [self pop_addAnimation:slide forKey:@"slide"];
+}
+
+#pragma mark - Shake
+
+- (void)shakeWithDuration:(CFTimeInterval)duration amount:(CGFloat)amount completion:(void (^)(BOOL finished))completion
+{
+    CGPoint center = self.center;
+    CGPoint left = CGPointMake(center.x - amount, center.y);
+    CGPoint right = CGPointMake(center.x + amount, center.y);
+
+    //__block int repeatsFinished = 0;
+
+    POPBasicAnimation *shakeIn = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
+    shakeIn.duration = duration * 0.125;
+    shakeIn.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear];
+    shakeIn.toValue = [NSValue valueWithCGPoint:left];
+    shakeIn.removedOnCompletion = NO;
+    shakeIn.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        if (finished) {
+            POPBasicAnimation *shakeRepeat = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
+            shakeRepeat.duration = duration * 0.25;
+            shakeRepeat.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear];
+            shakeRepeat.fromValue = [NSValue valueWithCGPoint:left];
+            shakeRepeat.toValue = [NSValue valueWithCGPoint:right];
+            shakeRepeat.repeatCount = 3;
+            shakeRepeat.autoreverses = YES;
+            shakeRepeat.removedOnCompletion = NO;
+            shakeRepeat.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+//                repeatsFinished++;
+//                LOG(General, "completion: %d : %d", repeatsFinished, finished);
+                if (finished) {
+                    POPBasicAnimation *shakeOut = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
+                    shakeOut.duration = duration * 0.125;
+                    shakeOut.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear];
+                    shakeOut.fromValue = [NSValue valueWithCGPoint:right];
+                    shakeOut.toValue = [NSValue valueWithCGPoint:center];
+                    shakeOut.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+                        [self pop_removeAnimationForKey:@"shake-repeat"];
+                        [self pop_removeAnimationForKey:@"shake-in"];
+                        if (completion) {
+                            completion(finished);
+                        }
+                    };
+                    [self pop_addAnimation:shakeOut forKey:@"shake-out"];
+                }
+            };
+            [self pop_addAnimation:shakeRepeat forKey:@"shake-repeat"];
+        }
+    };
+    [self pop_addAnimation:shakeIn forKey:@"shake-in"];
+}
+
+#pragma mark - Fade
 
 - (void)fadeWithDuration:(CFTimeInterval)duration completion:(void (^)(BOOL finished))completion
 {
@@ -77,7 +144,7 @@
     [self pop_addAnimation:fade forKey:@"fade"];
 }
 
-#pragma mark - Blooping
+#pragma mark - Bloop
 
 CFTimeInterval UPDefaultBloopDuration = 0.375;
 

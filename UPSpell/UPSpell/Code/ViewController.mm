@@ -217,13 +217,6 @@ using Position = UP::SpellGameModel::Position;
 
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
     const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
-    {
-        int idx = 0;
-        for (const auto &p : word_tray_tile_centers) {
-            LOG(LayoutManager, ">>> point [%d]:  %@", idx, NSStringFromCGPoint(p));
-            idx++;
-        }
-    }
     
     size_t idx = 0;
     for (UPTileView *wordTrayTileView in self.wordTrayTileViews) {
@@ -231,13 +224,6 @@ using Position = UP::SpellGameModel::Position;
         [wordTrayTileView bloopWithDuration:0.2 toPosition:word_tray_center completion:nil];
         idx++;
     }
-//    if (self.model->word_length() > 1) {
-//        for (size_t idx = 0; idx < self.model->word_length() - 2; idx++) {
-//            CGPoint word_tray_center = word_tray_tile_centers[word_idx];
-//            UPTileView *tileView = self.tileViews[idx];
-//            [tileView bloopWithDuration:0.4 toPosition:word_tray_center completion:nil];
-//        }
-//    }
     
     const size_t word_idx = self.model->word_length() - 1;
     CGPoint word_tray_center = word_tray_tile_centers[word_idx];
@@ -266,16 +252,32 @@ using Position = UP::SpellGameModel::Position;
 
 - (void)applyActionReject
 {
-    // shake word tray side-to-side and assess time penalty
+    CGPoint origin = self.wordTrayView.frame.origin;
     
+    // shake word tray side-to-side and assess time penalty
+    for (UPTileView *tileView in self.wordTrayTileViews) {
+        CGRect frame = CGRectOffset(tileView.frame, -origin.x, -origin.y);
+        [self.wordTrayView addSubview:tileView];
+        tileView.frame = frame;
+    }
+ 
+    CGFloat amount = up_rect_width(self.wordTrayView.frame) * 0.04;
+    [self.wordTrayView shakeWithDuration:0.7 amount:amount completion:^(BOOL finished) {
+    }];
 
-    [UIView animateWithDuration:0.125 animations:^{
+    [UIView animateWithDuration:0.1 animations:^{
         [self viewUpdatePenaltyBlockControlsForReject];
     } completion:^(BOOL finished) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:0.125 animations:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.2 animations:^{
                 [self viewUpdatePenaltyUnblockControls];
-            } completion:nil];
+            } completion:^(BOOL finished) {
+                for (UPTileView *tileView in self.wordTrayTileViews) {
+                    CGRect frame = CGRectOffset(tileView.frame, origin.x, origin.y);
+                    [self.view addSubview:tileView];
+                    tileView.frame = frame;
+                }
+            }];
         });
     }];
 }
@@ -377,7 +379,7 @@ using Position = UP::SpellGameModel::Position;
     self.roundControlButtonTrash.highlighted = YES;
     self.wordTrayView.alpha = 0.5;
     self.roundControlButtonPause.alpha = 0.5;
-    self.roundControlButtonClear.alpha = 0.5;
+    self.roundControlButtonClear.alpha = 0;
     for (UPTileView *tileView in self.tileViews) {
         tileView.alpha = 0.5;
     }
@@ -388,7 +390,7 @@ using Position = UP::SpellGameModel::Position;
     self.wordTrayView.alpha = 0.5;
     self.roundControlButtonPause.alpha = 0.5;
     self.roundControlButtonClear.alpha = 0.5;
-    self.roundControlButtonTrash.alpha = 0.5;
+    self.roundControlButtonTrash.alpha = 0;
     for (UPTileView *tileView in self.tileViews) {
         tileView.alpha = 0.5;
     }
@@ -400,8 +402,12 @@ using Position = UP::SpellGameModel::Position;
     self.roundControlButtonTrash.highlighted = NO;
     self.wordTrayView.alpha = 1.0;
     self.roundControlButtonPause.alpha = 1.0;
-    self.roundControlButtonClear.alpha = 1.0;
-    self.roundControlButtonTrash.alpha = 1.0;
+    if (self.showingRoundControlButtonClear) {
+        self.roundControlButtonClear.alpha = 1.0;
+    }
+    else {
+        self.roundControlButtonTrash.alpha = 1.0;
+    }
     for (UPTileView *tileView in self.tileViews) {
         tileView.alpha = 1.0;
     }
