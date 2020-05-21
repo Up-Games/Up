@@ -83,6 +83,11 @@ CFTimeInterval UPDefaultBloopDuration = 0.375;
     [self bloopWithDuration:UPDefaultBloopDuration toPosition:position size:size completion:completion];
 }
 
+- (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion
+{
+    [self bloopWithDuration:duration toPosition:position size:self.bounds.size completion:completion];
+}
+
 - (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position size:(CGSize)size completion:(void (^)(BOOL finished))completion
 {
     static constexpr CGFloat _Divisor = M_PI * 0.75;

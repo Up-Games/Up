@@ -3,15 +3,9 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#ifdef __OBJC__
-#import <Foundation/Foundation.h>
-#endif  // __OBJC__
-
 #ifdef __cplusplus
 
 #import <UpKit/UPMacros.h>
-
-#import <array>
 
 namespace UP {
 
@@ -42,7 +36,7 @@ public:
     int score() const { return score_for(glyph()) * multiplier(); }
     int multiplier() const { return m_multiplier; }
 
-    bool is_sentinel() const { return m_glyph == SentinelGlyph; }
+    template <bool B = true> bool is_sentinel() const { return (m_glyph == SentinelGlyph) == B; }
 
 private:
     char32_t m_glyph = 0;

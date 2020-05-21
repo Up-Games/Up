@@ -22,7 +22,9 @@ using UP::GameCode;
 using UP::Tile;
 using UP::LetterSequence;
 using UP::SpellGameModel;
-//using UP::TileTray;
+using Action = UP::SpellGameModel::Action;
+using Opcode = UP::SpellGameModel::Opcode;
+using Position = UP::SpellGameModel::Position;
 
 @interface ViewController () <UPGameTimerObserver>
 @property (nonatomic) UIView *infinityView;
@@ -37,12 +39,15 @@ using UP::SpellGameModel;
 @property (nonatomic) NSMutableArray *tileControls;
 @property (nonatomic) UIFont *gameplayInformationFont;
 @property (nonatomic) UIFont *gameplayInformationSuperscriptFont;
+@property (nonatomic) std::shared_ptr<SpellGameModel> model;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad
 {
+    LOG_CHANNEL_ON(General);
+
     [super viewDidLoad];
 
     UP::Random::create_instance();
@@ -54,7 +59,7 @@ using UP::SpellGameModel;
     NSLog(@"code: %d", game_code.value());
 //
 
-    SpellGameModel model(game_code);
+    self.model = std::make_shared<SpellGameModel>(game_code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
 //    [UIColor setThemeHue:0];
@@ -128,10 +133,10 @@ using UP::SpellGameModel;
     self.tileControls = [NSMutableArray array];
     size_t idx = 0;
 
-    for (const auto &tile : model.player_tray()) {
+    for (const auto &tile : self.model->player_tray()) {
         UPTileControl *tileControl = [UPTileControl controlWithTile:tile];
         [tileControl addTarget:self action:@selector(tileTapped:) forControlEvents:UIControlEventTouchUpInside];
-        tileControl.index = idx;
+        tileControl.position = SpellGameModel::Position(idx);
         [self.view addSubview:tileControl];
         [self.tileControls addObject:tileControl];
         idx++;
@@ -139,11 +144,10 @@ using UP::SpellGameModel;
 
     const std::array<CGRect, SpellGameModel::TileCount> tile_frames = layout_manager.player_tray_tile_frames();
     for (UPTileControl *tileControl in self.tileControls) {
-        tileControl.frame = tile_frames.at(tileControl.index);
+        tileControl.frame = tile_frames.at(SpellGameModel::index(tileControl.position));
     }
-
-    LOG_CHANNEL_ON(General);
-    LOG(General, "HI %@", @"Ken");
+    
+//    model.apply(Action(Opcode::TAP, Position::P2));
 }
 
 - (void)viewDidLayoutSubviews
@@ -159,26 +163,25 @@ using UP::SpellGameModel;
     self.scoreLabel.frame = layout_manager.game_score_label_frame();
 }
 
-static int word_count = 0;
-
 - (void)tileTapped:(id)sender
 {
     UPTileControl *tileControl = sender;
+    [self tapAction:tileControl];
+}
+
+#pragma mark - Actions
+
+- (void)tapAction:(UPTileControl *)tileControl
+{
+    const Position pos = tileControl.position;
+    const size_t idx = self.model->word_length();
+
+    self.model->apply(Action(Opcode::TAP, pos));
 
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
-    const std::array<CGRect, SpellGameModel::TileCount> tile_tray_frames = layout_manager.player_tray_tile_frames();
-    const std::array<CGRect, SpellGameModel::TileCount> word_tray_tile_frames = layout_manager.word_tray_tile_frames();
-    CGRect frame = tile_tray_frames.at(tileControl.index);
-    if (CGRectEqualToRect(tileControl.frame, frame)) {
-        [tileControl bloopWithDuration:0.3 toFrame:word_tray_tile_frames.at(word_count) completion:nil];
-        word_count++;
-    }
-    else {
-        [tileControl bloopWithDuration:0.3 toFrame:frame completion:^(BOOL finished) {
-            tileControl.frame = frame;
-        }];
-        word_count--;
-    }
+    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers();
+    CGPoint word_tray_center = word_tray_tile_centers.at(idx);
+    [tileControl bloopWithDuration:0.3 toPosition:word_tray_center completion:nil];
 }
 
 #pragma mark - UPGameTimerObserver

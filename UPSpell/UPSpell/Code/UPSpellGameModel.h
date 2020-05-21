@@ -3,10 +3,12 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <UpKit/UPAssertions.h>
 #import <UpKit/UPGameCode.h>
 #import <UpKit/UPLetterSequence.h>
 #import <UpKit/UPMacros.h>
-#import <UpKit/UPTile.h>
+
+#import "UPTile.h"
 
 #if __cplusplus
 
@@ -49,7 +51,8 @@ public:
         W7 = 6,
         XX = 0
     };
-
+    static size_t index(Position pos) { return static_cast<size_t>(pos); }
+    
     class Action {
     public:
         Action() {}
@@ -88,21 +91,23 @@ public:
         TileTray m_word_tray;
     };
 
-    SpellGameModel() { create_initial_state(); }
-    SpellGameModel(const GameCode &game_code) : m_game_code(game_code), m_letter_sequence(game_code) { create_initial_state(); }
-
-    const State &apply(const Action &action);
+    SpellGameModel() { apply_init(Action(Opcode::INIT)); }
+    SpellGameModel(const GameCode &game_code) : m_game_code(game_code), m_letter_sequence(game_code) { apply_init(Action(Opcode::INIT)); }
 
     const TileTray &player_tray() const { return m_player_tray; }
+    const MarkedArray &player_marked() const { return m_player_marked; }
     const TileTray &word_tray() const { return m_word_tray; }
     const std::vector<State> &states() const { return m_states; }
 
+    const std::u32string &word_string() const { return m_word_string; }
+    size_t word_length() const { return m_word_string.length(); }
+    int word_score() const { return m_word_score; }
+    bool word_in_lexicon() const { return m_word_in_lexicon; }
+
+    const State &apply(const Action &action);
+
 private:
-    void create_initial_state();
-
-    static inline size_t index(Position pos) { return static_cast<size_t>(pos); }
-
-    void player_mark_at(size_t idx) { m_player_marked.at(idx) = true; }
+    void player_mark_at(Position pos) { m_player_marked.at(index(pos)) = true; }
     void player_unmark_at(size_t idx) { m_player_marked.at(idx) = false; }
     void player_mark_all() { m_player_marked.fill(true); }
     void player_unmark_all() { m_player_marked.fill(false); }
@@ -110,15 +115,14 @@ private:
     void player_sentinelize_marked();
     void player_fill();
 
-    const std::u32string &word_string() const { return m_word_string; }
-    size_t word_length() const { return m_word_string.length(); }
-    int word_score() const { return m_word_score; }
-    bool word_in_lexicon() const { return m_word_in_lexicon; }
     void word_insert_at(const Tile &tile, Position pos);
     void word_remove_at(const Tile &tile, Position pos);
     void word_push_back(const Tile &tile) { m_word_tray[word_length()] = tile; }
     void word_clear() { m_word_tray.fill(Tile::sentinel()); }
     void word_update();
+
+    void apply_init(const Action &action);
+    void apply_tap(const Action &action);
 
     GameCode m_game_code;
     std::vector<State> m_states;
@@ -132,6 +136,51 @@ private:
     int m_word_score = 0;
     bool m_word_in_lexicon = false;
 };
+
+UP_STATIC_INLINE size_t index(SpellGameModel::Position pos) { return static_cast<size_t>(pos); }
+UP_STATIC_INLINE bool is_valid_tray_index(size_t idx) { return idx < SpellGameModel::TileCount; }
+
+UP_STATIC_INLINE bool position_in_player_tray(const SpellGameModel::Position pos)
+{
+    return pos >= SpellGameModel::Position::P1 && pos <= SpellGameModel::Position::P7;
+}
+
+UP_STATIC_INLINE bool position_in_word_tray(const SpellGameModel::Position pos)
+{
+    return pos >= SpellGameModel::Position::W1 && pos <= SpellGameModel::Position::W7;
+}
+
+template <bool B = true>
+bool is_sentinel_filled(const SpellGameModel::TileTray &tile_tray)
+{
+    for (const auto &tile : tile_tray) {
+        if (tile.is_sentinel<!B>()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template <bool B = true>
+bool is_marked(const SpellGameModel::MarkedArray &marked_array, const SpellGameModel::Position pos)
+{
+    return marked_array[index(pos)] == B;
+}
+
+template <bool B = true>
+size_t count_marked(const SpellGameModel::MarkedArray &marked_array)
+{
+    size_t count = 0;
+    for (const auto &mark : marked_array) {
+        if (mark == B) {
+            count++;
+        }
+    }
+    return count;
+}
+
+size_t count_non_sentinel(const SpellGameModel::TileTray &tile_tray);
+bool is_non_sentinel_filled_up_to(const SpellGameModel::TileTray &tile_tray, const size_t idx);
 
 }  // namespace UP
 

@@ -10,9 +10,9 @@
 #import <UpKit/UPFontMetrics.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPMacros.h>
-#import <UpKit/UPTile.h>
 
 #import "UPSpellGameModel.h"
+#import "UPTile.h"
 
 //#import "UPTileTray.h"
 
