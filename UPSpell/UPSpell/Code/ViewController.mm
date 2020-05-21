@@ -38,6 +38,7 @@ using Position = UP::SpellGameModel::Position;
 @property (nonatomic) UPGameTimerLabel *gameTimerLabel;
 @property (nonatomic) UPLabel *scoreLabel;
 @property (nonatomic) NSMutableArray *tileViews;
+@property (nonatomic) NSMutableArray *wordTrayTileViews;
 @property (nonatomic) NSMutableArray *playerTrayGhostTileViews;
 @property (nonatomic) UIFont *gameplayInformationFont;
 @property (nonatomic) UIFont *gameplayInformationSuperscriptFont;
@@ -49,6 +50,7 @@ using Position = UP::SpellGameModel::Position;
 - (void)viewDidLoad
 {
     LOG_CHANNEL_ON(General);
+    LOG_CHANNEL_ON(LayoutManager);
 
     [super viewDidLoad];
 
@@ -125,6 +127,7 @@ using Position = UP::SpellGameModel::Position;
     [self.view addSubview:self.scoreLabel];
 
     self.tileViews = [NSMutableArray array];
+    self.wordTrayTileViews = [NSMutableArray array];
     size_t idx = 0;
 
     for (const auto &tile : self.model->player_tray()) {
@@ -213,11 +216,35 @@ using Position = UP::SpellGameModel::Position;
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::TAP, pos));
 
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
-    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers();
+    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
+    {
+        int idx = 0;
+        for (const auto &p : word_tray_tile_centers) {
+            LOG(LayoutManager, ">>> point [%d]:  %@", idx, NSStringFromCGPoint(p));
+            idx++;
+        }
+    }
+    
+    size_t idx = 0;
+    for (UPTileView *wordTrayTileView in self.wordTrayTileViews) {
+        CGPoint word_tray_center = word_tray_tile_centers[idx];
+        [wordTrayTileView bloopWithDuration:0.2 toPosition:word_tray_center completion:nil];
+        idx++;
+    }
+//    if (self.model->word_length() > 1) {
+//        for (size_t idx = 0; idx < self.model->word_length() - 2; idx++) {
+//            CGPoint word_tray_center = word_tray_tile_centers[word_idx];
+//            UPTileView *tileView = self.tileViews[idx];
+//            [tileView bloopWithDuration:0.4 toPosition:word_tray_center completion:nil];
+//        }
+//    }
+    
     const size_t word_idx = self.model->word_length() - 1;
     CGPoint word_tray_center = word_tray_tile_centers[word_idx];
     UPTileView *tileView = self.tileViews[index(pos)];
     [tileView bloopWithDuration:0.4 toPosition:word_tray_center completion:nil];
+    
+    [self.wordTrayTileViews addObject:tileView];
     
     [self viewUpdateGameControls];
 }
@@ -245,7 +272,7 @@ using Position = UP::SpellGameModel::Position;
     [UIView animateWithDuration:0.125 animations:^{
         [self viewUpdatePenaltyBlockControlsForReject];
     } completion:^(BOOL finished) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:0.125 animations:^{
                 [self viewUpdatePenaltyUnblockControls];
             } completion:nil];
@@ -293,6 +320,7 @@ using Position = UP::SpellGameModel::Position;
         }
         idx++;
     }
+    [self.wordTrayTileViews removeAllObjects];
 }
 
 - (void)viewUpdateScoreWord
@@ -314,6 +342,7 @@ using Position = UP::SpellGameModel::Position;
         }
         idx++;
     }
+    [self.wordTrayTileViews removeAllObjects];
 }
 
 - (void)viewUpdateFillPlayerTray

@@ -14,14 +14,15 @@
 #import "UPSpellGameModel.h"
 #import "UPTile.h"
 
-//#import "UPTileTray.h"
-
 #if __cplusplus
 
 #import <array>
 #import <unordered_map>
 
 namespace UP {
+
+using TilePointArray = std::array<CGPoint, UP::SpellGameModel::TileCount>;
+using TileRectArray = std::array<CGRect, UP::SpellGameModel::TileCount>;
 
 class SpellLayoutManager {
 public:
@@ -102,14 +103,20 @@ public:
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
     UIBezierPath *tile_stroke_path() const { return m_tile_stroke_path; }
 
-    const std::array<CGRect, SpellGameModel::TileCount> &player_tray_tile_frames() const { return m_player_tray_tile_frames; }
-    const std::array<CGPoint, SpellGameModel::TileCount> &player_tray_tile_centers() const { return m_player_tray_tile_centers; }
+    const TileRectArray &player_tray_tile_frames() const { return m_player_tray_tile_frames; }
+    const TilePointArray &player_tray_tile_centers() const { return m_player_tray_tile_centers; }
 
-    const std::array<CGRect, SpellGameModel::TileCount> &word_tray_tile_frames() const { return m_word_tray_tile_frames; }
-    const std::array<CGPoint, SpellGameModel::TileCount> &word_tray_tile_centers() const { return m_word_tray_tile_centers; }
+    const TileRectArray &word_tray_tile_frames(size_t word_length) const {
+        ASSERT(word_length <= SpellGameModel::TileCount);
+        return m_word_tray_tile_frames[word_length - 1];
+    }
+    const TilePointArray &word_tray_tile_centers(size_t word_length) const {
+        ASSERT(word_length <= SpellGameModel::TileCount);
+        return m_word_tray_tile_centers[word_length - 1];
+    }
 
-    const std::array<CGRect, SpellGameModel::TileCount> &fill_tray_tile_frames() const { return m_fill_tray_tile_frames; }
-    const std::array<CGPoint, SpellGameModel::TileCount> &fill_tray_tile_centers() const { return m_fill_tray_tile_centers; }
+    const TileRectArray &fill_tray_tile_frames() const { return m_fill_tray_tile_frames; }
+    const TilePointArray &fill_tray_tile_centers() const { return m_fill_tray_tile_centers; }
 
 private:
     SpellLayoutManager() {}
@@ -190,12 +197,12 @@ private:
     CGFloat m_tile_stroke_width = 0.0;
     UIBezierPath *m_tile_stroke_path = nil;
 
-    std::array<CGRect, SpellGameModel::TileCount> m_player_tray_tile_frames;
-    std::array<CGPoint, SpellGameModel::TileCount> m_player_tray_tile_centers;
-    std::array<CGRect, SpellGameModel::TileCount> m_word_tray_tile_frames;
-    std::array<CGPoint, SpellGameModel::TileCount> m_word_tray_tile_centers;
-    std::array<CGRect, SpellGameModel::TileCount> m_fill_tray_tile_frames;
-    std::array<CGPoint, SpellGameModel::TileCount> m_fill_tray_tile_centers;
+    TileRectArray m_player_tray_tile_frames;
+    TilePointArray m_player_tray_tile_centers;
+    std::array<TileRectArray, SpellGameModel::TileCount> m_word_tray_tile_frames;
+    std::array<TilePointArray, SpellGameModel::TileCount> m_word_tray_tile_centers;
+    TileRectArray m_fill_tray_tile_frames;
+    TilePointArray m_fill_tray_tile_centers;
 };
 
 }  // namespace UP

@@ -10,6 +10,7 @@
 #import <UpKit/UPFontMetrics.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPMath.h>
+#import <UpKit/UPUtility.h>
 
 #include "UIFont+UPSpell.h"
 #include "UPSpellGameModel.h"
@@ -306,18 +307,86 @@ void SpellLayoutManager::calculate_word_tray_tile_frames()
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
     CGFloat gap = CanonicalTileGap * layout_scale();
+    
     CGFloat x = up_rect_min_x(player_tray_layout_frame());
     CGFloat y = up_rect_min_y(word_tray_layout_frame());
+    TileRectArray rects;
+    TilePointArray centers;
     for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         rect = up_rect_centered_y_in_rect(rect, word_tray_layout_frame());
         CGRect frame = up_pixel_rect(rect, screen_scale());
-        m_word_tray_tile_frames[idx] = frame;
-        m_word_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
+        rects[idx] = frame;
+        centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
         x += up_size_width(size) + gap;
     }
+    
+    TileRectArray odd_rects = rects;
+    TilePointArray odd_centers = centers;
+
+    // length 7
+    m_word_tray_tile_frames[6] = odd_rects;
+    m_word_tray_tile_centers[6] = odd_centers;
+
+    // length 5
+    shift_left(odd_rects.begin(), odd_rects.end(), 1);
+    std::fill(odd_rects.begin() + 5, odd_rects.end(), CGRectZero);
+    shift_left(odd_centers.begin(), odd_centers.end(), 1);
+    std::fill(odd_centers.begin() + 5, odd_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[4] = odd_rects;
+    m_word_tray_tile_centers[4] = odd_centers;
+
+    // length 3
+    shift_left(odd_rects.begin(), odd_rects.end(), 1);
+    std::fill(odd_rects.begin() + 3, odd_rects.end(), CGRectZero);
+    shift_left(odd_centers.begin(), odd_centers.end(), 1);
+    std::fill(odd_centers.begin() + 3, odd_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[2] = odd_rects;
+    m_word_tray_tile_centers[2] = odd_centers;
+
+    // length 1
+    shift_left(odd_rects.begin(), odd_rects.end(), 1);
+    std::fill(odd_rects.begin() + 1, odd_rects.end(), CGRectZero);
+    shift_left(odd_centers.begin(), odd_centers.end(), 1);
+    std::fill(odd_centers.begin() + 1, odd_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[0] = odd_rects;
+    m_word_tray_tile_centers[0] = odd_centers;
+
+    // recentering
+    TileRectArray even_rects = rects;
+    TilePointArray even_centers = centers;
+    CGFloat offset = (up_size_width(size) + gap) * 0.5;
+    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
+        even_rects[idx] = up_pixel_rect(CGRectOffset(even_rects[idx], -offset, 0), screen_scale());
+        even_centers[idx] = up_pixel_point(CGPointMake(even_centers[idx].x - offset, even_centers[idx].y), screen_scale());
+    }
+    
+    // length 6
+    shift_left(even_rects.begin(), even_rects.end(), 1);
+    std::fill(even_rects.begin() + 6, even_rects.end(), CGRectZero);
+    shift_left(even_centers.begin(), even_centers.end(), 1);
+    std::fill(even_centers.begin() + 6, even_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[5] = even_rects;
+    m_word_tray_tile_centers[5] = even_centers;
+
+    // length 4
+    shift_left(even_rects.begin(), even_rects.end(), 1);
+    std::fill(even_rects.begin() + 4, even_rects.end(), CGRectZero);
+    shift_left(even_centers.begin(), even_centers.end(), 1);
+    std::fill(even_centers.begin() + 4, even_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[3] = even_rects;
+    m_word_tray_tile_centers[3] = even_centers;
+
+    // length 2
+    shift_left(even_rects.begin(), even_rects.end(), 1);
+    std::fill(even_rects.begin() + 2, even_rects.end(), CGRectZero);
+    shift_left(even_centers.begin(), even_centers.end(), 1);
+    std::fill(even_centers.begin() + 2, even_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[1] = even_rects;
+    m_word_tray_tile_centers[1] = even_centers;
+
     int idx = 0;
-    for (const auto &r : word_tray_tile_frames()) {
+    for (const auto &r : word_tray_tile_frames(2)) {
         LOG(LayoutManager, "   word tray frame [%d]:  %@", idx, NSStringFromCGRect(r));
         idx++;
     }
