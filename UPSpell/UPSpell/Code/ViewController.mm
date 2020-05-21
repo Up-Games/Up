@@ -305,9 +305,9 @@ using Position = UP::SpellGameModel::Position;
             tileView.userInteractionEnabled = NO;
             CGRect frame = tileView.frame;
             CGPoint center = up_rect_center(frame);
-            center.y -= up_size_height(layout_manager.tile_size());
+            center.y -= up_size_height(layout_manager.tile_size()) * 0.8;
             self.tileViews[idx] = [UPTileView viewWithSentinel];
-            [tileView fadeWithDuration:0.25 completion:nil];
+            [tileView fadeWithDuration:0.2 completion:nil];
             [tileView bloopWithDuration:0.3 toPosition:center completion:^(BOOL finished) {
                 [tileView removeFromSuperview];
             }];
