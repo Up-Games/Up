@@ -110,6 +110,7 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 - (void)setActive:(BOOL)active
 {
+    _active = active;
     if (active) {
         self.additionalState |= UPControlStateActive;
     }
@@ -274,25 +275,20 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    NSLog(@"begin tracking");
     return YES;
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    NSLog(@"continue tracking");
     return YES;
 }
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    NSLog(@"end tracking");
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event
 {
-    NSLog(@"cancel tracking");
-
 }
 
 #pragma mark - Layout

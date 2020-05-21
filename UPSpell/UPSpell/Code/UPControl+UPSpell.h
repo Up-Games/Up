@@ -11,6 +11,7 @@
 
 + (UPControl *)roundControlButtonPause;
 + (UPControl *)roundControlButtonTrash;
++ (UPControl *)roundControlButtonClear;
 + (UPControl *)wordTray;
 
 @end

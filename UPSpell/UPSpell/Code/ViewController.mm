@@ -14,7 +14,7 @@
 #import "UPSceneDelegate.h"
 #import "UPSpellGameModel.h"
 #import "UPSpellLayoutManager.h"
-#import "UPTileControl.h"
+#import "UPTileView.h"
 #import "UPTilePaths.h"
 #import "ViewController.h"
 
@@ -26,17 +26,19 @@ using Action = UP::SpellGameModel::Action;
 using Opcode = UP::SpellGameModel::Opcode;
 using Position = UP::SpellGameModel::Position;
 
-@interface ViewController () <UPGameTimerObserver>
+@interface ViewController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
 @property (nonatomic) UPControl *wordTrayView;
-@property (nonatomic) UIView *tilesLayoutView;
 @property (nonatomic) UIView *tileFrameView;
 @property (nonatomic) UPControl *roundControlButtonPause;
 @property (nonatomic) UPControl *roundControlButtonTrash;
+@property (nonatomic) UPControl *roundControlButtonClear;
+@property (nonatomic) BOOL showingRoundControlButtonClear;
 @property (nonatomic) UPGameTimer *gameTimer;
 @property (nonatomic) UPGameTimerLabel *gameTimerLabel;
 @property (nonatomic) UPLabel *scoreLabel;
-@property (nonatomic) NSMutableArray *tileControls;
+@property (nonatomic) NSMutableArray *tileViews;
+@property (nonatomic) NSMutableArray *playerTrayGhostTileViews;
 @property (nonatomic) UIFont *gameplayInformationFont;
 @property (nonatomic) UIFont *gameplayInformationSuperscriptFont;
 @property (nonatomic) std::shared_ptr<SpellGameModel> model;
@@ -66,6 +68,7 @@ using Position = UP::SpellGameModel::Position;
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::create_instance();
     UP::TilePaths::create_instance();
     
+    layout_manager.set_screen_bounds([[UIScreen mainScreen] bounds]);
     layout_manager.set_screen_scale([[UIScreen mainScreen] scale]);
     layout_manager.set_canvas_frame([[UPSceneDelegate instance] canvasFrame]);
     layout_manager.calculate();
@@ -74,36 +77,27 @@ using Position = UP::SpellGameModel::Position;
     self.infinityView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
     [self.view addSubview:self.infinityView];
     
-    self.tilesLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
-//    self.tilesLayoutView.backgroundColor = [UIColor testColor3];
-    [self.view addSubview:self.tilesLayoutView];
-
     self.roundControlButtonPause = [UPControl roundControlButtonPause];
+    [self.roundControlButtonPause addTarget:self action:@selector(roundControlButtonPauseTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.roundControlButtonPause];
 
     self.roundControlButtonTrash = [UPControl roundControlButtonTrash];
+    [self.roundControlButtonTrash addTarget:self action:@selector(roundControlButtonTrashTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.roundControlButtonTrash];
 
+    self.roundControlButtonClear = [UPControl roundControlButtonClear];
+    [self.roundControlButtonClear addTarget:self action:@selector(roundControlButtonClearTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.roundControlButtonClear];
+
     self.wordTrayView = [UPControl wordTray];
-//    self.wordTrayView.backgroundColor = [UIColor testColor3];
+    [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.wordTrayView];
 
     UIFont *font = [UIFont gameplayInformationFontOfSize:layout_manager.gameplay_information_font_metrics().point_size()];
     UIFont *superscriptFont = [UIFont gameplayInformationFontOfSize:layout_manager.gameplay_information_superscript_font_metrics().point_size()];
-//    NSArray *features = CFBridgingRelease(CTFontCopyFeatures((__bridge CTFontRef)(font)));
-//    NSLog(@"features: %@", features);
 
     self.gameplayInformationFont = font;
     self.gameplayInformationSuperscriptFont = superscriptFont;
-
-    NSLog(@"=== font metrics");
-    NSLog(@"    name:       %@", font.fontName);
-    NSLog(@"    pointSize:  %.5f", font.pointSize);
-    NSLog(@"    ascender:   %.5f", font.ascender);
-    NSLog(@"    descender:  %.5f", font.descender);
-    NSLog(@"    capHeight:  %.5f", font.capHeight);
-    NSLog(@"    xHeight:    %.5f", font.xHeight);
-    NSLog(@"    lineHeight: %.5f", font.lineHeight);
 
     self.gameTimerLabel = [UPGameTimerLabel label];
     self.gameTimerLabel.font = font;
@@ -130,58 +124,258 @@ using Position = UP::SpellGameModel::Position;
     self.scoreLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.scoreLabel];
 
-    self.tileControls = [NSMutableArray array];
+    self.tileViews = [NSMutableArray array];
     size_t idx = 0;
 
     for (const auto &tile : self.model->player_tray()) {
-        UPTileControl *tileControl = [UPTileControl controlWithTile:tile];
-        [tileControl addTarget:self action:@selector(tileTapped:) forControlEvents:UIControlEventTouchUpInside];
-        tileControl.position = SpellGameModel::Position(idx);
-        [self.view addSubview:tileControl];
-        [self.tileControls addObject:tileControl];
+        UPTileView *tileView = [UPTileView viewWithTile:tile];
+        tileView.gestureDelegate = self;
+        tileView.position = UP::player_tray_position(idx);
+        [self.view addSubview:tileView];
+        [self.tileViews addObject:tileView];
         idx++;
     }
 
     const std::array<CGRect, SpellGameModel::TileCount> tile_frames = layout_manager.player_tray_tile_frames();
-    for (UPTileControl *tileControl in self.tileControls) {
-        tileControl.frame = tile_frames.at(SpellGameModel::index(tileControl.position));
+    for (UPTileView *tileView in self.tileViews) {
+        tileView.frame = tile_frames.at(SpellGameModel::index(tileView.position));
     }
     
-//    model.apply(Action(Opcode::TAP, Position::P2));
+    self.roundControlButtonClear.alpha = 0;
+    [self viewUpdateGameControls];
 }
 
 - (void)viewDidLayoutSubviews
 {
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
-    
     self.infinityView.frame = self.view.bounds;
     self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
-    self.tilesLayoutView.frame = layout_manager.player_tray_layout_frame();
     self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
     self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
+    self.roundControlButtonClear.frame = layout_manager.controls_button_trash_frame();
     self.gameTimerLabel.frame = layout_manager.game_time_label_frame();
     self.scoreLabel.frame = layout_manager.game_score_label_frame();
 }
 
-- (void)tileTapped:(id)sender
+#pragma mark - Control target/action
+
+- (void)roundControlButtonPauseTapped:(id)sender
 {
-    UPTileControl *tileControl = sender;
-    [self tapAction:tileControl];
+}
+
+- (void)roundControlButtonTrashTapped:(id)sender
+{
+}
+
+- (void)roundControlButtonClearTapped:(id)sender
+{
+    [self applyActionClear];
+}
+
+- (void)wordTrayTapped
+{
+    if (self.wordTrayView.active) {
+        [self applyActionSubmit];
+    }
+    else if (self.model->word_length() == 0) {
+        // Don't penalize. In the case it's a stray tap, let the player off the hook.
+        // FIXME: beep
+    }
+    else {
+        [self applyActionReject];
+    }
+}
+
+#pragma mark - UPTileViewGestureDelegate
+
+- (void)tileViewTapped:(UPTileView *)tileView
+{
+    if (tileView.tap.state != UIGestureRecognizerStateRecognized) {
+        return;
+    }
+    
+    if (UP::is_marked(self.model->player_marked(), tileView.position)) {
+        [self wordTrayTapped];
+    }
+    else {
+        [self applyActionTap:tileView.position];
+    }
+}
+
+- (void)tileViewPanned:(UPTileView *)tileView
+{
 }
 
 #pragma mark - Actions
 
-- (void)tapAction:(UPTileControl *)tileControl
+- (void)applyActionTap:(Position)pos
 {
-    const Position pos = tileControl.position;
-    const size_t idx = self.model->word_length();
-
-    self.model->apply(Action(Opcode::TAP, pos));
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::TAP, pos));
 
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
     const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers();
-    CGPoint word_tray_center = word_tray_tile_centers.at(idx);
-    [tileControl bloopWithDuration:0.3 toPosition:word_tray_center completion:nil];
+    const size_t word_idx = self.model->word_length() - 1;
+    CGPoint word_tray_center = word_tray_tile_centers[word_idx];
+    UPTileView *tileView = self.tileViews[index(pos)];
+    [tileView bloopWithDuration:0.4 toPosition:word_tray_center completion:nil];
+    
+    [self viewUpdateGameControls];
+}
+
+- (void)applyActionClear
+{
+    [self viewUpdateClearWordTray];
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::CLEAR));
+    [self viewUpdateGameControls];
+}
+
+- (void)applyActionSubmit
+{
+    [self viewUpdateScoreWord];
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::SUBMIT));
+    [self viewUpdateFillPlayerTray];
+    [self viewUpdateGameControls];
+}
+
+- (void)applyActionReject
+{
+    // shake word tray side-to-side and assess time penalty
+    
+
+    [UIView animateWithDuration:0.125 animations:^{
+        [self viewUpdatePenaltyBlockControlsForReject];
+    } completion:^(BOOL finished) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.125 animations:^{
+                [self viewUpdatePenaltyUnblockControls];
+            } completion:nil];
+        });
+    }];
+}
+
+#pragma mark - view updating
+
+- (void)viewUpdateGameControls
+{
+    // word tray
+    self.wordTrayView.active = self.model->word_in_lexicon();
+
+    // trash/clear button
+    if (self.model->word_length()) {
+        if (!self.showingRoundControlButtonClear) {
+            self.showingRoundControlButtonClear = YES;
+            self.roundControlButtonClear.alpha = 1;
+            self.roundControlButtonTrash.alpha = 0;
+        }
+    }
+    else {
+        if (self.showingRoundControlButtonClear) {
+            self.showingRoundControlButtonClear = NO;
+            self.roundControlButtonClear.alpha = 0;
+            self.roundControlButtonTrash.alpha = 1;
+        }
+    }
+    
+    self.scoreLabel.string = [NSString stringWithFormat:@"%d", self.model->game_score()];
+}
+
+- (void)viewUpdateClearWordTray
+{
+    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
+    size_t idx = 0;
+    for (const auto &mark : self.model->player_marked()) {
+        if (mark) {
+            CGPoint player_tray_center = player_tray_tile_centers[idx];
+            UPTileView *tileView = self.tileViews[idx];
+            [tileView bloopWithDuration:0.4 toPosition:player_tray_center completion:^(BOOL finished) {
+            }];
+        }
+        idx++;
+    }
+}
+
+- (void)viewUpdateScoreWord
+{
+    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    size_t idx = 0;
+    for (const auto &mark : self.model->player_marked()) {
+        if (mark) {
+            UPTileView *tileView = self.tileViews[idx];
+            tileView.userInteractionEnabled = NO;
+            CGRect frame = tileView.frame;
+            CGPoint center = up_rect_center(frame);
+            center.y -= up_size_height(layout_manager.tile_size());
+            self.tileViews[idx] = [UPTileView viewWithSentinel];
+            [tileView fadeWithDuration:0.25 completion:nil];
+            [tileView bloopWithDuration:0.3 toPosition:center completion:^(BOOL finished) {
+                [tileView removeFromSuperview];
+            }];
+        }
+        idx++;
+    }
+}
+
+- (void)viewUpdateFillPlayerTray
+{
+    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    const auto &fill_tray_tile_frames = layout_manager.fill_tray_tile_frames();
+    const auto &fill_tray_tile_centers = layout_manager.fill_tray_tile_centers();
+    const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
+
+    size_t idx = 0;
+    NSArray *copiedTileViews = [self.tileViews copy];
+    for (UPTileView *tileView in copiedTileViews) {
+        if (tileView.isSentinel) {
+            UPTileView *newTileView = [UPTileView viewWithTile:self.model->player_tray()[idx]];
+            newTileView.gestureDelegate = self;
+            newTileView.position = UP::player_tray_position(idx);
+            newTileView.frame = fill_tray_tile_frames[idx];
+            self.tileViews[idx] = newTileView;
+            [self.view addSubview:newTileView];
+            CGPoint fromPoint = fill_tray_tile_centers[idx];
+            CGPoint toPoint = player_tray_tile_centers[idx];
+            newTileView.center = fromPoint;
+            [newTileView bloopWithDuration:0.25 toPosition:toPoint completion:nil];
+        }
+        idx++;
+    }
+}
+
+- (void)viewUpdatePenaltyBlockControlsForDump
+{
+    self.view.userInteractionEnabled = NO;
+    self.roundControlButtonTrash.highlighted = YES;
+    self.wordTrayView.alpha = 0.5;
+    self.roundControlButtonPause.alpha = 0.5;
+    self.roundControlButtonClear.alpha = 0.5;
+    for (UPTileView *tileView in self.tileViews) {
+        tileView.alpha = 0.5;
+    }
+}
+
+- (void)viewUpdatePenaltyBlockControlsForReject
+{
+    self.wordTrayView.alpha = 0.5;
+    self.roundControlButtonPause.alpha = 0.5;
+    self.roundControlButtonClear.alpha = 0.5;
+    self.roundControlButtonTrash.alpha = 0.5;
+    for (UPTileView *tileView in self.tileViews) {
+        tileView.alpha = 0.5;
+    }
+}
+
+- (void)viewUpdatePenaltyUnblockControls
+{
+    self.view.userInteractionEnabled = YES;
+    self.roundControlButtonTrash.highlighted = NO;
+    self.wordTrayView.alpha = 1.0;
+    self.roundControlButtonPause.alpha = 1.0;
+    self.roundControlButtonClear.alpha = 1.0;
+    self.roundControlButtonTrash.alpha = 1.0;
+    for (UPTileView *tileView in self.tileViews) {
+        tileView.alpha = 1.0;
+    }
 }
 
 #pragma mark - UPGameTimerObserver

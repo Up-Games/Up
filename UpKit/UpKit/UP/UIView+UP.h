@@ -18,6 +18,8 @@
 
 @property (nonatomic) UPQuadOffsets quadOffsets;
 
+- (void)fadeWithDuration:(CFTimeInterval)duration completion:(void (^)(BOOL finished))completion;
+
 extern CFTimeInterval UPDefaultBloopDuration;
 
 - (void)bloopToFrame:(CGRect)frame completion:(void (^)(BOOL finished))completion;

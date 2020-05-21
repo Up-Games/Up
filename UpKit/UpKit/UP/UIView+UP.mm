@@ -44,7 +44,7 @@
     self.frame = [self.layoutRule layoutFrameForBoundsSize:self.bounds.size];
 }
 
-#pragma mark - quadOffsets
+#pragma mark - Quads
 
 @dynamic quadOffsets;
 
@@ -60,6 +60,24 @@
     NSValue *value = objc_getAssociatedObject(self, @selector(quadOffsets));
     return [value quadOffsetsValue];
 }
+
+#pragma mark - Fading
+
+- (void)fadeWithDuration:(CFTimeInterval)duration completion:(void (^)(BOOL finished))completion
+{
+    POPBasicAnimation *fade = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+    fade.duration = duration;
+    fade.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutCirc];
+    fade.toValue = @(0);
+    fade.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        if (completion) {
+            completion(finished);
+        }
+    };
+    [self pop_addAnimation:fade forKey:@"fade"];
+}
+
+#pragma mark - Blooping
 
 CFTimeInterval UPDefaultBloopDuration = 0.375;
 

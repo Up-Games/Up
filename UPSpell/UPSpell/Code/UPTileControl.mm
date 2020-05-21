@@ -1,5 +1,5 @@
 //
-//  UPTileControl.mm
+//  UPTileView.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -8,7 +8,7 @@
 #import <UPKit/UPStringTools.h>
 
 #import "UIFont+UPSpell.h"
-#import "UPTileControl.h"
+#import "UPTileView.h"
 #import "UPSpellLayoutManager.h"
 #import "UPTilePaths.h"
 
@@ -16,13 +16,13 @@ using UP::SpellLayoutManager;
 using UP::Tile;
 using UP::TilePaths;
 
-@interface UPTileControl ()
+@interface UPTileView ()
 @property (nonatomic, readwrite) UP::Tile tile;
 @end
 
-@implementation UPTileControl
+@implementation UPTileView
 
-+ (UPTileControl *)controlWithTile:(const UP::Tile &)tile
++ (UPTileView *)controlWithTile:(const UP::Tile &)tile
 {
     return [[self alloc] _initWithTile:tile];
 }

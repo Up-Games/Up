@@ -128,6 +128,28 @@ static UIBezierPath *_RoundControlButtonTrashIconPath(void)
     return path;
 }
 
+static UIBezierPath *_RoundControlButtonDownArrowIconPath(void)
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint: CGPointMake(63.76, 39.33)];
+    [path addCurveToPoint: CGPointMake(58.83, 39.74) controlPoint1: CGPointMake(62.29, 38.08) controlPoint2: CGPointMake(60.08, 38.26)];
+    [path addLineToPoint: CGPointMake(45.5, 55.46)];
+    [path addLineToPoint: CGPointMake(45.5, 20.5)];
+    [path addCurveToPoint: CGPointMake(42, 17) controlPoint1: CGPointMake(45.5, 18.57) controlPoint2: CGPointMake(43.93, 17)];
+    [path addCurveToPoint: CGPointMake(38.5, 20.5) controlPoint1: CGPointMake(40.07, 17) controlPoint2: CGPointMake(38.5, 18.57)];
+    [path addLineToPoint: CGPointMake(38.5, 55.46)];
+    [path addLineToPoint: CGPointMake(25.17, 39.74)];
+    [path addCurveToPoint: CGPointMake(20.24, 39.33) controlPoint1: CGPointMake(23.92, 38.26) controlPoint2: CGPointMake(21.71, 38.08)];
+    [path addCurveToPoint: CGPointMake(19.83, 44.26) controlPoint1: CGPointMake(18.76, 40.58) controlPoint2: CGPointMake(18.58, 42.79)];
+    [path addLineToPoint: CGPointMake(39.33, 67.26)];
+    [path addCurveToPoint: CGPointMake(42, 68.5) controlPoint1: CGPointMake(40, 68.05) controlPoint2: CGPointMake(40.97, 68.5)];
+    [path addCurveToPoint: CGPointMake(44.67, 67.26) controlPoint1: CGPointMake(43.03, 68.5) controlPoint2: CGPointMake(44.01, 68.05)];
+    [path addLineToPoint: CGPointMake(64.17, 44.26)];
+    [path addCurveToPoint: CGPointMake(63.76, 39.33) controlPoint1: CGPointMake(65.42, 42.79) controlPoint2: CGPointMake(65.24, 40.58)];
+    [path closePath];
+    return path;
+}
+
 static UIBezierPath *_WordTrayFillPath(void)
 {
     UIBezierPath* path = [UIBezierPath bezierPath];
@@ -297,43 +319,59 @@ static UIBezierPath *_WordTrayStrokePath(void)
 
 + (UPControl *)roundControlButtonPause
 {
-    UPControl *button = [UPControl control];
-    button.canonicalSize = UP::SpellLayoutManager::CanonicalRoundControlButtonSize;
-    [button setFillPath:_RoundControlButtonFillPath() forControlStates:UIControlStateNormal];
-    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
-    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UIControlStateHighlighted];
-    [button setStrokePath:_RoundControlButtonStrokePath() forControlStates:UIControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forControlStates:UIControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forControlStates:UIControlStateHighlighted];
-    [button setContentPath:_RoundControlButtonPauseIconPath() forControlStates:UIControlStateNormal];
-    return button;
+    UPControl *control = [UPControl control];
+    control.canonicalSize = UP::SpellLayoutManager::CanonicalRoundControlButtonSize;
+    [control setFillPath:_RoundControlButtonFillPath() forControlStates:UIControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UIControlStateHighlighted];
+    [control setStrokePath:_RoundControlButtonStrokePath() forControlStates:UIControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forControlStates:UIControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forControlStates:UIControlStateHighlighted];
+    [control setContentPath:_RoundControlButtonPauseIconPath() forControlStates:UIControlStateNormal];
+    return control;
 }
 
 + (UPControl *)roundControlButtonTrash
 {
-    UPControl *button = [UPControl control];
-    button.canonicalSize = UP::SpellLayoutManager::CanonicalRoundControlButtonSize;
-    [button setFillPath:_RoundControlButtonFillPath() forControlStates:UIControlStateNormal];
-    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
-    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UIControlStateHighlighted];
-    [button setStrokePath:_RoundControlButtonStrokePath() forControlStates:UIControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forControlStates:UIControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forControlStates:UIControlStateHighlighted];
-    [button setContentPath:_RoundControlButtonTrashIconPath() forControlStates:UIControlStateNormal];
-    return button;
+    UPControl *control = [UPControl control];
+    control.canonicalSize = UP::SpellLayoutManager::CanonicalRoundControlButtonSize;
+    [control setFillPath:_RoundControlButtonFillPath() forControlStates:UIControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UIControlStateHighlighted];
+    [control setStrokePath:_RoundControlButtonStrokePath() forControlStates:UIControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forControlStates:UIControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forControlStates:UIControlStateHighlighted];
+    [control setContentPath:_RoundControlButtonTrashIconPath() forControlStates:UIControlStateNormal];
+    return control;
+}
+
++ (UPControl *)roundControlButtonClear
+{
+    UPControl *control = [UPControl control];
+    control.canonicalSize = UP::SpellLayoutManager::CanonicalRoundControlButtonSize;
+    [control setFillPath:_RoundControlButtonFillPath() forControlStates:UIControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UIControlStateHighlighted];
+    [control setStrokePath:_RoundControlButtonStrokePath() forControlStates:UIControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forControlStates:UIControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forControlStates:UIControlStateHighlighted];
+    [control setContentPath:_RoundControlButtonDownArrowIconPath() forControlStates:UIControlStateNormal];
+    return control;
 }
 
 + (UPControl *)wordTray
 {
-    UPControl *button = [UPControl control];
-    button.canonicalSize = UP::SpellLayoutManager::CanonicalWordTrayFrame.size;
-    [button setFillPath:_WordTrayFillPath() forControlStates:UIControlStateNormal];
-    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveFill] forControlStates:UIControlStateNormal];
-    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveFill] forControlStates:UPControlStateActive];
-    [button setStrokePath:_WordTrayStrokePath() forControlStates:UIControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveStroke] forControlStates:UIControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveStroke] forControlStates:UPControlStateActive];
-    return button;
+    UPControl *control = [UPControl control];
+    control.canonicalSize = UP::SpellLayoutManager::CanonicalWordTrayFrame.size;
+    [control setFillPath:_WordTrayFillPath() forControlStates:UIControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveFill] forControlStates:UIControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveFill] forControlStates:UPControlStateActive];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedFill] forControlStates:(UIControlStateHighlighted | UPControlStateActive)];
+    [control setStrokePath:_WordTrayStrokePath() forControlStates:UIControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveStroke] forControlStates:UIControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveStroke] forControlStates:UPControlStateActive];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedStroke] forControlStates:(UIControlStateHighlighted | UPControlStateActive)];
+    return control;
 }
 
 @end

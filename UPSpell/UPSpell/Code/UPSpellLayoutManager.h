@@ -68,6 +68,9 @@ public:
 
     void calculate();
 
+    void set_screen_bounds(CGRect screen_bounds) { m_screen_bounds = screen_bounds; }
+    CGRect screen_bounds() const { return m_screen_bounds; }
+
     void set_screen_scale(CGFloat screen_scale) { m_screen_scale = screen_scale; }
     CGFloat screen_scale() const { return m_screen_scale; }
 
@@ -86,6 +89,8 @@ public:
     CGRect word_tray_layout_frame() const { return m_word_tray_layout_frame; }
     CGRect player_tray_layout_frame() const { return m_player_tray_layout_frame; }
 
+    CGSize tile_size() const { return m_tile_size; }
+
     CGRect controls_button_pause_frame() const { return m_controls_button_pause_frame; }
     CGRect controls_button_trash_frame() const { return m_controls_button_trash_frame; }
 
@@ -103,6 +108,9 @@ public:
     const std::array<CGRect, SpellGameModel::TileCount> &word_tray_tile_frames() const { return m_word_tray_tile_frames; }
     const std::array<CGPoint, SpellGameModel::TileCount> &word_tray_tile_centers() const { return m_word_tray_tile_centers; }
 
+    const std::array<CGRect, SpellGameModel::TileCount> &fill_tray_tile_frames() const { return m_fill_tray_tile_frames; }
+    const std::array<CGPoint, SpellGameModel::TileCount> &fill_tray_tile_centers() const { return m_fill_tray_tile_centers; }
+
 private:
     SpellLayoutManager() {}
 
@@ -117,6 +125,7 @@ private:
     void set_controls_layout_frame(CGRect controls_layout_frame) { m_controls_layout_frame = controls_layout_frame; }
     void set_word_tray_layout_frame(CGRect word_tray_layout_frame) { m_word_tray_layout_frame = word_tray_layout_frame; }
     void set_player_tray_layout_frame(CGRect player_tray_layout_frame) { m_player_tray_layout_frame = player_tray_layout_frame; }
+    void set_tile_size(CGSize tile_size) { m_tile_size = tile_size; }
     void set_controls_button_pause_frame(CGRect controls_button_pause_frame) {
         m_controls_button_pause_frame = controls_button_pause_frame;
     }
@@ -138,30 +147,36 @@ private:
     void set_tile_stroke_width(CGFloat tile_stroke_width) { m_tile_stroke_width = tile_stroke_width; }
 
     void calculate_controls_layout_frame();
-    void calculate_word_tray_frame();
-    void calculate_word_tray_tile_frames();
+    void calculate_word_tray_layout_frame();
     void calculate_player_tray_layout_frame();
+    void calculate_tile_size();
+    void calculate_tile_stroke_width();
+    void calculate_word_tray_tile_frames();
     void calculate_player_tray_tile_frames();
+    void calculate_fill_tray_tile_frames();
     void calculate_controls_button_pause_frame();
     void calculate_controls_button_trash_frame();
     void calculate_gameplay_information_font_metrics();
     void calculate_gameplay_information_superscript_font_metrics();
     void calculate_game_time_label_frame();
     void calculate_game_score_label_frame();
-    void calculate_tile_stroke_width();
 
+    CGRect m_screen_bounds = CGRectZero;
     CGFloat m_screen_scale = 2.0;
     AspectMode m_aspect_mode = AspectMode::Canonical;
     CGFloat m_aspect_ratio = CanonicalAspectRatio;
     CGFloat m_aspect_scale = 1.0;
+
     CGRect m_canvas_frame = CGRectZero;
     CGRect m_layout_frame = CGRectZero;
     CGFloat m_layout_scale = 1.0;
     UIEdgeInsets m_letterbox_insets = UIEdgeInsetsZero;
-    
+
     CGRect m_controls_layout_frame = CGRectZero;
     CGRect m_word_tray_layout_frame = CGRectZero;
     CGRect m_player_tray_layout_frame = CGRectZero;
+
+    CGSize m_tile_size;
 
     CGRect m_controls_button_pause_frame = CGRectZero;
     CGRect m_controls_button_trash_frame = CGRectZero;
@@ -179,6 +194,8 @@ private:
     std::array<CGPoint, SpellGameModel::TileCount> m_player_tray_tile_centers;
     std::array<CGRect, SpellGameModel::TileCount> m_word_tray_tile_frames;
     std::array<CGPoint, SpellGameModel::TileCount> m_word_tray_tile_centers;
+    std::array<CGRect, SpellGameModel::TileCount> m_fill_tray_tile_frames;
+    std::array<CGPoint, SpellGameModel::TileCount> m_fill_tray_tile_centers;
 };
 
 }  // namespace UP

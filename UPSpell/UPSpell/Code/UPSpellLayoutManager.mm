@@ -69,10 +69,12 @@ void SpellLayoutManager::calculate()
     }
 
     calculate_controls_layout_frame();
-    calculate_word_tray_frame();
+    calculate_tile_size();
+    calculate_word_tray_layout_frame();
     calculate_player_tray_layout_frame();
     calculate_word_tray_tile_frames();
     calculate_player_tray_tile_frames();
+    calculate_fill_tray_tile_frames();
     calculate_controls_button_pause_frame();
     calculate_controls_button_trash_frame();
     calculate_gameplay_information_font_metrics();
@@ -107,7 +109,7 @@ void SpellLayoutManager::calculate_controls_layout_frame()
     LOG(LayoutManager, "controls layout frame:   %@", NSStringFromCGRect(controls_layout_frame()));
 }
 
-void SpellLayoutManager::calculate_word_tray_frame()
+void SpellLayoutManager::calculate_word_tray_layout_frame()
 {
     switch (aspect_mode()) {
         case AspectMode::Canonical: {
@@ -155,6 +157,36 @@ void SpellLayoutManager::calculate_player_tray_layout_frame()
         }
     }
     LOG(LayoutManager, "   tiles layout frame:  %@", NSStringFromCGRect(player_tray_layout_frame()));
+}
+
+void SpellLayoutManager::calculate_tile_size()
+{
+    CGSize size = up_size_scaled(CanonicalTileSize, layout_scale());
+    set_tile_size(up_pixel_size(size, screen_scale()));
+}
+
+void SpellLayoutManager::calculate_tile_stroke_width()
+{
+    CGFloat stroke_width = CanonicalTileStrokeWidth * layout_scale();
+    set_tile_stroke_width(stroke_width);
+
+    CGRect stroke_bounds = CGRectMake(0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize));
+    CGRect stroke_inset = CGRectInset(stroke_bounds, CanonicalTileStrokeWidth, CanonicalTileStrokeWidth);
+
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint: CGPointMake(up_rect_max_x(stroke_inset), up_rect_min_y(stroke_inset))];
+    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_inset), up_rect_min_y(stroke_inset))];
+    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_inset), up_rect_max_y(stroke_inset))];
+    [path addLineToPoint: CGPointMake(up_rect_max_x(stroke_inset), up_rect_max_y(stroke_inset))];
+    [path closePath];
+    [path moveToPoint: CGPointMake(up_rect_max_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
+    [path addLineToPoint: CGPointMake(up_rect_max_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
+    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
+    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
+    [path closePath];
+    m_tile_stroke_path = path;
+
+    LOG(LayoutManager, "   tile stroke width:   %.2f", tile_stroke_width());
 }
 
 void SpellLayoutManager::calculate_controls_button_pause_frame()
@@ -248,28 +280,25 @@ void SpellLayoutManager::calculate_player_tray_tile_frames()
     }
 }
 
-void SpellLayoutManager::calculate_tile_stroke_width()
+void SpellLayoutManager::calculate_fill_tray_tile_frames()
 {
-    CGFloat stroke_width = CanonicalTileStrokeWidth * layout_scale();
-    set_tile_stroke_width(stroke_width);
-
-    CGRect stroke_bounds = CGRectMake(0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize));
-    CGRect stroke_inset = CGRectInset(stroke_bounds, CanonicalTileStrokeWidth, CanonicalTileStrokeWidth);
-
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint: CGPointMake(up_rect_max_x(stroke_inset), up_rect_min_y(stroke_inset))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_inset), up_rect_min_y(stroke_inset))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_inset), up_rect_max_y(stroke_inset))];
-    [path addLineToPoint: CGPointMake(up_rect_max_x(stroke_inset), up_rect_max_y(stroke_inset))];
-    [path closePath];
-    [path moveToPoint: CGPointMake(up_rect_max_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
-    [path addLineToPoint: CGPointMake(up_rect_max_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
-    [path closePath];
-    m_tile_stroke_path = path;
-
-    LOG(LayoutManager, "   tile stroke width:   %.2f", tile_stroke_width());
+    CGSize canonicalSize = CanonicalTileSize;
+    CGSize size = up_size_scaled(canonicalSize, layout_scale());
+    CGFloat gap = CanonicalTileGap * layout_scale();
+    CGFloat x = up_rect_min_x(player_tray_layout_frame());
+    CGFloat y = up_rect_max_y(screen_bounds()) + (up_size_height(size) * 0.8);
+    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
+        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
+        CGRect frame = up_pixel_rect(rect, screen_scale());
+        m_fill_tray_tile_frames[idx] = frame;
+        m_fill_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
+        x += up_size_width(size) + gap;
+    }
+    int idx = 0;
+    for (const auto &r : fill_tray_tile_frames()) {
+        LOG(LayoutManager, "   fill tray frame [%d]: %@", idx, NSStringFromCGRect(r));
+        idx++;
+    }
 }
 
 void SpellLayoutManager::calculate_word_tray_tile_frames()
