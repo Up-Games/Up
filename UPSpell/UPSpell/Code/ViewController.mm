@@ -156,7 +156,7 @@ static constexpr const char *GameTag = "game";
     }
     
     self.roundControlButtonClear.alpha = 0;
-    [self viewUpdateGameControls];
+    [self viewOpUpdateGameControls];
 }
 
 - (void)dealloc
@@ -276,53 +276,40 @@ static constexpr const char *GameTag = "game";
     
     [self.wordTrayTileViews addObject:tileView];
     
-    [self viewUpdateGameControls];
+    [self viewOpUpdateGameControls];
 }
 
 - (void)applyActionClear
 {
     cancel_delayed(GameTag);
 
-    [self viewUpdateClearWordTray];
+    [self viewOpClearWordTray];
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::CLEAR));
-    [self viewUpdateGameControls];
+    [self viewOpUpdateGameControls];
 }
 
 - (void)applyActionSubmit
 {
     cancel_delayed(GameTag);
 
-    [self viewUpdateScoreWord];
+    [self viewOpScoreWord];
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::SUBMIT));
-    [self viewUpdateFillPlayerTray];
-    [self viewUpdateGameControls];
+    [self viewOpFillPlayerTray];
+    [self viewOpUpdateGameControls];
 }
 
 - (void)applyActionReject
 {
     cancel_delayed(GameTag);
 
-    CGPoint origin = self.wordTrayView.frame.origin;
-    
-    [self viewUpdatePenaltyBlockControlsForReject];
-
     // shake word tray side-to-side and assess time penalty
-    for (UPTileView *tileView in self.wordTrayTileViews) {
-        CGRect frame = CGRectOffset(tileView.frame, -origin.x, -origin.y);
-        [self.wordTrayView addSubview:tileView];
-        tileView.frame = frame;
-    }
- 
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
-    CGFloat amount = layout_manager.word_tray_shake_amount();
-    [self.wordTrayView shakeWithDuration:0.75 amount:amount completion:^(BOOL finished) {
+    [self viewOpPenaltyForReject];
+    [self viewOpMoveWordTilesToWordTray];
+    [self.wordTrayView shakeWithDuration:0.75 amount:layout_manager.word_tray_shake_amount() completion:^(BOOL finished) {
         delay(GameTag, 0.25, ^{
-            [self viewUpdatePenaltyUnblockControls];
-            for (UPTileView *tileView in self.wordTrayTileViews) {
-                CGRect frame = CGRectOffset(tileView.frame, origin.x, origin.y);
-                [self.view addSubview:tileView];
-                tileView.frame = frame;
-            }
+            [self viewOpPenaltyFinished];
+            [self viewOpMoveWordTilesToMainView];
             [self applyActionClear];
         });
     }];
@@ -335,19 +322,19 @@ static constexpr const char *GameTag = "game";
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DUMP));
 
     [UIView animateWithDuration:0.1 animations:^{
-        [self viewUpdatePenaltyBlockControlsForDump];
+        [self viewOpPenaltyForDump];
     } completion:^(BOOL finished) {
-        [self viewUpdateDumpPlayerTray];
+        [self viewOpDumpPlayerTray];
         delay(GameTag, 1.25, ^{
-            [self viewUpdatePenaltyUnblockControls];
-            [self viewUpdateFillPlayerTray];
+            [self viewOpPenaltyFinished];
+            [self viewOpFillPlayerTray];
         });
     }];
 }
 
-#pragma mark - view updating
+#pragma mark - View ops
 
-- (void)viewUpdateGameControls
+- (void)viewOpUpdateGameControls
 {
     // word tray
     self.wordTrayView.active = self.model->word_in_lexicon();
@@ -371,7 +358,7 @@ static constexpr const char *GameTag = "game";
     self.scoreLabel.string = [NSString stringWithFormat:@"%d", self.model->game_score()];
 }
 
-- (void)viewUpdateClearWordTray
+- (void)viewOpClearWordTray
 {
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
@@ -388,7 +375,7 @@ static constexpr const char *GameTag = "game";
     [self.wordTrayTileViews removeAllObjects];
 }
 
-- (void)viewUpdateScoreWord
+- (void)viewOpScoreWord
 {
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     TileIndex idx = 0;
@@ -410,7 +397,7 @@ static constexpr const char *GameTag = "game";
     [self.wordTrayTileViews removeAllObjects];
 }
 
-- (void)viewUpdateDumpPlayerTray
+- (void)viewOpDumpPlayerTray
 {
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     Random &random = Random::instance();
@@ -433,7 +420,7 @@ static constexpr const char *GameTag = "game";
     }
 }
 
-- (void)viewUpdateFillPlayerTray
+- (void)viewOpFillPlayerTray
 {
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     const auto &fill_tray_tile_frames = layout_manager.offscreen_tray_tile_frames();
@@ -459,7 +446,7 @@ static constexpr const char *GameTag = "game";
     }
 }
 
-- (void)viewUpdatePenaltyBlockControlsForDump
+- (void)viewOpPenaltyForDump
 {
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.view.userInteractionEnabled = NO;
@@ -473,7 +460,7 @@ static constexpr const char *GameTag = "game";
     }
 }
 
-- (void)viewUpdatePenaltyBlockControlsForReject
+- (void)viewOpPenaltyForReject
 {
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.view.userInteractionEnabled = NO;
@@ -486,7 +473,7 @@ static constexpr const char *GameTag = "game";
     }
 }
 
-- (void)viewUpdatePenaltyUnblockControls
+- (void)viewOpPenaltyFinished
 {
     self.view.userInteractionEnabled = YES;
     self.roundControlButtonTrash.highlightedOverride = NO;
@@ -501,6 +488,28 @@ static constexpr const char *GameTag = "game";
     }
     for (UPTileView *tileView in self.tileViews) {
         tileView.alpha = 1.0;
+    }
+}
+
+- (void)viewOpMoveWordTilesToWordTray
+{
+    CGPoint wordTrayOrigin = self.wordTrayView.frame.origin;
+    for (UPTileView *tileView in self.wordTrayTileViews) {
+        ASSERT(tileView.superview == self.view);
+        CGRect frame = CGRectOffset(tileView.frame, -wordTrayOrigin.x, -wordTrayOrigin.y);
+        [self.wordTrayView addSubview:tileView];
+        tileView.frame = frame;
+    }
+}
+
+- (void)viewOpMoveWordTilesToMainView
+{
+    CGPoint wordTrayOrigin = self.wordTrayView.frame.origin;
+    for (UPTileView *tileView in self.wordTrayTileViews) {
+        ASSERT(tileView.superview == self.wordTrayView);
+        CGRect frame = CGRectOffset(tileView.frame, wordTrayOrigin.x, wordTrayOrigin.y);
+        [self.view addSubview:tileView];
+        tileView.frame = frame;
     }
 }
 
