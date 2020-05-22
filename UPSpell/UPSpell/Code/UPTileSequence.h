@@ -1,5 +1,5 @@
 //
-//  UPLetterSequence.h
+//  UPTileSequence.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -14,16 +14,18 @@
 #import <UpKit/UPRandom.h>
 #import <UpKit/UPStringTools.h>
 
+#import "UPTile.h"
+
 namespace UP {
     
-class LetterSequence {
+class TileSequence {
 public:
-    LetterSequence() : m_game_code(GameCode()) { m_random.seed_value(m_game_code.value()); }
-    LetterSequence(const GameCode &game_code) : m_game_code(game_code) { m_random.seed_value(m_game_code.value()); }
+    TileSequence() : m_game_code(GameCode()) { m_random.seed_value(m_game_code.value()); }
+    TileSequence(const GameCode &game_code) : m_game_code(game_code) { m_random.seed_value(m_game_code.value()); }
 
     GameCode game_code() const { return m_game_code; }
     
-    char32_t next() {
+    Tile next() {
         if (m_letters.size() == 0) {
             auto &lexicon = Lexicon::instance();
             std::u32string key = lexicon.random_key(m_random);
@@ -33,7 +35,15 @@ public:
         }
         char32_t c = m_letters.back();
         m_letters.pop_back();
-        return c;
+        int r = m_random.uint32_less_than(30);
+        int m = 1;
+        if (r >= 29) {
+            m = 3;
+        }
+        else if (r > 24) {
+            m = 2;
+        }
+        return Tile(c, m);
     }
     
 private:

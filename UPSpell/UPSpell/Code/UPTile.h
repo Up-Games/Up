@@ -33,7 +33,7 @@ public:
     static Tile sentinel() { return Tile(SentinelGlyph, 0); }
 
     char32_t glyph() const { return m_glyph; }
-    int score() const { return score_for(glyph()) * multiplier(); }
+    int score() const { return score_for(glyph()); }
     int multiplier() const { return m_multiplier; }
 
     template <bool B = true> bool is_sentinel() const { return (m_glyph == SentinelGlyph) == B; }

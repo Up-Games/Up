@@ -89,8 +89,7 @@ void SpellGameModel::player_fill()
     player_sentinelize_marked();
     for (auto &tile : m_player_tray) {
         if (tile.is_sentinel()) {
-            char32_t c = m_letter_sequence.next();
-            tile = Tile(c);
+            tile = m_tile_sequence.next();
         }
     }
     player_unmark_all();
@@ -128,10 +127,24 @@ void SpellGameModel::word_update()
             break;
         }
         chars[count] = tile.glyph();
-        m_word_score += tile.score();
+        m_word_score += (tile.score() * tile.multiplier());
         count++;
     }
     m_word_string = std::u32string(chars, count);
+    switch (count) {
+        default:
+            // no bonus
+            break;
+        case 5:
+            m_word_score += FiveLetterWordBonus;
+            break;
+        case 6:
+            m_word_score += SixLetterWordBonus;
+            break;
+        case 7:
+            m_word_score += SevenLetterWordBonus;
+            break;
+    }
     Lexicon &lexicon = Lexicon::instance();
     m_word_in_lexicon = count > 0 ? lexicon.contains(m_word_string) : false;
 }

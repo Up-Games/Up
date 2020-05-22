@@ -67,6 +67,7 @@
 		5DA8E03224748BB0008D3015 /* UPSpellGameModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellGameModel.h; sourceTree = "<group>"; };
 		5DA8E0422476128C008D3015 /* UPTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTile.h; sourceTree = "<group>"; };
 		5DA8E0432476BF41008D3015 /* UPTileView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTileView.mm; sourceTree = "<group>"; };
+		5DA8E04524775A2E008D3015 /* UPTileSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileSequence.h; sourceTree = "<group>"; };
 		5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTilePaths.mm; sourceTree = "<group>"; };
 		5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTilePaths.h; sourceTree = "<group>"; };
 		5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPTilePaths-private.mm"; sourceTree = "<group>"; };
@@ -125,6 +126,7 @@
 				5D5216E9246C7E9E005A2E9F /* UPSpellLayoutManager.mm */,
 				5DC67DF424730207009BCDBB /* UPSpellMacros.h */,
 				5DA8E0422476128C008D3015 /* UPTile.h */,
+				5DA8E04524775A2E008D3015 /* UPTileSequence.h */,
 				5D723114246B34C0006027A3 /* UPTileView.h */,
 				5DA8E0432476BF41008D3015 /* UPTileView.mm */,
 				5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */,

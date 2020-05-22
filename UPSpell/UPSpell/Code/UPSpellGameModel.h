@@ -5,9 +5,9 @@
 
 #import <UpKit/UPAssertions.h>
 #import <UpKit/UPGameCode.h>
-#import <UpKit/UPLetterSequence.h>
 #import <UpKit/UPMacros.h>
 
+#import "UPTileSequence.h"
 #import "UPTile.h"
 
 #if __cplusplus
@@ -55,6 +55,10 @@ public:
     };
     static size_t index(Position pos) { return static_cast<size_t>(pos); }
     
+    static constexpr int SevenLetterWordBonus = 50;
+    static constexpr int SixLetterWordBonus = 20;
+    static constexpr int FiveLetterWordBonus = 10;
+    
     class Action {
     public:
         Action() {}
@@ -98,7 +102,7 @@ public:
     };
 
     SpellGameModel() { apply_init(Action(Opcode::INIT)); }
-    SpellGameModel(const GameCode &game_code) : m_game_code(game_code), m_letter_sequence(game_code) { apply_init(Action(Opcode::INIT)); }
+    SpellGameModel(const GameCode &game_code) : m_game_code(game_code), m_tile_sequence(game_code) { apply_init(Action(Opcode::INIT)); }
 
     const TileTray &player_tray() const { return m_player_tray; }
     const MarkedArray &player_marked() const { return m_player_marked; }
@@ -140,7 +144,7 @@ private:
     GameCode m_game_code;
     std::vector<State> m_states;
 
-    LetterSequence m_letter_sequence;
+    TileSequence m_tile_sequence;
     TileTray m_player_tray;
     MarkedArray m_player_marked;
 

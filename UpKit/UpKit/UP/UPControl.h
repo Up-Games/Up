@@ -18,7 +18,8 @@ typedef NS_ENUM(NSUInteger, UPControlState) {
 @interface UPControl : UIControl
 
 @property (nonatomic) CGSize canonicalSize;
-@property(nonatomic, getter=isActive) BOOL active;
+@property (nonatomic, getter=isActive) BOOL active;
+@property (nonatomic) BOOL highlightedOverride;
 
 + (UPControl *)control;
 

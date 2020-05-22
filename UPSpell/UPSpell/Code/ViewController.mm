@@ -20,7 +20,7 @@
 
 using UP::GameCode;
 using UP::Tile;
-using UP::LetterSequence;
+using UP::TileSequence;
 using UP::SpellGameModel;
 using Action = UP::SpellGameModel::Action;
 using Opcode = UP::SpellGameModel::Opcode;
@@ -42,6 +42,7 @@ using Position = UP::SpellGameModel::Position;
 @property (nonatomic) NSMutableArray *playerTrayGhostTileViews;
 @property (nonatomic) UIFont *gameplayInformationFont;
 @property (nonatomic) UIFont *gameplayInformationSuperscriptFont;
+@property (nonatomic) UPDeferredBlock *wordTrayActivateDeferredBlock;
 @property (nonatomic) std::shared_ptr<SpellGameModel> model;
 @end
 
@@ -253,8 +254,6 @@ using Position = UP::SpellGameModel::Position;
 
 - (void)applyActionReject
 {
-    
-
     CGPoint origin = self.wordTrayView.frame.origin;
     
     // shake word tray side-to-side and assess time penalty
@@ -279,6 +278,7 @@ using Position = UP::SpellGameModel::Position;
                     [self.view addSubview:tileView];
                     tileView.frame = frame;
                 }
+                [self applyActionClear];
             }];
         });
     }];
@@ -305,7 +305,15 @@ using Position = UP::SpellGameModel::Position;
 - (void)viewUpdateGameControls
 {
     // word tray
-    self.wordTrayView.active = self.model->word_in_lexicon();
+    if (self.wordTrayActivateDeferredBlock) {
+        [self.wordTrayActivateDeferredBlock touch];
+    }
+    else {
+        self.wordTrayActivateDeferredBlock = [[UPDeferredBlock alloc] initWithInterval:0.1 block:^{
+            self.wordTrayView.active = self.model->word_in_lexicon();
+            self.wordTrayActivateDeferredBlock = nil;
+        }];
+    }
 
     // trash/clear button
     if (self.model->word_length()) {
@@ -417,6 +425,7 @@ using Position = UP::SpellGameModel::Position;
 - (void)viewUpdatePenaltyBlockControlsForDump
 {
     self.view.userInteractionEnabled = NO;
+    self.roundControlButtonTrash.highlightedOverride = YES;
     self.roundControlButtonTrash.highlighted = YES;
     self.wordTrayView.alpha = 0.5;
     self.roundControlButtonPause.alpha = 0.5;
@@ -441,6 +450,7 @@ using Position = UP::SpellGameModel::Position;
 - (void)viewUpdatePenaltyUnblockControls
 {
     self.view.userInteractionEnabled = YES;
+    self.roundControlButtonTrash.highlightedOverride = NO;
     self.roundControlButtonTrash.highlighted = NO;
     self.wordTrayView.alpha = 1.0;
     self.roundControlButtonPause.alpha = 1.0;

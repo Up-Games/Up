@@ -98,6 +98,9 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 - (void)setHighlighted:(BOOL)highlighted
 {
+    if (self.highlightedOverride && !highlighted) {
+        return;
+    }
     [super setHighlighted:highlighted];
     [self _controlStateChanged];
 }

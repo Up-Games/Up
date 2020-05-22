@@ -81,6 +81,7 @@ using UP::TilePaths;
         self.multiplierView.userInteractionEnabled = NO;
         self.multiplierView.canonicalSize = SpellLayoutManager::CanonicalTileSize;
         self.multiplierView.path = tile_paths.tile_path_for_multiplier(tile.multiplier());
+        self.multiplierView.opaque = NO;
         [self addSubview:self.multiplierView];
     }
 

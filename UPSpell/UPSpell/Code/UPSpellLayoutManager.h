@@ -38,10 +38,6 @@ public:
     static constexpr CGSize CanonicalCanvasSize = { CanonicalCanvasWidth, CanonicalCanvasHeight };
     static constexpr CGFloat CanonicalAspectRatio = CanonicalCanvasWidth / CanonicalCanvasHeight;
 
-    static inline constexpr CGRect CanonicalControlsLayoutFrame = {   92,  22, 816,  84 };
-    static inline constexpr CGRect CanonicalWordTrayFrame =       { 62.5, 133, 875, 182 };
-    static inline constexpr CGRect CanonicalTilesLayoutFrame =    {  105, 348, 790, 116 };
-
     static inline constexpr CGSize CanonicalRoundControlButtonSize = { 84, 84 };
 
     static inline constexpr CGFloat CanonicalGameplayInformationCapHeight = 57;
@@ -57,6 +53,12 @@ public:
     static inline constexpr CGRect CanonicalTileFrame = { 0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize) };
     static inline constexpr CGFloat CanonicalTileStrokeWidth = 3;
     static inline constexpr CGFloat CanonicalTileGap = 15;
+    static inline constexpr CGFloat CanonicalTilesLayoutWidth = up_size_width(CanonicalTileSize) * 7 + (CanonicalTileGap * 6);
+
+    static inline constexpr CGRect CanonicalControlsLayoutFrame = {   92,  22, 816,  84 };
+    static inline constexpr CGRect CanonicalWordTrayFrame =       { 62.5, 133, 875, 182 };
+    static inline constexpr CGRect CanonicalTilesLayoutFrame =    {    0, 348, CanonicalTilesLayoutWidth, 120 };
+
 
     static SpellLayoutManager &create_instance() {
         g_instance = new SpellLayoutManager();
