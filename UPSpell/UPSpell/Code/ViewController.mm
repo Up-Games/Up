@@ -18,19 +18,23 @@
 #import "UPTilePaths.h"
 #import "ViewController.h"
 
-using UP::GameCode;
-using UP::Tile;
-using UP::TileCount;
-using UP::TileSequence;
-using UP::SpellModel;
 using Action = UP::SpellModel::Action;
 using Opcode = UP::SpellModel::Opcode;
 using TileIndex = UP::TileIndex;
 
-using UP::DelayToken;
-using UP::delay;
-using UP::cancel_delayed;
 using UP::cancel_all_delayed;
+using UP::cancel_delayed;
+using UP::delay;
+using UP::DelayToken;
+using UP::GameCode;
+using UP::Lexicon;
+using UP::Random;
+using UP::SpellLayoutManager;
+using UP::SpellModel;
+using UP::Tile;
+using UP::TileCount;
+using UP::TilePaths;
+using UP::TileSequence;
 
 @interface ViewController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
@@ -48,7 +52,6 @@ using UP::cancel_all_delayed;
 @property (nonatomic) NSMutableArray *playerTrayGhostTileViews;
 @property (nonatomic) UIFont *gameInformationFont;
 @property (nonatomic) UIFont *gameInformationSuperscriptFont;
-@property (nonatomic) UPDeferredBlock *wordTrayActivateDeferredBlock;
 @property (nonatomic) SpellModel *model;
 @end
 
@@ -61,8 +64,8 @@ using UP::cancel_all_delayed;
 
     [super viewDidLoad];
 
-    UP::Random::create_instance();
-    UP::Lexicon::set_language(UPLexiconLanguageEnglish);
+    Random::create_instance();
+    Lexicon::set_language(UPLexiconLanguageEnglish);
 
     GameCode game_code = GameCode::random();
 //    GameCode game_code = GameCode("WPQ-2701");
@@ -73,8 +76,8 @@ using UP::cancel_all_delayed;
     
     [UIColor setThemeStyle:UPColorStyleLight];
 //    [UIColor setThemeHue:0];
-    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::create_instance();
-    UP::TilePaths::create_instance();
+    SpellLayoutManager &layout_manager = SpellLayoutManager::create_instance();
+    TilePaths::create_instance();
     
     layout_manager.set_screen_bounds([[UIScreen mainScreen] bounds]);
     layout_manager.set_screen_scale([[UIScreen mainScreen] scale]);
@@ -161,7 +164,7 @@ using UP::cancel_all_delayed;
 
 - (void)viewDidLayoutSubviews
 {
-    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     self.infinityView.frame = self.view.bounds;
     self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
     self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
@@ -252,7 +255,7 @@ using UP::cancel_all_delayed;
 {
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::TAP, tile_idx));
 
-    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
     
     TileIndex idx = 0;
@@ -298,7 +301,7 @@ using UP::cancel_all_delayed;
         tileView.frame = frame;
     }
  
-    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     CGFloat amount = layout_manager.word_tray_shake_amount();
     [self.wordTrayView shakeWithDuration:0.7 amount:amount completion:nil];
 
@@ -335,16 +338,7 @@ using UP::cancel_all_delayed;
 - (void)viewUpdateGameControls
 {
     // word tray
-    if (self.wordTrayActivateDeferredBlock) {
-        [self.wordTrayActivateDeferredBlock touch];
-    }
-    else {
-        // FIXMENOW
-        self.wordTrayActivateDeferredBlock = [[UPDeferredBlock alloc] initWithInterval:0.1 block:^{
-            self.wordTrayView.active = self.model->word_in_lexicon();
-            self.wordTrayActivateDeferredBlock = nil;
-        }];
-    }
+    self.wordTrayView.active = self.model->word_in_lexicon();
 
     // trash/clear button
     if (self.model->word_length()) {
@@ -367,7 +361,7 @@ using UP::cancel_all_delayed;
 
 - (void)viewUpdateClearWordTray
 {
-    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
     TileIndex idx = 0;
     for (const auto &mark : self.model->player_marked()) {
@@ -384,7 +378,7 @@ using UP::cancel_all_delayed;
 
 - (void)viewUpdateScoreWord
 {
-    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     TileIndex idx = 0;
     for (const auto &mark : self.model->player_marked()) {
         if (mark) {
@@ -406,8 +400,8 @@ using UP::cancel_all_delayed;
 
 - (void)viewUpdateDumpPlayerTray
 {
-    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
-    UP::Random &random = UP::Random::instance();
+    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
+    Random &random = Random::instance();
     const auto &offscreen_tray_tile_centers = layout_manager.offscreen_tray_tile_centers();
     
     std::array<size_t, TileCount> idxs;
@@ -429,7 +423,7 @@ using UP::cancel_all_delayed;
 
 - (void)viewUpdateFillPlayerTray
 {
-    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     const auto &fill_tray_tile_frames = layout_manager.offscreen_tray_tile_frames();
     const auto &fill_tray_tile_centers = layout_manager.offscreen_tray_tile_centers();
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
