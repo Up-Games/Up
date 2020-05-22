@@ -5,11 +5,11 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString * const UPGameplayInformationFontName;
+extern NSString * const UPGameInformationFontName;
 
 @interface UIFont (UPSpell)
 
-+ (UIFont *)gameplayInformationFontOfSize:(CGFloat)fontSize;
-+ (UIFont *)gameplayInformationFontWithCapHeight:(CGFloat)capHeight;
++ (UIFont *)gameInformationFontOfSize:(CGFloat)fontSize;
++ (UIFont *)gameInformationFontWithCapHeight:(CGFloat)capHeight;
 
 @end

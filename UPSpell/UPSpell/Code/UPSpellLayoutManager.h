@@ -11,7 +11,7 @@
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPMacros.h>
 
-#import "UPSpellGameModel.h"
+#import "UPSpellModel.h"
 #import "UPTile.h"
 
 #if __cplusplus
@@ -21,8 +21,8 @@
 
 namespace UP {
 
-using TilePointArray = std::array<CGPoint, UP::SpellGameModel::TileCount>;
-using TileRectArray = std::array<CGRect, UP::SpellGameModel::TileCount>;
+using TilePointArray = std::array<CGPoint, UP::SpellModel::TileCount>;
+using TileRectArray = std::array<CGRect, UP::SpellModel::TileCount>;
 
 class SpellLayoutManager {
 public:
@@ -40,10 +40,10 @@ public:
 
     static inline constexpr CGSize CanonicalRoundControlButtonSize = { 84, 84 };
 
-    static inline constexpr CGFloat CanonicalGameplayInformationCapHeight = 57;
-    static inline constexpr CGFloat CanonicalGameplayInformationSuperscriptCapHeight = 39;
-    static inline constexpr CGFloat CanonicalGameplayInformationSuperscriptBaselineAdjustment = 27;
-    static inline constexpr CGFloat CanonicalGameplayInformationSuperscriptKerning = 1;
+    static inline constexpr CGFloat CanonicalGameInformationCapHeight = 57;
+    static inline constexpr CGFloat CanonicalGameInformationSuperscriptCapHeight = 39;
+    static inline constexpr CGFloat CanonicalGameInformationSuperscriptBaselineAdjustment = 27;
+    static inline constexpr CGFloat CanonicalGameInformationSuperscriptKerning = 1;
     static inline constexpr CGFloat CanonicalGameTimeLabelWidth =  180;
     static inline constexpr CGPoint CanonicalGameTimeLabelRightAlignedBaselinePointRelativeToTDC =  { -30, 91.7 };
     static inline constexpr CGPoint CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTDC = {  30, 91.7 };
@@ -97,8 +97,8 @@ public:
     CGRect controls_button_pause_frame() const { return m_controls_button_pause_frame; }
     CGRect controls_button_trash_frame() const { return m_controls_button_trash_frame; }
 
-    const FontMetrics &gameplay_information_font_metrics() const { return m_gameplay_information_font_metrics; }
-    const FontMetrics &gameplay_information_superscript_font_metrics() const { return m_gameplay_information_superscript_font_metrics; }
+    const FontMetrics &game_information_font_metrics() const { return m_game_information_font_metrics; }
+    const FontMetrics &game_information_superscript_font_metrics() const { return m_game_information_superscript_font_metrics; }
     CGRect game_time_label_frame() const { return m_game_time_label_frame; }
     CGRect game_score_label_frame() const { return m_game_score_label_frame; }
 
@@ -109,11 +109,11 @@ public:
     const TilePointArray &player_tray_tile_centers() const { return m_player_tray_tile_centers; }
 
     const TileRectArray &word_tray_tile_frames(size_t word_length) const {
-        ASSERT(word_length <= SpellGameModel::TileCount);
+        ASSERT(word_length <= SpellModel::TileCount);
         return m_word_tray_tile_frames[word_length - 1];
     }
     const TilePointArray &word_tray_tile_centers(size_t word_length) const {
-        ASSERT(word_length <= SpellGameModel::TileCount);
+        ASSERT(word_length <= SpellModel::TileCount);
         return m_word_tray_tile_centers[word_length - 1];
     }
 
@@ -141,11 +141,11 @@ private:
     void set_controls_button_trash_frame(CGRect controls_button_trash_frame) {
         m_controls_button_trash_frame = controls_button_trash_frame;
     }
-    void set_gameplay_information_font_metrics(const FontMetrics &gameplay_information_font_metrics) {
-        m_gameplay_information_font_metrics = gameplay_information_font_metrics;
+    void set_game_information_font_metrics(const FontMetrics &game_information_font_metrics) {
+        m_game_information_font_metrics = game_information_font_metrics;
     }
-    void set_gameplay_information_superscript_font_metrics(const FontMetrics &gameplay_information_superscript_font_metrics) {
-        m_gameplay_information_superscript_font_metrics = gameplay_information_superscript_font_metrics;
+    void set_game_information_superscript_font_metrics(const FontMetrics &game_information_superscript_font_metrics) {
+        m_game_information_superscript_font_metrics = game_information_superscript_font_metrics;
     }
     void set_game_time_label_frame(CGRect game_time_label_frame) {
         m_game_time_label_frame = game_time_label_frame;
@@ -165,8 +165,8 @@ private:
     void calculate_offscreen_tray_tile_frames();
     void calculate_controls_button_pause_frame();
     void calculate_controls_button_trash_frame();
-    void calculate_gameplay_information_font_metrics();
-    void calculate_gameplay_information_superscript_font_metrics();
+    void calculate_game_information_font_metrics();
+    void calculate_game_information_superscript_font_metrics();
     void calculate_game_time_label_frame();
     void calculate_game_score_label_frame();
 
@@ -190,8 +190,8 @@ private:
     CGRect m_controls_button_pause_frame = CGRectZero;
     CGRect m_controls_button_trash_frame = CGRectZero;
 
-    FontMetrics m_gameplay_information_font_metrics;
-    FontMetrics m_gameplay_information_superscript_font_metrics;
+    FontMetrics m_game_information_font_metrics;
+    FontMetrics m_game_information_superscript_font_metrics;
 
     CGRect m_game_time_label_frame = CGRectZero;
     CGRect m_game_score_label_frame = CGRectZero;
@@ -201,8 +201,8 @@ private:
 
     TileRectArray m_player_tray_tile_frames;
     TilePointArray m_player_tray_tile_centers;
-    std::array<TileRectArray, SpellGameModel::TileCount> m_word_tray_tile_frames;
-    std::array<TilePointArray, SpellGameModel::TileCount> m_word_tray_tile_centers;
+    std::array<TileRectArray, SpellModel::TileCount> m_word_tray_tile_frames;
+    std::array<TilePointArray, SpellModel::TileCount> m_word_tray_tile_centers;
     TileRectArray m_offscreen_tray_tile_frames;
     TilePointArray m_offscreen_tray_tile_centers;
 };

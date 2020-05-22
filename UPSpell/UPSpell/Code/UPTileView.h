@@ -7,7 +7,7 @@
 
 #import <UPKit/UPControl.h>
 
-#import "UPSpellGameModel.h"
+#import "UPSpellModel.h"
 #import "UPTile.h"
 
 @protocol UPTileViewGestureDelegate;
@@ -19,7 +19,7 @@
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) int multiplier;
 @property (nonatomic, readonly) BOOL isSentinel;
-@property (nonatomic) UP::SpellGameModel::Position position;
+@property (nonatomic) UP::SpellModel::Position position;
 
 @property (nonatomic, readonly) UITapGestureRecognizer *tap;
 @property (nonatomic, readonly) UIPanGestureRecognizer *pan;

@@ -1,5 +1,5 @@
 //
-//  UPSpellGameModel.mm
+//  UPSpellModel.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -9,11 +9,11 @@
 #import <UpKit/UPLexicon.h>
 #import <UpKit/UPUtility.h>
 
-#include "UPSpellGameModel.h"
+#include "UPSpellModel.h"
 
 namespace UP {
 
-std::string tile_tray_description(const SpellGameModel::TileTray &tile_tray)
+std::string tile_tray_description(const SpellModel::TileTray &tile_tray)
 {
     std::stringstream stream;
     for (const auto &tile : tile_tray) {
@@ -27,7 +27,7 @@ std::string tile_tray_description(const SpellGameModel::TileTray &tile_tray)
     return stream.str();
 }
 
-std::string marked_array_description(const SpellGameModel::MarkedArray &marked_array)
+std::string marked_array_description(const SpellModel::MarkedArray &marked_array)
 {
     std::stringstream stream;
     for (const auto &mark : marked_array) {
@@ -41,7 +41,7 @@ std::string marked_array_description(const SpellGameModel::MarkedArray &marked_a
     return stream.str();
 }
 
-bool is_non_sentinel_filled_up_to(const SpellGameModel::TileTray &tile_tray, const size_t idx)
+bool is_non_sentinel_filled_up_to(const SpellModel::TileTray &tile_tray, const size_t idx)
 {
     ASSERT_WITH_MESSAGE(is_valid_tray_index_for_one_after_end(idx), "idx: %ld", idx);
     
@@ -62,7 +62,7 @@ bool is_non_sentinel_filled_up_to(const SpellGameModel::TileTray &tile_tray, con
     return true;
 }
 
-size_t count_non_sentinel(const SpellGameModel::TileTray &tile_tray)
+size_t count_non_sentinel(const SpellModel::TileTray &tile_tray)
 {
     size_t count = 0;
     for (const auto &tile : tile_tray) {
@@ -73,7 +73,7 @@ size_t count_non_sentinel(const SpellGameModel::TileTray &tile_tray)
     return count;
 }
 
-void SpellGameModel::player_sentinelize_marked()
+void SpellModel::player_sentinelize_marked()
 {
     size_t idx = 0;
     for (const auto &mark : m_player_marked) {
@@ -84,7 +84,7 @@ void SpellGameModel::player_sentinelize_marked()
     }
 }
 
-void SpellGameModel::player_fill()
+void SpellModel::player_fill()
 {
     player_sentinelize_marked();
     for (auto &tile : m_player_tray) {
@@ -95,7 +95,7 @@ void SpellGameModel::player_fill()
     player_unmark_all();
 }
 
-void SpellGameModel::word_insert_at(const Tile &tile, Position pos)
+void SpellModel::word_insert_at(const Tile &tile, Position pos)
 {
     if (pos == Position::W7 || index(pos) >= word_length()) {
         word_push_back(tile);
@@ -106,7 +106,7 @@ void SpellGameModel::word_insert_at(const Tile &tile, Position pos)
     }
 }
 
-void SpellGameModel::word_remove_at(const Tile &tile, Position pos)
+void SpellModel::word_remove_at(const Tile &tile, Position pos)
 {
     if (pos == Position::W7 || index(pos) >= word_length()) {
         m_word_tray[index(pos)] = Tile::sentinel();
@@ -117,7 +117,7 @@ void SpellGameModel::word_remove_at(const Tile &tile, Position pos)
     }
 }
 
-void SpellGameModel::word_update()
+void SpellModel::word_update()
 {
     char32_t chars[TileCount];
     size_t count = 0;
@@ -149,7 +149,7 @@ void SpellGameModel::word_update()
     m_word_in_lexicon = count > 0 ? lexicon.contains(m_word_string) : false;
 }
 
-const SpellGameModel::State &SpellGameModel::apply(const Action &action)
+const SpellModel::State &SpellModel::apply(const Action &action)
 {
     switch (action.opcode()) {
         case Opcode::NOP:
@@ -192,7 +192,7 @@ const SpellGameModel::State &SpellGameModel::apply(const Action &action)
     return m_states.emplace_back(action, player_tray(), word_tray(), game_score());
 }
 
-void SpellGameModel::apply_init(const Action &action)
+void SpellModel::apply_init(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::INIT);
     ASSERT(action.pos1() == Position::XX);
@@ -208,7 +208,7 @@ void SpellGameModel::apply_init(const Action &action)
     ASSERT(is_sentinel_filled(word_tray()));
 }
 
-void SpellGameModel::apply_tap(const Action &action)
+void SpellModel::apply_tap(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::TAP);
     ASSERT(is_sentinel_filled<false>(player_tray()));
@@ -236,7 +236,7 @@ void SpellGameModel::apply_tap(const Action &action)
     ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
 }
 
-void SpellGameModel::apply_submit(const Action &action)
+void SpellModel::apply_submit(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::SUBMIT);
     ASSERT(action.pos1() == Position::XX);
@@ -261,7 +261,7 @@ void SpellGameModel::apply_submit(const Action &action)
     ASSERT(is_sentinel_filled(word_tray()));
 }
 
-void SpellGameModel::apply_reject(const Action &action)
+void SpellModel::apply_reject(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::REJECT);
     ASSERT(action.pos1() == Position::XX);
@@ -273,7 +273,7 @@ void SpellGameModel::apply_reject(const Action &action)
     // otherwise, a no-op
 }
 
-void SpellGameModel::apply_clear(const Action &action)
+void SpellModel::apply_clear(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::CLEAR);
     ASSERT(action.pos1() == Position::XX);
@@ -295,7 +295,7 @@ void SpellGameModel::apply_clear(const Action &action)
     ASSERT(is_sentinel_filled(word_tray()));
 }
 
-void SpellGameModel::apply_dump(const Action &action)
+void SpellModel::apply_dump(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::DUMP);
     ASSERT(action.pos1() == Position::XX);

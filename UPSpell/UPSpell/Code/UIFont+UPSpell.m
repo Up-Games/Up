@@ -7,7 +7,7 @@
 
 #import "UIFont+UPSpell.h"
 
-NSString * const UPGameplayInformationFontName = @"MalloryNarrow-Bold";
+NSString * const UPGameInformationFontName = @"MalloryNarrow-Bold";
 
 //
 //  Below, the UIFontFeatureTypeIdentifierKey and UIFontFeatureSelectorIdentifierKey are set from
@@ -17,9 +17,9 @@ NSString * const UPGameplayInformationFontName = @"MalloryNarrow-Bold";
 
 @implementation UIFont (UPSpell)
 
-+ (UIFont *)gameplayInformationFontOfSize:(CGFloat)fontSize
++ (UIFont *)gameInformationFontOfSize:(CGFloat)fontSize
 {
-    UIFont *font = [UIFont fontWithName:UPGameplayInformationFontName size:fontSize];
+    UIFont *font = [UIFont fontWithName:UPGameInformationFontName size:fontSize];
     UIFontDescriptor *descriptor = [font fontDescriptor];
     NSDictionary *attributes = @{
         UIFontDescriptorFeatureSettingsAttribute: @[
@@ -37,12 +37,12 @@ NSString * const UPGameplayInformationFontName = @"MalloryNarrow-Bold";
     return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
 }
 
-+ (UIFont *)gameplayInformationFontWithCapHeight:(CGFloat)capHeight
++ (UIFont *)gameInformationFontWithCapHeight:(CGFloat)capHeight
 {
-    UIFont *canonicalFont = [UIFont fontWithName:UPGameplayInformationFontName size:1];
+    UIFont *canonicalFont = [UIFont fontWithName:UPGameInformationFontName size:1];
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
-    return [UIFont gameplayInformationFontOfSize:pointSize];
+    return [UIFont gameInformationFontOfSize:pointSize];
 }
 
 @end

@@ -13,7 +13,7 @@
 #import <UpKit/UPUtility.h>
 
 #include "UIFont+UPSpell.h"
-#include "UPSpellGameModel.h"
+#include "UPSpellModel.h"
 #include "UPSpellLayoutManager.h"
 
 namespace UP {
@@ -78,8 +78,8 @@ void SpellLayoutManager::calculate()
     calculate_offscreen_tray_tile_frames();
     calculate_controls_button_pause_frame();
     calculate_controls_button_trash_frame();
-    calculate_gameplay_information_font_metrics();
-    calculate_gameplay_information_superscript_font_metrics();
+    calculate_game_information_font_metrics();
+    calculate_game_information_superscript_font_metrics();
     calculate_game_time_label_frame();
     calculate_game_score_label_frame();
     calculate_tile_stroke_width();
@@ -216,25 +216,25 @@ void SpellLayoutManager::calculate_controls_button_trash_frame()
     LOG(LayoutManager, "   trash button frame:  %@", NSStringFromCGRect(controls_button_trash_frame()));
 }
 
-void SpellLayoutManager::calculate_gameplay_information_font_metrics()
+void SpellLayoutManager::calculate_game_information_font_metrics()
 {
-    CGFloat cap_height = CanonicalGameplayInformationCapHeight * layout_scale();
-    UIFont *font = [UIFont gameplayInformationFontWithCapHeight:cap_height];
-    set_gameplay_information_font_metrics(FontMetrics(font.fontName, font.pointSize));
+    CGFloat cap_height = CanonicalGameInformationCapHeight * layout_scale();
+    UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
+    set_game_information_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
-void SpellLayoutManager::calculate_gameplay_information_superscript_font_metrics()
+void SpellLayoutManager::calculate_game_information_superscript_font_metrics()
 {
-    CGFloat cap_height = CanonicalGameplayInformationSuperscriptCapHeight * layout_scale();
-    UIFont *font = [UIFont gameplayInformationFontWithCapHeight:cap_height];
-    CGFloat baseline_adjustment = CanonicalGameplayInformationSuperscriptBaselineAdjustment * layout_scale();
-    CGFloat kerning = CanonicalGameplayInformationSuperscriptKerning * layout_scale();
-    set_gameplay_information_superscript_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment, kerning));
+    CGFloat cap_height = CanonicalGameInformationSuperscriptCapHeight * layout_scale();
+    UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
+    CGFloat baseline_adjustment = CanonicalGameInformationSuperscriptBaselineAdjustment * layout_scale();
+    CGFloat kerning = CanonicalGameInformationSuperscriptKerning * layout_scale();
+    set_game_information_superscript_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment, kerning));
 }
 
 void SpellLayoutManager::calculate_game_time_label_frame()
 {
-    const FontMetrics &font_metrics = gameplay_information_font_metrics();
+    const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
     CGPoint baseline_point = up_point_scaled(CanonicalGameTimeLabelRightAlignedBaselinePointRelativeToTDC, layout_scale());
     CGFloat w = CanonicalGameTimeLabelWidth * layout_scale();
@@ -248,7 +248,7 @@ void SpellLayoutManager::calculate_game_time_label_frame()
 
 void SpellLayoutManager::calculate_game_score_label_frame()
 {
-    const FontMetrics &font_metrics = gameplay_information_font_metrics();
+    const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
     CGPoint baseline_point = up_point_scaled(CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTDC, layout_scale());
     CGFloat w = CanonicalGameScoreLabelWidth * layout_scale();
@@ -270,7 +270,7 @@ void SpellLayoutManager::calculate_word_tray_tile_frames()
     CGFloat y = up_rect_min_y(word_tray_layout_frame());
     TileRectArray rects;
     TilePointArray centers;
-    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
+    for (size_t idx = 0; idx < SpellModel::TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         rect = up_rect_centered_y_in_rect(rect, word_tray_layout_frame());
         CGRect frame = up_pixel_rect(rect, screen_scale());
@@ -314,7 +314,7 @@ void SpellLayoutManager::calculate_word_tray_tile_frames()
     TileRectArray even_rects = rects;
     TilePointArray even_centers = centers;
     CGFloat offset = (up_size_width(size) + gap) * 0.5;
-    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
+    for (size_t idx = 0; idx < SpellModel::TileCount; idx++) {
         even_rects[idx] = up_pixel_rect(CGRectOffset(even_rects[idx], -offset, 0), screen_scale());
         even_centers[idx] = up_pixel_point(CGPointMake(even_centers[idx].x - offset, even_centers[idx].y), screen_scale());
     }
@@ -357,7 +357,7 @@ void SpellLayoutManager::calculate_player_tray_tile_frames()
     CGFloat gap = CanonicalTileGap * layout_scale();
     CGFloat x = up_rect_min_x(player_tray_layout_frame());
     CGFloat y = up_rect_min_y(player_tray_layout_frame());
-    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
+    for (size_t idx = 0; idx < SpellModel::TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         CGRect frame = up_pixel_rect(rect, screen_scale());
         m_player_tray_tile_frames[idx] = frame;
@@ -378,7 +378,7 @@ void SpellLayoutManager::calculate_offscreen_tray_tile_frames()
     CGFloat gap = CanonicalTileGap * layout_scale();
     CGFloat x = up_rect_min_x(player_tray_layout_frame());
     CGFloat y = up_rect_max_y(screen_bounds()) + (up_size_height(size) * 0.8);
-    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
+    for (size_t idx = 0; idx < SpellModel::TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         CGRect frame = up_pixel_rect(rect, screen_scale());
         m_offscreen_tray_tile_frames[idx] = frame;

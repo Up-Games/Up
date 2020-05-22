@@ -1,5 +1,5 @@
 //
-//  UPSpellGameModel.h
+//  UPSpellModel.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -17,7 +17,7 @@
 
 namespace UP {
 
-class SpellGameModel {
+class SpellModel {
 public:
     enum class Opcode: uint8_t {
         NOP,    // no-op
@@ -101,8 +101,8 @@ public:
         int m_game_score = 0;
     };
 
-    SpellGameModel() { apply_init(Action(Opcode::INIT)); }
-    SpellGameModel(const GameCode &game_code) : m_game_code(game_code), m_tile_sequence(game_code) { apply_init(Action(Opcode::INIT)); }
+    SpellModel() { apply_init(Action(Opcode::INIT)); }
+    SpellModel(const GameCode &game_code) : m_game_code(game_code), m_tile_sequence(game_code) { apply_init(Action(Opcode::INIT)); }
 
     const TileTray &player_tray() const { return m_player_tray; }
     const MarkedArray &player_marked() const { return m_player_marked; }
@@ -156,16 +156,16 @@ private:
     int m_game_score = 0;
 };
 
-std::string tile_tray_description(const SpellGameModel::TileTray &);
-std::string marked_array_description(const SpellGameModel::MarkedArray &);
+std::string tile_tray_description(const SpellModel::TileTray &);
+std::string marked_array_description(const SpellModel::MarkedArray &);
 
-UP_STATIC_INLINE size_t index(SpellGameModel::Position pos) { return static_cast<size_t>(pos); }
-UP_STATIC_INLINE bool is_valid_tray_index(size_t idx) { return idx < SpellGameModel::TileCount; }
-UP_STATIC_INLINE bool is_valid_tray_index_for_one_after_end(size_t idx) { return idx <= SpellGameModel::TileCount; }
+UP_STATIC_INLINE size_t index(SpellModel::Position pos) { return static_cast<size_t>(pos); }
+UP_STATIC_INLINE bool is_valid_tray_index(size_t idx) { return idx < SpellModel::TileCount; }
+UP_STATIC_INLINE bool is_valid_tray_index_for_one_after_end(size_t idx) { return idx <= SpellModel::TileCount; }
 
-UP_STATIC_INLINE SpellGameModel::Position player_tray_position(size_t idx) {
+UP_STATIC_INLINE SpellModel::Position player_tray_position(size_t idx) {
     ASSERT(is_valid_tray_index(idx));
-    using Position = SpellGameModel::Position;
+    using Position = SpellModel::Position;
     switch (idx) {
         case 0:
             return Position::P1;
@@ -186,9 +186,9 @@ UP_STATIC_INLINE SpellGameModel::Position player_tray_position(size_t idx) {
     return Position::XX;
 }
 
-UP_STATIC_INLINE SpellGameModel::Position word_tray_position(size_t idx) {
+UP_STATIC_INLINE SpellModel::Position word_tray_position(size_t idx) {
     ASSERT(is_valid_tray_index(idx));
-    using Position = SpellGameModel::Position;
+    using Position = SpellModel::Position;
     switch (idx) {
         case 0:
             return Position::W1;
@@ -210,18 +210,18 @@ UP_STATIC_INLINE SpellGameModel::Position word_tray_position(size_t idx) {
 }
 
 
-UP_STATIC_INLINE bool position_in_player_tray(const SpellGameModel::Position pos)
+UP_STATIC_INLINE bool position_in_player_tray(const SpellModel::Position pos)
 {
-    return pos >= SpellGameModel::Position::P1 && pos <= SpellGameModel::Position::P7;
+    return pos >= SpellModel::Position::P1 && pos <= SpellModel::Position::P7;
 }
 
-UP_STATIC_INLINE bool position_in_word_tray(const SpellGameModel::Position pos)
+UP_STATIC_INLINE bool position_in_word_tray(const SpellModel::Position pos)
 {
-    return pos >= SpellGameModel::Position::W1 && pos <= SpellGameModel::Position::W7;
+    return pos >= SpellModel::Position::W1 && pos <= SpellModel::Position::W7;
 }
 
 template <bool B = true>
-bool is_sentinel_filled(const SpellGameModel::TileTray &tile_tray)
+bool is_sentinel_filled(const SpellModel::TileTray &tile_tray)
 {
     for (const auto &tile : tile_tray) {
         if (tile.is_sentinel<!B>()) {
@@ -232,13 +232,13 @@ bool is_sentinel_filled(const SpellGameModel::TileTray &tile_tray)
 }
 
 template <bool B = true>
-bool is_marked(const SpellGameModel::MarkedArray &marked_array, const SpellGameModel::Position pos)
+bool is_marked(const SpellModel::MarkedArray &marked_array, const SpellModel::Position pos)
 {
     return marked_array[index(pos)] == B;
 }
 
 template <bool B = true>
-size_t count_marked(const SpellGameModel::MarkedArray &marked_array)
+size_t count_marked(const SpellModel::MarkedArray &marked_array)
 {
     size_t count = 0;
     for (const auto &mark : marked_array) {
@@ -249,8 +249,8 @@ size_t count_marked(const SpellGameModel::MarkedArray &marked_array)
     return count;
 }
 
-size_t count_non_sentinel(const SpellGameModel::TileTray &tile_tray);
-bool is_non_sentinel_filled_up_to(const SpellGameModel::TileTray &tile_tray, const size_t idx);
+size_t count_non_sentinel(const SpellModel::TileTray &tile_tray);
+bool is_non_sentinel_filled_up_to(const SpellModel::TileTray &tile_tray, const size_t idx);
 
 }  // namespace UP
 

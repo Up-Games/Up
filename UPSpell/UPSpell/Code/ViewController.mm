@@ -12,7 +12,7 @@
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
 #import "UPSceneDelegate.h"
-#import "UPSpellGameModel.h"
+#import "UPSpellModel.h"
 #import "UPSpellLayoutManager.h"
 #import "UPTileView.h"
 #import "UPTilePaths.h"
@@ -21,10 +21,10 @@
 using UP::GameCode;
 using UP::Tile;
 using UP::TileSequence;
-using UP::SpellGameModel;
-using Action = UP::SpellGameModel::Action;
-using Opcode = UP::SpellGameModel::Opcode;
-using Position = UP::SpellGameModel::Position;
+using UP::SpellModel;
+using Action = UP::SpellModel::Action;
+using Opcode = UP::SpellModel::Opcode;
+using Position = UP::SpellModel::Position;
 
 @interface ViewController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
@@ -40,10 +40,10 @@ using Position = UP::SpellGameModel::Position;
 @property (nonatomic) NSMutableArray *tileViews;
 @property (nonatomic) NSMutableArray *wordTrayTileViews;
 @property (nonatomic) NSMutableArray *playerTrayGhostTileViews;
-@property (nonatomic) UIFont *gameplayInformationFont;
-@property (nonatomic) UIFont *gameplayInformationSuperscriptFont;
+@property (nonatomic) UIFont *gameInformationFont;
+@property (nonatomic) UIFont *gameInformationSuperscriptFont;
 @property (nonatomic) UPDeferredBlock *wordTrayActivateDeferredBlock;
-@property (nonatomic) std::shared_ptr<SpellGameModel> model;
+@property (nonatomic) std::shared_ptr<SpellModel> model;
 @end
 
 @implementation ViewController
@@ -64,7 +64,7 @@ using Position = UP::SpellGameModel::Position;
     NSLog(@"code: %d", game_code.value());
 //
 
-    self.model = std::make_shared<SpellGameModel>(game_code);
+    self.model = std::make_shared<SpellModel>(game_code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
 //    [UIColor setThemeHue:0];
@@ -96,17 +96,17 @@ using Position = UP::SpellGameModel::Position;
     [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.wordTrayView];
 
-    UIFont *font = [UIFont gameplayInformationFontOfSize:layout_manager.gameplay_information_font_metrics().point_size()];
-    UIFont *superscriptFont = [UIFont gameplayInformationFontOfSize:layout_manager.gameplay_information_superscript_font_metrics().point_size()];
+    UIFont *font = [UIFont gameInformationFontOfSize:layout_manager.game_information_font_metrics().point_size()];
+    UIFont *superscriptFont = [UIFont gameInformationFontOfSize:layout_manager.game_information_superscript_font_metrics().point_size()];
 
-    self.gameplayInformationFont = font;
-    self.gameplayInformationSuperscriptFont = superscriptFont;
+    self.gameInformationFont = font;
+    self.gameInformationSuperscriptFont = superscriptFont;
 
     self.gameTimerLabel = [UPGameTimerLabel label];
     self.gameTimerLabel.font = font;
     self.gameTimerLabel.superscriptFont = superscriptFont;
-    self.gameTimerLabel.superscriptBaselineAdjustment = layout_manager.gameplay_information_superscript_font_metrics().baseline_adjustment();
-    self.gameTimerLabel.superscriptKerning = layout_manager.gameplay_information_superscript_font_metrics().kerning();
+    self.gameTimerLabel.superscriptBaselineAdjustment = layout_manager.game_information_superscript_font_metrics().baseline_adjustment();
+    self.gameTimerLabel.superscriptKerning = layout_manager.game_information_superscript_font_metrics().kerning();
     
     self.gameTimer = [UPGameTimer defaultGameTimer];
     [self.gameTimer addObserver:self.gameTimerLabel];
@@ -140,9 +140,9 @@ using Position = UP::SpellGameModel::Position;
         idx++;
     }
 
-    const std::array<CGRect, SpellGameModel::TileCount> tile_frames = layout_manager.player_tray_tile_frames();
+    const std::array<CGRect, SpellModel::TileCount> tile_frames = layout_manager.player_tray_tile_frames();
     for (UPTileView *tileView in self.tileViews) {
-        tileView.frame = tile_frames.at(SpellGameModel::index(tileView.position));
+        tileView.frame = tile_frames.at(SpellModel::index(tileView.position));
     }
     
     self.roundControlButtonClear.alpha = 0;
@@ -379,8 +379,8 @@ using Position = UP::SpellGameModel::Position;
     UP::Random &random = UP::Random::instance();
     const auto &offscreen_tray_tile_centers = layout_manager.offscreen_tray_tile_centers();
     
-    std::array<size_t, UP::SpellGameModel::TileCount> idxs;
-    for (size_t idx = 0; idx < UP::SpellGameModel::TileCount; idx++) {
+    std::array<size_t, UP::SpellModel::TileCount> idxs;
+    for (size_t idx = 0; idx < UP::SpellModel::TileCount; idx++) {
         idxs[idx] = idx;
     }
     std::shuffle(idxs.begin(), idxs.end(), random.generator());
