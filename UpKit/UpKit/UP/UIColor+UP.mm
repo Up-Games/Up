@@ -75,6 +75,24 @@ static CGFloat _ThemeHue = 222;
     }
 }
 
++ (CGFloat)themeDisabledAlphaForStyle:(UPColorStyle)style
+{
+    switch (_ThemeStyle) {
+        case UPColorStyleDefault:
+        case UPColorStyleLight:
+        case UPColorStyleLightStark:
+            return 0.5;
+        case UPColorStyleDark:
+        case UPColorStyleDarkStark:
+            return 0.62;
+    }
+}
+
++ (CGFloat)themeDisabledAlpha
+{
+    return [UIColor themeDisabledAlphaForStyle:_ThemeStyle];
+}
+
 // https://stackoverflow.com/a/9177602
 + (UIColor *)colorizedGray:(CGFloat)gray hue:(CGFloat)hue saturation:(CGFloat)saturation
 {

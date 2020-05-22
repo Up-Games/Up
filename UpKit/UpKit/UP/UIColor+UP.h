@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
     UPColorCategoryInactiveFill,
     UPColorCategoryActiveFill,
     UPColorCategoryHighlightedFill,
-    UPColorCategorySecondaryFill,  // new
+    UPColorCategorySecondaryFill,
     UPColorCategorySecondaryInactiveFill,
     UPColorCategorySecondaryActiveFill,
     UPColorCategorySecondaryHighlightedFill,
@@ -27,20 +27,16 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
     UPColorCategoryInactiveStroke,
     UPColorCategoryActiveStroke,
     UPColorCategoryHighlightedStroke,
-    UPColorCategorySecondaryStroke,  // new
-    UPColorCategorySecondaryInactiveStroke,  // new
-    UPColorCategorySecondaryActiveStroke,  // new
-    UPColorCategorySecondaryHighlightedStroke,  // new
+    UPColorCategorySecondaryStroke,
+    UPColorCategorySecondaryInactiveStroke,
+    UPColorCategorySecondaryActiveStroke,
+    UPColorCategorySecondaryHighlightedStroke,
     UPColorCategoryContent,
     UPColorCategoryInactiveContent,
-    UPColorCategoryActiveContent,  // new
-    UPColorCategoryHighlightedContent,  // new
+    UPColorCategoryActiveContent,
+    UPColorCategoryHighlightedContent,
     UPColorCategoryInformation,
     UPColorCategoryInfinity,
-
-    UPColorCategoryDisabledFill,
-    UPColorCategoryDisabledStroke,
-    UPColorCategoryDisabledContent,
 
     UPColorCategoryWhite,
     UPColorCategoryBlack,
@@ -57,6 +53,9 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 
 + (UIColor *)themeColorWithCategory:(UPColorCategory)category;
 + (UIColor *)themeColorWithStyle:(UPColorStyle)style hue:(CGFloat)hue category:(UPColorCategory)category;
+
++ (CGFloat)themeDisabledAlphaForStyle:(UPColorStyle)style;
++ (CGFloat)themeDisabledAlpha;
 
 + (UIColor *)colorizedGray:(CGFloat)gray hue:(CGFloat)hue saturation:(CGFloat)saturation;
 

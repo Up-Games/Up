@@ -36,6 +36,8 @@ using UP::TileCount;
 using UP::TilePaths;
 using UP::TileSequence;
 
+static constexpr const char *GameTag = "game";
+
 @interface ViewController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
 @property (nonatomic) UPControl *wordTrayView;
@@ -253,6 +255,8 @@ using UP::TileSequence;
 
 - (void)applyActionTap:(TileIndex)tile_idx
 {
+    cancel_delayed(GameTag);
+
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::TAP, tile_idx));
 
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
@@ -277,6 +281,8 @@ using UP::TileSequence;
 
 - (void)applyActionClear
 {
+    cancel_delayed(GameTag);
+
     [self viewUpdateClearWordTray];
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::CLEAR));
     [self viewUpdateGameControls];
@@ -284,6 +290,8 @@ using UP::TileSequence;
 
 - (void)applyActionSubmit
 {
+    cancel_delayed(GameTag);
+
     [self viewUpdateScoreWord];
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::SUBMIT));
     [self viewUpdateFillPlayerTray];
@@ -292,8 +300,12 @@ using UP::TileSequence;
 
 - (void)applyActionReject
 {
+    cancel_delayed(GameTag);
+
     CGPoint origin = self.wordTrayView.frame.origin;
     
+    [self viewUpdatePenaltyBlockControlsForReject];
+
     // shake word tray side-to-side and assess time penalty
     for (UPTileView *tileView in self.wordTrayTileViews) {
         CGRect frame = CGRectOffset(tileView.frame, -origin.x, -origin.y);
@@ -303,35 +315,35 @@ using UP::TileSequence;
  
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     CGFloat amount = layout_manager.word_tray_shake_amount();
-    [self.wordTrayView shakeWithDuration:0.7 amount:amount completion:nil];
-
-    [self viewUpdatePenaltyBlockControlsForReject];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self viewUpdatePenaltyUnblockControls];
-        for (UPTileView *tileView in self.wordTrayTileViews) {
-            CGRect frame = CGRectOffset(tileView.frame, origin.x, origin.y);
-            [self.view addSubview:tileView];
-            tileView.frame = frame;
-        }
-        [self applyActionClear];
-    });
+    [self.wordTrayView shakeWithDuration:0.75 amount:amount completion:^(BOOL finished) {
+        delay(GameTag, 0.25, ^{
+            [self viewUpdatePenaltyUnblockControls];
+            for (UPTileView *tileView in self.wordTrayTileViews) {
+                CGRect frame = CGRectOffset(tileView.frame, origin.x, origin.y);
+                [self.view addSubview:tileView];
+                tileView.frame = frame;
+            }
+            [self applyActionClear];
+        });
+    }];
 }
 
 - (void)applyActionDump
 {
+    cancel_delayed(GameTag);
+
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DUMP));
 
     [UIView animateWithDuration:0.1 animations:^{
         [self viewUpdatePenaltyBlockControlsForDump];
     } completion:^(BOOL finished) {
         [self viewUpdateDumpPlayerTray];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        delay(GameTag, 1.25, ^{
             [self viewUpdatePenaltyUnblockControls];
             [self viewUpdateFillPlayerTray];
         });
     }];
 }
-
 
 #pragma mark - view updating
 
@@ -449,26 +461,28 @@ using UP::TileSequence;
 
 - (void)viewUpdatePenaltyBlockControlsForDump
 {
+    const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.view.userInteractionEnabled = NO;
     self.roundControlButtonTrash.highlightedOverride = YES;
     self.roundControlButtonTrash.highlighted = YES;
-    self.wordTrayView.alpha = 0.5;
-    self.roundControlButtonPause.alpha = 0.5;
+    self.wordTrayView.alpha = disabledAlpha;
+    self.roundControlButtonPause.alpha = disabledAlpha;
     self.roundControlButtonClear.alpha = 0;
     for (UPTileView *tileView in self.tileViews) {
-        tileView.alpha = 0.5;
+        tileView.alpha = disabledAlpha;
     }
 }
 
 - (void)viewUpdatePenaltyBlockControlsForReject
 {
+    const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.view.userInteractionEnabled = NO;
-    self.wordTrayView.alpha = 0.5;
-    self.roundControlButtonPause.alpha = 0.5;
-    self.roundControlButtonClear.alpha = 0.5;
+    self.wordTrayView.alpha = disabledAlpha;
+    self.roundControlButtonPause.alpha = disabledAlpha;
+    self.roundControlButtonClear.alpha = disabledAlpha;
     self.roundControlButtonTrash.alpha = 0;
     for (UPTileView *tileView in self.tileViews) {
-        tileView.alpha = 0.5;
+        tileView.alpha = disabledAlpha;
     }
 }
 
