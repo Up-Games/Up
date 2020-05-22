@@ -168,6 +168,7 @@ const SpellGameModel::State &SpellGameModel::apply(const Action &action)
             apply_clear(action);
             break;
         case Opcode::DUMP:
+            apply_dump(action);
             break;
         case Opcode::OVER:
             break;
@@ -271,6 +272,31 @@ void SpellGameModel::apply_clear(const Action &action)
     player_unmark_all();
     word_clear();
     word_update();
+
+    ASSERT(word_length() == 0);
+    ASSERT(!word_in_lexicon());
+    ASSERT(word_score() == 0);
+    ASSERT(count_marked(player_marked()) == 0);
+    ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
+    ASSERT(is_sentinel_filled<false>(player_tray()));
+    ASSERT(is_sentinel_filled(word_tray()));
+}
+
+void SpellGameModel::apply_dump(const Action &action)
+{
+    ASSERT(action.opcode() == Opcode::DUMP);
+    ASSERT(action.pos1() == Position::XX);
+    ASSERT(action.pos2() == Position::XX);
+    ASSERT(word_length() == 0);
+    ASSERT(!word_in_lexicon());
+    ASSERT(word_score() == 0);
+    ASSERT(count_marked(player_marked()) == 0);
+    ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
+    ASSERT(is_sentinel_filled<false>(player_tray()));
+    ASSERT(is_sentinel_filled(word_tray()));
+
+    player_mark_all();
+    player_fill();
 
     ASSERT(word_length() == 0);
     ASSERT(!word_in_lexicon());

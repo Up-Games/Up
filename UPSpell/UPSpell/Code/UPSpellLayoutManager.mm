@@ -75,7 +75,7 @@ void SpellLayoutManager::calculate()
     calculate_player_tray_layout_frame();
     calculate_word_tray_tile_frames();
     calculate_player_tray_tile_frames();
-    calculate_fill_tray_tile_frames();
+    calculate_offscreen_tray_tile_frames();
     calculate_controls_button_pause_frame();
     calculate_controls_button_trash_frame();
     calculate_gameplay_information_font_metrics();
@@ -260,48 +260,6 @@ void SpellLayoutManager::calculate_game_score_label_frame()
     LOG(LayoutManager, "   score label frame:   %@", NSStringFromCGRect(game_score_label_frame()));
 }
 
-void SpellLayoutManager::calculate_player_tray_tile_frames()
-{
-    CGSize canonicalSize = CanonicalTileSize;
-    CGSize size = up_size_scaled(canonicalSize, layout_scale());
-    CGFloat gap = CanonicalTileGap * layout_scale();
-    CGFloat x = up_rect_min_x(player_tray_layout_frame());
-    CGFloat y = up_rect_min_y(player_tray_layout_frame());
-    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
-        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
-        CGRect frame = up_pixel_rect(rect, screen_scale());
-        m_player_tray_tile_frames[idx] = frame;
-        m_player_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
-        x += up_size_width(size) + gap;
-    }
-    int idx = 0;
-    for (const auto &r : player_tray_tile_frames()) {
-        LOG(LayoutManager, "   tile tray frame [%d]: %@", idx, NSStringFromCGRect(r));
-        idx++;
-    }
-}
-
-void SpellLayoutManager::calculate_fill_tray_tile_frames()
-{
-    CGSize canonicalSize = CanonicalTileSize;
-    CGSize size = up_size_scaled(canonicalSize, layout_scale());
-    CGFloat gap = CanonicalTileGap * layout_scale();
-    CGFloat x = up_rect_min_x(player_tray_layout_frame());
-    CGFloat y = up_rect_max_y(screen_bounds()) + (up_size_height(size) * 0.8);
-    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
-        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
-        CGRect frame = up_pixel_rect(rect, screen_scale());
-        m_fill_tray_tile_frames[idx] = frame;
-        m_fill_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
-        x += up_size_width(size) + gap;
-    }
-    int idx = 0;
-    for (const auto &r : fill_tray_tile_frames()) {
-        LOG(LayoutManager, "   fill tray frame [%d]: %@", idx, NSStringFromCGRect(r));
-        idx++;
-    }
-}
-
 void SpellLayoutManager::calculate_word_tray_tile_frames()
 {
     CGSize canonicalSize = CanonicalTileSize;
@@ -388,6 +346,48 @@ void SpellLayoutManager::calculate_word_tray_tile_frames()
     int idx = 0;
     for (const auto &r : word_tray_tile_frames(2)) {
         LOG(LayoutManager, "   word tray frame [%d]:  %@", idx, NSStringFromCGRect(r));
+        idx++;
+    }
+}
+
+void SpellLayoutManager::calculate_player_tray_tile_frames()
+{
+    CGSize canonicalSize = CanonicalTileSize;
+    CGSize size = up_size_scaled(canonicalSize, layout_scale());
+    CGFloat gap = CanonicalTileGap * layout_scale();
+    CGFloat x = up_rect_min_x(player_tray_layout_frame());
+    CGFloat y = up_rect_min_y(player_tray_layout_frame());
+    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
+        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
+        CGRect frame = up_pixel_rect(rect, screen_scale());
+        m_player_tray_tile_frames[idx] = frame;
+        m_player_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
+        x += up_size_width(size) + gap;
+    }
+    int idx = 0;
+    for (const auto &r : player_tray_tile_frames()) {
+        LOG(LayoutManager, "   tile tray frame [%d]: %@", idx, NSStringFromCGRect(r));
+        idx++;
+    }
+}
+
+void SpellLayoutManager::calculate_offscreen_tray_tile_frames()
+{
+    CGSize canonicalSize = CanonicalTileSize;
+    CGSize size = up_size_scaled(canonicalSize, layout_scale());
+    CGFloat gap = CanonicalTileGap * layout_scale();
+    CGFloat x = up_rect_min_x(player_tray_layout_frame());
+    CGFloat y = up_rect_max_y(screen_bounds()) + (up_size_height(size) * 0.8);
+    for (size_t idx = 0; idx < SpellGameModel::TileCount; idx++) {
+        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
+        CGRect frame = up_pixel_rect(rect, screen_scale());
+        m_offscreen_tray_tile_frames[idx] = frame;
+        m_offscreen_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
+        x += up_size_width(size) + gap;
+    }
+    int idx = 0;
+    for (const auto &r : offscreen_tray_tile_frames()) {
+        LOG(LayoutManager, "   fill tray frame [%d]: %@", idx, NSStringFromCGRect(r));
         idx++;
     }
 }

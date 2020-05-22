@@ -19,6 +19,7 @@
 @property (nonatomic) UPQuadOffsets quadOffsets;
 
 - (void)slideWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion;
+- (void)slideWithDuration:(CFTimeInterval)duration delay:(CFTimeInterval)delay toPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion;
 - (void)shakeWithDuration:(CFTimeInterval)duration amount:(CGFloat)amount completion:(void (^)(BOOL finished))completion;
 - (void)fadeWithDuration:(CFTimeInterval)duration completion:(void (^)(BOOL finished))completion;
 

@@ -115,8 +115,8 @@ public:
         return m_word_tray_tile_centers[word_length - 1];
     }
 
-    const TileRectArray &fill_tray_tile_frames() const { return m_fill_tray_tile_frames; }
-    const TilePointArray &fill_tray_tile_centers() const { return m_fill_tray_tile_centers; }
+    const TileRectArray &offscreen_tray_tile_frames() const { return m_offscreen_tray_tile_frames; }
+    const TilePointArray &offscreen_tray_tile_centers() const { return m_offscreen_tray_tile_centers; }
 
 private:
     SpellLayoutManager() {}
@@ -160,7 +160,7 @@ private:
     void calculate_tile_stroke_width();
     void calculate_word_tray_tile_frames();
     void calculate_player_tray_tile_frames();
-    void calculate_fill_tray_tile_frames();
+    void calculate_offscreen_tray_tile_frames();
     void calculate_controls_button_pause_frame();
     void calculate_controls_button_trash_frame();
     void calculate_gameplay_information_font_metrics();
@@ -201,8 +201,8 @@ private:
     TilePointArray m_player_tray_tile_centers;
     std::array<TileRectArray, SpellGameModel::TileCount> m_word_tray_tile_frames;
     std::array<TilePointArray, SpellGameModel::TileCount> m_word_tray_tile_centers;
-    TileRectArray m_fill_tray_tile_frames;
-    TilePointArray m_fill_tray_tile_centers;
+    TileRectArray m_offscreen_tray_tile_frames;
+    TilePointArray m_offscreen_tray_tile_centers;
 };
 
 }  // namespace UP

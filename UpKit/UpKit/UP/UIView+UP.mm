@@ -66,8 +66,14 @@
 
 - (void)slideWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion
 {
+    [self slideWithDuration:duration delay:0 toPosition:position completion:completion];
+}
+
+- (void)slideWithDuration:(CFTimeInterval)duration delay:(CFTimeInterval)delay toPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion
+{
     POPBasicAnimation *slide = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
     slide.duration = duration;
+    slide.beginTime = CACurrentMediaTime() + delay;
     slide.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutCirc];
     slide.toValue = [NSValue valueWithCGPoint:position];
     slide.completionBlock = ^(POPAnimation *anim, BOOL finished) {

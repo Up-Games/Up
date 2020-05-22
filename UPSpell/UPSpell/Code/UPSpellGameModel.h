@@ -135,6 +135,7 @@ private:
     void apply_submit(const Action &action);
     void apply_reject(const Action &action);
     void apply_clear(const Action &action);
+    void apply_dump(const Action &action);
 
     GameCode m_game_code;
     std::vector<State> m_states;

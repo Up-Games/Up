@@ -50,7 +50,7 @@ using Position = UP::SpellGameModel::Position;
 - (void)viewDidLoad
 {
     LOG_CHANNEL_ON(General);
-    LOG_CHANNEL_ON(LayoutManager);
+    //LOG_CHANNEL_ON(LayoutManager);
 
     [super viewDidLoad];
 
@@ -168,6 +168,7 @@ using Position = UP::SpellGameModel::Position;
 
 - (void)roundControlButtonTrashTapped:(id)sender
 {
+    [self applyActionDump];
 }
 
 - (void)roundControlButtonClearTapped:(id)sender
@@ -252,6 +253,8 @@ using Position = UP::SpellGameModel::Position;
 
 - (void)applyActionReject
 {
+    
+
     CGPoint origin = self.wordTrayView.frame.origin;
     
     // shake word tray side-to-side and assess time penalty
@@ -262,8 +265,7 @@ using Position = UP::SpellGameModel::Position;
     }
  
     CGFloat amount = up_rect_width(self.wordTrayView.frame) * 0.04;
-    [self.wordTrayView shakeWithDuration:0.7 amount:amount completion:^(BOOL finished) {
-    }];
+    [self.wordTrayView shakeWithDuration:0.7 amount:amount completion:nil];
 
     [UIView animateWithDuration:0.1 animations:^{
         [self viewUpdatePenaltyBlockControlsForReject];
@@ -281,6 +283,22 @@ using Position = UP::SpellGameModel::Position;
         });
     }];
 }
+
+- (void)applyActionDump
+{
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DUMP));
+
+    [UIView animateWithDuration:0.1 animations:^{
+        [self viewUpdatePenaltyBlockControlsForDump];
+    } completion:^(BOOL finished) {
+        [self viewUpdateDumpPlayerTray];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self viewUpdatePenaltyUnblockControls];
+            [self viewUpdateFillPlayerTray];
+        });
+    }];
+}
+
 
 #pragma mark - view updating
 
@@ -347,11 +365,34 @@ using Position = UP::SpellGameModel::Position;
     [self.wordTrayTileViews removeAllObjects];
 }
 
+- (void)viewUpdateDumpPlayerTray
+{
+    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    UP::Random &random = UP::Random::instance();
+    const auto &offscreen_tray_tile_centers = layout_manager.offscreen_tray_tile_centers();
+    
+    std::array<size_t, UP::SpellGameModel::TileCount> idxs;
+    for (size_t idx = 0; idx < UP::SpellGameModel::TileCount; idx++) {
+        idxs[idx] = idx;
+    }
+    std::shuffle(idxs.begin(), idxs.end(), random.generator());
+
+    CFTimeInterval delay = 0.1;
+    int count = 0;
+    for (const auto idx : idxs) {
+        UPTileView *tileView = self.tileViews[idx];
+        self.tileViews[idx] = [UPTileView viewWithSentinel];
+        CGPoint point = offscreen_tray_tile_centers[idx];
+        [tileView slideWithDuration:0.4 delay:(count * delay) toPosition:point completion:nil];
+        count++;
+    }
+}
+
 - (void)viewUpdateFillPlayerTray
 {
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
-    const auto &fill_tray_tile_frames = layout_manager.fill_tray_tile_frames();
-    const auto &fill_tray_tile_centers = layout_manager.fill_tray_tile_centers();
+    const auto &fill_tray_tile_frames = layout_manager.offscreen_tray_tile_frames();
+    const auto &fill_tray_tile_centers = layout_manager.offscreen_tray_tile_centers();
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
 
     size_t idx = 0;
@@ -387,6 +428,7 @@ using Position = UP::SpellGameModel::Position;
 
 - (void)viewUpdatePenaltyBlockControlsForReject
 {
+    self.view.userInteractionEnabled = NO;
     self.wordTrayView.alpha = 0.5;
     self.roundControlButtonPause.alpha = 0.5;
     self.roundControlButtonClear.alpha = 0.5;
