@@ -270,7 +270,7 @@ void SpellLayoutManager::calculate_word_tray_tile_frames()
     CGFloat y = up_rect_min_y(word_tray_layout_frame());
     TileRectArray rects;
     TilePointArray centers;
-    for (size_t idx = 0; idx < SpellModel::TileCount; idx++) {
+    for (size_t idx = 0; idx < TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         rect = up_rect_centered_y_in_rect(rect, word_tray_layout_frame());
         CGRect frame = up_pixel_rect(rect, screen_scale());
@@ -314,7 +314,7 @@ void SpellLayoutManager::calculate_word_tray_tile_frames()
     TileRectArray even_rects = rects;
     TilePointArray even_centers = centers;
     CGFloat offset = (up_size_width(size) + gap) * 0.5;
-    for (size_t idx = 0; idx < SpellModel::TileCount; idx++) {
+    for (size_t idx = 0; idx < TileCount; idx++) {
         even_rects[idx] = up_pixel_rect(CGRectOffset(even_rects[idx], -offset, 0), screen_scale());
         even_centers[idx] = up_pixel_point(CGPointMake(even_centers[idx].x - offset, even_centers[idx].y), screen_scale());
     }
@@ -357,7 +357,7 @@ void SpellLayoutManager::calculate_player_tray_tile_frames()
     CGFloat gap = CanonicalTileGap * layout_scale();
     CGFloat x = up_rect_min_x(player_tray_layout_frame());
     CGFloat y = up_rect_min_y(player_tray_layout_frame());
-    for (size_t idx = 0; idx < SpellModel::TileCount; idx++) {
+    for (size_t idx = 0; idx < TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         CGRect frame = up_pixel_rect(rect, screen_scale());
         m_player_tray_tile_frames[idx] = frame;
@@ -378,7 +378,7 @@ void SpellLayoutManager::calculate_offscreen_tray_tile_frames()
     CGFloat gap = CanonicalTileGap * layout_scale();
     CGFloat x = up_rect_min_x(player_tray_layout_frame());
     CGFloat y = up_rect_max_y(screen_bounds()) + (up_size_height(size) * 0.8);
-    for (size_t idx = 0; idx < SpellModel::TileCount; idx++) {
+    for (size_t idx = 0; idx < TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         CGRect frame = up_pixel_rect(rect, screen_scale());
         m_offscreen_tray_tile_frames[idx] = frame;

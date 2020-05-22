@@ -17,6 +17,7 @@ using UP::ns_str;
 using UP::SpellLayoutManager;
 using UP::Tile;
 using UP::TilePaths;
+using UP::valid;
 
 @interface UPTileView ()
 @property (nonatomic, readwrite) UP::Tile tile;
@@ -127,6 +128,12 @@ using UP::TilePaths;
 - (BOOL)isSentinel
 {
     return self.tile.is_sentinel();
+}
+
+- (void)setIndex:(UP::TileIndex)index
+{
+    ASSERT_IDX(index);
+    _index = index;
 }
 
 #pragma mark - Gestures

@@ -21,8 +21,8 @@
 
 namespace UP {
 
-using TilePointArray = std::array<CGPoint, UP::SpellModel::TileCount>;
-using TileRectArray = std::array<CGRect, UP::SpellModel::TileCount>;
+using TilePointArray = std::array<CGPoint, UP::TileCount>;
+using TileRectArray = std::array<CGRect, UP::TileCount>;
 
 class SpellLayoutManager {
 public:
@@ -109,11 +109,11 @@ public:
     const TilePointArray &player_tray_tile_centers() const { return m_player_tray_tile_centers; }
 
     const TileRectArray &word_tray_tile_frames(size_t word_length) const {
-        ASSERT(word_length <= SpellModel::TileCount);
+        ASSERT_IDX(word_length);
         return m_word_tray_tile_frames[word_length - 1];
     }
     const TilePointArray &word_tray_tile_centers(size_t word_length) const {
-        ASSERT(word_length <= SpellModel::TileCount);
+        ASSERT_IDX(word_length);
         return m_word_tray_tile_centers[word_length - 1];
     }
 
@@ -201,8 +201,8 @@ private:
 
     TileRectArray m_player_tray_tile_frames;
     TilePointArray m_player_tray_tile_centers;
-    std::array<TileRectArray, SpellModel::TileCount> m_word_tray_tile_frames;
-    std::array<TilePointArray, SpellModel::TileCount> m_word_tray_tile_centers;
+    std::array<TileRectArray, TileCount> m_word_tray_tile_frames;
+    std::array<TilePointArray, TileCount> m_word_tray_tile_centers;
     TileRectArray m_offscreen_tray_tile_frames;
     TilePointArray m_offscreen_tray_tile_centers;
 };

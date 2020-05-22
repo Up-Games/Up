@@ -20,11 +20,12 @@
 
 using UP::GameCode;
 using UP::Tile;
+using UP::TileCount;
 using UP::TileSequence;
 using UP::SpellModel;
 using Action = UP::SpellModel::Action;
 using Opcode = UP::SpellModel::Opcode;
-using Position = UP::SpellModel::Position;
+using TileIndex = UP::TileIndex;
 
 @interface ViewController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
@@ -129,20 +130,20 @@ using Position = UP::SpellModel::Position;
 
     self.tileViews = [NSMutableArray array];
     self.wordTrayTileViews = [NSMutableArray array];
-    size_t idx = 0;
 
+    TileIndex idx = 0;
     for (const auto &tile : self.model->player_tray()) {
         UPTileView *tileView = [UPTileView viewWithTile:tile];
         tileView.gestureDelegate = self;
-        tileView.position = UP::player_tray_position(idx);
+        tileView.index = idx;
         [self.view addSubview:tileView];
         [self.tileViews addObject:tileView];
         idx++;
     }
 
-    const std::array<CGRect, SpellModel::TileCount> tile_frames = layout_manager.player_tray_tile_frames();
+    const std::array<CGRect, TileCount> tile_frames = layout_manager.player_tray_tile_frames();
     for (UPTileView *tileView in self.tileViews) {
-        tileView.frame = tile_frames.at(SpellModel::index(tileView.position));
+        tileView.frame = tile_frames[tileView.index];
     }
     
     self.roundControlButtonClear.alpha = 0;
@@ -199,11 +200,11 @@ using Position = UP::SpellModel::Position;
         return;
     }
     
-    if (UP::is_marked(self.model->player_marked(), tileView.position)) {
+    if (UP::is_marked(self.model->player_marked(), tileView.index)) {
         [self wordTrayTapped];
     }
     else {
-        [self applyActionTap:tileView.position];
+        [self applyActionTap:tileView.index];
     }
 }
 
@@ -213,14 +214,14 @@ using Position = UP::SpellModel::Position;
 
 #pragma mark - Actions
 
-- (void)applyActionTap:(Position)pos
+- (void)applyActionTap:(TileIndex)tile_idx
 {
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::TAP, pos));
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::TAP, tile_idx));
 
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
     const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
     
-    size_t idx = 0;
+    TileIndex idx = 0;
     for (UPTileView *wordTrayTileView in self.wordTrayTileViews) {
         CGPoint word_tray_center = word_tray_tile_centers[idx];
         [wordTrayTileView bloopWithDuration:0.2 toPosition:word_tray_center completion:nil];
@@ -229,7 +230,7 @@ using Position = UP::SpellModel::Position;
     
     const size_t word_idx = self.model->word_length() - 1;
     CGPoint word_tray_center = word_tray_tile_centers[word_idx];
-    UPTileView *tileView = self.tileViews[index(pos)];
+    UPTileView *tileView = self.tileViews[tile_idx];
     [tileView bloopWithDuration:0.4 toPosition:word_tray_center completion:nil];
     
     [self.wordTrayTileViews addObject:tileView];
@@ -338,7 +339,7 @@ using Position = UP::SpellModel::Position;
 {
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
-    size_t idx = 0;
+    TileIndex idx = 0;
     for (const auto &mark : self.model->player_marked()) {
         if (mark) {
             CGPoint player_tray_center = player_tray_tile_centers[idx];
@@ -354,7 +355,7 @@ using Position = UP::SpellModel::Position;
 - (void)viewUpdateScoreWord
 {
     UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
-    size_t idx = 0;
+    TileIndex idx = 0;
     for (const auto &mark : self.model->player_marked()) {
         if (mark) {
             UPTileView *tileView = self.tileViews[idx];
@@ -379,8 +380,8 @@ using Position = UP::SpellModel::Position;
     UP::Random &random = UP::Random::instance();
     const auto &offscreen_tray_tile_centers = layout_manager.offscreen_tray_tile_centers();
     
-    std::array<size_t, UP::SpellModel::TileCount> idxs;
-    for (size_t idx = 0; idx < UP::SpellModel::TileCount; idx++) {
+    std::array<size_t, TileCount> idxs;
+    for (TileIndex idx = 0; idx < TileCount; idx++) {
         idxs[idx] = idx;
     }
     std::shuffle(idxs.begin(), idxs.end(), random.generator());
@@ -403,13 +404,13 @@ using Position = UP::SpellModel::Position;
     const auto &fill_tray_tile_centers = layout_manager.offscreen_tray_tile_centers();
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
 
-    size_t idx = 0;
+    TileIndex idx = 0;
     NSArray *copiedTileViews = [self.tileViews copy];
     for (UPTileView *tileView in copiedTileViews) {
         if (tileView.isSentinel) {
             UPTileView *newTileView = [UPTileView viewWithTile:self.model->player_tray()[idx]];
             newTileView.gestureDelegate = self;
-            newTileView.position = UP::player_tray_position(idx);
+            newTileView.index = idx;
             newTileView.frame = fill_tray_tile_frames[idx];
             self.tileViews[idx] = newTileView;
             [self.view addSubview:newTileView];

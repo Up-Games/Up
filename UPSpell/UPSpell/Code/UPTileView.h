@@ -19,7 +19,7 @@
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) int multiplier;
 @property (nonatomic, readonly) BOOL isSentinel;
-@property (nonatomic) UP::SpellModel::Position position;
+@property (nonatomic) UP::TileIndex index;
 
 @property (nonatomic, readonly) UITapGestureRecognizer *tap;
 @property (nonatomic, readonly) UIPanGestureRecognizer *pan;
@@ -36,3 +36,4 @@
 - (void)tileViewTapped:(UPTileView *)tileView;
 - (void)tileViewPanned:(UPTileView *)tileView;
 @end
+

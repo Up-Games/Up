@@ -17,6 +17,23 @@
 
 namespace UP {
 
+using TileIndex = size_t;
+static constexpr TileIndex NotATileIndex = -1;
+static constexpr size_t TileCount = 7;
+static constexpr size_t LastTileIndex = TileCount - 1;
+using TileTray = std::array<Tile, TileCount>;
+using MarkedArray = std::array<bool, TileCount>;
+
+template <bool B = true>
+bool valid(TileIndex idx) { return (idx < TileCount) == B; }
+
+template <bool B = true>
+bool valid_end(TileIndex idx) { return (idx <= TileCount) == B; }
+
+#define ASSERT_IDX(idx) ASSERT_WITH_MESSAGE(valid(idx), "Invalid TileIndex: %ld", (idx))
+#define ASSERT_NIDX(idx) ASSERT_WITH_MESSAGE(valid<false>(idx), "Expected invalid TileIndex: %ld", (idx))
+#define ASSERT_IDX_END(idx) ASSERT_WITH_MESSAGE(valid_end(idx), "Invalid TileIndex: %ld", (idx))
+
 class SpellModel {
 public:
     enum class Opcode: uint8_t {
@@ -36,52 +53,29 @@ public:
         QUIT    // quit the game early
     };
 
-    enum class Position: size_t {
-        P1 = 0,
-        P2 = 1,
-        P3 = 2,
-        P4 = 3,
-        P5 = 4,
-        P6 = 5,
-        P7 = 6,
-        W1 = 0,
-        W2 = 1,
-        W3 = 2,
-        W4 = 3,
-        W5 = 4,
-        W6 = 5,
-        W7 = 6,
-        XX = 0
-    };
-    static size_t index(Position pos) { return static_cast<size_t>(pos); }
-    
     static constexpr int SevenLetterWordBonus = 50;
     static constexpr int SixLetterWordBonus = 20;
     static constexpr int FiveLetterWordBonus = 10;
-    
+
     class Action {
     public:
         Action() {}
-        explicit Action(Opcode opcode, Position pos1 = Position::XX, Position pos2 = Position::XX) :
-            m_timestamp(0), m_opcode(opcode), m_pos1(pos1), m_pos2(pos2) {}
-        Action(CFTimeInterval timestamp, Opcode opcode, Position pos1 = Position::XX, Position pos2 = Position::XX) :
-            m_timestamp(timestamp), m_opcode(opcode), m_pos1(pos1), m_pos2(pos2) {}
+        explicit Action(Opcode opcode, TileIndex idx1 = NotATileIndex, TileIndex idx2 = NotATileIndex) :
+            m_timestamp(0), m_opcode(opcode), m_idx1(idx1), m_idx2(idx2) {}
+        Action(CFTimeInterval timestamp, Opcode opcode, TileIndex idx1 = NotATileIndex, TileIndex idx2 = NotATileIndex) :
+            m_timestamp(timestamp), m_opcode(opcode), m_idx1(idx1), m_idx2(idx2) {}
 
         CFTimeInterval timestamp() const { return m_timestamp; }
         Opcode opcode() const { return m_opcode; }
-        Position pos1() const { return m_pos1; }
-        Position pos2() const { return m_pos2; }
+        TileIndex idx1() const { return m_idx1; }
+        TileIndex idx2() const { return m_idx2; }
 
     private:
         Opcode m_opcode = Opcode::NOP;
-        Position m_pos1 = Position::XX;
-        Position m_pos2 = Position::XX;
+        TileIndex m_idx1 = NotATileIndex;
+        TileIndex m_idx2 = NotATileIndex;
         CFTimeInterval m_timestamp = 0;
     };
-
-    enum { TileCount = 7 };
-    using TileTray = std::array<Tile, TileCount>;
-    using MarkedArray = std::array<bool, TileCount>;
 
     class State {
     public:
@@ -119,17 +113,17 @@ public:
     const State &apply(const Action &action);
 
 private:
-    void player_mark_at(Position pos) { m_player_marked.at(index(pos)) = true; }
-    void player_unmark_at(size_t idx) { m_player_marked.at(idx) = false; }
+    void player_mark_at(TileIndex idx) { ASSERT_IDX(idx); m_player_marked[idx] = true; }
+    void player_unmark_at(TileIndex idx) { ASSERT_IDX(idx); m_player_marked[idx] = false; }
     void player_mark_all() { m_player_marked.fill(true); }
     void player_unmark_all() { m_player_marked.fill(false); }
     size_t player_count_marked() const;
     void player_sentinelize_marked();
     void player_fill();
 
-    void word_insert_at(const Tile &tile, Position pos);
-    void word_remove_at(const Tile &tile, Position pos);
-    void word_push_back(const Tile &tile) { m_word_tray[word_length()] = tile; }
+    void word_insert_at(const Tile &, TileIndex);
+    void word_remove_at(const Tile &, TileIndex);
+    void word_push_back(const Tile &tile) { ASSERT_IDX(word_length()); m_word_tray[word_length()] = tile; }
     void word_clear() { m_word_tray.fill(Tile::sentinel()); }
     void word_update();
     void word_submit();
@@ -156,72 +150,11 @@ private:
     int m_game_score = 0;
 };
 
-std::string tile_tray_description(const SpellModel::TileTray &);
-std::string marked_array_description(const SpellModel::MarkedArray &);
-
-UP_STATIC_INLINE size_t index(SpellModel::Position pos) { return static_cast<size_t>(pos); }
-UP_STATIC_INLINE bool is_valid_tray_index(size_t idx) { return idx < SpellModel::TileCount; }
-UP_STATIC_INLINE bool is_valid_tray_index_for_one_after_end(size_t idx) { return idx <= SpellModel::TileCount; }
-
-UP_STATIC_INLINE SpellModel::Position player_tray_position(size_t idx) {
-    ASSERT(is_valid_tray_index(idx));
-    using Position = SpellModel::Position;
-    switch (idx) {
-        case 0:
-            return Position::P1;
-        case 1:
-            return Position::P2;
-        case 2:
-            return Position::P3;
-        case 3:
-            return Position::P4;
-        case 4:
-            return Position::P5;
-        case 5:
-            return Position::P6;
-        case 6:
-            return Position::P7;
-    }
-    ASSERT_NOT_REACHED();
-    return Position::XX;
-}
-
-UP_STATIC_INLINE SpellModel::Position word_tray_position(size_t idx) {
-    ASSERT(is_valid_tray_index(idx));
-    using Position = SpellModel::Position;
-    switch (idx) {
-        case 0:
-            return Position::W1;
-        case 1:
-            return Position::W2;
-        case 2:
-            return Position::W3;
-        case 3:
-            return Position::W4;
-        case 4:
-            return Position::W5;
-        case 5:
-            return Position::W6;
-        case 6:
-            return Position::W7;
-    }
-    ASSERT_NOT_REACHED();
-    return Position::XX;
-}
-
-
-UP_STATIC_INLINE bool position_in_player_tray(const SpellModel::Position pos)
-{
-    return pos >= SpellModel::Position::P1 && pos <= SpellModel::Position::P7;
-}
-
-UP_STATIC_INLINE bool position_in_word_tray(const SpellModel::Position pos)
-{
-    return pos >= SpellModel::Position::W1 && pos <= SpellModel::Position::W7;
-}
+std::string tile_tray_description(const TileTray &);
+std::string marked_array_description(const MarkedArray &);
 
 template <bool B = true>
-bool is_sentinel_filled(const SpellModel::TileTray &tile_tray)
+bool is_sentinel_filled(const TileTray &tile_tray)
 {
     for (const auto &tile : tile_tray) {
         if (tile.is_sentinel<!B>()) {
@@ -232,13 +165,14 @@ bool is_sentinel_filled(const SpellModel::TileTray &tile_tray)
 }
 
 template <bool B = true>
-bool is_marked(const SpellModel::MarkedArray &marked_array, const SpellModel::Position pos)
+bool is_marked(const MarkedArray &marked_array, const TileIndex idx)
 {
-    return marked_array[index(pos)] == B;
+    ASSERT_IDX(idx);
+    return marked_array[idx] == B;
 }
 
 template <bool B = true>
-size_t count_marked(const SpellModel::MarkedArray &marked_array)
+size_t count_marked(const MarkedArray &marked_array)
 {
     size_t count = 0;
     for (const auto &mark : marked_array) {
@@ -249,8 +183,8 @@ size_t count_marked(const SpellModel::MarkedArray &marked_array)
     return count;
 }
 
-size_t count_non_sentinel(const SpellModel::TileTray &tile_tray);
-bool is_non_sentinel_filled_up_to(const SpellModel::TileTray &tile_tray, const size_t idx);
+size_t count_non_sentinel(const TileTray &tile_tray);
+bool is_non_sentinel_filled_up_to(const TileTray &tile_tray, const TileIndex idx);
 
 }  // namespace UP
 

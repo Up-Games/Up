@@ -5,5 +5,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "UPSpellModel.h"
+#import "UPTileView.h"
+
+namespace UP {
+
+using TileViewArray = std::array<UPTileView, TileCount>;
+
+}  // namespace UP
+
 @interface ViewController : UIViewController
 @end
