@@ -49,7 +49,7 @@ using UP::cancel_all_delayed;
 @property (nonatomic) UIFont *gameInformationFont;
 @property (nonatomic) UIFont *gameInformationSuperscriptFont;
 @property (nonatomic) UPDeferredBlock *wordTrayActivateDeferredBlock;
-@property (nonatomic) std::shared_ptr<SpellModel> model;
+@property (nonatomic) SpellModel *model;
 @end
 
 @implementation ViewController
@@ -65,12 +65,11 @@ using UP::cancel_all_delayed;
     UP::Lexicon::set_language(UPLexiconLanguageEnglish);
 
     GameCode game_code = GameCode::random();
-////    GameCode code = GameCode("WPQ-2701");
-    NSLog(@"code: %s", game_code.string().c_str());
-    NSLog(@"code: %d", game_code.value());
+//    GameCode game_code = GameCode("WPQ-2701");
+//    LOG(General, "code: %s", game_code.string().c_str());
+//    LOG(General, "code: %d", game_code.value());
 //
-
-    self.model = std::make_shared<SpellModel>(game_code);
+    self.model = new SpellModel(game_code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
 //    [UIColor setThemeHue:0];
@@ -153,6 +152,11 @@ using UP::cancel_all_delayed;
     
     self.roundControlButtonClear.alpha = 0;
     [self viewUpdateGameControls];
+}
+
+- (void)dealloc
+{
+    delete self.model;
 }
 
 - (void)viewDidLayoutSubviews
