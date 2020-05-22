@@ -54,25 +54,29 @@ public:
     }
 
     uint32_t uint32_less_than(uint32_t bound) {
-        return uint_32() % bound;
+        std::uniform_int_distribution<uint32_t> dis(0, bound - 1);
+        return dis(m_generator);
     }
 
     uint32_t uint32_between(uint32_t gte_lo, uint32_t lt_hi) {
         if (gte_lo >= lt_hi) {
             return gte_lo;
         }
-        return (uint_32() % (lt_hi - gte_lo)) + gte_lo;
+        std::uniform_int_distribution<uint32_t> dis(gte_lo, lt_hi - 1);
+        return dis(m_generator);
     }
 
     uint32_t uint32_in_range(uint32_t gte_lo, uint32_t lte_hi) {
         if (gte_lo >= lte_hi) {
             return gte_lo;
         }
-        return (uint_32() % (lte_hi - gte_lo + 1)) + gte_lo;
+        std::uniform_int_distribution<uint32_t> dis(gte_lo, lte_hi);
+        return dis(m_generator);
     }
 
     float unit() {
-        return (float)uint_32() / std::numeric_limits<uint32_t>::max();
+        std::uniform_real_distribution<float> dis(0.0, 1.0);
+        return dis(m_generator);
     }
 
 private:
