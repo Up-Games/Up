@@ -1,2 +1,3 @@
-# Up
-Games. Craft, joy &amp; whimsy.
+# Up Games 
+
+Craft, joy &amp; whimsy.
