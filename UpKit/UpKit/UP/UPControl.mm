@@ -1,11 +1,12 @@
 //
-//  UPControl.m
+//  UPControl.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import "UPAssertions.h"
+#import "UPBezierPathView.h"
 #import "UPControl.h"
 #import "UIColor+UP.h"
-#import "UPBezierPathView.h"
 #import "UPMacros.h"
 
 @interface UPControl ()

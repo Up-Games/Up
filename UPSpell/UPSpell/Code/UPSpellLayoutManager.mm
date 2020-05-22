@@ -72,6 +72,7 @@ void SpellLayoutManager::calculate()
     calculate_controls_layout_frame();
     calculate_tile_size();
     calculate_word_tray_layout_frame();
+    calculate_word_tray_shake_amount();
     calculate_player_tray_layout_frame();
     calculate_word_tray_tile_frames();
     calculate_player_tray_tile_frames();
@@ -258,6 +259,12 @@ void SpellLayoutManager::calculate_game_score_label_frame()
     CGRect frame = CGRectMake(x, y, w, h);
     set_game_score_label_frame(up_pixel_rect(frame, screen_scale()));
     LOG(LayoutManager, "   score label frame:   %@", NSStringFromCGRect(game_score_label_frame()));
+}
+
+void SpellLayoutManager::calculate_word_tray_shake_amount()
+{
+    CGFloat amount = CanonicalWordTrayShakeAmount * layout_scale();
+    set_word_tray_shake_amount(up_pixel_float(amount, screen_scale()));
 }
 
 void SpellLayoutManager::calculate_word_tray_tile_frames()

@@ -59,6 +59,7 @@ public:
     static inline constexpr CGRect CanonicalWordTrayFrame =       { 62.5, 133, 875, 182 };
     static inline constexpr CGRect CanonicalTilesLayoutFrame =    {    0, 348, CanonicalTilesLayoutWidth, 120 };
 
+    static inline constexpr CGFloat CanonicalWordTrayShakeAmount = 30;
 
     static SpellLayoutManager &create_instance() {
         g_instance = new SpellLayoutManager();
@@ -93,6 +94,10 @@ public:
     CGRect player_tray_layout_frame() const { return m_player_tray_layout_frame; }
 
     CGSize tile_size() const { return m_tile_size; }
+    CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
+    UIBezierPath *tile_stroke_path() const { return m_tile_stroke_path; }
+
+    CGFloat word_tray_shake_amount() const { return m_word_tray_shake_amount; }
 
     CGRect controls_button_pause_frame() const { return m_controls_button_pause_frame; }
     CGRect controls_button_trash_frame() const { return m_controls_button_trash_frame; }
@@ -101,9 +106,6 @@ public:
     const FontMetrics &game_information_superscript_font_metrics() const { return m_game_information_superscript_font_metrics; }
     CGRect game_time_label_frame() const { return m_game_time_label_frame; }
     CGRect game_score_label_frame() const { return m_game_score_label_frame; }
-
-    CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
-    UIBezierPath *tile_stroke_path() const { return m_tile_stroke_path; }
 
     const TileRectArray &player_tray_tile_frames() const { return m_player_tray_tile_frames; }
     const TilePointArray &player_tray_tile_centers() const { return m_player_tray_tile_centers; }
@@ -135,6 +137,8 @@ private:
     void set_word_tray_layout_frame(CGRect word_tray_layout_frame) { m_word_tray_layout_frame = word_tray_layout_frame; }
     void set_player_tray_layout_frame(CGRect player_tray_layout_frame) { m_player_tray_layout_frame = player_tray_layout_frame; }
     void set_tile_size(CGSize tile_size) { m_tile_size = tile_size; }
+    void set_tile_stroke_width(CGFloat tile_stroke_width) { m_tile_stroke_width = tile_stroke_width; }
+    void set_word_tray_shake_amount(CGFloat word_tray_shake_amount) { m_word_tray_shake_amount = word_tray_shake_amount; }
     void set_controls_button_pause_frame(CGRect controls_button_pause_frame) {
         m_controls_button_pause_frame = controls_button_pause_frame;
     }
@@ -153,13 +157,13 @@ private:
     void set_game_score_label_frame(CGRect game_score_label_frame) {
         m_game_score_label_frame = game_score_label_frame;
     }
-    void set_tile_stroke_width(CGFloat tile_stroke_width) { m_tile_stroke_width = tile_stroke_width; }
 
     void calculate_controls_layout_frame();
     void calculate_word_tray_layout_frame();
     void calculate_player_tray_layout_frame();
     void calculate_tile_size();
     void calculate_tile_stroke_width();
+    void calculate_word_tray_shake_amount();
     void calculate_word_tray_tile_frames();
     void calculate_player_tray_tile_frames();
     void calculate_offscreen_tray_tile_frames();
@@ -186,6 +190,10 @@ private:
     CGRect m_player_tray_layout_frame = CGRectZero;
 
     CGSize m_tile_size;
+    CGFloat m_tile_stroke_width = 0.0;
+    UIBezierPath *m_tile_stroke_path = nil;
+
+    CGFloat m_word_tray_shake_amount;
 
     CGRect m_controls_button_pause_frame = CGRectZero;
     CGRect m_controls_button_trash_frame = CGRectZero;
@@ -195,9 +203,6 @@ private:
 
     CGRect m_game_time_label_frame = CGRectZero;
     CGRect m_game_score_label_frame = CGRectZero;
-
-    CGFloat m_tile_stroke_width = 0.0;
-    UIBezierPath *m_tile_stroke_path = nil;
 
     TileRectArray m_player_tray_tile_frames;
     TilePointArray m_player_tray_tile_centers;

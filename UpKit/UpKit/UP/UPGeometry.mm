@@ -94,6 +94,11 @@ CGFloat up_aspect_ratio_for_rect(CGRect rect)
     return up_aspect_ratio_for_size(rect.size);
 }
 
+CGFloat up_pixel_float(CGFloat fnum, CGFloat screen_scale)
+{
+    return up_round_to_screen_scale(fnum, screen_scale);
+}
+
 CGPoint up_pixel_point(CGPoint point, CGFloat screen_scale)
 {
     CGFloat x = up_round_to_screen_scale(point.x, screen_scale);

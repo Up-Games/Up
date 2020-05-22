@@ -27,6 +27,11 @@ using Action = UP::SpellModel::Action;
 using Opcode = UP::SpellModel::Opcode;
 using TileIndex = UP::TileIndex;
 
+using UP::DelayToken;
+using UP::delay;
+using UP::cancel_delayed;
+using UP::cancel_all_delayed;
+
 @interface ViewController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
 @property (nonatomic) UPControl *wordTrayView;
@@ -162,7 +167,34 @@ using TileIndex = UP::TileIndex;
     self.scoreLabel.frame = layout_manager.game_score_label_frame();
 }
 
-#pragma mark - Control target/action
+#pragma mark - UPGameTimerObserver
+
+- (void)gameTimerStarted:(UPGameTimer *)gameTimer
+{
+//    NSLog(@"gameTimerStarted");
+}
+
+- (void)gameTimerStopped:(UPGameTimer *)gameTimer
+{
+//    NSLog(@"gameTimerStopped");
+}
+
+- (void)gameTimerReset:(UPGameTimer *)gameTimer
+{
+//    NSLog(@"gameTimerReset");
+}
+
+- (void)gameTimerUpdated:(UPGameTimer *)gameTimer
+{
+//    NSLog(@"gameTimerPeriodicUpdate: %.2f", gameTimer.remainingTime);
+}
+
+- (void)gameTimerExpired:(UPGameTimer *)gameTimer
+{
+//    NSLog(@"gameTimerExpired");
+}
+
+#pragma mark - Control target/action and gestures
 
 - (void)roundControlButtonPauseTapped:(id)sender
 {
@@ -191,8 +223,6 @@ using TileIndex = UP::TileIndex;
         [self applyActionReject];
     }
 }
-
-#pragma mark - UPTileViewGestureDelegate
 
 - (void)tileViewTapped:(UPTileView *)tileView
 {
@@ -264,25 +294,20 @@ using TileIndex = UP::TileIndex;
         tileView.frame = frame;
     }
  
-    CGFloat amount = up_rect_width(self.wordTrayView.frame) * 0.04;
+    UP::SpellLayoutManager &layout_manager = UP::SpellLayoutManager::instance();
+    CGFloat amount = layout_manager.word_tray_shake_amount();
     [self.wordTrayView shakeWithDuration:0.7 amount:amount completion:nil];
 
-    [UIView animateWithDuration:0.1 animations:^{
-        [self viewUpdatePenaltyBlockControlsForReject];
-    } completion:^(BOOL finished) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:0.2 animations:^{
-                [self viewUpdatePenaltyUnblockControls];
-            } completion:^(BOOL finished) {
-                for (UPTileView *tileView in self.wordTrayTileViews) {
-                    CGRect frame = CGRectOffset(tileView.frame, origin.x, origin.y);
-                    [self.view addSubview:tileView];
-                    tileView.frame = frame;
-                }
-                [self applyActionClear];
-            }];
-        });
-    }];
+    [self viewUpdatePenaltyBlockControlsForReject];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self viewUpdatePenaltyUnblockControls];
+        for (UPTileView *tileView in self.wordTrayTileViews) {
+            CGRect frame = CGRectOffset(tileView.frame, origin.x, origin.y);
+            [self.view addSubview:tileView];
+            tileView.frame = frame;
+        }
+        [self applyActionClear];
+    });
 }
 
 - (void)applyActionDump
@@ -310,6 +335,7 @@ using TileIndex = UP::TileIndex;
         [self.wordTrayActivateDeferredBlock touch];
     }
     else {
+        // FIXMENOW
         self.wordTrayActivateDeferredBlock = [[UPDeferredBlock alloc] initWithInterval:0.1 block:^{
             self.wordTrayView.active = self.model->word_in_lexicon();
             self.wordTrayActivateDeferredBlock = nil;
@@ -465,33 +491,5 @@ using TileIndex = UP::TileIndex;
         tileView.alpha = 1.0;
     }
 }
-
-#pragma mark - UPGameTimerObserver
-
-- (void)gameTimerStarted:(UPGameTimer *)gameTimer
-{
-//    NSLog(@"gameTimerStarted");
-}
-
-- (void)gameTimerStopped:(UPGameTimer *)gameTimer
-{
-//    NSLog(@"gameTimerStopped");
-}
-
-- (void)gameTimerReset:(UPGameTimer *)gameTimer
-{
-//    NSLog(@"gameTimerReset");
-}
-
-- (void)gameTimerUpdated:(UPGameTimer *)gameTimer
-{
-//    NSLog(@"gameTimerPeriodicUpdate: %.2f", gameTimer.remainingTime);
-}
-
-- (void)gameTimerExpired:(UPGameTimer *)gameTimer
-{
-//    NSLog(@"gameTimerExpired");
-}
-
 
 @end

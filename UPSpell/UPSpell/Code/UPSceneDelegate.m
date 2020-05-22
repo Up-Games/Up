@@ -6,7 +6,6 @@
 #import <UpKit/UpKit.h>
 
 #import "UPSceneDelegate.h"
-//#import "UPSpellLayoutManager.h"
 
 static UPSceneDelegate *_Instance;
 
@@ -23,10 +22,7 @@ static UPSceneDelegate *_Instance;
 @dynamic canvasFrame;
 - (CGRect)canvasFrame
 {
-    UILayoutGuide *safeAreaLayoutGuide = self.window.safeAreaLayoutGuide;
-    NSLog(@"rect:  %@", NSStringFromCGRect(self.window.bounds));
-    NSLog(@"safe:  %@", NSStringFromCGRect(safeAreaLayoutGuide.layoutFrame));
-    return safeAreaLayoutGuide.layoutFrame;
+    return self.window.safeAreaLayoutGuide.layoutFrame;
 }
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions

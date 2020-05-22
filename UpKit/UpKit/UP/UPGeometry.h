@@ -100,6 +100,7 @@ CGPoint up_rect_center(CGRect);
 CGFloat up_aspect_ratio_for_size(CGSize);
 CGFloat up_aspect_ratio_for_rect(CGRect);
 
+CGFloat up_pixel_float(CGFloat fnum, CGFloat screen_scale);
 CGPoint up_pixel_point(CGPoint point, CGFloat screen_scale);
 CGSize up_pixel_size(CGSize size, CGFloat screen_scale);
 CGRect up_pixel_rect(CGRect rect, CGFloat screen_scale);
