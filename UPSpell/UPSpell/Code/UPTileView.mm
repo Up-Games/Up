@@ -51,7 +51,7 @@ using UP::valid;
         return self;
     }
 
-    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor;
     self.layer.shadowOffset = CGSizeMake(0, 0);
     self.layer.shadowOpacity = 0;
     self.layer.shadowRadius = 1.5;

@@ -273,7 +273,8 @@ static constexpr const char *GameTag = "game";
     CGPoint word_tray_center = word_tray_tile_centers[word_idx];
     UPTileView *tileView = self.tileViews[tile_idx];
     [self.view bringSubviewToFront:tileView];
-    [tileView bloopWithDuration:0.45 toPosition:word_tray_center completion:nil];
+    
+    [tileView bloopWithDuration:0.4 toPosition:word_tray_center completion:nil];
     
     [self.wordTrayTileViews addObject:tileView];
     
@@ -310,8 +311,10 @@ static constexpr const char *GameTag = "game";
     [self.wordTrayView shakeWithDuration:0.75 amount:layout_manager.word_tray_shake_amount() completion:^(BOOL finished) {
         delay(GameTag, 0.25, ^{
             [self viewOpPenaltyFinished];
-            [self viewOpMoveWordTilesToMainView];
-            [self applyActionClear];
+            delay(GameTag, 0.1, ^{
+                [self viewOpMoveWordTilesToMainView];
+                [self applyActionClear];
+            });
         });
     }];
 }
@@ -368,7 +371,7 @@ static constexpr const char *GameTag = "game";
         if (mark) {
             CGPoint player_tray_center = player_tray_tile_centers[idx];
             UPTileView *tileView = self.tileViews[idx];
-            [tileView bloopWithDuration:2.4 toPosition:player_tray_center completion:^(BOOL finished) {
+            [tileView bloopWithDuration:0.4 toPosition:player_tray_center completion:^(BOOL finished) {
             }];
         }
         idx++;
@@ -441,7 +444,7 @@ static constexpr const char *GameTag = "game";
             CGPoint fromPoint = fill_tray_tile_centers[idx];
             CGPoint toPoint = player_tray_tile_centers[idx];
             newTileView.center = fromPoint;
-            [newTileView bloopWithDuration:0.25 toPosition:toPoint completion:nil];
+            [newTileView bloopWithDuration:0.3 toPosition:toPoint completion:nil];
         }
         idx++;
     }

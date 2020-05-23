@@ -3,14 +3,48 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <vector>
+
 #import "UPAssertions.h"
 #import "UPBezierPathView.h"
 #import "UPControl.h"
 #import "UIColor+UP.h"
 #import "UPMacros.h"
 
+namespace UP {
+
+class ControlAction {
+public:
+    ControlAction(id target, SEL action, UIControlEvents control_events) :
+        m_target(target), m_action(action), m_control_events(control_events) {}
+
+    id target() const { return m_target; }
+    SEL action() const { return m_action; }
+    UIControlEvents control_events() const { return m_control_events; }
+
+private:
+    __weak id m_target = nullptr;
+    SEL m_action;
+    UIControlEvents m_control_events = 0;
+};
+
+bool operator==(const ControlAction &a, const ControlAction &b) {
+    return a.target() == b.target() && a.action() == b.action() && a.control_events() == b.control_events();
+}
+
+bool operator!=(const ControlAction &a, const ControlAction &b) {
+    return !(a==b);
+}
+
+}  // namespace UP
+
 @interface UPControl ()
-@property (nonatomic) UIControlState additionalState;
+{
+    std::vector<UP::ControlAction> m_actions;
+}
+@property (nonatomic, readwrite) UIControlState state;
+@property (nonatomic, readwrite) BOOL tracking;
+@property (nonatomic, readwrite) BOOL touchInside;
 @property (nonatomic) NSMutableDictionary<NSNumber *, UIBezierPath *> *pathsForStates;
 @property (nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *colorsForStates;
 @property (nonatomic) UPBezierPathView *contentPathView;
@@ -35,66 +69,38 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 @implementation UPControl
 
+#pragma mark - Initialization
+
 + (UPControl *)control
 {
     return [[self alloc] initWithFrame:CGRectZero];
 }
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    self.multipleTouchEnabled = NO;
+    return self;
+}
+
 #pragma mark - State
 
-- (UIControlState)state
-{
-    return super.state | self.additionalState;
-}
-
-- (void)setNormal
-{
-    [super setEnabled:YES];
-    [super setSelected:NO];
-    [super setHighlighted:NO];
-    self.additionalState = 0;
-    [self _controlStateChanged];
-}
-
-- (void)setHighlighted
-{
-    [super setEnabled:YES];
-    [super setSelected:NO];
-    [super setHighlighted:YES];
-    self.additionalState = 0;
-    [self _controlStateChanged];
-}
-
-- (void)setDisabled
-{
-    [super setEnabled:NO];
-    [super setSelected:NO];
-    [super setHighlighted:NO];
-    self.additionalState = 0;
-    [self _controlStateChanged];
-}
-
-- (void)setSelected
-{
-    [super setEnabled:YES];
-    [super setSelected:YES];
-    [super setHighlighted:NO];
-    self.additionalState = 0;
-    [self _controlStateChanged];
-}
-
-- (void)setActive
-{
-    [super setEnabled:YES];
-    [super setSelected:NO];
-    [super setHighlighted:NO];
-    [self setActive:YES];
-}
+@dynamic enabled, selected, highlighted, active;
 
 - (void)setSelected:(BOOL)selected
 {
-    [super setSelected:selected];
+    if (selected) {
+        self.state |= UIControlStateSelected;
+    }
+    else {
+        self.state &= ~UIControlStateSelected;
+    }
     [self _controlStateChanged];
+}
+
+- (BOOL)isSelected
+{
+    return self.state & UIControlStateSelected;
 }
 
 - (void)setHighlighted:(BOOL)highlighted
@@ -102,25 +108,99 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
     if (self.highlightedOverride && !highlighted) {
         return;
     }
-    [super setHighlighted:highlighted];
+    if (highlighted) {
+        self.state |= UIControlStateHighlighted;
+    }
+    else {
+        self.state &= ~UIControlStateHighlighted;
+    }
+    [self _controlStateChanged];
+}
+
+- (BOOL)isHighlighted
+{
+    return self.state & UIControlStateHighlighted;
+}
+
+- (void)setDisabled:(BOOL)disabled
+{
+    if (disabled) {
+        self.state |= UIControlStateDisabled;
+    }
+    else {
+        self.state &= ~UIControlStateDisabled;
+    }
     [self _controlStateChanged];
 }
 
 - (void)setEnabled:(BOOL)enabled
 {
-    [super setEnabled:enabled];
-    [self _controlStateChanged];
+    [self setDisabled:!enabled];
+}
+
+- (BOOL)isEnabled
+{
+    return (self.state & UIControlStateDisabled) == 0;
 }
 
 - (void)setActive:(BOOL)active
 {
-    _active = active;
     if (active) {
-        self.additionalState |= UPControlStateActive;
+        self.state |= UPControlStateActive;
     }
     else {
-        self.additionalState &= ~UPControlStateActive;
+        self.state &= ~UPControlStateActive;
     }
+    [self _controlStateChanged];
+}
+
+- (BOOL)isActive
+{
+    return self.state & UPControlStateActive;
+}
+
+- (void)setNormal
+{
+    [self setDisabled:NO];
+    [self setSelected:NO];
+    [self setHighlighted:NO];
+    [self setActive:NO];
+    [self _controlStateChanged];
+}
+
+- (void)setHighlighted
+{
+    [self setDisabled:NO];
+    [self setSelected:NO];
+    [self setHighlighted:YES];
+    [self setActive:NO];
+    [self _controlStateChanged];
+}
+
+- (void)setDisabled
+{
+    [self setDisabled:YES];
+    [self setSelected:NO];
+    [self setHighlighted:NO];
+    [self setActive:NO];
+    [self _controlStateChanged];
+}
+
+- (void)setSelected
+{
+    [self setDisabled:NO];
+    [self setSelected:YES];
+    [self setHighlighted:NO];
+    [self setActive:NO];
+    [self _controlStateChanged];
+}
+
+- (void)setActive
+{
+    [self setDisabled:NO];
+    [self setSelected:NO];
+    [self setHighlighted:NO];
+    [self setActive:YES];
     [self _controlStateChanged];
 }
 
@@ -275,6 +355,78 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
     [self setNeedsLayout];
 }
 
+#pragma mark - Touch events
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    if (!self.isEnabled) {
+        return;
+    }
+    
+    UITouch *touch = [touches anyObject];
+    self.tracking = [self beginTrackingWithTouch:touch withEvent:event];
+    if (self.tracking) {
+        self.touchInside = [self pointInside:[touch locationInView:self] withEvent:event];
+        self.highlighted = YES;
+        [self sendActionsForControlEvents:UIControlEventTouchDown];
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    if (!self.isEnabled) {
+        return;
+    }
+    
+    UITouch *touch = [touches anyObject];
+    self.tracking = [self continueTrackingWithTouch:touch withEvent:event];
+    if (self.tracking) {
+        BOOL wasTouchInside = self.touchInside;
+        self.touchInside = [self pointInside:[touch locationInView:self] withEvent:event];
+        if (!wasTouchInside && self.touchInside) {
+            self.highlighted = YES;
+            [self sendActionsForControlEvents:UIControlEventTouchDragEnter];
+        }
+        else if (wasTouchInside && !self.touchInside) {
+            self.highlighted = NO;
+            [self sendActionsForControlEvents:UIControlEventTouchDragExit];
+        }
+        else if (wasTouchInside && self.touchInside) {
+            [self sendActionsForControlEvents:UIControlEventTouchDragInside];
+        }
+        else if (!wasTouchInside && !self.touchInside) {
+            [self sendActionsForControlEvents:UIControlEventTouchDragOutside];
+        }
+    }
+    else {
+        self.highlighted = NO;
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    self.tracking = NO;
+    self.highlighted = NO;
+    
+    UITouch *touch = [touches anyObject];
+    [self endTrackingWithTouch:touch withEvent:event];
+
+    if (self.touchInside) {
+        [self sendActionsForControlEvents:UIControlEventTouchUpInside];
+    }
+    else {
+        [self sendActionsForControlEvents:UIControlEventTouchUpOutside];
+    }
+    self.touchInside = NO;
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    self.tracking = NO;
+    self.highlighted = NO;
+    [self cancelTrackingWithEvent:event];
+}
+
 #pragma mark - Tracking
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
@@ -293,6 +445,42 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event
 {
+}
+
+#pragma mark - Target/Action
+
+- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
+{
+    UP::ControlAction control_action(target, action, controlEvents);
+    for (const auto &a : m_actions) {
+        if (a == control_action) {
+            return;
+        }
+    }
+    m_actions.push_back(control_action);
+}
+
+- (void)removeTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
+{
+    UP::ControlAction control_action(target, action, controlEvents);
+    for (auto it = m_actions.begin(); it != m_actions.end(); ++it) {
+        if (control_action == *it) {
+            m_actions.erase(it);
+            return;
+        }
+    }
+}
+
+- (void)sendActionsForControlEvents:(UIControlEvents)controlEvents
+{
+    for (const auto &a : m_actions) {
+        if (a.control_events() & controlEvents) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [a.target() performSelector:a.action() withObject:a.target()];
+#pragma clang diagnostic pop
+        }
+    }
 }
 
 #pragma mark - Layout
