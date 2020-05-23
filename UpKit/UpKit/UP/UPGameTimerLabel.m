@@ -89,7 +89,6 @@ static const NSUInteger _StringLength = 5;
         [self.attributedTimeString addAttribute:NSFontAttributeName value:self.font range:range];
         [self.attributedTimeString addAttribute:NSForegroundColorAttributeName value:textColor range:range];
         [self.attributedTimeString addAttribute:NSKernAttributeName value:@(self.superscriptKerning) range:kernRange];
-//        [self.attributedTimeString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(27 * (56.0 / 82.0)) range:tenthsRange];
         [self.attributedTimeString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(self.superscriptBaselineAdjustment) range:tenthsRange];
         [self.attributedTimeString addAttribute:NSFontAttributeName value:self.superscriptFont range:tenthsRange];
         if (self.effectiveHidesSecondsInTenths) {

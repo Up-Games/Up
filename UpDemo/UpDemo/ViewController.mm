@@ -6,7 +6,6 @@
 #import <UpKit/UpKit.h>
 
 #import "ViewController.h"
-#import "UPQuadView.h"
 
 @interface ViewController ()
 @property (nonatomic) UPQuadView *v1;
