@@ -148,7 +148,7 @@
     }
 
     CGPoint point = [tap locationInView:self.view];
-    [self.v1 bloopWithDuration:2.0 toPosition:point completion:nil];
+    [self.v1 bloopWithDuration:1.5 toPosition:point completion:nil];
 }
 
 @end
