@@ -20,17 +20,13 @@
 
 - (void)slideWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion;
 - (void)slideWithDuration:(CFTimeInterval)duration delay:(CFTimeInterval)delay toPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion;
+
+- (void)addSlideWithDuration:(CFTimeInterval)duration deltaPosition:(CGPoint)deltaPosition completion:(void (^)(BOOL finished))completion;
+
 - (void)shakeWithDuration:(CFTimeInterval)duration amount:(CGFloat)amount completion:(void (^)(BOOL finished))completion;
 - (void)fadeWithDuration:(CFTimeInterval)duration completion:(void (^)(BOOL finished))completion;
 
-extern CFTimeInterval UPDefaultBloopDuration;
-
-- (void)bloopToFrame:(CGRect)frame completion:(void (^)(BOOL finished))completion;
-- (void)bloopWithDuration:(CFTimeInterval)duration toFrame:(CGRect)frame completion:(void (^)(BOOL finished))completion;
-- (void)bloopToPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion;
-- (void)bloopToPosition:(CGPoint)position size:(CGSize)size completion:(void (^)(BOOL finished))completion;
 - (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion;
-- (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position size:(CGSize)size completion:(void (^)(BOOL finished))completion;
 
 @end
 

@@ -111,11 +111,13 @@ public:
     const TilePointArray &player_tray_tile_centers() const { return m_player_tray_tile_centers; }
 
     const TileRectArray &word_tray_tile_frames(size_t word_length) const {
-        ASSERT_IDX(word_length);
+        ASSERT(word_length > 0);
+        ASSERT_IDX_END(word_length);
         return m_word_tray_tile_frames[word_length - 1];
     }
     const TilePointArray &word_tray_tile_centers(size_t word_length) const {
-        ASSERT_IDX(word_length);
+        ASSERT(word_length > 0);
+        ASSERT_IDX_END(word_length);
         return m_word_tray_tile_centers[word_length - 1];
     }
 

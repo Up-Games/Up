@@ -77,7 +77,7 @@ static constexpr const char *GameTag = "game";
     self.model = new SpellModel(game_code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
-//    [UIColor setThemeHue:0];
+    [UIColor setThemeHue:120];
     SpellLayoutManager &layout_manager = SpellLayoutManager::create_instance();
     TilePaths::create_instance();
     
@@ -262,17 +262,18 @@ static constexpr const char *GameTag = "game";
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
     
-    TileIndex idx = 0;
+    CGPoint w1 = word_tray_tile_centers[0];
+    CGPoint w2 = word_tray_tile_centers[1];
+    CGPoint word_tray_center_diff = CGPointMake((w1.x - w2.x) * 0.5, 0);
     for (UPTileView *wordTrayTileView in self.wordTrayTileViews) {
-        CGPoint word_tray_center = word_tray_tile_centers[idx];
-        [wordTrayTileView bloopWithDuration:0.2 toPosition:word_tray_center completion:nil];
-        idx++;
+        [wordTrayTileView addSlideWithDuration:0.3 deltaPosition:word_tray_center_diff completion:nil];
     }
     
     const size_t word_idx = self.model->word_length() - 1;
     CGPoint word_tray_center = word_tray_tile_centers[word_idx];
     UPTileView *tileView = self.tileViews[tile_idx];
-    [tileView bloopWithDuration:0.4 toPosition:word_tray_center completion:nil];
+    [self.view bringSubviewToFront:tileView];
+    [tileView bloopWithDuration:0.45 toPosition:word_tray_center completion:nil];
     
     [self.wordTrayTileViews addObject:tileView];
     
@@ -367,7 +368,7 @@ static constexpr const char *GameTag = "game";
         if (mark) {
             CGPoint player_tray_center = player_tray_tile_centers[idx];
             UPTileView *tileView = self.tileViews[idx];
-            [tileView bloopWithDuration:0.4 toPosition:player_tray_center completion:^(BOOL finished) {
+            [tileView bloopWithDuration:2.4 toPosition:player_tray_center completion:^(BOOL finished) {
             }];
         }
         idx++;

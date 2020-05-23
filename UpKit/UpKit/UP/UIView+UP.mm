@@ -71,10 +71,13 @@
 
 - (void)slideWithDuration:(CFTimeInterval)duration delay:(CFTimeInterval)delay toPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion
 {
+    CGPoint center = self.center;
+
     POPBasicAnimation *slide = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
     slide.duration = duration;
     slide.beginTime = CACurrentMediaTime() + delay;
     slide.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutCirc];
+    slide.fromValue = [NSValue valueWithCGPoint:center];
     slide.toValue = [NSValue valueWithCGPoint:position];
     slide.completionBlock = ^(POPAnimation *anim, BOOL finished) {
         if (completion) {
@@ -82,6 +85,25 @@
         }
     };
     [self pop_addAnimation:slide forKey:@"slide"];
+}
+
+- (void)addSlideWithDuration:(CFTimeInterval)duration deltaPosition:(CGPoint)deltaPosition completion:(void (^)(BOOL finished))completion
+{
+    CGFloat dx = deltaPosition.x;
+    CGFloat dy = deltaPosition.y;
+
+    POPBasicAnimation *slide = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
+    slide.duration = duration;
+    slide.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutCirc];
+    slide.additive = YES;
+    slide.fromValue = [NSValue valueWithCGPoint:CGPointZero];
+    slide.toValue = [NSValue valueWithCGPoint:CGPointMake(dx, dy)];
+    slide.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        if (completion) {
+            completion(finished);
+        }
+    };
+    [self pop_addAnimation:slide forKey:@"addSlide"];
 }
 
 #pragma mark - Shake
@@ -152,34 +174,7 @@
 
 #pragma mark - Bloop
 
-CFTimeInterval UPDefaultBloopDuration = 0.375;
-
-- (void)bloopToFrame:(CGRect)frame completion:(void (^)(BOOL finished))completion
-{
-    [self bloopWithDuration:UPDefaultBloopDuration toPosition:up_rect_center(frame) size:frame.size completion:completion];
-}
-
-- (void)bloopWithDuration:(CFTimeInterval)duration toFrame:(CGRect)frame completion:(void (^)(BOOL finished))completion
-{
-    [self bloopWithDuration:duration toPosition:up_rect_center(frame) size:frame.size completion:completion];
-}
-
-- (void)bloopToPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion
-{
-    [self bloopWithDuration:UPDefaultBloopDuration toPosition:position size:self.bounds.size completion:completion];
-}
-
-- (void)bloopToPosition:(CGPoint)position size:(CGSize)size completion:(void (^)(BOOL finished))completion
-{
-    [self bloopWithDuration:UPDefaultBloopDuration toPosition:position size:size completion:completion];
-}
-
 - (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position completion:(void (^)(BOOL finished))completion
-{
-    [self bloopWithDuration:duration toPosition:position size:self.bounds.size completion:completion];
-}
-
-- (void)bloopWithDuration:(CFTimeInterval)duration toPosition:(CGPoint)position size:(CGSize)size completion:(void (^)(BOOL finished))completion
 {
     static constexpr CGFloat _Divisor = M_PI * 0.75;
     static constexpr CGFloat _TL_A = M_PI * -0.75;
@@ -187,8 +182,8 @@ CFTimeInterval UPDefaultBloopDuration = 0.375;
     static constexpr CGFloat _BL_A = M_PI * 0.75;
     static constexpr CGFloat _BR_A = M_PI * 0.25;
 
-    CGRect startFrame = self.frame;
-    CGPoint center = up_rect_center(startFrame);
+    CGRect bounds = self.bounds;
+    CGPoint center = self.center;
     CGFloat dx = position.x - center.x;
     CGFloat dy = position.y - center.y;
     CGFloat angle = atan2(dy, dx);
@@ -198,11 +193,11 @@ CFTimeInterval UPDefaultBloopDuration = 0.375;
     CGFloat bl_f = UPMaxT(CGFloat, 1.0 - (up_radian_difference(_BL_A, angle) / _Divisor), 0);
     CGFloat br_f = UPMaxT(CGFloat, 1.0 - (up_radian_difference(_BR_A, angle) / _Divisor), 0);
  
-    static constexpr CGFloat _MaxStretch = 20;
-    static constexpr CGFloat _MaxStretchPercentage = 0.20;
+    static constexpr CGFloat _MaxStretch = 7.5;
+    static constexpr CGFloat _MaxStretchPercentage = 0.075;
 
-    CGFloat effectiveMaxStretchX = UPMinT(CGFloat, CGRectGetWidth(startFrame) * _MaxStretchPercentage, _MaxStretch);
-    CGFloat effectiveMaxStretchY = UPMinT(CGFloat, CGRectGetHeight(startFrame) * _MaxStretchPercentage, _MaxStretch);
+    CGFloat effectiveMaxStretchX = UPMinT(CGFloat, CGRectGetWidth(bounds) * _MaxStretchPercentage, _MaxStretch);
+    CGFloat effectiveMaxStretchY = UPMinT(CGFloat, CGRectGetHeight(bounds) * _MaxStretchPercentage, _MaxStretch);
 
     CGFloat dx_stretch = UPClampT(CGFloat, dx * 0.15, -effectiveMaxStretchX, effectiveMaxStretchX);
     CGFloat dy_stretch = UPClampT(CGFloat, dy * 0.15, -effectiveMaxStretchY, effectiveMaxStretchY);
@@ -239,20 +234,34 @@ CFTimeInterval UPDefaultBloopDuration = 0.375;
     };
     [self pop_addAnimation:stretch forKey:@"stretch"];
 
-    CGRect endFrame = up_rect_centered_around_point(CGRectMake(0, 0, size.width, size.height), center);
-
-    POPBasicAnimation *move = [POPBasicAnimation animationWithPropertyNamed:kPOPViewFrame];
+    POPBasicAnimation *move = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
     move.beginTime = moveDelay;
     move.duration = moveDuration;
+    move.additive = YES;
     move.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutBack];
-    move.fromValue = [NSValue valueWithCGRect:startFrame];
-    move.toValue = [NSValue valueWithCGRect:CGRectOffset(endFrame, dx, dy)];
+    move.fromValue = [NSValue valueWithCGPoint:CGPointZero];
+    move.toValue = [NSValue valueWithCGPoint:CGPointMake(dx, dy)];
     move.completionBlock = ^(POPAnimation *anim, BOOL finished) {
         if (completion) {
             completion(finished);
         }
     };
     [self pop_addAnimation:move forKey:@"move"];
+
+    POPBasicAnimation *shadow1 = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerShadowOpacity];
+    shadow1.duration = duration * 0.5;
+    shadow1.fromValue = @(0);
+    shadow1.toValue = @(1);
+    shadow1.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInQuad];
+    shadow1.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        POPBasicAnimation *shadow2 = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerShadowOpacity];
+        shadow2.duration = duration * 0.5;
+        shadow2.fromValue = @(1);
+        shadow2.toValue = @(0);
+        shadow2.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutQuad];
+        [self.layer pop_addAnimation:shadow2 forKey:@"shadow"];
+    };
+    [self.layer pop_addAnimation:shadow1 forKey:@"shadow"];
 }
 
 @end

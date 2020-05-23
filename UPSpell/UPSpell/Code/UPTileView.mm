@@ -28,6 +28,7 @@ using UP::valid;
 @property (nonatomic) UPBezierPathView *multiplierView;
 @property (nonatomic, readwrite) UITapGestureRecognizer *tap;
 @property (nonatomic, readwrite) UIPanGestureRecognizer *pan;
+@property (nonatomic) CGFloat shadowOpacity;
 @end
 
 @implementation UPTileView
@@ -49,6 +50,11 @@ using UP::valid;
     if (tile.is_sentinel()) {
         return self;
     }
+
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.shadowOffset = CGSizeMake(0, 0);
+    self.layer.shadowOpacity = 0;
+    self.layer.shadowRadius = 1.5;
 
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     TilePaths &tile_paths = TilePaths::instance();
@@ -104,6 +110,17 @@ using UP::valid;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+@dynamic shadowOpacity;
+- (void)setShadowOpacity:(CGFloat)shadowOpacity
+{
+    self.layer.shadowOpacity = shadowOpacity;
+}
+
+- (CGFloat)shadowOpacity
+{
+    return self.layer.shadowOpacity;
 }
 
 @dynamic glyph;
