@@ -10,4 +10,7 @@
 @property (nonatomic) UPQuadOffsets quadOffsets;
 @property (nonatomic) UPQuad quad;
 @property (nonatomic, readonly) UPQuad effectiveQuad;
+
+- (void)newBloop;
+
 @end

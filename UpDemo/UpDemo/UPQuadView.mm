@@ -5,6 +5,9 @@
 
 #import <UPKit/UPAssertions.h>
 #import <UPKit/UPGeometry.h>
+#import <UPKit/POP.h>
+#import <UPKit/NSValue+UP.h>
+
 #import "UPQuadView.h"
 
 @interface UPQuadView ()
@@ -110,4 +113,79 @@
     self.layer.transform = fullTransform;
 }
 
+static UPQuadOffsets UPQuadOffsetsForSquishAmountInAngleOfMovement(CGFloat amount, CGFloat angle)
+{
+    CGFloat tlx = cos(DEG2RAD * angle) * amount;
+    CGFloat trx = -cos(DEG2RAD * angle) * amount;
+
+    CGFloat bly = cos(DEG2RAD * angle) * amount;
+    CGFloat bry = cos(DEG2RAD * angle) * amount;
+
+    return UPQuadOffsetsMake(UPOffsetMake(tlx, 0), UPOffsetMake(trx, 0), UPOffsetMake(0, bly), UPOffsetMake(0, bry));
+}
+
+static UPQuadOffsets UPQuadOffsetsForUnsquishAmountInAngleOfMovement(CGFloat amount, CGFloat angle)
+{
+    CGFloat tly = -cos(DEG2RAD * angle) * amount;
+    CGFloat tr_y = -cos(DEG2RAD * angle) * amount;
+
+    CGFloat blx = cos(DEG2RAD * angle) * amount;
+    CGFloat brx = -cos(DEG2RAD * angle) * amount;
+
+    return UPQuadOffsetsMake(UPOffsetMake(0, tly), UPOffsetMake(0, tr_y), UPOffsetMake(blx, 0), UPOffsetMake(brx, 0));
+}
+
+- (void)newBloop
+{
+    CFTimeInterval duration = 0.4;
+    CFTimeInterval squishDuration = duration * 0.125;
+    CFTimeInterval moveDuration = duration - squishDuration;
+
+    UPQuadOffsets squishQuadOffsets = UPQuadOffsetsForSquishAmountInAngleOfMovement(5, 180);
+    UPQuadOffsets unsquishQuadOffsets = UPQuadOffsetsForUnsquishAmountInAngleOfMovement(5, 180);
+
+    POPBasicAnimation *squish = [POPBasicAnimation animationWithPropertyNamed:kPOPViewQuadOffsets];
+    squish.duration = squishDuration;
+    squish.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInSine];
+    squish.fromValue = [NSValue valueWithQuadOffsets:UPQuadOffsetsZero];
+    squish.toValue = [NSValue valueWithQuadOffsets:squishQuadOffsets];
+    squish.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        POPBasicAnimation *restore = [POPBasicAnimation animationWithPropertyNamed:kPOPViewQuadOffsets];
+        restore.duration = squishDuration * 2;
+        restore.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutBack];
+        restore.fromValue = [NSValue valueWithQuadOffsets:squishQuadOffsets];
+        restore.toValue = [NSValue valueWithQuadOffsets:UPQuadOffsetsZero];
+        [self pop_addAnimation:restore forKey:@"restore"];
+
+        POPBasicAnimation *move = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
+        move.duration = moveDuration;
+        move.additive = YES;
+        move.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutBack];
+        move.fromValue = [NSValue valueWithCGPoint:CGPointZero];
+        move.toValue = [NSValue valueWithCGPoint:CGPointMake(0, 200)];
+        move.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        };
+        [self pop_addAnimation:move forKey:@"move"];
+    };
+    [self pop_addAnimation:squish forKey:@"squish"];
+
+    POPBasicAnimation *unsquish = [POPBasicAnimation animationWithPropertyNamed:kPOPViewQuadOffsets];
+    unsquish.duration = squishDuration * 2.5;
+    unsquish.beginTime = CACurrentMediaTime() + (duration * 0.4);
+    unsquish.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInSine];
+    unsquish.fromValue = [NSValue valueWithQuadOffsets:UPQuadOffsetsZero];
+    unsquish.toValue = [NSValue valueWithQuadOffsets:unsquishQuadOffsets];
+    unsquish.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        POPBasicAnimation *restore = [POPBasicAnimation animationWithPropertyNamed:kPOPViewQuadOffsets];
+        restore.duration = squishDuration;
+        restore.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutSine];
+        restore.fromValue = [NSValue valueWithQuadOffsets:unsquishQuadOffsets];
+        restore.toValue = [NSValue valueWithQuadOffsets:UPQuadOffsetsZero];
+        [self pop_addAnimation:restore forKey:@"restore"];
+    };
+    [self pop_addAnimation:unsquish forKey:@"unsquish"];
+
+}
+
 @end
+

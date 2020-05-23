@@ -26,7 +26,7 @@
 
     LOG_CHANNEL_ON(General);
 
-    CGRect rect = CGRectMake(100, 100, 100, 100);
+    CGRect rect = CGRectMake(100, 100, 100, 120);
 //    UPQuadOffsets offsets = UPQuadOffsetsMake(UPOffsetMake(10, 0), UPOffsetMake(-10, 0), UPOffsetMake(-10, 0), UPOffsetMake(10, 0));
 //    UPQuadOffsets offsets = UPQuadOffsetsMake(UPOffsetMake(0, 0), UPOffsetMake(0, 0), UPOffsetMake(-40, 0), UPOffsetMake(40, 0));
 //    UPQuad q = UPQuadMakeWithRectAndOffsets(rect, offsets);
@@ -36,6 +36,12 @@
 //    self.v1.quadOffsets = offsets;
     self.v1.backgroundColor = [UIColor testColor1];
     [self.view addSubview:self.v1];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        CGRect viewLayoutRect = CGRectInset(self.view.bounds, 40, 100);
+        self.v1.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:viewLayoutRect hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalTop];
+        [self.v1 layoutWithRule];
+    });
     
 //    CATransform3D t = up_transform_for_rect_to_quad(self.v1.frame, offsets);
 //    self.v1.layer.transform = t;
@@ -148,7 +154,23 @@
     }
 
     CGPoint point = [tap locationInView:self.view];
-    [self.v1 bloopWithDuration:1.5 toPosition:point completion:nil];
+    [self.v1 bloopWithDuration:0.4 toPosition:point completion:nil];
+
+
+//    static bool flag;
+//    if (flag) {
+//        CGRect viewLayoutRect = CGRectInset(self.view.bounds, 40, 100);
+//        self.v1.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:viewLayoutRect hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalTop];
+//        [self.v1 layoutWithRule];
+//    }
+//    else {
+//        [self.v1 newBloop];
+//    }
+//    flag = !flag;
+
+
+//    CGPoint point = [tap locationInView:self.view];
+//    [self.v1 bloopWithDuration:1.5 toPosition:point completion:nil];
 }
 
 @end

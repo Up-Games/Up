@@ -192,9 +192,12 @@
     CGFloat tr_f = UPMaxT(CGFloat, 1.0 - (up_radian_difference(_TR_A, angle) / _Divisor), 0);
     CGFloat bl_f = UPMaxT(CGFloat, 1.0 - (up_radian_difference(_BL_A, angle) / _Divisor), 0);
     CGFloat br_f = UPMaxT(CGFloat, 1.0 - (up_radian_difference(_BR_A, angle) / _Divisor), 0);
- 
+
     static constexpr CGFloat _MaxStretch = 7.5;
     static constexpr CGFloat _MaxStretchPercentage = 0.075;
+
+    static constexpr CGFloat _MaxSquish = 4.0;
+    static constexpr CGFloat _MaxSquishPercentage = 0.04;
 
     CGFloat effectiveMaxStretchX = UPMinT(CGFloat, CGRectGetWidth(bounds) * _MaxStretchPercentage, _MaxStretch);
     CGFloat effectiveMaxStretchY = UPMinT(CGFloat, CGRectGetHeight(bounds) * _MaxStretchPercentage, _MaxStretch);
@@ -202,10 +205,32 @@
     CGFloat dx_stretch = UPClampT(CGFloat, dx * 0.15, -effectiveMaxStretchX, effectiveMaxStretchX);
     CGFloat dy_stretch = UPClampT(CGFloat, dy * 0.15, -effectiveMaxStretchY, effectiveMaxStretchY);
 
-    UPOffset tl_o = UPOffsetMake(tl_f * dx_stretch, tl_f * dy_stretch);
-    UPOffset tr_o = UPOffsetMake(tr_f * dx_stretch, tr_f * dy_stretch);
-    UPOffset bl_o = UPOffsetMake(bl_f * dx_stretch, bl_f * dy_stretch);
-    UPOffset br_o = UPOffsetMake(br_f * dx_stretch, br_f * dy_stretch);
+    CGFloat effectiveMaxSquishX = UPMinT(CGFloat, CGRectGetWidth(bounds) * _MaxSquishPercentage, _MaxSquish);
+    CGFloat effectiveMaxSquishY = UPMinT(CGFloat, CGRectGetHeight(bounds) * _MaxSquishPercentage, _MaxSquish);
+
+    CGFloat up_squish = 0;
+    CGFloat down_squish = 0;
+    CGFloat right_squish = 0;
+    CGFloat left_squish = 0;
+
+    CGFloat angle_deg = (RAD2DEG * angle) + 90;
+    if ((angle_deg >= 0 && angle_deg < 90) || (angle_deg >= -90 && angle_deg < 0)) {
+        up_squish = UPMinT(CGFloat, -sin(angle) * _MaxStretch, effectiveMaxSquishX);
+    }
+    if (angle_deg >= 90 && angle_deg < 270) {
+        down_squish = UPMinT(CGFloat, sin(angle) * _MaxStretch, effectiveMaxSquishX);
+    }
+    if ((angle_deg >= 0 && angle_deg < 180)) {
+        right_squish = UPMinT(CGFloat, cos(angle) * _MaxStretch, effectiveMaxSquishY);
+    }
+    if ((angle_deg >= 180 && angle_deg < 270) || (angle_deg >= -90 && angle_deg < 0)) {
+        left_squish = UPMinT(CGFloat, -cos(angle) * _MaxStretch, effectiveMaxSquishY);
+    }
+    
+    UPOffset tl_o = UPOffsetMake((tl_f * dx_stretch) + up_squish, (tl_f * dy_stretch) + left_squish);
+    UPOffset tr_o = UPOffsetMake((tr_f * dx_stretch) - up_squish, (tr_f * dy_stretch) + right_squish);
+    UPOffset bl_o = UPOffsetMake((bl_f * dx_stretch) + down_squish, (bl_f * dy_stretch) - left_squish);
+    UPOffset br_o = UPOffsetMake((br_f * dx_stretch) - down_squish, (br_f * dy_stretch) - right_squish);
 
     UPQuadOffsets quadOffsets = UPQuadOffsetsMake(tl_o, tr_o, bl_o, br_o);
 
