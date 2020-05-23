@@ -38,6 +38,9 @@ UP_STATIC_INLINE UPQuad UPQuadMake(CGPoint tl, CGPoint tr, CGPoint bl, CGPoint b
 UP_STATIC_INLINE UPOffset UPOffsetMake(CGFloat dx, CGFloat dy) {
     return (UPOffset){dx, dy};
 }
+UP_STATIC_INLINE UPOffset UPOffsetMakeWithPoint(CGPoint point) {
+    return UPOffsetMake(point.x, point.y);
+}
 UP_STATIC_INLINE UPQuad UPQuadMakeWithRectAndOffsets(CGRect rect, UPQuadOffsets offsets) {
     CGPoint tl = CGPointMake(CGRectGetMinX(rect) + offsets.tl.dx, CGRectGetMinY(rect) + offsets.tl.dy);
     CGPoint tr = CGPointMake(CGRectGetMaxX(rect) + offsets.tr.dx, CGRectGetMinY(rect) + offsets.tr.dy);
@@ -51,6 +54,12 @@ UP_STATIC_INLINE UPQuad UPQuadMakeWithRect(CGRect rect) {
 UP_STATIC_INLINE UPQuadOffsets UPQuadOffsetsMake(UPOffset tl, UPOffset tr, UPOffset bl, UPOffset br) {
     return (UPQuadOffsets){tl, tr, bl, br};
 }
+UP_STATIC_INLINE UPQuadOffsets UPQuadOffsetsMakeWithQuad(UPQuad q) {
+    return UPQuadOffsetsMake(UPOffsetMakeWithPoint(q.tl),
+                             UPOffsetMakeWithPoint(q.tr),
+                             UPOffsetMakeWithPoint(q.bl),
+                             UPOffsetMakeWithPoint(q.br));
+}
 UP_STATIC_INLINE CGRect UPQuadBoundingBox(UPQuad q) {
     CGFloat xmin = UPMultiMinT(CGFloat, q.tl.x, q.tr.x, q.bl.x, q.br.x);
     CGFloat ymin = UPMultiMinT(CGFloat, q.tl.y, q.tr.y, q.bl.y, q.br.y);
@@ -58,6 +67,15 @@ UP_STATIC_INLINE CGRect UPQuadBoundingBox(UPQuad q) {
     CGFloat ymax = UPMultiMaxT(CGFloat, q.tl.y, q.tr.y, q.bl.y, q.br.y);
     return CGRectMake(xmin, ymin, xmax - xmin, ymax - ymin);
 }
+UP_STATIC_INLINE UPQuad UPQuadApplyOffsets(UPQuad quad, UPQuadOffsets offsets) {
+    CGPoint tl = CGPointMake(quad.tl.x + offsets.tl.dx, quad.tl.y + offsets.tl.dy);
+    CGPoint tr = CGPointMake(quad.tr.x + offsets.tr.dx, quad.tr.y + offsets.tr.dy);
+    CGPoint bl = CGPointMake(quad.bl.x + offsets.bl.dx, quad.bl.y + offsets.bl.dy);
+    CGPoint br = CGPointMake(quad.br.x + offsets.br.dx, quad.br.y + offsets.br.dy);
+    return UPQuadMake(tl, tr, bl, br);
+}
+
+CGFloat up_quad_area(UPQuad q);
 
 #ifdef __OBJC__
 NSString *NSStringFromUPQuad(UPQuad);

@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import "UPAssertions.h"
 #import "UPGeometry.h"
 
 #ifdef __cplusplus
@@ -173,6 +174,24 @@ CGFloat up_bezier_sextic(CGFloat A, CGFloat B, CGFloat C, CGFloat D, CGFloat E, 
 
 // =========================================================================================================================================
 #pragma mark - Quads
+
+CGFloat up_quad_area(UPQuad q)
+{
+    CGFloat a = up_point_distance(q.bl, q.tl);
+    CGFloat b = up_point_distance(q.tl, q.tr);
+    CGFloat c = up_point_distance(q.tr, q.br);
+    CGFloat d = up_point_distance(q.br, q.bl);
+    
+    CGFloat A = fabs(atan2(q.bl.y - q.tl.y, q.bl.x - q.tl.x) + atan2(q.br.y - q.bl.y, q.br.x - q.bl.x));
+    CGFloat C = fabs(atan2(q.tr.y - q.br.y, q.tr.x - q.br.x) + atan2(q.tr.y - q.tl.y, q.tr.x - q.tl.x));
+
+    LOG(General, "A:      %.2f", A * RAD2DEG);
+    LOG(General, "C:      %.2f", C * RAD2DEG);
+    LOG(General, "sin(A): %.2f", sin(A));
+    LOG(General, "sin(C): %.2f", sin(C));
+
+    return (0.5 * a * d * sin(A)) + (0.5 * b * c * sin(C));
+}
 
 CATransform3D up_transform_for_rect_to_quad(CGRect rect, UPQuadOffsets offsets)
 {

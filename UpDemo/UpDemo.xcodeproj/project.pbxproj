@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5DA8E04C24798481008D3015 /* UPQuadView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E04B24798481008D3015 /* UPQuadView.mm */; };
 		5DD71D5C24578DE200F3F9E2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D5B24578DE200F3F9E2 /* AppDelegate.m */; };
 		5DD71D5F24578DE200F3F9E2 /* UPSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D5E24578DE200F3F9E2 /* UPSceneDelegate.m */; };
 		5DD71D6224578DE200F3F9E2 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D6124578DE200F3F9E2 /* ViewController.mm */; };
@@ -52,6 +53,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5DA8E04A24798481008D3015 /* UPQuadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPQuadView.h; sourceTree = "<group>"; };
+		5DA8E04B24798481008D3015 /* UPQuadView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPQuadView.mm; sourceTree = "<group>"; };
 		5DD71D5724578DE200F3F9E2 /* UpDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UpDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DD71D5A24578DE200F3F9E2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5DD71D5B24578DE200F3F9E2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -125,6 +128,8 @@
 		5DD71D5924578DE200F3F9E2 /* UpDemo */ = {
 			isa = PBXGroup;
 			children = (
+				5DA8E04A24798481008D3015 /* UPQuadView.h */,
+				5DA8E04B24798481008D3015 /* UPQuadView.mm */,
 				5DD71D5A24578DE200F3F9E2 /* AppDelegate.h */,
 				5DD71D5B24578DE200F3F9E2 /* AppDelegate.m */,
 				5DD71D5D24578DE200F3F9E2 /* UPSceneDelegate.h */,
@@ -299,6 +304,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DA8E04C24798481008D3015 /* UPQuadView.mm in Sources */,
 				5DD71D6224578DE200F3F9E2 /* ViewController.mm in Sources */,
 				5DD71D5C24578DE200F3F9E2 /* AppDelegate.m in Sources */,
 				5DD71D6D24578DE300F3F9E2 /* main.m in Sources */,

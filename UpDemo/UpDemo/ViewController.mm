@@ -6,9 +6,10 @@
 #import <UpKit/UpKit.h>
 
 #import "ViewController.h"
+#import "UPQuadView.h"
 
 @interface ViewController ()
-@property (nonatomic) UIView *v1;
+@property (nonatomic) UPQuadView *v1;
 @property (nonatomic) UIView *v2;
 @property (nonatomic) UIView *v3;
 @property (nonatomic) UIImage *image;
@@ -23,23 +24,43 @@
 {
     [super viewDidLoad];
 
-    UPLexicon *lexicon = [UPLexicon instanceForLanguage:UPLexiconLanguageEnglish];
+    LOG_CHANNEL_ON(General);
+
+    CGRect rect = CGRectMake(100, 100, 100, 100);
+//    UPQuadOffsets offsets = UPQuadOffsetsMake(UPOffsetMake(10, 0), UPOffsetMake(-10, 0), UPOffsetMake(-10, 0), UPOffsetMake(10, 0));
+//    UPQuadOffsets offsets = UPQuadOffsetsMake(UPOffsetMake(0, 0), UPOffsetMake(0, 0), UPOffsetMake(-40, 0), UPOffsetMake(40, 0));
+//    UPQuad q = UPQuadMakeWithRectAndOffsets(rect, offsets);
+//    CGFloat a = up_quad_area(q);
+
+    self.v1 = [[UPQuadView alloc] initWithFrame:rect];
+//    self.v1.quadOffsets = offsets;
+    self.v1.backgroundColor = [UIColor testColor1];
+    [self.view addSubview:self.v1];
     
-    NSString *word1 = @"foo";
-    NSLog(@"contains: %@", [lexicon containsWord:word1] ? @"Y" : @"N");
+//    CATransform3D t = up_transform_for_rect_to_quad(self.v1.frame, offsets);
+//    self.v1.layer.transform = t;
 
-    NSString *word2 = @"fooa";
-    NSLog(@"contains: %@", [lexicon containsWord:word2] ? @"Y" : @"N");
+//    [self.v1 transformToFitQuadTopLeft:CGPointMake(100, 100) topRight:CGPointMake(200, 100) bottomLeft:CGPointMake(60, 200) bottomRight:CGPointMake(240, 200)];
 
-    NSArray *initialLetters = [lexicon initialLetters];
-    NSMutableString *string = [NSMutableString string];
-    for (NSNumber *n in initialLetters) {
-        char32_t c = n.intValue;
-        NSString *s = UP::ns_str(c);
-        [string appendString:s];
-        [string appendString:@" "];
-    }
-    NSLog(@"initialLetters: %@", string);
+    //LOG(General, "area: %.2f", a);
+
+//    UPLexicon *lexicon = [UPLexicon instanceForLanguage:UPLexiconLanguageEnglish];
+//
+//    NSString *word1 = @"foo";
+//    NSLog(@"contains: %@", [lexicon containsWord:word1] ? @"Y" : @"N");
+//
+//    NSString *word2 = @"fooa";
+//    NSLog(@"contains: %@", [lexicon containsWord:word2] ? @"Y" : @"N");
+//
+//    NSArray *initialLetters = [lexicon initialLetters];
+//    NSMutableString *string = [NSMutableString string];
+//    for (NSNumber *n in initialLetters) {
+//        char32_t c = n.intValue;
+//        NSString *s = UP::ns_str(c);
+//        [string appendString:s];
+//        [string appendString:@" "];
+//    }
+//    NSLog(@"initialLetters: %@", string);
 
 //    self.v1 = [[UPShapeView alloc] initWithFrame:CGRectMake(157.5, 100, 72, 90)];
 //    self.v1 = [[UPShapeView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
@@ -57,8 +78,8 @@
 
     
 
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleTap:)];
-//    [self.view addGestureRecognizer:tap];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleTap:)];
+    [self.view addGestureRecognizer:tap];
 
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        [self colorize];
@@ -103,13 +124,13 @@
 
 - (void)viewDidLayoutSubviews
 {
-    CGRect imageLayoutRect = CGRectInset(self.view.bounds, 40, 40);
-    self.imageView.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:imageLayoutRect hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalMiddle];
-    [self.imageView layoutWithRule];
-
-    CGRect viewLayoutRect = CGRectInset(self.view.bounds, 40, 100);
-    self.v1.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:viewLayoutRect hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalBottom];
-    [self.v1 layoutWithRule];
+//    CGRect imageLayoutRect = CGRectInset(self.view.bounds, 40, 40);
+//    self.imageView.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:imageLayoutRect hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalMiddle];
+//    [self.imageView layoutWithRule];
+//
+//    CGRect viewLayoutRect = CGRectInset(self.view.bounds, 40, 100);
+//    self.v1.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:viewLayoutRect hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalBottom];
+//    [self.v1 layoutWithRule];
 
 //    viewLayoutRect = CGRectInset(self.view.bounds, 40, 200);
 //    self.v2.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:viewLayoutRect hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalBottom];
@@ -126,17 +147,8 @@
         return;
     }
 
-    static BOOL flag;
-    
-    if (flag) {
-        [self.v1 bloopToFrame:CGRectMake(50, 50, 144, 180)];
-    }
-    else {
-        CGPoint point = [tap locationInView:self.view];
-        [self.v1 bloopToPosition:point size:CGSizeMake(72, 90)];
-    
-    }
-    flag = !flag;
+    CGPoint point = [tap locationInView:self.view];
+    [self.v1 bloopWithDuration:2.0 toPosition:point completion:nil];
 }
 
 @end

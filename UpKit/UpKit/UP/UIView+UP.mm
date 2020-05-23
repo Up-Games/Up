@@ -248,20 +248,20 @@
     };
     [self pop_addAnimation:move forKey:@"move"];
 
-    POPBasicAnimation *shadow1 = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerShadowOpacity];
-    shadow1.duration = duration * 0.5;
-    shadow1.fromValue = @(0);
-    shadow1.toValue = @(1);
-    shadow1.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInQuad];
-    shadow1.completionBlock = ^(POPAnimation *anim, BOOL finished) {
-        POPBasicAnimation *shadow2 = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerShadowOpacity];
-        shadow2.duration = duration * 0.5;
-        shadow2.fromValue = @(1);
-        shadow2.toValue = @(0);
-        shadow2.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutQuad];
-        [self.layer pop_addAnimation:shadow2 forKey:@"shadow"];
-    };
-    [self.layer pop_addAnimation:shadow1 forKey:@"shadow"];
+//    POPBasicAnimation *shadow1 = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerShadowOpacity];
+//    shadow1.duration = duration * 0.5;
+//    shadow1.fromValue = @(0);
+//    shadow1.toValue = @(1);
+//    shadow1.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInQuad];
+//    shadow1.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+//        POPBasicAnimation *shadow2 = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerShadowOpacity];
+//        shadow2.duration = duration * 0.5;
+//        shadow2.fromValue = @(1);
+//        shadow2.toValue = @(0);
+//        shadow2.timingFunction = [UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutQuad];
+//        [self.layer pop_addAnimation:shadow2 forKey:@"shadow"];
+//    };
+//    [self.layer pop_addAnimation:shadow1 forKey:@"shadow"];
 }
 
 @end
