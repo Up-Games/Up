@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, UPControlState) {
     UPControlStateFlag4 =          0x00800000,
 };
 
-@interface UPControl : UPQuadView
+@interface UPControl : UIView
 
 @property (nonatomic, readonly) UIControlState state;
 

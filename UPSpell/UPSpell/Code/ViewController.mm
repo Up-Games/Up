@@ -77,7 +77,7 @@ static constexpr const char *GameTag = "game";
     self.model = new SpellModel(game_code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
-    [UIColor setThemeHue:120];
+    [UIColor setThemeHue:200];
     SpellLayoutManager &layout_manager = SpellLayoutManager::create_instance();
     TilePaths::create_instance();
     
@@ -154,7 +154,9 @@ static constexpr const char *GameTag = "game";
     for (UPTileView *tileView in self.tileViews) {
         tileView.frame = tile_frames[tileView.index];
     }
-    
+
+    self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
+
     self.roundControlButtonClear.alpha = 0;
     [self viewOpUpdateGameControls];
 }
@@ -168,7 +170,6 @@ static constexpr const char *GameTag = "game";
 {
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     self.infinityView.frame = self.view.bounds;
-    self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
     self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
     self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
     self.roundControlButtonClear.frame = layout_manager.controls_button_trash_frame();
@@ -266,7 +267,7 @@ static constexpr const char *GameTag = "game";
     CGPoint w2 = word_tray_tile_centers[1];
     CGPoint word_tray_center_diff = CGPointMake((w1.x - w2.x) * 0.5, 0);
     for (UPTileView *wordTrayTileView in self.wordTrayTileViews) {
-        [wordTrayTileView addSlideWithDuration:0.3 deltaPosition:word_tray_center_diff completion:nil];
+        [wordTrayTileView addSlideWithDuration:0.225 deltaPosition:word_tray_center_diff completion:nil];
     }
     
     const size_t word_idx = self.model->word_length() - 1;
@@ -308,7 +309,7 @@ static constexpr const char *GameTag = "game";
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     [self viewOpPenaltyForReject];
     [self viewOpMoveWordTilesToWordTray];
-    [self.wordTrayView shakeWithDuration:0.75 amount:layout_manager.word_tray_shake_amount() completion:^(BOOL finished) {
+    [self.wordTrayView shakeWithDuration:1 amount:layout_manager.word_tray_shake_amount() completion:^(BOOL finished) {
         delay(GameTag, 0.25, ^{
             [self viewOpPenaltyFinished];
             delay(GameTag, 0.1, ^{
@@ -371,8 +372,10 @@ static constexpr const char *GameTag = "game";
         if (mark) {
             CGPoint player_tray_center = player_tray_tile_centers[idx];
             UPTileView *tileView = self.tileViews[idx];
-            [tileView bloopWithDuration:0.4 toPosition:player_tray_center completion:^(BOOL finished) {
-            }];
+            [tileView bloopWithDuration:0.4 toPosition:player_tray_center completion:nil];
+            [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationCurveLinear animations:^{
+                tileView.transform = CGAffineTransformIdentity;
+            } completion:nil];
         }
         idx++;
     }
@@ -387,13 +390,12 @@ static constexpr const char *GameTag = "game";
         if (mark) {
             UPTileView *tileView = self.tileViews[idx];
             tileView.userInteractionEnabled = NO;
-            CGRect frame = tileView.frame;
-            CGPoint center = up_rect_center(frame);
-            center.y -= up_size_height(layout_manager.tile_size()) * 0.8;
+            CGPoint slide = CGPointMake(0, -up_size_height(layout_manager.tile_size()) * 1.25);
             self.tileViews[idx] = [UPTileView viewWithSentinel];
             [tileView fadeWithDuration:0.2 completion:nil];
-            [tileView bloopWithDuration:0.3 toPosition:center completion:^(BOOL finished) {
-                [tileView removeFromSuperview];
+            __weak UPTileView *weakTileView = tileView;
+            [tileView addSlideWithDuration:0.3 deltaPosition:slide completion:^(BOOL finished) {
+                [weakTileView removeFromSuperview];
             }];
         }
         idx++;
