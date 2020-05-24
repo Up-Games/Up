@@ -4,7 +4,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <UPKit/UPQuadView.h>
 
 typedef NS_ENUM(NSUInteger, UPControlState) {
     // Bits in this range:

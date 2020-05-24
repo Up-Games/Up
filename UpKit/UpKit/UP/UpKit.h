@@ -12,6 +12,8 @@ FOUNDATION_EXPORT double UpKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 
 #import <UpKit/UPAssertions.h>
+
+#import <UpKit/UPAnimator.h>
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPConstants.h>
 #import <UpKit/UPControl.h>
@@ -26,9 +28,9 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPLayoutRule.h>
 #import <UpKit/UPLexicon.h>
 #import <UpKit/UPMath.h>
-#import <UpKit/UPQuadView.h>
 #import <UpKit/UPRandom.h>
 #import <UpKit/UPStringTools.h>
+#import <UpKit/UPTickAnimator.h>
 #import <UpKit/UPTypes.h>
 #import <UpKit/UPUnitFunction.h>
 #import <UpKit/UPUtility.h>
@@ -38,6 +40,3 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UIFont+UP.h>
 #import <UpKit/UIImage+UP.h>
 #import <UpKit/UIView+UP.h>
-
-#import <UpKit/POP.h>
-

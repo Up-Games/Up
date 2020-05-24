@@ -3,7 +3,6 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#import <UPKit/POP.h>
 #import <UPKit/UIColor+UP.h>
 #import <UPKit/UPBezierPathView.h>
 #import <UPKit/UPStringTools.h>
@@ -157,7 +156,6 @@ using UP::valid;
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    [self pop_removeAllAnimations];
     return YES;
 }
 

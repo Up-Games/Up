@@ -265,20 +265,19 @@ static constexpr const char *GameTag = "game";
     
     CGPoint w1 = word_tray_tile_centers[0];
     CGPoint w2 = word_tray_tile_centers[1];
-    CGPoint word_tray_center_diff = CGPointMake((w1.x - w2.x) * 0.5, 0);
-    for (UPTileView *wordTrayTileView in self.wordTrayTileViews) {
-        [wordTrayTileView addSlideWithDuration:0.225 deltaPosition:word_tray_center_diff completion:nil];
-    }
+    UIOffset offset = UIOffsetMake((w1.x - w2.x) * 0.5, 0);
+    UPAnimator *slideAnimator = [UPAnimator slideViews:self.wordTrayTileViews withDuration:0.2 offset:offset completion:nil];
+    [slideAnimator startAnimation];
     
     const size_t word_idx = self.model->word_length() - 1;
     CGPoint word_tray_center = word_tray_tile_centers[word_idx];
     UPTileView *tileView = self.tileViews[tile_idx];
     [self.view bringSubviewToFront:tileView];
-    
-    [tileView bloopWithDuration:0.4 toPosition:word_tray_center completion:nil];
-    
     [self.wordTrayTileViews addObject:tileView];
-    
+
+    UPAnimator *bloopAnimator = [UPAnimator bloopViews:@[tileView] withDuration:0.4 position:word_tray_center completion:nil];
+    [bloopAnimator startAnimation];
+        
     [self viewOpUpdateGameControls];
 }
 
@@ -308,16 +307,20 @@ static constexpr const char *GameTag = "game";
     // shake word tray side-to-side and assess time penalty
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     [self viewOpPenaltyForReject];
-    [self viewOpMoveWordTilesToWordTray];
-    [self.wordTrayView shakeWithDuration:1 amount:layout_manager.word_tray_shake_amount() completion:^(BOOL finished) {
-        delay(GameTag, 0.25, ^{
-            [self viewOpPenaltyFinished];
-            delay(GameTag, 0.1, ^{
-                [self viewOpMoveWordTilesToMainView];
-                [self applyActionClear];
+    UIOffset offset = UIOffsetMake(layout_manager.word_tray_shake_amount(), 0);
+    NSMutableArray *views = [NSMutableArray arrayWithObject:self.wordTrayView];
+    [views addObjectsFromArray:self.wordTrayTileViews];
+    UPAnimator *animator = [UPAnimator shakeViews:views withDuration:0.9 offset:offset
+        completion:^(UIViewAnimatingPosition finalPosition) {
+            delay(GameTag, 0.25, ^{
+                [self viewOpPenaltyFinished];
+                delay(GameTag, 0.1, ^{
+                    [self applyActionClear];
+                });
             });
-        });
-    }];
+        }
+    ];
+    [animator startAnimation];
 }
 
 - (void)applyActionDump
@@ -330,7 +333,7 @@ static constexpr const char *GameTag = "game";
         [self viewOpPenaltyForDump];
     } completion:^(BOOL finished) {
         [self viewOpDumpPlayerTray];
-        delay(GameTag, 1.25, ^{
+        delay(GameTag, 1.5, ^{
             [self viewOpPenaltyFinished];
             [self viewOpFillPlayerTray];
         });
@@ -372,7 +375,8 @@ static constexpr const char *GameTag = "game";
         if (mark) {
             CGPoint player_tray_center = player_tray_tile_centers[idx];
             UPTileView *tileView = self.tileViews[idx];
-            [tileView bloopWithDuration:0.4 toPosition:player_tray_center completion:nil];
+            UPAnimator *bloopAnimator = [UPAnimator bloopViews:@[tileView] withDuration:0.4 position:player_tray_center completion:nil];
+            [bloopAnimator startAnimation];
             [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationCurveLinear animations:^{
                 tileView.transform = CGAffineTransformIdentity;
             } completion:nil];
@@ -390,17 +394,22 @@ static constexpr const char *GameTag = "game";
         if (mark) {
             UPTileView *tileView = self.tileViews[idx];
             tileView.userInteractionEnabled = NO;
-            CGPoint slide = CGPointMake(0, -up_size_height(layout_manager.tile_size()) * 1.25);
             self.tileViews[idx] = [UPTileView viewWithSentinel];
-            [tileView fadeWithDuration:0.2 completion:nil];
-            __weak UPTileView *weakTileView = tileView;
-            [tileView addSlideWithDuration:0.3 deltaPosition:slide completion:^(BOOL finished) {
-                [weakTileView removeFromSuperview];
-            }];
         }
         idx++;
     }
+
+    NSArray *wordTrayTileViewsCopy = [self.wordTrayTileViews copy];
     [self.wordTrayTileViews removeAllObjects];
+
+    UPAnimator *fadeOutAnimator = [UPAnimator fadeOutViews:wordTrayTileViewsCopy withDuration:0.3 completion:nil];
+    UIOffset offset = UIOffsetMake(0, -up_size_height(layout_manager.tile_size()) * 1.25);
+    UPAnimator *slideAnimator = [UPAnimator slideViews:wordTrayTileViewsCopy withDuration:0.3 offset:offset
+        completion:^(UIViewAnimatingPosition finalPosition) {
+            [wordTrayTileViewsCopy makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    }];
+    [fadeOutAnimator startAnimation];
+    [slideAnimator startAnimation];
 }
 
 - (void)viewOpDumpPlayerTray
@@ -415,13 +424,16 @@ static constexpr const char *GameTag = "game";
     }
     std::shuffle(idxs.begin(), idxs.end(), random.generator());
 
-    CFTimeInterval delay = 0.1;
+    CFTimeInterval delay = 0.125;
     int count = 0;
     for (const auto idx : idxs) {
         UPTileView *tileView = self.tileViews[idx];
         self.tileViews[idx] = [UPTileView viewWithSentinel];
-        CGPoint point = offscreen_tray_tile_centers[idx];
-        [tileView slideWithDuration:0.4 delay:(count * delay) toPosition:point completion:nil];
+        CGPoint center = tileView.center;
+        CGPoint offscreenPoint = offscreen_tray_tile_centers[idx];
+        UIOffset offset = UIOffsetMake(offscreenPoint.x - center.x, offscreenPoint.y - center.y);
+        UPAnimator *animator = [UPAnimator slideViews:@[tileView] withDuration:1.1 offset:offset completion:nil];
+        [animator startAnimationAfterDelay:(count * delay)];
         count++;
     }
 }
@@ -446,7 +458,8 @@ static constexpr const char *GameTag = "game";
             CGPoint fromPoint = fill_tray_tile_centers[idx];
             CGPoint toPoint = player_tray_tile_centers[idx];
             newTileView.center = fromPoint;
-            [newTileView bloopWithDuration:0.3 toPosition:toPoint completion:nil];
+            UPAnimator *animator = [UPAnimator bloopViews:@[newTileView] withDuration:0.3 position:toPoint completion:nil];
+            [animator startAnimation];
         }
         idx++;
     }

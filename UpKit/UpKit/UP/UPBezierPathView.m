@@ -5,7 +5,6 @@
 
 #import "UPBezierPathView.h"
 #import "UPMath.h"
-#import "POPPathAnimation.h"
 
 #define ShapeLayer() ((CAShapeLayer *)self.layer)
 
@@ -122,13 +121,6 @@ static NSMutableSet *_PathsNeedingUpdateSet;
 - (UIBezierPath *)transformedPath
 {
     return [self.effectivePath copy];
-}
-
-#pragma mark - POPPathAnimationDelegate
-
-- (void)pathAnimationUpdated:(POPPathAnimation *)animation
-{
-    self.path = animation.interpolatedPath;
 }
 
 #pragma mark - Geometry and Layout
