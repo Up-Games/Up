@@ -10,7 +10,12 @@
 extern "C" {
 #endif
 
-#pragma mark - Points, Sizes, and Rects
+#pragma mark - Floats, Points, Sizes, and Rects
+
+CGFloat up_float_scaled(CGFloat fnum, CGFloat scale)
+{
+    return fnum * scale;
+}
 
 CGPoint up_point_scaled(CGPoint point, CGFloat scale)
 {

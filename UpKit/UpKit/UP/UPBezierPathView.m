@@ -73,6 +73,12 @@ static NSMutableSet *_PathsNeedingUpdateSet;
     [self setNeedsPathUpdate];
 }
 
+@dynamic shapeLayer;
+- (CAShapeLayer *)shapeLayer
+{
+    return ShapeLayer();
+}
+
 @dynamic fillColor;
 - (void)setFillColor:(UIColor *)fillColor
 {

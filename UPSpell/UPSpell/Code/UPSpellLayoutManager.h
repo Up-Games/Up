@@ -57,8 +57,10 @@ public:
 
     static inline constexpr CGRect CanonicalControlsLayoutFrame = {   92,  22, 816,  84 };
     static inline constexpr CGRect CanonicalWordTrayFrame =       { 62.5, 133, 875, 182 };
+    static inline constexpr CGRect CanonicalWordTrayMaskFrame =   { 62.5, 143, 875, 420 };
     static inline constexpr CGRect CanonicalTilesLayoutFrame =    {    0, 348, CanonicalTilesLayoutWidth, 120 };
 
+    static inline constexpr CGFloat CanonicalWordTrayMaskXOffset = 10;
     static inline constexpr CGFloat CanonicalWordTrayShakeAmount = 30;
 
     static SpellLayoutManager &create_instance() {
@@ -92,6 +94,8 @@ public:
     CGRect controls_layout_frame() const { return m_controls_layout_frame; }
     CGRect word_tray_layout_frame() const { return m_word_tray_layout_frame; }
     CGRect player_tray_layout_frame() const { return m_player_tray_layout_frame; }
+
+    CGRect word_tray_mask_frame() const { return m_word_tray_mask_frame; }
 
     CGSize tile_size() const { return m_tile_size; }
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
@@ -137,6 +141,7 @@ private:
     void set_layout_scale(CGFloat layout_scale) { m_layout_scale = layout_scale; }
     void set_controls_layout_frame(CGRect controls_layout_frame) { m_controls_layout_frame = controls_layout_frame; }
     void set_word_tray_layout_frame(CGRect word_tray_layout_frame) { m_word_tray_layout_frame = word_tray_layout_frame; }
+    void set_word_tray_mask_frame(CGRect word_tray_mask_frame) { m_word_tray_mask_frame = word_tray_mask_frame; }
     void set_player_tray_layout_frame(CGRect player_tray_layout_frame) { m_player_tray_layout_frame = player_tray_layout_frame; }
     void set_tile_size(CGSize tile_size) { m_tile_size = tile_size; }
     void set_tile_stroke_width(CGFloat tile_stroke_width) { m_tile_stroke_width = tile_stroke_width; }
@@ -165,6 +170,7 @@ private:
     void calculate_player_tray_layout_frame();
     void calculate_tile_size();
     void calculate_tile_stroke_width();
+    void calculate_word_tray_mask_frame();
     void calculate_word_tray_shake_amount();
     void calculate_word_tray_tile_frames();
     void calculate_player_tray_tile_frames();
@@ -190,6 +196,8 @@ private:
     CGRect m_controls_layout_frame = CGRectZero;
     CGRect m_word_tray_layout_frame = CGRectZero;
     CGRect m_player_tray_layout_frame = CGRectZero;
+
+    CGRect m_word_tray_mask_frame = CGRectZero;
 
     CGSize m_tile_size;
     CGFloat m_tile_stroke_width = 0.0;

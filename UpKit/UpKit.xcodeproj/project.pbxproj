@@ -24,6 +24,8 @@
 		5DA8E054247AC79F008D3015 /* UPAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E052247AC79F008D3015 /* UPAnimator.m */; };
 		5DA8E05B247ADC27008D3015 /* UPTickAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E059247ADC27008D3015 /* UPTickAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E05C247ADC27008D3015 /* UPTickAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E05A247ADC27008D3015 /* UPTickAnimator.mm */; };
+		5DA8E05F247B361F008D3015 /* UPContainerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E05D247B361F008D3015 /* UPContainerView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DA8E060247B361F008D3015 /* UPContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E05E247B361F008D3015 /* UPContainerView.m */; };
 		5DBADB7324678F4000D9D1FF /* UPGameCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7424678F4000D9D1FF /* UPGameCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameCode.mm */; };
 		5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B2246EF6CC00090E7A /* UPLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -116,6 +118,8 @@
 		5DA8E052247AC79F008D3015 /* UPAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPAnimator.m; sourceTree = "<group>"; };
 		5DA8E059247ADC27008D3015 /* UPTickAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTickAnimator.h; sourceTree = "<group>"; };
 		5DA8E05A247ADC27008D3015 /* UPTickAnimator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTickAnimator.mm; sourceTree = "<group>"; };
+		5DA8E05D247B361F008D3015 /* UPContainerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPContainerView.h; sourceTree = "<group>"; };
+		5DA8E05E247B361F008D3015 /* UPContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPContainerView.m; sourceTree = "<group>"; };
 		5DBADB7124678F4000D9D1FF /* UPGameCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameCode.h; sourceTree = "<group>"; };
 		5DBADB7224678F4000D9D1FF /* UPGameCode.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameCode.mm; sourceTree = "<group>"; };
 		5DC618B2246EF6CC00090E7A /* UPLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLabel.h; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 				5DD71D9B2457AFB200F3F9E2 /* UPBezierPathView.m */,
 				5DEBE0192454E3AC00016047 /* UPColor.h */,
 				5DFE62252453CFCD00D9CA0B /* UPConstants.h */,
+				5DA8E05D247B361F008D3015 /* UPContainerView.h */,
+				5DA8E05E247B361F008D3015 /* UPContainerView.m */,
 				5D5216F0246D87DF005A2E9F /* UPControl.h */,
 				5D5216F1246D87DF005A2E9F /* UPControl.mm */,
 				5DD71D962457988000F3F9E2 /* UPDeferredBlock.h */,
@@ -372,6 +378,7 @@
 				5DD71D9C2457AFB200F3F9E2 /* UPBezierPathView.h in Headers */,
 				5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */,
 				5DA8E04924782C25008D3015 /* UPDelay.h in Headers */,
+				5DA8E05F247B361F008D3015 /* UPContainerView.h in Headers */,
 				5DA8E03B2475C796008D3015 /* UPAssertions.h in Headers */,
 				5DD71DA02458DA3A00F3F9E2 /* UIView+UP.h in Headers */,
 				5D2CAC84245B538B00B81332 /* NSValue+UP.h in Headers */,
@@ -547,6 +554,7 @@
 				5DD71D9D2457AFB200F3F9E2 /* UPBezierPathView.m in Sources */,
 				5DA8E04824782C25008D3015 /* UPDelay.mm in Sources */,
 				5DA8E05C247ADC27008D3015 /* UPTickAnimator.mm in Sources */,
+				5DA8E060247B361F008D3015 /* UPContainerView.m in Sources */,
 				5DD71DA12458DA3A00F3F9E2 /* UIView+UP.mm in Sources */,
 				5DC618B5246EF6CC00090E7A /* UPLabel.m in Sources */,
 			);

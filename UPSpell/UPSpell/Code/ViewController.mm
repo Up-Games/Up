@@ -41,7 +41,8 @@ static constexpr const char *GameTag = "game";
 @interface ViewController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
 @property (nonatomic) UPControl *wordTrayView;
-@property (nonatomic) UIView *tileFrameView;
+@property (nonatomic) UIView *tileContainerView;
+@property (nonatomic) UPBezierPathView *tileContainerClipView;
 @property (nonatomic) UPControl *roundControlButtonPause;
 @property (nonatomic) UPControl *roundControlButtonTrash;
 @property (nonatomic) UPControl *roundControlButtonClear;
@@ -89,7 +90,20 @@ static constexpr const char *GameTag = "game";
     self.infinityView = [[UIView alloc] initWithFrame:CGRectZero];
     self.infinityView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
     [self.view addSubview:self.infinityView];
-    
+        
+    self.wordTrayView = [UPControl wordTray];
+    [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.wordTrayView];
+
+    self.tileContainerView = [[UPContainerView alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:self.tileContainerView];
+
+    self.tileContainerClipView = [UPBezierPathView bezierPathView];
+    self.tileContainerClipView.canonicalSize = UP::SpellLayoutManager::CanonicalWordTrayMaskFrame.size;
+    self.tileContainerClipView.path = [self wordTrayMaskPath];
+    self.tileContainerClipView.fillColor = [UIColor blackColor];
+    self.tileContainerView.layer.mask = self.tileContainerClipView.shapeLayer;
+
     self.roundControlButtonPause = [UPControl roundControlButtonPause];
     [self.roundControlButtonPause addTarget:self action:@selector(roundControlButtonPauseTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.roundControlButtonPause];
@@ -101,10 +115,6 @@ static constexpr const char *GameTag = "game";
     self.roundControlButtonClear = [UPControl roundControlButtonClear];
     [self.roundControlButtonClear addTarget:self action:@selector(roundControlButtonClearTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.roundControlButtonClear];
-
-    self.wordTrayView = [UPControl wordTray];
-    [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.wordTrayView];
 
     UIFont *font = [UIFont gameInformationFontOfSize:layout_manager.game_information_font_metrics().point_size()];
     UIFont *superscriptFont = [UIFont gameInformationFontOfSize:layout_manager.game_information_superscript_font_metrics().point_size()];
@@ -140,25 +150,20 @@ static constexpr const char *GameTag = "game";
     self.tileViews = [NSMutableArray array];
     self.wordTrayTileViews = [NSMutableArray array];
 
-    TileIndex idx = 0;
-    for (const auto &tile : self.model->player_tray()) {
-        UPTileView *tileView = [UPTileView viewWithTile:tile];
-        tileView.gestureDelegate = self;
-        tileView.index = idx;
-        [self.view addSubview:tileView];
-        [self.tileViews addObject:tileView];
-        idx++;
-    }
-
-    const std::array<CGRect, TileCount> tile_frames = layout_manager.player_tray_tile_frames();
-    for (UPTileView *tileView in self.tileViews) {
-        tileView.frame = tile_frames[tileView.index];
-    }
-
     self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
 
     self.roundControlButtonClear.alpha = 0;
     [self viewOpUpdateGameControls];
+
+    for (TileIndex idx = 0; idx < TileCount; idx++) {
+        UPTileView *tileView = [UPTileView viewWithSentinel];
+        tileView.index = idx;
+        [self.tileViews addObject:tileView];
+    }
+
+    delay(0.2, ^{
+        [self viewOpFillPlayerTray];
+    });
 }
 
 - (void)dealloc
@@ -170,11 +175,44 @@ static constexpr const char *GameTag = "game";
 {
     SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
     self.infinityView.frame = self.view.bounds;
+    self.tileContainerView.frame = self.view.bounds;
+    self.tileContainerClipView.frame = layout_manager.word_tray_mask_frame();
     self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
     self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
     self.roundControlButtonClear.frame = layout_manager.controls_button_trash_frame();
     self.gameTimerLabel.frame = layout_manager.game_time_label_frame();
     self.scoreLabel.frame = layout_manager.game_score_label_frame();
+}
+
+- (UIBezierPath *)wordTrayMaskPath
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint: CGPointMake(874.89, 42.17)];
+    [path addCurveToPoint: CGPointMake(874.92, 29.27) controlPoint1: CGPointMake(874.89, 37.87) controlPoint2: CGPointMake(874.9, 33.57)];
+    [path addLineToPoint: CGPointMake(874.77, 29.3)];
+    [path addCurveToPoint: CGPointMake(874.67, 21.61) controlPoint1: CGPointMake(874.74, 26.73) controlPoint2: CGPointMake(874.71, 24.17)];
+    [path addCurveToPoint: CGPointMake(868.51, 10.28) controlPoint1: CGPointMake(874.43, 16.58) controlPoint2: CGPointMake(872.87, 12.34)];
+    [path addCurveToPoint: CGPointMake(861.45, 7.53) controlPoint1: CGPointMake(866.21, 9.19) controlPoint2: CGPointMake(863.87, 8.03)];
+    [path addCurveToPoint: CGPointMake(843.92, 4.64) controlPoint1: CGPointMake(855.64, 6.34) controlPoint2: CGPointMake(849.8, 5.14)];
+    [path addCurveToPoint: CGPointMake(658, 0.19) controlPoint1: CGPointMake(782.07, -0.48) controlPoint2: CGPointMake(719.98, 0.61)];
+    [path addCurveToPoint: CGPointMake(437.5, 0.01) controlPoint1: CGPointMake(586.97, 0.02) controlPoint2: CGPointMake(508.65, -0.02)];
+    [path addCurveToPoint: CGPointMake(217, 0.19) controlPoint1: CGPointMake(366.35, -0.02) controlPoint2: CGPointMake(288.03, 0.02)];
+    [path addCurveToPoint: CGPointMake(31.08, 4.64) controlPoint1: CGPointMake(155.02, 0.61) controlPoint2: CGPointMake(92.93, -0.48)];
+    [path addCurveToPoint: CGPointMake(13.55, 7.53) controlPoint1: CGPointMake(25.2, 5.14) controlPoint2: CGPointMake(19.36, 6.34)];
+    [path addCurveToPoint: CGPointMake(6.49, 10.28) controlPoint1: CGPointMake(11.13, 8.03) controlPoint2: CGPointMake(8.79, 9.19)];
+    [path addCurveToPoint: CGPointMake(0.33, 21.61) controlPoint1: CGPointMake(2.13, 12.34) controlPoint2: CGPointMake(0.57, 16.58)];
+    [path addCurveToPoint: CGPointMake(0.23, 29.3) controlPoint1: CGPointMake(0.29, 24.17) controlPoint2: CGPointMake(0.26, 26.73)];
+    [path addLineToPoint: CGPointMake(0.08, 29.27)];
+    [path addCurveToPoint: CGPointMake(0.11, 42.16) controlPoint1: CGPointMake(0.1, 33.57) controlPoint2: CGPointMake(0.11, 37.87)];
+    [path addCurveToPoint: CGPointMake(0.07, 132) controlPoint1: CGPointMake(-0.02, 59.55) controlPoint2: CGPointMake(-0.03, 107.78)];
+    [path addLineToPoint: CGPointMake(-0, 132)];
+    [path addLineToPoint: CGPointMake(-0, 420)];
+    [path addLineToPoint: CGPointMake(875, 420)];
+    [path addLineToPoint: CGPointMake(875, 132)];
+    [path addLineToPoint: CGPointMake(874.93, 132)];
+    [path addCurveToPoint: CGPointMake(874.89, 42.17) controlPoint1: CGPointMake(875.04, 107.78) controlPoint2: CGPointMake(875.02, 59.55)];
+    [path closePath];
+    return path;
 }
 
 #pragma mark - UPGameTimerObserver
@@ -454,7 +492,7 @@ static constexpr const char *GameTag = "game";
             newTileView.index = idx;
             newTileView.frame = fill_tray_tile_frames[idx];
             self.tileViews[idx] = newTileView;
-            [self.view addSubview:newTileView];
+            [self.tileContainerView addSubview:newTileView];
             CGPoint fromPoint = fill_tray_tile_centers[idx];
             CGPoint toPoint = player_tray_tile_centers[idx];
             newTileView.center = fromPoint;
@@ -507,28 +545,6 @@ static constexpr const char *GameTag = "game";
     }
     for (UPTileView *tileView in self.tileViews) {
         tileView.alpha = 1.0;
-    }
-}
-
-- (void)viewOpMoveWordTilesToWordTray
-{
-    CGPoint wordTrayOrigin = self.wordTrayView.frame.origin;
-    for (UPTileView *tileView in self.wordTrayTileViews) {
-        ASSERT(tileView.superview == self.view);
-        CGRect frame = CGRectOffset(tileView.frame, -wordTrayOrigin.x, -wordTrayOrigin.y);
-        [self.wordTrayView addSubview:tileView];
-        tileView.frame = frame;
-    }
-}
-
-- (void)viewOpMoveWordTilesToMainView
-{
-    CGPoint wordTrayOrigin = self.wordTrayView.frame.origin;
-    for (UPTileView *tileView in self.wordTrayTileViews) {
-        ASSERT(tileView.superview == self.wordTrayView);
-        CGRect frame = CGRectOffset(tileView.frame, wordTrayOrigin.x, wordTrayOrigin.y);
-        [self.view addSubview:tileView];
-        tileView.frame = frame;
     }
 }
 

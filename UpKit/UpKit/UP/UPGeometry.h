@@ -103,6 +103,7 @@ UP_STATIC_INLINE_CONST CGFloat up_rect_max_y(CGRect rect) { return rect.origin.y
 UP_STATIC_INLINE_CONST CGFloat up_rect_width(CGRect rect) { return rect.size.width; }
 UP_STATIC_INLINE_CONST CGFloat up_rect_height(CGRect rect) { return rect.size.height; }
 
+CGFloat up_float_scaled(CGFloat fnum, CGFloat scale);
 CGPoint up_point_scaled(CGPoint point, CGFloat scale);
 CGSize up_size_scaled(CGSize size, CGFloat scale);
 
