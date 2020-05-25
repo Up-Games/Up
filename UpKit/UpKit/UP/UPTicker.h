@@ -8,12 +8,14 @@
 
 @class UPTickAnimator;
 
+extern CFTimeInterval UPTickerInterval;
+
 @interface UPTicker : NSObject
 
-@property (nonatomic) CADisplayLink *displayLink;
 @property (nonatomic) NSMutableSet<UPTickAnimator *> *animators;
 
 + (UPTicker *)instance;
+- (instancetype)init NS_UNAVAILABLE;
 
 - (void)addAnimator:(UPTickAnimator *)animator;
 - (void)removeAnimator:(UPTickAnimator *)animator;

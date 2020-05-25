@@ -23,11 +23,9 @@
 @property (nonatomic, copy) UPTickAnimatorCompletion completion;
 
 @property (nonatomic) NSString *tag;
-@property (nonatomic) CFTimeInterval startTick;
+@property (nonatomic) CFTimeInterval remainingDuration;
 @property (nonatomic) CFTimeInterval previousTick;
-@property (nonatomic) CFTimeInterval accumulatedTicks;
 @property (nonatomic) CGFloat rate;
-@property (nonatomic) BOOL startTickNeedsUpdate;
 @property (nonatomic) BOOL completed;
 
 @property (nonatomic) UIViewAnimatingState state;
@@ -81,7 +79,8 @@
 
     self.state = UIViewAnimatingStateInactive;
     self.animatingPosition = UIViewAnimatingPositionStart;
-    self.startTickNeedsUpdate = YES;
+    self.remainingDuration = self.duration;
+    self.previousTick = 0;
 
     return self;
 }
@@ -95,13 +94,16 @@
     // prevent self from being released before method finishes
     UPTickAnimator *ref = self;
 
-    if (self.startTickNeedsUpdate) {
-        self.startTickNeedsUpdate = NO;
-        self.startTick = currentTick;
-        self.previousTick = currentTick;
+    if (up_is_fuzzy_zero(self.previousTick)) {
+        self.remainingDuration -= (UPTickerInterval * self.rate);
     }
+    else {
+        self.remainingDuration -= ((currentTick - self.previousTick) * self.rate);
+    }
+    self.previousTick = currentTick;
+    self.remainingDuration = UPMaxT(CFTimeInterval, self.remainingDuration, 0);
 
-    if (up_is_fuzzy_zero(self.duration)) {
+    if (up_is_fuzzy_zero(self.remainingDuration)) {
         self.completed = YES;
         CGFloat effectiveFraction = 1.0;
         UIViewAnimatingPosition effectiveAnimatingPosition = UIViewAnimatingPositionEnd;
@@ -114,15 +116,10 @@
         if (self.applier) {
             self.applier(self, effectiveFraction);
         }
-        if (self.completion) {
-            self.completion(self, self.animatingPosition);
-            [self stop];
-        }
-        self.running = NO;
+        [self stopAnimation:NO];
     }
     else {
-        self.accumulatedTicks += ((currentTick - self.startTick) - (self.previousTick - self.startTick)) * self.rate;
-        CGFloat fraction = self.accumulatedTicks / self.duration;
+        CGFloat fraction = 1.0 - (self.remainingDuration / self.duration);
         self.completed = [self isCompletedWithFraction:fraction];
         if (self.completed) {
             CGFloat effectiveFraction = [self computeEffectiveFraction:[self completedFraction]];
@@ -138,11 +135,7 @@
             if (self.applier) {
                 self.applier(self, effectiveFraction);
             }
-            if (self.completion) {
-                self.completion(self, self.animatingPosition);
-                [self stop];
-            }
-            self.running = NO;
+            [self stopAnimation:NO];
         }
         else {
             CGFloat effectiveFraction = [self computeEffectiveFraction:fraction];
@@ -197,19 +190,6 @@
     return 1.0 * self.repeatCount * (self.rebounds ? 2.0 : 1.0);
 }
 
-- (void)stop
-{
-    self.running = NO;
-    if (self.completed) {
-        self.state = UIViewAnimatingStateInactive;
-    }
-    else {
-        self.state = UIViewAnimatingStateStopped;
-    }
-    [[UPTicker instance] removeAnimator:self];
-    self.startTickNeedsUpdate = YES;
-}
-
 #pragma mark - UIViewAnimating
 
 - (void)startAnimation
@@ -235,6 +215,7 @@
 {
     ASSERT(self.state != UIViewAnimatingStateStopped);
     self.running = NO;
+    self.previousTick = 0;
     self.state = UIViewAnimatingStateInactive;
     [[UPTicker instance] removeAnimator:self];
 }
@@ -242,9 +223,12 @@
 - (void)stopAnimation:(BOOL)withoutFinishing
 {
     ASSERT(self.state != UIViewAnimatingStateStopped);
-    [self stop];
-    if (!withoutFinishing && self.completion) {
-        self.completion(self, self.animatingPosition);
+    self.running = NO;
+    self.previousTick = 0;
+    self.state = UIViewAnimatingStateStopped;
+    [[UPTicker instance] removeAnimator:self];
+    if (!withoutFinishing) {
+        [self finishAnimationAtPosition:self.animatingPosition];
     }
 }
 

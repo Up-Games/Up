@@ -23,3 +23,21 @@
 #else
 #define UP_STATIC_INLINE_CONST UP_STATIC_INLINE_EXPLICIT
 #endif  // __cplusplus
+
+// UNLIKELY
+#if !defined(UNLIKELY)
+#define UNLIKELY(x) __builtin_expect(!!(x), 0)
+#endif
+
+#if !defined(UNLIKELY)
+#define UNLIKELY(x) (x)
+#endif
+
+// LIKELY
+#if !defined(LIKELY)
+#define LIKELY(x) __builtin_expect(!!(x), 1)
+#endif
+
+#if !defined(LIKELY)
+#define LIKELY(x) (x)
+#endif
