@@ -5,19 +5,20 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIViewAnimating.h>
+#import <UPKit/UPTicker.h>
 #import <UPKit/UPUnitFunction.h>
 
-@class UPTickAnimator;
+@class UPTickingAnimator;
 
-typedef void (^UPTickAnimatorApplier)(UPTickAnimator *animator, CGFloat fractionCompleted);
-typedef void (^UPTickAnimatorCompletion)(UPTickAnimator *animator, UIViewAnimatingPosition finalPosition);
+typedef void (^UPTickAnimatorApplier)(UPTickingAnimator *animator, CGFloat fractionCompleted);
+typedef void (^UPTickAnimatorCompletion)(UPTickingAnimator *animator, UIViewAnimatingPosition finalPosition);
 
-@interface UPTickAnimator : NSObject <UIViewAnimating>
+@interface UPTickingAnimator : NSObject <UIViewAnimating, UPTicking>
 
-+ (UPTickAnimator *)animatorWithDuration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
++ (UPTickingAnimator *)animatorWithDuration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     applier:(UPTickAnimatorApplier)applier completion:(UPTickAnimatorCompletion)completion;
 
-+ (UPTickAnimator *)animatorWithDuration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
++ (UPTickingAnimator *)animatorWithDuration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     repeatCount:(NSUInteger)repeatCount rebounds:(BOOL)rebounds
         applier:(UPTickAnimatorApplier)applier completion:(UPTickAnimatorCompletion)completion;
 

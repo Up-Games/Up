@@ -7,12 +7,12 @@
 
 #import "UPAssertions.h"
 #import "UPMacros.h"
-#import "UPTicker.h"
-#import "UPTickAnimator.h"
+#import "UPTickingAnimator.h"
 
 CFTimeInterval UPTickerInterval = 1.0 / 60.0;
 
 @interface UPTicker ()
+@property (nonatomic) NSMutableSet<NSObject<UPTicking> *> *tickings;
 @property (nonatomic) CADisplayLink *displayLink;
 @end
 
@@ -32,21 +32,21 @@ CFTimeInterval UPTickerInterval = 1.0 / 60.0;
 {
     self = [super init];
 
-    self.animators = [NSMutableSet set];
+    self.tickings = [NSMutableSet set];
 
     return self;
 }
 
-- (void)addAnimator:(UPTickAnimator *)animator
+- (void)addTicking:(UPTickingAnimator *)animator
 {
-    [self.animators addObject:animator];
+    [self.tickings addObject:animator];
     [self _startDisplayLinkIfNeeded];
 }
 
-- (void)removeAnimator:(UPTickAnimator *)animator
+- (void)removeTicking:(UPTickingAnimator *)animator
 {
-    [self.animators removeObject:animator];
-    [self _stopDisplayLinkIfNoTickers];
+    [self.tickings removeObject:animator];
+    [self _stopDisplayLinkIfNoTickings];
 }
 
 - (void)_tick:(CADisplayLink *)sender
@@ -57,22 +57,22 @@ CFTimeInterval UPTickerInterval = 1.0 / 60.0;
         UPTickerInterval = self.displayLink.duration;
     }
     CFTimeInterval now = CACurrentMediaTime();
-    for (UPTickAnimator *animator in self.animators) {
+    for (UPTickingAnimator *animator in self.tickings) {
         [animator tick:now];
     }
 }
 
 - (void)_startDisplayLinkIfNeeded
 {
-    if (!self.displayLink || self.animators.count > 0) {
+    if (!self.displayLink || self.tickings.count > 0) {
         self.displayLink = [[UIScreen mainScreen] displayLinkWithTarget:self selector:@selector(_tick:)];
         [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
     }
 }
 
-- (void)_stopDisplayLinkIfNoTickers
+- (void)_stopDisplayLinkIfNoTickings
 {
-    if (self.animators.count == 0) {
+    if (self.tickings.count == 0) {
         [self.displayLink invalidate];
         self.displayLink = nil;
     }

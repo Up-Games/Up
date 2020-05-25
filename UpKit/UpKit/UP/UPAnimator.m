@@ -5,7 +5,7 @@
 
 #import "UPAssertions.h"
 #import "UPAnimator.h"
-#import "UPTickAnimator.h"
+#import "UPTickingAnimator.h"
 
 @interface UPAnimator ()
 @property (nonatomic) NSObject<UIViewAnimating> *inner;
@@ -33,9 +33,9 @@
     completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
     __block UIOffset roffset = UIOffsetZero;
-    UPTickAnimator *animator = [UPTickAnimator animatorWithDuration:duration
+    UPTickingAnimator *animator = [UPTickingAnimator animatorWithDuration:duration
         unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear]
-        applier:^(UPTickAnimator *animator, CGFloat fractionCompleted) {
+        applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
             CGFloat factor = sin(5 * M_PI * fractionCompleted);
             UIOffset foffset = UIOffsetMake(factor * offset.horizontal, factor * offset.vertical);
             UIOffset doffset = UIOffsetMake(foffset.horizontal - roffset.horizontal, foffset.vertical - roffset.vertical);
@@ -44,7 +44,7 @@
                 view.transform = CGAffineTransformTranslate(view.transform, doffset.horizontal, doffset.vertical);
             }
         }
-        completion:^(UPTickAnimator *animator, UIViewAnimatingPosition finalPosition) {
+        completion:^(UPTickingAnimator *animator, UIViewAnimatingPosition finalPosition) {
             if (completion) {
                 completion(finalPosition);
             }

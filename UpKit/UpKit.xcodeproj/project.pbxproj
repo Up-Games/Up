@@ -22,11 +22,11 @@
 		5DA8E04924782C25008D3015 /* UPDelay.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E04724782C25008D3015 /* UPDelay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E053247AC79F008D3015 /* UPAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E051247AC79F008D3015 /* UPAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E054247AC79F008D3015 /* UPAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E052247AC79F008D3015 /* UPAnimator.m */; };
-		5DA8E05B247ADC27008D3015 /* UPTickAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E059247ADC27008D3015 /* UPTickAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DA8E05C247ADC27008D3015 /* UPTickAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E05A247ADC27008D3015 /* UPTickAnimator.mm */; };
+		5DA8E05B247ADC27008D3015 /* UPTickingAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E059247ADC27008D3015 /* UPTickingAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DA8E05C247ADC27008D3015 /* UPTickingAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E05A247ADC27008D3015 /* UPTickingAnimator.mm */; };
 		5DA8E05F247B361F008D3015 /* UPContainerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E05D247B361F008D3015 /* UPContainerView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E060247B361F008D3015 /* UPContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E05E247B361F008D3015 /* UPContainerView.m */; };
-		5DA8E063247C063B008D3015 /* UPTicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E061247C063B008D3015 /* UPTicker.h */; };
+		5DA8E063247C063B008D3015 /* UPTicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E061247C063B008D3015 /* UPTicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E064247C063B008D3015 /* UPTicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E062247C063B008D3015 /* UPTicker.m */; };
 		5DBADB7324678F4000D9D1FF /* UPGameCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7424678F4000D9D1FF /* UPGameCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameCode.mm */; };
@@ -118,8 +118,8 @@
 		5DA8E04724782C25008D3015 /* UPDelay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDelay.h; sourceTree = "<group>"; };
 		5DA8E051247AC79F008D3015 /* UPAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAnimator.h; sourceTree = "<group>"; };
 		5DA8E052247AC79F008D3015 /* UPAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPAnimator.m; sourceTree = "<group>"; };
-		5DA8E059247ADC27008D3015 /* UPTickAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTickAnimator.h; sourceTree = "<group>"; };
-		5DA8E05A247ADC27008D3015 /* UPTickAnimator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTickAnimator.mm; sourceTree = "<group>"; };
+		5DA8E059247ADC27008D3015 /* UPTickingAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTickingAnimator.h; sourceTree = "<group>"; };
+		5DA8E05A247ADC27008D3015 /* UPTickingAnimator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTickingAnimator.mm; sourceTree = "<group>"; };
 		5DA8E05D247B361F008D3015 /* UPContainerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPContainerView.h; sourceTree = "<group>"; };
 		5DA8E05E247B361F008D3015 /* UPContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPContainerView.m; sourceTree = "<group>"; };
 		5DA8E061247C063B008D3015 /* UPTicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTicker.h; sourceTree = "<group>"; };
@@ -345,8 +345,8 @@
 				5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */,
 				5DA8E03D2475E14D008D3015 /* UPStackTrace.h */,
 				5DEBE02C245716F900016047 /* UPStringTools.h */,
-				5DA8E059247ADC27008D3015 /* UPTickAnimator.h */,
-				5DA8E05A247ADC27008D3015 /* UPTickAnimator.mm */,
+				5DA8E059247ADC27008D3015 /* UPTickingAnimator.h */,
+				5DA8E05A247ADC27008D3015 /* UPTickingAnimator.mm */,
 				5DA8E061247C063B008D3015 /* UPTicker.h */,
 				5DA8E062247C063B008D3015 /* UPTicker.m */,
 				5DFE6222245376D100D9CA0B /* UPTypes.h */,
@@ -390,7 +390,7 @@
 				5D2CAC84245B538B00B81332 /* NSValue+UP.h in Headers */,
 				5DEBE01A2454E3AC00016047 /* UPColor.h in Headers */,
 				5DA8E053247AC79F008D3015 /* UPAnimator.h in Headers */,
-				5DA8E05B247ADC27008D3015 /* UPTickAnimator.h in Headers */,
+				5DA8E05B247ADC27008D3015 /* UPTickingAnimator.h in Headers */,
 				5DA8E03F2475E14D008D3015 /* UPStackTrace.h in Headers */,
 				5DF9DF992466412B00B2199D /* UPRandom.h in Headers */,
 				5DFE62262453CFCD00D9CA0B /* UPConstants.h in Headers */,
@@ -561,7 +561,7 @@
 				5D2CAC86245B53F200B81332 /* NSValue+UP.m in Sources */,
 				5DD71D9D2457AFB200F3F9E2 /* UPBezierPathView.m in Sources */,
 				5DA8E04824782C25008D3015 /* UPDelay.mm in Sources */,
-				5DA8E05C247ADC27008D3015 /* UPTickAnimator.mm in Sources */,
+				5DA8E05C247ADC27008D3015 /* UPTickingAnimator.mm in Sources */,
 				5DA8E060247B361F008D3015 /* UPContainerView.m in Sources */,
 				5DD71DA12458DA3A00F3F9E2 /* UIView+UP.mm in Sources */,
 				5DC618B5246EF6CC00090E7A /* UPLabel.m in Sources */,

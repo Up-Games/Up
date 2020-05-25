@@ -6,22 +6,21 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 
-@class UPTickAnimator;
+@class UPTickingAnimator;
+@protocol UPTicking;
 
 extern CFTimeInterval UPTickerInterval;
 
 @interface UPTicker : NSObject
 
-@property (nonatomic) NSMutableSet<UPTickAnimator *> *animators;
-
 + (UPTicker *)instance;
 - (instancetype)init NS_UNAVAILABLE;
 
-- (void)addAnimator:(UPTickAnimator *)animator;
-- (void)removeAnimator:(UPTickAnimator *)animator;
+- (void)addTicking:(NSObject<UPTicking> *)ticking;
+- (void)removeTicking:(NSObject<UPTicking> *)ticking;
 
 @end
 
-@interface NSObject (UPTicking)
-- (void)tick:(CFTimeInterval)currentTick;
+@protocol UPTicking <NSObject>
+- (void)tick:(CFTimeInterval)now;
 @end

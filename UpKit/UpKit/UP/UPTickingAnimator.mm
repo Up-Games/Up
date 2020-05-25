@@ -8,12 +8,12 @@
 
 #import "UPAssertions.h"
 #import "UPDelay.h"
-#import "UPTickAnimator.h"
+#import "UPTickingAnimator.h"
 #import "UPTicker.h"
 #import "UPMath.h"
 #import "UPStringTools.h"
 
-@interface UPTickAnimator ()
+@interface UPTickingAnimator ()
 
 @property (nonatomic) CFTimeInterval duration;
 @property (nonatomic) UPUnitFunction *unitFunction;
@@ -36,9 +36,9 @@
 
 @end
 
-@implementation UPTickAnimator
+@implementation UPTickingAnimator
 
-+ (UPTickAnimator *)animatorWithDuration:(CFTimeInterval)duration
++ (UPTickingAnimator *)animatorWithDuration:(CFTimeInterval)duration
                             unitFunction:(UPUnitFunction *)unitFunction
                                  applier:(UPTickAnimatorApplier)applier
                               completion:(UPTickAnimatorCompletion)completion
@@ -46,7 +46,7 @@
     return [self animatorWithDuration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO applier:applier completion:completion];
 }
 
-+ (UPTickAnimator *)animatorWithDuration:(CFTimeInterval)duration
++ (UPTickingAnimator *)animatorWithDuration:(CFTimeInterval)duration
                             unitFunction:(UPUnitFunction *)unitFunction
                              repeatCount:(NSUInteger)repeatCount
                                 rebounds:(BOOL)rebounds
@@ -85,22 +85,22 @@
     return self;
 }
 
-- (void)tick:(CFTimeInterval)currentTick
+- (void)tick:(CFTimeInterval)now
 {
     if (!self.running || self.completed) {
         return;
     }
 
     // prevent self from being released before method finishes
-    UPTickAnimator *ref = self;
+    UPTickingAnimator *ref = self;
 
     if (up_is_fuzzy_zero(self.previousTick)) {
         self.remainingDuration -= (UPTickerInterval * self.rate);
     }
     else {
-        self.remainingDuration -= ((currentTick - self.previousTick) * self.rate);
+        self.remainingDuration -= ((now - self.previousTick) * self.rate);
     }
-    self.previousTick = currentTick;
+    self.previousTick = now;
     self.remainingDuration = UPMaxT(CFTimeInterval, self.remainingDuration, 0);
 
     if (up_is_fuzzy_zero(self.remainingDuration)) {
@@ -146,7 +146,7 @@
         }
     }
 
-    self.previousTick = currentTick;
+    self.previousTick = now;
     ref = nil;
 }
 
@@ -201,7 +201,7 @@
     self.completed = NO;
     self.running = YES;
     self.state = UIViewAnimatingStateActive;
-    [[UPTicker instance] addAnimator:self];
+    [[UPTicker instance] addTicking:self];
 }
 
 - (void)startAnimationAfterDelay:(NSTimeInterval)delay
@@ -217,7 +217,7 @@
     self.running = NO;
     self.previousTick = 0;
     self.state = UIViewAnimatingStateInactive;
-    [[UPTicker instance] removeAnimator:self];
+    [[UPTicker instance] removeTicking:self];
 }
 
 - (void)stopAnimation:(BOOL)withoutFinishing
@@ -226,7 +226,7 @@
     self.running = NO;
     self.previousTick = 0;
     self.state = UIViewAnimatingStateStopped;
-    [[UPTicker instance] removeAnimator:self];
+    [[UPTicker instance] removeTicking:self];
     if (!withoutFinishing) {
         [self finishAnimationAtPosition:self.animatingPosition];
     }
