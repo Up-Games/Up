@@ -9,6 +9,7 @@
 #import "UPAssertions.h"
 #import "UPDelay.h"
 #import "UPTickAnimator.h"
+#import "UPTicker.h"
 #import "UPMath.h"
 #import "UPStringTools.h"
 
@@ -36,73 +37,6 @@
 - (void)tick:(CFTimeInterval)currentTick;
 
 @end
-
-// ================================================================================================
-
-@interface UPTicker : NSObject
-
-@property (nonatomic) CADisplayLink *displayLink;
-@property (nonatomic) NSMutableSet<UPTickAnimator *> *animators;
-
-- (void)addAnimator:(UPTickAnimator *)animator;
-- (void)removeAnimator:(UPTickAnimator *)animator;
-
-@end
-
-@implementation UPTicker
-
-+ (UPTicker *)instance
-{
-    static dispatch_once_t onceToken;
-    static UPTicker *instance;
-    dispatch_once(&onceToken, ^{
-        instance = [[self alloc] init];
-    });
-    return instance;
-}
-
-- (instancetype)init
-{
-    self = [super init];
-
-    self.animators = [NSMutableSet set];
-
-    return self;
-}
-
-- (void)addAnimator:(UPTickAnimator *)animator
-{
-    [self.animators addObject:animator];
-
-    if (self.displayLink) {
-        return;
-    }
-
-    self.displayLink = [[UIScreen mainScreen] displayLinkWithTarget:self selector:@selector(_tick:)];
-    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-}
-
-- (void)removeAnimator:(UPTickAnimator *)animator
-{
-    [self.animators removeObject:animator];
-
-    if (self.animators.count == 0) {
-        [self.displayLink invalidate];
-        self.displayLink = nil;
-    }
-}
-
-- (void)_tick:(CADisplayLink *)sender
-{
-    CFTimeInterval currentTick = CACurrentMediaTime();
-    for (UPTickAnimator *animator in self.animators) {
-        [animator tick:currentTick];
-    }
-}
-
-@end
-
-// ================================================================================================
 
 @implementation UPTickAnimator
 
