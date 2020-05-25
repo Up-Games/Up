@@ -445,8 +445,8 @@ static constexpr const char *GameTag = "game";
         completion:^(UIViewAnimatingPosition finalPosition) {
             [wordTrayTileViewsCopy makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }];
-    UIOffset springOffset = UIOffsetMake(0, up_size_height(layout_manager.tile_size()) * 0.15);
-    UPAnimator *springAnimator = [UPAnimator springViews:wordTrayTileViewsCopy withDuration:0.125 offset:springOffset
+    UIOffset springOffset = UIOffsetMake(0, up_size_height(layout_manager.tile_size()) * 0.125);
+    UPAnimator *springAnimator = [UPAnimator springViews:wordTrayTileViewsCopy withDuration:0.13 offset:springOffset
         completion:^(UIViewAnimatingPosition finalPosition) {
             [slideAnimator startAnimation];
     }];
