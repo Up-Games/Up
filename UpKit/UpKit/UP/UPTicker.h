@@ -18,6 +18,10 @@ extern CFTimeInterval UPTickerInterval;
 
 - (void)addTicking:(NSObject<UPTicking> *)ticking;
 - (void)removeTicking:(NSObject<UPTicking> *)ticking;
+- (void)removeAllTickings;
+
+- (void)start;
+- (void)stop;
 
 @end
 

@@ -49,9 +49,27 @@ CFTimeInterval UPTickerInterval = 1.0 / 60.0;
     [self _stopDisplayLinkIfNoTickings];
 }
 
+- (void)removeAllTickings
+{
+    [self.tickings removeAllObjects];
+    [self stop];
+}
+
+- (void)start
+{
+    [self _startDisplayLinkIfNeeded];
+}
+
+- (void)stop
+{
+    [self.displayLink invalidate];
+    self.displayLink = nil;
+}
+
+static BOOL tickIntervalChecked = NO;
+
 - (void)_tick:(CADisplayLink *)sender
 {
-    static BOOL tickIntervalChecked = NO;
     if (UNLIKELY(!tickIntervalChecked)) {
         tickIntervalChecked = YES;
         UPTickerInterval = self.displayLink.duration;
@@ -65,6 +83,7 @@ CFTimeInterval UPTickerInterval = 1.0 / 60.0;
 - (void)_startDisplayLinkIfNeeded
 {
     if (!self.displayLink || self.tickings.count > 0) {
+        tickIntervalChecked = NO;
         self.displayLink = [[UIScreen mainScreen] displayLinkWithTarget:self selector:@selector(_tick:)];
         [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
     }
@@ -73,8 +92,7 @@ CFTimeInterval UPTickerInterval = 1.0 / 60.0;
 - (void)_stopDisplayLinkIfNoTickings
 {
     if (self.tickings.count == 0) {
-        [self.displayLink invalidate];
-        self.displayLink = nil;
+        [self stop];
     }
 }
 

@@ -10,8 +10,47 @@
 #import "UPDelay.h"
 #import "UPTickingAnimator.h"
 #import "UPTicker.h"
+#import "UPMacros.h"
 #import "UPMath.h"
 #import "UPStringTools.h"
+
+// =========================================================================================================================================
+
+static CGFloat compute_effective_fraction(CGFloat fraction, BOOL rebounds, NSUInteger repeatCount, UPUnitFunction *unitFunction)
+{
+    CGFloat effective_fraction = fraction;
+    if (rebounds) {
+        CGFloat ipart;
+        CGFloat fpart = modf(fraction, &ipart);
+        if (ipart >= (repeatCount * 2)) {
+            effective_fraction = 0.0;
+        }
+        else {
+            effective_fraction = fpart;
+            if (((NSInteger)roundf(ipart)) % 2 == 1) {
+                effective_fraction = 1.0 - effective_fraction;
+            }
+        }
+    }
+    else if (repeatCount > 1) {
+        CGFloat ipart;
+        CGFloat fpart = modf(fraction, &ipart);
+        if (ipart >= repeatCount) {
+            effective_fraction = 1.0;
+        }
+        else {
+            effective_fraction = fpart;
+        }
+    }
+    return [unitFunction valueForInput:effective_fraction];
+}
+
+UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger repeatCount)
+{
+    return 1.0 * repeatCount * (rebounds ? 2.0 : 1.0);
+}
+
+// =========================================================================================================================================
 
 @interface UPTickingAnimator ()
 
@@ -120,9 +159,10 @@
     }
     else {
         CGFloat fraction = 1.0 - (self.remainingDuration / self.duration);
-        self.completed = [self isCompletedWithFraction:fraction];
+        CGFloat completedFraction = compute_completed_fraction(self.rebounds, self.repeatCount);
+        self.completed = fraction > completedFraction || up_is_fuzzy_equal(fraction, completedFraction);
         if (self.completed) {
-            CGFloat effectiveFraction = [self computeEffectiveFraction:[self completedFraction]];
+            CGFloat effectiveFraction = compute_effective_fraction(completedFraction, self.rebounds, self.repeatCount, self.unitFunction);
             UIViewAnimatingPosition effectiveAnimatingPosition = UIViewAnimatingPositionCurrent;
             self.fractionComplete = effectiveFraction;
             if (up_is_fuzzy_zero(effectiveFraction)) {
@@ -138,7 +178,7 @@
             [self stopAnimation:NO];
         }
         else {
-            CGFloat effectiveFraction = [self computeEffectiveFraction:fraction];
+            CGFloat effectiveFraction = compute_effective_fraction(fraction, self.rebounds, self.repeatCount, self.unitFunction);
             self.fractionComplete = effectiveFraction;
             if (self.applier) {
                 self.applier(self, effectiveFraction);
@@ -148,46 +188,6 @@
 
     self.previousTick = now;
     ref = nil;
-}
-
-- (CGFloat)computeEffectiveFraction:(CGFloat)fraction
-{
-    CGFloat effective_fraction = fraction;
-    if (self.rebounds) {
-        CGFloat ipart;
-        CGFloat fpart = modf(fraction, &ipart);
-        if (ipart >= (self.repeatCount * 2)) {
-            effective_fraction = 0.0;
-        }
-        else {
-            effective_fraction = fpart;
-            if (((NSInteger)roundf(ipart)) % 2 == 1) {
-                effective_fraction = 1.0 - effective_fraction;
-            }
-        }
-    }
-    else if (self.repeatCount > 1) {
-        CGFloat ipart;
-        CGFloat fpart = modf(fraction, &ipart);
-        if (ipart >= self.repeatCount) {
-            effective_fraction = 1.0;
-        }
-        else {
-            effective_fraction = fpart;
-        }
-    }
-    return [self.unitFunction valueForInput:effective_fraction];
-}
-
-- (BOOL)isCompletedWithFraction:(CGFloat)fraction
-{
-    CGFloat completedFraction = [self completedFraction];
-    return fraction > completedFraction || up_is_fuzzy_equal(fraction, completedFraction);
-}
-
-- (CGFloat)completedFraction
-{
-    return 1.0 * self.repeatCount * (self.rebounds ? 2.0 : 1.0);
 }
 
 #pragma mark - UIViewAnimating
