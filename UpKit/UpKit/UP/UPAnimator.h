@@ -16,6 +16,9 @@
 + (UPAnimator *)slideViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration offset:(UIOffset)offset
     completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
++ (UPAnimator *)springViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration offset:(UIOffset)offset
+    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
+
 + (UPAnimator *)bloopViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration position:(CGPoint)position
     completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 

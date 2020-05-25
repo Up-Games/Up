@@ -440,14 +440,18 @@ static constexpr const char *GameTag = "game";
     NSArray *wordTrayTileViewsCopy = [self.wordTrayTileViews copy];
     [self.wordTrayTileViews removeAllObjects];
 
-    UPAnimator *fadeOutAnimator = [UPAnimator fadeOutViews:wordTrayTileViewsCopy withDuration:0.3 completion:nil];
-    UIOffset offset = UIOffsetMake(0, -up_size_height(layout_manager.tile_size()) * 1.25);
-    UPAnimator *slideAnimator = [UPAnimator slideViews:wordTrayTileViewsCopy withDuration:0.3 offset:offset
+    UIOffset slideOffset = UIOffsetMake(0, -up_size_height(layout_manager.tile_size()) * 1.25);
+    UPAnimator *slideAnimator = [UPAnimator slideViews:wordTrayTileViewsCopy withDuration:0.1 offset:slideOffset
         completion:^(UIViewAnimatingPosition finalPosition) {
             [wordTrayTileViewsCopy makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }];
-    [fadeOutAnimator startAnimation];
-    [slideAnimator startAnimation];
+    UIOffset springOffset = UIOffsetMake(0, up_size_height(layout_manager.tile_size()) * 0.15);
+    UPAnimator *springAnimator = [UPAnimator springViews:wordTrayTileViewsCopy withDuration:0.125 offset:springOffset
+        completion:^(UIViewAnimatingPosition finalPosition) {
+            [slideAnimator startAnimation];
+    }];
+
+    [springAnimator startAnimation];
 }
 
 - (void)viewOpDumpPlayerTray

@@ -71,6 +71,24 @@
     return [[self alloc] initWithInnerAnimator:animator];
 }
 
++ (UPAnimator *)springViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration offset:(UIOffset)offset
+    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
+{
+    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7
+         animations:^{
+            for (UIView *view in views) {
+                view.transform = CGAffineTransformTranslate(view.transform, offset.horizontal, offset.vertical);
+            }
+        }
+    ];
+    if (completion) {
+        [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+            completion(finalPosition);
+        }];
+    }
+    return [[self alloc] initWithInnerAnimator:animator];
+}
+
 + (UPAnimator *)bloopViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration position:(CGPoint)position
     completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
