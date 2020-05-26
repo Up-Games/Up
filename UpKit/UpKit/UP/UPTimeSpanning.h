@@ -6,6 +6,7 @@
 #import <UIKit/UIKit.h>
 
 #import <UPKit/UPMacros.h>
+#import <UPKit/UPSerialNumber.h>
 
 @class UPAnimator;
 
@@ -20,8 +21,6 @@
 
 #if __cplusplus
 
-#import <atomic>
-
 namespace UP {
 namespace TimeSpanning {
 
@@ -30,11 +29,6 @@ extern const char * const DelayLabel;
 extern const char * const TestLabel;
 
 void init();
-
-UP_STATIC_INLINE uint32_t next_serial_number() {
-    static std::atomic_uint32_t g_counter;
-    return ++g_counter;
-}
 
 UPAnimator *bloop(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
     void (^completion)(UIViewAnimatingPosition));

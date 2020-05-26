@@ -36,7 +36,7 @@
     self.duration = duration;
     self.remainingDuration = self.duration;
     self.block = block;
-    self.serialNumber = UP::TimeSpanning::next_serial_number();
+    self.serialNumber = UP::next_serial_number();
     
     self.previousTick = 0;
     

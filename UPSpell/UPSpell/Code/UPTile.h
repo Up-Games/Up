@@ -6,6 +6,7 @@
 #ifdef __cplusplus
 
 #import <UpKit/UPMacros.h>
+#import <UpKit/UPSerialNumber.h>
 
 namespace UP {
 
@@ -28,19 +29,22 @@ public:
     }
 
     Tile() {}
-    Tile(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {}
+    Tile(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier), m_serial_number(next_serial_number()) {}
 
     static Tile sentinel() { return Tile(SentinelGlyph, 0); }
 
     char32_t glyph() const { return m_glyph; }
-    int score() const { return score_for(glyph()); }
     int multiplier() const { return m_multiplier; }
+    int score() const { return score_for(glyph()); }
+    int effective_score() const { return multiplier() * score(); }
+    uint32_t serial_number() const { return m_serial_number; }
 
     template <bool B = true> bool is_sentinel() const { return (m_glyph == SentinelGlyph) == B; }
 
 private:
     char32_t m_glyph = 0;
     int m_multiplier = 1;
+    uint32_t m_serial_number = next_serial_number();
 };
 
 UP_STATIC_INLINE bool operator==(const Tile &a, const Tile &b) {

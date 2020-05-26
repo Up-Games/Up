@@ -113,7 +113,7 @@
     self = [super init];
     self.label = label;
     self.inner = inner;
-    self.serialNumber = UP::TimeSpanning::next_serial_number();
+    self.serialNumber = UP::next_serial_number();
     return self;
 }
 
