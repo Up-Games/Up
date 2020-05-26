@@ -5,22 +5,26 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UPAnimator : NSObject <UIViewAnimating>
+#import <UpKit/UpTimeSpanning.h>
 
-+ (UPAnimator *)fadeOutViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration
+@interface UPAnimator : NSObject <UIViewAnimating, UPTimeSpanning>
+
++ (UPAnimator *)bloopAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
+    position:(CGPoint)position completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
+
++ (UPAnimator *)fadeAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
-+ (UPAnimator *)shakeViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration offset:(UIOffset)offset
-    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
++ (UPAnimator *)shakeAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
+    offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
-+ (UPAnimator *)slideViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration offset:(UIOffset)offset
-    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
++ (UPAnimator *)slideAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
+    offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
-+ (UPAnimator *)springViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration offset:(UIOffset)offset
-    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
++ (UPAnimator *)springAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
+    offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
-+ (UPAnimator *)bloopViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration position:(CGPoint)position
-    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
+// UIViewAnimating
 
 @property(nonatomic, readonly) UIViewAnimatingState state;
 @property(nonatomic, readonly, getter=isRunning) BOOL running;
@@ -32,5 +36,13 @@
 - (void)pauseAnimation;
 - (void)stopAnimation:(BOOL)withoutFinishing;
 - (void)finishAnimationAtPosition:(UIViewAnimatingPosition)finalPosition;
+
+// UPTimeSpanning
+@property(nonatomic, readonly) const char *label;
+@property(nonatomic, readonly) uint32_t serialNumber;
+- (void)start;
+- (void)pause;
+- (void)reset;
+- (void)cancel;
 
 @end

@@ -1,20 +1,39 @@
 //
-//  UPAnimator.m
+//  UPAnimator.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
 #import "UPAssertions.h"
 #import "UPAnimator.h"
 #import "UPTickingAnimator.h"
+#import "UPUnitFunction.h"
 
 @interface UPAnimator ()
+@property (nonatomic, readwrite) const char *label;
+@property (nonatomic, readwrite) uint32_t serialNumber;
 @property (nonatomic) NSObject<UIViewAnimating> *inner;
 @end
 
 @implementation UPAnimator
 
-+ (UPAnimator *)fadeOutViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration
-    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
++ (UPAnimator *)bloopAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
+    position:(CGPoint)position completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
+{
+    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7 animations:^{
+        for (UIView *view in views) {
+            view.center = position;
+        }
+    }];
+    if (completion) {
+        [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+            completion(finalPosition);
+        }];
+    }
+    return [[self alloc] initWithLabel:label innerAnimator:animator];
+}
+
++ (UPAnimator *)fadeAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
+    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 {
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration curve:UIViewAnimationCurveEaseOut animations:^{
         for (UIView *view in views) {
@@ -26,11 +45,11 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] initWithInnerAnimator:animator];
+    return [[self alloc] initWithLabel:label innerAnimator:animator];
 }
 
-+ (UPAnimator *)shakeViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration offset:(UIOffset)offset
-    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
++ (UPAnimator *)shakeAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
+    offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
     __block UIOffset roffset = UIOffsetZero;
     UPTickingAnimator *animator = [UPTickingAnimator animatorWithDuration:duration
@@ -50,11 +69,11 @@
             }
         }
     ];
-    return [[self alloc] initWithInnerAnimator:animator];
+    return [[self alloc] initWithLabel:label innerAnimator:animator];
 }
 
-+ (UPAnimator *)slideViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration offset:(UIOffset)offset
-    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
++ (UPAnimator *)slideAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
+    offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration
         curve:UIViewAnimationCurveLinear animations:^{
@@ -68,11 +87,11 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] initWithInnerAnimator:animator];
+    return [[self alloc] initWithLabel:label innerAnimator:animator];
 }
 
-+ (UPAnimator *)springViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration offset:(UIOffset)offset
-    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
++ (UPAnimator *)springAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
+    offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7
          animations:^{
@@ -86,30 +105,52 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] initWithInnerAnimator:animator];
+    return [[self alloc] initWithLabel:label innerAnimator:animator];
 }
 
-+ (UPAnimator *)bloopViews:(NSArray<UIView *> *)views withDuration:(CFTimeInterval)duration position:(CGPoint)position
-    completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
-{
-    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7 animations:^{
-        for (UIView *view in views) {
-            view.center = position;
-        }
-    }];
-    if (completion) {
-        [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
-            completion(finalPosition);
-        }];
-    }
-    return [[self alloc] initWithInnerAnimator:animator];
-}
-
-- (instancetype)initWithInnerAnimator:(NSObject<UIViewAnimating> *)inner
+- (instancetype)initWithLabel:(const char *)label innerAnimator:(NSObject<UIViewAnimating> *)inner
 {
     self = [super init];
+    self.label = label;
     self.inner = inner;
+    self.serialNumber = UP::TimeSpanning::next_serial_number();
     return self;
+}
+
+- (void)dealloc
+{
+    UP::TimeSpanning::remove(self);
+}
+
+#pragma mark - UIViewAnimating
+
+@dynamic state;
+- (UIViewAnimatingState)state
+{
+    return self.inner.state;
+}
+
+@dynamic running;
+- (BOOL)isRunning
+{
+    return self.inner.isRunning;
+}
+
+@dynamic reversed;
+- (BOOL)isReversed
+{
+    return self.inner.isReversed;
+}
+
+@dynamic fractionComplete;
+- (CGFloat)fractionComplete
+{
+    return self.inner.fractionComplete;
+}
+
+- (void)setFractionComplete:(CGFloat)fractionComplete
+{
+    self.inner.fractionComplete = fractionComplete;
 }
 
 - (void)startAnimation
@@ -137,28 +178,26 @@
     [self.inner finishAnimationAtPosition:finalPosition];
 }
 
-@dynamic state;
-- (UIViewAnimatingState)state
+#pragma mark - UPTimeSpanning
+
+- (void)start
 {
-    return self.inner.state;
+    [self.inner startAnimation];
 }
 
-@dynamic running;
-- (BOOL)isRunning
+- (void)pause
 {
-    return self.inner.isRunning;
+    [self.inner pauseAnimation];
 }
 
-@dynamic reversed;
-- (BOOL)isReversed
+- (void)reset
 {
-    return self.inner.isReversed;
+    self.inner.fractionComplete = 0;
 }
 
-@dynamic fractionComplete;
-- (CGFloat)fractionComplete
+- (void)cancel
 {
-    return self.inner.fractionComplete;
+    [self.inner stopAnimation:NO];
 }
 
 @end

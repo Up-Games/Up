@@ -18,16 +18,18 @@
 		5DA8E03B2475C796008D3015 /* UPAssertions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E0392475C796008D3015 /* UPAssertions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E03F2475E14D008D3015 /* UPStackTrace.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E03D2475E14D008D3015 /* UPStackTrace.h */; };
 		5DA8E0402475E14D008D3015 /* UPStackTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */; };
-		5DA8E04824782C25008D3015 /* UPDelay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E04624782C25008D3015 /* UPDelay.mm */; };
-		5DA8E04924782C25008D3015 /* UPDelay.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E04724782C25008D3015 /* UPDelay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E053247AC79F008D3015 /* UPAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E051247AC79F008D3015 /* UPAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DA8E054247AC79F008D3015 /* UPAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E052247AC79F008D3015 /* UPAnimator.m */; };
+		5DA8E054247AC79F008D3015 /* UPAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E052247AC79F008D3015 /* UPAnimator.mm */; };
 		5DA8E05B247ADC27008D3015 /* UPTickingAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E059247ADC27008D3015 /* UPTickingAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E05C247ADC27008D3015 /* UPTickingAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E05A247ADC27008D3015 /* UPTickingAnimator.mm */; };
 		5DA8E05F247B361F008D3015 /* UPContainerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E05D247B361F008D3015 /* UPContainerView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E060247B361F008D3015 /* UPContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E05E247B361F008D3015 /* UPContainerView.m */; };
 		5DA8E063247C063B008D3015 /* UPTicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E061247C063B008D3015 /* UPTicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E064247C063B008D3015 /* UPTicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E062247C063B008D3015 /* UPTicker.m */; };
+		5DA8E067247C2B04008D3015 /* UPDelayedAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E065247C2B04008D3015 /* UPDelayedAction.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DA8E068247C2B04008D3015 /* UPDelayedAction.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E066247C2B04008D3015 /* UPDelayedAction.mm */; };
+		5DA8E06B247C76A8008D3015 /* UPTimeSpanning.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E069247C76A8008D3015 /* UPTimeSpanning.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DA8E06C247C76A8008D3015 /* UPTimeSpanning.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E06A247C76A8008D3015 /* UPTimeSpanning.mm */; };
 		5DBADB7324678F4000D9D1FF /* UPGameCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7424678F4000D9D1FF /* UPGameCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameCode.mm */; };
 		5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B2246EF6CC00090E7A /* UPLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -44,8 +46,6 @@
 		5DD71D472457748000F3F9E2 /* UPLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D462457748000F3F9E2 /* UPLayoutTests.m */; };
 		5DD71D4A2457824A00F3F9E2 /* UPGeometry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D482457824A00F3F9E2 /* UPGeometry.mm */; };
 		5DD71D4B2457824A00F3F9E2 /* UPGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D492457824A00F3F9E2 /* UPGeometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DD71D982457988000F3F9E2 /* UPDeferredBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D962457988000F3F9E2 /* UPDeferredBlock.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DD71D992457988000F3F9E2 /* UPDeferredBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D972457988000F3F9E2 /* UPDeferredBlock.m */; };
 		5DD71D9C2457AFB200F3F9E2 /* UPBezierPathView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D9A2457AFB200F3F9E2 /* UPBezierPathView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71D9D2457AFB200F3F9E2 /* UPBezierPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D9B2457AFB200F3F9E2 /* UPBezierPathView.m */; };
 		5DD71DA02458DA3A00F3F9E2 /* UIView+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D9E2458DA3A00F3F9E2 /* UIView+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -114,16 +114,18 @@
 		5DA8E0392475C796008D3015 /* UPAssertions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAssertions.h; sourceTree = "<group>"; };
 		5DA8E03D2475E14D008D3015 /* UPStackTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPStackTrace.h; sourceTree = "<group>"; };
 		5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPStackTrace.cpp; sourceTree = "<group>"; };
-		5DA8E04624782C25008D3015 /* UPDelay.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDelay.mm; sourceTree = "<group>"; };
-		5DA8E04724782C25008D3015 /* UPDelay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDelay.h; sourceTree = "<group>"; };
 		5DA8E051247AC79F008D3015 /* UPAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAnimator.h; sourceTree = "<group>"; };
-		5DA8E052247AC79F008D3015 /* UPAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPAnimator.m; sourceTree = "<group>"; };
+		5DA8E052247AC79F008D3015 /* UPAnimator.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAnimator.mm; sourceTree = "<group>"; };
 		5DA8E059247ADC27008D3015 /* UPTickingAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTickingAnimator.h; sourceTree = "<group>"; };
 		5DA8E05A247ADC27008D3015 /* UPTickingAnimator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTickingAnimator.mm; sourceTree = "<group>"; };
 		5DA8E05D247B361F008D3015 /* UPContainerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPContainerView.h; sourceTree = "<group>"; };
 		5DA8E05E247B361F008D3015 /* UPContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPContainerView.m; sourceTree = "<group>"; };
 		5DA8E061247C063B008D3015 /* UPTicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTicker.h; sourceTree = "<group>"; };
 		5DA8E062247C063B008D3015 /* UPTicker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPTicker.m; sourceTree = "<group>"; };
+		5DA8E065247C2B04008D3015 /* UPDelayedAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDelayedAction.h; sourceTree = "<group>"; };
+		5DA8E066247C2B04008D3015 /* UPDelayedAction.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDelayedAction.mm; sourceTree = "<group>"; };
+		5DA8E069247C76A8008D3015 /* UPTimeSpanning.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTimeSpanning.h; sourceTree = "<group>"; };
+		5DA8E06A247C76A8008D3015 /* UPTimeSpanning.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTimeSpanning.mm; sourceTree = "<group>"; };
 		5DBADB7124678F4000D9D1FF /* UPGameCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameCode.h; sourceTree = "<group>"; };
 		5DBADB7224678F4000D9D1FF /* UPGameCode.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameCode.mm; sourceTree = "<group>"; };
 		5DC618B2246EF6CC00090E7A /* UPLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLabel.h; sourceTree = "<group>"; };
@@ -141,8 +143,6 @@
 		5DD71D482457824A00F3F9E2 /* UPGeometry.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGeometry.mm; sourceTree = "<group>"; };
 		5DD71D492457824A00F3F9E2 /* UPGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPGeometry.h; sourceTree = "<group>"; };
 		5DD71D4C2457832400F3F9E2 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		5DD71D962457988000F3F9E2 /* UPDeferredBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDeferredBlock.h; sourceTree = "<group>"; };
-		5DD71D972457988000F3F9E2 /* UPDeferredBlock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPDeferredBlock.m; sourceTree = "<group>"; };
 		5DD71D9A2457AFB200F3F9E2 /* UPBezierPathView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPBezierPathView.h; sourceTree = "<group>"; };
 		5DD71D9B2457AFB200F3F9E2 /* UPBezierPathView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPBezierPathView.m; sourceTree = "<group>"; };
 		5DD71D9E2458DA3A00F3F9E2 /* UIView+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+UP.h"; sourceTree = "<group>"; };
@@ -307,7 +307,7 @@
 				5DD71D9E2458DA3A00F3F9E2 /* UIView+UP.h */,
 				5DD71D9F2458DA3A00F3F9E2 /* UIView+UP.mm */,
 				5DA8E051247AC79F008D3015 /* UPAnimator.h */,
-				5DA8E052247AC79F008D3015 /* UPAnimator.m */,
+				5DA8E052247AC79F008D3015 /* UPAnimator.mm */,
 				5DD71DA22458F39200F3F9E2 /* UPAny.h */,
 				5DA8E0392475C796008D3015 /* UPAssertions.h */,
 				5DA8E0382475C796008D3015 /* UPAssertions.mm */,
@@ -319,10 +319,8 @@
 				5DA8E05E247B361F008D3015 /* UPContainerView.m */,
 				5D5216F0246D87DF005A2E9F /* UPControl.h */,
 				5D5216F1246D87DF005A2E9F /* UPControl.mm */,
-				5DD71D962457988000F3F9E2 /* UPDeferredBlock.h */,
-				5DD71D972457988000F3F9E2 /* UPDeferredBlock.m */,
-				5DA8E04724782C25008D3015 /* UPDelay.h */,
-				5DA8E04624782C25008D3015 /* UPDelay.mm */,
+				5DA8E065247C2B04008D3015 /* UPDelayedAction.h */,
+				5DA8E066247C2B04008D3015 /* UPDelayedAction.mm */,
 				5DC618BD24703A1500090E7A /* UPFontMetrics.h */,
 				5DBADB7124678F4000D9D1FF /* UPGameCode.h */,
 				5DBADB7224678F4000D9D1FF /* UPGameCode.mm */,
@@ -345,10 +343,12 @@
 				5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */,
 				5DA8E03D2475E14D008D3015 /* UPStackTrace.h */,
 				5DEBE02C245716F900016047 /* UPStringTools.h */,
-				5DA8E059247ADC27008D3015 /* UPTickingAnimator.h */,
-				5DA8E05A247ADC27008D3015 /* UPTickingAnimator.mm */,
 				5DA8E061247C063B008D3015 /* UPTicker.h */,
 				5DA8E062247C063B008D3015 /* UPTicker.m */,
+				5DA8E059247ADC27008D3015 /* UPTickingAnimator.h */,
+				5DA8E05A247ADC27008D3015 /* UPTickingAnimator.mm */,
+				5DA8E069247C76A8008D3015 /* UPTimeSpanning.h */,
+				5DA8E06A247C76A8008D3015 /* UPTimeSpanning.mm */,
 				5DFE6222245376D100D9CA0B /* UPTypes.h */,
 				5DF8A8E52454892B00751E2E /* UPUnitFunction.h */,
 				5DF8A8E62454892C00751E2E /* UPUnitFunction.mm */,
@@ -377,13 +377,12 @@
 				5DD71DA32458F39200F3F9E2 /* UPAny.h in Headers */,
 				5DEBE02E245716F900016047 /* UPStringTools.h in Headers */,
 				5D5216F2246D87DF005A2E9F /* UPControl.h in Headers */,
-				5DD71D982457988000F3F9E2 /* UPDeferredBlock.h in Headers */,
 				5DFE62282453D11100D9CA0B /* UPMath.h in Headers */,
+				5DA8E067247C2B04008D3015 /* UPDelayedAction.h in Headers */,
 				5DF8A8E02454835F00751E2E /* UPTypes.h in Headers */,
 				5D269CB1245CDB31000B6A1D /* UIImage+UP.h in Headers */,
 				5DD71D9C2457AFB200F3F9E2 /* UPBezierPathView.h in Headers */,
 				5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */,
-				5DA8E04924782C25008D3015 /* UPDelay.h in Headers */,
 				5DA8E05F247B361F008D3015 /* UPContainerView.h in Headers */,
 				5DA8E03B2475C796008D3015 /* UPAssertions.h in Headers */,
 				5DD71DA02458DA3A00F3F9E2 /* UIView+UP.h in Headers */,
@@ -403,6 +402,7 @@
 				5DBADB7324678F4000D9D1FF /* UPGameCode.h in Headers */,
 				5DA8E063247C063B008D3015 /* UPTicker.h in Headers */,
 				5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */,
+				5DA8E06B247C76A8008D3015 /* UPTimeSpanning.h in Headers */,
 				5DC67DFB247367D1009BCDBB /* UPGameTimerLabel.h in Headers */,
 				5DF8A8E72454892C00751E2E /* UPUnitFunction.h in Headers */,
 				5DA8E0372475962A008D3015 /* UPUtility.h in Headers */,
@@ -543,7 +543,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D269CB2245CDB31000B6A1D /* UIImage+UP.m in Sources */,
-				5DD71D992457988000F3F9E2 /* UPDeferredBlock.m in Sources */,
 				5DBADB7424678F4000D9D1FF /* UPGameCode.mm in Sources */,
 				5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */,
 				5D5216F3246D87DF005A2E9F /* UPControl.mm in Sources */,
@@ -553,18 +552,19 @@
 				5DD71D4A2457824A00F3F9E2 /* UPGeometry.mm in Sources */,
 				5DC67DFC247367D1009BCDBB /* UPGameTimerLabel.m in Sources */,
 				5DC618BC246F045700090E7A /* UIFont+UP.mm in Sources */,
-				5DA8E054247AC79F008D3015 /* UPAnimator.m in Sources */,
+				5DA8E054247AC79F008D3015 /* UPAnimator.mm in Sources */,
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5DA8E064247C063B008D3015 /* UPTicker.m in Sources */,
 				5DF9DF432465B35700B2199D /* UPLexicon.mm in Sources */,
 				5DA8E0402475E14D008D3015 /* UPStackTrace.cpp in Sources */,
 				5D2CAC86245B53F200B81332 /* NSValue+UP.m in Sources */,
 				5DD71D9D2457AFB200F3F9E2 /* UPBezierPathView.m in Sources */,
-				5DA8E04824782C25008D3015 /* UPDelay.mm in Sources */,
 				5DA8E05C247ADC27008D3015 /* UPTickingAnimator.mm in Sources */,
 				5DA8E060247B361F008D3015 /* UPContainerView.m in Sources */,
+				5DA8E06C247C76A8008D3015 /* UPTimeSpanning.mm in Sources */,
 				5DD71DA12458DA3A00F3F9E2 /* UIView+UP.mm in Sources */,
 				5DC618B5246EF6CC00090E7A /* UPLabel.m in Sources */,
+				5DA8E068247C2B04008D3015 /* UPDelayedAction.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

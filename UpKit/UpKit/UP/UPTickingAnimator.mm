@@ -7,12 +7,14 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "UPAssertions.h"
-#import "UPDelay.h"
+#import "UPDelayedAction.h"
 #import "UPTickingAnimator.h"
 #import "UPTicker.h"
+#import "UPTimeSpanning.h"
 #import "UPMacros.h"
 #import "UPMath.h"
 #import "UPStringTools.h"
+#import "UPUnitFunction.h"
 
 // =========================================================================================================================================
 
@@ -61,7 +63,7 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 @property (nonatomic, copy) UPTickAnimatorApplier applier;
 @property (nonatomic, copy) UPTickAnimatorCompletion completion;
 
-@property (nonatomic) NSString *tag;
+@property (nonatomic) const char *label;
 @property (nonatomic) CFTimeInterval remainingDuration;
 @property (nonatomic) CFTimeInterval previousTick;
 @property (nonatomic) CGFloat rate;
@@ -113,8 +115,7 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
     self.completion = completion;
     self.rate = 1.0;
     
-    static int counter;
-    self.tag = [NSString stringWithFormat:@"%@:%d", self.class, ++counter];
+    self.label = UP::TimeSpanning::AnimationLabel;
 
     self.state = UIViewAnimatingStateInactive;
     self.animatingPosition = UIViewAnimatingPositionStart;
@@ -150,7 +151,7 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
             effectiveFraction = 0.0;
             self.animatingPosition = effectiveAnimatingPosition;
         }
-        self.fractionComplete = effectiveFraction;
+        _fractionComplete = effectiveFraction;
         self.animatingPosition = effectiveAnimatingPosition;
         if (self.applier) {
             self.applier(self, effectiveFraction);
@@ -159,12 +160,12 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
     }
     else {
         CGFloat fraction = 1.0 - (self.remainingDuration / self.duration);
+        _fractionComplete = fraction;
         CGFloat completedFraction = compute_completed_fraction(self.rebounds, self.repeatCount);
         self.completed = fraction > completedFraction || up_is_fuzzy_equal(fraction, completedFraction);
         if (self.completed) {
             CGFloat effectiveFraction = compute_effective_fraction(completedFraction, self.rebounds, self.repeatCount, self.unitFunction);
             UIViewAnimatingPosition effectiveAnimatingPosition = UIViewAnimatingPositionCurrent;
-            self.fractionComplete = effectiveFraction;
             if (up_is_fuzzy_zero(effectiveFraction)) {
                 effectiveAnimatingPosition = UIViewAnimatingPositionStart;
             }
@@ -179,7 +180,6 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
         }
         else {
             CGFloat effectiveFraction = compute_effective_fraction(fraction, self.rebounds, self.repeatCount, self.unitFunction);
-            self.fractionComplete = effectiveFraction;
             if (self.applier) {
                 self.applier(self, effectiveFraction);
             }
@@ -206,7 +206,7 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 - (void)startAnimationAfterDelay:(NSTimeInterval)delay
 {
-    UP::delay(UP::cpp_str(self.tag), delay, ^{
+    UP::TimeSpanning::delay(UP::TimeSpanning::DelayLabel, delay, ^{
         [self startAnimation];
     });
 }
@@ -254,6 +254,11 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
     if (self.completion) {
         self.completion(self, finalPosition);
     }
+}
+
+- (void)setFractionComplete:(CGFloat)fractionComplete
+{
+    self.remainingDuration = fractionComplete * self.duration;
 }
 
 - (BOOL)reversed

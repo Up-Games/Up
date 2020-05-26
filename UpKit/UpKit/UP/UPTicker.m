@@ -7,12 +7,13 @@
 
 #import "UPAssertions.h"
 #import "UPMacros.h"
-#import "UPTickingAnimator.h"
+#import "UPTicker.h"
 
 CFTimeInterval UPTickerInterval = 1.0 / 60.0;
 
 @interface UPTicker ()
 @property (nonatomic) NSMutableSet<NSObject<UPTicking> *> *tickings;
+@property (nonatomic) NSMutableArray<NSObject<UPTicking> *> *iterationTickings;
 @property (nonatomic) CADisplayLink *displayLink;
 @end
 
@@ -33,19 +34,20 @@ CFTimeInterval UPTickerInterval = 1.0 / 60.0;
     self = [super init];
 
     self.tickings = [NSMutableSet set];
+    self.iterationTickings = [NSMutableArray array];
 
     return self;
 }
 
-- (void)addTicking:(UPTickingAnimator *)animator
+- (void)addTicking:(NSObject<UPTicking> *)ticking
 {
-    [self.tickings addObject:animator];
+    [self.tickings addObject:ticking];
     [self _startDisplayLinkIfNeeded];
 }
 
-- (void)removeTicking:(UPTickingAnimator *)animator
+- (void)removeTicking:(NSObject<UPTicking> *)ticking
 {
-    [self.tickings removeObject:animator];
+    [self.tickings removeObject:ticking];
     [self _stopDisplayLinkIfNoTickings];
 }
 
@@ -75,8 +77,12 @@ static BOOL tickIntervalChecked = NO;
         UPTickerInterval = self.displayLink.duration;
     }
     CFTimeInterval now = CACurrentMediaTime();
-    for (UPTickingAnimator *animator in self.tickings) {
-        [animator tick:now];
+    [self.iterationTickings removeAllObjects];
+    for (NSObject<UPTicking> *ticking in self.tickings) {
+        [self.iterationTickings addObject:ticking];
+    }
+    for (NSObject<UPTicking> *ticking in self.iterationTickings) {
+        [ticking tick:now];
     }
 }
 

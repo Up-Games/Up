@@ -6,9 +6,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIViewAnimating.h>
 #import <UPKit/UPTicker.h>
-#import <UPKit/UPUnitFunction.h>
 
 @class UPTickingAnimator;
+@class UPUnitFunction;
 
 typedef void (^UPTickAnimatorApplier)(UPTickingAnimator *animator, CGFloat fractionCompleted);
 typedef void (^UPTickAnimatorCompletion)(UPTickingAnimator *animator, UIViewAnimatingPosition finalPosition);
@@ -22,6 +22,7 @@ typedef void (^UPTickAnimatorCompletion)(UPTickingAnimator *animator, UIViewAnim
     repeatCount:(NSUInteger)repeatCount rebounds:(BOOL)rebounds
         applier:(UPTickAnimatorApplier)applier completion:(UPTickAnimatorCompletion)completion;
 
+// UIViewAnimating
 @property (nonatomic, readonly) UIViewAnimatingState state;
 @property (nonatomic, readonly, getter=isRunning) BOOL running;
 @property (nonatomic) CGFloat fractionComplete;
