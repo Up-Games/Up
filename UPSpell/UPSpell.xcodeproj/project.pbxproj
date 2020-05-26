@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D5216EB246C7E9E005A2E9F /* UPSpellLayoutCalculator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216E9246C7E9E005A2E9F /* UPSpellLayoutCalculator.mm */; };
+		5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */; };
 		5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */; };
+		5D5F15D7247D75C800EB1486 /* UPTile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F15D6247D75C800EB1486 /* UPTile.mm */; };
 		5D72311C246B3717006027A3 /* MalloryCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D723119246B3713006027A3 /* MalloryCond-Bold.otf */; };
 		5D72311D246B3717006027A3 /* MalloryMPNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D72311B246B3713006027A3 /* MalloryMPNrrw-Bold.otf */; };
 		5D72311E246B3717006027A3 /* MalloryNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D72311A246B3713006027A3 /* MalloryNrrw-Bold.otf */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.m */; };
-		5DA8E03324748BB0008D3015 /* UPSpellModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E03124748BB0008D3015 /* UPSpellModel.mm */; };
 		5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E0432476BF41008D3015 /* UPTileView.mm */; };
+		5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E078247D723A008D3015 /* UPSpellModel.mm */; };
 		5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */; };
 		5DF9DF5C2466165700B2199D /* UPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5B2466165700B2199D /* UPAppDelegate.m */; };
 		5DF9DF5F2466165700B2199D /* UPSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5E2466165700B2199D /* UPSceneDelegate.m */; };
@@ -53,21 +54,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5D5216E9246C7E9E005A2E9F /* UPSpellLayoutCalculator.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellLayoutCalculator.mm; sourceTree = "<group>"; };
-		5D5216EA246C7E9E005A2E9F /* UPSpellLayoutCalculator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellLayoutCalculator.h; sourceTree = "<group>"; };
+		5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellLayout.mm; sourceTree = "<group>"; };
+		5D5216EA246C7E9E005A2E9F /* UPSpellLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellLayout.h; sourceTree = "<group>"; };
 		5D57D1FA246DB97700705395 /* UPControl+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UPControl+UPSpell.h"; sourceTree = "<group>"; };
 		5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPControl+UPSpell.mm"; sourceTree = "<group>"; };
+		5D5F15D6247D75C800EB1486 /* UPTile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTile.mm; sourceTree = "<group>"; };
 		5D723114246B34C0006027A3 /* UPTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileView.h; sourceTree = "<group>"; };
 		5D723119246B3713006027A3 /* MalloryCond-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Bold.otf"; sourceTree = "<group>"; };
 		5D72311A246B3713006027A3 /* MalloryNrrw-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryNrrw-Bold.otf"; sourceTree = "<group>"; };
 		5D72311B246B3713006027A3 /* MalloryMPNrrw-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryMPNrrw-Bold.otf"; sourceTree = "<group>"; };
 		5D72311F246B3917006027A3 /* UIFont+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UPSpell.h"; sourceTree = "<group>"; };
 		5D723120246B3996006027A3 /* UIFont+UPSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+UPSpell.m"; sourceTree = "<group>"; };
-		5DA8E03124748BB0008D3015 /* UPSpellModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellModel.mm; sourceTree = "<group>"; };
-		5DA8E03224748BB0008D3015 /* UPSpellModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellModel.h; sourceTree = "<group>"; };
 		5DA8E0422476128C008D3015 /* UPTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTile.h; sourceTree = "<group>"; };
 		5DA8E0432476BF41008D3015 /* UPTileView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTileView.mm; sourceTree = "<group>"; };
 		5DA8E04524775A2E008D3015 /* UPTileSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileSequence.h; sourceTree = "<group>"; };
+		5DA8E076247D719D008D3015 /* UPSpellTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellTypes.h; sourceTree = "<group>"; };
+		5DA8E077247D723A008D3015 /* UPSpellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellModel.h; sourceTree = "<group>"; };
+		5DA8E078247D723A008D3015 /* UPSpellModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellModel.mm; sourceTree = "<group>"; };
 		5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTilePaths.mm; sourceTree = "<group>"; };
 		5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTilePaths.h; sourceTree = "<group>"; };
 		5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPTilePaths-private.mm"; sourceTree = "<group>"; };
@@ -120,12 +123,14 @@
 				5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */,
 				5DF9DF5D2466165700B2199D /* UPSceneDelegate.h */,
 				5DF9DF5E2466165700B2199D /* UPSceneDelegate.m */,
-				5D5216EA246C7E9E005A2E9F /* UPSpellLayoutCalculator.h */,
-				5D5216E9246C7E9E005A2E9F /* UPSpellLayoutCalculator.mm */,
+				5D5216EA246C7E9E005A2E9F /* UPSpellLayout.h */,
+				5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */,
 				5DC67DF424730207009BCDBB /* UPSpellMacros.h */,
-				5DA8E03224748BB0008D3015 /* UPSpellModel.h */,
-				5DA8E03124748BB0008D3015 /* UPSpellModel.mm */,
+				5DA8E077247D723A008D3015 /* UPSpellModel.h */,
+				5DA8E078247D723A008D3015 /* UPSpellModel.mm */,
+				5DA8E076247D719D008D3015 /* UPSpellTypes.h */,
 				5DA8E0422476128C008D3015 /* UPTile.h */,
+				5D5F15D6247D75C800EB1486 /* UPTile.mm */,
 				5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */,
 				5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */,
 				5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */,
@@ -303,12 +308,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */,
-				5DA8E03324748BB0008D3015 /* UPSpellModel.mm in Sources */,
 				5D723121246B3996006027A3 /* UIFont+UPSpell.m in Sources */,
 				5DF9DF622466165700B2199D /* ViewController.mm in Sources */,
+				5D5F15D7247D75C800EB1486 /* UPTile.mm in Sources */,
 				5DF9DF5C2466165700B2199D /* UPAppDelegate.m in Sources */,
 				5DF9DF6D2466165800B2199D /* main.m in Sources */,
-				5D5216EB246C7E9E005A2E9F /* UPSpellLayoutCalculator.mm in Sources */,
+				5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */,
+				5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */,
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
 				5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */,
 				5DF9DF5F2466165700B2199D /* UPSceneDelegate.m in Sources */,

@@ -6,14 +6,16 @@
 #ifdef __cplusplus
 
 #import <UpKit/UPMacros.h>
-#import <UpKit/UPSerialNumber.h>
+#import <UpKit/UPTypes.h>
+
+#import "UPSpellTypes.h"
+
+@class UPTileView;
 
 namespace UP {
 
 class Tile {
 public:
-    static constexpr char32_t SentinelGlyph = 0;
-
     static int score_for(char32_t glyph) {
         static constexpr int scores[] = {
             1, /* A */    4, /* B */    3, /* C */    2, /* D */    1, /* E */    3, /* F */    3, /* G */    2, /* H */
@@ -29,7 +31,7 @@ public:
     }
 
     Tile() {}
-    Tile(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier), m_serial_number(next_serial_number()) {}
+    Tile(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {}
 
     static Tile sentinel() { return Tile(SentinelGlyph, 0); }
 
@@ -37,14 +39,28 @@ public:
     int multiplier() const { return m_multiplier; }
     int score() const { return score_for(glyph()); }
     int effective_score() const { return multiplier() * score(); }
-    uint32_t serial_number() const { return m_serial_number; }
 
-    template <bool B = true> bool is_sentinel() const { return (m_glyph == SentinelGlyph) == B; }
+    template <bool B = true> bool is_sentinel() const { return (glyph() == SentinelGlyph) == B; }
+
+    TileIndex player_tray_index() const { return m_player_tray_index; }
+    void set_player_tray_index(TileIndex player_tray_index) { m_player_tray_index = player_tray_index; }
+    template <bool B = true> bool in_player_tray() const { return (player_tray_index() != NotATileIndex) == B; }
+
+    TileIndex word_tray_index() const { return m_word_tray_index; }
+    void set_word_tray_index(TileIndex word_tray_index) { m_word_tray_index = word_tray_index; }
+    template <bool B = true> bool in_word_tray() const { return (word_tray_index() != NotATileIndex) == B; }
+
+    UPTileView *view();
+    UPTileView *ghosted_view();
 
 private:
     char32_t m_glyph = 0;
     int m_multiplier = 1;
-    uint32_t m_serial_number = next_serial_number();
+    
+    TileIndex m_player_tray_index = NotATileIndex;
+    TileIndex m_word_tray_index = NotATileIndex;
+    __strong UPTileView *m_view = nullptr;
+    __strong UPTileView *m_ghosted_view = nullptr;
 };
 
 UP_STATIC_INLINE bool operator==(const Tile &a, const Tile &b) {

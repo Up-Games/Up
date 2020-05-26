@@ -7,6 +7,7 @@
 #import <UpKit/UPGameCode.h>
 #import <UpKit/UPMacros.h>
 
+#import "UPSpellTypes.h"
 #import "UPTileSequence.h"
 #import "UPTile.h"
 
@@ -17,18 +18,8 @@
 
 namespace UP {
 
-using TileIndex = size_t;
-static constexpr TileIndex NotATileIndex = -1;
-static constexpr size_t TileCount = 7;
-static constexpr size_t LastTileIndex = TileCount - 1;
 using TileTray = std::array<Tile, TileCount>;
 using MarkedArray = std::array<bool, TileCount>;
-
-template <bool B = true>
-bool valid(TileIndex idx) { return (idx < TileCount) == B; }
-
-template <bool B = true>
-bool valid_end(TileIndex idx) { return (idx <= TileCount) == B; }
 
 #define ASSERT_IDX(idx) ASSERT_WITH_MESSAGE(valid(idx), "Invalid TileIndex: %ld", (idx))
 #define ASSERT_NIDX(idx) ASSERT_WITH_MESSAGE(valid<false>(idx), "Expected invalid TileIndex: %ld", (idx))

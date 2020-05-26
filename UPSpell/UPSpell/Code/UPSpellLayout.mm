@@ -1,5 +1,5 @@
 //
-//  UPSpellLayoutCalculator.mm
+//  UPSpellLayout.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -14,11 +14,11 @@
 
 #include "UIFont+UPSpell.h"
 #include "UPSpellModel.h"
-#include "UPSpellLayoutCalculator.h"
+#include "UPSpellLayout.h"
 
 namespace UP {
 
-void SpellLayoutCalculator::calculate()
+void SpellLayout::calculate()
 {
     set_aspect_ratio(up_aspect_ratio_for_rect(canvas_frame()));
     if (up_is_fuzzy_equal(aspect_ratio(), CanonicalAspectRatio)) {
@@ -77,7 +77,7 @@ void SpellLayoutCalculator::calculate()
     calculate_player_tray_layout_frame();
     calculate_word_tray_tile_frames();
     calculate_player_tray_tile_frames();
-    calculate_offscreen_tray_tile_frames();
+    calculate_prefill_tile_frames();
     calculate_controls_button_pause_frame();
     calculate_controls_button_trash_frame();
     calculate_game_information_font_metrics();
@@ -87,7 +87,7 @@ void SpellLayoutCalculator::calculate()
     calculate_tile_stroke_width();
 }
 
-void SpellLayoutCalculator::calculate_controls_layout_frame()
+void SpellLayout::calculate_controls_layout_frame()
 {
     switch (aspect_mode()) {
         case AspectMode::Canonical: {
@@ -112,7 +112,7 @@ void SpellLayoutCalculator::calculate_controls_layout_frame()
     LOG(Layout, "controls layout frame:   %@", NSStringFromCGRect(controls_layout_frame()));
 }
 
-void SpellLayoutCalculator::calculate_word_tray_layout_frame()
+void SpellLayout::calculate_word_tray_layout_frame()
 {
     switch (aspect_mode()) {
         case AspectMode::Canonical: {
@@ -137,7 +137,7 @@ void SpellLayoutCalculator::calculate_word_tray_layout_frame()
     LOG(Layout, "word tray layout frame: %@", NSStringFromCGRect(word_tray_layout_frame()));
 }
 
-void SpellLayoutCalculator::calculate_word_tray_mask_frame()
+void SpellLayout::calculate_word_tray_mask_frame()
 {
     switch (aspect_mode()) {
         case AspectMode::Canonical: {
@@ -162,7 +162,7 @@ void SpellLayoutCalculator::calculate_word_tray_mask_frame()
     LOG(Layout, "word tray mask frame: %@", NSStringFromCGRect(word_tray_mask_frame()));
 }
 
-void SpellLayoutCalculator::calculate_player_tray_layout_frame()
+void SpellLayout::calculate_player_tray_layout_frame()
 {
     switch (aspect_mode()) {
         case AspectMode::Canonical: {
@@ -187,13 +187,13 @@ void SpellLayoutCalculator::calculate_player_tray_layout_frame()
     LOG(Layout, "   tiles layout frame:  %@", NSStringFromCGRect(player_tray_layout_frame()));
 }
 
-void SpellLayoutCalculator::calculate_tile_size()
+void SpellLayout::calculate_tile_size()
 {
     CGSize size = up_size_scaled(CanonicalTileSize, layout_scale());
     set_tile_size(up_pixel_size(size, screen_scale()));
 }
 
-void SpellLayoutCalculator::calculate_tile_stroke_width()
+void SpellLayout::calculate_tile_stroke_width()
 {
     CGFloat stroke_width = CanonicalTileStrokeWidth * layout_scale();
     set_tile_stroke_width(stroke_width);
@@ -217,7 +217,7 @@ void SpellLayoutCalculator::calculate_tile_stroke_width()
     LOG(Layout, "   tile stroke width:   %.2f", tile_stroke_width());
 }
 
-void SpellLayoutCalculator::calculate_controls_button_pause_frame()
+void SpellLayout::calculate_controls_button_pause_frame()
 {
     CGSize size = up_size_scaled(CanonicalRoundControlButtonSize, layout_scale());
     CGRect frame = CGRectMake(
@@ -230,7 +230,7 @@ void SpellLayoutCalculator::calculate_controls_button_pause_frame()
     LOG(Layout, "   pause button frame:  %@", NSStringFromCGRect(controls_button_pause_frame()));
 }
 
-void SpellLayoutCalculator::calculate_controls_button_trash_frame()
+void SpellLayout::calculate_controls_button_trash_frame()
 {
     CGSize size = up_size_scaled(CanonicalRoundControlButtonSize, layout_scale());
     CGRect frame = CGRectMake(
@@ -243,14 +243,14 @@ void SpellLayoutCalculator::calculate_controls_button_trash_frame()
     LOG(Layout, "   trash button frame:  %@", NSStringFromCGRect(controls_button_trash_frame()));
 }
 
-void SpellLayoutCalculator::calculate_game_information_font_metrics()
+void SpellLayout::calculate_game_information_font_metrics()
 {
     CGFloat cap_height = CanonicalGameInformationCapHeight * layout_scale();
     UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
     set_game_information_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
-void SpellLayoutCalculator::calculate_game_information_superscript_font_metrics()
+void SpellLayout::calculate_game_information_superscript_font_metrics()
 {
     CGFloat cap_height = CanonicalGameInformationSuperscriptCapHeight * layout_scale();
     UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
@@ -259,7 +259,7 @@ void SpellLayoutCalculator::calculate_game_information_superscript_font_metrics(
     set_game_information_superscript_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment, kerning));
 }
 
-void SpellLayoutCalculator::calculate_game_time_label_frame()
+void SpellLayout::calculate_game_time_label_frame()
 {
     const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
@@ -273,7 +273,7 @@ void SpellLayoutCalculator::calculate_game_time_label_frame()
     LOG(Layout, "   time label frame:    %@", NSStringFromCGRect(game_time_label_frame()));
 }
 
-void SpellLayoutCalculator::calculate_game_score_label_frame()
+void SpellLayout::calculate_game_score_label_frame()
 {
     const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
@@ -287,13 +287,13 @@ void SpellLayoutCalculator::calculate_game_score_label_frame()
     LOG(Layout, "   score label frame:   %@", NSStringFromCGRect(game_score_label_frame()));
 }
 
-void SpellLayoutCalculator::calculate_word_tray_shake_amount()
+void SpellLayout::calculate_word_tray_shake_amount()
 {
     CGFloat amount = CanonicalWordTrayShakeAmount * layout_scale();
     set_word_tray_shake_amount(up_pixel_float(amount, screen_scale()));
 }
 
-void SpellLayoutCalculator::calculate_word_tray_tile_frames()
+void SpellLayout::calculate_word_tray_tile_frames()
 {
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
@@ -383,7 +383,7 @@ void SpellLayoutCalculator::calculate_word_tray_tile_frames()
     }
 }
 
-void SpellLayoutCalculator::calculate_player_tray_tile_frames()
+void SpellLayout::calculate_player_tray_tile_frames()
 {
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
@@ -404,7 +404,7 @@ void SpellLayoutCalculator::calculate_player_tray_tile_frames()
     }
 }
 
-void SpellLayoutCalculator::calculate_offscreen_tray_tile_frames()
+void SpellLayout::calculate_prefill_tile_frames()
 {
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
@@ -414,12 +414,33 @@ void SpellLayoutCalculator::calculate_offscreen_tray_tile_frames()
     for (size_t idx = 0; idx < TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         CGRect frame = up_pixel_rect(rect, screen_scale());
-        m_offscreen_tray_tile_frames[idx] = frame;
-        m_offscreen_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
+        m_prefill_tile_frames[idx] = frame;
+        m_prefill_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
         x += up_size_width(size) + gap;
     }
     int idx = 0;
-    for (const auto &r : offscreen_tray_tile_frames()) {
+    for (const auto &r : prefill_tile_frames()) {
+        LOG(Layout, "   fill tray frame [%d]: %@", idx, NSStringFromCGRect(r));
+        idx++;
+    }
+}
+
+void SpellLayout::calculate_score_tile_frames()
+{
+    CGSize canonicalSize = CanonicalTileSize;
+    CGSize size = up_size_scaled(canonicalSize, layout_scale());
+    CGFloat gap = CanonicalTileGap * layout_scale();
+    CGFloat x = up_rect_min_x(word_tray_layout_frame());
+    CGFloat y = up_rect_min_y(word_tray_layout_frame()) - (up_size_height(size) * 1.5);
+    for (size_t idx = 0; idx < TileCount; idx++) {
+        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
+        CGRect frame = up_pixel_rect(rect, screen_scale());
+        m_score_tile_frames[idx] = frame;
+        m_score_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
+        x += up_size_width(size) + gap;
+    }
+    int idx = 0;
+    for (const auto &r : prefill_tile_frames()) {
         LOG(Layout, "   fill tray frame [%d]: %@", idx, NSStringFromCGRect(r));
         idx++;
     }

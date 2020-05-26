@@ -1,5 +1,5 @@
 //
-//  UPSpellLayoutCalculator.h
+//  UPSpellLayout.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -12,7 +12,7 @@
 #import <UpKit/UPMacros.h>
 
 #import "UPSpellModel.h"
-#import "UPTile.h"
+#import "UPSpellTypes.h"
 
 #if __cplusplus
 
@@ -24,7 +24,7 @@ namespace UP {
 using TilePointArray = std::array<CGPoint, UP::TileCount>;
 using TileRectArray = std::array<CGRect, UP::TileCount>;
 
-class SpellLayoutCalculator {
+class SpellLayout {
 public:
     enum class AspectMode {
         Canonical,
@@ -63,12 +63,12 @@ public:
     static inline constexpr CGFloat CanonicalWordTrayMaskXOffset = 10;
     static inline constexpr CGFloat CanonicalWordTrayShakeAmount = 30;
 
-    static SpellLayoutCalculator &create_instance() {
-        g_instance = new SpellLayoutCalculator();
+    static SpellLayout &create_instance() {
+        g_instance = new SpellLayout();
         return *g_instance;
     }
 
-    static SpellLayoutCalculator &instance() {
+    static SpellLayout &instance() {
         return *g_instance;
     }
 
@@ -125,13 +125,16 @@ public:
         return m_word_tray_tile_centers[word_length - 1];
     }
 
-    const TileRectArray &offscreen_tray_tile_frames() const { return m_offscreen_tray_tile_frames; }
-    const TilePointArray &offscreen_tray_tile_centers() const { return m_offscreen_tray_tile_centers; }
+    const TileRectArray &prefill_tile_frames() const { return m_prefill_tile_frames; }
+    const TilePointArray &prefill_tile_centers() const { return m_prefill_tile_centers; }
+
+    const TileRectArray &score_tile_frames() const { return m_score_tile_frames; }
+    const TilePointArray &score_tile_centers() const { return m_score_tile_centers; }
 
 private:
-    SpellLayoutCalculator() {}
+    SpellLayout() {}
 
-    UP_STATIC_INLINE SpellLayoutCalculator *g_instance;
+    UP_STATIC_INLINE SpellLayout *g_instance;
     
     void set_aspect_mode(AspectMode aspect_mode) { m_aspect_mode = aspect_mode; }
     void set_aspect_ratio(CGFloat aspect_ratio) { m_aspect_ratio = aspect_ratio; }
@@ -174,7 +177,8 @@ private:
     void calculate_word_tray_shake_amount();
     void calculate_word_tray_tile_frames();
     void calculate_player_tray_tile_frames();
-    void calculate_offscreen_tray_tile_frames();
+    void calculate_prefill_tile_frames();
+    void calculate_score_tile_frames();
     void calculate_controls_button_pause_frame();
     void calculate_controls_button_trash_frame();
     void calculate_game_information_font_metrics();
@@ -218,8 +222,10 @@ private:
     TilePointArray m_player_tray_tile_centers;
     std::array<TileRectArray, TileCount> m_word_tray_tile_frames;
     std::array<TilePointArray, TileCount> m_word_tray_tile_centers;
-    TileRectArray m_offscreen_tray_tile_frames;
-    TilePointArray m_offscreen_tray_tile_centers;
+    TileRectArray m_prefill_tile_frames;
+    TilePointArray m_prefill_tile_centers;
+    TileRectArray m_score_tile_frames;
+    TilePointArray m_score_tile_centers;
 };
 
 }  // namespace UP

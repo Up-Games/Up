@@ -7,14 +7,12 @@
 
 #import <UPKit/UPControl.h>
 
-#import "UPSpellModel.h"
-#import "UPTile.h"
+#import "UPSpellTypes.h"
 
 @protocol UPTileViewGestureDelegate;
 
 @interface UPTileView : UPControl
 
-@property (nonatomic, readonly) UP::Tile tile;
 @property (nonatomic, readonly) char32_t glyph;
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) int multiplier;
@@ -27,7 +25,7 @@
 @property (nonatomic) BOOL panEnabled;
 @property (nonatomic) NSObject<UPTileViewGestureDelegate> *gestureDelegate;
 
-+ (UPTileView *)viewWithTile:(const UP::Tile &)tile;
++ (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier;
 + (UPTileView *)viewWithSentinel;
 
 @end

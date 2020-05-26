@@ -8,18 +8,20 @@
 #import <UPKit/UPStringTools.h>
 
 #import "UIFont+UPSpell.h"
-#import "UPSpellLayoutCalculator.h"
+#import "UPSpellLayout.h"
 #import "UPTileView.h"
 #import "UPTilePaths.h"
 
 using UP::ns_str;
-using UP::SpellLayoutCalculator;
+using UP::SpellLayout;
 using UP::Tile;
 using UP::TilePaths;
 using UP::valid;
 
 @interface UPTileView ()
-@property (nonatomic, readwrite) UP::Tile tile;
+@property (nonatomic, readwrite) char32_t glyph;
+@property (nonatomic, readwrite) int score;
+@property (nonatomic, readwrite) int multiplier;
 @property (nonatomic) UIView *fillView;
 @property (nonatomic) UPBezierPathView *strokeView;
 @property (nonatomic) UPBezierPathView *glyphView;
@@ -32,21 +34,23 @@ using UP::valid;
 
 @implementation UPTileView
 
-+ (UPTileView *)viewWithTile:(const Tile &)tile
++ (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier
 {
-    return [[self alloc] _initWithTile:tile];
+    return [[self alloc] _initWithGlyph:glyph score:score multiplier:multiplier];
 }
 
 + (UPTileView *)viewWithSentinel
 {
-    return [[self alloc] _initWithTile:Tile::sentinel()];
+    return [[self alloc] _initWithGlyph:UP::SentinelGlyph score:0 multiplier:0];
 }
 
-- (instancetype)_initWithTile:(const Tile &)tile
+- (instancetype)_initWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier
 {
     self = [super initWithFrame:CGRectZero];
-    self.tile = tile;
-    if (tile.is_sentinel()) {
+    self.glyph = glyph;
+    self.score = score;
+    self.multiplier = multiplier;
+    if (self.isSentinel) {
         return self;
     }
 
@@ -55,7 +59,7 @@ using UP::valid;
     self.layer.shadowOpacity = 0;
     self.layer.shadowRadius = 1.5;
 
-    SpellLayoutCalculator &layout_manager = SpellLayoutCalculator::instance();
+    SpellLayout &layout_manager = SpellLayout::instance();
     TilePaths &tile_paths = TilePaths::instance();
 
     self.fillView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -64,7 +68,7 @@ using UP::valid;
 
     self.strokeView = [UPBezierPathView bezierPathView];
     self.strokeView.userInteractionEnabled = NO;
-    self.strokeView.canonicalSize = SpellLayoutCalculator::CanonicalTileSize;
+    self.strokeView.canonicalSize = SpellLayout::CanonicalTileSize;
     self.strokeView.path = layout_manager.tile_stroke_path();
     self.strokeView.opaque = NO;
     self.strokeView.backgroundColor = [UIColor clearColor];
@@ -72,21 +76,21 @@ using UP::valid;
 
     self.glyphView = [UPBezierPathView bezierPathView];
     self.glyphView.userInteractionEnabled = NO;
-    self.glyphView.canonicalSize = SpellLayoutCalculator::CanonicalTileSize;
-    self.glyphView.path = tile_paths.tile_path_for_glyph(tile.glyph());
+    self.glyphView.canonicalSize = SpellLayout::CanonicalTileSize;
+    self.glyphView.path = tile_paths.tile_path_for_glyph(self.glyph);
     [self addSubview:self.glyphView];
 
     self.scoreView = [UPBezierPathView bezierPathView];
     self.scoreView.userInteractionEnabled = NO;
-    self.scoreView.canonicalSize = SpellLayoutCalculator::CanonicalTileSize;
-    self.scoreView.path = tile_paths.tile_path_for_score(tile.score());
+    self.scoreView.canonicalSize = SpellLayout::CanonicalTileSize;
+    self.scoreView.path = tile_paths.tile_path_for_score(self.score);
     [self addSubview:self.scoreView];
 
-    if (tile.multiplier() != 1) {
+    if (self.multiplier != 1) {
         self.multiplierView = [UPBezierPathView bezierPathView];
         self.multiplierView.userInteractionEnabled = NO;
-        self.multiplierView.canonicalSize = SpellLayoutCalculator::CanonicalTileSize;
-        self.multiplierView.path = tile_paths.tile_path_for_multiplier(tile.multiplier());
+        self.multiplierView.canonicalSize = SpellLayout::CanonicalTileSize;
+        self.multiplierView.path = tile_paths.tile_path_for_multiplier(self.multiplier);
         self.multiplierView.opaque = NO;
         [self addSubview:self.multiplierView];
     }
@@ -122,28 +126,10 @@ using UP::valid;
     return self.layer.shadowOpacity;
 }
 
-@dynamic glyph;
-- (char32_t)glyph
-{
-    return self.tile.glyph();
-}
-
-@dynamic score;
-- (int)score
-{
-    return self.tile.score();
-}
-
-@dynamic multiplier;
-- (int)multiplier
-{
-    return self.tile.multiplier();
-}
-
 @dynamic isSentinel;
 - (BOOL)isSentinel
 {
-    return self.tile.is_sentinel();
+    return self.glyph == UP::SentinelGlyph;
 }
 
 - (void)setIndex:(UP::TileIndex)index
