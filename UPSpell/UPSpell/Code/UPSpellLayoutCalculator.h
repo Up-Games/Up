@@ -1,5 +1,5 @@
 //
-//  UPSpellLayoutManager.h
+//  UPSpellLayoutCalculator.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -24,7 +24,7 @@ namespace UP {
 using TilePointArray = std::array<CGPoint, UP::TileCount>;
 using TileRectArray = std::array<CGRect, UP::TileCount>;
 
-class SpellLayoutManager {
+class SpellLayoutCalculator {
 public:
     enum class AspectMode {
         Canonical,
@@ -63,12 +63,12 @@ public:
     static inline constexpr CGFloat CanonicalWordTrayMaskXOffset = 10;
     static inline constexpr CGFloat CanonicalWordTrayShakeAmount = 30;
 
-    static SpellLayoutManager &create_instance() {
-        g_instance = new SpellLayoutManager();
+    static SpellLayoutCalculator &create_instance() {
+        g_instance = new SpellLayoutCalculator();
         return *g_instance;
     }
 
-    static SpellLayoutManager &instance() {
+    static SpellLayoutCalculator &instance() {
         return *g_instance;
     }
 
@@ -129,9 +129,9 @@ public:
     const TilePointArray &offscreen_tray_tile_centers() const { return m_offscreen_tray_tile_centers; }
 
 private:
-    SpellLayoutManager() {}
+    SpellLayoutCalculator() {}
 
-    UP_STATIC_INLINE SpellLayoutManager *g_instance;
+    UP_STATIC_INLINE SpellLayoutCalculator *g_instance;
     
     void set_aspect_mode(AspectMode aspect_mode) { m_aspect_mode = aspect_mode; }
     void set_aspect_ratio(CGFloat aspect_ratio) { m_aspect_ratio = aspect_ratio; }

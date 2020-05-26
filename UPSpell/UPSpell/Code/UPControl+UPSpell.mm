@@ -6,7 +6,7 @@
 #import <UpKit/UIColor+UP.h>
 
 #import "UPControl+UPSpell.h"
-#import "UPSpellLayoutManager.h"
+#import "UPSpellLayoutCalculator.h"
 
 static UIBezierPath *_RoundControlButtonFillPath(void)
 {
@@ -320,7 +320,7 @@ static UIBezierPath *_WordTrayStrokePath(void)
 + (UPControl *)roundControlButtonPause
 {
     UPControl *control = [UPControl control];
-    control.canonicalSize = UP::SpellLayoutManager::CanonicalRoundControlButtonSize;
+    control.canonicalSize = UP::SpellLayoutCalculator::CanonicalRoundControlButtonSize;
     [control setFillPath:_RoundControlButtonFillPath() forControlStates:UIControlStateNormal];
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UIControlStateHighlighted];
@@ -334,7 +334,7 @@ static UIBezierPath *_WordTrayStrokePath(void)
 + (UPControl *)roundControlButtonTrash
 {
     UPControl *control = [UPControl control];
-    control.canonicalSize = UP::SpellLayoutManager::CanonicalRoundControlButtonSize;
+    control.canonicalSize = UP::SpellLayoutCalculator::CanonicalRoundControlButtonSize;
     [control setFillPath:_RoundControlButtonFillPath() forControlStates:UIControlStateNormal];
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UIControlStateHighlighted];
@@ -348,7 +348,7 @@ static UIBezierPath *_WordTrayStrokePath(void)
 + (UPControl *)roundControlButtonClear
 {
     UPControl *control = [UPControl control];
-    control.canonicalSize = UP::SpellLayoutManager::CanonicalRoundControlButtonSize;
+    control.canonicalSize = UP::SpellLayoutCalculator::CanonicalRoundControlButtonSize;
     [control setFillPath:_RoundControlButtonFillPath() forControlStates:UIControlStateNormal];
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UIControlStateHighlighted];
@@ -362,7 +362,7 @@ static UIBezierPath *_WordTrayStrokePath(void)
 + (UPControl *)wordTray
 {
     UPControl *control = [UPControl control];
-    control.canonicalSize = UP::SpellLayoutManager::CanonicalWordTrayFrame.size;
+    control.canonicalSize = UP::SpellLayoutCalculator::CanonicalWordTrayFrame.size;
     [control setFillPath:_WordTrayFillPath() forControlStates:UIControlStateNormal];
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveFill] forControlStates:UIControlStateNormal];
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveFill] forControlStates:UPControlStateActive];

@@ -13,7 +13,7 @@
 #import "UPControl+UPSpell.h"
 #import "UPSceneDelegate.h"
 #import "UPSpellModel.h"
-#import "UPSpellLayoutManager.h"
+#import "UPSpellLayoutCalculator.h"
 #import "UPTileView.h"
 #import "UPTilePaths.h"
 #import "ViewController.h"
@@ -25,7 +25,7 @@ using TileIndex = UP::TileIndex;
 using UP::GameCode;
 using UP::Lexicon;
 using UP::Random;
-using UP::SpellLayoutManager;
+using UP::SpellLayoutCalculator;
 using UP::SpellModel;
 using UP::Tile;
 using UP::TileCount;
@@ -75,7 +75,7 @@ using UP::TimeSpanning::TestLabel;
 - (void)viewDidLoad
 {
     LOG_CHANNEL_ON(General);
-    //LOG_CHANNEL_ON(LayoutManager);
+    //LOG_CHANNEL_ON(Layout);
 
     [super viewDidLoad];
 
@@ -92,7 +92,7 @@ using UP::TimeSpanning::TestLabel;
     
     [UIColor setThemeStyle:UPColorStyleLight];
     [UIColor setThemeHue:200];
-    SpellLayoutManager &layout_manager = SpellLayoutManager::create_instance();
+    SpellLayoutCalculator &layout_manager = SpellLayoutCalculator::create_instance();
     TilePaths::create_instance();
     
     layout_manager.set_screen_bounds([[UIScreen mainScreen] bounds]);
@@ -112,7 +112,7 @@ using UP::TimeSpanning::TestLabel;
     [self.view addSubview:self.tileContainerView];
 
     self.tileContainerClipView = [UPBezierPathView bezierPathView];
-    self.tileContainerClipView.canonicalSize = UP::SpellLayoutManager::CanonicalWordTrayMaskFrame.size;
+    self.tileContainerClipView.canonicalSize = UP::SpellLayoutCalculator::CanonicalWordTrayMaskFrame.size;
     self.tileContainerClipView.path = [self wordTrayMaskPath];
     self.tileContainerClipView.fillColor = [UIColor blackColor];
     self.tileContainerView.layer.mask = self.tileContainerClipView.shapeLayer;
@@ -186,7 +186,7 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)viewDidLayoutSubviews
 {
-    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
+    SpellLayoutCalculator &layout_manager = SpellLayoutCalculator::instance();
     self.infinityView.frame = self.view.bounds;
     self.tileContainerView.frame = self.view.bounds;
     self.tileContainerClipView.frame = layout_manager.word_tray_mask_frame();
@@ -311,7 +311,7 @@ using UP::TimeSpanning::TestLabel;
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::TAP, tile_idx));
 
-    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
+    SpellLayoutCalculator &layout_manager = SpellLayoutCalculator::instance();
     const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
     
     CGPoint w1 = word_tray_tile_centers[0];
@@ -357,7 +357,7 @@ using UP::TimeSpanning::TestLabel;
     cancel(DelayLabel);
 
     // shake word tray side-to-side and assess time penalty
-    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
+    SpellLayoutCalculator &layout_manager = SpellLayoutCalculator::instance();
     [self viewOpPenaltyForReject];
     UIOffset offset = UIOffsetMake(layout_manager.word_tray_shake_amount(), 0);
     NSMutableArray *views = [NSMutableArray arrayWithObject:self.wordTrayView];
@@ -418,7 +418,7 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)viewOpClearWordTray
 {
-    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
+    SpellLayoutCalculator &layout_manager = SpellLayoutCalculator::instance();
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
     TileIndex idx = 0;
     for (const auto &mark : self.model->player_marked()) {
@@ -437,7 +437,7 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)viewOpScoreWord
 {
-    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
+    SpellLayoutCalculator &layout_manager = SpellLayoutCalculator::instance();
     TileIndex idx = 0;
     for (const auto &mark : self.model->player_marked()) {
         if (mark) {
@@ -466,7 +466,7 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)viewOpDumpPlayerTray
 {
-    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
+    SpellLayoutCalculator &layout_manager = SpellLayoutCalculator::instance();
     Random &random = Random::instance();
     const auto &offscreen_tray_tile_centers = layout_manager.offscreen_tray_tile_centers();
     
@@ -494,7 +494,7 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)viewOpFillPlayerTray
 {
-    SpellLayoutManager &layout_manager = SpellLayoutManager::instance();
+    SpellLayoutCalculator &layout_manager = SpellLayoutCalculator::instance();
     const auto &fill_tray_tile_frames = layout_manager.offscreen_tray_tile_frames();
     const auto &fill_tray_tile_centers = layout_manager.offscreen_tray_tile_centers();
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
