@@ -51,7 +51,7 @@ NSObject<UPTimeSpanning> *delay(const char *label, double delay_in_seconds, void
     return action;
 }
 
-UPAnimator *bloop_animator(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
+UPAnimator *bloop(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
     void (^completion)(UIViewAnimatingPosition))
 {
     UPAnimator *animator = [UPAnimator bloopAnimatorWithLabel:label views:views duration:duration position:position completion:completion];
@@ -59,7 +59,7 @@ UPAnimator *bloop_animator(const char *label, NSArray<UIView *> *views, CFTimeIn
     return animator;
 }
 
-UPAnimator *fade_animator(const char *label, NSArray<UIView *> *views, CFTimeInterval duration,
+UPAnimator *fade(const char *label, NSArray<UIView *> *views, CFTimeInterval duration,
     void (^completion)(UIViewAnimatingPosition))
 {
     UPAnimator *animator = [UPAnimator fadeAnimatorWithLabel:label views:views duration:duration completion:completion];
@@ -67,15 +67,7 @@ UPAnimator *fade_animator(const char *label, NSArray<UIView *> *views, CFTimeInt
     return animator;
 }
 
-UPAnimator *slide_animator(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
-    void (^completion)(UIViewAnimatingPosition))
-{
-    UPAnimator *animator = [UPAnimator slideAnimatorWithLabel:label views:views duration:duration offset:offset completion:completion];
-    g_map->emplace(animator.serialNumber, animator);
-    return animator;
-}
-
-UPAnimator *shake_animator(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+UPAnimator *shake(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition))
 {
     UPAnimator *animator = [UPAnimator shakeAnimatorWithLabel:label views:views duration:duration offset:offset completion:completion];
@@ -83,7 +75,15 @@ UPAnimator *shake_animator(const char *label, NSArray<UIView *> *views, CFTimeIn
     return animator;
 }
 
-UPAnimator *spring_animator(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+UPAnimator *slide(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+    void (^completion)(UIViewAnimatingPosition))
+{
+    UPAnimator *animator = [UPAnimator slideAnimatorWithLabel:label views:views duration:duration offset:offset completion:completion];
+    g_map->emplace(animator.serialNumber, animator);
+    return animator;
+}
+
+UPAnimator *spring(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition))
 {
     UPAnimator *animator = [UPAnimator springAnimatorWithLabel:label views:views duration:duration offset:offset completion:completion];
