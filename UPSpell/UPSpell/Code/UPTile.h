@@ -3,6 +3,8 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 #ifdef __cplusplus
 
 #import <UpKit/UPMacros.h>
@@ -51,7 +53,12 @@ public:
     template <bool B = true> bool in_word_tray() const { return (word_tray_index() != NotATileIndex) == B; }
 
     UPTileView *view();
+    void clear_view() { m_view = nil; }
+    template <bool B = true> bool has_view() const { return (m_view != nil) == B; }
+
     UPTileView *ghosted_view();
+    void clear_ghosted_view() { m_ghosted_view = nil; }
+    template <bool B = true> bool has_ghosted_view() const { return (m_ghosted_view != nil) == B; }
 
 private:
     char32_t m_glyph = 0;

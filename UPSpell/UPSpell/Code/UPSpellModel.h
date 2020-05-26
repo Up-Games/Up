@@ -20,6 +20,7 @@ namespace UP {
 
 using TileTray = std::array<Tile, TileCount>;
 using MarkedArray = std::array<bool, TileCount>;
+using TileViewArray = std::array<UPTileView *, TileCount>;
 
 #define ASSERT_IDX(idx) ASSERT_WITH_MESSAGE(valid(idx), "Invalid TileIndex: %ld", (idx))
 #define ASSERT_NIDX(idx) ASSERT_WITH_MESSAGE(valid<false>(idx), "Expected invalid TileIndex: %ld", (idx))
@@ -90,9 +91,14 @@ public:
     SpellModel(const GameCode &game_code) : m_game_code(game_code), m_tile_sequence(game_code) { apply_init(Action(Opcode::INIT)); }
 
     const TileTray &player_tray() const { return m_player_tray; }
+    TileTray &player_tray() { return m_player_tray; }
     const MarkedArray &player_marked() const { return m_player_marked; }
     const TileTray &word_tray() const { return m_word_tray; }
+    TileTray &word_tray() { return m_word_tray; }
     const std::vector<State> &states() const { return m_states; }
+    
+    NSArray *tile_views();
+    NSArray *word_tray_tile_views();
 
     const std::u32string &word_string() const { return m_word_string; }
     size_t word_length() const { return m_word_string.length(); }
@@ -111,6 +117,7 @@ private:
     size_t player_count_marked() const;
     void player_sentinelize_marked();
     void player_fill();
+    void player_clear_tiles();
 
     void word_insert_at(const Tile &, TileIndex);
     void word_remove_at(const Tile &, TileIndex);
@@ -176,6 +183,17 @@ size_t count_marked(const MarkedArray &marked_array)
 
 size_t count_non_sentinel(const TileTray &tile_tray);
 bool is_non_sentinel_filled_up_to(const TileTray &tile_tray, const TileIndex idx);
+
+template <bool B = true>
+bool has_views(const TileTray &tile_tray)
+{
+    for (const auto &tile : tile_tray) {
+        if (tile.has_view<!B>()) {
+            return false;
+        }
+    }
+    return true;
+}
 
 }  // namespace UP
 
