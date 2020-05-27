@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import "UPAssertions.h"
 #import "UPDelayedAction.h"
 #import "UPMath.h"
 #import "UPTimeSpanning.h"
@@ -77,6 +78,8 @@
 
 - (void)call
 {
+    ASSERT(self.state != UPDelayedActionStateCalled);
+
     UPDelayedAction *ref = self;
 
     self.state = UPDelayedActionStateCalled;

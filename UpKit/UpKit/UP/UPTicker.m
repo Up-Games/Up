@@ -81,6 +81,23 @@ static BOOL tickIntervalChecked = NO;
     for (NSObject<UPTicking> *ticking in self.tickings) {
         [self.iterationTickings addObject:ticking];
     }
+    
+    if (self.iterationTickings.count > 1) {
+        [self.iterationTickings sortUsingComparator:
+            ^NSComparisonResult(id obj1, id obj2) {
+                NSObject<UPTicking> *t1 = obj1;
+                NSObject<UPTicking> *t2 = obj2;
+                if (t1.serialNumber < t2.serialNumber) {
+                    return NSOrderedAscending;
+                }
+                if (t1.serialNumber > t2.serialNumber) {
+                    return NSOrderedDescending;
+                }
+                ASSERT_NOT_REACHED();
+                return NSOrderedSame;
+        }];
+    }
+     
     for (NSObject<UPTicking> *ticking in self.iterationTickings) {
         [ticking tick:now];
     }

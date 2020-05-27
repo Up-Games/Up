@@ -73,6 +73,8 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 @property (nonatomic) UIViewAnimatingPosition animatingPosition;
 @property (nonatomic, readwrite) BOOL running;
 
+@property (nonatomic, readwrite) uint32_t serialNumber;
+
 - (void)tick:(CFTimeInterval)currentTick;
 
 @end
@@ -121,6 +123,8 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
     self.animatingPosition = UIViewAnimatingPositionStart;
     self.remainingDuration = self.duration;
     self.previousTick = 0;
+
+    self.serialNumber = UP::next_serial_number();
 
     return self;
 }
@@ -225,7 +229,9 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
     ASSERT(self.state != UIViewAnimatingStateStopped);
     self.running = NO;
     self.previousTick = 0;
-    self.state = UIViewAnimatingStateStopped;
+    if (self.state == UIViewAnimatingStateActive) {
+        self.state = UIViewAnimatingStateStopped;
+    }
     [[UPTicker instance] removeTicking:self];
     if (!withoutFinishing) {
         [self finishAnimationAtPosition:self.animatingPosition];

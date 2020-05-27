@@ -26,5 +26,6 @@ extern CFTimeInterval UPTickerInterval;
 @end
 
 @protocol UPTicking <NSObject>
+@property (nonatomic, readonly) uint32_t serialNumber;
 - (void)tick:(CFTimeInterval)now;
 @end

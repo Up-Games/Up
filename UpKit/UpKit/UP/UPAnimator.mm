@@ -220,7 +220,7 @@
 
 - (void)cancel
 {
-    [self.inner stopAnimation:NO];
+    [self.inner stopAnimation:YES];
 }
 
 @end

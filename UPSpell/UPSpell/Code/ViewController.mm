@@ -574,9 +574,8 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)viewOpPenaltyForDump
 {
-    ASSERT(self.view.userInteractionEnabled == NO);
+    ASSERT(!self.view.userInteractionEnabled);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
-    self.view.userInteractionEnabled = NO;
     self.roundControlButtonTrash.highlightedOverride = YES;
     self.roundControlButtonTrash.highlighted = YES;
     self.wordTrayView.alpha = disabledAlpha;
@@ -590,7 +589,7 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)viewOpPenaltyForReject
 {
-    ASSERT(self.view.userInteractionEnabled == NO);
+    ASSERT(!self.view.userInteractionEnabled);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.wordTrayView.alpha = disabledAlpha;
     self.roundControlButtonPause.alpha = disabledAlpha;
@@ -604,7 +603,7 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)viewOpPenaltyFinished
 {
-    ASSERT(self.view.userInteractionEnabled == NO);
+    ASSERT(!self.view.userInteractionEnabled);
     self.roundControlButtonTrash.highlightedOverride = NO;
     self.roundControlButtonTrash.highlighted = NO;
     self.wordTrayView.alpha = 1.0;
@@ -623,11 +622,13 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)viewOpLockUserInterface
 {
+    ASSERT(self.view.userInteractionEnabled);
     self.view.userInteractionEnabled = NO;
 }
 
 - (void)viewOpUnlockUserInterface
 {
+    ASSERT(!self.view.userInteractionEnabled);
     self.view.userInteractionEnabled = YES;
 }
 

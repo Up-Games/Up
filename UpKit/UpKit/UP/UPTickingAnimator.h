@@ -37,4 +37,8 @@ typedef void (^UPTickAnimatorCompletion)(UPTickingAnimator *animator, UIViewAnim
 - (void)stopAnimation:(BOOL)withoutFinishing;
 - (void)finishAnimationAtPosition:(UIViewAnimatingPosition)finalPosition;
 
+// UPTicking
+@property (nonatomic, readonly) uint32_t serialNumber;
+- (void)tick:(CFTimeInterval)now;
+
 @end
