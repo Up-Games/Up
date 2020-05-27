@@ -434,7 +434,7 @@ void SpellLayout::calculate_prefill_tile_frames()
 void SpellLayout::calculate_score_tile_spring_down_offset_y()
 {
     CGSize size = up_size_scaled(CanonicalTileSize, layout_scale());
-    CGFloat y = up_size_height(size) * 0.125;
+    CGFloat y = up_size_height(size) * 0.11;
     set_score_tile_spring_down_offset_y(up_pixel_float(y, screen_scale()));
     LOG(Layout, "spring_down_offset_y:    %.2f", score_tile_spring_down_offset_y());
 }
