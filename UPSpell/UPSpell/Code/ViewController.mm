@@ -367,7 +367,9 @@ using UP::TimeSpanning::TestLabel;
 - (void)applyActionClear
 {
     cancel(DelayLabel);
+    cancel(AnimationLabel);
 
+    [self viewOpApplyTranslationToFrame:[self wordTrayTileViews]];
     [self viewOpClearWordTray];
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::CLEAR));
     [self viewOpUpdateGameControls];
@@ -456,6 +458,16 @@ using UP::TimeSpanning::TestLabel;
     }
     
     self.scoreLabel.string = [NSString stringWithFormat:@"%d", self.model->game_score()];
+}
+
+- (void)viewOpApplyTranslationToFrame:(NSArray *)tileViews
+{
+    for (UPTileView *tileView in tileViews) {
+        CGAffineTransform transform = tileView.transform;
+        tileView.transform = CGAffineTransformIdentity;
+        CGRect frame = CGRectOffset(tileView.frame, transform.tx, transform.ty);
+        tileView.frame = frame;
+    }
 }
 
 - (void)viewOpClearWordTray
