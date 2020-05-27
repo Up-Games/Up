@@ -32,23 +32,11 @@ using UP::TilePaths;
 @property (nonatomic) CGFloat shadowOpacity;
 @end
 
-static NSMutableSet *allViews;
-
 @implementation UPTileView
-
-+ (void)initialize
-{
-    allViews = [NSMutableSet set];
-}
 
 + (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier
 {
     return [[self alloc] _initWithGlyph:glyph score:score multiplier:multiplier];
-}
-
-+ (UPTileView *)viewWithSentinel
-{
-    return [[self alloc] _initWithGlyph:UP::SentinelGlyph score:0 multiplier:0];
 }
 
 - (instancetype)_initWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier
@@ -57,7 +45,7 @@ static NSMutableSet *allViews;
     self.glyph = glyph;
     self.score = score;
     self.multiplier = multiplier;
-    if (self.isSentinel) {
+    if (glyph == UP::SentinelGlyph) {
         return self;
     }
 
@@ -132,12 +120,6 @@ static NSMutableSet *allViews;
 - (CGFloat)shadowOpacity
 {
     return self.layer.shadowOpacity;
-}
-
-@dynamic isSentinel;
-- (BOOL)isSentinel
-{
-    return self.glyph == UP::SentinelGlyph;
 }
 
 #pragma mark - Gestures

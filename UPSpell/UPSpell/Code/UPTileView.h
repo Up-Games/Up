@@ -14,7 +14,6 @@
 @property (nonatomic, readonly) char32_t glyph;
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) int multiplier;
-@property (nonatomic, readonly) BOOL isSentinel;
 
 @property (nonatomic, readonly) UITapGestureRecognizer *tap;
 @property (nonatomic, readonly) UIPanGestureRecognizer *pan;
@@ -23,7 +22,6 @@
 @property (nonatomic) NSObject<UPTileViewGestureDelegate> *gestureDelegate;
 
 + (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier;
-+ (UPTileView *)viewWithSentinel;
 
 @end
 
