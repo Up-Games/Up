@@ -44,39 +44,21 @@ public:
 
     template <bool B = true> bool is_sentinel() const { return (glyph() == SentinelGlyph) == B; }
 
-    TileIndex player_tray_index() const { return m_player_tray_index; }
-    void set_player_tray_index(TileIndex player_tray_index) { m_player_tray_index = player_tray_index; }
-    template <bool B = true> bool in_player_tray() const { return (player_tray_index() != NotATileIndex) == B; }
-
-    TileIndex word_tray_index() const { return m_word_tray_index; }
-    void set_word_tray_index(TileIndex word_tray_index) { m_word_tray_index = word_tray_index; }
-    template <bool B = true> bool in_word_tray() const { return (word_tray_index() != NotATileIndex) == B; }
-
-    UPTileView *view();
-    void clear_view() { m_view = nil; }
+    UPTileView *view() const { return m_view; }
+    void set_view(UPTileView * view) { m_view = view; }
     template <bool B = true> bool has_view() const { return (m_view != nil) == B; }
 
-    UPTileView *ghosted_view();
-    void clear_ghosted_view() { m_ghosted_view = nil; }
+    UPTileView *ghosted_view() const { return m_ghosted_view; }
+    void set_ghosted_view(UPTileView *ghosted_view) { m_ghosted_view = ghosted_view; }
     template <bool B = true> bool has_ghosted_view() const { return (m_ghosted_view != nil) == B; }
 
 private:
     char32_t m_glyph = 0;
     int m_multiplier = 1;
     
-    TileIndex m_player_tray_index = NotATileIndex;
-    TileIndex m_word_tray_index = NotATileIndex;
-    __strong UPTileView *m_view = nullptr;
-    __strong UPTileView *m_ghosted_view = nullptr;
+    __weak UPTileView *m_view = nullptr;
+    __weak UPTileView *m_ghosted_view = nullptr;
 };
-
-UP_STATIC_INLINE bool operator==(const Tile &a, const Tile &b) {
-    return a.glyph() == b.glyph() && a.score() == b.score() && a.multiplier() == b.multiplier();
-}
-
-UP_STATIC_INLINE bool operator!=(const Tile &a, const Tile &b) {
-    return !(a == b);
-}
 
 }  // namespace UP
 

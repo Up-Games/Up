@@ -37,17 +37,7 @@
     self.backgroundColorCategory = UPColorCategoryClear;
     self.textColorCategory = UPColorCategoryInformation;
     [self updateThemeColors];
-    [[NSNotificationCenter defaultCenter] addObserverForName:UPThemeColorsChangedNotification object:nil queue:[NSOperationQueue mainQueue]
-        usingBlock:^(NSNotification * _Nonnull note) {
-            [self updateThemeColors];
-        }
-    ];
     return self;
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @dynamic string;

@@ -3,9 +3,15 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <limits>
+
 #import <UIKit/UIKit.h>
 
 #import <UpKit/UpTimeSpanning.h>
+
+namespace UP {
+    static constexpr CGFloat NotACoordinate = std::numeric_limits<CGFloat>::quiet_NaN();
+}
 
 @interface UPAnimator : NSObject <UIViewAnimating, UPTimeSpanning>
 
@@ -20,6 +26,9 @@
 
 + (UPAnimator *)slideAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
+
++ (UPAnimator *)slideToAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
+    point:(CGPoint)point completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
 + (UPAnimator *)springAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;

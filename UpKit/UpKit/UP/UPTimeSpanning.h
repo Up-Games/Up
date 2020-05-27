@@ -41,6 +41,9 @@ UPAnimator *shake(const char *label, NSArray<UIView *> *views, CFTimeInterval du
 UPAnimator *slide(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition));
 
+UPAnimator *slide_to(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point,
+    void (^completion)(UIViewAnimatingPosition));
+
 UPAnimator *spring(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition));
 
@@ -62,6 +65,11 @@ UPAnimator *shake(NSArray<UIView *> *views, CFTimeInterval duration, UIOffset of
 UP_STATIC_INLINE
 UPAnimator *slide(NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset, void (^completion)(UIViewAnimatingPosition)) {
     return slide(AnimationLabel, views, duration, offset, completion);
+}
+
+UP_STATIC_INLINE
+UPAnimator *slide_to(NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point, void (^completion)(UIViewAnimatingPosition)) {
+    return slide_to(AnimationLabel, views, duration, point, completion);
 }
 
 UP_STATIC_INLINE

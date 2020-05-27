@@ -3,6 +3,8 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <UpKit/UPGeometry.h>
+
 #import "UPAssertions.h"
 #import "UPAnimator.h"
 #import "UPTickingAnimator.h"
@@ -79,6 +81,27 @@
         curve:UIViewAnimationCurveLinear animations:^{
             for (UIView *view in views) {
                 view.transform = CGAffineTransformTranslate(view.transform, offset.horizontal, offset.vertical);
+            }
+        }
+    ];
+    if (completion) {
+        [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+            completion(finalPosition);
+        }];
+    }
+    return [[self alloc] initWithLabel:label innerAnimator:animator];
+}
+
++ (UPAnimator *)slideToAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
+    point:(CGPoint)point completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
+{
+    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration
+        curve:UIViewAnimationCurveLinear animations:^{
+            for (UIView *view in views) {
+                CGPoint center = up_rect_center(view.frame);
+                CGFloat dx = isnan(point.x) ? 0 : point.x - center.x;
+                CGFloat dy = isnan(point.y) ? 0 : point.y - center.y;
+                view.transform = CGAffineTransformTranslate(view.transform, dx, dy);
             }
         }
     ];

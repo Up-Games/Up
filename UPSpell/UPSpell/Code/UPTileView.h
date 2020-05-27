@@ -7,8 +7,6 @@
 
 #import <UPKit/UPControl.h>
 
-#import "UPSpellTypes.h"
-
 @protocol UPTileViewGestureDelegate;
 
 @interface UPTileView : UPControl
@@ -17,7 +15,6 @@
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) int multiplier;
 @property (nonatomic, readonly) BOOL isSentinel;
-@property (nonatomic) UP::TileIndex index;
 
 @property (nonatomic, readonly) UITapGestureRecognizer *tap;
 @property (nonatomic, readonly) UIPanGestureRecognizer *pan;

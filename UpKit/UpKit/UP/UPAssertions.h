@@ -143,6 +143,7 @@ NO_RETURN_DUE_TO_CRASH void UPCrash(void);
 #define UP_LOG_CHANNELS(M) \
 M(General) \
 M(Layout) \
+M(Leaks) \
 
 UP_LOG_CHANNELS(DECLARE_LOG_CHANNEL)
 #endif

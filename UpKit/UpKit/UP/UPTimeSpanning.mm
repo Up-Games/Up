@@ -83,6 +83,14 @@ UPAnimator *slide(const char *label, NSArray<UIView *> *views, CFTimeInterval du
     return animator;
 }
 
+UPAnimator *slide_to(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point,
+    void (^completion)(UIViewAnimatingPosition))
+{
+    UPAnimator *animator = [UPAnimator slideToAnimatorWithLabel:label views:views duration:duration point:point completion:completion];
+    g_map->emplace(animator.serialNumber, animator);
+    return animator;
+}
+
 UPAnimator *spring(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition))
 {

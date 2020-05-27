@@ -73,11 +73,13 @@ void SpellLayout::calculate()
     calculate_tile_size();
     calculate_word_tray_layout_frame();
     calculate_word_tray_mask_frame();
-    calculate_word_tray_shake_amount();
+    calculate_word_tray_shake_offset();
     calculate_player_tray_layout_frame();
     calculate_word_tray_tile_frames();
     calculate_player_tray_tile_frames();
     calculate_prefill_tile_frames();
+    calculate_score_tile_spring_down_offset_y();
+    calculate_score_tile_center_y();
     calculate_controls_button_pause_frame();
     calculate_controls_button_trash_frame();
     calculate_game_information_font_metrics();
@@ -287,10 +289,10 @@ void SpellLayout::calculate_game_score_label_frame()
     LOG(Layout, "   score label frame:   %@", NSStringFromCGRect(game_score_label_frame()));
 }
 
-void SpellLayout::calculate_word_tray_shake_amount()
+void SpellLayout::calculate_word_tray_shake_offset()
 {
     CGFloat amount = CanonicalWordTrayShakeAmount * layout_scale();
-    set_word_tray_shake_amount(up_pixel_float(amount, screen_scale()));
+    set_word_tray_shake_offset(UIOffsetMake(up_pixel_float(amount, screen_scale()), 0));
 }
 
 void SpellLayout::calculate_word_tray_tile_frames()
@@ -346,10 +348,10 @@ void SpellLayout::calculate_word_tray_tile_frames()
     // recentering
     TileRectArray even_rects = rects;
     TilePointArray even_centers = centers;
-    CGFloat offset = (up_size_width(size) + gap) * 0.5;
+    CGFloat offset_x = (up_size_width(size) + gap) * 0.5;
     for (size_t idx = 0; idx < TileCount; idx++) {
-        even_rects[idx] = up_pixel_rect(CGRectOffset(even_rects[idx], -offset, 0), screen_scale());
-        even_centers[idx] = up_pixel_point(CGPointMake(even_centers[idx].x - offset, even_centers[idx].y), screen_scale());
+        even_rects[idx] = up_pixel_rect(CGRectOffset(even_rects[idx], -offset_x, 0), screen_scale());
+        even_centers[idx] = up_pixel_point(CGPointMake(even_centers[idx].x - offset_x, even_centers[idx].y), screen_scale());
     }
     
     // length 6
@@ -375,6 +377,10 @@ void SpellLayout::calculate_word_tray_tile_frames()
     std::fill(even_centers.begin() + 2, even_centers.end(), CGPointZero);
     m_word_tray_tile_frames[1] = even_rects;
     m_word_tray_tile_centers[1] = even_centers;
+
+    // single-tile offset
+    UIOffset offset = UIOffsetMake(up_pixel_float(-offset_x, screen_scale()), 0);
+    set_word_tray_tile_offset(offset);
 
     int idx = 0;
     for (const auto &r : word_tray_tile_frames(2)) {
@@ -420,30 +426,25 @@ void SpellLayout::calculate_prefill_tile_frames()
     }
     int idx = 0;
     for (const auto &r : prefill_tile_frames()) {
-        LOG(Layout, "   fill tray frame [%d]: %@", idx, NSStringFromCGRect(r));
+        LOG(Layout, "prefill tray frame [%d]: %@", idx, NSStringFromCGRect(r));
         idx++;
     }
 }
 
-void SpellLayout::calculate_score_tile_frames()
+void SpellLayout::calculate_score_tile_spring_down_offset_y()
 {
-    CGSize canonicalSize = CanonicalTileSize;
-    CGSize size = up_size_scaled(canonicalSize, layout_scale());
-    CGFloat gap = CanonicalTileGap * layout_scale();
-    CGFloat x = up_rect_min_x(word_tray_layout_frame());
-    CGFloat y = up_rect_min_y(word_tray_layout_frame()) - (up_size_height(size) * 1.5);
-    for (size_t idx = 0; idx < TileCount; idx++) {
-        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
-        CGRect frame = up_pixel_rect(rect, screen_scale());
-        m_score_tile_frames[idx] = frame;
-        m_score_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
-        x += up_size_width(size) + gap;
-    }
-    int idx = 0;
-    for (const auto &r : prefill_tile_frames()) {
-        LOG(Layout, "   fill tray frame [%d]: %@", idx, NSStringFromCGRect(r));
-        idx++;
-    }
+    CGSize size = up_size_scaled(CanonicalTileSize, layout_scale());
+    CGFloat y = up_size_height(size) * 0.125;
+    set_score_tile_spring_down_offset_y(up_pixel_float(y, screen_scale()));
+    LOG(Layout, "spring_down_offset_y:    %.2f", score_tile_spring_down_offset_y());
+}
+
+void SpellLayout::calculate_score_tile_center_y()
+{
+    CGSize size = up_size_scaled(CanonicalTileSize, layout_scale());
+    CGFloat y = up_rect_min_y(word_tray_layout_frame()) - (up_size_height(size));
+    set_score_tile_center_y(up_pixel_float(y, screen_scale()));
+    LOG(Layout, "score_tile_center_y:     %.2f", score_tile_center_y());
 }
 
 }  // namespace UP

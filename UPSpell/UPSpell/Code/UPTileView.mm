@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <UPKit/UPAssertions.h>
 #import <UPKit/UIColor+UP.h>
 #import <UPKit/UPBezierPathView.h>
 #import <UPKit/UPStringTools.h>
@@ -16,7 +17,6 @@ using UP::ns_str;
 using UP::SpellLayout;
 using UP::Tile;
 using UP::TilePaths;
-using UP::valid;
 
 @interface UPTileView ()
 @property (nonatomic, readwrite) char32_t glyph;
@@ -32,7 +32,14 @@ using UP::valid;
 @property (nonatomic) CGFloat shadowOpacity;
 @end
 
+static NSMutableSet *allViews;
+
 @implementation UPTileView
+
++ (void)initialize
+{
+    allViews = [NSMutableSet set];
+}
 
 + (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier
 {
@@ -102,17 +109,18 @@ using UP::valid;
     self.panEnabled = NO;
 
     [self updateThemeColors];
-    [[NSNotificationCenter defaultCenter] addObserverForName:UPThemeColorsChangedNotification object:nil queue:[NSOperationQueue mainQueue]
-        usingBlock:^(NSNotification * _Nonnull note) {
-            [self updateThemeColors];
-        }
-    ];
+    
     return self;
 }
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    LOG(Leaks, "dealloc: %@", self);
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"UPTileView : %c : %p", (char)self.glyph, self];
 }
 
 @dynamic shadowOpacity;
@@ -130,12 +138,6 @@ using UP::valid;
 - (BOOL)isSentinel
 {
     return self.glyph == UP::SentinelGlyph;
-}
-
-- (void)setIndex:(UP::TileIndex)index
-{
-    ASSERT_IDX(index);
-    _index = index;
 }
 
 #pragma mark - Gestures

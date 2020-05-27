@@ -74,30 +74,6 @@ size_t count_non_sentinel(const TileTray &tile_tray)
     return count;
 }
 
-NSArray *SpellModel::tile_views()
-{
-    NSMutableArray *array = [NSMutableArray array];
-    for (auto &tile : player_tray()) {
-        ASSERT(tile.has_view());
-        [array addObject:tile.view()];
-    }
-    return array;
-}
-
-NSArray *SpellModel::word_tray_tile_views()
-{
-    NSMutableArray *array = [NSMutableArray array];
-    for (auto &tile : word_tray()) {
-        if (tile.is_sentinel<false>()) {
-            [array addObject:tile.view()];
-        }
-        else {
-            break;
-        }
-    }
-    return array;
-}
-
 void SpellModel::player_sentinelize_marked()
 {
     TileIndex idx = 0;
@@ -176,13 +152,6 @@ void SpellModel::word_update()
     m_word_in_lexicon = count > 0 ? lexicon.contains(m_word_string) : false;
 }
 
-void SpellModel::player_clear_tiles()
-{
-    for (auto &tile : player_tray()) {
-        tile.clear_view();
-    }
-}
-
 const SpellModel::State &SpellModel::apply(const Action &action)
 {
     switch (action.opcode()) {
@@ -252,7 +221,6 @@ void SpellModel::apply_tap(const Action &action)
     ASSERT_WITH_MESSAGE(is_marked<false>(player_marked(), action.idx1()), "idx: %ld ; marked: %s",
         action.idx1(), marked_array_description(player_marked()).c_str());
     ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
-    ASSERT(has_views(player_tray()));
 
     size_t in_word_length = word_length();
     const TileIndex idx = action.idx1();
@@ -328,7 +296,6 @@ void SpellModel::apply_clear(const Action &action)
     ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
     ASSERT(is_sentinel_filled<false>(player_tray()));
     ASSERT(is_sentinel_filled(word_tray()));
-    ASSERT(has_views(player_tray()));
 }
 
 void SpellModel::apply_dump(const Action &action)
@@ -343,10 +310,8 @@ void SpellModel::apply_dump(const Action &action)
     ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
     ASSERT(is_sentinel_filled<false>(player_tray()));
     ASSERT(is_sentinel_filled(word_tray()));
-    ASSERT(has_views(player_tray()));
 
     player_mark_all();
-    player_clear_tiles();
     player_fill();
 
     ASSERT(word_length() == 0);
@@ -356,7 +321,6 @@ void SpellModel::apply_dump(const Action &action)
     ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
     ASSERT(is_sentinel_filled<false>(player_tray()));
     ASSERT(is_sentinel_filled(word_tray()));
-    ASSERT(has_views<false>(player_tray()));
 }
 
 }  // namespace UP
