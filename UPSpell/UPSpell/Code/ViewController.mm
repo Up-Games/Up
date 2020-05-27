@@ -75,6 +75,7 @@ using UP::TimeSpanning::TestLabel;
 - (void)viewDidLoad
 {
     LOG_CHANNEL_ON(General);
+    LOG_CHANNEL_ON(Gestures);
     //LOG_CHANNEL_ON(Layout);
     //LOG_CHANNEL_ON(Leaks);
 
@@ -92,7 +93,7 @@ using UP::TimeSpanning::TestLabel;
     self.model = new SpellModel(game_code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
-    [UIColor setThemeHue:200];
+    [UIColor setThemeHue:180];
     SpellLayout &layout_manager = SpellLayout::create_instance();
     TilePaths::create_instance();
     
@@ -338,6 +339,22 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)tileViewPanned:(UPTileView *)tileView
 {
+    LOG(Gestures, "pan: %d", tileView.pan.state);
+}
+
+- (void)tileViewLongPressed:(UPTileView *)tileView
+{
+    LOG(Gestures, "longPress: %d", tileView.longPress.state);
+}
+
+- (void)dragWithPoint:(CGPoint)point
+{
+
+}
+
+- (void)dropWithPoint:(CGPoint)point
+{
+
 }
 
 #pragma mark - Actions

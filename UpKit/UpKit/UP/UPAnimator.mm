@@ -21,17 +21,17 @@
 + (UPAnimator *)bloopAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     position:(CGPoint)position completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7 animations:^{
+    UIViewPropertyAnimator *positionAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7 animations:^{
         for (UIView *view in views) {
             view.center = position;
         }
     }];
     if (completion) {
-        [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        [positionAnimator addCompletion:^(UIViewAnimatingPosition finalPosition) {
             completion(finalPosition);
         }];
     }
-    return [[self alloc] initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithLabel:label innerAnimator:positionAnimator];
 }
 
 + (UPAnimator *)fadeAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
@@ -47,7 +47,7 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithLabel:label innerAnimator:animator];
 }
 
 + (UPAnimator *)shakeAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
@@ -71,7 +71,7 @@
             }
         }
     ];
-    return [[self alloc] initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithLabel:label innerAnimator:animator];
 }
 
 + (UPAnimator *)slideAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
@@ -89,7 +89,7 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithLabel:label innerAnimator:animator];
 }
 
 + (UPAnimator *)slideToAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
@@ -110,7 +110,7 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithLabel:label innerAnimator:animator];
 }
 
 + (UPAnimator *)springAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
@@ -128,10 +128,10 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithLabel:label innerAnimator:animator];
 }
 
-- (instancetype)initWithLabel:(const char *)label innerAnimator:(NSObject<UIViewAnimating> *)inner
+- (instancetype)_initWithLabel:(const char *)label innerAnimator:(NSObject<UIViewAnimating> *)inner
 {
     self = [super init];
     self.label = label;
@@ -205,12 +205,12 @@
 
 - (void)start
 {
-    [self.inner startAnimation];
+    [self startAnimation];
 }
 
 - (void)pause
 {
-    [self.inner pauseAnimation];
+    [self pauseAnimation];
 }
 
 - (void)reset
@@ -220,7 +220,7 @@
 
 - (void)cancel
 {
-    [self.inner stopAnimation:YES];
+    [self stopAnimation:YES];
 }
 
 @end

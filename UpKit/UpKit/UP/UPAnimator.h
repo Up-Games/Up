@@ -40,6 +40,8 @@ namespace UP {
 @property(nonatomic, getter=isReversed) BOOL reversed;
 @property(nonatomic) CGFloat fractionComplete;
 
+- (instancetype)init NS_UNAVAILABLE;
+
 - (void)startAnimation;
 - (void)startAnimationAfterDelay:(NSTimeInterval)delay;
 - (void)pauseAnimation;

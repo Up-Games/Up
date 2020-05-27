@@ -29,6 +29,7 @@ using UP::TilePaths;
 @property (nonatomic) UPBezierPathView *multiplierView;
 @property (nonatomic, readwrite) UITapGestureRecognizer *tap;
 @property (nonatomic, readwrite) UIPanGestureRecognizer *pan;
+@property (nonatomic, readwrite) UILongPressGestureRecognizer *longPress;
 @property (nonatomic) CGFloat shadowOpacity;
 @end
 
@@ -49,10 +50,10 @@ using UP::TilePaths;
         return self;
     }
 
-    self.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor;
+    self.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.6].CGColor;
     self.layer.shadowOffset = CGSizeMake(0, 0);
     self.layer.shadowOpacity = 0;
-    self.layer.shadowRadius = 1.5;
+    self.layer.shadowRadius = 6;
 
     SpellLayout &layout_manager = SpellLayout::instance();
     TilePaths &tile_paths = TilePaths::instance();
@@ -94,7 +95,8 @@ using UP::TilePaths;
     [self addGestureRecognizer:self.tap];
     self.pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan)];
     [self addGestureRecognizer:self.pan];
-    self.panEnabled = NO;
+    self.longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress)];
+    [self addGestureRecognizer:self.longPress];
 
     [self updateThemeColors];
     
@@ -126,7 +128,18 @@ using UP::TilePaths;
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    self.highlighted = YES;
     return YES;
+}
+
+- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    self.highlighted = NO;
+}
+
+- (void)cancelTrackingWithEvent:(UIEvent *)event
+{
+    self.highlighted = NO;
 }
 
 - (void)handleTap
@@ -139,10 +152,15 @@ using UP::TilePaths;
     [self.gestureDelegate tileViewPanned:self];
 }
 
-@dynamic tapEnabled;
-- (void)setTapEnabled:(BOOL)tapEnabled
+- (void)handleLongPress
 {
-    self.tap.enabled = tapEnabled;
+    [self.gestureDelegate tileViewLongPressed:self];
+}
+
+@dynamic tapEnabled;
+- (void)setTapEnabled:(BOOL)enabled
+{
+    self.tap.enabled = enabled;
 }
 
 - (BOOL)tapEnabled
@@ -151,14 +169,25 @@ using UP::TilePaths;
 }
 
 @dynamic panEnabled;
-- (void)setPanEnabled:(BOOL)panEnabled
+- (void)setPanEnabled:(BOOL)enabled
 {
-    self.pan.enabled = panEnabled;
+    self.pan.enabled = enabled;
 }
 
 - (BOOL)panEnabled
 {
     return self.pan.enabled;
+}
+
+@dynamic longPressEnabled;
+- (void)setLongPressEnabled:(BOOL)enabled
+{
+    self.longPress.enabled = enabled;
+}
+
+- (BOOL)longPressEnabled
+{
+    return self.longPress.enabled;
 }
 
 #pragma mark - Layout
@@ -171,6 +200,7 @@ using UP::TilePaths;
     self.glyphView.frame = bounds;
     self.scoreView.frame = bounds;
     self.multiplierView.frame = bounds;
+    [self updateControl];
 }
 
 #pragma mark - Theme colors

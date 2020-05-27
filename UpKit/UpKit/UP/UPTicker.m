@@ -93,7 +93,6 @@ static BOOL tickIntervalChecked = NO;
                 if (t1.serialNumber > t2.serialNumber) {
                     return NSOrderedDescending;
                 }
-                ASSERT_NOT_REACHED();
                 return NSOrderedSame;
         }];
     }
