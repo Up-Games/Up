@@ -20,15 +20,12 @@ using UP::SpellLayout;
 using UP::Tile;
 using UP::TilePaths;
 
-@interface UPTileView ()
+@interface UPTileView () <UIGestureRecognizerDelegate>
 @property (nonatomic, readwrite) char32_t glyph;
 @property (nonatomic, readwrite) int score;
 @property (nonatomic, readwrite) int multiplier;
 @property (nonatomic, readwrite) UITapGestureRecognizer *tap;
 @property (nonatomic, readwrite) UIPanGestureRecognizer *pan;
-@property (nonatomic, readwrite) UILongPressGestureRecognizer *longPress;
-@property (nonatomic) UPTickingAnimator *dehighlightAnimator;
-
 @end
 
 @implementation UPTileView
@@ -75,12 +72,12 @@ using UP::TilePaths;
     [self setContentPath:contentPath];
     
     self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
+    self.tap.delegate = self;
     [self addGestureRecognizer:self.tap];
+
     self.pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan)];
+    self.pan.delegate = self;
     [self addGestureRecognizer:self.pan];
-    self.longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress)];
-    [self addGestureRecognizer:self.longPress];
-    self.longPress.enabled = NO;
 
     return self;
 }
@@ -142,11 +139,6 @@ using UP::TilePaths;
     [self.gestureDelegate tileViewPanned:self];
 }
 
-- (void)handleLongPress
-{
-    [self.gestureDelegate tileViewLongPressed:self];
-}
-
 @dynamic tapEnabled;
 - (void)setTapEnabled:(BOOL)enabled
 {
@@ -167,25 +159,6 @@ using UP::TilePaths;
 - (BOOL)panEnabled
 {
     return self.pan.enabled;
-}
-
-@dynamic longPressEnabled;
-- (void)setLongPressEnabled:(BOOL)enabled
-{
-    self.longPress.enabled = enabled;
-}
-
-- (BOOL)longPressEnabled
-{
-    return self.longPress.enabled;
-}
-
-- (void)controlUpdate
-{
-    if (self.dehighlightAnimator) {
-        return;
-    }
-    [super controlUpdate];
 }
 
 @end

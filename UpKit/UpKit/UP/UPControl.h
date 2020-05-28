@@ -39,6 +39,8 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 
 @property (nonatomic) CGSize canonicalSize;
 
+@property (nonatomic) CGSize chargeSize;
+
 + (UPControl *)control;
 
 - (void)setHighlighted:(BOOL)highlighted;

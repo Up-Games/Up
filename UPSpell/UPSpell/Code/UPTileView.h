@@ -17,10 +17,8 @@
 
 @property (nonatomic, readonly) UITapGestureRecognizer *tap;
 @property (nonatomic, readonly) UIPanGestureRecognizer *pan;
-@property (nonatomic, readonly) UILongPressGestureRecognizer *longPress;
 @property (nonatomic) BOOL tapEnabled;
 @property (nonatomic) BOOL panEnabled;
-@property (nonatomic) BOOL longPressEnabled;
 @property (nonatomic) NSObject<UPTileViewGestureDelegate> *gestureDelegate;
 
 + (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier;
@@ -34,6 +32,5 @@
 - (void)cancelTracking:(UPTileView *)tileView event:(UIEvent *)event;
 - (void)tileViewTapped:(UPTileView *)tileView;
 - (void)tileViewPanned:(UPTileView *)tileView;
-- (void)tileViewLongPressed:(UPTileView *)tileView;
 @end
 

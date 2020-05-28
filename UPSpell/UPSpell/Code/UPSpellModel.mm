@@ -161,10 +161,10 @@ const SpellModel::State &SpellModel::apply(const Action &action)
         case Opcode::INIT:
             apply_init(action);
             break;
-        case Opcode::TAP:
+        case Opcode::ADD:
             apply_tap(action);
             break;
-        case Opcode::DRAG:
+        case Opcode::PICK:
             break;
         case Opcode::DROP:
             break;
@@ -213,7 +213,7 @@ void SpellModel::apply_init(const Action &action)
 
 void SpellModel::apply_tap(const Action &action)
 {
-    ASSERT(action.opcode() == Opcode::TAP);
+    ASSERT(action.opcode() == Opcode::ADD);
     ASSERT(is_sentinel_filled<false>(player_tray()));
     ASSERT(is_non_sentinel_filled_up_to(word_tray(), word_length()));
     ASSERT_IDX(action.idx1());

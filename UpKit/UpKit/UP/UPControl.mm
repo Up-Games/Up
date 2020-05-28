@@ -507,6 +507,22 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     return m_color_animations.find(k) != m_color_animations.end();
 }
 
+#pragma mark - Hit testing
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if ([super pointInside:point withEvent:event]) {
+        return YES;
+    }
+    
+    if (!CGSizeEqualToSize(self.chargeSize, CGSizeZero)) {
+        CGRect chargeRect = CGRectInset(self.bounds, -self.chargeSize.width, -self.chargeSize.height);
+        return CGRectContainsPoint(chargeRect, point);
+    }
+    
+    return NO;
+}
+
 #pragma mark - Touch events
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

@@ -68,6 +68,10 @@ using UP::TimeSpanning::TestLabel;
 @property (nonatomic) UIFont *gameInformationFont;
 @property (nonatomic) UIFont *gameInformationSuperscriptFont;
 @property (nonatomic) CGPoint panStartPoint;
+@property (nonatomic) CGFloat panTotalDistance;
+@property (nonatomic) CGFloat panFurthestDistance;
+@property (nonatomic) CGFloat panCurrentDistance;
+@property (nonatomic) BOOL panEverMovedUp;
 @property (nonatomic) SpellModel *model;
 @end
 
@@ -123,14 +127,22 @@ using UP::TimeSpanning::TestLabel;
 
     self.roundControlButtonPause = [UPControl roundControlButtonPause];
     [self.roundControlButtonPause addTarget:self action:@selector(roundControlButtonPauseTapped:) forControlEvents:UIControlEventTouchUpInside];
+    self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
+    self.roundControlButtonPause.chargeSize =
+        CGSizeMake(up_rect_width(self.roundControlButtonPause.frame) * 0.65, up_rect_height(self.roundControlButtonPause.frame) * 0.125);
     [self.view addSubview:self.roundControlButtonPause];
 
     self.roundControlButtonTrash = [UPControl roundControlButtonTrash];
     [self.roundControlButtonTrash addTarget:self action:@selector(roundControlButtonTrashTapped:) forControlEvents:UIControlEventTouchUpInside];
+    self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
+    self.roundControlButtonTrash.chargeSize =
+        CGSizeMake(up_rect_width(self.roundControlButtonTrash.frame) * 0.65, up_rect_height(self.roundControlButtonTrash.frame) * 0.125);
     [self.view addSubview:self.roundControlButtonTrash];
 
     self.roundControlButtonClear = [UPControl roundControlButtonClear];
     [self.roundControlButtonClear addTarget:self action:@selector(roundControlButtonClearTapped:) forControlEvents:UIControlEventTouchUpInside];
+    self.roundControlButtonClear.chargeSize =
+        CGSizeMake(up_rect_width(self.roundControlButtonClear.frame) * 0.65, up_rect_height(self.roundControlButtonClear.frame) * 0.125);
     [self.view addSubview:self.roundControlButtonClear];
 
     UIFont *font = [UIFont gameInformationFontOfSize:layout_manager.game_information_font_metrics().point_size()];
@@ -185,8 +197,8 @@ using UP::TimeSpanning::TestLabel;
     self.infinityView.frame = self.view.bounds;
     self.tileContainerView.frame = self.view.bounds;
     self.tileContainerClipView.frame = layout_manager.word_tray_mask_frame();
-    self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
-    self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
+//    self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
+//    self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
     self.roundControlButtonClear.frame = layout_manager.controls_button_trash_frame();
     self.gameTimerLabel.frame = layout_manager.game_time_label_frame();
     self.scoreLabel.frame = layout_manager.game_score_label_frame();
@@ -362,7 +374,7 @@ using UP::TimeSpanning::TestLabel;
         [self wordTrayTapped];
     }
     else {
-        [self applyActionTap:tileIndex];
+        [self applyActionAdd:tileIndex];
     }
 }
 
@@ -377,7 +389,7 @@ using UP::TimeSpanning::TestLabel;
         case UIGestureRecognizerStateBegan: {
             TileIndex tileIndex = [self playerTrayIndexOfView:tileView];
             ASSERT_IDX(tileIndex);
-            [self applyActionDrag:tileIndex];
+            [self applyActionPick:tileIndex];
             break;
         }
         case UIGestureRecognizerStateChanged: {
@@ -401,13 +413,39 @@ using UP::TimeSpanning::TestLabel;
                 CGFloat dy = center.y - up_rect_max_y(tdr);
                 center.y = up_rect_max_y(tdr) + sqrt(dy);
             }
+            
+            self.panTotalDistance += up_point_distance(tileView.center, center);
+            self.panFurthestDistance = UPMaxT(CGFloat, self.panFurthestDistance, up_point_distance(CGPointZero, t));
+            self.panCurrentDistance = up_point_distance(self.panStartPoint, center);
+            
+            CGPoint v = [pan velocityInView:tileView];
+            if (!self.panEverMovedUp) {
+                self.panEverMovedUp = v.y < 0;
+            }
+            
             tileView.center = center;
             break;
         }
         case UIGestureRecognizerStateEnded: {
             TileIndex tileIndex = [self playerTrayIndexOfView:tileView];
             ASSERT_IDX(tileIndex);
-            [self applyActionDrop:tileIndex];
+            CGPoint v = [pan velocityInView:tileView];
+            BOOL moved = self.panFurthestDistance >= 25;
+            BOOL putBack = self.panCurrentDistance < 10;
+            BOOL movingUp = v.y < -50;
+            LOG(Gestures, "pan ended: d: %.2f ; f: %.2f ; c: %.2f ; v: %.2f",
+                self.panTotalDistance, self.panFurthestDistance, self.panCurrentDistance, v.y);
+            LOG(Gestures, "   moved:     %s", moved ? "Y" : "N");
+            LOG(Gestures, "   put back:  %s", putBack ? "Y" : "N");
+            LOG(Gestures, "   moving up: %s", movingUp ? "Y" : "N");
+            LOG(Gestures, "   ever up:   %s", self.panEverMovedUp ? "Y" : "N");
+            LOG(Gestures, "   add:       %s", ((!moved && putBack) || movingUp || !self.panEverMovedUp) ? "Y" : "N");
+            if ((!moved && putBack) || movingUp || !self.panEverMovedUp) {
+                [self applyActionAdd:tileIndex];
+            }
+            else {
+                [self applyActionDrop:tileIndex];
+            }
             break;
         }
         case UIGestureRecognizerStateCancelled:
@@ -417,24 +455,18 @@ using UP::TimeSpanning::TestLabel;
             [self applyActionDrop:tileIndex];
             break;
         }
-    }
-    
-}
-
-- (void)tileViewLongPressed:(UPTileView *)tileView
-{
-    LOG(Gestures, "longPress: %d", tileView.longPress.state);
+    }    
 }
 
 #pragma mark - Actions
 
-- (void)applyActionTap:(TileIndex)tile_idx
+- (void)applyActionAdd:(TileIndex)tile_idx
 {
     cancel(DelayLabel);
 
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::TAP, tile_idx));
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, tile_idx));
 
     SpellLayout &layout_manager = SpellLayout::instance();
 
@@ -451,9 +483,9 @@ using UP::TimeSpanning::TestLabel;
     [self viewOpUpdateGameControls];
 }
 
-- (void)applyActionDrag:(TileIndex)tile_idx
+- (void)applyActionPick:(TileIndex)tile_idx
 {
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DRAG, tile_idx));
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::PICK, tile_idx));
 
     UPTileView *tileView = [self playerTrayTileViewAtIndex:tile_idx];
     [self.tileContainerView bringSubviewToFront:tileView];
@@ -463,6 +495,10 @@ using UP::TimeSpanning::TestLabel;
     CGFloat dy = center.y - pointInView.y;
     CGPoint pointInSuperview = [tileView.pan locationInView:tileView.superview];
     self.panStartPoint = CGPointMake(pointInSuperview.x + dx, pointInSuperview.y + dy);
+    self.panTotalDistance = 0;
+    self.panFurthestDistance = 0;
+    self.panCurrentDistance = 0;
+    self.panEverMovedUp = NO;
     tileView.highlighted = YES;
 }
 
