@@ -99,6 +99,15 @@ UPAnimator *spring(const char *label, NSArray<UIView *> *views, CFTimeInterval d
     return animator;
 }
 
+UPAnimator *set_color(const char *label, NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
+    UPControlState fromControlState, UPControlState toControlState, void (^completion)(UIViewAnimatingPosition))
+{
+    UPAnimator *animator = [UPAnimator setColorAnimatorWithLabel:label controls:controls duration:duration element:element
+        fromControlState:fromControlState toControlState:toControlState completion:completion];
+    g_map->emplace(animator.serialNumber, animator);
+    return animator;
+}
+
 void cancel(NSObject<UPTimeSpanning> *obj)
 {
     if (obj) {

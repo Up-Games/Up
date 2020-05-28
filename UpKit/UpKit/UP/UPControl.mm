@@ -5,11 +5,16 @@
 
 #import <vector>
 
+#import "UPAnimator.h"
 #import "UPAssertions.h"
 #import "UPBezierPathView.h"
 #import "UPControl.h"
 #import "UIColor+UP.h"
 #import "UPMacros.h"
+#import "UPTickingAnimator.h"
+#import "UPTimeSpanning.h"
+
+// =========================================================================================================================================
 
 namespace UP {
 
@@ -38,11 +43,16 @@ bool operator!=(const ControlAction &a, const ControlAction &b) {
 
 }  // namespace UP
 
+// =========================================================================================================================================
+
+using UP::TimeSpanning::cancel;
+using UP::TimeSpanning::set_color;
+
 @interface UPControl ()
 {
     std::vector<UP::ControlAction> m_actions;
 }
-@property (nonatomic, readwrite) UIControlState state;
+@property (nonatomic, readwrite) UPControlState state;
 @property (nonatomic, readwrite) BOOL tracking;
 @property (nonatomic, readwrite) BOOL touchInside;
 @property (nonatomic, readwrite) UPBezierPathView *contentPathView;
@@ -50,21 +60,25 @@ bool operator!=(const ControlAction &a, const ControlAction &b) {
 @property (nonatomic, readwrite) UPBezierPathView *strokePathView;
 @property (nonatomic) NSMutableDictionary<NSNumber *, UIBezierPath *> *pathsForStates;
 @property (nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *colorsForStates;
+@property (nonatomic) UPControlState previouslyUpdatedState;
+@property (nonatomic) UPAnimator *fillColorAnimator;
+@property (nonatomic) UPAnimator *strokeColorAnimator;
+@property (nonatomic) UPAnimator *contentColorAnimator;
 @end
 
-UP_STATIC_INLINE NSNumber * _ContentKey(UIControlState controlState)
+UP_STATIC_INLINE NSNumber * _FillKey(UPControlState controlState)
 {
-    return @(controlState);
+    return @(UPControlElementFill | controlState);
 }
 
-UP_STATIC_INLINE NSNumber * _FillKey(UIControlState controlState)
+UP_STATIC_INLINE NSNumber * _StrokeKey(UPControlState controlState)
 {
-    return @(UPControlStateFlag1 | controlState);
+    return @(UPControlElementStroke | controlState);
 }
 
-UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
+UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
 {
-    return @(UPControlStateFlag2 | controlState);
+    return @(UPControlElementContent | controlState);
 }
 
 @implementation UPControl
@@ -81,6 +95,8 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
     self = [super initWithFrame:frame];
     self.multipleTouchEnabled = NO;
     self.autoHighlights = YES;
+    self.previouslyUpdatedState = UPControlStateInvalid;
+    self.state = UPControlStateNormal;
     return self;
 }
 
@@ -91,17 +107,17 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 - (void)setSelected:(BOOL)selected
 {
     if (selected) {
-        self.state |= UIControlStateSelected;
+        self.state |= UPControlStateSelected;
     }
     else {
-        self.state &= ~UIControlStateSelected;
+        self.state &= ~UPControlStateSelected;
     }
     [self _controlStateChanged];
 }
 
 - (BOOL)isSelected
 {
-    return self.state & UIControlStateSelected;
+    return self.state & UPControlStateSelected;
 }
 
 - (void)setHighlighted:(BOOL)highlighted
@@ -110,26 +126,26 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
         return;
     }
     if (highlighted) {
-        self.state |= UIControlStateHighlighted;
+        self.state |= UPControlStateHighlighted;
     }
     else {
-        self.state &= ~UIControlStateHighlighted;
+        self.state &= ~UPControlStateHighlighted;
     }
     [self _controlStateChanged];
 }
 
 - (BOOL)isHighlighted
 {
-    return self.state & UIControlStateHighlighted;
+    return self.state & UPControlStateHighlighted;
 }
 
 - (void)setDisabled:(BOOL)disabled
 {
     if (disabled) {
-        self.state |= UIControlStateDisabled;
+        self.state |= UPControlStateDisabled;
     }
     else {
-        self.state &= ~UIControlStateDisabled;
+        self.state &= ~UPControlStateDisabled;
     }
     [self _controlStateChanged];
 }
@@ -141,7 +157,7 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 - (BOOL)isEnabled
 {
-    return (self.state & UIControlStateDisabled) == 0;
+    return (self.state & UPControlStateDisabled) == 0;
 }
 
 - (void)setActive:(BOOL)active
@@ -207,8 +223,7 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 - (void)_controlStateChanged
 {
-    [self setNeedsLayout];
-    [self updateControl];
+    [self controlUpdate];
 }
 
 #pragma mark - Paths
@@ -268,10 +283,10 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 - (void)setContentPath:(UIBezierPath *)path
 {
-    [self setContentPath:path forControlStates:UIControlStateNormal];
+    [self setContentPath:path forControlStates:UPControlStateNormal];
 }
 
-- (void)setContentPath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates
+- (void)setContentPath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates
 {
     [self _createPathsForStatesIfNeeded];
     [self _createContentPathViewIfNeeded];
@@ -282,10 +297,10 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 - (void)setFillPath:(UIBezierPath *)path
 {
-    [self setFillPath:path forControlStates:UIControlStateNormal];
+    [self setFillPath:path forControlStates:UPControlStateNormal];
 }
 
-- (void)setFillPath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates
+- (void)setFillPath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates
 {
     [self _createPathsForStatesIfNeeded];
     [self _createFillPathViewIfNeeded];
@@ -296,10 +311,10 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 
 - (void)setStrokePath:(UIBezierPath *)path
 {
-    [self setStrokePath:path forControlStates:UIControlStateNormal];
+    [self setStrokePath:path forControlStates:UPControlStateNormal];
 }
 
-- (void)setStrokePath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates
+- (void)setStrokePath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates
 {
     [self _createPathsForStatesIfNeeded];
     [self _createStrokePathViewIfNeeded];
@@ -317,12 +332,64 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
     }
 }
 
-- (void)setContentColor:(UIColor *)color
+- (void)setFillColor:(UIColor *)color
 {
-    [self setContentColor:color forControlStates:UIControlStateNormal];
+    [self setFillColor:color forControlStates:UPControlStateNormal];
 }
 
-- (void)setContentColor:(UIColor *)color forControlStates:(UIControlState)controlStates
+- (void)setFillColor:(UIColor *)color forControlStates:(UPControlState)controlStates
+{
+    [self _createColorsForStatesIfNeeded];
+    NSNumber *key = _FillKey(controlStates);
+    self.colorsForStates[key] = color;
+    [self setNeedsLayout];
+}
+
+- (UIColor *)fillColorForControlStates:(UPControlState)controlStates
+{
+    UIColor *color = self.colorsForStates[_FillKey(controlStates)];
+    if (color) {
+        return color;
+    }
+    color = self.colorsForStates[_FillKey(UPControlStateNormal)];
+    if (color) {
+        return color;
+    }
+    return [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
+}
+
+- (void)setStrokeColor:(UIColor *)color
+{
+    [self setStrokeColor:color forControlStates:UPControlStateNormal];
+}
+
+- (void)setStrokeColor:(UIColor *)color forControlStates:(UPControlState)controlStates
+{
+    [self _createColorsForStatesIfNeeded];
+    NSNumber *key = _StrokeKey(controlStates);
+    self.colorsForStates[key] = color;
+    [self setNeedsLayout];
+}
+
+- (UIColor *)strokeColorForControlStates:(UPControlState)controlStates
+{
+    UIColor *color = self.colorsForStates[_StrokeKey(controlStates)];
+    if (color) {
+        return color;
+    }
+    color = self.colorsForStates[_StrokeKey(UPControlStateNormal)];
+    if (color) {
+        return color;
+    }
+    return [UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke];
+}
+
+- (void)setContentColor:(UIColor *)color
+{
+    [self setContentColor:color forControlStates:UPControlStateNormal];
+}
+
+- (void)setContentColor:(UIColor *)color forControlStates:(UPControlState)controlStates
 {
     [self _createColorsForStatesIfNeeded];
     NSNumber *key = _ContentKey(controlStates);
@@ -330,36 +397,17 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
     [self setNeedsLayout];
 }
 
-- (void)setFillColor:(UIColor *)color
+- (UIColor *)contentColorForControlStates:(UPControlState)controlStates
 {
-    [self setFillColor:color forControlStates:UIControlStateNormal];
-}
-
-- (void)setFillColor:(UIColor *)color forControlStates:(UIControlState)controlStates
-{
-    [self _createColorsForStatesIfNeeded];
-    NSNumber *key = _FillKey(controlStates);
-    self.colorsForStates[key] = color;
-    [self setNeedsLayout];
-}
-
-- (UIColor *)fillColorForControlStates:(UIControlState)controlStates
-{
-    NSNumber *key = _FillKey(controlStates);
-    return self.colorsForStates[key] ?: self.colorsForStates[_FillKey(UIControlStateNormal)];
-}
-
-- (void)setStrokeColor:(UIColor *)color
-{
-    [self setStrokeColor:color forControlStates:UIControlStateNormal];
-}
-
-- (void)setStrokeColor:(UIColor *)color forControlStates:(UIControlState)controlStates
-{
-    [self _createColorsForStatesIfNeeded];
-    NSNumber *key = _StrokeKey(controlStates);
-    self.colorsForStates[key] = color;
-    [self setNeedsLayout];
+    UIColor *color = self.colorsForStates[_ContentKey(controlStates)];
+    if (color) {
+        return color;
+    }
+    color = self.colorsForStates[_ContentKey(UPControlStateNormal)];
+    if (color) {
+        return color;
+    }
+    return [UIColor themeColorWithCategory:UPColorCategoryContent];
 }
 
 #pragma mark - Touch events
@@ -510,36 +558,63 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
     self.fillPathView.frame = bounds;
     self.strokePathView.frame = bounds;
     self.contentPathView.frame = bounds;
-    [self updateControl];
+    [self controlUpdate];
 }
 
 #pragma mark - Updating
 
-- (void)updateControl
+- (void)controlUpdate
 {
-    UIControlState state = self.state;
-
+    UPControlState state = self.state;
+    if (state == self.previouslyUpdatedState) {
+        return;
+    }
+    
     if (self.fillPathView) {
         NSNumber *key = _FillKey(state);
-        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_FillKey(UIControlStateNormal)];
+        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_FillKey(UPControlStateNormal)];
         self.fillPathView.path = path;
-        UIColor *color = self.colorsForStates[key] ?: self.colorsForStates[_FillKey(UIControlStateNormal)];
-        self.fillPathView.fillColor = color ? color : [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
+        
+        cancel(self.fillColorAnimator);
+        self.fillColorAnimator = nil;
+        
+        LOG(General, "fill: %s => %s",
+            (self.previouslyUpdatedState & UPControlStateHighlighted) ? "Y" : "N",
+            (self.state & UPControlStateHighlighted) ? "Y" : "N");
+        
+        if ((self.previouslyUpdatedState & UPControlStateHighlighted) && (state & UPControlStateHighlighted) == 0) {
+            self.fillColorAnimator = set_color(@[self], 0.3, UPControlElementFill, self.previouslyUpdatedState, state, nil);
+            [self.fillColorAnimator start];
+        }
+        else {
+            UIColor *color = [self fillColorForControlStates:state];
+            self.fillPathView.fillColor = color;
+        }
     }
     if (self.strokePathView) {
         NSNumber *key = _StrokeKey(state);
-        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_StrokeKey(UIControlStateNormal)];
+        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_StrokeKey(UPControlStateNormal)];
         self.strokePathView.path = path;
-        UIColor *color = self.colorsForStates[key] ?: self.colorsForStates[_StrokeKey(UIControlStateNormal)];
-        self.strokePathView.fillColor = color ? color : [UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke];
+
+        cancel(self.strokeColorAnimator);
+        self.strokeColorAnimator = nil;
+
+        UIColor *color = [self strokeColorForControlStates:state];
+        self.strokePathView.fillColor = color;
     }
     if (self.contentPathView) {
         NSNumber *key = _ContentKey(state);
-        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_ContentKey(UIControlStateNormal)];
+        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_ContentKey(UPControlStateNormal)];
         self.contentPathView.path = path;
-        UIColor *color = self.colorsForStates[key] ?: self.colorsForStates[_ContentKey(UIControlStateNormal)];
-        self.contentPathView.fillColor = color ? color : [UIColor themeColorWithCategory:UPColorCategoryContent];
+
+        cancel(self.contentColorAnimator);
+        self.contentColorAnimator = nil;
+
+        UIColor *color = [self contentColorForControlStates:state];
+        self.contentPathView.fillColor = color;
     }
+    
+    self.previouslyUpdatedState = state;
 }
 
 @end

@@ -7,19 +7,28 @@
 
 @class UPBezierPathView;
 
-typedef NS_ENUM(NSUInteger, UPControlState) {
-    // Bits in this range:
-    // UIControlStateApplication = 0x00FF0000
-    UPControlStateActive =         0x00010000,
-    UPControlStateFlag1 =          0x00100000,
-    UPControlStateFlag2 =          0x00200000,
-    UPControlStateFlag3 =          0x00400000,
-    UPControlStateFlag4 =          0x00800000,
+typedef NS_OPTIONS(NSUInteger, UPControlState) {
+    UPControlStateNormal =      0x00000000,
+    UPControlStateHighlighted = 0x00000001,
+    UPControlStateDisabled =    0x00000002,
+    UPControlStateSelected =    0x00000004,
+    UPControlStateActive =      0x00010000,
+    UPControlStateApplication = 0x00FF0000,
+    UPControlStateReserved =    0xFF000000,
+    UPControlStateInvalid =     0x01000000,
+};
+
+typedef NS_OPTIONS(NSUInteger, UPControlElement) {
+    // Values chosen to be in the UPControlStateApplication range, so
+    // there's the option to bitwise-OR them together with UPControlStates.
+    UPControlElementFill =    0x00100000,
+    UPControlElementStroke =  0x00200000,
+    UPControlElementContent = 0x00400000,
 };
 
 @interface UPControl : UIView
 
-@property (nonatomic, readonly) UIControlState state;
+@property (nonatomic, readonly) UPControlState state;
 
 @property (nonatomic, getter=isEnabled) BOOL enabled;          // default is YES. if NO, ignores touch events and subclasses may draw differently
 @property (nonatomic, getter=isSelected) BOOL selected;        // default is NO may be used by some subclasses or by application
@@ -52,26 +61,28 @@ typedef NS_ENUM(NSUInteger, UPControlState) {
 - (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 - (void)removeTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 
-@property (nonatomic, readonly) UPBezierPathView *contentPathView;
 @property (nonatomic, readonly) UPBezierPathView *fillPathView;
 @property (nonatomic, readonly) UPBezierPathView *strokePathView;
-
-- (void)setContentPath:(UIBezierPath *)path;
-- (void)setContentPath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
-- (void)setContentColor:(UIColor *)color;
-- (void)setContentColor:(UIColor *)color forControlStates:(UIControlState)controlStates;
+@property (nonatomic, readonly) UPBezierPathView *contentPathView;
 
 - (void)setFillPath:(UIBezierPath *)path;
-- (void)setFillPath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
+- (void)setFillPath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates;
 - (void)setFillColor:(UIColor *)color;
-- (void)setFillColor:(UIColor *)color forControlStates:(UIControlState)controlStates;
-- (UIColor *)fillColorForControlStates:(UIControlState)controlStates;
+- (void)setFillColor:(UIColor *)color forControlStates:(UPControlState)controlStates;
+- (UIColor *)fillColorForControlStates:(UPControlState)controlStates;
 
 - (void)setStrokePath:(UIBezierPath *)path;
-- (void)setStrokePath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
+- (void)setStrokePath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates;
 - (void)setStrokeColor:(UIColor *)color;
-- (void)setStrokeColor:(UIColor *)color forControlStates:(UIControlState)controlStates;
+- (void)setStrokeColor:(UIColor *)color forControlStates:(UPControlState)controlStates;
+- (UIColor *)strokeColorForControlStates:(UPControlState)controlStates;
 
-- (void)updateControl;
+- (void)setContentPath:(UIBezierPath *)path;
+- (void)setContentPath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates;
+- (void)setContentColor:(UIColor *)color;
+- (void)setContentColor:(UIColor *)color forControlStates:(UPControlState)controlStates;
+- (UIColor *)contentColorForControlStates:(UPControlState)controlStates;
+
+- (void)controlUpdate;
 
 @end

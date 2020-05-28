@@ -1,5 +1,5 @@
 //
-//  UPTickAnimator.mm
+//  UPTickingAnimator.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -60,8 +60,8 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 @property (nonatomic) UPUnitFunction *unitFunction;
 @property (nonatomic) NSUInteger repeatCount;
 @property (nonatomic) BOOL rebounds;
-@property (nonatomic, copy) UPTickAnimatorApplier applier;
-@property (nonatomic, copy) UPTickAnimatorCompletion completion;
+@property (nonatomic, copy) UPTickingAnimatorApplier applier;
+@property (nonatomic, copy) UPTickingAnimatorCompletion completion;
 
 @property (nonatomic) const char *label;
 @property (nonatomic) CFTimeInterval remainingDuration;
@@ -83,8 +83,8 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 + (UPTickingAnimator *)animatorWithDuration:(CFTimeInterval)duration
                             unitFunction:(UPUnitFunction *)unitFunction
-                                 applier:(UPTickAnimatorApplier)applier
-                              completion:(UPTickAnimatorCompletion)completion
+                                 applier:(UPTickingAnimatorApplier)applier
+                              completion:(UPTickingAnimatorCompletion)completion
 {
     return [self animatorWithDuration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO applier:applier completion:completion];
 }
@@ -93,8 +93,8 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
                             unitFunction:(UPUnitFunction *)unitFunction
                              repeatCount:(NSUInteger)repeatCount
                                 rebounds:(BOOL)rebounds
-                                 applier:(UPTickAnimatorApplier)applier
-                              completion:(UPTickAnimatorCompletion)completion
+                                 applier:(UPTickingAnimatorApplier)applier
+                              completion:(UPTickingAnimatorCompletion)completion
 {
     return [[self alloc] initWithDuration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO
         applier:applier completion:completion];
@@ -104,8 +104,8 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
                     unitFunction:(UPUnitFunction *)unitFunction
                      repeatCount:(NSUInteger)repeatCount
                         rebounds:(BOOL)rebounds
-                         applier:(UPTickAnimatorApplier)applier
-                      completion:(UPTickAnimatorCompletion)completion;
+                         applier:(UPTickingAnimatorApplier)applier
+                      completion:(UPTickingAnimatorCompletion)completion;
 {
     self = [super init];
 
@@ -226,7 +226,9 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 - (void)stopAnimation:(BOOL)withoutFinishing
 {
-    ASSERT(self.state != UIViewAnimatingStateStopped);
+    if (self.state == UIViewAnimatingStateStopped) {
+        return;
+    }
     self.running = NO;
     self.previousTick = 0;
     if (self.state == UIViewAnimatingStateActive) {

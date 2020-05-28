@@ -1,5 +1,5 @@
 //
-//  UPTickAnimator.h
+//  UPTickingAnimator.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -10,17 +10,17 @@
 @class UPTickingAnimator;
 @class UPUnitFunction;
 
-typedef void (^UPTickAnimatorApplier)(UPTickingAnimator *animator, CGFloat fractionCompleted);
-typedef void (^UPTickAnimatorCompletion)(UPTickingAnimator *animator, UIViewAnimatingPosition finalPosition);
+typedef void (^UPTickingAnimatorApplier)(UPTickingAnimator *animator, CGFloat fractionCompleted);
+typedef void (^UPTickingAnimatorCompletion)(UPTickingAnimator *animator, UIViewAnimatingPosition finalPosition);
 
 @interface UPTickingAnimator : NSObject <UIViewAnimating, UPTicking>
 
 + (UPTickingAnimator *)animatorWithDuration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
-    applier:(UPTickAnimatorApplier)applier completion:(UPTickAnimatorCompletion)completion;
+    applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion;
 
 + (UPTickingAnimator *)animatorWithDuration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     repeatCount:(NSUInteger)repeatCount rebounds:(BOOL)rebounds
-        applier:(UPTickAnimatorApplier)applier completion:(UPTickAnimatorCompletion)completion;
+        applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion;
 
 // UIViewAnimating
 @property (nonatomic, readonly) UIViewAnimatingState state;
@@ -28,7 +28,7 @@ typedef void (^UPTickAnimatorCompletion)(UPTickingAnimator *animator, UIViewAnim
 @property (nonatomic) CGFloat fractionComplete;
 
 // In my opinion, this is a poorly-defined API that complicates the implementation beyond the possible utility.
-// UPTickAnimator does not implement it. Asserts if called.
+// UPTickingAnimator does not implement it. Asserts if called.
 @property (nonatomic, getter=isReversed) BOOL reversed;
 
 - (void)startAnimation;

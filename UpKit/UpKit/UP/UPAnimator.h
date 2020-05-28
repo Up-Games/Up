@@ -7,7 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import <UpKit/UpTimeSpanning.h>
+#import <UpKit/UPControl.h>
+#import <UpKit/UPTimeSpanning.h>
 
 namespace UP {
     static constexpr CGFloat NotACoordinate = std::numeric_limits<CGFloat>::quiet_NaN();
@@ -32,6 +33,10 @@ namespace UP {
 
 + (UPAnimator *)springAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
+
++ (UPAnimator *)setColorAnimatorWithLabel:(const char *)label controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
+    element:(UPControlElement)element fromControlState:(UPControlState)fromControlState toControlState:(UPControlState)toControlState
+        completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
 // UIViewAnimating
 

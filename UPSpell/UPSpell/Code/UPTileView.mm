@@ -58,12 +58,12 @@ using UP::TilePaths;
 
     CGRect fillRect = CGRectMake(0, 0, up_size_width(SpellLayout::CanonicalTileSize), up_size_height(SpellLayout::CanonicalTileSize));
     [self setFillPath:[UIBezierPath bezierPathWithRect:fillRect]];
-    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
-    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UIControlStateHighlighted];
+    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UPControlStateNormal];
+    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UPControlStateHighlighted];
     
     [self setStrokePath:layout_manager.tile_stroke_path()];
-    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forControlStates:UIControlStateNormal];
-    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forControlStates:UIControlStateHighlighted];
+    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forControlStates:UPControlStateNormal];
+    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forControlStates:UPControlStateHighlighted];
 
     UIBezierPath *contentPath = [UIBezierPath bezierPath];
     [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
@@ -76,7 +76,6 @@ using UP::TilePaths;
     self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
     [self addGestureRecognizer:self.tap];
     self.pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan)];
-    self.pan.m
     [self addGestureRecognizer:self.pan];
     self.longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress)];
     [self addGestureRecognizer:self.longPress];
@@ -93,41 +92,6 @@ using UP::TilePaths;
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"UPTileView : %c : %p", (char)self.glyph, self];
-}
-
-#pragma mark - States
-
-- (void)setHighlighted
-{
-    [self.dehighlightAnimator stopAnimation:NO];
-    self.dehighlightAnimator = nil;
-    [super setHighlighted];
-}
-
-- (void)setHighlighted:(BOOL)highlighted
-{
-    BOOL wasHighlighted = self.highlighted;
-    [super setHighlighted:highlighted];
-    if (wasHighlighted && !highlighted) {
-        if (self.dehighlightAnimator) {
-            [self.dehighlightAnimator stopAnimation:NO];
-            self.dehighlightAnimator = nil;
-        }
-        UPTickingAnimator *animator = [UPTickingAnimator animatorWithDuration:0.375
-            unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear]
-            applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
-                UIColor *c1 = [self fillColorForControlStates:UIControlStateHighlighted];
-                UIColor *c2 = [self fillColorForControlStates:UIControlStateNormal];
-                UIColor *color = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
-                self.fillPathView.fillColor = color;
-            }
-            completion:^(UPTickingAnimator *animator, UIViewAnimatingPosition finalPosition) {
-                self.dehighlightAnimator = nil;
-            }
-        ];
-        self.dehighlightAnimator = animator;
-        [self.dehighlightAnimator startAnimation];
-    }
 }
 
 #pragma mark - Gestures
@@ -215,12 +179,12 @@ using UP::TilePaths;
     return self.longPress.enabled;
 }
 
-- (void)updateControl
+- (void)controlUpdate
 {
     if (self.dehighlightAnimator) {
         return;
     }
-    [super updateControl];
+    [super controlUpdate];
 }
 
 @end

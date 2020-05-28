@@ -5,6 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import <UPKit/UPControl.h>
 #import <UPKit/UPMacros.h>
 #import <UPKit/UPSerialNumber.h>
 
@@ -47,6 +48,9 @@ UPAnimator *slide_to(const char *label, NSArray<UIView *> *views, CFTimeInterval
 UPAnimator *spring(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition));
 
+UPAnimator *set_color(const char *label, NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
+    UPControlState fromControlState, UPControlState toControlState, void (^completion)(UIViewAnimatingPosition));
+
 UP_STATIC_INLINE
 UPAnimator *bloop(NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position, void (^completion)(UIViewAnimatingPosition)) {
     return bloop(AnimationLabel, views, duration, position, completion);
@@ -75,6 +79,12 @@ UPAnimator *slide_to(NSArray<UIView *> *views, CFTimeInterval duration, CGPoint 
 UP_STATIC_INLINE
 UPAnimator *spring(NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset, void (^completion)(UIViewAnimatingPosition)) {
     return spring(AnimationLabel, views, duration, offset, completion);
+}
+
+UP_STATIC_INLINE
+UPAnimator *set_color(NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
+    UPControlState fromControlState, UPControlState toControlState, void (^completion)(UIViewAnimatingPosition)) {
+    return set_color(AnimationLabel, controls, duration, element, fromControlState, toControlState, completion);
 }
 
 NSObject<UPTimeSpanning> *delay(const char *label, double delay_in_seconds, void (^block)(void));

@@ -3,10 +3,11 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#import <UpKit/UPGeometry.h>
-
+#import "UIColor+UP.h"
 #import "UPAssertions.h"
 #import "UPAnimator.h"
+#import "UPBezierPathView.h"
+#import "UPGeometry.h"
 #import "UPTickingAnimator.h"
 #import "UPUnitFunction.h"
 
@@ -128,6 +129,44 @@
             completion(finalPosition);
         }];
     }
+    return [[self alloc] _initWithLabel:label innerAnimator:animator];
+}
+
++ (UPAnimator *)setColorAnimatorWithLabel:(const char *)label controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
+    element:(UPControlElement)element fromControlState:(UPControlState)fromControlState toControlState:(UPControlState)toControlState
+        completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
+{
+    UPTickingAnimator *animator = [UPTickingAnimator animatorWithDuration:duration
+        unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInEaseOutExpo]
+        applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
+            if (element & UPControlElementFill) {
+                for (UPControl *control in controls) {
+                    UIColor *c1 = [control fillColorForControlStates:fromControlState];
+                    UIColor *c2 = [control fillColorForControlStates:toControlState];
+                    control.fillPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
+                }
+            }
+            if (element & UPControlElementStroke) {
+                for (UPControl *control in controls) {
+                    UIColor *c1 = [control strokeColorForControlStates:fromControlState];
+                    UIColor *c2 = [control strokeColorForControlStates:toControlState];
+                    control.strokePathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
+                }
+            }
+            if (element & UPControlElementContent) {
+                for (UPControl *control in controls) {
+                    UIColor *c1 = [control contentColorForControlStates:fromControlState];
+                    UIColor *c2 = [control contentColorForControlStates:toControlState];
+                    control.contentPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
+                }
+            }
+        }
+        completion:^(UPTickingAnimator *animator, UIViewAnimatingPosition finalPosition) {
+            if (completion) {
+                completion(finalPosition);
+            }
+        }
+    ];
     return [[self alloc] _initWithLabel:label innerAnimator:animator];
 }
 
