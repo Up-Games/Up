@@ -31,7 +31,7 @@ public:
         NOP,    // no-op
         INIT,   // create the initial game state
         TAP,    // tap a tile, moving it from the player tray to the end of the word tray
-        PICK,   // long press or swipe a tile to pick it up
+        DRAG,   // drag a tile to pick it up
         DROP,   // drop a picked-up tile, leaving it where it was
         HOVER,  // float above a position where a tile could be moved
         MOVE,   // move a picked-up tile to a new position and make space for it if needed

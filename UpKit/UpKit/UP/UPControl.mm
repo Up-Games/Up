@@ -45,11 +45,11 @@ bool operator!=(const ControlAction &a, const ControlAction &b) {
 @property (nonatomic, readwrite) UIControlState state;
 @property (nonatomic, readwrite) BOOL tracking;
 @property (nonatomic, readwrite) BOOL touchInside;
+@property (nonatomic, readwrite) UPBezierPathView *contentPathView;
+@property (nonatomic, readwrite) UPBezierPathView *fillPathView;
+@property (nonatomic, readwrite) UPBezierPathView *strokePathView;
 @property (nonatomic) NSMutableDictionary<NSNumber *, UIBezierPath *> *pathsForStates;
 @property (nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *colorsForStates;
-@property (nonatomic) UPBezierPathView *contentPathView;
-@property (nonatomic) UPBezierPathView *fillPathView;
-@property (nonatomic) UPBezierPathView *strokePathView;
 @end
 
 UP_STATIC_INLINE NSNumber * _ContentKey(UIControlState controlState)
@@ -80,6 +80,7 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 {
     self = [super initWithFrame:frame];
     self.multipleTouchEnabled = NO;
+    self.autoHighlights = YES;
     return self;
 }
 
@@ -342,6 +343,12 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
     [self setNeedsLayout];
 }
 
+- (UIColor *)fillColorForControlStates:(UIControlState)controlStates
+{
+    NSNumber *key = _FillKey(controlStates);
+    return self.colorsForStates[key] ?: self.colorsForStates[_FillKey(UIControlStateNormal)];
+}
+
 - (void)setStrokeColor:(UIColor *)color
 {
     [self setStrokeColor:color forControlStates:UIControlStateNormal];
@@ -367,7 +374,9 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
     self.tracking = [self beginTrackingWithTouch:touch withEvent:event];
     if (self.tracking) {
         self.touchInside = [self pointInside:[touch locationInView:self] withEvent:event];
-        self.highlighted = YES;
+        if (self.autoHighlights) {
+            self.highlighted = YES;
+        }
         [self sendActionsForControlEvents:UIControlEventTouchDown];
     }
 }
@@ -384,11 +393,15 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
         BOOL wasTouchInside = self.touchInside;
         self.touchInside = [self pointInside:[touch locationInView:self] withEvent:event];
         if (!wasTouchInside && self.touchInside) {
-            self.highlighted = YES;
+            if (self.autoHighlights) {
+                self.highlighted = YES;
+            }
             [self sendActionsForControlEvents:UIControlEventTouchDragEnter];
         }
         else if (wasTouchInside && !self.touchInside) {
-            self.highlighted = NO;
+            if (self.autoHighlights) {
+                self.highlighted = NO;
+            }
             [self sendActionsForControlEvents:UIControlEventTouchDragExit];
         }
         else if (wasTouchInside && self.touchInside) {
@@ -399,14 +412,18 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
         }
     }
     else {
-        self.highlighted = NO;
+        if (self.autoHighlights) {
+            self.highlighted = NO;
+        }
     }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     self.tracking = NO;
-    self.highlighted = NO;
+    if (self.autoHighlights) {
+        self.highlighted = NO;
+    }
     
     UITouch *touch = [touches anyObject];
     [self endTrackingWithTouch:touch withEvent:event];
@@ -423,7 +440,9 @@ UP_STATIC_INLINE NSNumber * _StrokeKey(UIControlState controlState)
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     self.tracking = NO;
-    self.highlighted = NO;
+    if (self.autoHighlights) {
+        self.highlighted = NO;
+    }
     [self cancelTrackingWithEvent:event];
 }
 

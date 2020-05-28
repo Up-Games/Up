@@ -164,7 +164,7 @@ const SpellModel::State &SpellModel::apply(const Action &action)
         case Opcode::TAP:
             apply_tap(action);
             break;
-        case Opcode::PICK:
+        case Opcode::DRAG:
             break;
         case Opcode::DROP:
             break;

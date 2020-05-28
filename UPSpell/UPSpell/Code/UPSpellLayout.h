@@ -100,6 +100,7 @@ public:
     CGSize tile_size() const { return m_tile_size; }
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
     UIBezierPath *tile_stroke_path() const { return m_tile_stroke_path; }
+    CGRect tile_drag_frame() const { return m_tile_drag_frame; }
 
     UIOffset word_tray_shake_offset() const { return m_word_tray_shake_offset; }
     UIOffset word_tray_tile_offset() const { return m_word_tray_tile_offset; }
@@ -149,6 +150,7 @@ private:
     void set_player_tray_layout_frame(CGRect rect) { m_player_tray_layout_frame = rect; }
     void set_tile_size(CGSize size) { m_tile_size = size; }
     void set_tile_stroke_width(CGFloat f) { m_tile_stroke_width = f; }
+    void set_tile_drag_frame(CGRect rect) { m_tile_drag_frame = rect; }
     void set_word_tray_shake_offset(UIOffset offset) { m_word_tray_shake_offset = offset; }
     void set_word_tray_tile_offset(UIOffset offset) { m_word_tray_tile_offset = offset; }
     void set_controls_button_pause_frame(CGRect rect) { m_controls_button_pause_frame = rect; }
@@ -166,6 +168,7 @@ private:
     void calculate_tile_size();
     void calculate_tile_stroke_width();
     void calculate_word_tray_mask_frame();
+    void calculate_tile_drag_frame();
     void calculate_word_tray_shake_offset();
     void calculate_word_tray_tile_frames();
     void calculate_player_tray_tile_frames();
@@ -199,6 +202,7 @@ private:
     CGSize m_tile_size = CGSizeZero;
     CGFloat m_tile_stroke_width = 0.0;
     UIBezierPath *m_tile_stroke_path = nil;
+    CGRect m_tile_drag_frame = CGRectZero;
 
     UIOffset m_word_tray_shake_offset;
     UIOffset m_word_tray_tile_offset;

@@ -5,6 +5,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class UPBezierPathView;
+
 typedef NS_ENUM(NSUInteger, UPControlState) {
     // Bits in this range:
     // UIControlStateApplication = 0x00FF0000
@@ -23,6 +25,7 @@ typedef NS_ENUM(NSUInteger, UPControlState) {
 @property (nonatomic, getter=isSelected) BOOL selected;        // default is NO may be used by some subclasses or by application
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;  // default is NO. this gets set/cleared automatically when touch enters/exits
 @property (nonatomic, getter=isActive) BOOL active;
+@property (nonatomic) BOOL autoHighlights;
 @property (nonatomic) BOOL highlightedOverride;
 
 @property (nonatomic) CGSize canonicalSize;
@@ -49,7 +52,9 @@ typedef NS_ENUM(NSUInteger, UPControlState) {
 - (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 - (void)removeTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 
-- (void)updateControl;
+@property (nonatomic, readonly) UPBezierPathView *contentPathView;
+@property (nonatomic, readonly) UPBezierPathView *fillPathView;
+@property (nonatomic, readonly) UPBezierPathView *strokePathView;
 
 - (void)setContentPath:(UIBezierPath *)path;
 - (void)setContentPath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
@@ -60,10 +65,13 @@ typedef NS_ENUM(NSUInteger, UPControlState) {
 - (void)setFillPath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
 - (void)setFillColor:(UIColor *)color;
 - (void)setFillColor:(UIColor *)color forControlStates:(UIControlState)controlStates;
+- (UIColor *)fillColorForControlStates:(UIControlState)controlStates;
 
 - (void)setStrokePath:(UIBezierPath *)path;
 - (void)setStrokePath:(UIBezierPath *)path forControlStates:(UIControlState)controlStates;
 - (void)setStrokeColor:(UIColor *)color;
 - (void)setStrokeColor:(UIColor *)color forControlStates:(UIControlState)controlStates;
+
+- (void)updateControl;
 
 @end

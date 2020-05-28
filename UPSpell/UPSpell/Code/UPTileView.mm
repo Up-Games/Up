@@ -7,6 +7,8 @@
 #import <UPKit/UIColor+UP.h>
 #import <UPKit/UPBezierPathView.h>
 #import <UPKit/UPStringTools.h>
+#import <UPKit/UPTickingAnimator.h>
+#import <UPKit/UPUnitFunction.h>
 
 #import "UIFont+UPSpell.h"
 #import "UPSpellLayout.h"
@@ -22,15 +24,11 @@ using UP::TilePaths;
 @property (nonatomic, readwrite) char32_t glyph;
 @property (nonatomic, readwrite) int score;
 @property (nonatomic, readwrite) int multiplier;
-@property (nonatomic) UIView *fillView;
-@property (nonatomic) UPBezierPathView *strokeView;
-@property (nonatomic) UPBezierPathView *glyphView;
-@property (nonatomic) UPBezierPathView *scoreView;
-@property (nonatomic) UPBezierPathView *multiplierView;
 @property (nonatomic, readwrite) UITapGestureRecognizer *tap;
 @property (nonatomic, readwrite) UIPanGestureRecognizer *pan;
 @property (nonatomic, readwrite) UILongPressGestureRecognizer *longPress;
-@property (nonatomic) CGFloat shadowOpacity;
+@property (nonatomic) UPTickingAnimator *dehighlightAnimator;
+
 @end
 
 @implementation UPTileView
@@ -43,6 +41,9 @@ using UP::TilePaths;
 - (instancetype)_initWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier
 {
     self = [super initWithFrame:CGRectZero];
+    
+    self.autoHighlights = NO;
+    
     self.glyph = glyph;
     self.score = score;
     self.multiplier = multiplier;
@@ -50,56 +51,37 @@ using UP::TilePaths;
         return self;
     }
 
-    self.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.6].CGColor;
-    self.layer.shadowOffset = CGSizeMake(0, 0);
-    self.layer.shadowOpacity = 0;
-    self.layer.shadowRadius = 6;
-
     SpellLayout &layout_manager = SpellLayout::instance();
     TilePaths &tile_paths = TilePaths::instance();
 
-    self.fillView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.fillView.userInteractionEnabled = NO;
-    [self addSubview:self.fillView];
+    self.canonicalSize = SpellLayout::CanonicalTileSize;
 
-    self.strokeView = [UPBezierPathView bezierPathView];
-    self.strokeView.userInteractionEnabled = NO;
-    self.strokeView.canonicalSize = SpellLayout::CanonicalTileSize;
-    self.strokeView.path = layout_manager.tile_stroke_path();
-    self.strokeView.opaque = NO;
-    self.strokeView.backgroundColor = [UIColor clearColor];
-    [self addSubview:self.strokeView];
+    CGRect fillRect = CGRectMake(0, 0, up_size_width(SpellLayout::CanonicalTileSize), up_size_height(SpellLayout::CanonicalTileSize));
+    [self setFillPath:[UIBezierPath bezierPathWithRect:fillRect]];
+    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UIControlStateNormal];
+    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UIControlStateHighlighted];
+    
+    [self setStrokePath:layout_manager.tile_stroke_path()];
+    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forControlStates:UIControlStateNormal];
+    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forControlStates:UIControlStateHighlighted];
 
-    self.glyphView = [UPBezierPathView bezierPathView];
-    self.glyphView.userInteractionEnabled = NO;
-    self.glyphView.canonicalSize = SpellLayout::CanonicalTileSize;
-    self.glyphView.path = tile_paths.tile_path_for_glyph(self.glyph);
-    [self addSubview:self.glyphView];
-
-    self.scoreView = [UPBezierPathView bezierPathView];
-    self.scoreView.userInteractionEnabled = NO;
-    self.scoreView.canonicalSize = SpellLayout::CanonicalTileSize;
-    self.scoreView.path = tile_paths.tile_path_for_score(self.score);
-    [self addSubview:self.scoreView];
-
+    UIBezierPath *contentPath = [UIBezierPath bezierPath];
+    [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
+    [contentPath appendPath:tile_paths.tile_path_for_score(self.score)];
     if (self.multiplier != 1) {
-        self.multiplierView = [UPBezierPathView bezierPathView];
-        self.multiplierView.userInteractionEnabled = NO;
-        self.multiplierView.canonicalSize = SpellLayout::CanonicalTileSize;
-        self.multiplierView.path = tile_paths.tile_path_for_multiplier(self.multiplier);
-        self.multiplierView.opaque = NO;
-        [self addSubview:self.multiplierView];
+        [contentPath appendPath:tile_paths.tile_path_for_multiplier(self.multiplier)];
     }
-
+    [self setContentPath:contentPath];
+    
     self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
     [self addGestureRecognizer:self.tap];
     self.pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan)];
+    self.pan.m
     [self addGestureRecognizer:self.pan];
     self.longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress)];
     [self addGestureRecognizer:self.longPress];
+    self.longPress.enabled = NO;
 
-    [self updateThemeColors];
-    
     return self;
 }
 
@@ -113,33 +95,76 @@ using UP::TilePaths;
     return [NSString stringWithFormat:@"UPTileView : %c : %p", (char)self.glyph, self];
 }
 
-@dynamic shadowOpacity;
-- (void)setShadowOpacity:(CGFloat)shadowOpacity
+#pragma mark - States
+
+- (void)setHighlighted
 {
-    self.layer.shadowOpacity = shadowOpacity;
+    [self.dehighlightAnimator stopAnimation:NO];
+    self.dehighlightAnimator = nil;
+    [super setHighlighted];
 }
 
-- (CGFloat)shadowOpacity
+- (void)setHighlighted:(BOOL)highlighted
 {
-    return self.layer.shadowOpacity;
+    BOOL wasHighlighted = self.highlighted;
+    [super setHighlighted:highlighted];
+    if (wasHighlighted && !highlighted) {
+        if (self.dehighlightAnimator) {
+            [self.dehighlightAnimator stopAnimation:NO];
+            self.dehighlightAnimator = nil;
+        }
+        UPTickingAnimator *animator = [UPTickingAnimator animatorWithDuration:0.375
+            unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear]
+            applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
+                UIColor *c1 = [self fillColorForControlStates:UIControlStateHighlighted];
+                UIColor *c2 = [self fillColorForControlStates:UIControlStateNormal];
+                UIColor *color = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
+                self.fillPathView.fillColor = color;
+            }
+            completion:^(UPTickingAnimator *animator, UIViewAnimatingPosition finalPosition) {
+                self.dehighlightAnimator = nil;
+            }
+        ];
+        self.dehighlightAnimator = animator;
+        [self.dehighlightAnimator startAnimation];
+    }
 }
 
 #pragma mark - Gestures
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    self.highlighted = YES;
-    return YES;
+    if (!self.gestureDelegate) {
+        self.highlighted = YES;
+        return YES;
+    }
+    return [self.gestureDelegate beginTracking:self touch:touch event:event];
+}
+
+- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    if (!self.gestureDelegate) {
+        return YES;
+    }
+    return [self.gestureDelegate continueTracking:self touch:touch event:event];
 }
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    self.highlighted = NO;
+    if (!self.gestureDelegate) {
+        self.highlighted = NO;
+        return;
+    }
+    [self.gestureDelegate endTracking:self touch:touch event:event];
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event
 {
-    self.highlighted = NO;
+    if (!self.gestureDelegate) {
+        self.highlighted = NO;
+        return;
+    }
+    [self.gestureDelegate cancelTracking:self event:event];
 }
 
 - (void)handleTap
@@ -190,28 +215,12 @@ using UP::TilePaths;
     return self.longPress.enabled;
 }
 
-#pragma mark - Layout
-
-- (void)layoutSubviews
+- (void)updateControl
 {
-    CGRect bounds = self.bounds;
-    self.fillView.frame = bounds;
-    self.strokeView.frame = bounds;
-    self.glyphView.frame = bounds;
-    self.scoreView.frame = bounds;
-    self.multiplierView.frame = bounds;
-    [self updateControl];
-}
-
-#pragma mark - Theme colors
-
-- (void)updateThemeColors
-{
-    self.fillView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
-    self.strokeView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke];
-    self.glyphView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryContent];
-    self.scoreView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryContent];
-    self.multiplierView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryContent];
+    if (self.dehighlightAnimator) {
+        return;
+    }
+    [super updateControl];
 }
 
 @end

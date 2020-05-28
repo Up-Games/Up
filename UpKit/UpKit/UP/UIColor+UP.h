@@ -59,6 +59,8 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 
 + (UIColor *)colorizedGray:(CGFloat)gray hue:(CGFloat)hue saturation:(CGFloat)saturation;
 
++ (UIColor *)colorByMixingColor:(UIColor *)color1 color:(UIColor *)color2 fraction:(CGFloat)fraction;
+
 - (CGFloat)LABLightness;
 
 + (UIColor *)testColor1;

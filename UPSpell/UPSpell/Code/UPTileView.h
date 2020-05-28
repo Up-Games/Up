@@ -28,6 +28,10 @@
 @end
 
 @protocol UPTileViewGestureDelegate <NSObject>
+- (BOOL)beginTracking:(UPTileView *)tileView touch:(UITouch *)touch event:(UIEvent *)event;
+- (BOOL)continueTracking:(UPTileView *)tileView touch:(UITouch *)touch event:(UIEvent *)event;
+- (void)endTracking:(UPTileView *)tileView touch:(UITouch *)touch event:(UIEvent *)event;
+- (void)cancelTracking:(UPTileView *)tileView event:(UIEvent *)event;
 - (void)tileViewTapped:(UPTileView *)tileView;
 - (void)tileViewPanned:(UPTileView *)tileView;
 - (void)tileViewLongPressed:(UPTileView *)tileView;

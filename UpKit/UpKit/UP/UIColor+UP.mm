@@ -112,6 +112,20 @@ static CGFloat _ThemeHue = 222;
     return outputColor;
 }
 
++ (UIColor *)colorByMixingColor:(UIColor *)color1 color:(UIColor *)color2 fraction:(CGFloat)fraction
+{
+    CGFloat r1, g1, b1, a1;
+    [color1 getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
+    CGFloat r2, g2, b2, a2;
+    [color2 getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
+
+    CGFloat r3 = mix_channel(r1, r2, fraction);
+    CGFloat g3 = mix_channel(g1, g2, fraction);
+    CGFloat b3 = mix_channel(b1, b2, fraction);
+    CGFloat a3 = mix_channel(a1, a2, fraction);
+    return [UIColor colorWithRed:r3 green:g3 blue:b3 alpha:a3];
+}
+
 - (CGFloat)LABLightness
 {
     CGFloat r, g, b, a;

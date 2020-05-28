@@ -73,6 +73,7 @@ void SpellLayout::calculate()
     calculate_tile_size();
     calculate_word_tray_layout_frame();
     calculate_word_tray_mask_frame();
+    calculate_tile_drag_frame();
     calculate_word_tray_shake_offset();
     calculate_player_tray_layout_frame();
     calculate_word_tray_tile_frames();
@@ -162,6 +163,16 @@ void SpellLayout::calculate_word_tray_mask_frame()
         }
     }
     LOG(Layout, "word tray mask frame: %@", NSStringFromCGRect(word_tray_mask_frame()));
+}
+
+void SpellLayout::calculate_tile_drag_frame()
+{
+    CGRect frame = CGRectIntersection(word_tray_mask_frame(), canvas_frame());
+    frame = CGRectIntersection(frame, CGRectInset(screen_bounds(), 20, 20));
+    frame = CGRectInset(frame, up_size_width(tile_size()) * 0.85, up_size_height(tile_size()) * 0.65);
+    frame = CGRectOffset(frame, 0, up_size_height(tile_size()) * 0.11);
+    set_tile_drag_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "tile_drag_frame: %@", NSStringFromCGRect(tile_drag_frame()));
 }
 
 void SpellLayout::calculate_player_tray_layout_frame()
