@@ -66,22 +66,28 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @property (nonatomic, readonly) UPBezierPathView *contentPathView;
 
 - (void)setFillPath:(UIBezierPath *)path;
-- (void)setFillPath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates;
+- (void)setFillPath:(UIBezierPath *)path forControlStates:(UPControlState)states;
 - (void)setFillColor:(UIColor *)color;
-- (void)setFillColor:(UIColor *)color forControlStates:(UPControlState)controlStates;
-- (UIColor *)fillColorForControlStates:(UPControlState)controlStates;
+- (void)setFillColor:(UIColor *)color forControlStates:(UPControlState)states;
+- (UIColor *)fillColorForControlStates:(UPControlState)states;
+- (void)setAnimatesFillColor:(BOOL)animates fromState:(UPControlState)fromState toState:(UPControlState)toState;
+- (BOOL)animatesFillColorFromState:(UPControlState)fromState toState:(UPControlState)toState;
 
 - (void)setStrokePath:(UIBezierPath *)path;
-- (void)setStrokePath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates;
+- (void)setStrokePath:(UIBezierPath *)path forControlStates:(UPControlState)states;
 - (void)setStrokeColor:(UIColor *)color;
-- (void)setStrokeColor:(UIColor *)color forControlStates:(UPControlState)controlStates;
-- (UIColor *)strokeColorForControlStates:(UPControlState)controlStates;
+- (void)setStrokeColor:(UIColor *)color forControlStates:(UPControlState)states;
+- (UIColor *)strokeColorForControlStates:(UPControlState)states;
+- (void)setAnimatesStrokeColor:(BOOL)animates fromState:(UPControlState)fromState toState:(UPControlState)toState;
+- (BOOL)animatesStrokeColorFromState:(UPControlState)fromState toState:(UPControlState)toState;
 
 - (void)setContentPath:(UIBezierPath *)path;
-- (void)setContentPath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates;
+- (void)setContentPath:(UIBezierPath *)path forControlStates:(UPControlState)states;
 - (void)setContentColor:(UIColor *)color;
-- (void)setContentColor:(UIColor *)color forControlStates:(UPControlState)controlStates;
-- (UIColor *)contentColorForControlStates:(UPControlState)controlStates;
+- (void)setContentColor:(UIColor *)color forControlStates:(UPControlState)states;
+- (UIColor *)contentColorForControlStates:(UPControlState)states;
+- (void)setAnimatesContentColor:(BOOL)animates fromState:(UPControlState)fromState toState:(UPControlState)toState;
+- (BOOL)animatesContentColorFromState:(UPControlState)fromState toState:(UPControlState)toState;
 
 - (void)controlUpdate;
 

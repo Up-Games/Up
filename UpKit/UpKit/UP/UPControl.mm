@@ -3,6 +3,8 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <map>
+#import <set>
 #import <vector>
 
 #import "UPAnimator.h"
@@ -45,12 +47,19 @@ bool operator!=(const ControlAction &a, const ControlAction &b) {
 
 // =========================================================================================================================================
 
+using UP::ControlAction;
+
 using UP::TimeSpanning::cancel;
 using UP::TimeSpanning::set_color;
 
+using UPControlStatePair = std::pair<UPControlState, UPControlState>;
+
 @interface UPControl ()
 {
-    std::vector<UP::ControlAction> m_actions;
+    std::vector<ControlAction> m_actions;
+    std::map<NSUInteger, __strong UIBezierPath *> m_paths;
+    std::map<NSUInteger, __strong UIColor *> m_colors;
+    std::set<UPControlStatePair> m_color_animations;
 }
 @property (nonatomic, readwrite) UPControlState state;
 @property (nonatomic, readwrite) BOOL tracking;
@@ -59,8 +68,7 @@ using UP::TimeSpanning::set_color;
 @property (nonatomic, readwrite) UPBezierPathView *fillPathView;
 @property (nonatomic, readwrite) UPBezierPathView *strokePathView;
 @property (nonatomic) NSMutableDictionary<NSNumber *, UIBezierPath *> *pathsForStates;
-@property (nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *colorsForStates;
-@property (nonatomic) UPControlState previouslyUpdatedState;
+@property (nonatomic) UPControlState previousState;
 @property (nonatomic) UPAnimator *fillColorAnimator;
 @property (nonatomic) UPAnimator *strokeColorAnimator;
 @property (nonatomic) UPAnimator *contentColorAnimator;
@@ -81,6 +89,21 @@ UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
     return @(UPControlElementContent | controlState);
 }
 
+UP_STATIC_INLINE NSUInteger up_control_key_fill(UPControlState controlState)
+{
+    return UPControlElementFill | controlState;
+}
+
+UP_STATIC_INLINE NSUInteger up_control_key_stroke(UPControlState controlState)
+{
+    return UPControlElementStroke | controlState;
+}
+
+UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
+{
+    return UPControlElementContent | controlState;
+}
+
 @implementation UPControl
 
 #pragma mark - Initialization
@@ -95,7 +118,7 @@ UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
     self = [super initWithFrame:frame];
     self.multipleTouchEnabled = NO;
     self.autoHighlights = YES;
-    self.previouslyUpdatedState = UPControlStateInvalid;
+    self.previousState = UPControlStateInvalid;
     self.state = UPControlStateNormal;
     return self;
 }
@@ -325,13 +348,6 @@ UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
 
 # pragma mark - Colors
 
-- (void)_createColorsForStatesIfNeeded
-{
-    if (!self.colorsForStates) {
-        self.colorsForStates = [NSMutableDictionary dictionary];
-    }
-}
-
 - (void)setFillColor:(UIColor *)color
 {
     [self setFillColor:color forControlStates:UPControlStateNormal];
@@ -339,23 +355,50 @@ UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
 
 - (void)setFillColor:(UIColor *)color forControlStates:(UPControlState)controlStates
 {
-    [self _createColorsForStatesIfNeeded];
-    NSNumber *key = _FillKey(controlStates);
-    self.colorsForStates[key] = color;
+    NSUInteger k = up_control_key_fill(controlStates);
+    auto it = m_colors.find(k);
+    if (it == m_colors.end()) {
+        m_colors.emplace(k, color);
+    }
+    else {
+        it->second = color;
+    }
     [self setNeedsLayout];
 }
 
 - (UIColor *)fillColorForControlStates:(UPControlState)controlStates
 {
-    UIColor *color = self.colorsForStates[_FillKey(controlStates)];
-    if (color) {
-        return color;
+    const auto &end = m_colors.end();
+    const auto &sval = m_colors.find(up_control_key_fill(controlStates));
+    if (sval != end) {
+        return sval->second;
     }
-    color = self.colorsForStates[_FillKey(UPControlStateNormal)];
-    if (color) {
-        return color;
+    const auto &nval = m_colors.find(up_control_key_fill(UPControlStateNormal));
+    if (nval != end) {
+        return nval->second;
     }
     return [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
+}
+
+- (void)setAnimatesFillColor:(BOOL)animates fromState:(UPControlState)fromState toState:(UPControlState)toState
+{
+    UPControlStatePair k = { up_control_key_fill(fromState), up_control_key_fill(toState) };
+    auto it = m_color_animations.find(k);
+    if (it == m_color_animations.end()) {
+        if (animates) {
+            m_color_animations.emplace(k);
+        }
+    }
+    else if (!animates) {
+        m_color_animations.erase(it);
+    }
+    [self setNeedsLayout];
+}
+
+- (BOOL)animatesFillColorFromState:(UPControlState)fromState toState:(UPControlState)toState
+{
+    UPControlStatePair k = { up_control_key_fill(fromState), up_control_key_fill(toState) };
+    return m_color_animations.find(k) != m_color_animations.end();
 }
 
 - (void)setStrokeColor:(UIColor *)color
@@ -365,23 +408,50 @@ UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
 
 - (void)setStrokeColor:(UIColor *)color forControlStates:(UPControlState)controlStates
 {
-    [self _createColorsForStatesIfNeeded];
-    NSNumber *key = _StrokeKey(controlStates);
-    self.colorsForStates[key] = color;
+    NSUInteger k = up_control_key_stroke(controlStates);
+    auto it = m_colors.find(k);
+    if (it == m_colors.end()) {
+        m_colors.emplace(k, color);
+    }
+    else {
+        it->second = color;
+    }
     [self setNeedsLayout];
 }
 
 - (UIColor *)strokeColorForControlStates:(UPControlState)controlStates
 {
-    UIColor *color = self.colorsForStates[_StrokeKey(controlStates)];
-    if (color) {
-        return color;
+    const auto &end = m_colors.end();
+    const auto &sval = m_colors.find(up_control_key_stroke(controlStates));
+    if (sval != end) {
+        return sval->second;
     }
-    color = self.colorsForStates[_StrokeKey(UPControlStateNormal)];
-    if (color) {
-        return color;
+    const auto &nval = m_colors.find(up_control_key_stroke(UPControlStateNormal));
+    if (nval != end) {
+        return nval->second;
     }
     return [UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke];
+}
+
+- (void)setAnimatesStrokeColor:(BOOL)animates fromState:(UPControlState)fromState toState:(UPControlState)toState
+{
+    UPControlStatePair k = { up_control_key_stroke(fromState), up_control_key_stroke(toState) };
+    auto it = m_color_animations.find(k);
+    if (it == m_color_animations.end()) {
+        if (animates) {
+            m_color_animations.emplace(k);
+        }
+    }
+    else if (!animates) {
+        m_color_animations.erase(it);
+    }
+    [self setNeedsLayout];
+}
+
+- (BOOL)animatesStrokeColorFromState:(UPControlState)fromState toState:(UPControlState)toState
+{
+    UPControlStatePair k = { up_control_key_stroke(fromState), up_control_key_stroke(toState) };
+    return m_color_animations.find(k) != m_color_animations.end();
 }
 
 - (void)setContentColor:(UIColor *)color
@@ -391,23 +461,50 @@ UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
 
 - (void)setContentColor:(UIColor *)color forControlStates:(UPControlState)controlStates
 {
-    [self _createColorsForStatesIfNeeded];
-    NSNumber *key = _ContentKey(controlStates);
-    self.colorsForStates[key] = color;
+    NSUInteger k = up_control_key_content(controlStates);
+    auto it = m_colors.find(k);
+    if (it == m_colors.end()) {
+        m_colors.emplace(k, color);
+    }
+    else {
+        it->second = color;
+    }
     [self setNeedsLayout];
 }
 
 - (UIColor *)contentColorForControlStates:(UPControlState)controlStates
 {
-    UIColor *color = self.colorsForStates[_ContentKey(controlStates)];
-    if (color) {
-        return color;
+    const auto &end = m_colors.end();
+    const auto &sval = m_colors.find(up_control_key_content(controlStates));
+    if (sval != end) {
+        return sval->second;
     }
-    color = self.colorsForStates[_ContentKey(UPControlStateNormal)];
-    if (color) {
-        return color;
+    const auto &nval = m_colors.find(up_control_key_content(UPControlStateNormal));
+    if (nval != end) {
+        return nval->second;
     }
     return [UIColor themeColorWithCategory:UPColorCategoryContent];
+}
+
+- (void)setAnimatesContentColor:(BOOL)animates fromState:(UPControlState)fromState toState:(UPControlState)toState
+{
+    UPControlStatePair k = { up_control_key_content(fromState), up_control_key_content(toState) };
+    auto it = m_color_animations.find(k);
+    if (it == m_color_animations.end()) {
+        if (animates) {
+            m_color_animations.emplace(k);
+        }
+    }
+    else if (!animates) {
+        m_color_animations.erase(it);
+    }
+    [self setNeedsLayout];
+}
+
+- (BOOL)animatesContentColorFromState:(UPControlState)fromState toState:(UPControlState)toState
+{
+    UPControlStatePair k = { up_control_key_content(fromState), up_control_key_content(toState) };
+    return m_color_animations.find(k) != m_color_animations.end();
 }
 
 #pragma mark - Touch events
@@ -550,6 +647,19 @@ UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
     }
 }
 
+#pragma mark - Lifecycle
+
+- (void)removeFromSuperview
+{
+    cancel(self.fillColorAnimator);
+    cancel(self.strokeColorAnimator);
+    cancel(self.contentColorAnimator);
+    self.fillColorAnimator = nil;
+    self.strokeColorAnimator = nil;
+    self.contentColorAnimator = nil;
+    [super removeFromSuperview];
+}
+
 #pragma mark - Layout
 
 - (void)layoutSubviews
@@ -566,7 +676,7 @@ UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
 - (void)controlUpdate
 {
     UPControlState state = self.state;
-    if (state == self.previouslyUpdatedState) {
+    if (state == self.previousState) {
         return;
     }
     
@@ -577,18 +687,20 @@ UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
         
         cancel(self.fillColorAnimator);
         self.fillColorAnimator = nil;
-        
-        LOG(General, "fill: %s => %s",
-            (self.previouslyUpdatedState & UPControlStateHighlighted) ? "Y" : "N",
-            (self.state & UPControlStateHighlighted) ? "Y" : "N");
-        
-        if ((self.previouslyUpdatedState & UPControlStateHighlighted) && (state & UPControlStateHighlighted) == 0) {
-            self.fillColorAnimator = set_color(@[self], 0.3, UPControlElementFill, self.previouslyUpdatedState, state, nil);
+
+        BOOL animates = [self animatesFillColorFromState:self.previousState toState:state] &&
+            ![[self fillColorForControlStates:self.previousState] isEqual:[self fillColorForControlStates:state]];
+
+        if (animates) {
+            self.fillColorAnimator = set_color(@[self], 0.3, UPControlElementFill, self.previousState, state,
+                ^(UIViewAnimatingPosition) {
+                    self.fillColorAnimator = nil;
+                }
+            );
             [self.fillColorAnimator start];
         }
         else {
-            UIColor *color = [self fillColorForControlStates:state];
-            self.fillPathView.fillColor = color;
+            self.fillPathView.fillColor = [self fillColorForControlStates:state];
         }
     }
     if (self.strokePathView) {
@@ -599,8 +711,20 @@ UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
         cancel(self.strokeColorAnimator);
         self.strokeColorAnimator = nil;
 
-        UIColor *color = [self strokeColorForControlStates:state];
-        self.strokePathView.fillColor = color;
+        BOOL animates = [self animatesFillColorFromState:self.previousState toState:state] &&
+            ![[self strokeColorForControlStates:self.previousState] isEqual:[self strokeColorForControlStates:state]];
+
+        if (animates) {
+            self.strokeColorAnimator = set_color(@[self], 0.3, UPControlElementStroke, self.previousState, state,
+                ^(UIViewAnimatingPosition) {
+                    self.strokeColorAnimator = nil;
+                }
+            );
+            [self.strokeColorAnimator start];
+        }
+        else {
+            self.strokePathView.fillColor = [self strokeColorForControlStates:state];
+        }
     }
     if (self.contentPathView) {
         NSNumber *key = _ContentKey(state);
@@ -610,11 +734,23 @@ UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
         cancel(self.contentColorAnimator);
         self.contentColorAnimator = nil;
 
-        UIColor *color = [self contentColorForControlStates:state];
-        self.contentPathView.fillColor = color;
+        BOOL animates = [self animatesFillColorFromState:self.previousState toState:state] &&
+            ![[self contentColorForControlStates:self.previousState] isEqual:[self contentColorForControlStates:state]];
+
+        if (animates) {
+            self.contentColorAnimator = set_color(@[self], 0.3, UPControlElementContent, self.previousState, state,
+                ^(UIViewAnimatingPosition) {
+                    self.strokeColorAnimator = nil;
+                }
+            );
+            [self.strokeColorAnimator start];
+        }
+        else {
+            self.contentPathView.fillColor = [self contentColorForControlStates:state];;
+        }
     }
     
-    self.previouslyUpdatedState = state;
+    self.previousState = state;
 }
 
 @end

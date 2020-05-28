@@ -13,33 +13,17 @@
 namespace UP {
 namespace TimeSpanning {
 
-static std::unordered_map<uint32_t, NSObject<UPTimeSpanning> *> *g_map;
-static std::vector<uint32_t> *g_rem_serial_numbers;
+static std::unordered_map<uint32_t, __weak NSObject<UPTimeSpanning> *> *g_map;
 
 const char * const AnimationLabel = "animation";
 const char * const DelayLabel = "delay";
 const char * const TestLabel = "test";
 
-static void sweep()
-{
-    for (const auto &sn : *g_rem_serial_numbers) {
-        g_map->erase(sn);
-    }
-    g_rem_serial_numbers->clear();
-}
-
 void init()
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        g_map = new std::unordered_map<uint32_t, NSObject<UPTimeSpanning> *>();
-        g_rem_serial_numbers = new std::vector<uint32_t>();
-        CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(NULL, kCFRunLoopBeforeWaiting, YES, 0,
-            ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) {
-                sweep();
-            }
-        );
-        CFRunLoopAddObserver(CFRunLoopGetMain(), observer, kCFRunLoopCommonModes);
+        g_map = new std::unordered_map<uint32_t, __weak NSObject<UPTimeSpanning> *>();
     });
 }
 
@@ -111,18 +95,21 @@ UPAnimator *set_color(const char *label, NSArray<UPControl *> *controls, CFTimeI
 void cancel(NSObject<UPTimeSpanning> *obj)
 {
     if (obj) {
+        g_map->erase(obj.serialNumber);
         [obj cancel];
-        g_rem_serial_numbers->push_back(obj.serialNumber);
     }
 }
 
 void cancel(const char *label)
 {
-    for (const auto &it : *g_map) {
-        NSObject<UPTimeSpanning> *obj = it.second;
+    for (auto it = g_map->begin(); it != g_map->end();) {
+        NSObject<UPTimeSpanning> *obj = it->second;
         if (label == obj.label || strcmp(label, obj.label) == 0) {
+            it = g_map->erase(it);
             [obj cancel];
-            g_rem_serial_numbers->push_back(obj.serialNumber);
+        }
+        else {
+            ++it;
         }
     }
 }
@@ -132,8 +119,8 @@ void cancel_all()
     for (const auto &it : *g_map) {
         NSObject<UPTimeSpanning> *obj = it.second;
         [obj cancel];
-        g_rem_serial_numbers->push_back(obj.serialNumber);
     }
+    g_map->clear();
 }
 
 void pause(NSObject<UPTimeSpanning> *obj)
@@ -165,7 +152,6 @@ void start(NSObject<UPTimeSpanning> *obj)
 
 void start(const char *label)
 {
-    sweep();
     for (const auto &it : *g_map) {
         NSObject<UPTimeSpanning> *obj = it.second;
         if (label == obj.label || strcmp(label, obj.label) == 0) {
@@ -176,7 +162,6 @@ void start(const char *label)
 
 void start_all()
 {
-    sweep();
     for (const auto &it : *g_map) {
         [it.second start];
     }
@@ -184,7 +169,7 @@ void start_all()
 
 void remove(NSObject<UPTimeSpanning> *obj)
 {
-    g_rem_serial_numbers->push_back(obj.serialNumber);
+    g_map->erase(obj.serialNumber);
 }
 
 }  // namespace TimeSpanning

@@ -94,7 +94,7 @@ using UP::TimeSpanning::TestLabel;
     self.model = new SpellModel(game_code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
-    [UIColor setThemeHue:0];
+    [UIColor setThemeHue:300];
     SpellLayout &layout_manager = SpellLayout::create_instance();
     TilePaths::create_instance();
     

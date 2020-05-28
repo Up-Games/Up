@@ -60,6 +60,7 @@ using UP::TilePaths;
     [self setFillPath:[UIBezierPath bezierPathWithRect:fillRect]];
     [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UPControlStateNormal];
     [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UPControlStateHighlighted];
+    [self setAnimatesFillColor:YES fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     
     [self setStrokePath:layout_manager.tile_stroke_path()];
     [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forControlStates:UPControlStateNormal];
