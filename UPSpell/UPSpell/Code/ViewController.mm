@@ -126,23 +126,21 @@ using UP::TimeSpanning::TestLabel;
     self.tileContainerView.layer.mask = self.tileContainerClipView.shapeLayer;
 
     self.roundControlButtonPause = [UPControl roundControlButtonPause];
+    self.roundControlButtonPause.frame = layout_manager.game_controls_left_button_frame();
+    self.roundControlButtonPause.chargeSize = layout_manager.game_controls_button_charge_size();
     [self.roundControlButtonPause addTarget:self action:@selector(roundControlButtonPauseTapped:) forControlEvents:UIControlEventTouchUpInside];
-    self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
-    self.roundControlButtonPause.chargeSize =
-        CGSizeMake(up_rect_width(self.roundControlButtonPause.frame) * 0.65, up_rect_height(self.roundControlButtonPause.frame) * 0.125);
     [self.view addSubview:self.roundControlButtonPause];
 
     self.roundControlButtonTrash = [UPControl roundControlButtonTrash];
+    self.roundControlButtonTrash.frame = layout_manager.game_controls_right_button_frame();
+    self.roundControlButtonTrash.chargeSize = layout_manager.game_controls_button_charge_size();
     [self.roundControlButtonTrash addTarget:self action:@selector(roundControlButtonTrashTapped:) forControlEvents:UIControlEventTouchUpInside];
-    self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
-    self.roundControlButtonTrash.chargeSize =
-        CGSizeMake(up_rect_width(self.roundControlButtonTrash.frame) * 0.65, up_rect_height(self.roundControlButtonTrash.frame) * 0.125);
     [self.view addSubview:self.roundControlButtonTrash];
 
     self.roundControlButtonClear = [UPControl roundControlButtonClear];
+    self.roundControlButtonClear.frame = layout_manager.game_controls_right_button_frame();
+    self.roundControlButtonClear.chargeSize = layout_manager.game_controls_button_charge_size();
     [self.roundControlButtonClear addTarget:self action:@selector(roundControlButtonClearTapped:) forControlEvents:UIControlEventTouchUpInside];
-    self.roundControlButtonClear.chargeSize =
-        CGSizeMake(up_rect_width(self.roundControlButtonClear.frame) * 0.65, up_rect_height(self.roundControlButtonClear.frame) * 0.125);
     [self.view addSubview:self.roundControlButtonClear];
 
     UIFont *font = [UIFont gameInformationFontOfSize:layout_manager.game_information_font_metrics().point_size()];
@@ -197,9 +195,6 @@ using UP::TimeSpanning::TestLabel;
     self.infinityView.frame = self.view.bounds;
     self.tileContainerView.frame = self.view.bounds;
     self.tileContainerClipView.frame = layout_manager.word_tray_mask_frame();
-//    self.roundControlButtonPause.frame = layout_manager.controls_button_pause_frame();
-//    self.roundControlButtonTrash.frame = layout_manager.controls_button_trash_frame();
-    self.roundControlButtonClear.frame = layout_manager.controls_button_trash_frame();
     self.gameTimerLabel.frame = layout_manager.game_time_label_frame();
     self.scoreLabel.frame = layout_manager.game_score_label_frame();
 }

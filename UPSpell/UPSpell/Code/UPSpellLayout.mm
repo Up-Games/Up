@@ -81,8 +81,9 @@ void SpellLayout::calculate()
     calculate_prefill_tile_frames();
     calculate_score_tile_spring_down_offset_y();
     calculate_score_tile_center_y();
-    calculate_controls_button_pause_frame();
-    calculate_controls_button_trash_frame();
+    calculate_game_controls_left_button_frame();
+    calculate_game_controls_right_button_frame();
+    calculate_game_controls_button_charge_size();
     calculate_game_information_font_metrics();
     calculate_game_information_superscript_font_metrics();
     calculate_game_time_label_frame();
@@ -230,7 +231,7 @@ void SpellLayout::calculate_tile_stroke_width()
     LOG(Layout, "   tile stroke width:   %.2f", tile_stroke_width());
 }
 
-void SpellLayout::calculate_controls_button_pause_frame()
+void SpellLayout::calculate_game_controls_left_button_frame()
 {
     CGSize size = up_size_scaled(CanonicalRoundControlButtonSize, layout_scale());
     CGRect frame = CGRectMake(
@@ -239,11 +240,11 @@ void SpellLayout::calculate_controls_button_pause_frame()
         up_size_width(size),
         up_size_height(size)
     );
-    set_controls_button_pause_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "   pause button frame:  %@", NSStringFromCGRect(controls_button_pause_frame()));
+    set_game_controls_left_button_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "   pause button frame:  %@", NSStringFromCGRect(game_controls_left_button_frame()));
 }
 
-void SpellLayout::calculate_controls_button_trash_frame()
+void SpellLayout::calculate_game_controls_right_button_frame()
 {
     CGSize size = up_size_scaled(CanonicalRoundControlButtonSize, layout_scale());
     CGRect frame = CGRectMake(
@@ -252,8 +253,16 @@ void SpellLayout::calculate_controls_button_trash_frame()
         up_size_width(size),
         up_size_height(size)
     );
-    set_controls_button_trash_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "   trash button frame:  %@", NSStringFromCGRect(controls_button_trash_frame()));
+    set_game_controls_right_button_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "   trash button frame:  %@", NSStringFromCGRect(game_controls_right_button_frame()));
+}
+
+void SpellLayout::calculate_game_controls_button_charge_size()
+{
+    CGSize size = up_size_scaled(CanonicalRoundControlButtonSize, layout_scale());
+    CGSize charge_size = CGSizeMake(up_size_width(size) * 0.65, up_size_height(size) * 0.15);
+    set_game_controls_button_charge_size(up_pixel_size(charge_size, screen_scale()));
+    LOG(Layout, "   button charge size:  %@", NSStringFromCGSize(game_controls_button_charge_size()));
 }
 
 void SpellLayout::calculate_game_information_font_metrics()

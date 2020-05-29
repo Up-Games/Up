@@ -105,8 +105,9 @@ public:
     UIOffset word_tray_shake_offset() const { return m_word_tray_shake_offset; }
     UIOffset word_tray_tile_offset() const { return m_word_tray_tile_offset; }
 
-    CGRect controls_button_pause_frame() const { return m_controls_button_pause_frame; }
-    CGRect controls_button_trash_frame() const { return m_controls_button_trash_frame; }
+    CGRect game_controls_left_button_frame() const { return m_game_controls_left_button_frame; }
+    CGRect game_controls_right_button_frame() const { return m_game_controls_right_button_frame; }
+    CGSize game_controls_button_charge_size() const { return m_game_controls_button_charge_size; }
 
     const FontMetrics &game_information_font_metrics() const { return m_game_information_font_metrics; }
     const FontMetrics &game_information_superscript_font_metrics() const { return m_game_information_superscript_font_metrics; }
@@ -153,8 +154,9 @@ private:
     void set_tile_drag_frame(CGRect rect) { m_tile_drag_frame = rect; }
     void set_word_tray_shake_offset(UIOffset offset) { m_word_tray_shake_offset = offset; }
     void set_word_tray_tile_offset(UIOffset offset) { m_word_tray_tile_offset = offset; }
-    void set_controls_button_pause_frame(CGRect rect) { m_controls_button_pause_frame = rect; }
-    void set_controls_button_trash_frame(CGRect rect) { m_controls_button_trash_frame = rect; }
+    void set_game_controls_left_button_frame(CGRect rect) { m_game_controls_left_button_frame = rect; }
+    void set_game_controls_right_button_frame(CGRect rect) { m_game_controls_right_button_frame = rect; }
+    void set_game_controls_button_charge_size(CGSize size) { m_game_controls_button_charge_size = size; }
     void set_game_information_font_metrics(const FontMetrics &metrics) { m_game_information_font_metrics = metrics; }
     void set_game_information_superscript_font_metrics(const FontMetrics &metrics) { m_game_information_superscript_font_metrics = metrics; }
     void set_game_time_label_frame(CGRect rect) { m_game_time_label_frame = rect; }
@@ -175,8 +177,9 @@ private:
     void calculate_prefill_tile_frames();
     void calculate_score_tile_spring_down_offset_y();
     void calculate_score_tile_center_y();
-    void calculate_controls_button_pause_frame();
-    void calculate_controls_button_trash_frame();
+    void calculate_game_controls_left_button_frame();
+    void calculate_game_controls_right_button_frame();
+    void calculate_game_controls_button_charge_size();
     void calculate_game_information_font_metrics();
     void calculate_game_information_superscript_font_metrics();
     void calculate_game_time_label_frame();
@@ -207,8 +210,9 @@ private:
     UIOffset m_word_tray_shake_offset;
     UIOffset m_word_tray_tile_offset;
 
-    CGRect m_controls_button_pause_frame = CGRectZero;
-    CGRect m_controls_button_trash_frame = CGRectZero;
+    CGRect m_game_controls_left_button_frame = CGRectZero;
+    CGRect m_game_controls_right_button_frame = CGRectZero;
+    CGSize m_game_controls_button_charge_size = CGSizeZero;
 
     FontMetrics m_game_information_font_metrics;
     FontMetrics m_game_information_superscript_font_metrics;
