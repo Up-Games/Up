@@ -57,11 +57,12 @@ using UP::TilePaths;
     [self setFillPath:[UIBezierPath bezierPathWithRect:fillRect]];
     [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UPControlStateNormal];
     [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UPControlStateHighlighted];
-    [self setAnimatesFillColor:YES fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self setFillColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     
     [self setStrokePath:layout_manager.tile_stroke_path()];
     [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forControlStates:UPControlStateNormal];
     [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forControlStates:UPControlStateHighlighted];
+    [self setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
     UIBezierPath *contentPath = [UIBezierPath bezierPath];
     [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];

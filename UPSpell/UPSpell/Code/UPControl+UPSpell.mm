@@ -367,12 +367,12 @@ static UIBezierPath *_WordTrayStrokePath(void)
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveFill] forControlStates:UPControlStateNormal];
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveFill] forControlStates:UPControlStateActive];
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedFill] forControlStates:(UPControlStateHighlighted | UPControlStateActive)];
-    [control setAnimatesFillColor:YES fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
+    [control setFillColorAnimationDuration:0.5 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
     [control setStrokePath:_WordTrayStrokePath() forControlStates:UPControlStateNormal];
     [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveStroke] forControlStates:UPControlStateNormal];
     [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveStroke] forControlStates:UPControlStateActive];
     [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedStroke] forControlStates:(UPControlStateHighlighted | UPControlStateActive)];
-    [control setAnimatesStrokeColor:YES fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
+    [control setStrokeColorAnimationDuration:YES fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
     return control;
 }
 

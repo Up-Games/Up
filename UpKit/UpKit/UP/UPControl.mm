@@ -4,7 +4,6 @@
 //
 
 #import <map>
-#import <set>
 #import <vector>
 
 #import "UPAnimator.h"
@@ -13,6 +12,8 @@
 #import "UPControl.h"
 #import "UIColor+UP.h"
 #import "UPMacros.h"
+#import "UPMath.h"
+#import "UPTicker.h"
 #import "UPTickingAnimator.h"
 #import "UPTimeSpanning.h"
 
@@ -59,7 +60,7 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
     std::vector<ControlAction> m_actions;
     std::map<NSUInteger, __strong UIBezierPath *> m_paths;
     std::map<NSUInteger, __strong UIColor *> m_colors;
-    std::set<UPControlStatePair> m_color_animations;
+    std::map<UPControlStatePair, CFTimeInterval> m_color_animations;
 }
 @property (nonatomic, readwrite) UPControlState state;
 @property (nonatomic, readwrite) BOOL tracking;
@@ -380,25 +381,26 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     return [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
 }
 
-- (void)setAnimatesFillColor:(BOOL)animates fromState:(UPControlState)fromState toState:(UPControlState)toState
+- (void)setFillColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState
 {
     UPControlStatePair k = { up_control_key_fill(fromState), up_control_key_fill(toState) };
     auto it = m_color_animations.find(k);
     if (it == m_color_animations.end()) {
-        if (animates) {
-            m_color_animations.emplace(k);
+        if (duration >= UPTickerInterval) {
+            m_color_animations.emplace(k, duration);
         }
     }
-    else if (!animates) {
+    else if (up_is_fuzzy_zero(duration)) {
         m_color_animations.erase(it);
     }
     [self setNeedsLayout];
 }
 
-- (BOOL)animatesFillColorFromState:(UPControlState)fromState toState:(UPControlState)toState
+- (CFTimeInterval)fillColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState
 {
     UPControlStatePair k = { up_control_key_fill(fromState), up_control_key_fill(toState) };
-    return m_color_animations.find(k) != m_color_animations.end();
+    const auto it = m_color_animations.find(k);
+    return it != m_color_animations.end() ? it->second : 0.0;
 }
 
 - (void)setStrokeColor:(UIColor *)color
@@ -433,25 +435,26 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     return [UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke];
 }
 
-- (void)setAnimatesStrokeColor:(BOOL)animates fromState:(UPControlState)fromState toState:(UPControlState)toState
+- (void)setStrokeColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState
 {
     UPControlStatePair k = { up_control_key_stroke(fromState), up_control_key_stroke(toState) };
     auto it = m_color_animations.find(k);
     if (it == m_color_animations.end()) {
-        if (animates) {
-            m_color_animations.emplace(k);
+        if (duration >= UPTickerInterval) {
+            m_color_animations.emplace(k, duration);
         }
     }
-    else if (!animates) {
+    else if (up_is_fuzzy_zero(duration)) {
         m_color_animations.erase(it);
     }
     [self setNeedsLayout];
 }
 
-- (BOOL)animatesStrokeColorFromState:(UPControlState)fromState toState:(UPControlState)toState
+- (CFTimeInterval)strokeColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState
 {
     UPControlStatePair k = { up_control_key_stroke(fromState), up_control_key_stroke(toState) };
-    return m_color_animations.find(k) != m_color_animations.end();
+    const auto it = m_color_animations.find(k);
+    return it != m_color_animations.end() ? it->second : 0.0;
 }
 
 - (void)setContentColor:(UIColor *)color
@@ -486,25 +489,26 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     return [UIColor themeColorWithCategory:UPColorCategoryContent];
 }
 
-- (void)setAnimatesContentColor:(BOOL)animates fromState:(UPControlState)fromState toState:(UPControlState)toState
+- (void)setContentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState
 {
     UPControlStatePair k = { up_control_key_content(fromState), up_control_key_content(toState) };
     auto it = m_color_animations.find(k);
     if (it == m_color_animations.end()) {
-        if (animates) {
-            m_color_animations.emplace(k);
+        if (duration >= UPTickerInterval) {
+            m_color_animations.emplace(k, duration);
         }
     }
-    else if (!animates) {
+    else if (up_is_fuzzy_zero(duration)) {
         m_color_animations.erase(it);
     }
     [self setNeedsLayout];
 }
 
-- (BOOL)animatesContentColorFromState:(UPControlState)fromState toState:(UPControlState)toState
+- (CFTimeInterval)contentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState
 {
     UPControlStatePair k = { up_control_key_content(fromState), up_control_key_content(toState) };
-    return m_color_animations.find(k) != m_color_animations.end();
+    const auto it = m_color_animations.find(k);
+    return it != m_color_animations.end() ? it->second : 0.0;
 }
 
 #pragma mark - Hit testing
@@ -704,11 +708,11 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         cancel(self.fillColorAnimator);
         self.fillColorAnimator = nil;
 
-        BOOL animates = [self animatesFillColorFromState:self.previousState toState:state] &&
-            ![[self fillColorForControlStates:self.previousState] isEqual:[self fillColorForControlStates:state]];
-
-        if (animates) {
-            self.fillColorAnimator = set_color(@[self], 0.3, UPControlElementFill, self.previousState, state,
+        UIColor *colorForState = [self fillColorForControlStates:state];
+        CFTimeInterval duration = [self fillColorAnimationDuration:self.previousState toState:state];
+        BOOL colorsDiffer = ![self.fillPathView.fillColor isEqual:colorForState];
+        if (duration > UPTickerInterval && colorsDiffer) {
+            self.fillColorAnimator = set_color(@[self], duration, UPControlElementFill, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.fillColorAnimator = nil;
                 }
@@ -716,7 +720,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
             [self.fillColorAnimator start];
         }
         else {
-            self.fillPathView.fillColor = [self fillColorForControlStates:state];
+            self.fillPathView.fillColor = colorForState;
         }
     }
     if (self.strokePathView) {
@@ -727,11 +731,11 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         cancel(self.strokeColorAnimator);
         self.strokeColorAnimator = nil;
 
-        BOOL animates = [self animatesFillColorFromState:self.previousState toState:state] &&
-            ![[self strokeColorForControlStates:self.previousState] isEqual:[self strokeColorForControlStates:state]];
-
-        if (animates) {
-            self.strokeColorAnimator = set_color(@[self], 0.3, UPControlElementStroke, self.previousState, state,
+        UIColor *colorForState = [self strokeColorForControlStates:state];
+        CFTimeInterval duration = [self strokeColorAnimationDuration:self.previousState toState:state];
+        BOOL colorsDiffer = ![self.strokePathView.fillColor isEqual:colorForState];
+        if (duration > UPTickerInterval && colorsDiffer) {
+            self.strokeColorAnimator = set_color(@[self], duration, UPControlElementStroke, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.strokeColorAnimator = nil;
                 }
@@ -739,7 +743,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
             [self.strokeColorAnimator start];
         }
         else {
-            self.strokePathView.fillColor = [self strokeColorForControlStates:state];
+            self.strokePathView.fillColor = colorForState;
         }
     }
     if (self.contentPathView) {
@@ -750,11 +754,11 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         cancel(self.contentColorAnimator);
         self.contentColorAnimator = nil;
 
-        BOOL animates = [self animatesFillColorFromState:self.previousState toState:state] &&
-            ![[self contentColorForControlStates:self.previousState] isEqual:[self contentColorForControlStates:state]];
-
-        if (animates) {
-            self.contentColorAnimator = set_color(@[self], 0.3, UPControlElementContent, self.previousState, state,
+        UIColor *colorForState = [self contentColorForControlStates:state];
+        CFTimeInterval duration = [self contentColorAnimationDuration:self.previousState toState:state];
+        BOOL colorsDiffer = ![self.contentPathView.fillColor isEqual:colorForState];
+        if (duration > UPTickerInterval && colorsDiffer) {
+            self.contentColorAnimator = set_color(@[self], duration, UPControlElementContent, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.strokeColorAnimator = nil;
                 }
@@ -762,7 +766,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
             [self.strokeColorAnimator start];
         }
         else {
-            self.contentPathView.fillColor = [self contentColorForControlStates:state];;
+            self.contentPathView.fillColor = colorForState;
         }
     }
     
