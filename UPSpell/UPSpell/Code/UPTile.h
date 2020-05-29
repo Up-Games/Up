@@ -32,7 +32,7 @@ public:
         return scores[k];
     }
 
-    Tile() {}
+    constexpr Tile() {}
     Tile(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {}
 
     static Tile sentinel() { return Tile(SentinelGlyph, 0); }
@@ -45,19 +45,14 @@ public:
     template <bool B = true> bool is_sentinel() const { return (glyph() == SentinelGlyph) == B; }
 
     UPTileView *view() const { return m_view; }
-    void set_view(UPTileView * view) { m_view = view; }
+    void set_view(UPTileView *view) { m_view = view; }
     template <bool B = true> bool has_view() const { return (m_view != nil) == B; }
-
-    UPTileView *ghosted_view() const { return m_ghosted_view; }
-    void set_ghosted_view(UPTileView *ghosted_view) { m_ghosted_view = ghosted_view; }
-    template <bool B = true> bool has_ghosted_view() const { return (m_ghosted_view != nil) == B; }
 
 private:
     char32_t m_glyph = 0;
     int m_multiplier = 1;
     
     __weak UPTileView *m_view = nullptr;
-    __weak UPTileView *m_ghosted_view = nullptr;
 };
 
 }  // namespace UP

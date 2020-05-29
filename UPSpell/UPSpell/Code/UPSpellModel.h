@@ -18,6 +18,25 @@
 
 namespace UP {
 
+class GameTile {
+public:
+    constexpr GameTile() {}
+    GameTile(const Tile &tile, const TilePosition &player_tray_position, const TilePosition &game_position) {}
+
+    Tile tile() const { return m_tile; }
+    TilePosition player_tray_position() const { return m_player_tray_position; }
+    TilePosition game_position() const { return m_game_position; }
+    
+    bool in_player_tray() const { return game_position().tray() == TileTray::Player; }
+    bool in_word_tray() const { return game_position().tray() == TileTray::Word; }
+
+private:
+    Tile m_tile;
+    TilePosition m_player_tray_position;
+    TilePosition m_game_position;
+};
+
+using GameTileArray = std::array<GameTile, TileCount>;
 using TileArray = std::array<Tile, TileCount>;
 using MarkedArray = std::array<bool, TileCount>;
 
@@ -67,23 +86,23 @@ public:
     class State {
     public:
         State() {}
-        State(const Action &action, const TileArray &player_tray, const TileArray &word_tray, int game_score) :
-            m_action(action), m_player_tray(player_tray), m_word_tray(word_tray), m_game_score(game_score) {}
+        State(const Action &action, const GameTileArray &game_tiles, int game_score) :
+            m_action(action), m_game_tiles(game_tiles), m_game_score(game_score) {}
 
         Action action() const { return m_action; }
-        const TileArray &player_tray() { return m_player_tray; }
-        const TileArray &word_tray() { return m_word_tray; }
+        const GameTileArray &game_tiles() { return m_game_tiles; }
         int game_score() const { return m_game_score; }
 
     private:
         Action m_action;
-        TileArray m_player_tray;
-        TileArray m_word_tray;
+        GameTileArray m_game_tiles;
         int m_game_score = 0;
     };
 
     SpellModel() { apply_init(Action(Opcode::INIT)); }
     SpellModel(const GameCode &game_code) : m_game_code(game_code), m_tile_sequence(game_code) { apply_init(Action(Opcode::INIT)); }
+
+    const GameTileArray &game_tiles() const { return m_game_tiles; }
 
     const TileArray &player_tray() const { return m_player_tray; }
     TileArray &player_tray() { return m_player_tray; }
@@ -132,15 +151,18 @@ private:
     std::vector<State> m_states;
 
     TileSequence m_tile_sequence;
-    TileArray m_player_tray;
-    MarkedArray m_player_marked;
+    GameTileArray m_game_tiles;
 
-    TileArray m_word_tray;
     std::u32string m_word_string;
     int m_word_score = 0;
     bool m_word_in_lexicon = false;
     
     int m_game_score = 0;
+
+    // remove me
+    TileArray m_player_tray;
+    MarkedArray m_player_marked;
+    TileArray m_word_tray;
 };
 
 std::string tile_tray_description(const TileArray &);

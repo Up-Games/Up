@@ -192,7 +192,7 @@ const SpellModel::State &SpellModel::apply(const Action &action)
             break;
     }
 
-    return m_states.emplace_back(action, player_tray(), word_tray(), game_score());
+    return m_states.emplace_back(action, game_tiles(), game_score());
 }
 
 void SpellModel::apply_init(const Action &action)
