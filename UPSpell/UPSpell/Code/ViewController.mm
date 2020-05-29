@@ -22,6 +22,8 @@
 using Action = UP::SpellModel::Action;
 using Opcode = UP::SpellModel::Opcode;
 using TileIndex = UP::TileIndex;
+using TilePosition = UP::TilePosition;
+using TileTray = UP::TileTray;
 
 using UP::GameCode;
 using UP::Lexicon;
@@ -68,7 +70,6 @@ using UP::TimeSpanning::TestLabel;
 @property (nonatomic) UIFont *gameInformationFont;
 @property (nonatomic) UIFont *gameInformationSuperscriptFont;
 @property (nonatomic) CGPoint panStartPoint;
-@property (nonatomic) CGFloat panTotalDistance;
 @property (nonatomic) CGFloat panFurthestDistance;
 @property (nonatomic) CGFloat panCurrentDistance;
 @property (nonatomic) BOOL panEverMovedUp;
@@ -112,6 +113,7 @@ using UP::TimeSpanning::TestLabel;
     [self.view addSubview:self.infinityView];
         
     self.wordTrayView = [UPControl wordTray];
+    self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
     [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.wordTrayView];
 
@@ -173,8 +175,6 @@ using UP::TimeSpanning::TestLabel;
     self.scoreLabel.textColorCategory = UPColorCategoryInformation;
     self.scoreLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.scoreLabel];
-
-    self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
 
     self.roundControlButtonClear.alpha = 0;
     [self viewOpUpdateGameControls];
@@ -369,7 +369,7 @@ using UP::TimeSpanning::TestLabel;
         [self wordTrayTapped];
     }
     else {
-        [self applyActionAdd:tileIndex];
+        [self applyActionAdd:TilePosition(TileTray::Player, tileIndex)];
     }
 }
 
@@ -390,52 +390,45 @@ using UP::TimeSpanning::TestLabel;
         case UIGestureRecognizerStateChanged: {
             SpellLayout &layout_manager = SpellLayout::instance();
             CGPoint t = [pan translationInView:tileView];
-            CGPoint center = CGPointMake(self.panStartPoint.x + t.x, self.panStartPoint.y + t.y);
-            CGRect tdr = layout_manager.tile_drag_frame();
-            if (center.x < up_rect_min_x(tdr)) {
-                CGFloat dx = up_rect_min_x(tdr) - center.x;
-                center.x = up_rect_min_x(tdr) - sqrt(dx);
-            }
-            else if (center.x > up_rect_max_x(tdr)) {
-                CGFloat dx = center.x - up_rect_max_x(tdr);
-                center.x = up_rect_max_x(tdr) + sqrt(dx);
-            }
-            if (center.y < up_rect_min_y(tdr)) {
-                CGFloat dy = up_rect_min_y(tdr) - center.y;
-                center.y = up_rect_min_y(tdr) - sqrt(dy);
-            }
-            else if (center.y > up_rect_max_y(tdr)) {
-                CGFloat dy = center.y - up_rect_max_y(tdr);
-                center.y = up_rect_max_y(tdr) + sqrt(dy);
-            }
-            
-            self.panTotalDistance += up_point_distance(tileView.center, center);
+            CGPoint newCenter = CGPointMake(self.panStartPoint.x + t.x, self.panStartPoint.y + t.y);
+            newCenter = up_point_with_exponential_barrier(newCenter, layout_manager.tile_drag_barrier_frame());
             self.panFurthestDistance = UPMaxT(CGFloat, self.panFurthestDistance, up_point_distance(CGPointZero, t));
-            self.panCurrentDistance = up_point_distance(self.panStartPoint, center);
-            
-            CGPoint v = [pan velocityInView:tileView];
-            if (!self.panEverMovedUp) {
-                self.panEverMovedUp = v.y < 0;
+            self.panCurrentDistance = up_point_distance(self.panStartPoint, newCenter);
+            self.panEverMovedUp = self.panEverMovedUp || [pan velocityInView:tileView].y < 0;
+            tileView.center = newCenter;
+            BOOL tileInsideWordTray = CGRectContainsPoint(layout_manager.word_tray_layout_frame(), newCenter);
+            if (tileInsideWordTray) {
+                LOG(General, "point inside: %@", NSStringFromCGPoint(newCenter));
             }
-            
-            tileView.center = center;
             break;
         }
         case UIGestureRecognizerStateEnded: {
+            SpellLayout &layout_manager = SpellLayout::instance();
             TileIndex tileIndex = [self playerTrayIndexOfView:tileView];
             ASSERT_IDX(tileIndex);
             CGPoint v = [pan velocityInView:tileView];
-            BOOL moved = self.panFurthestDistance >= 25;
+            BOOL pannedFar = self.panFurthestDistance >= 25;
             BOOL putBack = self.panCurrentDistance < 10;
             BOOL movingUp = v.y < -50;
-            LOG(Gestures, "pan ended: d: %.2f ; f: %.2f ; c: %.2f ; v: %.2f",
-                self.panTotalDistance, self.panFurthestDistance, self.panCurrentDistance, v.y);
-            LOG(Gestures, "   moved:     %s", moved ? "Y" : "N");
-            LOG(Gestures, "   put back:  %s", putBack ? "Y" : "N");
-            LOG(Gestures, "   moving up: %s", movingUp ? "Y" : "N");
-            LOG(Gestures, "   ever up:   %s", self.panEverMovedUp ? "Y" : "N");
-            LOG(Gestures, "   add:       %s", ((!moved && putBack) || movingUp || !self.panEverMovedUp) ? "Y" : "N");
-            if ((!moved && putBack) || movingUp || !self.panEverMovedUp) {
+            CGFloat movingDownVelocity = UPMaxT(CGFloat, v.y, 0.0);
+            BOOL tileInsideWordTray = CGRectContainsPoint(layout_manager.word_tray_layout_frame(), tileView.center);
+            CGPoint projectedDownCenter = CGPointMake(tileView.center.x, tileView.center.y + (movingDownVelocity * 0.15));
+            BOOL projectedTileInsideWordTray = CGRectContainsPoint(layout_manager.word_tray_layout_frame(), projectedDownCenter);
+            LOG(Gestures, "pan ended: f: %.2f ; c: %.2f ; v: %.2f", self.panFurthestDistance, self.panCurrentDistance, v.y);
+            LOG(Gestures, "   center:     %@", NSStringFromCGPoint(tileView.center));
+            LOG(Gestures, "   projected:  %@", NSStringFromCGPoint(projectedDownCenter));
+            LOG(Gestures, "   panned far: %s", pannedFar ? "Y" : "N");
+            LOG(Gestures, "   put back:   %s", putBack ? "Y" : "N");
+            LOG(Gestures, "   moving up:  %s", movingUp ? "Y" : "N");
+            LOG(Gestures, "   ever up:    %s", self.panEverMovedUp ? "Y" : "N");
+            LOG(Gestures, "   inside [c]: %s", tileInsideWordTray ? "Y" : "N");
+            LOG(Gestures, "   inside [p]: %s", projectedTileInsideWordTray ? "Y" : "N");
+            LOG(Gestures, "   move:       %s", projectedTileInsideWordTray ? "Y" : "N");
+            LOG(Gestures, "   add:        %s", ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) ? "Y" : "N");
+            if (projectedTileInsideWordTray) {
+            
+            }
+            else if ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) {
                 [self applyActionAdd:tileIndex];
             }
             else {
@@ -455,13 +448,13 @@ using UP::TimeSpanning::TestLabel;
 
 #pragma mark - Actions
 
-- (void)applyActionAdd:(TileIndex)tile_idx
+- (void)applyActionAdd:(TilePosition)pos
 {
     cancel(DelayLabel);
 
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, tile_idx));
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, pos));
 
     SpellLayout &layout_manager = SpellLayout::instance();
 
@@ -470,7 +463,7 @@ using UP::TimeSpanning::TestLabel;
     const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
     const size_t word_idx = self.model->word_length() - 1;
     CGPoint word_tray_center = word_tray_tile_centers[word_idx];
-    UPTileView *tileView = [self playerTrayTileViewAtIndex:tile_idx];
+    UPTileView *tileView = [self playerTrayTileViewAtIndex:pos.index()];
     [self.tileContainerView bringSubviewToFront:tileView];
     start(bloop(@[tileView], 0.4, word_tray_center, nil));
 
@@ -490,7 +483,6 @@ using UP::TimeSpanning::TestLabel;
     CGFloat dy = center.y - pointInView.y;
     CGPoint pointInSuperview = [tileView.pan locationInView:tileView.superview];
     self.panStartPoint = CGPointMake(pointInSuperview.x + dx, pointInSuperview.y + dy);
-    self.panTotalDistance = 0;
     self.panFurthestDistance = 0;
     self.panCurrentDistance = 0;
     self.panEverMovedUp = NO;

@@ -185,6 +185,28 @@ UP_STATIC_INLINE CGFloat up_ceil_to_screen_scale(CGFloat f, CGFloat scale)
     return floor(f * scale) / scale;
 }
 
+UP_STATIC_INLINE CGPoint up_point_with_exponential_barrier(CGPoint point, CGRect barrier)
+{
+    CGPoint bpoint = point;
+    if (bpoint.x < up_rect_min_x(barrier)) {
+        CGFloat dx = up_rect_min_x(barrier) - bpoint.x;
+        bpoint.x = up_rect_min_x(barrier) - sqrt(dx);
+    }
+    else if (bpoint.x > up_rect_max_x(barrier)) {
+        CGFloat dx = bpoint.x - up_rect_max_x(barrier);
+        bpoint.x = up_rect_max_x(barrier) + sqrt(dx);
+    }
+    if (bpoint.y < up_rect_min_y(barrier)) {
+        CGFloat dy = up_rect_min_y(barrier) - bpoint.y;
+        bpoint.y = up_rect_min_y(barrier) - sqrt(dy);
+    }
+    else if (bpoint.y > up_rect_max_y(barrier)) {
+        CGFloat dy = bpoint.y - up_rect_max_y(barrier);
+        bpoint.y = up_rect_max_y(barrier) + sqrt(dy);
+    }
+    return bpoint;
+}
+
 #ifdef __cplusplus
 }  // extern "C"
 #endif

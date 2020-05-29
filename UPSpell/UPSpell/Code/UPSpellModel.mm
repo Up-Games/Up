@@ -14,7 +14,7 @@
 
 namespace UP {
 
-std::string tile_tray_description(const TileTray &tile_tray)
+std::string tile_tray_description(const TileArray &tile_tray)
 {
     std::stringstream stream;
     for (const auto &tile : tile_tray) {
@@ -42,7 +42,7 @@ std::string marked_array_description(const MarkedArray &marked_array)
     return stream.str();
 }
 
-bool is_non_sentinel_filled_up_to(const TileTray &tile_tray, const TileIndex idx)
+bool is_non_sentinel_filled_up_to(const TileArray &tile_tray, const TileIndex idx)
 {
     ASSERT_WITH_MESSAGE(valid_end(idx), "idx: %ld", idx);
     
@@ -63,7 +63,7 @@ bool is_non_sentinel_filled_up_to(const TileTray &tile_tray, const TileIndex idx
     return true;
 }
 
-size_t count_non_sentinel(const TileTray &tile_tray)
+size_t count_non_sentinel(const TileArray &tile_tray)
 {
     size_t count = 0;
     for (const auto &tile : tile_tray) {
@@ -168,9 +168,11 @@ const SpellModel::State &SpellModel::apply(const Action &action)
             break;
         case Opcode::DROP:
             break;
+        case Opcode::REMOVE:
+            break;
         case Opcode::HOVER:
             break;
-        case Opcode::MOVE:
+        case Opcode::PUT:
             break;
         case Opcode::SWAP:
             break;

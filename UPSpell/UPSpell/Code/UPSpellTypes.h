@@ -27,6 +27,35 @@ bool valid_end(TileIndex idx) { return (idx <= TileCount) == B; }
 #define ASSERT_NIDX(idx) ASSERT_WITH_MESSAGE(valid<false>(idx), "Expected invalid TileIndex: %ld", (idx))
 #define ASSERT_IDX_END(idx) ASSERT_WITH_MESSAGE(valid_end(idx), "Invalid TileIndex: %ld", (idx))
 
+enum class TileTray { None, Player, Word };
+
+class TilePosition {
+public:
+    constexpr TilePosition() {}
+    TilePosition(TileTray tray, TileIndex index) : m_tray(tray), m_index(index) { /*ASSERT_IDX(m_index);*/ }
+    TileTray tray() const { return m_tray; }
+    TileIndex index() const { return m_index; }
+    
+    bool valid() const { return tray() != TileTray::None && index() != NotATileIndex; }
+    
+private:
+    TileTray m_tray = TileTray::None;
+    TileIndex m_index = NotATileIndex;
+};
+
+UP_STATIC_INLINE bool operator==(const TilePosition &a, const TilePosition &b)
+{
+    return a.tray() == b.tray() && a.index() == b.index();
+}
+
+UP_STATIC_INLINE bool operator!=(const TilePosition &a, const TilePosition &b) { return !(a == b); }
+
+template <bool B = true>
+bool valid(TilePosition pos) { return pos.valid() == B; }
+
+#define ASSERT_POS(pos) ASSERT_WITH_MESSAGE(valid(pos), "Invalid TilePosition: %d:%ld", ((int)pos.tray(), pos.index()))
+//#define ASSERT_NIDX(idx) ASSERT_WITH_MESSAGE(valid<false>(idx), "Expected invalid TileIndex: %ld", (idx))
+
 }  // namespace UP
 
 #endif  // __cplusplus
