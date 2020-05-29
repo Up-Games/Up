@@ -26,13 +26,12 @@ public:
     enum class Opcode: uint8_t {
         NOP,    // no-op
         INIT,   // create the initial game state
-        ADD,    // moving it from the player tray to the end of the word tray, usually by tapping it
+        ADD,    // move a player tray to the word tray
+        REMOVE, // remove a tile from the word tray, tightening up the remaining tiles (if any)
         PICK,   // drag a tile to pick it up
-        DROP,   // drop a picked-up tile, leaving it where it was
-        REMOVE, // remove a tile from a word tray position, tightening up the remaining tiles (if any)
         HOVER,  // float above a position where a tile could be moved
-        PUT,    // put a picked-up tile down in a new position
-        SWAP,   // swap positions of a picked-up tile and another tile
+        DROP,   // drop a picked-up tile, leaving it where it was
+        SWAP,   // swap positions of two tiles
         SUBMIT, // accept submission of tiles in the word tray to score points
         REJECT, // reject submission of tiles in the word tray to score points
         CLEAR,  // return the tiles in the word to their positions in the player tray

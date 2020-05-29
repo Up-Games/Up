@@ -384,7 +384,7 @@ using UP::TimeSpanning::TestLabel;
         case UIGestureRecognizerStateBegan: {
             TileIndex tileIndex = [self playerTrayIndexOfView:tileView];
             ASSERT_IDX(tileIndex);
-            [self applyActionPick:tileIndex];
+            [self applyActionPick:TilePosition(TileTray::Player, tileIndex)];
             break;
         }
         case UIGestureRecognizerStateChanged: {
@@ -429,10 +429,10 @@ using UP::TimeSpanning::TestLabel;
             
             }
             else if ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) {
-                [self applyActionAdd:tileIndex];
+                [self applyActionAdd:TilePosition(TileTray::Player, tileIndex)];
             }
             else {
-                [self applyActionDrop:tileIndex];
+                [self applyActionDrop:TilePosition(TileTray::Player, tileIndex)];
             }
             break;
         }
@@ -440,7 +440,7 @@ using UP::TimeSpanning::TestLabel;
         case UIGestureRecognizerStateFailed: {
             TileIndex tileIndex = [self playerTrayIndexOfView:tileView];
             ASSERT_IDX(tileIndex);
-            [self applyActionDrop:tileIndex];
+            [self applyActionDrop:TilePosition(TileTray::Player, tileIndex)];
             break;
         }
     }    
@@ -471,11 +471,11 @@ using UP::TimeSpanning::TestLabel;
     [self viewOpUpdateGameControls];
 }
 
-- (void)applyActionPick:(TileIndex)tile_idx
+- (void)applyActionPick:(TilePosition)pos
 {
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::PICK, tile_idx));
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::PICK, pos));
 
-    UPTileView *tileView = [self playerTrayTileViewAtIndex:tile_idx];
+    UPTileView *tileView = [self playerTrayTileViewAtIndex:pos.index()];
     [self.tileContainerView bringSubviewToFront:tileView];
     CGPoint pointInView = [tileView.pan locationInView:tileView];
     CGPoint center = up_rect_center(tileView.bounds);
@@ -489,14 +489,14 @@ using UP::TimeSpanning::TestLabel;
     tileView.highlighted = YES;
 }
 
-- (void)applyActionDrop:(TileIndex)tile_idx
+- (void)applyActionDrop:(TilePosition)pos
 {
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DROP, tile_idx));
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DROP, pos));
 
     SpellLayout &layout_manager = SpellLayout::instance();
-    UPTileView *tileView = [self playerTrayTileViewAtIndex:tile_idx];
+    UPTileView *tileView = [self playerTrayTileViewAtIndex:pos.index()];
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
-    CGPoint tile_center = player_tray_tile_centers[tile_idx];
+    CGPoint tile_center = player_tray_tile_centers[pos.index()];
     start(bloop(@[tileView], 0.4, tile_center, nil));
     
     tileView.highlighted = NO;

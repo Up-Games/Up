@@ -164,15 +164,13 @@ const SpellModel::State &SpellModel::apply(const Action &action)
         case Opcode::ADD:
             apply_tap(action);
             break;
-        case Opcode::PICK:
-            break;
-        case Opcode::DROP:
-            break;
         case Opcode::REMOVE:
+            break;
+        case Opcode::PICK:
             break;
         case Opcode::HOVER:
             break;
-        case Opcode::PUT:
+        case Opcode::DROP:
             break;
         case Opcode::SWAP:
             break;
@@ -200,8 +198,8 @@ const SpellModel::State &SpellModel::apply(const Action &action)
 void SpellModel::apply_init(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::INIT);
-    ASSERT(action.idx1() == NotATileIndex);
-    ASSERT(action.idx2() == NotATileIndex);
+    ASSERT_NPOS(action.pos1());
+    ASSERT_NPOS(action.pos1());
     ASSERT(is_sentinel_filled(player_tray()));
     ASSERT(is_sentinel_filled(word_tray()));
 
@@ -218,17 +216,17 @@ void SpellModel::apply_tap(const Action &action)
     ASSERT(action.opcode() == Opcode::ADD);
     ASSERT(is_sentinel_filled<false>(player_tray()));
     ASSERT(is_non_sentinel_filled_up_to(word_tray(), word_length()));
-    ASSERT_IDX(action.idx1());
-    ASSERT_NIDX(action.idx2());
-    ASSERT_WITH_MESSAGE(is_marked<false>(player_marked(), action.idx1()), "idx: %ld ; marked: %s",
-        action.idx1(), marked_array_description(player_marked()).c_str());
+    ASSERT_POS(action.pos1());
+    ASSERT_NPOS(action.pos2());
+    ASSERT_WITH_MESSAGE(is_marked<false>(player_marked(), action.pos1().index()), "idx: %ld ; marked: %s",
+        action.pos1().index(), marked_array_description(player_marked()).c_str());
     ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
 
     size_t in_word_length = word_length();
-    const TileIndex idx = action.idx1();
+    const TileIndex idx = action.pos1().index();
 
     const Tile &tile = m_player_tray[idx];
-    player_mark_at(action.idx1());
+    player_mark_at(idx);
     word_push_back(tile);
     word_update();
 
@@ -237,15 +235,15 @@ void SpellModel::apply_tap(const Action &action)
     ASSERT(in_word_length + 1 == out_word_length);
     ASSERT(is_sentinel_filled<false>(player_tray()));
     ASSERT(is_non_sentinel_filled_up_to(word_tray(), word_length()));
-    ASSERT(is_marked(player_marked(), action.idx1()));
+    ASSERT(is_marked(player_marked(), idx));
     ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
 }
 
 void SpellModel::apply_submit(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::SUBMIT);
-    ASSERT_NIDX(action.idx1());
-    ASSERT_NIDX(action.idx2());
+    ASSERT_NPOS(action.pos1());
+    ASSERT_NPOS(action.pos2());
     ASSERT(is_non_sentinel_filled_up_to(word_tray(), word_length()));
     ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
     ASSERT(word_length() > 0);
@@ -269,8 +267,8 @@ void SpellModel::apply_submit(const Action &action)
 void SpellModel::apply_reject(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::REJECT);
-    ASSERT_NIDX(action.idx1());
-    ASSERT_NIDX(action.idx2());
+    ASSERT_NPOS(action.pos1());
+    ASSERT_NPOS(action.pos2());
     ASSERT(is_non_sentinel_filled_up_to(word_tray(), word_length()));
     ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
     ASSERT(!word_in_lexicon());
@@ -281,8 +279,8 @@ void SpellModel::apply_reject(const Action &action)
 void SpellModel::apply_clear(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::CLEAR);
-    ASSERT_NIDX(action.idx1());
-    ASSERT_NIDX(action.idx2());
+    ASSERT_NPOS(action.pos1());
+    ASSERT_NPOS(action.pos2());
     ASSERT(is_non_sentinel_filled_up_to(word_tray(), word_length()));
     ASSERT(word_length() > 0);
     ASSERT(count_marked<false>(player_marked()) + word_length() == TileCount);
@@ -303,8 +301,8 @@ void SpellModel::apply_clear(const Action &action)
 void SpellModel::apply_dump(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::DUMP);
-    ASSERT_NIDX(action.idx1());
-    ASSERT_NIDX(action.idx2());
+    ASSERT_NPOS(action.pos1());
+    ASSERT_NPOS(action.pos2());
     ASSERT(word_length() == 0);
     ASSERT(!word_in_lexicon());
     ASSERT(word_score() == 0);

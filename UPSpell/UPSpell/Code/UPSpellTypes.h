@@ -43,6 +43,20 @@ private:
     TileIndex m_index = NotATileIndex;
 };
 
+UP_STATIC_INLINE const char *cstr_for(TileTray tray)
+{
+    switch (tray) {
+        case TileTray::None:
+            return "none";
+        case TileTray::Player:
+            return "player";
+        case TileTray::Word:
+            return "word";
+    }
+    ASSERT_NOT_REACHED();
+    return "?";
+}
+
 UP_STATIC_INLINE bool operator==(const TilePosition &a, const TilePosition &b)
 {
     return a.tray() == b.tray() && a.index() == b.index();
@@ -53,8 +67,8 @@ UP_STATIC_INLINE bool operator!=(const TilePosition &a, const TilePosition &b) {
 template <bool B = true>
 bool valid(TilePosition pos) { return pos.valid() == B; }
 
-#define ASSERT_POS(pos) ASSERT_WITH_MESSAGE(valid(pos), "Invalid TilePosition: %d:%ld", ((int)pos.tray(), pos.index()))
-//#define ASSERT_NIDX(idx) ASSERT_WITH_MESSAGE(valid<false>(idx), "Expected invalid TileIndex: %ld", (idx))
+#define ASSERT_POS(pos) ASSERT_WITH_MESSAGE(valid(pos), "Invalid TilePosition: %s:%ld", cstr_for(pos.tray()), pos.index())
+#define ASSERT_NPOS(pos) ASSERT_WITH_MESSAGE(valid<false>(pos), "Expected invalid TilePosition: %s:%ld", cstr_for(pos.tray()), pos.index())
 
 }  // namespace UP
 
