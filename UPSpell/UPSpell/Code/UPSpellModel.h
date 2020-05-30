@@ -48,8 +48,8 @@ public:
     TileTray tray() const { return m_tray; }
     TileIndex index() const { return m_index; }
     
-    TilePosition incremented() const { ASSERT_IDX(m_index); return TilePosition(m_tray, m_index + 1); }
-    TilePosition decremented() const { ASSERT_IDX(m_index); return TilePosition(m_tray, m_index + 1); }
+    TilePosition incremented() const { ASSERT_IDX(m_index + 1); return TilePosition(m_tray, m_index + 1); }
+    TilePosition decremented() const { ASSERT_IDX(m_index - 1); return TilePosition(m_tray, m_index - 1); }
 
     template <bool B = true> bool in_player_tray() const { return (tray() == TileTray::Player) == B; }
     template <bool B = true> bool in_word_tray() const { return (tray() == TileTray::Word) == B; }
@@ -127,15 +127,16 @@ public:
         INIT,   // create the initial game state
         ADD,    // move a player tray to the word tray
         REMOVE, // remove a tile from the word tray, tightening up the remaining tiles (if any)
+        MOVE,   // move a word tray tile to a new word tray position
         PICK,   // drag a tile to pick it up
         HOVER,  // float above a position where a tile could be moved
+        NOVER,  // cancel a previous hover, tightening up the remaining tiles (if any)
         DROP,   // drop a picked-up tile, leaving it where it was
-        SWAP,   // swap positions of two tiles
         SUBMIT, // accept submission of tiles in the word tray to score points
         REJECT, // reject submission of tiles in the word tray to score points
         CLEAR,  // return the tiles in the word to their positions in the player tray
         DUMP,   // dump player tray tiles and replace them with a new set of tiles
-        OVER,   // game over
+        GAME,   // game over
         QUIT    // quit the game early
     };
 
@@ -188,14 +189,20 @@ public:
     const Tile &find_tile(const UPTileView *) const;
     Tile &find_tile(const UPTileView *);
 
-    UPTileView *view_at_position(const TilePosition &pos);
+    const Tile &find_tile(const TilePosition &) const;
+    Tile &find_tile(const TilePosition &);
+
+    UPTileView *find_view(const TilePosition &pos);
+
     TileIndex player_tray_index(const UPTileView *);
+    TileIndex player_tray_index(const TilePosition &);
 
     NSArray *all_views() const;
     NSArray *player_tray_views() const;
     NSArray *word_tray_views() const;
 
     const std::vector<State> &states() const { return m_states; }
+    const State &back_state() const;
 
     const std::u32string &word_string() const { return m_word_string; }
     size_t word_length() const { return m_word_string.length(); }
@@ -214,21 +221,31 @@ private:
     void clear_and_sentinelize();
     void update_word();
 
-    void append_to_word(const TilePosition &player_tray_pos);
+    void append_to_word(const TilePosition &player_pos);
     void insert_into_word(const TilePosition &player_pos, const TilePosition &word_pos);
+    void add_to_word(const TilePosition &player_pos, const TilePosition &word_pos);
     void remove_from_word(const TilePosition &word_pos);
 
     bool is_sentinel_filled() const;
     template <bool B> bool is_sentinel_filled() const { return is_sentinel_filled() == B; }
     bool is_word_tray_positioned_up_to(TileIndex) const;
+    bool not_word_tray_positioned_after(TileIndex) const;
     bool positions_valid() const;
 
     void apply_init(const Action &action);
     void apply_add(const Action &action);
+    void apply_remove(const Action &action);
+    void apply_move(const Action &action);
+    void apply_pick(const Action &action);
+    void apply_hover(const Action &action);
+    void apply_nover(const Action &action);
+    void apply_drop(const Action &action);
     void apply_submit(const Action &action);
     void apply_reject(const Action &action);
     void apply_clear(const Action &action);
     void apply_dump(const Action &action);
+    void apply_game(const Action &action);
+    void apply_quit(const Action &action);
 
     GameCode m_game_code;
     TileSequence m_tile_sequence;

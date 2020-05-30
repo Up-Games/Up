@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <limits>
 #import <memory>
 
 #import <CoreText/CoreText.h>
@@ -21,6 +22,7 @@
 
 using Action = UP::SpellModel::Action;
 using Opcode = UP::SpellModel::Opcode;
+using State = UP::SpellModel::State;
 using TileIndex = UP::TileIndex;
 using TilePosition = UP::TilePosition;
 using TileTray = UP::TileTray;
@@ -70,6 +72,8 @@ using UP::TimeSpanning::TestLabel;
 @property (nonatomic) UPLabel *scoreLabel;
 @property (nonatomic) UIFont *gameInformationFont;
 @property (nonatomic) UIFont *gameInformationSuperscriptFont;
+@property (nonatomic) UPTileView *pickedView;
+@property (nonatomic) TilePosition pickedPosition;
 @property (nonatomic) CGPoint panStartPoint;
 @property (nonatomic) CGFloat panFurthestDistance;
 @property (nonatomic) CGFloat panCurrentDistance;
@@ -180,6 +184,9 @@ using UP::TimeSpanning::TestLabel;
     self.roundControlButtonClear.alpha = 0;
     [self viewOpUpdateGameControls];
 
+    self.pickedView = nil;
+    self.pickedPosition = TilePosition();
+
     delay(0.2, ^{
         [self viewOpFillPlayerTray];
     });
@@ -272,6 +279,21 @@ using UP::TimeSpanning::TestLabel;
     return array;
 }
 
+- (NSArray *)wordTrayTileViewsExceptPickedView
+{
+    ASSERT(self.pickedView);
+    NSMutableArray *array = [NSMutableArray array];
+    for (const auto &tile : self.model->tiles()) {
+        if (tile.in_word_tray()) {
+            ASSERT(tile.has_view());
+            if (tile.view() != self.pickedView) {
+                [array addObject:tile.view()];
+            }
+        }
+    }
+    return array;
+}
+
 #pragma mark - Control target/action and gestures
 
 - (void)roundControlButtonPauseTapped:(id)sender
@@ -356,6 +378,7 @@ using UP::TimeSpanning::TestLabel;
             break;
         }
         case UIGestureRecognizerStateChanged: {
+            ASSERT(self.pickedView == tileView);
             SpellLayout &layout_manager = SpellLayout::instance();
             CGPoint t = [pan translationInView:tileView];
             CGPoint newCenter = CGPointMake(self.panStartPoint.x + t.x, self.panStartPoint.y + t.y);
@@ -365,12 +388,17 @@ using UP::TimeSpanning::TestLabel;
             self.panEverMovedUp = self.panEverMovedUp || [pan velocityInView:tileView].y < 0;
             tileView.center = newCenter;
             BOOL tileInsideWordTray = CGRectContainsPoint(layout_manager.word_tray_layout_frame(), newCenter);
+            Tile &tile = self.model->find_tile(tileView);
             if (tileInsideWordTray) {
-                LOG(General, "point inside: %@", NSStringFromCGPoint(newCenter));
+                [self applyActionHoverIfNeeded:tile];
+            }
+            else {
+                [self applyActionNoverIfNeeded:tile];
             }
             break;
         }
         case UIGestureRecognizerStateEnded: {
+            ASSERT(self.pickedView == tileView);
             SpellLayout &layout_manager = SpellLayout::instance();
             CGPoint v = [pan velocityInView:tileView];
             BOOL pannedFar = self.panFurthestDistance >= 25;
@@ -392,24 +420,73 @@ using UP::TimeSpanning::TestLabel;
             LOG(Gestures, "   move:       %s", projectedTileInsideWordTray ? "Y" : "N");
             LOG(Gestures, "   add:        %s", ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) ? "Y" : "N");
             Tile &tile = self.model->find_tile(tileView);
-//            if (projectedTileInsideWordTray) {
-//
-//            }
-//            else
-            if ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) {
-                [self applyActionAdd:tile];
+            if (self.pickedPosition.in_player_tray()) {
+                if (projectedTileInsideWordTray) {
+                    [self applyActionAdd:tile];
+                }
+                else if ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) {
+                    [self applyActionAdd:tile];
+                }
+                else {
+                    [self applyActionDrop:tile];
+                }
             }
             else {
-                [self applyActionDrop:tile];
+                if (projectedTileInsideWordTray) {
+                    TilePosition hover_position = [self calculateHoverPosition:tile];
+                    if (self.pickedPosition == hover_position) {
+                        LOG(Gestures, "drop");
+                        [self applyActionDrop:tile];
+                    }
+                    else {
+                        LOG(Gestures, "move");
+                        [self applyActionMoveTile:tile toPosition:hover_position];
+                    }
+                }
+                else {
+                    LOG(Gestures, "remove");
+                    [self applyActionRemove:tile];
+                }
             }
+            self.pickedView = nil;
+            self.pickedPosition = TilePosition();
             break;
         }
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateFailed: {
-            [self applyActionDrop:self.model->find_tile(tileView)];
+            if (self.pickedView) {
+                ASSERT(self.pickedView == tileView);
+                [self applyActionDrop:self.model->find_tile(tileView)];
+                self.pickedView = nil;
+            }
             break;
         }
     }
+}
+
+- (TilePosition)calculateHoverPosition:(const Tile &)tile
+{
+    ASSERT(tile.has_view());
+    UPTileView *tileView = tile.view();
+    ASSERT(self.pickedView == tileView);
+    ASSERT_POS(self.pickedPosition);
+
+    // find the word position closest to the tile
+    size_t word_length = self.pickedPosition.in_word_tray() ? self.model->word_length() : self.model->word_length() + 1;
+    
+    SpellLayout &layout_manager = SpellLayout::instance();
+    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(word_length);
+    CGPoint center = tileView.center;
+    CGFloat min_d = std::numeric_limits<CGFloat>::max();
+    TilePosition pos;
+    for (auto it = word_tray_tile_centers.begin(); it != word_tray_tile_centers.end(); ++it) {
+        CGFloat d = up_point_distance(center, *it);
+        if (d < min_d) {
+            min_d = d;
+            pos = TilePosition(TileTray::Word, it - word_tray_tile_centers.begin());
+        }
+    }
+    return pos;
 }
 
 #pragma mark - Actions
@@ -423,15 +500,23 @@ using UP::TimeSpanning::TestLabel;
 
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, tile.position()));
+    BOOL needSlide = YES;
+    TilePosition word_pos = TilePosition(TileTray::Word, self.model->word_length());
+    const State &state = self.model->back_state();
+    if (state.action().opcode() == SpellModel::Opcode::HOVER) {
+        word_pos = state.action().pos1();
+        needSlide = NO;
+    }
+
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, tile.position(), word_pos));
 
     SpellLayout &layout_manager = SpellLayout::instance();
-
-    start(slide(AnimationLabel, wordTrayTileViews, 0.15, layout_manager.word_tray_tile_offset(), nil));
-
+    if (needSlide) {
+        start(slide(AnimationLabel, wordTrayTileViews, 0.15, layout_manager.word_tray_tile_offset(), nil));
+    }
+    
     const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
-    const size_t word_idx = self.model->word_length() - 1;
-    CGPoint word_tray_center = word_tray_tile_centers[word_idx];
+    CGPoint word_tray_center = word_tray_tile_centers[word_pos.index()];
     UPTileView *tileView = tile.view();
     [self.tileContainerView bringSubviewToFront:tileView];
     start(bloop(@[tileView], 0.4, word_tray_center, nil));
@@ -440,13 +525,62 @@ using UP::TimeSpanning::TestLabel;
     [self viewOpUpdateGameControls];
 }
 
+- (void)applyActionRemove:(const Tile &)tile
+{
+    ASSERT(tile.has_view());
+    ASSERT(self.pickedView);
+    ASSERT_POS(self.pickedPosition);
+
+    cancel(DelayLabel);
+
+    UPTileView *tileView = tile.view();
+
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::REMOVE, tile.position()));
+
+    [self viewOpSlideWordTrayViewsIntoPlace];
+
+    SpellLayout &layout_manager = SpellLayout::instance();
+    const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
+    CGPoint center = player_tray_tile_centers[self.model->player_tray_index(tileView)];
+    [self.tileContainerView bringSubviewToFront:tileView];
+    start(bloop(@[tileView], 0.4, center, nil));
+
+    tileView.highlighted = NO;
+    [self viewOpUpdateGameControls];
+}
+
+- (void)applyActionMoveTile:(const Tile &)tile toPosition:(const TilePosition &)position
+{
+    ASSERT(tile.has_view());
+    ASSERT(position.in_word_tray());
+
+    cancel(DelayLabel);
+    cancel(AnimationLabel);
+
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::MOVE, tile.position(), position));
+
+    [self viewOpSlideWordTrayViewsIntoPlace];
+
+    UPTileView *tileView = tile.view();
+    tileView.highlighted = NO;
+    [self viewOpUpdateGameControls];
+}
+
 - (void)applyActionPick:(const Tile &)tile
 {
     ASSERT(tile.has_view());
+    ASSERT(self.pickedView == nil);
+    ASSERT_NPOS(self.pickedPosition);
+
+    cancel(DelayLabel);
+
+    UPTileView *tileView = tile.view();
+    self.pickedView = tileView;
+    self.pickedPosition = tile.position();
+    [self viewOpApplyTranslationToFrame:@[self.pickedView]];
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::PICK, tile.position()));
 
-    UPTileView *tileView = tile.view();
     [self.tileContainerView bringSubviewToFront:tileView];
     CGPoint pointInView = [tileView.pan locationInView:tileView];
     CGPoint center = up_rect_center(tileView.bounds);
@@ -457,22 +591,73 @@ using UP::TimeSpanning::TestLabel;
     self.panFurthestDistance = 0;
     self.panCurrentDistance = 0;
     self.panEverMovedUp = NO;
+
     tileView.highlighted = YES;
+}
+
+- (void)applyActionHoverIfNeeded:(const Tile &)tile
+{
+    ASSERT(tile.has_view());
+    ASSERT(self.pickedView == tile.view());
+    ASSERT_POS(self.pickedPosition);
+
+    cancel(DelayLabel);
+
+    TilePosition hover_pos = [self calculateHoverPosition:tile];
+    ASSERT_POS(hover_pos);
+
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::HOVER, hover_pos));
+
+    [self viewOpHover:hover_pos];
+}
+
+- (void)applyActionNoverIfNeeded:(const Tile &)tile
+{
+    ASSERT(tile.has_view());
+    ASSERT(self.pickedView == tile.view());
+    ASSERT_POS(self.pickedPosition);
+
+    cancel(DelayLabel);
+
+    const State &state = self.model->back_state();
+    if (state.action().opcode() != SpellModel::Opcode::HOVER) {
+        return;
+    }
+
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::NOVER));
+
+    [self viewOpNover];
+    [self viewOpUpdateGameControls];
 }
 
 - (void)applyActionDrop:(const Tile &)tile
 {
     ASSERT(tile.has_view());
+    ASSERT(self.pickedView == tile.view());
+    ASSERT_POS(self.pickedPosition);
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DROP, tile.position()));
+    cancel(DelayLabel);
 
-    SpellLayout &layout_manager = SpellLayout::instance();
     UPTileView *tileView = tile.view();
-    const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
-    CGPoint tile_center = player_tray_tile_centers[self.model->player_tray_index(tileView)];
-    start(bloop(@[tileView], 0.4, tile_center, nil));
+
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DROP, self.pickedPosition));
+
+    if (self.pickedPosition.in_word_tray()) {
+        SpellLayout &layout_manager = SpellLayout::instance();
+        const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
+        CGPoint tile_center = word_tray_tile_centers[self.pickedPosition.index()];
+        start(bloop(@[tileView], 0.4, tile_center, nil));
+    }
+    else {
+        SpellLayout &layout_manager = SpellLayout::instance();
+        const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
+        CGPoint tile_center = player_tray_tile_centers[self.model->player_tray_index(tileView)];
+        start(bloop(@[tileView], 0.4, tile_center, nil));
+    }
 
     tileView.highlighted = NO;
+
+    [self viewOpUpdateGameControls];
 }
 
 - (void)applyActionClear
@@ -579,6 +764,103 @@ using UP::TimeSpanning::TestLabel;
         tileView.transform = CGAffineTransformIdentity;
         CGRect frame = CGRectOffset(tileView.frame, transform.tx, transform.ty);
         tileView.frame = frame;
+    }
+}
+
+- (void)viewOpSlideWordTrayViewsIntoPlace
+{
+    NSArray *wordTrayTileViews = [self wordTrayTileViews];
+    if (wordTrayTileViews.count == 0) {
+        return;
+    }
+
+    SpellLayout &layout_manager = SpellLayout::instance();
+    size_t word_length = self.model->word_length();
+    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(word_length);
+
+    for (UPTileView *tileView in wordTrayTileViews) {
+        const Tile &tile = self.model->find_tile(tileView);
+        TileIndex idx = tile.position().index();
+        CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
+        start(slide_to(@[tileView], 0.2, word_tray_tile_center, nil));
+    }
+}
+
+- (void)viewOpHover:(const TilePosition &)hover_pos
+{
+    NSArray *wordTrayTileViews = [self wordTrayTileViewsExceptPickedView];
+    if (wordTrayTileViews.count == 0) {
+        return;
+    }
+
+    [self viewOpApplyTranslationToFrame:wordTrayTileViews];
+
+    SpellLayout &layout_manager = SpellLayout::instance();
+    size_t word_length = self.pickedPosition.in_word_tray() ? self.model->word_length() : self.model->word_length() + 1;
+    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(word_length);
+
+    if (self.pickedPosition.in_player_tray()) {
+        for (UPTileView *tileView in wordTrayTileViews) {
+            ASSERT(tileView != self.pickedView);
+            const Tile &tile = self.model->find_tile(tileView);
+            TileIndex idx = tile.position().index();
+            CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
+            if (idx >= hover_pos.index()) {
+                word_tray_tile_center = word_tray_tile_centers[idx + 1];
+            }
+            start(slide_to(@[tileView], 0.2, word_tray_tile_center, nil));
+        }
+    }
+    else {
+        for (UPTileView *tileView in wordTrayTileViews) {
+            ASSERT(tileView != self.pickedView);
+            const Tile &tile = self.model->find_tile(tileView);
+            TileIndex idx = tile.position().index();
+            CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
+            if (idx < self.pickedPosition.index() && hover_pos.index() <= idx) {
+                word_tray_tile_center = word_tray_tile_centers[idx + 1];
+            }
+            else if (idx > self.pickedPosition.index() && hover_pos.index() >= idx) {
+                word_tray_tile_center = word_tray_tile_centers[idx - 1];
+            }
+            start(slide_to(@[tileView], 0.2, word_tray_tile_center, nil));
+        }
+    }
+}
+
+- (void)viewOpNover
+{
+    NSArray *wordTrayTileViews = [self wordTrayTileViewsExceptPickedView];
+    if (wordTrayTileViews.count == 0) {
+        return;
+    }
+
+    [self viewOpApplyTranslationToFrame:wordTrayTileViews];
+
+    SpellLayout &layout_manager = SpellLayout::instance();
+    size_t word_length = self.pickedPosition.in_word_tray() ? self.model->word_length() - 1 : self.model->word_length();
+    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(word_length);
+
+    if (self.pickedPosition.in_player_tray()) {
+        for (UPTileView *tileView in wordTrayTileViews) {
+            ASSERT(tileView != self.pickedView);
+            const Tile &tile = self.model->find_tile(tileView);
+            TileIndex idx = tile.position().index();
+            CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
+            start(slide_to(@[tileView], 0.2, word_tray_tile_center, nil));
+        }
+    }
+    else {
+        for (UPTileView *tileView in wordTrayTileViews) {
+            ASSERT(tileView != self.pickedView);
+            const Tile &tile = self.model->find_tile(tileView);
+            TileIndex idx = tile.position().index();
+            CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
+            if (idx > self.pickedPosition.index()) {
+                word_tray_tile_center = word_tray_tile_centers[idx - 1];
+            }
+            start(slide_to(@[tileView], 0.2, word_tray_tile_center, nil));
+        }
     }
 }
 

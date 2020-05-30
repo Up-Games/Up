@@ -38,7 +38,7 @@ Tile &SpellModel::find_tile(const UPTileView *view)
     return tile;
 }
 
-UPTileView *SpellModel::view_at_position(const TilePosition &pos)
+const Tile &SpellModel::find_tile(const TilePosition &pos) const
 {
     switch (pos.tray()) {
         case TileTray::None: {
@@ -46,22 +46,53 @@ UPTileView *SpellModel::view_at_position(const TilePosition &pos)
             break;
         }
         case TileTray::Player: {
-            UPTileView *view = m_tiles[pos.index()].view();
-            ASSERT(view);
-            return view;
+            return m_tiles[pos.index()];
         }
         case TileTray::Word: {
-            for (auto &tile : m_tiles) {
+            for (auto it = m_tiles.begin(); it != m_tiles.end(); ++it) {
+                const auto &tile = *it;
                 if (tile.position() == pos) {
-                    UPTileView *view = m_tiles[pos.index()].view();
-                    ASSERT(view);
-                    return view;
+                    TileIndex idx = it - m_tiles.begin();
+                    return m_tiles[idx];
                 }
             }
             ASSERT_NOT_REACHED();
-            return nullptr;
+            static Tile tile;
+            return tile;
         }
     }
+}
+
+Tile &SpellModel::find_tile(const TilePosition &pos)
+{
+    switch (pos.tray()) {
+        case TileTray::None: {
+            ASSERT_NOT_REACHED();
+            break;
+        }
+        case TileTray::Player: {
+            return m_tiles[pos.index()];
+        }
+        case TileTray::Word: {
+            for (auto it = m_tiles.begin(); it != m_tiles.end(); ++it) {
+                const auto &tile = *it;
+                if (tile.position() == pos) {
+                    TileIndex idx = it - m_tiles.begin();
+                    return m_tiles[idx];
+                }
+            }
+            ASSERT_NOT_REACHED();
+            static Tile tile;
+            return tile;
+        }
+    }
+}
+
+UPTileView *SpellModel::find_view(const TilePosition &pos)
+{
+    auto &tile = find_tile(pos);
+    ASSERT(tile.has_view());
+    return tile.view();
 }
     
 TileIndex SpellModel::player_tray_index(const UPTileView *view)
@@ -75,6 +106,29 @@ TileIndex SpellModel::player_tray_index(const UPTileView *view)
     }
     ASSERT_NOT_REACHED();
     return NotATileIndex;
+}
+
+TileIndex SpellModel::player_tray_index(const TilePosition &pos)
+{
+    switch (pos.tray()) {
+        case TileTray::None: {
+            ASSERT_NOT_REACHED();
+            break;
+        }
+        case TileTray::Player: {
+            return pos.index();
+        }
+        case TileTray::Word: {
+            for (auto it = m_tiles.begin(); it != m_tiles.end(); ++it) {
+                const auto &tile = *it;
+                if (tile.position() == pos) {
+                    return it - m_tiles.begin();
+                }
+            }
+            ASSERT_NOT_REACHED();
+            return NotATileIndex;
+        }
+    }
 }
 
 NSArray *SpellModel::all_views() const
@@ -111,6 +165,15 @@ NSArray *SpellModel::word_tray_views() const
     return array;
 }
 
+const SpellModel::State &SpellModel::back_state() const
+{
+    if (m_states.size()) {
+        return m_states.back();
+    }
+    static State state;
+    return state;
+}
+ 
 std::string SpellModel::tiles_description() const
 {
     std::stringstream stream;
@@ -222,7 +285,8 @@ void SpellModel::append_to_word(const TilePosition &player_pos)
 
 void SpellModel::insert_into_word(const TilePosition &player_pos, const TilePosition &word_pos)
 {
-    ASSERT(is_word_tray_positioned_up_to(word_pos.index()));
+    ASSERT(player_pos.in_player_tray());
+    ASSERT(word_pos.in_word_tray());
     for (auto &tile : m_tiles) {
         if (tile.in_word_tray() && tile.position().index() >= word_pos.index()) {
             // make room in word
@@ -233,9 +297,21 @@ void SpellModel::insert_into_word(const TilePosition &player_pos, const TilePosi
     tile.set_position(word_pos);
 }
 
+void SpellModel::add_to_word(const TilePosition &player_pos, const TilePosition &word_pos)
+{
+    ASSERT(player_pos.in_player_tray());
+    ASSERT(word_pos.in_word_tray());
+    if (word_pos.index() == word_length()) {
+        append_to_word(player_pos);
+    }
+    else {
+        insert_into_word(player_pos, word_pos);
+    }
+}
+
 void SpellModel::remove_from_word(const TilePosition &word_pos)
 {
-    ASSERT(is_word_tray_positioned_up_to(word_pos.index()));
+    ASSERT(word_pos.in_word_tray());
     
     for (auto it = m_tiles.begin(); it != m_tiles.end(); ++it) {
         auto &tile = *it;
@@ -244,7 +320,7 @@ void SpellModel::remove_from_word(const TilePosition &word_pos)
                 // put back
                 tile.set_position(TilePosition(TileTray::Player, it - m_tiles.begin()));
             }
-            if (tile.position().index() > word_pos.index()) {
+            else if (tile.position().index() > word_pos.index()) {
                 // close up hole in word
                 tile.set_position(tile.position().decremented());
             }
@@ -275,7 +351,21 @@ bool SpellModel::is_word_tray_positioned_up_to(TileIndex tile_idx) const
         if (idx < tile_idx) {
             ASSERT(marks[idx]);
         }
-        else {
+    }
+    return true;
+}
+
+bool SpellModel::not_word_tray_positioned_after(TileIndex tile_idx) const
+{
+    std::array<bool, TileCount> marks;
+    marks.fill(false);
+    for (auto &tile : m_tiles) {
+        if (tile.in_word_tray()) {
+            marks[tile.position().index()] = true;
+        }
+    }
+    for (size_t idx = 0; idx < TileCount; idx++) {
+        if (idx >= tile_idx) {
             ASSERT(!marks[idx]);
         }
     }
@@ -319,14 +409,22 @@ const SpellModel::State &SpellModel::apply(const Action &action)
             apply_add(action);
             break;
         case Opcode::REMOVE:
+            apply_remove(action);
+            break;
+        case Opcode::MOVE:
+            apply_move(action);
             break;
         case Opcode::PICK:
+            apply_pick(action);
             break;
         case Opcode::HOVER:
+            apply_hover(action);
+            break;
+        case Opcode::NOVER:
+            apply_nover(action);
             break;
         case Opcode::DROP:
-            break;
-        case Opcode::SWAP:
+            apply_drop(action);
             break;
         case Opcode::SUBMIT:
             apply_submit(action);
@@ -340,9 +438,11 @@ const SpellModel::State &SpellModel::apply(const Action &action)
         case Opcode::DUMP:
             apply_dump(action);
             break;
-        case Opcode::OVER:
+        case Opcode::GAME:
+            apply_game(action);
             break;
         case Opcode::QUIT:
+            apply_quit(action);
             break;
     }
 
@@ -374,14 +474,18 @@ void SpellModel::apply_add(const Action &action)
     ASSERT(is_word_tray_positioned_up_to(word_length()));
     ASSERT_POS(action.pos1());
     ASSERT(m_tiles[action.pos1().index()].in_player_tray());
-    ASSERT_NPOS(action.pos2());
+    ASSERT_POS(action.pos2());
+    ASSERT(action.pos2().in_word_tray());
     ASSERT(positions_valid());
 
 #if !ASSERT_DISABLED
     size_t in_word_length = word_length();
 #endif
 
-    append_to_word(action.pos1());
+    const TilePosition &player_pos = action.pos1();
+    const TilePosition &word_pos = action.pos2();
+
+    add_to_word(player_pos, word_pos);
     update_word();
 
 #if !ASSERT_DISABLED
@@ -392,6 +496,116 @@ void SpellModel::apply_add(const Action &action)
     ASSERT(in_word_length + 1 == out_word_length);
     ASSERT(is_sentinel_filled<false>());
     ASSERT(is_word_tray_positioned_up_to(word_length()));
+}
+
+void SpellModel::apply_remove(const Action &action)
+{
+    ASSERT(action.opcode() == Opcode::REMOVE);
+    ASSERT(is_sentinel_filled<false>());
+    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(not_word_tray_positioned_after(word_length()));
+    ASSERT_POS(action.pos1());
+    ASSERT(action.pos1().in_word_tray());
+    ASSERT_NPOS(action.pos2());
+    ASSERT(positions_valid());
+    ASSERT(is_sentinel_filled<false>());
+    ASSERT(word_length() > 0);
+    ASSERT(word_score() > 0);
+
+#if !ASSERT_DISABLED
+    size_t in_word_length = word_length();
+#endif
+
+    remove_from_word(action.pos1());
+    update_word();
+
+#if !ASSERT_DISABLED
+    size_t out_word_length = word_length();
+#endif
+
+    ASSERT(positions_valid());
+    ASSERT(in_word_length - 1 == out_word_length);
+    ASSERT(is_word_tray_positioned_up_to(word_length()));
+}
+
+void SpellModel::apply_move(const Action &action)
+{
+    ASSERT(action.opcode() == Opcode::MOVE);
+    ASSERT(is_sentinel_filled<false>());
+    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(not_word_tray_positioned_after(word_length()));
+    ASSERT_POS(action.pos1());
+    ASSERT_POS(action.pos2());
+    ASSERT(action.pos1().in_word_tray());
+    ASSERT(action.pos2().in_word_tray());
+    ASSERT(action.pos1() != action.pos2());
+    ASSERT(positions_valid());
+    ASSERT(is_sentinel_filled<false>());
+    ASSERT(word_length() > 0);
+    ASSERT(word_score() > 0);
+
+#if !ASSERT_DISABLED
+    size_t in_word_length = word_length();
+#endif
+
+    LOG(General, "pos1: %ld", action.pos1().index());
+    LOG(General, "pos2: %ld", action.pos2().index());
+
+    TilePosition player_pos(TileTray::Player, player_tray_index(action.pos1()));
+
+//    auto &tile = find_tile(action.pos1());
+    remove_from_word(action.pos1());
+    insert_into_word(player_pos, action.pos2());
+
+    update_word();
+
+#if !ASSERT_DISABLED
+    size_t out_word_length = word_length();
+#endif
+
+    ASSERT(positions_valid());
+    ASSERT(in_word_length == out_word_length);
+    ASSERT(is_word_tray_positioned_up_to(word_length()));
+}
+ 
+void SpellModel::apply_pick(const Action &action)
+{
+    ASSERT(action.opcode() == Opcode::PICK);
+    ASSERT(is_sentinel_filled<false>());
+    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT_POS(action.pos1());
+    ASSERT_NPOS(action.pos2());
+    ASSERT(positions_valid());
+
+    // otherwise, a no-op
+}
+
+void SpellModel::apply_hover(const Action &action)
+{
+    ASSERT(action.opcode() == Opcode::HOVER);
+    ASSERT(is_sentinel_filled<false>());
+    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT_POS(action.pos1());
+    ASSERT_NPOS(action.pos2());
+    ASSERT(positions_valid());
+
+    // otherwise, a no-op
+}
+
+void SpellModel::apply_nover(const Action &action)
+{
+    ASSERT(action.opcode() == Opcode::NOVER);
+    ASSERT(is_sentinel_filled<false>());
+    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT_NPOS(action.pos1());
+    ASSERT_NPOS(action.pos2());
+    ASSERT(positions_valid());
+
+    // otherwise, a no-op
+}
+
+void SpellModel::apply_drop(const Action &action)
+{
 }
 
 void SpellModel::apply_submit(const Action &action)
@@ -468,6 +682,14 @@ void SpellModel::apply_dump(const Action &action)
     ASSERT(!word_in_lexicon());
     ASSERT(word_score() == 0);
     ASSERT(positions_valid());
+}
+
+void SpellModel::apply_game(const Action &action)
+{
+}
+
+void SpellModel::apply_quit(const Action &action)
+{
 }
 
 }  // namespace UP

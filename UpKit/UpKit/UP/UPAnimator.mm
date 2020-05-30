@@ -97,7 +97,7 @@
     point:(CGPoint)point completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration
-        curve:UIViewAnimationCurveLinear animations:^{
+        curve:UIViewAnimationCurveEaseInOut animations:^{
             for (UIView *view in views) {
                 CGPoint center = up_rect_center(view.frame);
                 CGFloat dx = isnan(point.x) ? 0 : point.x - center.x;
