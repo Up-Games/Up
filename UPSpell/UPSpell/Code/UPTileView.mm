@@ -17,7 +17,7 @@
 
 using UP::ns_str;
 using UP::SpellLayout;
-using UP::Tile;
+using UP::TileModel;
 using UP::TilePaths;
 
 @interface UPTileView () <UIGestureRecognizerDelegate>

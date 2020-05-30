@@ -12,7 +12,6 @@
 #import <UpKit/UPMacros.h>
 
 #import "UPSpellModel.h"
-#import "UPSpellTypes.h"
 
 #if __cplusplus
 

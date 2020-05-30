@@ -14,7 +14,7 @@
 #import <UpKit/UPRandom.h>
 #import <UpKit/UPStringTools.h>
 
-#import "UPTile.h"
+#import "UPTileModel.h"
 
 namespace UP {
     
@@ -25,7 +25,7 @@ public:
 
     GameCode game_code() const { return m_game_code; }
     
-    Tile next() {
+    TileModel next() {
         if (m_letters.size() == 0) {
             auto &lexicon = Lexicon::instance();
             std::u32string key = lexicon.random_key(m_random);
@@ -43,7 +43,7 @@ public:
         else if (r > 24) {
             m = 2;
         }
-        return Tile(c, m);
+        return TileModel(c, m);
     }
     
 private:

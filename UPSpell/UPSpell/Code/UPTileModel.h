@@ -1,5 +1,5 @@
 //
-//  UPTile.h
+//  UPTileModel.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -10,13 +10,13 @@
 #import <UpKit/UPMacros.h>
 #import <UpKit/UPTypes.h>
 
-#import "UPSpellTypes.h"
-
 @class UPTileView;
 
 namespace UP {
 
-class Tile {
+static constexpr char32_t SentinelGlyph = 0;
+
+class TileModel {
 public:
     static int score_for(char32_t glyph) {
         static constexpr int scores[] = {
@@ -32,10 +32,10 @@ public:
         return scores[k];
     }
 
-    constexpr Tile() {}
-    Tile(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {}
+    constexpr TileModel() {}
+    TileModel(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {}
 
-    static Tile sentinel() { return Tile(SentinelGlyph, 0); }
+    static TileModel sentinel() { return TileModel(SentinelGlyph, 0); }
 
     char32_t glyph() const { return m_glyph; }
     int multiplier() const { return m_multiplier; }
@@ -44,15 +44,9 @@ public:
 
     template <bool B = true> bool is_sentinel() const { return (glyph() == SentinelGlyph) == B; }
 
-    UPTileView *view() const { return m_view; }
-    void set_view(UPTileView *view) { m_view = view; }
-    template <bool B = true> bool has_view() const { return (m_view != nil) == B; }
-
 private:
     char32_t m_glyph = 0;
     int m_multiplier = 1;
-    
-    __weak UPTileView *m_view = nullptr;
 };
 
 }  // namespace UP

@@ -7,38 +7,118 @@
 #import <UpKit/UPGameCode.h>
 #import <UpKit/UPMacros.h>
 
-#import "UPSpellTypes.h"
 #import "UPTileSequence.h"
-#import "UPTile.h"
+#import "UPTileModel.h"
+
+@class UPTileView;
 
 #if __cplusplus
 
-#import <vector>
 #import <array>
+#import <string>
+#import <vector>
 
 namespace UP {
 
-class GameTile {
+// =========================================================================================================================================
+
+using TileIndex = size_t;
+static constexpr TileIndex NotATileIndex = -1;
+static constexpr size_t TileCount = 7;
+static constexpr size_t LastTileIndex = TileCount - 1;
+
+template <bool B = true>
+bool valid(TileIndex idx) { return (idx < TileCount) == B; }
+
+template <bool B = true>
+bool valid_end(TileIndex idx) { return (idx <= TileCount) == B; }
+
+#define ASSERT_IDX(idx) ASSERT_WITH_MESSAGE(UP::valid((idx)), "Invalid TileIndex: %ld", (idx))
+#define ASSERT_NIDX(idx) ASSERT_WITH_MESSAGE(UP::valid<false>((idx)), "Expected invalid TileIndex: %ld", (idx))
+#define ASSERT_IDX_END(idx) ASSERT_WITH_MESSAGE(UP::valid_end((idx)), "Invalid TileIndex: %ld", (idx))
+
+// =========================================================================================================================================
+
+enum class TileTray { None, Player, Word };
+
+class TilePosition {
 public:
-    constexpr GameTile() {}
-    GameTile(const Tile &tile, const TilePosition &player_tray_position, const TilePosition &game_position) {}
-
-    Tile tile() const { return m_tile; }
-    TilePosition player_tray_position() const { return m_player_tray_position; }
-    TilePosition game_position() const { return m_game_position; }
+    constexpr TilePosition() {}
+    TilePosition(TileTray tray, TileIndex index) : m_tray(tray), m_index(index) { /*ASSERT_IDX(m_index);*/ }
+    TileTray tray() const { return m_tray; }
+    TileIndex index() const { return m_index; }
     
-    bool in_player_tray() const { return game_position().tray() == TileTray::Player; }
-    bool in_word_tray() const { return game_position().tray() == TileTray::Word; }
+    TilePosition incremented() const { ASSERT_IDX(m_index); return TilePosition(m_tray, m_index + 1); }
+    TilePosition decremented() const { ASSERT_IDX(m_index); return TilePosition(m_tray, m_index + 1); }
 
+    template <bool B = true> bool in_player_tray() const { return (tray() == TileTray::Player) == B; }
+    template <bool B = true> bool in_word_tray() const { return (tray() == TileTray::Word) == B; }
+
+    bool valid() const { return tray() != TileTray::None && index() != NotATileIndex; }
+    
 private:
-    Tile m_tile;
-    TilePosition m_player_tray_position;
-    TilePosition m_game_position;
+    TileTray m_tray = TileTray::None;
+    TileIndex m_index = NotATileIndex;
 };
 
-using GameTileArray = std::array<GameTile, TileCount>;
+UP_STATIC_INLINE const char *cstr_for(TileTray tray)
+{
+    switch (tray) {
+        case TileTray::None:
+            return "none";
+        case TileTray::Player:
+            return "player";
+        case TileTray::Word:
+            return "word";
+    }
+    ASSERT_NOT_REACHED();
+    return "?";
+}
+
+UP_STATIC_INLINE bool operator==(const TilePosition &a, const TilePosition &b)
+{
+    return a.tray() == b.tray() && a.index() == b.index();
+}
+
+UP_STATIC_INLINE bool operator!=(const TilePosition &a, const TilePosition &b) { return !(a == b); }
+
+template <bool B = true>
+bool valid(TilePosition pos) { return pos.valid() == B; }
+
+#define ASSERT_POS(pos) ASSERT_WITH_MESSAGE(valid(pos), "Invalid TilePosition: %s:%ld", cstr_for(pos.tray()), pos.index())
+#define ASSERT_NPOS(pos) ASSERT_WITH_MESSAGE(valid<false>(pos), "Expected invalid TilePosition: %s:%ld", cstr_for(pos.tray()), pos.index())
+
+// =========================================================================================================================================
+
+class Tile {
+public:
+    constexpr Tile() {}
+    Tile(const TileModel &model, const TilePosition &position, UPTileView *view = nullptr) :
+        m_model(model), m_position(position), m_view(view) {}
+
+    TileModel model() const { return m_model; }
+    void set_model(const TileModel &model) { m_model = model; }
+    
+    TilePosition position() const { return m_position; }
+    void set_position(const TilePosition &position) { m_position = position; }
+    
+    template <bool B = true> bool in_player_tray() const { return position().in_player_tray<B>(); }
+    template <bool B = true> bool in_word_tray() const { return position().in_word_tray<B>(); }
+
+    UPTileView *view() const { return m_view; }
+    void set_view(UPTileView *view) { m_view = view; }
+    void clear_view() { m_view = nullptr; }
+    template <bool B = true> bool has_view() const { return (m_view != nil) == B; }
+
+private:
+    TileModel m_model;
+    TilePosition m_position;
+    __weak UPTileView *m_view = nullptr;
+};
+
 using TileArray = std::array<Tile, TileCount>;
-using MarkedArray = std::array<bool, TileCount>;
+
+// =========================================================================================================================================
 
 class SpellModel {
 public:
@@ -86,120 +166,84 @@ public:
     class State {
     public:
         State() {}
-        State(const Action &action, const GameTileArray &game_tiles, int game_score) :
-            m_action(action), m_game_tiles(game_tiles), m_game_score(game_score) {}
+        State(const Action &action, const TileArray &tiles, int game_score) :
+            m_action(action), m_tiles(tiles), m_score(game_score) {}
 
         Action action() const { return m_action; }
-        const GameTileArray &game_tiles() { return m_game_tiles; }
-        int game_score() const { return m_game_score; }
+        const TileArray &tiles() { return m_tiles; }
+        int score() const { return m_score; }
 
     private:
         Action m_action;
-        GameTileArray m_game_tiles;
-        int m_game_score = 0;
+        TileArray m_tiles;
+        int m_score = 0;
     };
 
     SpellModel() { apply_init(Action(Opcode::INIT)); }
     SpellModel(const GameCode &game_code) : m_game_code(game_code), m_tile_sequence(game_code) { apply_init(Action(Opcode::INIT)); }
 
-    const GameTileArray &game_tiles() const { return m_game_tiles; }
+    const TileArray &tiles() const { return m_tiles; }
+    TileArray &tiles() { return m_tiles; }
 
-    const TileArray &player_tray() const { return m_player_tray; }
-    TileArray &player_tray() { return m_player_tray; }
-    const MarkedArray &player_marked() const { return m_player_marked; }
-    const TileArray &word_tray() const { return m_word_tray; }
-    TileArray &word_tray() { return m_word_tray; }
+    const Tile &find_tile(const UPTileView *) const;
+    Tile &find_tile(const UPTileView *);
+
+    UPTileView *view_at_position(const TilePosition &pos);
+    TileIndex player_tray_index(const UPTileView *);
+
+    NSArray *all_views() const;
+    NSArray *player_tray_views() const;
+    NSArray *word_tray_views() const;
+
     const std::vector<State> &states() const { return m_states; }
-
-    TileIndex player_tray_index(const UPTileView *) const;
-    TileIndex word_tray_index(const UPTileView *) const;
 
     const std::u32string &word_string() const { return m_word_string; }
     size_t word_length() const { return m_word_string.length(); }
     int word_score() const { return m_word_score; }
     bool word_in_lexicon() const { return m_word_in_lexicon; }
 
-    int game_score() const { return m_game_score; }
+    int score() const { return m_score; }
 
     const State &apply(const Action &action);
 
 private:
-    void player_mark_at(TileIndex idx) { ASSERT_IDX(idx); m_player_marked[idx] = true; }
-    void player_unmark_at(TileIndex idx) { ASSERT_IDX(idx); m_player_marked[idx] = false; }
-    void player_mark_all() { m_player_marked.fill(true); }
-    void player_unmark_all() { m_player_marked.fill(false); }
-    size_t player_count_marked() const;
-    void player_sentinelize_marked();
-    void player_fill();
-    void player_clear_tiles();
+    std::string tiles_description() const;
+    void fill_player_tray();
+    void clear_word_tray();
+    void clear_and_sentinelize_word_tray();
+    void clear_and_sentinelize();
+    void update_word();
 
-    void word_insert_at(const Tile &, TileIndex);
-    void word_remove_at(const Tile &, TileIndex);
-    void word_push_back(const Tile &tile) { ASSERT_IDX(word_length()); m_word_tray[word_length()] = tile; }
-    void word_clear() { m_word_tray.fill(Tile::sentinel()); }
-    void word_update();
-    void word_submit();
+    void append_to_word(const TilePosition &player_tray_pos);
+    void insert_into_word(const TilePosition &player_pos, const TilePosition &word_pos);
+    void remove_from_word(const TilePosition &word_pos);
+
+    bool is_sentinel_filled() const;
+    template <bool B> bool is_sentinel_filled() const { return is_sentinel_filled() == B; }
+    bool is_word_tray_positioned_up_to(TileIndex) const;
+    bool positions_valid() const;
 
     void apply_init(const Action &action);
-    void apply_tap(const Action &action);
+    void apply_add(const Action &action);
     void apply_submit(const Action &action);
     void apply_reject(const Action &action);
     void apply_clear(const Action &action);
     void apply_dump(const Action &action);
 
     GameCode m_game_code;
-    std::vector<State> m_states;
-
     TileSequence m_tile_sequence;
-    GameTileArray m_game_tiles;
+    TileArray m_tiles;
+    std::vector<State> m_states;
 
     std::u32string m_word_string;
     int m_word_score = 0;
     bool m_word_in_lexicon = false;
     
-    int m_game_score = 0;
-
-    // remove me
-    TileArray m_player_tray;
-    MarkedArray m_player_marked;
-    TileArray m_word_tray;
+    int m_score = 0;
 };
 
-std::string tile_tray_description(const TileArray &);
-std::string marked_array_description(const MarkedArray &);
+// =========================================================================================================================================
 
-template <bool B = true>
-bool is_sentinel_filled(const TileArray &tile_tray)
-{
-    for (const auto &tile : tile_tray) {
-        if (tile.is_sentinel<!B>()) {
-            return false;
-        }
-    }
-    return true;
-}
-
-template <bool B = true>
-bool is_marked(const MarkedArray &marked_array, const TileIndex idx)
-{
-    ASSERT_IDX(idx);
-    return marked_array[idx] == B;
-}
-
-template <bool B = true>
-size_t count_marked(const MarkedArray &marked_array)
-{
-    size_t count = 0;
-    for (const auto &mark : marked_array) {
-        if (mark == B) {
-            count++;
-        }
-    }
-    return count;
-}
-
-size_t count_non_sentinel(const TileArray &tile_tray);
-bool is_non_sentinel_filled_up_to(const TileArray &tile_tray, const TileIndex idx);
 
 }  // namespace UP
 

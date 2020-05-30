@@ -14,7 +14,7 @@
 #import "UPSceneDelegate.h"
 #import "UPSpellModel.h"
 #import "UPSpellLayout.h"
-#import "UPTile.h"
+#import "UPTileModel.h"
 #import "UPTileView.h"
 #import "UPTilePaths.h"
 #import "ViewController.h"
@@ -31,6 +31,7 @@ using UP::Random;
 using UP::SpellLayout;
 using UP::SpellModel;
 using UP::Tile;
+using UP::TileModel;
 using UP::TileCount;
 using UP::TilePaths;
 using UP::TileSequence;
@@ -99,7 +100,7 @@ using UP::TimeSpanning::TestLabel;
     self.model = new SpellModel(game_code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
-    [UIColor setThemeHue:300];
+    [UIColor setThemeHue:190];
     SpellLayout &layout_manager = SpellLayout::create_instance();
     TilePaths::create_instance();
     
@@ -259,44 +260,16 @@ using UP::TimeSpanning::TestLabel;
 
 #pragma mark - View mapping
 
-- (NSArray *)playerTrayTileViews
-{
-    NSMutableArray *array = [NSMutableArray array];
-    for (const auto &tile : self.model->player_tray()) {
-        if (tile.view()) {
-            [array addObject:tile.view()];
-        }
-    }
-    return array;
-}
-
 - (NSArray *)wordTrayTileViews
 {
     NSMutableArray *array = [NSMutableArray array];
-    for (const auto &tile : self.model->word_tray()) {
-        if (tile.view()) {
+    for (const auto &tile : self.model->tiles()) {
+        if (tile.in_word_tray()) {
+            ASSERT(tile.has_view());
             [array addObject:tile.view()];
         }
     }
     return array;
-}
-
-- (TileIndex)playerTrayIndexOfView:(UPTileView *)view
-{
-    TileIndex idx = 0;
-    for (const auto &tile : self.model->player_tray()) {
-        if (view == tile.view()) {
-            return idx;
-        }
-        idx++;
-    }
-    return UP::NotATileIndex;
-}
-
-- (UPTileView *)playerTrayTileViewAtIndex:(TileIndex)index
-{
-    ASSERT_IDX(index);
-    return self.model->player_tray()[index].view();
 }
 
 #pragma mark - Control target/action and gestures
@@ -331,9 +304,8 @@ using UP::TimeSpanning::TestLabel;
 
 - (BOOL)beginTracking:(UPTileView *)tileView touch:(UITouch *)touch event:(UIEvent *)event
 {
-    TileIndex tileIndex = [self playerTrayIndexOfView:tileView];
-    ASSERT_IDX(tileIndex);
-    if (UP::is_marked(self.model->player_marked(), tileIndex)) {
+    const Tile &tile = self.model->find_tile(tileView);
+    if (tile.in_word_tray()) {
         tileView.highlighted = NO;
         return NO;
     }
@@ -362,14 +334,12 @@ using UP::TimeSpanning::TestLabel;
         return;
     }
     
-    TileIndex tileIndex = [self playerTrayIndexOfView:tileView];
-    ASSERT_IDX(tileIndex);
-    
-    if (UP::is_marked(self.model->player_marked(), tileIndex)) {
+    const Tile &tile = self.model->find_tile(tileView);
+    if (tile.in_word_tray()) {
         [self wordTrayTapped];
     }
     else {
-        [self applyActionAdd:TilePosition(TileTray::Player, tileIndex)];
+        [self applyActionAdd:tile];
     }
 }
 
@@ -382,9 +352,7 @@ using UP::TimeSpanning::TestLabel;
             break;
         }
         case UIGestureRecognizerStateBegan: {
-            TileIndex tileIndex = [self playerTrayIndexOfView:tileView];
-            ASSERT_IDX(tileIndex);
-            [self applyActionPick:TilePosition(TileTray::Player, tileIndex)];
+            [self applyActionPick:self.model->find_tile(tileView)];
             break;
         }
         case UIGestureRecognizerStateChanged: {
@@ -404,8 +372,6 @@ using UP::TimeSpanning::TestLabel;
         }
         case UIGestureRecognizerStateEnded: {
             SpellLayout &layout_manager = SpellLayout::instance();
-            TileIndex tileIndex = [self playerTrayIndexOfView:tileView];
-            ASSERT_IDX(tileIndex);
             CGPoint v = [pan velocityInView:tileView];
             BOOL pannedFar = self.panFurthestDistance >= 25;
             BOOL putBack = self.panCurrentDistance < 10;
@@ -425,36 +391,39 @@ using UP::TimeSpanning::TestLabel;
             LOG(Gestures, "   inside [p]: %s", projectedTileInsideWordTray ? "Y" : "N");
             LOG(Gestures, "   move:       %s", projectedTileInsideWordTray ? "Y" : "N");
             LOG(Gestures, "   add:        %s", ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) ? "Y" : "N");
-            if (projectedTileInsideWordTray) {
-            
-            }
-            else if ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) {
-                [self applyActionAdd:TilePosition(TileTray::Player, tileIndex)];
+            Tile &tile = self.model->find_tile(tileView);
+//            if (projectedTileInsideWordTray) {
+//
+//            }
+//            else
+            if ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) {
+                [self applyActionAdd:tile];
             }
             else {
-                [self applyActionDrop:TilePosition(TileTray::Player, tileIndex)];
+                [self applyActionDrop:tile];
             }
             break;
         }
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateFailed: {
-            TileIndex tileIndex = [self playerTrayIndexOfView:tileView];
-            ASSERT_IDX(tileIndex);
-            [self applyActionDrop:TilePosition(TileTray::Player, tileIndex)];
+            [self applyActionDrop:self.model->find_tile(tileView)];
             break;
         }
-    }    
+    }
 }
 
 #pragma mark - Actions
 
-- (void)applyActionAdd:(TilePosition)pos
+- (void)applyActionAdd:(const Tile &)tile
 {
+    ASSERT(tile.has_view());
+    ASSERT(tile.in_player_tray());
+
     cancel(DelayLabel);
 
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, pos));
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, tile.position()));
 
     SpellLayout &layout_manager = SpellLayout::instance();
 
@@ -463,7 +432,7 @@ using UP::TimeSpanning::TestLabel;
     const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
     const size_t word_idx = self.model->word_length() - 1;
     CGPoint word_tray_center = word_tray_tile_centers[word_idx];
-    UPTileView *tileView = [self playerTrayTileViewAtIndex:pos.index()];
+    UPTileView *tileView = tile.view();
     [self.tileContainerView bringSubviewToFront:tileView];
     start(bloop(@[tileView], 0.4, word_tray_center, nil));
 
@@ -471,11 +440,13 @@ using UP::TimeSpanning::TestLabel;
     [self viewOpUpdateGameControls];
 }
 
-- (void)applyActionPick:(TilePosition)pos
+- (void)applyActionPick:(const Tile &)tile
 {
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::PICK, pos));
+    ASSERT(tile.has_view());
 
-    UPTileView *tileView = [self playerTrayTileViewAtIndex:pos.index()];
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::PICK, tile.position()));
+
+    UPTileView *tileView = tile.view();
     [self.tileContainerView bringSubviewToFront:tileView];
     CGPoint pointInView = [tileView.pan locationInView:tileView];
     CGPoint center = up_rect_center(tileView.bounds);
@@ -489,16 +460,18 @@ using UP::TimeSpanning::TestLabel;
     tileView.highlighted = YES;
 }
 
-- (void)applyActionDrop:(TilePosition)pos
+- (void)applyActionDrop:(const Tile &)tile
 {
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DROP, pos));
+    ASSERT(tile.has_view());
+
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DROP, tile.position()));
 
     SpellLayout &layout_manager = SpellLayout::instance();
-    UPTileView *tileView = [self playerTrayTileViewAtIndex:pos.index()];
+    UPTileView *tileView = tile.view();
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
-    CGPoint tile_center = player_tray_tile_centers[pos.index()];
+    CGPoint tile_center = player_tray_tile_centers[self.model->player_tray_index(tileView)];
     start(bloop(@[tileView], 0.4, tile_center, nil));
-    
+
     tileView.highlighted = NO;
 }
 
@@ -531,8 +504,10 @@ using UP::TimeSpanning::TestLabel;
 
     [self viewOpLockUserInterface];
 
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::REJECT));
+
     // assess time penalty and shake word tray side-to-side
-    [self viewOpPenaltyForReject:[self playerTrayTileViews]];
+    [self viewOpPenaltyForReject:self.model->all_views()];
     SpellLayout &layout_manager = SpellLayout::instance();
     NSMutableArray *views = [NSMutableArray arrayWithObject:self.wordTrayView];
     [views addObjectsFromArray:[self wordTrayTileViews]];
@@ -555,21 +530,20 @@ using UP::TimeSpanning::TestLabel;
 
     [self viewOpLockUserInterface];
 
-    NSArray *playerTrayTileViews = [self playerTrayTileViews];
+    NSArray *playerTrayTileViews = self.model->player_tray_views();
+    ASSERT(playerTrayTileViews.count == TileCount);
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DUMP));
 
-    [UIView animateWithDuration:0.1 animations:^{
-        [self viewOpPenaltyForDump:playerTrayTileViews];
-    } completion:^(BOOL finished) {
-        [self viewOpDumpPlayerTray:playerTrayTileViews];
-        delay(1.65, ^{
+    [self viewOpPenaltyForDump:playerTrayTileViews];
+    [self viewOpDumpPlayerTray:playerTrayTileViews];
+    delay(1.65, ^{
+        [self viewOpFillPlayerTrayWithPostFillOp:^{
             [self viewOpPenaltyFinished];
-            [self viewOpFillPlayerTrayWithCompletion:^{
-                [self viewOpUnlockUserInterface];
-            }];
-        });
-    }];
+        } completion:^{
+            [self viewOpUnlockUserInterface];
+        }];
+    });
 }
 
 #pragma mark - View ops
@@ -595,7 +569,7 @@ using UP::TimeSpanning::TestLabel;
         }
     }
     
-    self.scoreLabel.string = [NSString stringWithFormat:@"%d", self.model->game_score()];
+    self.scoreLabel.string = [NSString stringWithFormat:@"%d", self.model->score()];
 }
 
 - (void)viewOpApplyTranslationToFrame:(NSArray *)tileViews
@@ -617,7 +591,7 @@ using UP::TimeSpanning::TestLabel;
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
     
     for (UPTileView *tileView in wordTrayTileViews) {
-        TileIndex idx = [self playerTrayIndexOfView:tileView];
+        TileIndex idx = self.model->player_tray_index(tileView);
         CGPoint player_tray_center = player_tray_tile_centers[idx];
         start(bloop(@[tileView], 0.4, player_tray_center, nil));
         [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationCurveLinear animations:^{
@@ -680,19 +654,19 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)viewOpFillPlayerTray
 {
-    [self viewOpFillPlayerTrayWithCompletion:nil];
+    [self viewOpFillPlayerTrayWithPostFillOp:nil completion:nil];
 }
 
-- (void)viewOpFillPlayerTrayWithCompletion:(void (^)(void))completion
+- (void)viewOpFillPlayerTrayWithPostFillOp:(void (^)(void))postFillOp completion:(void (^)(void))completion
 {
     SpellLayout &layout_manager = SpellLayout::instance();
     const auto &prefill_tile_frames = layout_manager.prefill_tile_frames();
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
 
     TileIndex idx = 0;
-    for (auto &tile : self.model->player_tray()) {
+    for (auto &tile : self.model->tiles()) {
         if (tile.has_view<false>()) {
-            UPTileView *tileView = [UPTileView viewWithGlyph:tile.glyph() score:tile.score() multiplier:tile.multiplier()];
+            UPTileView *tileView = [UPTileView viewWithGlyph:tile.model().glyph() score:tile.model().score() multiplier:tile.model().multiplier()];
             tile.set_view(tileView);
             tileView.gestureDelegate = self;
             tileView.frame = prefill_tile_frames[idx];
@@ -700,6 +674,10 @@ using UP::TimeSpanning::TestLabel;
             start(bloop(@[tileView], 0.3, player_tray_tile_centers[idx], nil));
         }
         idx++;
+    }
+
+    if (postFillOp) {
+        postFillOp();
     }
 
     // FIXME: make it possible to bloop views to their respective points as a collection
@@ -750,7 +728,7 @@ using UP::TimeSpanning::TestLabel;
     else {
         self.roundControlButtonTrash.alpha = 1.0;
     }
-    NSArray *playerTrayTileViews = [self playerTrayTileViews];
+    NSArray *playerTrayTileViews = self.model->all_views();
     for (UPTileView *tileView in playerTrayTileViews) {
         tileView.alpha = 1.0;
     }

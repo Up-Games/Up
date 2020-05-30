@@ -63,10 +63,9 @@
 		5D72311B246B3713006027A3 /* MalloryMPNrrw-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryMPNrrw-Bold.otf"; sourceTree = "<group>"; };
 		5D72311F246B3917006027A3 /* UIFont+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UPSpell.h"; sourceTree = "<group>"; };
 		5D723120246B3996006027A3 /* UIFont+UPSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+UPSpell.m"; sourceTree = "<group>"; };
-		5DA8E0422476128C008D3015 /* UPTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTile.h; sourceTree = "<group>"; };
+		5DA8E0422476128C008D3015 /* UPTileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTileModel.h; sourceTree = "<group>"; };
 		5DA8E0432476BF41008D3015 /* UPTileView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTileView.mm; sourceTree = "<group>"; };
 		5DA8E04524775A2E008D3015 /* UPTileSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileSequence.h; sourceTree = "<group>"; };
-		5DA8E076247D719D008D3015 /* UPSpellTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellTypes.h; sourceTree = "<group>"; };
 		5DA8E077247D723A008D3015 /* UPSpellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellModel.h; sourceTree = "<group>"; };
 		5DA8E078247D723A008D3015 /* UPSpellModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellModel.mm; sourceTree = "<group>"; };
 		5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTilePaths.mm; sourceTree = "<group>"; };
@@ -126,8 +125,7 @@
 				5DC67DF424730207009BCDBB /* UPSpellMacros.h */,
 				5DA8E077247D723A008D3015 /* UPSpellModel.h */,
 				5DA8E078247D723A008D3015 /* UPSpellModel.mm */,
-				5DA8E076247D719D008D3015 /* UPSpellTypes.h */,
-				5DA8E0422476128C008D3015 /* UPTile.h */,
+				5DA8E0422476128C008D3015 /* UPTileModel.h */,
 				5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */,
 				5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */,
 				5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */,
