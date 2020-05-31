@@ -56,6 +56,7 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 @interface UPTickingAnimator ()
 
+@property (nonatomic, readwrite) UP::Role role;
 @property (nonatomic) CFTimeInterval duration;
 @property (nonatomic) UPUnitFunction *unitFunction;
 @property (nonatomic) NSUInteger repeatCount;
@@ -63,7 +64,6 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 @property (nonatomic, copy) UPTickingAnimatorApplier applier;
 @property (nonatomic, copy) UPTickingAnimatorCompletion completion;
 
-@property (nonatomic) const char *label;
 @property (nonatomic) CFTimeInterval remainingDuration;
 @property (nonatomic) CFTimeInterval previousTick;
 @property (nonatomic) CGFloat rate;
@@ -81,34 +81,28 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 @implementation UPTickingAnimator
 
-+ (UPTickingAnimator *)animatorWithDuration:(CFTimeInterval)duration
-                            unitFunction:(UPUnitFunction *)unitFunction
-                                 applier:(UPTickingAnimatorApplier)applier
-                              completion:(UPTickingAnimatorCompletion)completion
++ (UPTickingAnimator *)animatorWithRole:(UP::Role)role duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
+    applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion
 {
-    return [self animatorWithDuration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO applier:applier completion:completion];
-}
-
-+ (UPTickingAnimator *)animatorWithDuration:(CFTimeInterval)duration
-                            unitFunction:(UPUnitFunction *)unitFunction
-                             repeatCount:(NSUInteger)repeatCount
-                                rebounds:(BOOL)rebounds
-                                 applier:(UPTickingAnimatorApplier)applier
-                              completion:(UPTickingAnimatorCompletion)completion
-{
-    return [[self alloc] initWithDuration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO
+    return [self animatorWithRole:role duration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO
         applier:applier completion:completion];
 }
 
-- (instancetype)initWithDuration:(CFTimeInterval)duration
-                    unitFunction:(UPUnitFunction *)unitFunction
-                     repeatCount:(NSUInteger)repeatCount
-                        rebounds:(BOOL)rebounds
-                         applier:(UPTickingAnimatorApplier)applier
-                      completion:(UPTickingAnimatorCompletion)completion;
++ (UPTickingAnimator *)animatorWithRole:(UP::Role)role duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
+    repeatCount:(NSUInteger)repeatCount rebounds:(BOOL)rebounds applier:(UPTickingAnimatorApplier)applier
+        completion:(UPTickingAnimatorCompletion)completion
+{
+    return [[self alloc] initWithRole:role duration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO
+        applier:applier completion:completion];
+}
+
+- (instancetype)initWithRole:(UP::Role)role duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
+    repeatCount:(NSUInteger)repeatCount rebounds:(BOOL)rebounds
+        applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion;
 {
     self = [super init];
 
+    self.role = role;
     self.duration = duration;
     self.unitFunction = unitFunction;
     self.repeatCount = repeatCount;
@@ -117,8 +111,6 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
     self.completion = completion;
     self.rate = 1.0;
     
-    self.label = UP::TimeSpanning::AnimationLabel;
-
     self.state = UIViewAnimatingStateInactive;
     self.animatingPosition = UIViewAnimatingPositionStart;
     self.remainingDuration = self.duration;
@@ -210,7 +202,7 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 - (void)startAnimationAfterDelay:(NSTimeInterval)delay
 {
-    UP::TimeSpanning::delay(UP::TimeSpanning::DelayLabel, delay, ^{
+    UP::TimeSpanning::delay(self.role, delay, ^{
         [self startAnimation];
     });
 }

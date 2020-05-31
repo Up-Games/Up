@@ -10,7 +10,7 @@
 
 @interface UPDelayedAction ()
 
-@property (nonatomic, readwrite) const char *label;
+@property (nonatomic, readwrite) UP::Role role;
 @property (nonatomic, readwrite) uint32_t serialNumber;
 
 @property (nonatomic, readwrite) UPDelayedActionState state;
@@ -24,16 +24,16 @@
 
 @implementation UPDelayedAction
 
-+ (UPDelayedAction *)delayedActionWithLabel:(const char *)label duration:(CFTimeInterval)duration block:(void (^)(void))block
++ (UPDelayedAction *)delayedAction:(const char *)role duration:(CFTimeInterval)duration block:(void (^)(void))block
 {
-    return [[self alloc] initWithLabel:label duration:duration block:block];
+    return [[self alloc] init:role duration:duration block:block];
 }
 
-- (instancetype)initWithLabel:(const char *)label duration:(CFTimeInterval)duration block:(void (^)(void))block
+- (instancetype)init:(const char *)role duration:(CFTimeInterval)duration block:(void (^)(void))block
 {
     self = [super init];
     self.state = UPDelayedActionStateNone;
-    self.label = label;
+    self.role = role;
     self.duration = duration;
     self.remainingDuration = self.duration;
     self.block = block;

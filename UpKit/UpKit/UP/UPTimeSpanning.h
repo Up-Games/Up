@@ -7,12 +7,13 @@
 
 #import <UPKit/UPControl.h>
 #import <UPKit/UPMacros.h>
+#import <UPKit/UPRole.h>
 #import <UPKit/UPSerialNumber.h>
 
 @class UPAnimator;
 
 @protocol UPTimeSpanning <NSObject>
-@property (nonatomic, readonly) const char *label;
+@property (nonatomic, readonly) UP::Role role;
 @property (nonatomic, readonly) uint32_t serialNumber;
 - (void)start;
 - (void)pause;
@@ -25,85 +26,40 @@
 namespace UP {
 namespace TimeSpanning {
 
-extern const char * const AnimationLabel;
-extern const char * const DelayLabel;
-extern const char * const TestLabel;
-
 void init();
 
-UPAnimator *bloop(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
+UPAnimator *bloop(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
     void (^completion)(UIViewAnimatingPosition));
 
-UPAnimator *fade(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
+UPAnimator *fade(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
 
-UPAnimator *shake(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+UPAnimator *shake(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition));
 
-UPAnimator *slide(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+UPAnimator *slide(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition));
 
-UPAnimator *slide_to(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point,
+UPAnimator *slide_to(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point,
     void (^completion)(UIViewAnimatingPosition));
 
-UPAnimator *spring(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+UPAnimator *spring(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition));
 
-UPAnimator *set_color(const char *label, NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
+UPAnimator *set_color(UP::Role role, NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
     UPControlState fromControlState, UPControlState toControlState, void (^completion)(UIViewAnimatingPosition));
 
-UP_STATIC_INLINE
-UPAnimator *bloop(NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position, void (^completion)(UIViewAnimatingPosition)) {
-    return bloop(AnimationLabel, views, duration, position, completion);
-}
-
-UP_STATIC_INLINE
-UPAnimator *fade(NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position, void (^completion)(UIViewAnimatingPosition)) {
-    return fade(AnimationLabel, views, duration, completion);
-}
-
-UP_STATIC_INLINE
-UPAnimator *shake(NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset, void (^completion)(UIViewAnimatingPosition)) {
-    return shake(AnimationLabel, views, duration, offset, completion);
-}
-
-UP_STATIC_INLINE
-UPAnimator *slide(NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset, void (^completion)(UIViewAnimatingPosition)) {
-    return slide(AnimationLabel, views, duration, offset, completion);
-}
-
-UP_STATIC_INLINE
-UPAnimator *slide_to(NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point, void (^completion)(UIViewAnimatingPosition)) {
-    return slide_to(AnimationLabel, views, duration, point, completion);
-}
-
-UP_STATIC_INLINE
-UPAnimator *spring(NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset, void (^completion)(UIViewAnimatingPosition)) {
-    return spring(AnimationLabel, views, duration, offset, completion);
-}
-
-UP_STATIC_INLINE
-UPAnimator *set_color(NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
-    UPControlState fromControlState, UPControlState toControlState, void (^completion)(UIViewAnimatingPosition)) {
-    return set_color(AnimationLabel, controls, duration, element, fromControlState, toControlState, completion);
-}
-
-NSObject<UPTimeSpanning> *delay(const char *label, double delay_in_seconds, void (^block)(void));
-
-UP_STATIC_INLINE
-NSObject<UPTimeSpanning> *delay(double delay_in_seconds, void (^block)(void)) {
-    return delay(DelayLabel, delay_in_seconds, block);
-}
+NSObject<UPTimeSpanning> *delay(UP::Role role, double delay_in_seconds, void (^block)(void));
 
 void cancel(NSObject<UPTimeSpanning> *);
-void cancel(const char *label);
+void cancel(UP::Role role);
 void cancel_all();
 
 void pause(NSObject<UPTimeSpanning> *);
-void pause(const char *label);
+void pause(UP::Role role);
 void pause_all();
 
 void start(NSObject<UPTimeSpanning> *);
-void start(const char *label);
+void start(UP::Role role);
 void start_all();
 
 void remove(NSObject<UPTimeSpanning> *);

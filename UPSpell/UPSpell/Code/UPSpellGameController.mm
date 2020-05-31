@@ -54,9 +54,12 @@ using UP::TimeSpanning::pause;
 using UP::TimeSpanning::start_all;
 using UP::TimeSpanning::start;
 
-using UP::TimeSpanning::AnimationLabel;
-using UP::TimeSpanning::DelayLabel;
-using UP::TimeSpanning::TestLabel;
+using UP::RoleGame;
+using UP::RoleGameDelay;
+using UP::RoleGameUI;
+using UP::RoleMode;
+using UP::RoleModeDelay;
+using UP::RoleModeUI;
 
 @interface UPSpellGameController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
@@ -119,6 +122,7 @@ using UP::TimeSpanning::TestLabel;
     [self.view addSubview:self.infinityView];
         
     self.wordTrayView = [UPControl wordTray];
+    self.wordTrayView.role = RoleGameUI;
     self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
     [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.wordTrayView];
@@ -134,18 +138,21 @@ using UP::TimeSpanning::TestLabel;
     self.tileContainerView.layer.mask = self.tileContainerClipView.shapeLayer;
 
     self.roundControlButtonPause = [UPControl roundControlButtonPause];
+    self.roundControlButtonPause.role = RoleGameUI;
     self.roundControlButtonPause.frame = layout_manager.game_controls_left_button_frame();
     self.roundControlButtonPause.chargeSize = layout_manager.game_controls_button_charge_size();
     [self.roundControlButtonPause addTarget:self action:@selector(roundControlButtonPauseTapped:) forEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.roundControlButtonPause];
 
     self.roundControlButtonTrash = [UPControl roundControlButtonTrash];
+    self.roundControlButtonTrash.role = RoleGameUI;
     self.roundControlButtonTrash.frame = layout_manager.game_controls_right_button_frame();
     self.roundControlButtonTrash.chargeSize = layout_manager.game_controls_button_charge_size();
     [self.roundControlButtonTrash addTarget:self action:@selector(roundControlButtonTrashTapped:) forEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.roundControlButtonTrash];
 
     self.roundControlButtonClear = [UPControl roundControlButtonClear];
+    self.roundControlButtonClear.role = RoleGameUI;
     self.roundControlButtonClear.frame = layout_manager.game_controls_right_button_frame();
     self.roundControlButtonClear.chargeSize = layout_manager.game_controls_button_charge_size();
     [self.roundControlButtonClear addTarget:self action:@selector(roundControlButtonClearTapped:) forEvents:UIControlEventTouchUpInside];
@@ -188,7 +195,7 @@ using UP::TimeSpanning::TestLabel;
     self.pickedView = nil;
     self.pickedPosition = TilePosition();
 
-    delay(0.2, ^{
+    delay(RoleGameDelay, 0.2, ^{
         [self viewOpFillPlayerTray];
     });
 }
@@ -494,7 +501,7 @@ using UP::TimeSpanning::TestLabel;
     ASSERT(tile.has_view());
     ASSERT(tile.in_player_tray());
 
-    cancel(DelayLabel);
+    cancel(RoleGameDelay);
 
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
 
@@ -510,14 +517,14 @@ using UP::TimeSpanning::TestLabel;
 
     SpellLayout &layout_manager = SpellLayout::instance();
     if (needSlide) {
-        start(slide(AnimationLabel, wordTrayTileViews, 0.15, layout_manager.word_tray_tile_offset(), nil));
+        start(slide(RoleGameUI, wordTrayTileViews, 0.15, layout_manager.word_tray_tile_offset(), nil));
     }
     
     const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
     CGPoint word_tray_center = word_tray_tile_centers[word_pos.index()];
     UPTileView *tileView = tile.view();
     [self.tileContainerView bringSubviewToFront:tileView];
-    start(bloop(@[tileView], 0.4, word_tray_center, nil));
+    start(bloop(RoleGameUI, @[tileView], 0.4, word_tray_center, nil));
 
     tileView.highlighted = NO;
     [self viewOpUpdateGameControls];
@@ -529,7 +536,7 @@ using UP::TimeSpanning::TestLabel;
     ASSERT(self.pickedView);
     ASSERT_POS(self.pickedPosition);
 
-    cancel(DelayLabel);
+    cancel(RoleGameDelay);
 
     UPTileView *tileView = tile.view();
 
@@ -541,7 +548,7 @@ using UP::TimeSpanning::TestLabel;
     const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
     CGPoint center = player_tray_tile_centers[self.model->player_tray_index(tileView)];
     [self.tileContainerView bringSubviewToFront:tileView];
-    start(bloop(@[tileView], 0.4, center, nil));
+    start(bloop(RoleGameUI, @[tileView], 0.4, center, nil));
 
     tileView.highlighted = NO;
     [self viewOpUpdateGameControls];
@@ -552,8 +559,8 @@ using UP::TimeSpanning::TestLabel;
     ASSERT(tile.has_view());
     ASSERT(position.in_word_tray());
 
-    cancel(DelayLabel);
-    cancel(AnimationLabel);
+    cancel(RoleGameDelay);
+    cancel(RoleGameUI);
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::MOVE, tile.position(), position));
 
@@ -570,7 +577,7 @@ using UP::TimeSpanning::TestLabel;
     ASSERT(self.pickedView == nil);
     ASSERT_NPOS(self.pickedPosition);
 
-    cancel(DelayLabel);
+    cancel(RoleGameDelay);
 
     UPTileView *tileView = tile.view();
     self.pickedView = tileView;
@@ -599,7 +606,7 @@ using UP::TimeSpanning::TestLabel;
     ASSERT(self.pickedView == tile.view());
     ASSERT_POS(self.pickedPosition);
 
-    cancel(DelayLabel);
+    cancel(RoleGameDelay);
 
     TilePosition hover_pos = [self calculateHoverPosition:tile];
     ASSERT_POS(hover_pos);
@@ -615,7 +622,7 @@ using UP::TimeSpanning::TestLabel;
     ASSERT(self.pickedView == tile.view());
     ASSERT_POS(self.pickedPosition);
 
-    cancel(DelayLabel);
+    cancel(RoleGameDelay);
 
     const State &state = self.model->back_state();
     if (state.action().opcode() != SpellModel::Opcode::HOVER) {
@@ -634,7 +641,7 @@ using UP::TimeSpanning::TestLabel;
     ASSERT(self.pickedView == tile.view());
     ASSERT_POS(self.pickedPosition);
 
-    cancel(DelayLabel);
+    cancel(RoleGameDelay);
 
     UPTileView *tileView = tile.view();
 
@@ -644,13 +651,13 @@ using UP::TimeSpanning::TestLabel;
         SpellLayout &layout_manager = SpellLayout::instance();
         const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
         CGPoint tile_center = word_tray_tile_centers[self.pickedPosition.index()];
-        start(bloop(@[tileView], 0.4, tile_center, nil));
+        start(bloop(RoleGameUI, @[tileView], 0.4, tile_center, nil));
     }
     else {
         SpellLayout &layout_manager = SpellLayout::instance();
         const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
         CGPoint tile_center = player_tray_tile_centers[self.model->player_tray_index(tileView)];
-        start(bloop(@[tileView], 0.4, tile_center, nil));
+        start(bloop(RoleGameUI, @[tileView], 0.4, tile_center, nil));
     }
 
     tileView.highlighted = NO;
@@ -660,8 +667,8 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)applyActionClear
 {
-    cancel(DelayLabel);
-    cancel(AnimationLabel);
+    cancel(RoleGameDelay);
+    cancel(RoleGameUI);
 
     [self viewOpApplyTranslationToFrame:[self wordTrayTileViews]];
     [self viewOpClearWordTray];
@@ -671,11 +678,11 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)applyActionSubmit
 {
-    cancel(DelayLabel);
+    cancel(RoleGameDelay);
 
     [self viewOpScoreWord];
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::SUBMIT));
-    delay(0.25, ^{
+    delay(RoleGameDelay, 0.25, ^{
         [self viewOpFillPlayerTray];
         [self viewOpUpdateGameControls];
     });
@@ -683,7 +690,7 @@ using UP::TimeSpanning::TestLabel;
 
 - (void)applyActionReject
 {
-    cancel(DelayLabel);
+    cancel(RoleGameDelay);
 
     [self viewOpLockUserInterface];
 
@@ -694,10 +701,10 @@ using UP::TimeSpanning::TestLabel;
     SpellLayout &layout_manager = SpellLayout::instance();
     NSMutableArray *views = [NSMutableArray arrayWithObject:self.wordTrayView];
     [views addObjectsFromArray:[self wordTrayTileViews]];
-    start(shake(views, 0.9, layout_manager.word_tray_shake_offset(), ^(UIViewAnimatingPosition) {
-        delay(0.25, ^{
+    start(shake(RoleGameUI, views, 0.9, layout_manager.word_tray_shake_offset(), ^(UIViewAnimatingPosition) {
+        delay(RoleGameDelay, 0.25, ^{
             [self viewOpPenaltyFinished];
-            delay(0.1, ^{
+            delay(RoleGameDelay, 0.1, ^{
                 [self applyActionClear];
                 [self viewOpUnlockUserInterface];
             });
@@ -709,7 +716,7 @@ using UP::TimeSpanning::TestLabel;
 {
     ASSERT(self.wordTrayTileViews.count == 0);
 
-    cancel(DelayLabel);
+    cancel(RoleGameDelay);
 
     [self viewOpLockUserInterface];
 
@@ -720,7 +727,7 @@ using UP::TimeSpanning::TestLabel;
 
     [self viewOpPenaltyForDump:playerTrayTileViews];
     [self viewOpDumpPlayerTray:playerTrayTileViews];
-    delay(1.65, ^{
+    delay(RoleGameDelay, 1.65, ^{
         [self viewOpFillPlayerTrayWithPostFillOp:^{
             [self viewOpPenaltyFinished];
         } completion:^{
@@ -780,7 +787,7 @@ using UP::TimeSpanning::TestLabel;
         const Tile &tile = self.model->find_tile(tileView);
         TileIndex idx = tile.position().index();
         CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
-        start(slide_to(@[tileView], 0.2, word_tray_tile_center, nil));
+        start(slide_to(RoleGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
     }
 }
 
@@ -806,7 +813,7 @@ using UP::TimeSpanning::TestLabel;
             if (idx >= hover_pos.index()) {
                 word_tray_tile_center = word_tray_tile_centers[idx + 1];
             }
-            start(slide_to(@[tileView], 0.2, word_tray_tile_center, nil));
+            start(slide_to(RoleGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
         }
     }
     else {
@@ -821,7 +828,7 @@ using UP::TimeSpanning::TestLabel;
             else if (idx > self.pickedPosition.index() && hover_pos.index() >= idx) {
                 word_tray_tile_center = word_tray_tile_centers[idx - 1];
             }
-            start(slide_to(@[tileView], 0.2, word_tray_tile_center, nil));
+            start(slide_to(RoleGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
         }
     }
 }
@@ -845,7 +852,7 @@ using UP::TimeSpanning::TestLabel;
             const Tile &tile = self.model->find_tile(tileView);
             TileIndex idx = tile.position().index();
             CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
-            start(slide_to(@[tileView], 0.2, word_tray_tile_center, nil));
+            start(slide_to(RoleGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
         }
     }
     else {
@@ -857,7 +864,7 @@ using UP::TimeSpanning::TestLabel;
             if (idx > self.pickedPosition.index()) {
                 word_tray_tile_center = word_tray_tile_centers[idx - 1];
             }
-            start(slide_to(@[tileView], 0.2, word_tray_tile_center, nil));
+            start(slide_to(RoleGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
         }
     }
 }
@@ -873,10 +880,10 @@ using UP::TimeSpanning::TestLabel;
     for (UPTileView *tileView in wordTrayTileViews) {
         TileIndex idx = self.model->player_tray_index(tileView);
         CGPoint player_tray_center = player_tray_tile_centers[idx];
-        start(bloop(@[tileView], 0.4, player_tray_center, nil));
-        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationCurveLinear animations:^{
-            tileView.transform = CGAffineTransformIdentity;
-        } completion:nil];
+        start(bloop(RoleGameUI, @[tileView], 0.4, player_tray_center, nil));
+//        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationCurveLinear animations:^{
+//            tileView.transform = CGAffineTransformIdentity;
+//        } completion:nil];
     }
 }
 
@@ -891,12 +898,12 @@ using UP::TimeSpanning::TestLabel;
     }
 
     CGPoint slidePoint = CGPointMake(UP::NotACoordinate, layout_manager.score_tile_center_y());
-    UPAnimator *slideAnimator = slide_to(wordTrayTileViews, 0.1, slidePoint, ^(UIViewAnimatingPosition) {
+    UPAnimator *slideAnimator = slide_to(RoleGameUI, wordTrayTileViews, 0.1, slidePoint, ^(UIViewAnimatingPosition) {
         [wordTrayTileViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     });
 
     UIOffset springOffset = UIOffsetMake(0, layout_manager.score_tile_spring_down_offset_y());
-    UPAnimator *springAnimator = spring(wordTrayTileViews, 0.13, springOffset, ^(UIViewAnimatingPosition) {
+    UPAnimator *springAnimator = spring(RoleGameUI, wordTrayTileViews, 0.13, springOffset, ^(UIViewAnimatingPosition) {
         start(slideAnimator);
     });
     
@@ -922,10 +929,10 @@ using UP::TimeSpanning::TestLabel;
         CGPoint center = tileView.center;
         CGPoint offscreenPoint = offscreen_tray_tile_centers[idx];
         UIOffset offset = UIOffsetMake(offscreenPoint.x - center.x, offscreenPoint.y - center.y);
-        UPAnimator *animator = slide(@[tileView], 1.1, offset, ^(UIViewAnimatingPosition) {
+        UPAnimator *animator = slide(RoleGameUI, @[tileView], 1.1, offset, ^(UIViewAnimatingPosition) {
             [tileView removeFromSuperview];
         });
-        delay(count * baseDelay, ^{
+        delay(RoleGameDelay, count * baseDelay, ^{
             start(animator);
         });
         count++;
@@ -948,10 +955,11 @@ using UP::TimeSpanning::TestLabel;
         if (tile.has_view<false>()) {
             UPTileView *tileView = [UPTileView viewWithGlyph:tile.model().glyph() score:tile.model().score() multiplier:tile.model().multiplier()];
             tile.set_view(tileView);
+            tileView.role = RoleGameUI;
             tileView.gestureDelegate = self;
             tileView.frame = prefill_tile_frames[idx];
             [self.tileContainerView addSubview:tileView];
-            start(bloop(@[tileView], 0.3, player_tray_tile_centers[idx], nil));
+            start(bloop(RoleGameUI, @[tileView], 0.3, player_tray_tile_centers[idx], nil));
         }
         idx++;
     }
@@ -961,7 +969,7 @@ using UP::TimeSpanning::TestLabel;
     }
 
     // FIXME: make it possible to bloop views to their respective points as a collection
-    delay(0.3, ^{
+    delay(RoleGameDelay, 0.3, ^{
         if (completion) {
             completion();
         }

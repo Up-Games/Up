@@ -8,18 +8,19 @@
 #import "UPAnimator.h"
 #import "UPBezierPathView.h"
 #import "UPGeometry.h"
+#import "UPRole.h"
 #import "UPTickingAnimator.h"
 #import "UPUnitFunction.h"
 
 @interface UPAnimator ()
-@property (nonatomic, readwrite) const char *label;
+@property (nonatomic, readwrite) UP::Role role;
 @property (nonatomic, readwrite) uint32_t serialNumber;
 @property (nonatomic) NSObject<UIViewAnimating> *inner;
 @end
 
 @implementation UPAnimator
 
-+ (UPAnimator *)bloopAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)bloopAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     position:(CGPoint)position completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
     UIViewPropertyAnimator *positionAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7 animations:^{
@@ -32,10 +33,10 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] _initWithLabel:label innerAnimator:positionAnimator];
+    return [[self alloc] _initWithRole:role innerAnimator:positionAnimator];
 }
 
-+ (UPAnimator *)fadeAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)fadeAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 {
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration curve:UIViewAnimationCurveEaseOut animations:^{
@@ -48,14 +49,14 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] _initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithRole:role innerAnimator:animator];
 }
 
-+ (UPAnimator *)shakeAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)shakeAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
     __block UIOffset roffset = UIOffsetZero;
-    UPTickingAnimator *animator = [UPTickingAnimator animatorWithDuration:duration
+    UPTickingAnimator *animator = [UPTickingAnimator animatorWithRole:role duration:duration
         unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear]
         applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
             CGFloat factor = sin(5 * M_PI * fractionCompleted);
@@ -72,10 +73,10 @@
             }
         }
     ];
-    return [[self alloc] _initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithRole:role innerAnimator:animator];
 }
 
-+ (UPAnimator *)slideAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)slideAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration
@@ -90,10 +91,10 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] _initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithRole:role innerAnimator:animator];
 }
 
-+ (UPAnimator *)slideToAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)slideToAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     point:(CGPoint)point completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration
@@ -111,10 +112,10 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] _initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithRole:role innerAnimator:animator];
 }
 
-+ (UPAnimator *)springAnimatorWithLabel:(const char *)label views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)springAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7
@@ -129,14 +130,14 @@
             completion(finalPosition);
         }];
     }
-    return [[self alloc] _initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithRole:role innerAnimator:animator];
 }
 
-+ (UPAnimator *)setColorAnimatorWithLabel:(const char *)label controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
++ (UPAnimator *)setColorAnimatorWithRole:(UP::Role)role controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
     element:(UPControlElement)element fromControlState:(UPControlState)fromControlState toControlState:(UPControlState)toControlState
         completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 {
-    UPTickingAnimator *animator = [UPTickingAnimator animatorWithDuration:duration
+    UPTickingAnimator *animator = [UPTickingAnimator animatorWithRole:role duration:duration
         unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInEaseOutExpo]
         applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
             if (element & UPControlElementFill) {
@@ -167,13 +168,15 @@
             }
         }
     ];
-    return [[self alloc] _initWithLabel:label innerAnimator:animator];
+    return [[self alloc] _initWithRole:role innerAnimator:animator];
 }
 
-- (instancetype)_initWithLabel:(const char *)label innerAnimator:(NSObject<UIViewAnimating> *)inner
+- (instancetype)_initWithRole:(UP::Role)role innerAnimator:(NSObject<UIViewAnimating> *)inner
 {
+    ASSERT(role);
+
     self = [super init];
-    self.label = label;
+    self.role = role;
     self.inner = inner;
     self.serialNumber = UP::next_serial_number();
     return self;

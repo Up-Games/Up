@@ -15,10 +15,6 @@ namespace TimeSpanning {
 
 static std::unordered_map<uint32_t, __weak NSObject<UPTimeSpanning> *> *g_map;
 
-const char * const AnimationLabel = "animation";
-const char * const DelayLabel = "delay";
-const char * const TestLabel = "test";
-
 void init()
 {
     static dispatch_once_t onceToken;
@@ -27,66 +23,66 @@ void init()
     });
 }
 
-NSObject<UPTimeSpanning> *delay(const char *label, double delay_in_seconds, void (^block)(void))
+NSObject<UPTimeSpanning> *delay(UP::Role role, double delay_in_seconds, void (^block)(void))
 {
-    UPDelayedAction *action = [UPDelayedAction delayedActionWithLabel:label duration:delay_in_seconds block:block];
+    UPDelayedAction *action = [UPDelayedAction delayedAction:role duration:delay_in_seconds block:block];
     g_map->emplace(action.serialNumber, action);
     [action start];
     return action;
 }
 
-UPAnimator *bloop(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
+UPAnimator *bloop(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator bloopAnimatorWithLabel:label views:views duration:duration position:position completion:completion];
+    UPAnimator *animator = [UPAnimator bloopAnimatorWithRole:role views:views duration:duration position:position completion:completion];
     g_map->emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *fade(const char *label, NSArray<UIView *> *views, CFTimeInterval duration,
+UPAnimator *fade(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator fadeAnimatorWithLabel:label views:views duration:duration completion:completion];
+    UPAnimator *animator = [UPAnimator fadeAnimatorWithRole:role views:views duration:duration completion:completion];
     g_map->emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *shake(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+UPAnimator *shake(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator shakeAnimatorWithLabel:label views:views duration:duration offset:offset completion:completion];
+    UPAnimator *animator = [UPAnimator shakeAnimatorWithRole:role views:views duration:duration offset:offset completion:completion];
     g_map->emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *slide(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+UPAnimator *slide(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator slideAnimatorWithLabel:label views:views duration:duration offset:offset completion:completion];
+    UPAnimator *animator = [UPAnimator slideAnimatorWithRole:role views:views duration:duration offset:offset completion:completion];
     g_map->emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *slide_to(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point,
+UPAnimator *slide_to(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator slideToAnimatorWithLabel:label views:views duration:duration point:point completion:completion];
+    UPAnimator *animator = [UPAnimator slideToAnimatorWithRole:role views:views duration:duration point:point completion:completion];
     g_map->emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *spring(const char *label, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+UPAnimator *spring(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator springAnimatorWithLabel:label views:views duration:duration offset:offset completion:completion];
+    UPAnimator *animator = [UPAnimator springAnimatorWithRole:role views:views duration:duration offset:offset completion:completion];
     g_map->emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *set_color(const char *label, NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
+UPAnimator *set_color(UP::Role role, NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
     UPControlState fromControlState, UPControlState toControlState, void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator setColorAnimatorWithLabel:label controls:controls duration:duration element:element
+    UPAnimator *animator = [UPAnimator setColorAnimatorWithRole:role controls:controls duration:duration element:element
         fromControlState:fromControlState toControlState:toControlState completion:completion];
     g_map->emplace(animator.serialNumber, animator);
     return animator;
@@ -100,11 +96,11 @@ void cancel(NSObject<UPTimeSpanning> *obj)
     }
 }
 
-void cancel(const char *label)
+void cancel(UP::Role role)
 {
     for (auto it = g_map->begin(); it != g_map->end();) {
         NSObject<UPTimeSpanning> *obj = it->second;
-        if (label == obj.label || strcmp(label, obj.label) == 0) {
+        if (role == obj.role || strcmp(role, obj.role) == 0) {
             it = g_map->erase(it);
             [obj cancel];
         }
@@ -128,11 +124,11 @@ void pause(NSObject<UPTimeSpanning> *obj)
     [obj pause];
 }
 
-void pause(const char *label)
+void pause(UP::Role role)
 {
     for (const auto &it : *g_map) {
         NSObject<UPTimeSpanning> *obj = it.second;
-        if (label == obj.label || strcmp(label, obj.label) == 0) {
+        if (role == obj.role || strcmp(role, obj.role) == 0) {
             [obj pause];
         }
     }
@@ -150,11 +146,11 @@ void start(NSObject<UPTimeSpanning> *obj)
     [obj start];
 }
 
-void start(const char *label)
+void start(UP::Role role)
 {
     for (const auto &it : *g_map) {
         NSObject<UPTimeSpanning> *obj = it.second;
-        if (label == obj.label || strcmp(label, obj.label) == 0) {
+        if (role == obj.role || strcmp(role, obj.role) == 0) {
             [obj start];
         }
     }

@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIViewAnimating.h>
+#import <UPKit/UPRole.h>
 #import <UPKit/UPTicker.h>
 
 @class UPTickingAnimator;
@@ -15,12 +16,14 @@ typedef void (^UPTickingAnimatorCompletion)(UPTickingAnimator *animator, UIViewA
 
 @interface UPTickingAnimator : NSObject <UIViewAnimating, UPTicking>
 
-+ (UPTickingAnimator *)animatorWithDuration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
++ (UPTickingAnimator *)animatorWithRole:(UP::Role)role duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion;
 
-+ (UPTickingAnimator *)animatorWithDuration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
++ (UPTickingAnimator *)animatorWithRole:(UP::Role)role duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     repeatCount:(NSUInteger)repeatCount rebounds:(BOOL)rebounds
         applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion;
+
+@property (nonatomic, readonly) UP::Role role;
 
 // UIViewAnimating
 @property (nonatomic, readonly) UIViewAnimatingState state;

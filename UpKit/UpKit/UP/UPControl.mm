@@ -712,7 +712,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         CFTimeInterval duration = [self fillColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.fillPathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            self.fillColorAnimator = set_color(@[self], duration, UPControlElementFill, self.previousState, state,
+            self.fillColorAnimator = set_color(self.role, @[self], duration, UPControlElementFill, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.fillColorAnimator = nil;
                 }
@@ -735,7 +735,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         CFTimeInterval duration = [self strokeColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.strokePathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            self.strokeColorAnimator = set_color(@[self], duration, UPControlElementStroke, self.previousState, state,
+            self.strokeColorAnimator = set_color(self.role, @[self], duration, UPControlElementStroke, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.strokeColorAnimator = nil;
                 }
@@ -758,7 +758,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         CFTimeInterval duration = [self contentColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.contentPathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            self.contentColorAnimator = set_color(@[self], duration, UPControlElementContent, self.previousState, state,
+            self.contentColorAnimator = set_color(self.role, @[self], duration, UPControlElementContent, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.strokeColorAnimator = nil;
                 }

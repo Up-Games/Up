@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, UPDelayedActionState) {
 
 @interface UPDelayedAction : NSObject <UPTicking, UPTimeSpanning>
 
-@property (nonatomic, readonly) const char *label;
+@property (nonatomic, readonly) UP::Role role;
 @property (nonatomic, readonly) uint32_t serialNumber;
 
 @property (nonatomic, readonly) UPDelayedActionState state;
@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, UPDelayedActionState) {
 
 @property (nonatomic, readonly) CFTimeInterval remainingDuration;
 
-+ (UPDelayedAction *)delayedActionWithLabel:(const char *)label duration:(CFTimeInterval)duration block:(void (^)(void))block;
++ (UPDelayedAction *)delayedAction:(const char *)role duration:(CFTimeInterval)duration block:(void (^)(void))block;
 
 - (instancetype)init NS_UNAVAILABLE;
 
