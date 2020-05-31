@@ -86,7 +86,7 @@ using UP::TimeSpanning::TestLabel;
 - (void)viewDidLoad
 {
     LOG_CHANNEL_ON(General);
-    LOG_CHANNEL_ON(Gestures);
+    //LOG_CHANNEL_ON(Gestures);
     //LOG_CHANNEL_ON(Layout);
     //LOG_CHANNEL_ON(Leaks);
 
@@ -435,16 +435,13 @@ using UP::TimeSpanning::TestLabel;
                 if (projectedTileInsideWordTray) {
                     TilePosition hover_position = [self calculateHoverPosition:tile];
                     if (self.pickedPosition == hover_position) {
-                        LOG(Gestures, "drop");
                         [self applyActionDrop:tile];
                     }
                     else {
-                        LOG(Gestures, "move");
                         [self applyActionMoveTile:tile toPosition:hover_position];
                     }
                 }
                 else {
-                    LOG(Gestures, "remove");
                     [self applyActionRemove:tile];
                 }
             }
