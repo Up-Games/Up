@@ -1,5 +1,5 @@
 //
-//  ViewController.mm
+//  UPSpellGameController.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -18,7 +18,7 @@
 #import "UPTileModel.h"
 #import "UPTileView.h"
 #import "UPTilePaths.h"
-#import "ViewController.h"
+#import "UPSpellGameController.h"
 
 using Action = UP::SpellModel::Action;
 using Opcode = UP::SpellModel::Opcode;
@@ -58,7 +58,7 @@ using UP::TimeSpanning::AnimationLabel;
 using UP::TimeSpanning::DelayLabel;
 using UP::TimeSpanning::TestLabel;
 
-@interface ViewController () <UPGameTimerObserver, UPTileViewGestureDelegate>
+@interface UPSpellGameController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
 @property (nonatomic) UPControl *wordTrayView;
 @property (nonatomic) UIView *tileContainerView;
@@ -81,7 +81,7 @@ using UP::TimeSpanning::TestLabel;
 @property (nonatomic) SpellModel *model;
 @end
 
-@implementation ViewController
+@implementation UPSpellGameController
 
 - (void)viewDidLoad
 {

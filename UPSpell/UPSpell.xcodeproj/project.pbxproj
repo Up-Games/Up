@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */; };
+		5D54078424841631003F193D /* UPSpellNavigationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D54078324841631003F193D /* UPSpellNavigationController.mm */; };
 		5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */; };
 		5D72311C246B3717006027A3 /* MalloryCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D723119246B3713006027A3 /* MalloryCond-Bold.otf */; };
 		5D72311D246B3717006027A3 /* MalloryMPNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D72311B246B3713006027A3 /* MalloryMPNrrw-Bold.otf */; };
@@ -18,7 +19,7 @@
 		5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */; };
 		5DF9DF5C2466165700B2199D /* UPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5B2466165700B2199D /* UPAppDelegate.m */; };
 		5DF9DF5F2466165700B2199D /* UPSceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */; };
-		5DF9DF622466165700B2199D /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF612466165700B2199D /* ViewController.mm */; };
+		5DF9DF622466165700B2199D /* UPSpellGameController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF612466165700B2199D /* UPSpellGameController.mm */; };
 		5DF9DF652466165700B2199D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5DF9DF632466165700B2199D /* Main.storyboard */; };
 		5DF9DF672466165800B2199D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DF9DF662466165800B2199D /* Assets.xcassets */; };
 		5DF9DF6A2466165800B2199D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5DF9DF682466165800B2199D /* LaunchScreen.storyboard */; };
@@ -55,6 +56,8 @@
 /* Begin PBXFileReference section */
 		5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellLayout.mm; sourceTree = "<group>"; };
 		5D5216EA246C7E9E005A2E9F /* UPSpellLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellLayout.h; sourceTree = "<group>"; };
+		5D54078224841631003F193D /* UPSpellNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellNavigationController.h; sourceTree = "<group>"; };
+		5D54078324841631003F193D /* UPSpellNavigationController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellNavigationController.mm; sourceTree = "<group>"; };
 		5D57D1FA246DB97700705395 /* UPControl+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UPControl+UPSpell.h"; sourceTree = "<group>"; };
 		5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPControl+UPSpell.mm"; sourceTree = "<group>"; };
 		5D723114246B34C0006027A3 /* UPTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileView.h; sourceTree = "<group>"; };
@@ -77,8 +80,8 @@
 		5DF9DF5B2466165700B2199D /* UPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPAppDelegate.m; sourceTree = "<group>"; };
 		5DF9DF5D2466165700B2199D /* UPSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSceneDelegate.h; sourceTree = "<group>"; };
 		5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSceneDelegate.mm; sourceTree = "<group>"; };
-		5DF9DF602466165700B2199D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		5DF9DF612466165700B2199D /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		5DF9DF602466165700B2199D /* UPSpellGameController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellGameController.h; sourceTree = "<group>"; };
+		5DF9DF612466165700B2199D /* UPSpellGameController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellGameController.mm; sourceTree = "<group>"; };
 		5DF9DF642466165700B2199D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5DF9DF662466165800B2199D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5DF9DF692466165800B2199D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -120,11 +123,15 @@
 				5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */,
 				5DF9DF5D2466165700B2199D /* UPSceneDelegate.h */,
 				5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */,
+				5DF9DF602466165700B2199D /* UPSpellGameController.h */,
+				5DF9DF612466165700B2199D /* UPSpellGameController.mm */,
 				5D5216EA246C7E9E005A2E9F /* UPSpellLayout.h */,
 				5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */,
 				5DC67DF424730207009BCDBB /* UPSpellMacros.h */,
 				5DA8E077247D723A008D3015 /* UPSpellModel.h */,
 				5DA8E078247D723A008D3015 /* UPSpellModel.mm */,
+				5D54078224841631003F193D /* UPSpellNavigationController.h */,
+				5D54078324841631003F193D /* UPSpellNavigationController.mm */,
 				5DA8E0422476128C008D3015 /* UPTileModel.h */,
 				5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */,
 				5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */,
@@ -132,8 +139,6 @@
 				5DA8E04524775A2E008D3015 /* UPTileSequence.h */,
 				5D723114246B34C0006027A3 /* UPTileView.h */,
 				5DA8E0432476BF41008D3015 /* UPTileView.mm */,
-				5DF9DF602466165700B2199D /* ViewController.h */,
-				5DF9DF612466165700B2199D /* ViewController.mm */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -304,8 +309,9 @@
 			files = (
 				5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */,
 				5D723121246B3996006027A3 /* UIFont+UPSpell.m in Sources */,
-				5DF9DF622466165700B2199D /* ViewController.mm in Sources */,
+				5DF9DF622466165700B2199D /* UPSpellGameController.mm in Sources */,
 				5DF9DF5C2466165700B2199D /* UPAppDelegate.m in Sources */,
+				5D54078424841631003F193D /* UPSpellNavigationController.mm in Sources */,
 				5DF9DF6D2466165800B2199D /* main.m in Sources */,
 				5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */,
 				5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */,
