@@ -89,6 +89,7 @@ using UP::TimeSpanning::TestLabel;
     //LOG_CHANNEL_ON(Gestures);
     //LOG_CHANNEL_ON(Layout);
     //LOG_CHANNEL_ON(Leaks);
+    //LOG_CHANNEL_ON(Mode);
 
     [super viewDidLoad];
 
@@ -1023,6 +1024,264 @@ using UP::TimeSpanning::TestLabel;
 {
     ASSERT(!self.view.userInteractionEnabled);
     self.view.userInteractionEnabled = YES;
+}
+
+#pragma mark - Modes
+
+- (void)setMode:(UPSpellGameMode)mode
+{
+    [self setMode:mode animated:NO];
+}
+
+- (void)setMode:(UPSpellGameMode)mode animated:(BOOL)animated
+{
+    if (_mode == mode) {
+        return;
+    }
+    UPSpellGameMode prev = _mode;
+    _mode = mode;
+    
+    switch (prev) {
+        case UPSpellGameModeStart: {
+            switch (mode) {
+                case UPSpellGameModeStart:
+                case UPSpellGameModeOffscreenLeft:
+                case UPSpellGameModeOffscreenRight:
+                case UPSpellGameModeCountdown:
+                case UPSpellGameModePlay:
+                case UPSpellGameModePause:
+                case UPSpellGameModeOverInterstitial:
+                case UPSpellGameModeOver:
+                    ASSERT_NOT_REACHED();
+                    break;
+                case UPSpellGameModeMenu:
+                    [self modeTransitionFromNoneToMenu:animated];
+                    break;
+            }
+            break;
+        }
+        case UPSpellGameModeOffscreenLeft: {
+            switch (mode) {
+                case UPSpellGameModeStart:
+                case UPSpellGameModeOffscreenLeft:
+                case UPSpellGameModeOffscreenRight:
+                case UPSpellGameModeCountdown:
+                case UPSpellGameModePlay:
+                case UPSpellGameModePause:
+                case UPSpellGameModeOverInterstitial:
+                case UPSpellGameModeOver:
+                    ASSERT_NOT_REACHED();
+                    break;
+                case UPSpellGameModeMenu:
+                    [self modeTransitionFromOffscreenLeftToMenu:animated];
+                    break;
+            }
+            break;
+        }
+        case UPSpellGameModeOffscreenRight: {
+            switch (mode) {
+                case UPSpellGameModeStart:
+                case UPSpellGameModeOffscreenLeft:
+                case UPSpellGameModeOffscreenRight:
+                case UPSpellGameModeCountdown:
+                case UPSpellGameModePlay:
+                case UPSpellGameModePause:
+                case UPSpellGameModeOverInterstitial:
+                case UPSpellGameModeOver:
+                    ASSERT_NOT_REACHED();
+                    break;
+                case UPSpellGameModeMenu:
+                    [self modeTransitionFromOffscreenRightToMenu:animated];
+                    break;
+            }
+            break;
+        }
+        case UPSpellGameModeMenu: {
+            switch (mode) {
+                case UPSpellGameModeStart:
+                case UPSpellGameModeMenu:
+                case UPSpellGameModePlay:
+                case UPSpellGameModePause:
+                case UPSpellGameModeOverInterstitial:
+                case UPSpellGameModeOver:
+                    ASSERT_NOT_REACHED();
+                    break;
+                case UPSpellGameModeOffscreenLeft:
+                    [self modeTransitionFromMenuToOffscreenLeft:animated];
+                    break;
+                case UPSpellGameModeOffscreenRight:
+                    [self modeTransitionFromMenuToOffscreenRight:animated];
+                    break;
+                case UPSpellGameModeCountdown:
+                    [self modeTransitionFromMenuToCountdown:animated];
+                    break;
+            }
+            break;
+        }
+        case UPSpellGameModeCountdown: {
+            switch (mode) {
+                case UPSpellGameModeStart:
+                case UPSpellGameModeOffscreenLeft:
+                case UPSpellGameModeOffscreenRight:
+                case UPSpellGameModeMenu:
+                case UPSpellGameModeCountdown:
+                case UPSpellGameModeOverInterstitial:
+                case UPSpellGameModeOver:
+                    ASSERT_NOT_REACHED();
+                    break;
+                case UPSpellGameModePlay:
+                    [self modeTransitionFromCountdownToPlay:animated];
+                    break;
+                case UPSpellGameModePause:
+                    [self modeTransitionFromCountdownToPause:animated];
+                    break;
+            }
+            break;
+        }
+        case UPSpellGameModePlay: {
+            switch (mode) {
+                case UPSpellGameModeStart:
+                case UPSpellGameModeOffscreenLeft:
+                case UPSpellGameModeOffscreenRight:
+                case UPSpellGameModeMenu:
+                case UPSpellGameModeCountdown:
+                case UPSpellGameModePlay:
+                case UPSpellGameModeOver:
+                    ASSERT_NOT_REACHED();
+                    break;
+                case UPSpellGameModePause:
+                    [self modeTransitionFromPlayToPause:animated];
+                    break;
+                case UPSpellGameModeOverInterstitial:
+                    [self modeTransitionFromPlayToOverInterstitial:animated];
+                    break;
+            }
+            break;
+        }
+        case UPSpellGameModePause: {
+            switch (mode) {
+                case UPSpellGameModeStart:
+                case UPSpellGameModeOffscreenLeft:
+                case UPSpellGameModeOffscreenRight:
+                case UPSpellGameModePause:
+                case UPSpellGameModeOverInterstitial:
+                case UPSpellGameModeOver:
+                    ASSERT_NOT_REACHED();
+                    break;
+                case UPSpellGameModeCountdown:
+                    [self modeTransitionFromPauseToCountdown:animated];
+                    break;
+                case UPSpellGameModeMenu:
+                    [self modeTransitionFromPauseToMenu:animated];
+                    break;
+                case UPSpellGameModePlay:
+                    [self modeTransitionFromPauseToPlay:animated];
+                    break;
+            }
+            break;
+        }
+        case UPSpellGameModeOverInterstitial: {
+            switch (mode) {
+                case UPSpellGameModeStart:
+                case UPSpellGameModeOffscreenLeft:
+                case UPSpellGameModeOffscreenRight:
+                case UPSpellGameModeMenu:
+                case UPSpellGameModeCountdown:
+                case UPSpellGameModePlay:
+                case UPSpellGameModePause:
+                case UPSpellGameModeOverInterstitial:
+                    ASSERT_NOT_REACHED();
+                    break;
+                case UPSpellGameModeOver:
+                    [self modeTransitionFromOverInterstitialToOver:animated];
+                    break;
+            }
+            break;
+        }
+        case UPSpellGameModeOver:
+            switch (mode) {
+                case UPSpellGameModeStart:
+                case UPSpellGameModeOffscreenLeft:
+                case UPSpellGameModeOffscreenRight:
+                case UPSpellGameModePlay:
+                case UPSpellGameModePause:
+                case UPSpellGameModeOverInterstitial:
+                case UPSpellGameModeOver:
+                    ASSERT_NOT_REACHED();
+                    break;
+                case UPSpellGameModeMenu:
+                    [self modeTransitionFromOverToMenu:animated];
+                    break;
+                case UPSpellGameModeCountdown:
+                    [self modeTransitionFromOverToCountdown:animated];
+                    break;
+            }
+            break;
+    }
+}
+
+- (void)modeTransitionFromNoneToMenu:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromMenuToOffscreenLeft:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromMenuToOffscreenRight:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromOffscreenLeftToMenu:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromOffscreenRightToMenu:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromMenuToCountdown:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromCountdownToPause:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromPauseToCountdown:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromCountdownToPlay:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromPlayToPause:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromPauseToPlay:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromPauseToMenu:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromPlayToOverInterstitial:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromOverInterstitialToOver:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromOverToCountdown:(BOOL)animated
+{
+}
+
+- (void)modeTransitionFromOverToMenu:(BOOL)animated
+{
 }
 
 @end

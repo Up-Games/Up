@@ -145,6 +145,7 @@ M(General) \
 M(Gestures) \
 M(Layout) \
 M(Leaks) \
+M(Mode) \
 
 UP_LOG_CHANNELS(DECLARE_LOG_CHANNEL)
 #endif
