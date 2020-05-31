@@ -119,7 +119,7 @@ using UP::TimeSpanning::TestLabel;
         
     self.wordTrayView = [UPControl wordTray];
     self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
-    [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.wordTrayView];
 
     self.tileContainerView = [[UPContainerView alloc] initWithFrame:CGRectZero];
@@ -135,19 +135,19 @@ using UP::TimeSpanning::TestLabel;
     self.roundControlButtonPause = [UPControl roundControlButtonPause];
     self.roundControlButtonPause.frame = layout_manager.game_controls_left_button_frame();
     self.roundControlButtonPause.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundControlButtonPause addTarget:self action:@selector(roundControlButtonPauseTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.roundControlButtonPause addTarget:self action:@selector(roundControlButtonPauseTapped:) forEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.roundControlButtonPause];
 
     self.roundControlButtonTrash = [UPControl roundControlButtonTrash];
     self.roundControlButtonTrash.frame = layout_manager.game_controls_right_button_frame();
     self.roundControlButtonTrash.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundControlButtonTrash addTarget:self action:@selector(roundControlButtonTrashTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.roundControlButtonTrash addTarget:self action:@selector(roundControlButtonTrashTapped:) forEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.roundControlButtonTrash];
 
     self.roundControlButtonClear = [UPControl roundControlButtonClear];
     self.roundControlButtonClear.frame = layout_manager.game_controls_right_button_frame();
     self.roundControlButtonClear.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundControlButtonClear addTarget:self action:@selector(roundControlButtonClearTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.roundControlButtonClear addTarget:self action:@selector(roundControlButtonClearTapped:) forEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.roundControlButtonClear];
 
     UIFont *font = [UIFont gameInformationFontOfSize:layout_manager.game_information_font_metrics().point_size()];

@@ -55,13 +55,13 @@ using UP::TilePaths;
 
     CGRect fillRect = CGRectMake(0, 0, up_size_width(SpellLayout::CanonicalTileSize), up_size_height(SpellLayout::CanonicalTileSize));
     [self setFillPath:[UIBezierPath bezierPathWithRect:fillRect]];
-    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forControlStates:UPControlStateNormal];
-    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forControlStates:UPControlStateHighlighted];
+    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateNormal];
+    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
     [self setFillColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     
     [self setStrokePath:layout_manager.tile_stroke_path()];
-    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forControlStates:UPControlStateNormal];
-    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forControlStates:UPControlStateHighlighted];
+    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
+    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
     [self setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
     UIBezierPath *contentPath = [UIBezierPath bezierPath];

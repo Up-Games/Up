@@ -23,21 +23,21 @@ namespace UP {
 
 class ControlAction {
 public:
-    ControlAction(id target, SEL action, UIControlEvents control_events) :
-        m_target(target), m_action(action), m_control_events(control_events) {}
+    ControlAction(id target, SEL action, UPControlEvents events) :
+        m_target(target), m_action(action), m_events(events) {}
 
     id target() const { return m_target; }
     SEL action() const { return m_action; }
-    UIControlEvents control_events() const { return m_control_events; }
+    UPControlEvents events() const { return m_events; }
 
 private:
     __weak id m_target = nullptr;
     SEL m_action;
-    UIControlEvents m_control_events = 0;
+    UPControlEvents m_events = 0;
 };
 
 bool operator==(const ControlAction &a, const ControlAction &b) {
-    return a.target() == b.target() && a.action() == b.action() && a.control_events() == b.control_events();
+    return a.target() == b.target() && a.action() == b.action() && a.events() == b.events();
 }
 
 bool operator!=(const ControlAction &a, const ControlAction &b) {
@@ -307,42 +307,42 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 
 - (void)setContentPath:(UIBezierPath *)path
 {
-    [self setContentPath:path forControlStates:UPControlStateNormal];
+    [self setContentPath:path forState:UPControlStateNormal];
 }
 
-- (void)setContentPath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates
+- (void)setContentPath:(UIBezierPath *)path forState:(UPControlState)state
 {
     [self _createPathsForStatesIfNeeded];
     [self _createContentPathViewIfNeeded];
-    NSNumber *key = _ContentKey(controlStates);
+    NSNumber *key = _ContentKey(state);
     self.pathsForStates[key] = path;
     [self setNeedsLayout];
 }
 
 - (void)setFillPath:(UIBezierPath *)path
 {
-    [self setFillPath:path forControlStates:UPControlStateNormal];
+    [self setFillPath:path forState:UPControlStateNormal];
 }
 
-- (void)setFillPath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates
+- (void)setFillPath:(UIBezierPath *)path forState:(UPControlState)state
 {
     [self _createPathsForStatesIfNeeded];
     [self _createFillPathViewIfNeeded];
-    NSNumber *key = _FillKey(controlStates);
+    NSNumber *key = _FillKey(state);
     self.pathsForStates[key] = path;
     [self setNeedsLayout];
 }
 
 - (void)setStrokePath:(UIBezierPath *)path
 {
-    [self setStrokePath:path forControlStates:UPControlStateNormal];
+    [self setStrokePath:path forState:UPControlStateNormal];
 }
 
-- (void)setStrokePath:(UIBezierPath *)path forControlStates:(UPControlState)controlStates
+- (void)setStrokePath:(UIBezierPath *)path forState:(UPControlState)state
 {
     [self _createPathsForStatesIfNeeded];
     [self _createStrokePathViewIfNeeded];
-    NSNumber *key = _StrokeKey(controlStates);
+    NSNumber *key = _StrokeKey(state);
     self.pathsForStates[key] = path;
     [self setNeedsLayout];
 }
@@ -351,12 +351,12 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 
 - (void)setFillColor:(UIColor *)color
 {
-    [self setFillColor:color forControlStates:UPControlStateNormal];
+    [self setFillColor:color forState:UPControlStateNormal];
 }
 
-- (void)setFillColor:(UIColor *)color forControlStates:(UPControlState)controlStates
+- (void)setFillColor:(UIColor *)color forState:(UPControlState)state
 {
-    NSUInteger k = up_control_key_fill(controlStates);
+    NSUInteger k = up_control_key_fill(state);
     auto it = m_colors.find(k);
     if (it == m_colors.end()) {
         m_colors.emplace(k, color);
@@ -367,10 +367,10 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     [self setNeedsLayout];
 }
 
-- (UIColor *)fillColorForControlStates:(UPControlState)controlStates
+- (UIColor *)fillColorForControlStates:(UPControlState)state
 {
     const auto &end = m_colors.end();
-    const auto &sval = m_colors.find(up_control_key_fill(controlStates));
+    const auto &sval = m_colors.find(up_control_key_fill(state));
     if (sval != end) {
         return sval->second;
     }
@@ -405,12 +405,12 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 
 - (void)setStrokeColor:(UIColor *)color
 {
-    [self setStrokeColor:color forControlStates:UPControlStateNormal];
+    [self setStrokeColor:color forState:UPControlStateNormal];
 }
 
-- (void)setStrokeColor:(UIColor *)color forControlStates:(UPControlState)controlStates
+- (void)setStrokeColor:(UIColor *)color forState:(UPControlState)state
 {
-    NSUInteger k = up_control_key_stroke(controlStates);
+    NSUInteger k = up_control_key_stroke(state);
     auto it = m_colors.find(k);
     if (it == m_colors.end()) {
         m_colors.emplace(k, color);
@@ -421,10 +421,10 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     [self setNeedsLayout];
 }
 
-- (UIColor *)strokeColorForControlStates:(UPControlState)controlStates
+- (UIColor *)strokeColorForControlStates:(UPControlState)state
 {
     const auto &end = m_colors.end();
-    const auto &sval = m_colors.find(up_control_key_stroke(controlStates));
+    const auto &sval = m_colors.find(up_control_key_stroke(state));
     if (sval != end) {
         return sval->second;
     }
@@ -459,12 +459,12 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 
 - (void)setContentColor:(UIColor *)color
 {
-    [self setContentColor:color forControlStates:UPControlStateNormal];
+    [self setContentColor:color forState:UPControlStateNormal];
 }
 
-- (void)setContentColor:(UIColor *)color forControlStates:(UPControlState)controlStates
+- (void)setContentColor:(UIColor *)color forState:(UPControlState)state
 {
-    NSUInteger k = up_control_key_content(controlStates);
+    NSUInteger k = up_control_key_content(state);
     auto it = m_colors.find(k);
     if (it == m_colors.end()) {
         m_colors.emplace(k, color);
@@ -475,10 +475,10 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     [self setNeedsLayout];
 }
 
-- (UIColor *)contentColorForControlStates:(UPControlState)controlStates
+- (UIColor *)contentColorForControlStates:(UPControlState)state
 {
     const auto &end = m_colors.end();
-    const auto &sval = m_colors.find(up_control_key_content(controlStates));
+    const auto &sval = m_colors.find(up_control_key_content(state));
     if (sval != end) {
         return sval->second;
     }
@@ -633,9 +633,9 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 
 #pragma mark - Target/Action
 
-- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
+- (void)addTarget:(id)target action:(SEL)action forEvents:(UPControlEvents)events
 {
-    UP::ControlAction control_action(target, action, controlEvents);
+    UP::ControlAction control_action(target, action, events);
     for (const auto &a : m_actions) {
         if (a == control_action) {
             return;
@@ -644,9 +644,9 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     m_actions.push_back(control_action);
 }
 
-- (void)removeTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
+- (void)removeTarget:(id)target action:(SEL)action forEvents:(UPControlEvents)events
 {
-    UP::ControlAction control_action(target, action, controlEvents);
+    UP::ControlAction control_action(target, action, events);
     for (auto it = m_actions.begin(); it != m_actions.end(); ++it) {
         if (control_action == *it) {
             m_actions.erase(it);
@@ -655,10 +655,10 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     }
 }
 
-- (void)sendActionsForControlEvents:(UIControlEvents)controlEvents
+- (void)sendActionsForControlEvents:(UPControlEvents)events
 {
     for (const auto &a : m_actions) {
-        if (a.control_events() & controlEvents) {
+        if (a.events() & events) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
             [a.target() performSelector:a.action() withObject:a.target()];

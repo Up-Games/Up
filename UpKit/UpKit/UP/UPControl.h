@@ -7,6 +7,26 @@
 
 @class UPBezierPathView;
 
+typedef NS_OPTIONS(NSUInteger, UPControlEvents) {
+    UPControlEventTouchDown                                         = 1 <<  0,      // on all touch downs
+    UPControlEventTouchDownRepeat                                   = 1 <<  1,      // on multiple touchdowns (tap count > 1)
+    UPControlEventTouchDragInside                                   = 1 <<  2,
+    UPControlEventTouchDragOutside                                  = 1 <<  3,
+    UPControlEventTouchDragEnter                                    = 1 <<  4,
+    UPControlEventTouchDragExit                                     = 1 <<  5,
+    UPControlEventTouchUpInside                                     = 1 <<  6,
+    UPControlEventTouchUpOutside                                    = 1 <<  7,
+    UPControlEventTouchCancel                                       = 1 <<  8,
+
+    UPControlEventValueChanged                                      = 1 << 12,     // sliders, etc.
+    UPControlEventPrimaryActionTriggered                            = 1 << 13,     // semantic action: for buttons, etc.
+
+    UPControlEventAllTouchEvents                                    = 0x00000FFF,  // for touch events
+    UPControlEventApplicationReserved                               = 0x0F000000,  // range available for application use
+    UPControlEventSystemReserved                                    = 0xF0000000,  // range reserved for internal framework use
+    UPControlEventAllEvents                                         = 0xFFFFFFFF
+};
+
 typedef NS_OPTIONS(NSUInteger, UPControlState) {
     UPControlStateNormal =      0x00000000,
     UPControlStateHighlighted = 0x00000001,
@@ -60,34 +80,34 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event;
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event;
 
-- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
-- (void)removeTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
+- (void)addTarget:(id)target action:(SEL)action forEvents:(UPControlEvents)events;
+- (void)removeTarget:(id)target action:(SEL)action forEvents:(UPControlEvents)events;
 
 @property (nonatomic, readonly) UPBezierPathView *fillPathView;
 @property (nonatomic, readonly) UPBezierPathView *strokePathView;
 @property (nonatomic, readonly) UPBezierPathView *contentPathView;
 
 - (void)setFillPath:(UIBezierPath *)path;
-- (void)setFillPath:(UIBezierPath *)path forControlStates:(UPControlState)states;
+- (void)setFillPath:(UIBezierPath *)path forState:(UPControlState)state;
 - (void)setFillColor:(UIColor *)color;
-- (void)setFillColor:(UIColor *)color forControlStates:(UPControlState)states;
-- (UIColor *)fillColorForControlStates:(UPControlState)states;
+- (void)setFillColor:(UIColor *)color forState:(UPControlState)state;
+- (UIColor *)fillColorForControlStates:(UPControlState)state;
 - (void)setFillColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)fillColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
 
 - (void)setStrokePath:(UIBezierPath *)path;
-- (void)setStrokePath:(UIBezierPath *)path forControlStates:(UPControlState)states;
+- (void)setStrokePath:(UIBezierPath *)path forState:(UPControlState)state;
 - (void)setStrokeColor:(UIColor *)color;
-- (void)setStrokeColor:(UIColor *)color forControlStates:(UPControlState)states;
-- (UIColor *)strokeColorForControlStates:(UPControlState)states;
+- (void)setStrokeColor:(UIColor *)color forState:(UPControlState)state;
+- (UIColor *)strokeColorForControlStates:(UPControlState)state;
 - (void)setStrokeColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)strokeColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
 
 - (void)setContentPath:(UIBezierPath *)path;
-- (void)setContentPath:(UIBezierPath *)path forControlStates:(UPControlState)states;
+- (void)setContentPath:(UIBezierPath *)path forState:(UPControlState)state;
 - (void)setContentColor:(UIColor *)color;
-- (void)setContentColor:(UIColor *)color forControlStates:(UPControlState)states;
-- (UIColor *)contentColorForControlStates:(UPControlState)states;
+- (void)setContentColor:(UIColor *)color forState:(UPControlState)state;
+- (UIColor *)contentColorForControlStates:(UPControlState)state;
 - (void)setContentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)contentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
 
