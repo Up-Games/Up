@@ -189,7 +189,6 @@ using UP::RoleModeUI;
     self.scoreLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.scoreLabel];
 
-    self.roundControlButtonClear.alpha = 0;
     [self viewOpUpdateGameControls];
 
     self.pickedView = nil;
@@ -313,10 +312,8 @@ using UP::RoleModeUI;
     if (self.mode == UPSpellGameModePlay) {
         self.mode = UPSpellGameModePause;
         [self.gameTimer stop];
-        pause(RoleGameDelay);
-        pause(RoleGameUI);
-        self.roundControlButtonPause.highlightedOverride = YES;
-        self.roundControlButtonPause.highlighted = YES;
+        pause(RoleGameAll);
+        [self viewOpEnterModal:self.model->all_tile_views()];
     }
     else {
         self.mode = UPSpellGameModePlay;
@@ -725,7 +722,7 @@ using UP::RoleModeUI;
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::REJECT));
 
     // assess time penalty and shake word tray side-to-side
-    [self viewOpPenaltyForReject:self.model->all_views()];
+    [self viewOpPenaltyForReject:self.model->all_tile_views()];
     SpellLayout &layout_manager = SpellLayout::instance();
     NSMutableArray *views = [NSMutableArray arrayWithObject:self.wordTrayView];
     [views addObjectsFromArray:[self wordTrayTileViews]];
@@ -748,7 +745,7 @@ using UP::RoleModeUI;
 
     [self viewOpLockUserInterface];
 
-    NSArray *playerTrayTileViews = self.model->player_tray_views();
+    NSArray *playerTrayTileViews = self.model->player_tray_tile_views();
     ASSERT(playerTrayTileViews.count == TileCount);
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DUMP));
@@ -773,18 +770,14 @@ using UP::RoleModeUI;
 
     // trash/clear button
     if (self.model->word_length()) {
-        if (!self.showingRoundControlButtonClear) {
-            self.showingRoundControlButtonClear = YES;
-            self.roundControlButtonClear.alpha = 1;
-            self.roundControlButtonTrash.alpha = 0;
-        }
+        self.showingRoundControlButtonClear = YES;
+        self.roundControlButtonClear.hidden = NO;
+        self.roundControlButtonTrash.hidden = YES;
     }
     else {
-        if (self.showingRoundControlButtonClear) {
-            self.showingRoundControlButtonClear = NO;
-            self.roundControlButtonClear.alpha = 0;
-            self.roundControlButtonTrash.alpha = 1;
-        }
+        self.showingRoundControlButtonClear = NO;
+        self.roundControlButtonClear.hidden = YES;
+        self.roundControlButtonTrash.hidden = NO;
     }
     
     self.scoreLabel.string = [NSString stringWithFormat:@"%d", self.model->score()];
@@ -1047,9 +1040,64 @@ using UP::RoleModeUI;
     else {
         self.roundControlButtonTrash.alpha = 1.0;
     }
-    NSArray *playerTrayTileViews = self.model->all_views();
+    NSArray *playerTrayTileViews = self.model->all_tile_views();
     for (UPTileView *tileView in playerTrayTileViews) {
         tileView.alpha = 1.0;
+    }
+}
+
+- (void)viewOpEnterModal:(NSArray *)tileViews
+{
+    self.roundControlButtonPause.highlightedOverride = YES;
+    self.roundControlButtonPause.highlighted = YES;
+    self.roundControlButtonPause.alpha = [UIColor themeModalActiveAlpha];
+
+    const CGFloat alpha = [UIColor themeModalBackgroundAlpha];
+    self.wordTrayView.alpha = alpha;
+    if (self.showingRoundControlButtonClear) {
+        self.roundControlButtonClear.alpha = alpha;
+    }
+    else {
+        self.roundControlButtonTrash.alpha = alpha;
+    }
+    self.gameTimerLabel.alpha = alpha;
+    self.scoreLabel.alpha = alpha;
+
+    self.wordTrayView.userInteractionEnabled = NO;
+    self.roundControlButtonTrash.userInteractionEnabled = NO;
+    self.roundControlButtonClear.userInteractionEnabled = NO;
+    self.roundControlButtonPause.userInteractionEnabled = NO;
+
+    for (UPTileView *tileView in tileViews) {
+        tileView.alpha = alpha;
+        tileView.userInteractionEnabled = NO;
+    }
+}
+
+- (void)viewOpExitModal:(NSArray *)tileViews
+{
+    self.roundControlButtonPause.highlightedOverride = NO;
+    self.roundControlButtonPause.highlighted = NO;
+    self.roundControlButtonPause.alpha = 1.0;
+
+    self.wordTrayView.alpha = 1.0;
+    if (self.showingRoundControlButtonClear) {
+        self.roundControlButtonClear.alpha = 1.0;
+    }
+    else {
+        self.roundControlButtonTrash.alpha = 1.0;
+    }
+    self.gameTimerLabel.alpha = 1.0;
+    self.scoreLabel.alpha = 1.0;
+
+    self.wordTrayView.userInteractionEnabled = YES;
+    self.roundControlButtonTrash.userInteractionEnabled = YES;
+    self.roundControlButtonClear.userInteractionEnabled = YES;
+    self.roundControlButtonPause.userInteractionEnabled = YES;
+
+    for (UPTileView *tileView in tileViews) {
+        tileView.alpha = 1.0;
+        tileView.userInteractionEnabled = YES;
     }
 }
 

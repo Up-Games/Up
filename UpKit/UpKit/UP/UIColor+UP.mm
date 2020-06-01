@@ -93,6 +93,41 @@ static CGFloat _ThemeHue = 222;
     return [UIColor themeDisabledAlphaForStyle:_ThemeStyle];
 }
 
++ (CGFloat)themeModalBackgroundAlphaForStyle:(UPColorStyle)style
+{
+    switch (_ThemeStyle) {
+        case UPColorStyleDefault:
+        case UPColorStyleLight:
+        case UPColorStyleLightStark:
+            return 0.03;
+        case UPColorStyleDark:
+        case UPColorStyleDarkStark:
+            return 0.03;
+    }
+}
+
++ (CGFloat)themeModalBackgroundAlpha
+{
+    return [UIColor themeModalBackgroundAlphaForStyle:_ThemeStyle];
+}
+
++ (CGFloat)themeModalActiveAlphaForStyle:(UPColorStyle)style
+{
+    switch (_ThemeStyle) {
+        case UPColorStyleDefault:
+        case UPColorStyleLight:
+        case UPColorStyleLightStark:
+        case UPColorStyleDark:
+        case UPColorStyleDarkStark:
+            return 0.25;
+    }
+}
+
++ (CGFloat)themeModalActiveAlpha
+{
+    return [UIColor themeModalActiveAlphaForStyle:_ThemeStyle];
+}
+
 // https://stackoverflow.com/a/9177602
 + (UIColor *)colorizedGray:(CGFloat)gray hue:(CGFloat)hue saturation:(CGFloat)saturation
 {

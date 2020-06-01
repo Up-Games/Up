@@ -197,9 +197,9 @@ public:
     TileIndex player_tray_index(const UPTileView *);
     TileIndex player_tray_index(const TilePosition &);
 
-    NSArray *all_views() const;
-    NSArray *player_tray_views() const;
-    NSArray *word_tray_views() const;
+    NSArray *all_tile_views() const;
+    NSArray *player_tray_tile_views() const;
+    NSArray *word_tray_tile_views() const;
 
     const std::vector<State> &states() const { return m_states; }
     const State &back_state() const;

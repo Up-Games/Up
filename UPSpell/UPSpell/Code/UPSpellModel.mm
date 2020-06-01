@@ -131,7 +131,7 @@ TileIndex SpellModel::player_tray_index(const TilePosition &pos)
     }
 }
 
-NSArray *SpellModel::all_views() const
+NSArray *SpellModel::all_tile_views() const
 {
     NSMutableArray *array = [NSMutableArray array];
     for (const auto &tile : tiles()) {
@@ -141,7 +141,7 @@ NSArray *SpellModel::all_views() const
     return array;
 }
 
-NSArray *SpellModel::player_tray_views() const
+NSArray *SpellModel::player_tray_tile_views() const
 {
     NSMutableArray *array = [NSMutableArray array];
     for (const auto &tile : tiles()) {
@@ -153,7 +153,7 @@ NSArray *SpellModel::player_tray_views() const
     return array;
 }
 
-NSArray *SpellModel::word_tray_views() const
+NSArray *SpellModel::word_tray_tile_views() const
 {
     NSMutableArray *array = [NSMutableArray array];
     for (const auto &tile : tiles()) {
