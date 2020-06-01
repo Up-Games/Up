@@ -902,9 +902,6 @@ using UP::RoleModeUI;
         TileIndex idx = self.model->player_tray_index(tileView);
         CGPoint player_tray_center = player_tray_tile_centers[idx];
         start(bloop(RoleGameUI, @[tileView], 0.4, player_tray_center, nil));
-//        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationCurveLinear animations:^{
-//            tileView.transform = CGAffineTransformIdentity;
-//        } completion:nil];
     }
 }
 
