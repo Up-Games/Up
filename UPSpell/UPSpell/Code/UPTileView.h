@@ -23,6 +23,8 @@
 
 + (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier;
 
+- (void)clearGestures;
+
 @end
 
 @protocol UPTileViewGestureDelegate <NSObject>

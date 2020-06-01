@@ -91,7 +91,7 @@ using UP::RoleModeUI;
     LOG_CHANNEL_ON(General);
     //LOG_CHANNEL_ON(Gestures);
     //LOG_CHANNEL_ON(Layout);
-    //LOG_CHANNEL_ON(Leaks);
+    LOG_CHANNEL_ON(Leaks);
     //LOG_CHANNEL_ON(Mode);
 
     [super viewDidLoad];
@@ -194,6 +194,10 @@ using UP::RoleModeUI;
 
     self.pickedView = nil;
     self.pickedPosition = TilePosition();
+
+    self.mode = UPSpellGameModeMenu;
+    self.mode = UPSpellGameModeCountdown;
+    self.mode = UPSpellGameModePlay;
 
     delay(RoleGameDelay, 0.2, ^{
         [self viewOpFillPlayerTray];
@@ -302,10 +306,33 @@ using UP::RoleModeUI;
     return array;
 }
 
+#pragma mark - Pause
+
+- (void)pause
+{
+    if (self.mode == UPSpellGameModePlay) {
+        self.mode = UPSpellGameModePause;
+        [self.gameTimer stop];
+        pause(RoleGameDelay);
+        pause(RoleGameUI);
+        self.roundControlButtonPause.highlightedOverride = YES;
+        self.roundControlButtonPause.highlighted = YES;
+    }
+    else {
+        self.mode = UPSpellGameModePlay;
+        [self.gameTimer start];
+        start(RoleGameDelay);
+        start(RoleGameUI);
+        self.roundControlButtonPause.highlightedOverride = NO;
+        self.roundControlButtonPause.highlighted = NO;
+    }
+}
+
 #pragma mark - Control target/action and gestures
 
 - (void)roundControlButtonPauseTapped:(id)sender
 {
+    [self pause];
 }
 
 - (void)roundControlButtonTrashTapped:(id)sender
@@ -526,7 +553,7 @@ using UP::RoleModeUI;
     [self.tileContainerView bringSubviewToFront:tileView];
     start(bloop(RoleGameUI, @[tileView], 0.4, word_tray_center, nil));
 
-    tileView.highlighted = NO;
+//    tileView.highlighted = NO;
     [self viewOpUpdateGameControls];
 }
 
@@ -895,11 +922,14 @@ using UP::RoleModeUI;
     
     for (UPTileView *tileView in wordTrayTileViews) {
         tileView.userInteractionEnabled = NO;
+        [tileView clearGestures];
     }
 
     CGPoint slidePoint = CGPointMake(UP::NotACoordinate, layout_manager.score_tile_center_y());
     UPAnimator *slideAnimator = slide_to(RoleGameUI, wordTrayTileViews, 0.1, slidePoint, ^(UIViewAnimatingPosition) {
+        LOG(Leaks, "views [1]: %@", self.tileContainerView.subviews);
         [wordTrayTileViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        LOG(Leaks, "views [2]: %@", self.tileContainerView.subviews);
     });
 
     UIOffset springOffset = UIOffsetMake(0, layout_manager.score_tile_spring_down_offset_y());

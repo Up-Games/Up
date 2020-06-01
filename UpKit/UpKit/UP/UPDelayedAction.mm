@@ -44,15 +44,11 @@
     return self;
 }
 
-- (void)dealloc
-{
-    UP::TimeSpanning::remove(self);
-}
-
 - (void)start
 {
     self.state = UPDelayedActionStateRunning;
     [[UPTicker instance] addTicking:self];
+    UP::TimeSpanning::add(self);
 }
 
 - (void)pause
@@ -60,6 +56,7 @@
     self.previousTick = 0;
     self.state = UPDelayedActionStatePaused;
     [[UPTicker instance] removeTicking:self];
+    UP::TimeSpanning::remove(self);
 }
 
 - (void)reset
@@ -67,6 +64,7 @@
     self.state = UPDelayedActionStateRunning;
     self.remainingDuration = self.duration;
     [[UPTicker instance] addTicking:self];
+    UP::TimeSpanning::add(self);
 }
 
 - (void)cancel
@@ -74,6 +72,7 @@
     self.previousTick = 0;
     self.state = UPDelayedActionStateCancelled;
     [[UPTicker instance] removeTicking:self];
+    UP::TimeSpanning::remove(self);
 }
 
 - (void)call
@@ -87,7 +86,8 @@
     if (self.block) {
         self.block();
     }
-    
+
+    UP::TimeSpanning::remove(self);
     ref = nil;
 }
 

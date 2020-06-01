@@ -62,6 +62,7 @@ void start(NSObject<UPTimeSpanning> *);
 void start(UP::Role role);
 void start_all();
 
+void add(NSObject<UPTimeSpanning> *);
 void remove(NSObject<UPTimeSpanning> *);
 
 }  // namespace TimeSpanning

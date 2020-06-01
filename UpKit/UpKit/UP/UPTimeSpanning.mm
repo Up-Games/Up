@@ -6,6 +6,7 @@
 #import <unordered_map>
 #import <vector>
 
+#import "UPAssertions.h"
 #import "UPAnimator.h"
 #import "UPDelayedAction.h"
 #import "UPTimeSpanning.h"
@@ -23,10 +24,34 @@ void init()
     });
 }
 
+UP_STATIC_INLINE void emplace(uint32_t serial_number, NSObject<UPTimeSpanning> *obj)
+{
+#if LOG_DISABLED
+    g_map->emplace(serial_number, obj);
+#else
+    auto r = g_map->emplace(serial_number, obj);
+    if (r.second) {
+        LOG(Leaks, "add: %d (%ld)", serial_number, g_map->size());
+    }
+#endif
+}
+
+UP_STATIC_INLINE void erase(uint32_t serial_number)
+{
+#if LOG_DISABLED
+    g_map->erase(serial_number);
+#else
+    auto r = g_map->erase(serial_number);
+    if (r) {
+        LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
+    }
+#endif
+}
+
 NSObject<UPTimeSpanning> *delay(UP::Role role, double delay_in_seconds, void (^block)(void))
 {
     UPDelayedAction *action = [UPDelayedAction delayedAction:role duration:delay_in_seconds block:block];
-    g_map->emplace(action.serialNumber, action);
+    emplace(action.serialNumber, action);
     [action start];
     return action;
 }
@@ -35,7 +60,7 @@ UPAnimator *bloop(UP::Role role, NSArray<UIView *> *views, CFTimeInterval durati
     void (^completion)(UIViewAnimatingPosition))
 {
     UPAnimator *animator = [UPAnimator bloopAnimatorWithRole:role views:views duration:duration position:position completion:completion];
-    g_map->emplace(animator.serialNumber, animator);
+    emplace(animator.serialNumber, animator);
     return animator;
 }
 
@@ -43,7 +68,7 @@ UPAnimator *fade(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duratio
     void (^completion)(UIViewAnimatingPosition))
 {
     UPAnimator *animator = [UPAnimator fadeAnimatorWithRole:role views:views duration:duration completion:completion];
-    g_map->emplace(animator.serialNumber, animator);
+    emplace(animator.serialNumber, animator);
     return animator;
 }
 
@@ -51,7 +76,7 @@ UPAnimator *shake(UP::Role role, NSArray<UIView *> *views, CFTimeInterval durati
     void (^completion)(UIViewAnimatingPosition))
 {
     UPAnimator *animator = [UPAnimator shakeAnimatorWithRole:role views:views duration:duration offset:offset completion:completion];
-    g_map->emplace(animator.serialNumber, animator);
+    emplace(animator.serialNumber, animator);
     return animator;
 }
 
@@ -59,7 +84,7 @@ UPAnimator *slide(UP::Role role, NSArray<UIView *> *views, CFTimeInterval durati
     void (^completion)(UIViewAnimatingPosition))
 {
     UPAnimator *animator = [UPAnimator slideAnimatorWithRole:role views:views duration:duration offset:offset completion:completion];
-    g_map->emplace(animator.serialNumber, animator);
+    emplace(animator.serialNumber, animator);
     return animator;
 }
 
@@ -67,7 +92,7 @@ UPAnimator *slide_to(UP::Role role, NSArray<UIView *> *views, CFTimeInterval dur
     void (^completion)(UIViewAnimatingPosition))
 {
     UPAnimator *animator = [UPAnimator slideToAnimatorWithRole:role views:views duration:duration point:point completion:completion];
-    g_map->emplace(animator.serialNumber, animator);
+    emplace(animator.serialNumber, animator);
     return animator;
 }
 
@@ -75,7 +100,7 @@ UPAnimator *spring(UP::Role role, NSArray<UIView *> *views, CFTimeInterval durat
     void (^completion)(UIViewAnimatingPosition))
 {
     UPAnimator *animator = [UPAnimator springAnimatorWithRole:role views:views duration:duration offset:offset completion:completion];
-    g_map->emplace(animator.serialNumber, animator);
+    emplace(animator.serialNumber, animator);
     return animator;
 }
 
@@ -84,7 +109,7 @@ UPAnimator *set_color(UP::Role role, NSArray<UPControl *> *controls, CFTimeInter
 {
     UPAnimator *animator = [UPAnimator setColorAnimatorWithRole:role controls:controls duration:duration element:element
         fromControlState:fromControlState toControlState:toControlState completion:completion];
-    g_map->emplace(animator.serialNumber, animator);
+    emplace(animator.serialNumber, animator);
     return animator;
 }
 
@@ -163,9 +188,14 @@ void start_all()
     }
 }
 
+void add(NSObject<UPTimeSpanning> *obj)
+{
+    emplace(obj.serialNumber, obj);
+}
+
 void remove(NSObject<UPTimeSpanning> *obj)
 {
-    g_map->erase(obj.serialNumber);
+    erase(obj.serialNumber);
 }
 
 }  // namespace TimeSpanning

@@ -50,12 +50,11 @@ const CFTimeInterval UPGameTimerDefaultDuration = 120;
     }
     self.startTime = CACurrentMediaTime();
     self.previousCallbackTime = self.startTime;
-    self.remainingTime = self.duration;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:UPGameTimerInterval repeats:YES block:^(NSTimer *timer) {
         CFTimeInterval now = CACurrentMediaTime();
         self.now = now;
-        CFTimeInterval elapsed = now - self.startTime;
-        self.remainingTime = UPMaxT(CFTimeInterval, self.duration - elapsed, 0.0);
+        CFTimeInterval elapsed = now - self.previousCallbackTime;
+        self.remainingTime = UPMaxT(CFTimeInterval, self.remainingTime - elapsed, 0.0);
         for (id observer in self.observers) {
             [observer gameTimerUpdated:self];
         }

@@ -28,6 +28,8 @@ using UP::TilePaths;
 @property (nonatomic, readwrite) UIPanGestureRecognizer *pan;
 @end
 
+static uint32_t _InstanceCount;
+
 @implementation UPTileView
 
 + (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier
@@ -38,6 +40,9 @@ using UP::TilePaths;
 - (instancetype)_initWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier
 {
     self = [super initWithFrame:CGRectZero];
+    
+    _InstanceCount++;
+    LOG(Leaks, "alloc:   %@ (%d)", self, _InstanceCount);
     
     self.autoHighlights = NO;
     
@@ -85,7 +90,8 @@ using UP::TilePaths;
 
 - (void)dealloc
 {
-    LOG(Leaks, "dealloc: %@", self);
+    _InstanceCount--;
+    LOG(Leaks, "dealloc: %@ (%d)", self, _InstanceCount);
 }
 
 - (NSString *)description
@@ -94,6 +100,17 @@ using UP::TilePaths;
 }
 
 #pragma mark - Gestures
+
+- (void)clearGestures
+{
+    self.tap.delegate = nil;
+    self.pan.delegate = nil;
+    [self removeGestureRecognizer:self.tap];
+    [self removeGestureRecognizer:self.pan];
+    self.tap = nil;
+    self.pan = nil;
+    self.gestureDelegate = nil;
+}
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {

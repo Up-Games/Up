@@ -446,6 +446,11 @@ const SpellModel::State &SpellModel::apply(const Action &action)
             break;
     }
 
+//    TileArray tiles_copy = tiles();
+//    for (auto &tile : tiles_copy) {
+//        tile.clear_view();
+//    }
+
     return m_states.emplace_back(action, tiles(), score());
 }
 

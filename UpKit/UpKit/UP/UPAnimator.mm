@@ -23,40 +23,51 @@
 + (UPAnimator *)bloopAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     position:(CGPoint)position completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UIViewPropertyAnimator *positionAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7 animations:^{
+    UPAnimator *animator = [[self alloc] _initWithRole:role];
+    UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7 animations:^{
         for (UIView *view in views) {
             view.center = position;
         }
     }];
+    [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        UP::TimeSpanning::remove(animator);
+    }];
     if (completion) {
-        [positionAnimator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
             completion(finalPosition);
         }];
     }
-    return [[self alloc] _initWithRole:role innerAnimator:positionAnimator];
+    animator.inner = inner;
+    return animator;
 }
 
 + (UPAnimator *)fadeAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 {
-    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration curve:UIViewAnimationCurveEaseOut animations:^{
+    UPAnimator *animator = [[self alloc] _initWithRole:role];
+    UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration curve:UIViewAnimationCurveEaseOut animations:^{
         for (UIView *view in views) {
             view.alpha = 0;
         }
     }];
+    [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        UP::TimeSpanning::remove(animator);
+    }];
     if (completion) {
-        [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
             completion(finalPosition);
         }];
     }
-    return [[self alloc] _initWithRole:role innerAnimator:animator];
+    animator.inner = inner;
+    return animator;
 }
 
 + (UPAnimator *)shakeAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
+    UPAnimator *animator = [[self alloc] _initWithRole:role];
     __block UIOffset roffset = UIOffsetZero;
-    UPTickingAnimator *animator = [UPTickingAnimator animatorWithRole:role duration:duration
+    UPTickingAnimator *inner = [UPTickingAnimator animatorWithRole:role duration:duration
         unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear]
         applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
             CGFloat factor = sin(5 * M_PI * fractionCompleted);
@@ -67,37 +78,45 @@
                 view.transform = CGAffineTransformTranslate(view.transform, doffset.horizontal, doffset.vertical);
             }
         }
-        completion:^(UPTickingAnimator *animator, UIViewAnimatingPosition finalPosition) {
+        completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+            UP::TimeSpanning::remove(animator);
             if (completion) {
                 completion(finalPosition);
             }
         }
     ];
-    return [[self alloc] _initWithRole:role innerAnimator:animator];
+    animator.inner = inner;
+    return animator;
 }
 
 + (UPAnimator *)slideAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration
+    UPAnimator *animator = [[self alloc] _initWithRole:role];
+    UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration
         curve:UIViewAnimationCurveLinear animations:^{
             for (UIView *view in views) {
                 view.transform = CGAffineTransformTranslate(view.transform, offset.horizontal, offset.vertical);
             }
         }
     ];
+    [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        UP::TimeSpanning::remove(animator);
+    }];
     if (completion) {
-        [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
             completion(finalPosition);
         }];
     }
-    return [[self alloc] _initWithRole:role innerAnimator:animator];
+    animator.inner = inner;
+    return animator;
 }
 
 + (UPAnimator *)slideToAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     point:(CGPoint)point completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration
+    UPAnimator *animator = [[self alloc] _initWithRole:role];
+    UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration
         curve:UIViewAnimationCurveEaseInOut animations:^{
             for (UIView *view in views) {
                 CGPoint center = up_rect_center(view.frame);
@@ -107,37 +126,47 @@
             }
         }
     ];
+    [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        UP::TimeSpanning::remove(animator);
+    }];
     if (completion) {
-        [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
             completion(finalPosition);
         }];
     }
-    return [[self alloc] _initWithRole:role innerAnimator:animator];
+    animator.inner = inner;
+    return animator;
 }
 
 + (UPAnimator *)springAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7
+    UPAnimator *animator = [[self alloc] _initWithRole:role];
+    UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7
          animations:^{
             for (UIView *view in views) {
                 view.transform = CGAffineTransformTranslate(view.transform, offset.horizontal, offset.vertical);
             }
         }
     ];
+    [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        UP::TimeSpanning::remove(animator);
+    }];
     if (completion) {
-        [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
             completion(finalPosition);
         }];
     }
-    return [[self alloc] _initWithRole:role innerAnimator:animator];
+    animator.inner = inner;
+    return animator;
 }
 
 + (UPAnimator *)setColorAnimatorWithRole:(UP::Role)role controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
     element:(UPControlElement)element fromControlState:(UPControlState)fromControlState toControlState:(UPControlState)toControlState
         completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 {
-    UPTickingAnimator *animator = [UPTickingAnimator animatorWithRole:role duration:duration
+    UPAnimator *animator = [[self alloc] _initWithRole:role];
+    UPTickingAnimator *inner = [UPTickingAnimator animatorWithRole:role duration:duration
         unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInEaseOutExpo]
         applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
             if (element & UPControlElementFill) {
@@ -162,29 +191,25 @@
                 }
             }
         }
-        completion:^(UPTickingAnimator *animator, UIViewAnimatingPosition finalPosition) {
+        completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+            UP::TimeSpanning::remove(animator);
             if (completion) {
                 completion(finalPosition);
             }
         }
     ];
-    return [[self alloc] _initWithRole:role innerAnimator:animator];
+    animator.inner = inner;
+    return animator;
 }
 
-- (instancetype)_initWithRole:(UP::Role)role innerAnimator:(NSObject<UIViewAnimating> *)inner
+- (instancetype)_initWithRole:(UP::Role)role
 {
     ASSERT(role);
 
     self = [super init];
     self.role = role;
-    self.inner = inner;
     self.serialNumber = UP::next_serial_number();
     return self;
-}
-
-- (void)dealloc
-{
-    UP::TimeSpanning::remove(self);
 }
 
 #pragma mark - UIViewAnimating
@@ -221,11 +246,13 @@
 - (void)startAnimation
 {
     [self.inner startAnimation];
+    UP::TimeSpanning::add(self);
 }
 
 - (void)startAnimationAfterDelay:(NSTimeInterval)delay
 {
     [self.inner startAnimationAfterDelay:delay];
+    UP::TimeSpanning::add(self);
 }
 
 - (void)pauseAnimation
@@ -236,6 +263,7 @@
 - (void)stopAnimation:(BOOL)withoutFinishing
 {
     [self.inner stopAnimation:withoutFinishing];
+    UP::TimeSpanning::remove(self);
 }
 
 - (void)finishAnimationAtPosition:(UIViewAnimatingPosition)finalPosition
