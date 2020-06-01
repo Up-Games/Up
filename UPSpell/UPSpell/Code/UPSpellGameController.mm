@@ -1008,7 +1008,6 @@ using UP::RoleModeUI;
     self.roundControlButtonTrash.highlighted = YES;
     self.wordTrayView.alpha = disabledAlpha;
     self.roundControlButtonPause.alpha = disabledAlpha;
-    self.roundControlButtonClear.alpha = 0;
     for (UPTileView *tileView in tileViews) {
         tileView.alpha = disabledAlpha;
     }
@@ -1021,7 +1020,6 @@ using UP::RoleModeUI;
     self.wordTrayView.alpha = disabledAlpha;
     self.roundControlButtonPause.alpha = disabledAlpha;
     self.roundControlButtonClear.alpha = disabledAlpha;
-    self.roundControlButtonTrash.alpha = 0;
     for (UPTileView *tileView in tileViews) {
         tileView.alpha = disabledAlpha;
     }
