@@ -181,22 +181,22 @@ static uint32_t _InstanceCount;
         applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
             if (element & UPControlElementFill) {
                 for (UPControl *control in controls) {
-                    UIColor *c1 = [control fillColorForControlStates:fromControlState];
-                    UIColor *c2 = [control fillColorForControlStates:toControlState];
+                    UIColor *c1 = [control fillColorForState:fromControlState];
+                    UIColor *c2 = [control fillColorForState:toControlState];
                     control.fillPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
                 }
             }
             if (element & UPControlElementStroke) {
                 for (UPControl *control in controls) {
-                    UIColor *c1 = [control strokeColorForControlStates:fromControlState];
-                    UIColor *c2 = [control strokeColorForControlStates:toControlState];
+                    UIColor *c1 = [control strokeColorForState:fromControlState];
+                    UIColor *c2 = [control strokeColorForState:toControlState];
                     control.strokePathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
                 }
             }
             if (element & UPControlElementContent) {
                 for (UPControl *control in controls) {
-                    UIColor *c1 = [control contentColorForControlStates:fromControlState];
-                    UIColor *c2 = [control contentColorForControlStates:toControlState];
+                    UIColor *c1 = [control contentColorForState:fromControlState];
+                    UIColor *c2 = [control contentColorForState:toControlState];
                     control.contentPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
                 }
             }

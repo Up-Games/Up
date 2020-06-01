@@ -68,27 +68,11 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 @property (nonatomic, readwrite) UPBezierPathView *contentPathView;
 @property (nonatomic, readwrite) UPBezierPathView *fillPathView;
 @property (nonatomic, readwrite) UPBezierPathView *strokePathView;
-@property (nonatomic) NSMutableDictionary<NSNumber *, UIBezierPath *> *pathsForStates;
 @property (nonatomic) UPControlState previousState;
 @property (nonatomic) uint32_t fillColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t strokeColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t contentColorAnimatorSerialNumber;
 @end
-
-UP_STATIC_INLINE NSNumber * _FillKey(UPControlState controlState)
-{
-    return @(UPControlElementFill | controlState);
-}
-
-UP_STATIC_INLINE NSNumber * _StrokeKey(UPControlState controlState)
-{
-    return @(UPControlElementStroke | controlState);
-}
-
-UP_STATIC_INLINE NSNumber * _ContentKey(UPControlState controlState)
-{
-    return @(UPControlElementContent | controlState);
-}
 
 UP_STATIC_INLINE NSUInteger up_control_key_fill(UPControlState controlState)
 {
@@ -252,13 +236,6 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 
 #pragma mark - Paths
 
-- (void)_createPathsForStatesIfNeeded
-{
-    if (!self.pathsForStates) {
-        self.pathsForStates = [NSMutableDictionary dictionary];
-    }
-}
-
 - (void)_reorderPathViews
 {
     if (self.fillPathView) {
@@ -269,17 +246,6 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     }
     if (self.contentPathView) {
         [self bringSubviewToFront:self.contentPathView];
-    }
-}
-
-- (void)_createContentPathViewIfNeeded
-{
-    if (!self.contentPathView) {
-        self.contentPathView = [UPBezierPathView bezierPathView];
-        self.contentPathView.userInteractionEnabled = NO;
-        self.contentPathView.canonicalSize = self.canonicalSize;
-        [self addSubview:self.contentPathView];
-        [self _reorderPathViews];
     }
 }
 
@@ -305,18 +271,15 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     }
 }
 
-- (void)setContentPath:(UIBezierPath *)path
+- (void)_createContentPathViewIfNeeded
 {
-    [self setContentPath:path forState:UPControlStateNormal];
-}
-
-- (void)setContentPath:(UIBezierPath *)path forState:(UPControlState)state
-{
-    [self _createPathsForStatesIfNeeded];
-    [self _createContentPathViewIfNeeded];
-    NSNumber *key = _ContentKey(state);
-    self.pathsForStates[key] = path;
-    [self setNeedsLayout];
+    if (!self.contentPathView) {
+        self.contentPathView = [UPBezierPathView bezierPathView];
+        self.contentPathView.userInteractionEnabled = NO;
+        self.contentPathView.canonicalSize = self.canonicalSize;
+        [self addSubview:self.contentPathView];
+        [self _reorderPathViews];
+    }
 }
 
 - (void)setFillPath:(UIBezierPath *)path
@@ -326,11 +289,30 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 
 - (void)setFillPath:(UIBezierPath *)path forState:(UPControlState)state
 {
-    [self _createPathsForStatesIfNeeded];
     [self _createFillPathViewIfNeeded];
-    NSNumber *key = _FillKey(state);
-    self.pathsForStates[key] = path;
+    NSUInteger k = up_control_key_fill(state);
+    auto it = m_paths.find(k);
+    if (it == m_paths.end()) {
+        m_paths.emplace(k, path);
+    }
+    else {
+        it->second = path;
+    }
     [self setNeedsLayout];
+}
+
+- (UIBezierPath *)fillPathForState:(UPControlState)state
+{
+    const auto &end = m_paths.end();
+    const auto &sval = m_paths.find(up_control_key_fill(state));
+    if (sval != end) {
+        return sval->second;
+    }
+    const auto &nval = m_paths.find(up_control_key_fill(UPControlStateNormal));
+    if (nval != end) {
+        return nval->second;
+    }
+    return nil;
 }
 
 - (void)setStrokePath:(UIBezierPath *)path
@@ -340,11 +322,61 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 
 - (void)setStrokePath:(UIBezierPath *)path forState:(UPControlState)state
 {
-    [self _createPathsForStatesIfNeeded];
     [self _createStrokePathViewIfNeeded];
-    NSNumber *key = _StrokeKey(state);
-    self.pathsForStates[key] = path;
-    [self setNeedsLayout];
+    NSUInteger k = up_control_key_stroke(state);
+    auto it = m_paths.find(k);
+    if (it == m_paths.end()) {
+        m_paths.emplace(k, path);
+    }
+    else {
+        it->second = path;
+    }
+}
+
+- (UIBezierPath *)strokePathForState:(UPControlState)state
+{
+    const auto &end = m_paths.end();
+    const auto &sval = m_paths.find(up_control_key_stroke(state));
+    if (sval != end) {
+        return sval->second;
+    }
+    const auto &nval = m_paths.find(up_control_key_stroke(UPControlStateNormal));
+    if (nval != end) {
+        return nval->second;
+    }
+    return nil;
+}
+
+- (void)setContentPath:(UIBezierPath *)path
+{
+    [self setContentPath:path forState:UPControlStateNormal];
+}
+
+- (void)setContentPath:(UIBezierPath *)path forState:(UPControlState)state
+{
+    [self _createContentPathViewIfNeeded];
+    NSUInteger k = up_control_key_content(state);
+    auto it = m_paths.find(k);
+    if (it == m_paths.end()) {
+        m_paths.emplace(k, path);
+    }
+    else {
+        it->second = path;
+    }
+}
+
+- (UIBezierPath *)contentPathForState:(UPControlState)state
+{
+    const auto &end = m_paths.end();
+    const auto &sval = m_paths.find(up_control_key_content(state));
+    if (sval != end) {
+        return sval->second;
+    }
+    const auto &nval = m_paths.find(up_control_key_content(UPControlStateNormal));
+    if (nval != end) {
+        return nval->second;
+    }
+    return nil;
 }
 
 # pragma mark - Colors
@@ -367,7 +399,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     [self setNeedsLayout];
 }
 
-- (UIColor *)fillColorForControlStates:(UPControlState)state
+- (UIColor *)fillColorForState:(UPControlState)state
 {
     const auto &end = m_colors.end();
     const auto &sval = m_colors.find(up_control_key_fill(state));
@@ -421,7 +453,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     [self setNeedsLayout];
 }
 
-- (UIColor *)strokeColorForControlStates:(UPControlState)state
+- (UIColor *)strokeColorForState:(UPControlState)state
 {
     const auto &end = m_colors.end();
     const auto &sval = m_colors.find(up_control_key_stroke(state));
@@ -475,7 +507,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     [self setNeedsLayout];
 }
 
-- (UIColor *)contentColorForControlStates:(UPControlState)state
+- (UIColor *)contentColorForState:(UPControlState)state
 {
     const auto &end = m_colors.end();
     const auto &sval = m_colors.find(up_control_key_content(state));
@@ -708,14 +740,12 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     }
     
     if (self.fillPathView) {
-        NSNumber *key = _FillKey(state);
-        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_FillKey(UPControlStateNormal)];
-        self.fillPathView.path = path;
+        self.fillPathView.path = [self fillPathForState:state];
 
         cancel(self.fillColorAnimatorSerialNumber);
         self.fillColorAnimatorSerialNumber = UP::NotASerialNumber;
 
-        UIColor *colorForState = [self fillColorForControlStates:state];
+        UIColor *colorForState = [self fillColorForState:state];
         CFTimeInterval duration = [self fillColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.fillPathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
@@ -732,14 +762,12 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         }
     }
     if (self.strokePathView) {
-        NSNumber *key = _StrokeKey(state);
-        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_StrokeKey(UPControlStateNormal)];
-        self.strokePathView.path = path;
+        self.strokePathView.path = [self strokePathForState:state];
 
         cancel(self.strokeColorAnimatorSerialNumber);
         self.strokeColorAnimatorSerialNumber = UP::NotASerialNumber;
 
-        UIColor *colorForState = [self strokeColorForControlStates:state];
+        UIColor *colorForState = [self strokeColorForState:state];
         CFTimeInterval duration = [self strokeColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.strokePathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
@@ -756,14 +784,12 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         }
     }
     if (self.contentPathView) {
-        NSNumber *key = _ContentKey(state);
-        UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_ContentKey(UPControlStateNormal)];
-        self.contentPathView.path = path;
+        self.contentPathView.path = [self contentPathForState:state];
 
         cancel(self.contentColorAnimatorSerialNumber);
         self.contentColorAnimatorSerialNumber = UP::NotASerialNumber;
 
-        UIColor *colorForState = [self contentColorForControlStates:state];
+        UIColor *colorForState = [self contentColorForState:state];
         CFTimeInterval duration = [self contentColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.contentPathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {

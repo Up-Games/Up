@@ -42,10 +42,10 @@ typedef NS_OPTIONS(NSUInteger, UPControlState) {
 
 typedef NS_OPTIONS(NSUInteger, UPControlElement) {
     // Values chosen to be in the UPControlStateApplication range, so
-    // there's the option to bitwise-OR them together with UPControlStates.
-    UPControlElementFill =    0x00100000,
-    UPControlElementStroke =  0x00200000,
-    UPControlElementContent = 0x00400000,
+    // there's the option to bitwise-OR them together with UPControlState values.
+    UPControlElementFill =        0x00100000,
+    UPControlElementStroke =      0x00200000,
+    UPControlElementContent =     0x00400000,
 };
 
 @interface UPControl : UIView
@@ -92,25 +92,28 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 
 - (void)setFillPath:(UIBezierPath *)path;
 - (void)setFillPath:(UIBezierPath *)path forState:(UPControlState)state;
+- (UIBezierPath *)fillPathForState:(UPControlState)state;
 - (void)setFillColor:(UIColor *)color;
 - (void)setFillColor:(UIColor *)color forState:(UPControlState)state;
-- (UIColor *)fillColorForControlStates:(UPControlState)state;
+- (UIColor *)fillColorForState:(UPControlState)state;
 - (void)setFillColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)fillColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
 
 - (void)setStrokePath:(UIBezierPath *)path;
 - (void)setStrokePath:(UIBezierPath *)path forState:(UPControlState)state;
+- (UIBezierPath *)strokePathForState:(UPControlState)state;
 - (void)setStrokeColor:(UIColor *)color;
 - (void)setStrokeColor:(UIColor *)color forState:(UPControlState)state;
-- (UIColor *)strokeColorForControlStates:(UPControlState)state;
+- (UIColor *)strokeColorForState:(UPControlState)state;
 - (void)setStrokeColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)strokeColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
 
 - (void)setContentPath:(UIBezierPath *)path;
 - (void)setContentPath:(UIBezierPath *)path forState:(UPControlState)state;
+- (UIBezierPath *)contentPathForState:(UPControlState)state;
 - (void)setContentColor:(UIColor *)color;
 - (void)setContentColor:(UIColor *)color forState:(UPControlState)state;
-- (UIColor *)contentColorForControlStates:(UPControlState)state;
+- (UIColor *)contentColorForState:(UPControlState)state;
 - (void)setContentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)contentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
 
