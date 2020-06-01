@@ -44,4 +44,7 @@ typedef void (^UPTickingAnimatorCompletion)(UPTickingAnimator *animator, UIViewA
 @property (nonatomic, readonly) uint32_t serialNumber;
 - (void)tick:(CFTimeInterval)now;
 
+// aid in breaking retain cycles
+- (void)clearBlocks;
+
 @end

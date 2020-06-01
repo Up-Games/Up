@@ -51,6 +51,7 @@ UPAnimator *set_color(UP::Role role, NSArray<UPControl *> *controls, CFTimeInter
 NSObject<UPTimeSpanning> *delay(UP::Role role, double delay_in_seconds, void (^block)(void));
 
 void cancel(NSObject<UPTimeSpanning> *);
+void cancel(uint32_t);
 void cancel(UP::Role role);
 void cancel_all();
 

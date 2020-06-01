@@ -116,8 +116,21 @@ UPAnimator *set_color(UP::Role role, NSArray<UPControl *> *controls, CFTimeInter
 void cancel(NSObject<UPTimeSpanning> *obj)
 {
     if (obj) {
-        g_map->erase(obj.serialNumber);
+        erase(obj.serialNumber);
         [obj cancel];
+    }
+}
+
+void cancel(uint32_t serial_number)
+{
+    auto it = g_map->find(serial_number);
+    if (it != g_map->end()) {
+        NSObject<UPTimeSpanning> *obj = it->second;
+        [obj cancel];
+        g_map->erase(it);
+#if !LOG_DISABLED
+        LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
+#endif
     }
 }
 
@@ -126,7 +139,11 @@ void cancel(UP::Role role)
     for (auto it = g_map->begin(); it != g_map->end();) {
         NSObject<UPTimeSpanning> *obj = it->second;
         if (role == obj.role || strcmp(role, obj.role) == 0) {
+            uint32_t serial_number = obj.serialNumber;
             it = g_map->erase(it);
+#if !LOG_DISABLED
+            LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
+#endif
             [obj cancel];
         }
         else {

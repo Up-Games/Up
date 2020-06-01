@@ -18,6 +18,8 @@
 @property (nonatomic) NSObject<UIViewAnimating> *inner;
 @end
 
+static uint32_t _InstanceCount;
+
 @implementation UPAnimator
 
 + (UPAnimator *)bloopAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
@@ -79,10 +81,11 @@
             }
         }
         completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
-            UP::TimeSpanning::remove(animator);
             if (completion) {
                 completion(finalPosition);
             }
+            [inner clearBlocks];
+            UP::TimeSpanning::remove(animator);
         }
     ];
     animator.inner = inner;
@@ -192,10 +195,11 @@
             }
         }
         completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
-            UP::TimeSpanning::remove(animator);
             if (completion) {
                 completion(finalPosition);
             }
+            [inner clearBlocks];
+            UP::TimeSpanning::remove(animator);
         }
     ];
     animator.inner = inner;
@@ -206,10 +210,20 @@
 {
     ASSERT(role);
 
+    _InstanceCount++;
+    LOG(Leaks, "anim+: %@ (%d)", self, _InstanceCount);
+
     self = [super init];
     self.role = role;
     self.serialNumber = UP::next_serial_number();
     return self;
+}
+
+- (void)dealloc
+{
+    _InstanceCount--;
+    LOG(Leaks, "anim-: %@ (%d)", self, _InstanceCount);
+    UP::TimeSpanning::remove(self);
 }
 
 #pragma mark - UIViewAnimating

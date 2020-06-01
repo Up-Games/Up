@@ -121,6 +121,12 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
     return self;
 }
 
+- (void)clearBlocks
+{
+    self.applier = nil;
+    self.completion = nil;
+}
+
 - (void)tick:(CFTimeInterval)now
 {
     if (!self.running || self.completed) {

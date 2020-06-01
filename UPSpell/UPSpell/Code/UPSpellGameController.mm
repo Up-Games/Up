@@ -532,7 +532,7 @@ using UP::RoleModeUI;
 
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
 
-    BOOL needSlide = YES;
+    BOOL needSlide = wordTrayTileViews.count > 0;
     TilePosition word_pos = TilePosition(TileTray::Word, self.model->word_length());
     const State &state = self.model->back_state();
     if (state.action().opcode() == SpellModel::Opcode::HOVER) {
@@ -553,7 +553,7 @@ using UP::RoleModeUI;
     [self.tileContainerView bringSubviewToFront:tileView];
     start(bloop(RoleGameUI, @[tileView], 0.4, word_tray_center, nil));
 
-//    tileView.highlighted = NO;
+    tileView.highlighted = NO;
     [self viewOpUpdateGameControls];
 }
 

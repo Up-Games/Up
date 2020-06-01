@@ -704,7 +704,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         NSNumber *key = _FillKey(state);
         UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_FillKey(UPControlStateNormal)];
         self.fillPathView.path = path;
-        
+
         cancel(self.fillColorAnimator);
         self.fillColorAnimator = nil;
 
@@ -712,12 +712,15 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         CFTimeInterval duration = [self fillColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.fillPathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            self.fillColorAnimator = set_color(self.role, @[self], duration, UPControlElementFill, self.previousState, state,
+            //self.fillColorAnimator =
+            UPAnimator *animator = set_color(self.role, @[self], duration, UPControlElementFill, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.fillColorAnimator = nil;
                 }
             );
-            [self.fillColorAnimator start];
+            [animator start];
+            //[self.fillColorAnimator start];
+            self.fillPathView.fillColor = colorForState;
         }
         else {
             self.fillPathView.fillColor = colorForState;
@@ -735,12 +738,14 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         CFTimeInterval duration = [self strokeColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.strokePathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            self.strokeColorAnimator = set_color(self.role, @[self], duration, UPControlElementStroke, self.previousState, state,
+            //self.strokeColorAnimator =
+            UPAnimator *animator = set_color(self.role, @[self], duration, UPControlElementStroke, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.strokeColorAnimator = nil;
                 }
             );
-            [self.strokeColorAnimator start];
+            [animator start];
+            //[self.strokeColorAnimator start];
         }
         else {
             self.strokePathView.fillColor = colorForState;
@@ -758,12 +763,14 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         CFTimeInterval duration = [self contentColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.contentPathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            self.contentColorAnimator = set_color(self.role, @[self], duration, UPControlElementContent, self.previousState, state,
+            //self.contentColorAnimator =
+            UPAnimator *animator = set_color(self.role, @[self], duration, UPControlElementContent, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.strokeColorAnimator = nil;
                 }
             );
-            [self.strokeColorAnimator start];
+            [animator start];
+            //[self.contentColorAnimator start];
         }
         else {
             self.contentPathView.fillColor = colorForState;
