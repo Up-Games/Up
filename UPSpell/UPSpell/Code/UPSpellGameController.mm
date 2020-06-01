@@ -66,10 +66,10 @@ using UP::RoleModeUI;
 @property (nonatomic) UPControl *wordTrayView;
 @property (nonatomic) UIView *tileContainerView;
 @property (nonatomic) UPBezierPathView *tileContainerClipView;
-@property (nonatomic) UPControl *roundControlButtonPause;
-@property (nonatomic) UPControl *roundControlButtonTrash;
-@property (nonatomic) UPControl *roundControlButtonClear;
-@property (nonatomic) BOOL showingRoundControlButtonClear;
+@property (nonatomic) UPControl *roundButtonPause;
+@property (nonatomic) UPControl *roundButtonTrash;
+@property (nonatomic) UPControl *roundButtonClear;
+@property (nonatomic) BOOL showingRoundButtonClear;
 @property (nonatomic) UPGameTimer *gameTimer;
 @property (nonatomic) UPGameTimerLabel *gameTimerLabel;
 @property (nonatomic) UPLabel *scoreLabel;
@@ -137,26 +137,26 @@ using UP::RoleModeUI;
     self.tileContainerClipView.fillColor = [UIColor blackColor];
     self.tileContainerView.layer.mask = self.tileContainerClipView.shapeLayer;
 
-    self.roundControlButtonPause = [UPControl roundControlButtonPause];
-    self.roundControlButtonPause.role = RoleGameUI;
-    self.roundControlButtonPause.frame = layout_manager.game_controls_left_button_frame();
-    self.roundControlButtonPause.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundControlButtonPause addTarget:self action:@selector(roundControlButtonPauseTapped:) forEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.roundControlButtonPause];
+    self.roundButtonPause = [UPControl roundButtonPause];
+    self.roundButtonPause.role = RoleGameUI;
+    self.roundButtonPause.frame = layout_manager.game_controls_left_button_frame();
+    self.roundButtonPause.chargeSize = layout_manager.game_controls_button_charge_size();
+    [self.roundButtonPause addTarget:self action:@selector(roundControlButtonPauseTapped:) forEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.roundButtonPause];
 
-    self.roundControlButtonTrash = [UPControl roundControlButtonTrash];
-    self.roundControlButtonTrash.role = RoleGameUI;
-    self.roundControlButtonTrash.frame = layout_manager.game_controls_right_button_frame();
-    self.roundControlButtonTrash.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundControlButtonTrash addTarget:self action:@selector(roundControlButtonTrashTapped:) forEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.roundControlButtonTrash];
+    self.roundButtonTrash = [UPControl roundButtonTrash];
+    self.roundButtonTrash.role = RoleGameUI;
+    self.roundButtonTrash.frame = layout_manager.game_controls_right_button_frame();
+    self.roundButtonTrash.chargeSize = layout_manager.game_controls_button_charge_size();
+    [self.roundButtonTrash addTarget:self action:@selector(roundControlButtonTrashTapped:) forEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.roundButtonTrash];
 
-    self.roundControlButtonClear = [UPControl roundControlButtonClear];
-    self.roundControlButtonClear.role = RoleGameUI;
-    self.roundControlButtonClear.frame = layout_manager.game_controls_right_button_frame();
-    self.roundControlButtonClear.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundControlButtonClear addTarget:self action:@selector(roundControlButtonClearTapped:) forEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.roundControlButtonClear];
+    self.roundButtonClear = [UPControl roundButtonClear];
+    self.roundButtonClear.role = RoleGameUI;
+    self.roundButtonClear.frame = layout_manager.game_controls_right_button_frame();
+    self.roundButtonClear.chargeSize = layout_manager.game_controls_button_charge_size();
+    [self.roundButtonClear addTarget:self action:@selector(roundControlButtonClearTapped:) forEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.roundButtonClear];
 
     UIFont *font = [UIFont gameInformationFontOfSize:layout_manager.game_information_font_metrics().point_size()];
     UIFont *superscriptFont = [UIFont gameInformationFontOfSize:layout_manager.game_information_superscript_font_metrics().point_size()];
@@ -190,6 +190,11 @@ using UP::RoleModeUI;
     [self.view addSubview:self.scoreLabel];
 
     [self viewOpUpdateGameControls];
+
+//    UPControl *textButtonPlay = [UPControl textButtonPlay];
+//    textButtonPlay.frame = CGRectMake(200, 200, 188, 75);
+//    [self.view addSubview:textButtonPlay];
+//    
 
     self.pickedView = nil;
     self.pickedPosition = TilePosition();
@@ -320,8 +325,8 @@ using UP::RoleModeUI;
         [self.gameTimer start];
         start(RoleGameDelay);
         start(RoleGameUI);
-        self.roundControlButtonPause.highlightedOverride = NO;
-        self.roundControlButtonPause.highlighted = NO;
+        self.roundButtonPause.highlightedOverride = NO;
+        self.roundButtonPause.highlighted = NO;
     }
 }
 
@@ -770,14 +775,14 @@ using UP::RoleModeUI;
 
     // trash/clear button
     if (self.model->word_length()) {
-        self.showingRoundControlButtonClear = YES;
-        self.roundControlButtonClear.hidden = NO;
-        self.roundControlButtonTrash.hidden = YES;
+        self.showingRoundButtonClear = YES;
+        self.roundButtonClear.hidden = NO;
+        self.roundButtonTrash.hidden = YES;
     }
     else {
-        self.showingRoundControlButtonClear = NO;
-        self.roundControlButtonClear.hidden = YES;
-        self.roundControlButtonTrash.hidden = NO;
+        self.showingRoundButtonClear = NO;
+        self.roundButtonClear.hidden = YES;
+        self.roundButtonTrash.hidden = NO;
     }
     
     self.scoreLabel.string = [NSString stringWithFormat:@"%d", self.model->score()];
@@ -1001,10 +1006,10 @@ using UP::RoleModeUI;
 {
     ASSERT(!self.view.userInteractionEnabled);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
-    self.roundControlButtonTrash.highlightedOverride = YES;
-    self.roundControlButtonTrash.highlighted = YES;
+    self.roundButtonTrash.highlightedOverride = YES;
+    self.roundButtonTrash.highlighted = YES;
     self.wordTrayView.alpha = disabledAlpha;
-    self.roundControlButtonPause.alpha = disabledAlpha;
+    self.roundButtonPause.alpha = disabledAlpha;
     for (UPTileView *tileView in tileViews) {
         tileView.alpha = disabledAlpha;
     }
@@ -1015,8 +1020,8 @@ using UP::RoleModeUI;
     ASSERT(!self.view.userInteractionEnabled);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.wordTrayView.alpha = disabledAlpha;
-    self.roundControlButtonPause.alpha = disabledAlpha;
-    self.roundControlButtonClear.alpha = disabledAlpha;
+    self.roundButtonPause.alpha = disabledAlpha;
+    self.roundButtonClear.alpha = disabledAlpha;
     for (UPTileView *tileView in tileViews) {
         tileView.alpha = disabledAlpha;
     }
@@ -1025,15 +1030,15 @@ using UP::RoleModeUI;
 - (void)viewOpPenaltyFinished
 {
     ASSERT(!self.view.userInteractionEnabled);
-    self.roundControlButtonTrash.highlightedOverride = NO;
-    self.roundControlButtonTrash.highlighted = NO;
+    self.roundButtonTrash.highlightedOverride = NO;
+    self.roundButtonTrash.highlighted = NO;
     self.wordTrayView.alpha = 1.0;
-    self.roundControlButtonPause.alpha = 1.0;
-    if (self.showingRoundControlButtonClear) {
-        self.roundControlButtonClear.alpha = 1.0;
+    self.roundButtonPause.alpha = 1.0;
+    if (self.showingRoundButtonClear) {
+        self.roundButtonClear.alpha = 1.0;
     }
     else {
-        self.roundControlButtonTrash.alpha = 1.0;
+        self.roundButtonTrash.alpha = 1.0;
     }
     NSArray *playerTrayTileViews = self.model->all_tile_views();
     for (UPTileView *tileView in playerTrayTileViews) {
@@ -1043,25 +1048,25 @@ using UP::RoleModeUI;
 
 - (void)viewOpEnterModal:(NSArray *)tileViews
 {
-    self.roundControlButtonPause.highlightedOverride = YES;
-    self.roundControlButtonPause.highlighted = YES;
-    self.roundControlButtonPause.alpha = [UIColor themeModalActiveAlpha];
+    self.roundButtonPause.highlightedOverride = YES;
+    self.roundButtonPause.highlighted = YES;
+    self.roundButtonPause.alpha = [UIColor themeModalActiveAlpha];
 
     const CGFloat alpha = [UIColor themeModalBackgroundAlpha];
     self.wordTrayView.alpha = alpha;
-    if (self.showingRoundControlButtonClear) {
-        self.roundControlButtonClear.alpha = alpha;
+    if (self.showingRoundButtonClear) {
+        self.roundButtonClear.alpha = alpha;
     }
     else {
-        self.roundControlButtonTrash.alpha = alpha;
+        self.roundButtonTrash.alpha = alpha;
     }
     self.gameTimerLabel.alpha = alpha;
     self.scoreLabel.alpha = alpha;
 
     self.wordTrayView.userInteractionEnabled = NO;
-    self.roundControlButtonTrash.userInteractionEnabled = NO;
-    self.roundControlButtonClear.userInteractionEnabled = NO;
-    self.roundControlButtonPause.userInteractionEnabled = NO;
+    self.roundButtonTrash.userInteractionEnabled = NO;
+    self.roundButtonClear.userInteractionEnabled = NO;
+    self.roundButtonPause.userInteractionEnabled = NO;
 
     for (UPTileView *tileView in tileViews) {
         tileView.alpha = alpha;
@@ -1071,24 +1076,24 @@ using UP::RoleModeUI;
 
 - (void)viewOpExitModal:(NSArray *)tileViews
 {
-    self.roundControlButtonPause.highlightedOverride = NO;
-    self.roundControlButtonPause.highlighted = NO;
-    self.roundControlButtonPause.alpha = 1.0;
+    self.roundButtonPause.highlightedOverride = NO;
+    self.roundButtonPause.highlighted = NO;
+    self.roundButtonPause.alpha = 1.0;
 
     self.wordTrayView.alpha = 1.0;
-    if (self.showingRoundControlButtonClear) {
-        self.roundControlButtonClear.alpha = 1.0;
+    if (self.showingRoundButtonClear) {
+        self.roundButtonClear.alpha = 1.0;
     }
     else {
-        self.roundControlButtonTrash.alpha = 1.0;
+        self.roundButtonTrash.alpha = 1.0;
     }
     self.gameTimerLabel.alpha = 1.0;
     self.scoreLabel.alpha = 1.0;
 
     self.wordTrayView.userInteractionEnabled = YES;
-    self.roundControlButtonTrash.userInteractionEnabled = YES;
-    self.roundControlButtonClear.userInteractionEnabled = YES;
-    self.roundControlButtonPause.userInteractionEnabled = YES;
+    self.roundButtonTrash.userInteractionEnabled = YES;
+    self.roundButtonClear.userInteractionEnabled = YES;
+    self.roundButtonPause.userInteractionEnabled = YES;
 
     for (UPTileView *tileView in tileViews) {
         tileView.alpha = 1.0;

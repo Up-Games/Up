@@ -46,6 +46,7 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
     UPControlElementFill =        0x00100000,
     UPControlElementStroke =      0x00200000,
     UPControlElementContentPath = 0x00400000,
+    UPControlElementContentText = 0x00800000,
 };
 
 @interface UPControl : UIView

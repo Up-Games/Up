@@ -9,9 +9,16 @@
 
 @interface UPControl (UPSpell)
 
-+ (UPControl *)roundControlButtonPause;
-+ (UPControl *)roundControlButtonTrash;
-+ (UPControl *)roundControlButtonClear;
++ (UPControl *)roundButtonPause;
++ (UPControl *)roundButtonTrash;
++ (UPControl *)roundButtonClear;
 + (UPControl *)wordTray;
+
++ (UPControl *)textButtonAbout;
++ (UPControl *)textButtonExtras;
++ (UPControl *)textButtonMenu;
++ (UPControl *)textButtonPlay;
++ (UPControl *)textButtonQuit;
++ (UPControl *)textButtonResume;
 
 @end

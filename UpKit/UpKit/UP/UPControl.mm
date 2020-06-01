@@ -60,18 +60,19 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
     std::vector<ControlAction> m_actions;
     std::map<NSUInteger, __strong UIBezierPath *> m_paths;
     std::map<NSUInteger, __strong UIColor *> m_colors;
+    std::map<NSUInteger, __strong NSAttributedString *> m_texts;
     std::map<UPControlStatePair, CFTimeInterval> m_color_animations;
 }
 @property (nonatomic, readwrite) UPControlState state;
 @property (nonatomic, readwrite) BOOL tracking;
 @property (nonatomic, readwrite) BOOL touchInside;
-@property (nonatomic, readwrite) UPBezierPathView *contentPathView;
 @property (nonatomic, readwrite) UPBezierPathView *fillPathView;
 @property (nonatomic, readwrite) UPBezierPathView *strokePathView;
+@property (nonatomic, readwrite) UPBezierPathView *contentPathView;
 @property (nonatomic) UPControlState previousState;
 @property (nonatomic) uint32_t fillColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t strokeColorAnimatorSerialNumber;
-@property (nonatomic) uint32_t contentColorAnimatorSerialNumber;
+@property (nonatomic) uint32_t contentPathColorAnimatorSerialNumber;
 @end
 
 UP_STATIC_INLINE NSUInteger up_control_key_fill(UPControlState controlState)
@@ -84,7 +85,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_stroke(UPControlState controlState)
     return UPControlElementStroke | controlState;
 }
 
-UP_STATIC_INLINE NSUInteger up_control_key_content_path(UPControlState controlState)
+UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 {
     return UPControlElementContentPath | controlState;
 }
@@ -355,7 +356,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content_path(UPControlState controlSt
 - (void)setContentPath:(UIBezierPath *)path forState:(UPControlState)state
 {
     [self _createContentPathViewIfNeeded];
-    NSUInteger k = up_control_key_content_path(state);
+    NSUInteger k = up_control_key_content(state);
     auto it = m_paths.find(k);
     if (it == m_paths.end()) {
         m_paths.emplace(k, path);
@@ -368,11 +369,11 @@ UP_STATIC_INLINE NSUInteger up_control_key_content_path(UPControlState controlSt
 - (UIBezierPath *)contentPathForState:(UPControlState)state
 {
     const auto &end = m_paths.end();
-    const auto &sval = m_paths.find(up_control_key_content_path(state));
+    const auto &sval = m_paths.find(up_control_key_content(state));
     if (sval != end) {
         return sval->second;
     }
-    const auto &nval = m_paths.find(up_control_key_content_path(UPControlStateNormal));
+    const auto &nval = m_paths.find(up_control_key_content(UPControlStateNormal));
     if (nval != end) {
         return nval->second;
     }
@@ -496,7 +497,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content_path(UPControlState controlSt
 
 - (void)setContentColor:(UIColor *)color forState:(UPControlState)state
 {
-    NSUInteger k = up_control_key_content_path(state);
+    NSUInteger k = up_control_key_content(state);
     auto it = m_colors.find(k);
     if (it == m_colors.end()) {
         m_colors.emplace(k, color);
@@ -510,11 +511,11 @@ UP_STATIC_INLINE NSUInteger up_control_key_content_path(UPControlState controlSt
 - (UIColor *)contentColorForState:(UPControlState)state
 {
     const auto &end = m_colors.end();
-    const auto &sval = m_colors.find(up_control_key_content_path(state));
+    const auto &sval = m_colors.find(up_control_key_content(state));
     if (sval != end) {
         return sval->second;
     }
-    const auto &nval = m_colors.find(up_control_key_content_path(UPControlStateNormal));
+    const auto &nval = m_colors.find(up_control_key_content(UPControlStateNormal));
     if (nval != end) {
         return nval->second;
     }
@@ -523,7 +524,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content_path(UPControlState controlSt
 
 - (void)setContentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState
 {
-    UPControlStatePair k = { up_control_key_content_path(fromState), up_control_key_content_path(toState) };
+    UPControlStatePair k = { up_control_key_content(fromState), up_control_key_content(toState) };
     auto it = m_color_animations.find(k);
     if (it == m_color_animations.end()) {
         if (duration >= UPTickerInterval) {
@@ -538,7 +539,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content_path(UPControlState controlSt
 
 - (CFTimeInterval)contentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState
 {
-    UPControlStatePair k = { up_control_key_content_path(fromState), up_control_key_content_path(toState) };
+    UPControlStatePair k = { up_control_key_content(fromState), up_control_key_content(toState) };
     const auto it = m_color_animations.find(k);
     return it != m_color_animations.end() ? it->second : 0.0;
 }
@@ -726,10 +727,10 @@ UP_STATIC_INLINE NSUInteger up_control_key_content_path(UPControlState controlSt
     cancel(@[self]);
     cancel(self.fillColorAnimatorSerialNumber);
     cancel(self.strokeColorAnimatorSerialNumber);
-    cancel(self.contentColorAnimatorSerialNumber);
+    cancel(self.contentPathColorAnimatorSerialNumber);
     self.fillColorAnimatorSerialNumber = UP::NotASerialNumber;
     self.strokeColorAnimatorSerialNumber = UP::NotASerialNumber;
-    self.contentColorAnimatorSerialNumber = UP::NotASerialNumber;
+    self.contentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
 }
 
 - (void)controlUpdate
@@ -786,8 +787,8 @@ UP_STATIC_INLINE NSUInteger up_control_key_content_path(UPControlState controlSt
     if (self.contentPathView) {
         self.contentPathView.path = [self contentPathForState:state];
 
-        cancel(self.contentColorAnimatorSerialNumber);
-        self.contentColorAnimatorSerialNumber = UP::NotASerialNumber;
+        cancel(self.contentPathColorAnimatorSerialNumber);
+        self.contentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
 
         UIColor *colorForState = [self contentColorForState:state];
         CFTimeInterval duration = [self contentColorAnimationDuration:self.previousState toState:state];
@@ -795,11 +796,11 @@ UP_STATIC_INLINE NSUInteger up_control_key_content_path(UPControlState controlSt
         if (duration > UPTickerInterval && colorsDiffer) {
             UPAnimator *animator = set_color(self.role, @[self], duration, UPControlElementContentPath, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
-                    self.contentColorAnimatorSerialNumber = UP::NotASerialNumber;
+                    self.contentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
                 }
             );
             [animator start];
-            self.contentColorAnimatorSerialNumber = animator.serialNumber;
+            self.contentPathColorAnimatorSerialNumber = animator.serialNumber;
         }
         else {
             self.contentPathView.fillColor = colorForState;
