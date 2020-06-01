@@ -193,7 +193,7 @@ static uint32_t _InstanceCount;
                     control.strokePathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
                 }
             }
-            if (element & UPControlElementContent) {
+            if (element & UPControlElementContentPath) {
                 for (UPControl *control in controls) {
                     UIColor *c1 = [control contentColorForState:fromControlState];
                     UIColor *c2 = [control contentColorForState:toControlState];

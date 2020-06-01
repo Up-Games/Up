@@ -45,7 +45,7 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
     // there's the option to bitwise-OR them together with UPControlState values.
     UPControlElementFill =        0x00100000,
     UPControlElementStroke =      0x00200000,
-    UPControlElementContent =     0x00400000,
+    UPControlElementContentPath = 0x00400000,
 };
 
 @interface UPControl : UIView
