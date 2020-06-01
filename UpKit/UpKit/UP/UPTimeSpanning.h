@@ -52,19 +52,23 @@ NSObject<UPTimeSpanning> *delay(UP::Role role, double delay_in_seconds, void (^b
 
 void cancel(NSObject<UPTimeSpanning> *);
 void cancel(uint32_t);
-void cancel(UP::Role role);
+void cancel(NSArray<UIView *> *);
+void cancel(UP::Role);
 void cancel_all();
 
 void pause(NSObject<UPTimeSpanning> *);
-void pause(UP::Role role);
+void pause(uint32_t);
+void pause(UP::Role);
 void pause_all();
 
 void start(NSObject<UPTimeSpanning> *);
-void start(UP::Role role);
+void start(uint32_t);
+void start(UP::Role);
 void start_all();
 
 void add(NSObject<UPTimeSpanning> *);
 void remove(NSObject<UPTimeSpanning> *);
+void remove(uint32_t);
 
 }  // namespace TimeSpanning
 }  // namespace UP

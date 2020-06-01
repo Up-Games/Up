@@ -14,13 +14,13 @@
 namespace UP {
 namespace TimeSpanning {
 
-static std::unordered_map<uint32_t, __weak NSObject<UPTimeSpanning> *> *g_map;
+static std::unordered_map<uint32_t, __strong NSObject<UPTimeSpanning> *> *g_map;
 
 void init()
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        g_map = new std::unordered_map<uint32_t, __weak NSObject<UPTimeSpanning> *>();
+        g_map = new std::unordered_map<uint32_t, __strong NSObject<UPTimeSpanning> *>();
     });
 }
 
@@ -126,11 +126,29 @@ void cancel(uint32_t serial_number)
     auto it = g_map->find(serial_number);
     if (it != g_map->end()) {
         NSObject<UPTimeSpanning> *obj = it->second;
-        [obj cancel];
         g_map->erase(it);
+        [obj cancel];
 #if !LOG_DISABLED
         LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
 #endif
+    }
+}
+
+void cancel(NSArray<UIView *> *views)
+{
+    for (auto it = g_map->begin(); it != g_map->end();) {
+        NSObject<UPTimeSpanning> *obj = it->second;
+        if ([obj isKindOfClass:[UPAnimator class]] && [views isEqualToArray:((UPAnimator *)obj).views]) {
+            uint32_t serial_number = obj.serialNumber;
+            it = g_map->erase(it);
+#if !LOG_DISABLED
+            LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
+#endif
+            [obj cancel];
+        }
+        else {
+            ++it;
+        }
     }
 }
 
@@ -138,7 +156,7 @@ void cancel(UP::Role role)
 {
     for (auto it = g_map->begin(); it != g_map->end();) {
         NSObject<UPTimeSpanning> *obj = it->second;
-        if (role == obj.role || strcmp(role, obj.role) == 0) {
+        if (role_match(role, obj.role)) {
             uint32_t serial_number = obj.serialNumber;
             it = g_map->erase(it);
 #if !LOG_DISABLED
@@ -166,11 +184,20 @@ void pause(NSObject<UPTimeSpanning> *obj)
     [obj pause];
 }
 
+void pause(uint32_t serial_number)
+{
+    auto it = g_map->find(serial_number);
+    if (it != g_map->end()) {
+        NSObject<UPTimeSpanning> *obj = it->second;
+        [obj pause];
+    }
+}
+
 void pause(UP::Role role)
 {
     for (const auto &it : *g_map) {
         NSObject<UPTimeSpanning> *obj = it.second;
-        if (role == obj.role || strcmp(role, obj.role) == 0) {
+        if (role_match(role, obj.role)) {
             [obj pause];
         }
     }
@@ -192,9 +219,18 @@ void start(UP::Role role)
 {
     for (const auto &it : *g_map) {
         NSObject<UPTimeSpanning> *obj = it.second;
-        if (role == obj.role || strcmp(role, obj.role) == 0) {
+        if (role_match(role, obj.role)) {
             [obj start];
         }
+    }
+}
+
+void start(uint32_t serial_number)
+{
+    auto it = g_map->find(serial_number);
+    if (it != g_map->end()) {
+        NSObject<UPTimeSpanning> *obj = it->second;
+        [obj start];
     }
 }
 
@@ -213,6 +249,11 @@ void add(NSObject<UPTimeSpanning> *obj)
 void remove(NSObject<UPTimeSpanning> *obj)
 {
     erase(obj.serialNumber);
+}
+
+void remove(uint32_t serial_number)
+{
+    erase(serial_number);
 }
 
 }  // namespace TimeSpanning

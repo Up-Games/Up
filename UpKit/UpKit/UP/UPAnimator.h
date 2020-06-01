@@ -38,14 +38,17 @@ namespace UP {
     element:(UPControlElement)element fromControlState:(UPControlState)fromControlState toControlState:(UPControlState)toControlState
         completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
+// UPAnimator
+
+@property (nonatomic, readonly) NSArray<UIView *> *views;
+- (instancetype)init NS_UNAVAILABLE;
+
 // UIViewAnimating
 
 @property(nonatomic, readonly) UIViewAnimatingState state;
 @property(nonatomic, readonly, getter=isRunning) BOOL running;
 @property(nonatomic, getter=isReversed) BOOL reversed;
 @property(nonatomic) CGFloat fractionComplete;
-
-- (instancetype)init NS_UNAVAILABLE;
 
 - (void)startAnimation;
 - (void)startAnimationAfterDelay:(NSTimeInterval)delay;

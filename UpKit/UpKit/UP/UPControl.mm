@@ -70,9 +70,9 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 @property (nonatomic, readwrite) UPBezierPathView *strokePathView;
 @property (nonatomic) NSMutableDictionary<NSNumber *, UIBezierPath *> *pathsForStates;
 @property (nonatomic) UPControlState previousState;
-@property (nonatomic) UPAnimator *fillColorAnimator;
-@property (nonatomic) UPAnimator *strokeColorAnimator;
-@property (nonatomic) UPAnimator *contentColorAnimator;
+@property (nonatomic) uint32_t fillColorAnimatorSerialNumber;
+@property (nonatomic) uint32_t strokeColorAnimatorSerialNumber;
+@property (nonatomic) uint32_t contentColorAnimatorSerialNumber;
 @end
 
 UP_STATIC_INLINE NSNumber * _FillKey(UPControlState controlState)
@@ -615,6 +615,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    [self cancelAnimations];
     return YES;
 }
 
@@ -671,12 +672,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 
 - (void)removeFromSuperview
 {
-    cancel(self.fillColorAnimator);
-    cancel(self.strokeColorAnimator);
-    cancel(self.contentColorAnimator);
-    self.fillColorAnimator = nil;
-    self.strokeColorAnimator = nil;
-    self.contentColorAnimator = nil;
+    [self cancelAnimations];
     [super removeFromSuperview];
 }
 
@@ -693,6 +689,17 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
 
 #pragma mark - Updating
 
+- (void)cancelAnimations
+{
+    cancel(@[self]);
+    cancel(self.fillColorAnimatorSerialNumber);
+    cancel(self.strokeColorAnimatorSerialNumber);
+    cancel(self.contentColorAnimatorSerialNumber);
+    self.fillColorAnimatorSerialNumber = UP::NotASerialNumber;
+    self.strokeColorAnimatorSerialNumber = UP::NotASerialNumber;
+    self.contentColorAnimatorSerialNumber = UP::NotASerialNumber;
+}
+
 - (void)controlUpdate
 {
     UPControlState state = self.state;
@@ -705,22 +712,20 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_FillKey(UPControlStateNormal)];
         self.fillPathView.path = path;
 
-        cancel(self.fillColorAnimator);
-        self.fillColorAnimator = nil;
+        cancel(self.fillColorAnimatorSerialNumber);
+        self.fillColorAnimatorSerialNumber = UP::NotASerialNumber;
 
         UIColor *colorForState = [self fillColorForControlStates:state];
         CFTimeInterval duration = [self fillColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.fillPathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            //self.fillColorAnimator =
             UPAnimator *animator = set_color(self.role, @[self], duration, UPControlElementFill, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
-                    self.fillColorAnimator = nil;
+                    self.fillColorAnimatorSerialNumber = UP::NotASerialNumber;
                 }
             );
             [animator start];
-            //[self.fillColorAnimator start];
-            self.fillPathView.fillColor = colorForState;
+            self.fillColorAnimatorSerialNumber = animator.serialNumber;
         }
         else {
             self.fillPathView.fillColor = colorForState;
@@ -731,21 +736,20 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_StrokeKey(UPControlStateNormal)];
         self.strokePathView.path = path;
 
-        cancel(self.strokeColorAnimator);
-        self.strokeColorAnimator = nil;
+        cancel(self.strokeColorAnimatorSerialNumber);
+        self.strokeColorAnimatorSerialNumber = UP::NotASerialNumber;
 
         UIColor *colorForState = [self strokeColorForControlStates:state];
         CFTimeInterval duration = [self strokeColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.strokePathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            //self.strokeColorAnimator =
             UPAnimator *animator = set_color(self.role, @[self], duration, UPControlElementStroke, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
-                    self.strokeColorAnimator = nil;
+                    self.strokeColorAnimatorSerialNumber = UP::NotASerialNumber;
                 }
             );
             [animator start];
-            //[self.strokeColorAnimator start];
+            self.strokeColorAnimatorSerialNumber = animator.serialNumber;
         }
         else {
             self.strokePathView.fillColor = colorForState;
@@ -756,21 +760,20 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         UIBezierPath *path = self.pathsForStates[key] ?: self.pathsForStates[_ContentKey(UPControlStateNormal)];
         self.contentPathView.path = path;
 
-        cancel(self.contentColorAnimator);
-        self.contentColorAnimator = nil;
+        cancel(self.contentColorAnimatorSerialNumber);
+        self.contentColorAnimatorSerialNumber = UP::NotASerialNumber;
 
         UIColor *colorForState = [self contentColorForControlStates:state];
         CFTimeInterval duration = [self contentColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.contentPathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            //self.contentColorAnimator =
             UPAnimator *animator = set_color(self.role, @[self], duration, UPControlElementContent, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
-                    self.strokeColorAnimator = nil;
+                    self.contentColorAnimatorSerialNumber = UP::NotASerialNumber;
                 }
             );
             [animator start];
-            //[self.contentColorAnimator start];
+            self.contentColorAnimatorSerialNumber = animator.serialNumber;
         }
         else {
             self.contentPathView.fillColor = colorForState;

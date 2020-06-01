@@ -54,10 +54,10 @@ using UP::TimeSpanning::pause;
 using UP::TimeSpanning::start_all;
 using UP::TimeSpanning::start;
 
-using UP::RoleGame;
+using UP::RoleGameAll;
 using UP::RoleGameDelay;
 using UP::RoleGameUI;
-using UP::RoleMode;
+using UP::RoleModeAll;
 using UP::RoleModeDelay;
 using UP::RoleModeUI;
 
@@ -91,7 +91,7 @@ using UP::RoleModeUI;
     LOG_CHANNEL_ON(General);
     //LOG_CHANNEL_ON(Gestures);
     //LOG_CHANNEL_ON(Layout);
-    LOG_CHANNEL_ON(Leaks);
+    //LOG_CHANNEL_ON(Leaks);
     //LOG_CHANNEL_ON(Mode);
 
     [super viewDidLoad];
@@ -586,8 +586,7 @@ using UP::RoleModeUI;
     ASSERT(tile.has_view());
     ASSERT(position.in_word_tray());
 
-    cancel(RoleGameDelay);
-    cancel(RoleGameUI);
+    cancel(RoleGameAll);
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::MOVE, tile.position(), position));
 
@@ -604,9 +603,11 @@ using UP::RoleModeUI;
     ASSERT(self.pickedView == nil);
     ASSERT_NPOS(self.pickedPosition);
 
-    cancel(RoleGameDelay);
+    cancel(RoleGameAll);
 
     UPTileView *tileView = tile.view();
+    [tileView cancelAnimations];
+
     self.pickedView = tileView;
     self.pickedPosition = tile.position();
     [self viewOpApplyTranslationToFrame:@[self.pickedView]];

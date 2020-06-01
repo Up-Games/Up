@@ -114,6 +114,7 @@ static uint32_t _InstanceCount;
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    [self cancelAnimations];
     if (!self.gestureDelegate) {
         self.highlighted = YES;
         return YES;
