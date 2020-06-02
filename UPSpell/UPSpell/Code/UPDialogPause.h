@@ -5,6 +5,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class UPControl;
+@class UPLabel;
+
 @interface UPDialogPause : UIView
 
 @property (nonatomic, readonly) UPControl *quitButton;

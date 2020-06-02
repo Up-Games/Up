@@ -12,6 +12,7 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
+#import "UPDialogGameOver.h"
 #import "UPDialogPause.h"
 #import "UPSceneDelegate.h"
 #import "UPSpellModel.h"
@@ -82,6 +83,7 @@ using UP::RoleModeUI;
 @property (nonatomic) CGFloat panFurthestDistance;
 @property (nonatomic) CGFloat panCurrentDistance;
 @property (nonatomic) BOOL panEverMovedUp;
+@property (nonatomic) UPDialogGameOver *dialogGameOver;
 @property (nonatomic) UPDialogPause *dialogPause;
 @property (nonatomic) SpellModel *model;
 @end
@@ -174,6 +176,7 @@ using UP::RoleModeUI;
     
     self.gameTimer = [UPGameTimer defaultGameTimer];
     [self.gameTimer addObserver:self.gameTimerLabel];
+    [self.gameTimer addObserver:self];
     [self.gameTimer notifyObservers];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -190,6 +193,13 @@ using UP::RoleModeUI;
     self.scoreLabel.textColorCategory = UPColorCategoryInformation;
     self.scoreLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.scoreLabel];
+
+    self.dialogGameOver = [UPDialogGameOver instance];
+    [self.view addSubview:self.dialogGameOver];
+//    [self.dialogPause.quitButton addTarget:self action:@selector(dialogPauseQuitButtonTapped:) forEvents:UPControlEventTouchUpInside];
+//    [self.dialogPause.resumeButton addTarget:self action:@selector(dialogPauseResumeButtonTapped:) forEvents:UPControlEventTouchUpInside];
+    self.dialogGameOver.hidden = YES;
+    self.dialogGameOver.frame = layout_manager.screen_bounds();
 
     self.dialogPause = [UPDialogPause instance];
     [self.view addSubview:self.dialogPause];
@@ -282,7 +292,7 @@ using UP::RoleModeUI;
 
 - (void)gameTimerExpired:(UPGameTimer *)gameTimer
 {
-//    NSLog(@"gameTimerExpired");
+    [self setMode:UPSpellGameModeOverInterstitial animated:YES];
 }
 
 #pragma mark - View mapping
@@ -1039,35 +1049,44 @@ using UP::RoleModeUI;
     }
 }
 
-- (void)viewOpEnterModal:(NSArray *)tileViews
+- (void)viewOpEnterModal:(UPSpellGameMode)mode
 {
-    self.roundButtonPause.highlightedOverride = YES;
-    self.roundButtonPause.highlighted = YES;
-    self.roundButtonPause.alpha = [UIColor themeModalActiveAlpha];
-
     const CGFloat alpha = [UIColor themeModalBackgroundAlpha];
-    self.wordTrayView.alpha = alpha;
+    if (mode == UPSpellGameModePause) {
+        self.roundButtonPause.highlightedOverride = YES;
+        self.roundButtonPause.highlighted = YES;
+        self.roundButtonPause.alpha = [UIColor themeModalActiveAlpha];
+        self.gameTimerLabel.alpha = alpha;
+        self.scoreLabel.alpha = alpha;
+    }
+    else if (mode == UPSpellGameModeOverInterstitial) {
+        self.roundButtonPause.alpha = alpha;
+    }
+    else {
+        self.gameTimerLabel.alpha = alpha;
+        self.scoreLabel.alpha = alpha;
+        self.roundButtonPause.alpha = alpha;
+    }
     if (self.showingRoundButtonClear) {
         self.roundButtonClear.alpha = alpha;
     }
     else {
         self.roundButtonTrash.alpha = alpha;
     }
-    self.gameTimerLabel.alpha = alpha;
-    self.scoreLabel.alpha = alpha;
+    self.wordTrayView.alpha = alpha;
 
     self.wordTrayView.userInteractionEnabled = NO;
     self.roundButtonTrash.userInteractionEnabled = NO;
     self.roundButtonClear.userInteractionEnabled = NO;
     self.roundButtonPause.userInteractionEnabled = NO;
 
-    for (UPTileView *tileView in tileViews) {
+    for (UPTileView *tileView in self.model->all_tile_views()) {
         tileView.alpha = alpha;
         tileView.userInteractionEnabled = NO;
     }
 }
 
-- (void)viewOpExitModal:(NSArray *)tileViews
+- (void)viewOpExitModal
 {
     self.roundButtonPause.highlightedOverride = NO;
     self.roundButtonPause.highlighted = NO;
@@ -1088,7 +1107,7 @@ using UP::RoleModeUI;
     self.roundButtonClear.userInteractionEnabled = YES;
     self.roundButtonPause.userInteractionEnabled = YES;
 
-    for (UPTileView *tileView in tileViews) {
+    for (UPTileView *tileView in self.model->all_tile_views()) {
         tileView.alpha = 1.0;
         tileView.userInteractionEnabled = YES;
     }
@@ -1344,7 +1363,7 @@ using UP::RoleModeUI;
     pause(RoleGameAll);
     [self viewOpLockUserInterface];
     [UIView animateWithDuration:0.1 animations:^{
-        [self viewOpEnterModal:self.model->all_tile_views()];
+        [self viewOpEnterModal:UPSpellGameModePause];
     }];
     CGPoint center = self.view.center;
     CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
@@ -1370,7 +1389,7 @@ using UP::RoleModeUI;
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         [UIView animateWithDuration:0.3 animations:^{
-            [self viewOpExitModal:self.model->all_tile_views()];
+            [self viewOpExitModal];
         } completion:^(BOOL finished) {
             [self.gameTimer start];
             start(RoleGameDelay);
@@ -1395,10 +1414,53 @@ using UP::RoleModeUI;
 
 - (void)modeTransitionFromPlayToOverInterstitial:(BOOL)animated
 {
+    SpellLayout &layout_manager = SpellLayout::instance();
+    self.dialogGameOver.titlePathView.frame = layout_manager.dialog_over_interstitial_title_layout_frame();
+    self.dialogGameOver.menuButton.frame = layout_manager.dialog_over_interstitial_button_left_frame();
+    self.dialogGameOver.playButton.frame = layout_manager.dialog_over_interstitial_button_right_frame();
+    self.dialogGameOver.noteLabel.frame = layout_manager.dialog_over_interstitial_note_label_frame();
+    self.dialogGameOver.menuButton.hidden = YES;
+    self.dialogGameOver.playButton.hidden = YES;
+    self.dialogGameOver.noteLabel.hidden = YES;
+
+    pause(RoleGameAll);
+    [self viewOpLockUserInterface];
+
+    [UIView animateWithDuration:0.1 animations:^{
+        [self viewOpEnterModal:UPSpellGameModeOverInterstitial];
+    }];
+    CGPoint center = self.view.center;
+    CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
+    self.dialogGameOver.center = offscreenCenter;
+    self.dialogGameOver.transform = CGAffineTransformIdentity;
+    self.dialogGameOver.hidden = NO;
+    self.dialogGameOver.alpha = 1.0;
+    start(bloop(RoleModeUI, @[self.dialogGameOver], 0.3, center, ^(UIViewAnimatingPosition) {
+        delay(RoleModeUI, 1.0, ^{
+            [self setMode:UPSpellGameModeOver animated:YES];
+        });
+    }));
 }
 
 - (void)modeTransitionFromOverInterstitialToOver:(BOOL)animated
 {
+    [self viewOpUnlockUserInterface];
+
+    SpellLayout &layout_manager = SpellLayout::instance();
+    self.dialogGameOver.titlePathView.frame = layout_manager.dialog_over_interstitial_title_layout_frame();
+    self.dialogGameOver.menuButton.frame = layout_manager.dialog_over_interstitial_button_left_frame();
+    self.dialogGameOver.playButton.frame = layout_manager.dialog_over_interstitial_button_right_frame();
+    self.dialogGameOver.noteLabel.frame = layout_manager.dialog_over_interstitial_note_label_frame();
+    self.dialogGameOver.menuButton.hidden = NO;
+    self.dialogGameOver.playButton.hidden = NO;
+    self.dialogGameOver.noteLabel.hidden = NO;
+
+    CGPoint menuButtonCenter = up_rect_center(layout_manager.dialog_over_button_left_frame());
+    CGPoint playButtonCenter = up_rect_center(layout_manager.dialog_over_button_right_frame());
+    CGPoint noteLabelCenter = up_rect_center(layout_manager.dialog_over_note_label_frame());
+    start(slide_to(RoleModeUI, @[self.dialogGameOver.menuButton], 0.75, menuButtonCenter, nil));
+    start(slide_to(RoleModeUI, @[self.dialogGameOver.playButton], 0.75, playButtonCenter, nil));
+//    start(slide_to(RoleModeUI, @[self.dialogGameOver.noteLabel], 0.75, noteLabelCenter, nil));
 }
 
 - (void)modeTransitionFromOverToCountdown:(BOOL)animated

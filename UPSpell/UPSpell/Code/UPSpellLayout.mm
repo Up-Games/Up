@@ -92,9 +92,19 @@ void SpellLayout::calculate()
     calculate_tile_stroke_width();
     calculate_dialog_title_layout_frame();
     calculate_dialog_spring_dismiss_offset_y();
+    calculate_dialog_pause_title_layout_frame();
     calculate_dialog_pause_buttons_layout_frame();
     calculate_dialog_pause_button_quit_frame();
     calculate_dialog_pause_button_resume_frame();
+    calculate_dialog_over_title_layout_frame();
+    calculate_dialog_over_buttons_layout_frame();
+    calculate_dialog_over_button_left_frame();
+    calculate_dialog_over_button_right_frame();
+    calculate_dialog_over_note_label_frame();
+    calculate_dialog_over_interstitial_title_layout_frame();
+    calculate_dialog_over_interstitial_button_left_frame();
+    calculate_dialog_over_interstitial_button_right_frame();
+    calculate_dialog_over_interstitial_note_label_frame();
 }
 
 void SpellLayout::calculate_controls_layout_frame()
@@ -494,6 +504,12 @@ void SpellLayout::calculate_dialog_spring_dismiss_offset_y()
     LOG(Layout, "dialog_spring_dismiss_offset_y:    %.2f", dialog_spring_dismiss_offset_y());
 }
 
+void SpellLayout::calculate_dialog_pause_title_layout_frame()
+{
+    set_dialog_pause_title_layout_frame(dialog_title_layout_frame());
+    LOG(Layout, "dialog_pause_title_layout_frame: %@", NSStringFromCGRect(dialog_pause_title_layout_frame()));
+}
+
 void SpellLayout::calculate_dialog_pause_buttons_layout_frame()
 {
     switch (aspect_mode()) {
@@ -529,7 +545,7 @@ void SpellLayout::calculate_dialog_pause_button_quit_frame()
         up_size_height(size)
     );
     set_dialog_pause_button_quit_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "pause dialog quit button frame:  %@", NSStringFromCGRect(dialog_pause_button_quit_frame()));
+    LOG(Layout, "dialog_pause_button_quit_frame:  %@", NSStringFromCGRect(dialog_pause_button_quit_frame()));
 }
 
 void SpellLayout::calculate_dialog_pause_button_resume_frame()
@@ -542,8 +558,124 @@ void SpellLayout::calculate_dialog_pause_button_resume_frame()
         up_size_height(size)
     );
     set_dialog_pause_button_resume_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "pause dialog resume button frame:  %@", NSStringFromCGRect(dialog_pause_button_resume_frame()));
+    LOG(Layout, "dialog_pause_button_resume_frame:  %@", NSStringFromCGRect(dialog_pause_button_resume_frame()));
 }
 
+void SpellLayout::calculate_dialog_over_title_layout_frame()
+{
+    CGRect frame = up_rect_centered_in_rect(dialog_title_layout_frame(), screen_bounds());
+    frame.origin.y = up_rect_min_y(frame) - (up_rect_height(frame) * 0.05);
+    set_dialog_over_title_layout_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "dialog_over_title_layout_frame: %@", NSStringFromCGRect(dialog_over_title_layout_frame()));
+}
+
+void SpellLayout::calculate_dialog_over_buttons_layout_frame()
+{
+    switch (aspect_mode()) {
+        case AspectMode::Canonical: {
+            set_dialog_over_buttons_layout_frame(CanonicalDialogOverButtonsLayoutFrame);
+            break;
+        }
+        case AspectMode::WiderThanCanonical: {
+            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalDialogOverButtonsLayoutFrame, layout_scale(), layout_frame());
+            set_dialog_over_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
+            break;
+        }
+        case AspectMode::TallerThanCanonical: {
+            CGRect frame = CanonicalDialogOverButtonsLayoutFrame;
+            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
+            // Frame is moved up in the UI by 50% the letterbox inset
+            // That's what looks good.
+            frame.origin.y -= letterbox_insets().top * 0.5;
+            set_dialog_over_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
+            break;
+        }
+    }
+    LOG(Layout, "set_dialog_over_buttons_layout_frame: %@", NSStringFromCGRect(dialog_over_buttons_layout_frame()));
+
+}
+
+void SpellLayout::calculate_dialog_over_button_left_frame()
+{
+    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
+    CGRect frame = CGRectMake(
+        up_rect_min_x(dialog_over_buttons_layout_frame()),
+        up_rect_min_y(dialog_over_buttons_layout_frame()),
+        up_size_width(size),
+        up_size_height(size)
+    );
+    set_dialog_over_button_left_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "dialog_over_button_left_frame:  %@", NSStringFromCGRect(dialog_over_button_left_frame()));
+}
+
+void SpellLayout::calculate_dialog_over_button_right_frame()
+{
+    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
+    CGRect frame = CGRectMake(
+        up_rect_max_x(dialog_over_buttons_layout_frame()) - up_size_width(size),
+        up_rect_min_y(dialog_over_buttons_layout_frame()),
+        up_size_width(size),
+        up_size_height(size)
+    );
+    set_dialog_over_button_right_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "dialog_over_button_right_frame:  %@", NSStringFromCGRect(dialog_over_button_right_frame()));
+}
+
+void SpellLayout::calculate_dialog_over_note_label_frame()
+{
+    switch (aspect_mode()) {
+        case AspectMode::Canonical: {
+            set_dialog_over_note_label_frame(CanonicalDialogOverNoteLayoutFrame);
+            break;
+        }
+        case AspectMode::WiderThanCanonical: {
+            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalDialogOverNoteLayoutFrame, layout_scale(), layout_frame());
+            set_dialog_over_note_label_frame(up_pixel_rect(frame, screen_scale()));
+            break;
+        }
+        case AspectMode::TallerThanCanonical: {
+            CGRect frame = CanonicalDialogOverNoteLayoutFrame;
+            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
+            // Frame is moved up in the UI by 20% of the letterbox inset
+            // That's what looks good.
+            frame.origin.y -= letterbox_insets().top * 0.2;
+            set_dialog_over_note_label_frame(up_pixel_rect(frame, screen_scale()));
+            break;
+        }
+    }
+    LOG(Layout, "dialog_over_note_label_frame: %@", NSStringFromCGRect(dialog_over_note_label_frame()));
+}
+
+void SpellLayout::calculate_dialog_over_interstitial_title_layout_frame()
+{
+    CGRect frame = up_rect_centered_in_rect(dialog_title_layout_frame(), screen_bounds());
+    frame.origin.y = up_rect_min_y(frame) - (up_rect_height(frame) * 0.05);
+    set_dialog_over_interstitial_title_layout_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "dialog_over_interstitial_title_layout_frame: %@", NSStringFromCGRect(dialog_over_interstitial_title_layout_frame()));
+}
+
+void SpellLayout::calculate_dialog_over_interstitial_button_left_frame()
+{
+    CGRect frame = dialog_over_button_left_frame();
+    frame.origin.y = up_rect_min_y(screen_bounds()) - (up_rect_height(frame) * 1.2);
+    set_dialog_over_interstitial_button_left_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "dialog_over_interstitial_button_left_frame: %@", NSStringFromCGRect(dialog_over_interstitial_button_left_frame()));
+}
+
+void SpellLayout::calculate_dialog_over_interstitial_button_right_frame()
+{
+    CGRect frame = dialog_over_button_right_frame();
+    frame.origin.y = up_rect_min_y(screen_bounds()) - (up_rect_height(frame) * 1.2);
+    set_dialog_over_interstitial_button_right_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "dialog_over_interstitial_button_right_frame: %@", NSStringFromCGRect(dialog_over_interstitial_button_right_frame()));
+}
+
+void SpellLayout::calculate_dialog_over_interstitial_note_label_frame()
+{
+    CGRect frame = dialog_over_note_label_frame();
+    frame.origin.y = up_rect_max_y(screen_bounds()) + (up_rect_height(frame) * 1.2);
+    set_dialog_over_interstitial_note_label_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "dialog_over_interstitial_note_label_frame: %@", NSStringFromCGRect(dialog_over_interstitial_note_label_frame()));
+}
 
 }  // namespace UP

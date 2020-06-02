@@ -64,11 +64,10 @@ public:
     static inline constexpr CGFloat CanonicalWordTrayMaskXOffset = 10;
     static inline constexpr CGFloat CanonicalWordTrayShakeAmount = 30;
 
-    static inline constexpr CGSize CanonicalDialogTitleSize =   { 875, 182 };
-    static inline constexpr CGRect CanonicalDialogTitleFrame =  {
-        62.5, 133, up_size_width(CanonicalDialogTitleSize), up_size_height(CanonicalDialogTitleSize)
-    };
-    static inline constexpr CGRect CanonicalDialogPauseButtonsLayoutFrame =  {   257, 350, 480,  75 };
+    static inline constexpr CGSize CanonicalDialogTitleSize =                          {  875, 182 };
+    static inline constexpr CGRect CanonicalDialogPauseButtonsLayoutFrame =  { 257, 350,  480,  75 };
+    static inline constexpr CGRect CanonicalDialogOverButtonsLayoutFrame =   {  80,  28,  840,  85 };
+    static inline constexpr CGRect CanonicalDialogOverNoteLayoutFrame =      {   0, 385, 1000,  40 };
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
@@ -144,9 +143,22 @@ public:
 
     CGRect dialog_title_layout_frame() const { return m_dialog_title_layout_frame; }
     CGFloat dialog_spring_dismiss_offset_y() const { return m_dialog_spring_dismiss_offset_y; }
+
+    CGRect dialog_pause_title_layout_frame() const { return m_dialog_pause_title_layout_frame; }
     CGRect dialog_pause_buttons_layout_frame() const { return m_dialog_pause_buttons_layout_frame; }
     CGRect dialog_pause_button_quit_frame() const { return m_dialog_pause_button_quit_frame; }
     CGRect dialog_pause_button_resume_frame() const { return m_dialog_pause_button_resume_frame; }
+
+    CGRect dialog_over_title_layout_frame() const { return m_dialog_over_title_layout_frame; };
+    CGRect dialog_over_buttons_layout_frame() const { return m_dialog_over_buttons_layout_frame; };
+    CGRect dialog_over_button_left_frame() const { return m_dialog_over_button_left_frame; };
+    CGRect dialog_over_button_right_frame() const { return m_dialog_over_button_right_frame; };
+    CGRect dialog_over_note_label_frame() const { return m_dialog_over_note_label_frame; };
+
+    CGRect dialog_over_interstitial_title_layout_frame() const { return m_dialog_over_interstitial_title_layout_frame; }
+    CGRect dialog_over_interstitial_button_left_frame() const { return m_dialog_over_interstitial_button_left_frame; }
+    CGRect dialog_over_interstitial_button_right_frame() const { return m_dialog_over_interstitial_button_right_frame; }
+    CGRect dialog_over_interstitial_note_label_frame() const { return m_dialog_over_interstitial_note_label_frame; }
 
 private:
     SpellLayout() {}
@@ -179,10 +191,20 @@ private:
     void set_score_tile_spring_down_offset_y(CGFloat f) { m_score_tile_spring_down_offset_y = f; }
     void set_score_tile_center_y(CGFloat f) { m_score_tile_center_y = f; }
     void set_dialog_title_layout_frame(CGRect rect) { m_dialog_title_layout_frame = rect; }
+    void set_dialog_spring_dismiss_offset_y(CGFloat f) { m_dialog_spring_dismiss_offset_y = f; }
+    void set_dialog_pause_title_layout_frame(CGRect rect) { m_dialog_pause_title_layout_frame = rect; }
     void set_dialog_pause_buttons_layout_frame(CGRect rect) { m_dialog_pause_buttons_layout_frame = rect; }
     void set_dialog_pause_button_quit_frame(CGRect rect) { m_dialog_pause_button_quit_frame = rect; }
     void set_dialog_pause_button_resume_frame(CGRect rect) { m_dialog_pause_button_resume_frame = rect; }
-    void set_dialog_spring_dismiss_offset_y(CGFloat f) { m_dialog_spring_dismiss_offset_y = f; }
+    void set_dialog_over_title_layout_frame(CGRect rect) { m_dialog_over_title_layout_frame = rect; }
+    void set_dialog_over_buttons_layout_frame(CGRect rect) { m_dialog_over_buttons_layout_frame = rect; }
+    void set_dialog_over_button_left_frame(CGRect rect) { m_dialog_over_button_left_frame = rect; }
+    void set_dialog_over_button_right_frame(CGRect rect) { m_dialog_over_button_right_frame = rect; }
+    void set_dialog_over_note_label_frame(CGRect rect) { m_dialog_over_note_label_frame = rect; }
+    void set_dialog_over_interstitial_title_layout_frame(CGRect rect) { m_dialog_over_interstitial_title_layout_frame = rect; }
+    void set_dialog_over_interstitial_button_left_frame(CGRect rect) { m_dialog_over_interstitial_button_left_frame = rect; }
+    void set_dialog_over_interstitial_button_right_frame(CGRect rect) { m_dialog_over_interstitial_button_right_frame = rect; }
+    void set_dialog_over_interstitial_note_label_frame(CGRect rect) { m_dialog_over_interstitial_note_label_frame = rect; }
 
     void calculate_controls_layout_frame();
     void calculate_word_tray_layout_frame();
@@ -207,9 +229,19 @@ private:
     void calculate_game_score_label_frame();
     void calculate_dialog_title_layout_frame();
     void calculate_dialog_spring_dismiss_offset_y();
+    void calculate_dialog_pause_title_layout_frame();
     void calculate_dialog_pause_buttons_layout_frame();
     void calculate_dialog_pause_button_quit_frame();
     void calculate_dialog_pause_button_resume_frame();
+    void calculate_dialog_over_title_layout_frame();
+    void calculate_dialog_over_buttons_layout_frame();
+    void calculate_dialog_over_button_left_frame();
+    void calculate_dialog_over_button_right_frame();
+    void calculate_dialog_over_note_label_frame();
+    void calculate_dialog_over_interstitial_title_layout_frame();
+    void calculate_dialog_over_interstitial_button_left_frame();
+    void calculate_dialog_over_interstitial_button_right_frame();
+    void calculate_dialog_over_interstitial_note_label_frame();
 
     CGRect m_screen_bounds = CGRectZero;
     CGFloat m_screen_scale = 2.0;
@@ -258,9 +290,22 @@ private:
     
     CGRect m_dialog_title_layout_frame;
     CGFloat m_dialog_spring_dismiss_offset_y;
+
+    CGRect m_dialog_pause_title_layout_frame;
     CGRect m_dialog_pause_buttons_layout_frame;
     CGRect m_dialog_pause_button_quit_frame;
     CGRect m_dialog_pause_button_resume_frame;
+
+    CGRect m_dialog_over_title_layout_frame;
+    CGRect m_dialog_over_buttons_layout_frame;
+    CGRect m_dialog_over_button_left_frame;
+    CGRect m_dialog_over_button_right_frame;
+    CGRect m_dialog_over_note_label_frame;
+
+    CGRect m_dialog_over_interstitial_title_layout_frame;
+    CGRect m_dialog_over_interstitial_button_left_frame;
+    CGRect m_dialog_over_interstitial_button_right_frame;
+    CGRect m_dialog_over_interstitial_note_label_frame;
 };
 
 }  // namespace UP

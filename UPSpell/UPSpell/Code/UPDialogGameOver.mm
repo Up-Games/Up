@@ -8,29 +8,31 @@
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPControl.h>
 #import <UpKit/UPGeometry.h>
+#import <UpKit/UPLabel.h>
 #import <UpKit/UPLayoutRule.h>
 
 #import "UPControl+UPSpell.h"
-#import "UPDialogPause.h"
+#import "UPDialogGameOver.h"
 #import "UPSpellLayout.h"
 #import "UPTextPaths.h"
 
 using UP::SpellLayout;
 
-@interface UPDialogPause ()
-@property (nonatomic) UPBezierPathView *titlePathView;
-@property (nonatomic, readwrite) UPControl *quitButton;
-@property (nonatomic, readwrite) UPControl *resumeButton;
+@interface UPDialogGameOver ()
+@property (nonatomic, readwrite) UPBezierPathView *titlePathView;
+@property (nonatomic, readwrite) UPControl *menuButton;
+@property (nonatomic, readwrite) UPControl *playButton;
+@property (nonatomic, readwrite) UPLabel *noteLabel;
 @end
 
-@implementation UPDialogPause
+@implementation UPDialogGameOver
 
-+ (UPDialogPause *)instance
++ (UPDialogGameOver *)instance
 {
     static dispatch_once_t onceToken;
-    static UPDialogPause *_Instance;
+    static UPDialogGameOver *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPDialogPause alloc] _init];
+        _Instance = [[UPDialogGameOver alloc] _init];
     });
     return _Instance;
 }
@@ -42,24 +44,22 @@ using UP::SpellLayout;
 
     self.titlePathView = [UPBezierPathView bezierPathView];
     self.titlePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
-    self.titlePathView.path = UP::TextPathDialogPaused();
-    self.titlePathView.frame = layout_manager.dialog_pause_title_layout_frame();
+    self.titlePathView.path = UP::TextPathDialogGameOver();
+    self.titlePathView.frame = layout_manager.dialog_over_interstitial_title_layout_frame();
     [self addSubview:self.titlePathView];
 
-    self.quitButton = [UPControl textButtonQuit];
-    self.quitButton.frame = layout_manager.dialog_pause_button_quit_frame();
-    [self addSubview:self.quitButton];
+    self.menuButton = [UPControl textButtonMenu];
+    self.menuButton.frame = layout_manager.dialog_over_interstitial_button_left_frame();
+    [self addSubview:self.menuButton];
 
-    self.resumeButton = [UPControl textButtonResume];
-    self.resumeButton.frame = layout_manager.dialog_pause_button_resume_frame();
-    [self addSubview:self.resumeButton];
+    self.playButton = [UPControl textButtonPlay];
+    self.playButton.frame = layout_manager.dialog_over_interstitial_button_right_frame();
+    [self addSubview:self.playButton];
 
     [self updateThemeColors];
 
     return self;
 }
-
-#pragma mark - Layout
 
 #pragma mark - Theme colors
 

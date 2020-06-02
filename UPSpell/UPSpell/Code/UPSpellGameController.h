@@ -5,17 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, UPSpellGameMode) {
-    UPSpellGameModeStart,
-    UPSpellGameModeOffscreenLeft,
-    UPSpellGameModeOffscreenRight,
-    UPSpellGameModeMenu,
-    UPSpellGameModeCountdown,
-    UPSpellGameModePlay,
-    UPSpellGameModePause,
-    UPSpellGameModeOverInterstitial,
-    UPSpellGameModeOver,
-};
+#import "UPSpellGameMode.h"
 
 @interface UPSpellGameController : UIViewController
 

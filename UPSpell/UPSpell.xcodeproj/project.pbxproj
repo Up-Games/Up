@@ -12,6 +12,7 @@
 		5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */; };
 		5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1412485B49E006264D2 /* UPDialogPause.mm */; };
 		5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1442485B820006264D2 /* UPTextPaths.mm */; };
+		5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */; };
 		5D72311C246B3717006027A3 /* MalloryCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D723119246B3713006027A3 /* MalloryCond-Bold.otf */; };
 		5D72311D246B3717006027A3 /* MalloryMPNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D72311B246B3713006027A3 /* MalloryMPNrrw-Bold.otf */; };
 		5D72311E246B3717006027A3 /* MalloryNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D72311A246B3713006027A3 /* MalloryNrrw-Bold.otf */; };
@@ -66,6 +67,9 @@
 		5D5EA1412485B49E006264D2 /* UPDialogPause.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogPause.mm; sourceTree = "<group>"; };
 		5D5EA1432485B820006264D2 /* UPTextPaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTextPaths.h; sourceTree = "<group>"; };
 		5D5EA1442485B820006264D2 /* UPTextPaths.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTextPaths.mm; sourceTree = "<group>"; };
+		5D5EA1462486A1D2006264D2 /* UPDialogGameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogGameOver.h; sourceTree = "<group>"; };
+		5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameOver.mm; sourceTree = "<group>"; };
+		5D5EA1492486A76E006264D2 /* UPSpellGameMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellGameMode.h; sourceTree = "<group>"; };
 		5D723114246B34C0006027A3 /* UPTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileView.h; sourceTree = "<group>"; };
 		5D723119246B3713006027A3 /* MalloryCond-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Bold.otf"; sourceTree = "<group>"; };
 		5D72311A246B3713006027A3 /* MalloryNrrw-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryNrrw-Bold.otf"; sourceTree = "<group>"; };
@@ -127,12 +131,15 @@
 				5DF9DF5B2466165700B2199D /* UPAppDelegate.m */,
 				5D57D1FA246DB97700705395 /* UPControl+UPSpell.h */,
 				5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */,
+				5D5EA1462486A1D2006264D2 /* UPDialogGameOver.h */,
+				5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */,
 				5D5EA1402485B49E006264D2 /* UPDialogPause.h */,
 				5D5EA1412485B49E006264D2 /* UPDialogPause.mm */,
 				5DF9DF5D2466165700B2199D /* UPSceneDelegate.h */,
 				5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */,
 				5DF9DF602466165700B2199D /* UPSpellGameController.h */,
 				5DF9DF612466165700B2199D /* UPSpellGameController.mm */,
+				5D5EA1492486A76E006264D2 /* UPSpellGameMode.h */,
 				5D5216EA246C7E9E005A2E9F /* UPSpellLayout.h */,
 				5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */,
 				5DC67DF424730207009BCDBB /* UPSpellMacros.h */,
@@ -325,6 +332,7 @@
 				5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */,
 				5DF9DF6D2466165800B2199D /* main.m in Sources */,
 				5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */,
+				5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */,
 				5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */,
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
 				5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */,
