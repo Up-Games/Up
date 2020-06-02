@@ -12,6 +12,7 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
+#import "UPDialogPause.h"
 #import "UPSceneDelegate.h"
 #import "UPSpellModel.h"
 #import "UPSpellLayout.h"
@@ -81,6 +82,7 @@ using UP::RoleModeUI;
 @property (nonatomic) CGFloat panFurthestDistance;
 @property (nonatomic) CGFloat panCurrentDistance;
 @property (nonatomic) BOOL panEverMovedUp;
+@property (nonatomic) UPDialogPause *dialogPause;
 @property (nonatomic) SpellModel *model;
 @end
 
@@ -90,7 +92,7 @@ using UP::RoleModeUI;
 {
     LOG_CHANNEL_ON(General);
     //LOG_CHANNEL_ON(Gestures);
-    //LOG_CHANNEL_ON(Layout);
+    LOG_CHANNEL_ON(Layout);
     //LOG_CHANNEL_ON(Leaks);
     //LOG_CHANNEL_ON(Mode);
 
@@ -124,7 +126,7 @@ using UP::RoleModeUI;
     self.wordTrayView = [UPControl wordTray];
     self.wordTrayView.role = RoleGameUI;
     self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
-    [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forEvents:UIControlEventTouchUpInside];
+    [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forEvents:UPControlEventTouchUpInside];
     [self.view addSubview:self.wordTrayView];
 
     self.tileContainerView = [[UPContainerView alloc] initWithFrame:CGRectZero];
@@ -141,21 +143,21 @@ using UP::RoleModeUI;
     self.roundButtonPause.role = RoleGameUI;
     self.roundButtonPause.frame = layout_manager.game_controls_left_button_frame();
     self.roundButtonPause.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundButtonPause addTarget:self action:@selector(roundControlButtonPauseTapped:) forEvents:UIControlEventTouchUpInside];
+    [self.roundButtonPause addTarget:self action:@selector(roundButtonPauseTapped:) forEvents:UPControlEventTouchUpInside];
     [self.view addSubview:self.roundButtonPause];
 
     self.roundButtonTrash = [UPControl roundButtonTrash];
     self.roundButtonTrash.role = RoleGameUI;
     self.roundButtonTrash.frame = layout_manager.game_controls_right_button_frame();
     self.roundButtonTrash.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundButtonTrash addTarget:self action:@selector(roundControlButtonTrashTapped:) forEvents:UIControlEventTouchUpInside];
+    [self.roundButtonTrash addTarget:self action:@selector(roundButtonTrashTapped:) forEvents:UPControlEventTouchUpInside];
     [self.view addSubview:self.roundButtonTrash];
 
     self.roundButtonClear = [UPControl roundButtonClear];
     self.roundButtonClear.role = RoleGameUI;
     self.roundButtonClear.frame = layout_manager.game_controls_right_button_frame();
     self.roundButtonClear.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundButtonClear addTarget:self action:@selector(roundControlButtonClearTapped:) forEvents:UIControlEventTouchUpInside];
+    [self.roundButtonClear addTarget:self action:@selector(roundButtonClearTapped:) forEvents:UPControlEventTouchUpInside];
     [self.view addSubview:self.roundButtonClear];
 
     UIFont *font = [UIFont gameInformationFontOfSize:layout_manager.game_information_font_metrics().point_size()];
@@ -189,12 +191,13 @@ using UP::RoleModeUI;
     self.scoreLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.scoreLabel];
 
-    [self viewOpUpdateGameControls];
+    self.dialogPause = [UPDialogPause instance];
+    [self.view addSubview:self.dialogPause];
+    [self.dialogPause.quitButton addTarget:self action:@selector(dialogPauseQuitButtonTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.dialogPause.resumeButton addTarget:self action:@selector(dialogPauseResumeButtonTapped:) forEvents:UPControlEventTouchUpInside];
+    self.dialogPause.hidden = YES;
 
-//    UPControl *textButtonPlay = [UPControl textButtonPlay];
-//    textButtonPlay.frame = CGRectMake(200, 200, 188, 75);
-//    [self.view addSubview:textButtonPlay];
-//    
+    [self viewOpUpdateGameControls];
 
     self.pickedView = nil;
     self.pickedPosition = TilePosition();
@@ -221,6 +224,7 @@ using UP::RoleModeUI;
     self.tileContainerClipView.frame = layout_manager.word_tray_mask_frame();
     self.gameTimerLabel.frame = layout_manager.game_time_label_frame();
     self.scoreLabel.frame = layout_manager.game_score_label_frame();
+    self.dialogPause.frame = self.view.bounds;
 }
 
 - (UIBezierPath *)wordTrayMaskPath
@@ -319,30 +323,44 @@ using UP::RoleModeUI;
         [self.gameTimer stop];
         pause(RoleGameAll);
         [self viewOpEnterModal:self.model->all_tile_views()];
+        self.dialogPause.hidden = NO;
     }
-    else {
-        self.mode = UPSpellGameModePlay;
-        [self.gameTimer start];
-        start(RoleGameDelay);
-        start(RoleGameUI);
-        self.roundButtonPause.highlightedOverride = NO;
-        self.roundButtonPause.highlighted = NO;
-    }
+}
+
+- (void)resume
+{
+    self.mode = UPSpellGameModePlay;
+    [self.gameTimer start];
+    start(RoleGameDelay);
+    start(RoleGameUI);
+    self.roundButtonPause.highlightedOverride = NO;
+    self.roundButtonPause.highlighted = NO;
+    [self viewOpExitModal:self.model->all_tile_views()];
+    self.dialogPause.hidden = YES;
+}
+
+- (void)dialogPauseQuitButtonTapped:(id)sender
+{
+}
+
+- (void)dialogPauseResumeButtonTapped:(id)sender
+{
+    [self resume];
 }
 
 #pragma mark - Control target/action and gestures
 
-- (void)roundControlButtonPauseTapped:(id)sender
+- (void)roundButtonPauseTapped:(id)sender
 {
     [self pause];
 }
 
-- (void)roundControlButtonTrashTapped:(id)sender
+- (void)roundButtonTrashTapped:(id)sender
 {
     [self applyActionDump];
 }
 
-- (void)roundControlButtonClearTapped:(id)sender
+- (void)roundButtonClearTapped:(id)sender
 {
     [self applyActionClear];
 }

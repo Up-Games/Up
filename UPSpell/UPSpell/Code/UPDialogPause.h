@@ -1,0 +1,17 @@
+//
+//  UPDialogPause.h
+//  Copyright © 2020 Up Games. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface UPDialogPause : UIView
+
+@property (nonatomic, readonly) UPControl *quitButton;
+@property (nonatomic, readonly) UPControl *resumeButton;
+
++ (UPDialogPause *)instance;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+@end

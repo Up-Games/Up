@@ -90,6 +90,10 @@ void SpellLayout::calculate()
     calculate_game_time_label_frame();
     calculate_game_score_label_frame();
     calculate_tile_stroke_width();
+    calculate_dialog_title_layout_frame();
+    calculate_dialog_pause_buttons_layout_frame();
+    calculate_dialog_pause_button_quit_frame();
+    calculate_dialog_pause_button_resume_frame();
 }
 
 void SpellLayout::calculate_controls_layout_frame()
@@ -475,5 +479,63 @@ void SpellLayout::calculate_score_tile_center_y()
     set_score_tile_center_y(up_pixel_float(y, screen_scale()));
     LOG(Layout, "score_tile_center_y:     %.2f", score_tile_center_y());
 }
+
+void SpellLayout::calculate_dialog_title_layout_frame()
+{
+    set_dialog_title_layout_frame(word_tray_layout_frame());
+    LOG(Layout, "dialog_title_layout_frame: %@", NSStringFromCGRect(dialog_title_layout_frame()));
+}
+
+void SpellLayout::calculate_dialog_pause_buttons_layout_frame()
+{
+    switch (aspect_mode()) {
+        case AspectMode::Canonical: {
+            set_dialog_pause_buttons_layout_frame(CanonicalDialogPauseButtonsLayoutFrame);
+            break;
+        }
+        case AspectMode::WiderThanCanonical: {
+            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalDialogPauseButtonsLayoutFrame, layout_scale(), layout_frame());
+            set_dialog_pause_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
+            break;
+        }
+        case AspectMode::TallerThanCanonical: {
+            CGRect frame = CanonicalDialogPauseButtonsLayoutFrame;
+            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
+            // Frame is moved up in the UI by 20% of the letterbox inset
+            // That's what looks good.
+            frame.origin.y -= letterbox_insets().top * 0.2;
+            set_dialog_pause_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
+            break;
+        }
+    }
+    LOG(Layout, "dialog_pause_buttons_layout_frame: %@", NSStringFromCGRect(dialog_pause_buttons_layout_frame()));
+}
+
+void SpellLayout::calculate_dialog_pause_button_quit_frame()
+{
+    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
+    CGRect frame = CGRectMake(
+        up_rect_min_x(dialog_pause_buttons_layout_frame()),
+        up_rect_min_y(dialog_pause_buttons_layout_frame()),
+        up_size_width(size),
+        up_size_height(size)
+    );
+    set_dialog_pause_button_quit_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "pause dialog quit button frame:  %@", NSStringFromCGRect(dialog_pause_button_quit_frame()));
+}
+
+void SpellLayout::calculate_dialog_pause_button_resume_frame()
+{
+    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
+    CGRect frame = CGRectMake(
+        up_rect_max_x(dialog_pause_buttons_layout_frame()) - up_size_width(size),
+        up_rect_min_y(dialog_pause_buttons_layout_frame()),
+        up_size_width(size),
+        up_size_height(size)
+    );
+    set_dialog_pause_button_resume_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "pause dialog resume button frame:  %@", NSStringFromCGRect(dialog_pause_button_resume_frame()));
+}
+
 
 }  // namespace UP

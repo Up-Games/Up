@@ -575,7 +575,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         if (self.autoHighlights) {
             self.highlighted = YES;
         }
-        [self sendActionsForControlEvents:UIControlEventTouchDown];
+        [self sendActionsForControlEvents:UPControlEventTouchDown];
     }
 }
 
@@ -594,19 +594,19 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
             if (self.autoHighlights) {
                 self.highlighted = YES;
             }
-            [self sendActionsForControlEvents:UIControlEventTouchDragEnter];
+            [self sendActionsForControlEvents:UPControlEventTouchDragEnter];
         }
         else if (wasTouchInside && !self.touchInside) {
             if (self.autoHighlights) {
                 self.highlighted = NO;
             }
-            [self sendActionsForControlEvents:UIControlEventTouchDragExit];
+            [self sendActionsForControlEvents:UPControlEventTouchDragExit];
         }
         else if (wasTouchInside && self.touchInside) {
-            [self sendActionsForControlEvents:UIControlEventTouchDragInside];
+            [self sendActionsForControlEvents:UPControlEventTouchDragInside];
         }
         else if (!wasTouchInside && !self.touchInside) {
-            [self sendActionsForControlEvents:UIControlEventTouchDragOutside];
+            [self sendActionsForControlEvents:UPControlEventTouchDragOutside];
         }
     }
     else {
@@ -627,10 +627,10 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
     [self endTrackingWithTouch:touch withEvent:event];
 
     if (self.touchInside) {
-        [self sendActionsForControlEvents:UIControlEventTouchUpInside];
+        [self sendActionsForControlEvents:UPControlEventTouchUpInside];
     }
     else {
-        [self sendActionsForControlEvents:UIControlEventTouchUpOutside];
+        [self sendActionsForControlEvents:UPControlEventTouchUpOutside];
     }
     self.touchInside = NO;
 }
