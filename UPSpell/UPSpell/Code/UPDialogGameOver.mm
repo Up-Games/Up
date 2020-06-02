@@ -39,29 +39,29 @@ using UP::SpellLayout;
 
 - (instancetype)_init
 {
-    SpellLayout &layout_manager = SpellLayout::instance();
-    self = [super initWithFrame:layout_manager.canvas_frame()];
+    SpellLayout &layout = SpellLayout::instance();
+    self = [super initWithFrame:layout.canvas_frame()];
 
     self.titlePathView = [UPBezierPathView bezierPathView];
     self.titlePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
     self.titlePathView.path = UP::TextPathDialogGameOver();
-    self.titlePathView.frame = layout_manager.dialog_over_interstitial_title_layout_frame();
+    self.titlePathView.frame = layout.dialog_over_interstitial_title_layout_frame();
     [self addSubview:self.titlePathView];
 
     self.menuButton = [UPControl textButtonMenu];
-    self.menuButton.frame = layout_manager.dialog_over_interstitial_button_left_frame();
+    self.menuButton.frame = layout.dialog_over_interstitial_button_left_frame();
     [self addSubview:self.menuButton];
 
     self.playButton = [UPControl textButtonPlay];
-    self.playButton.frame = layout_manager.dialog_over_interstitial_button_right_frame();
+    self.playButton.frame = layout.dialog_over_interstitial_button_right_frame();
     [self addSubview:self.playButton];
 
     self.noteLabel = [UPLabel label];
     self.noteLabel.string = @"‘GRUBMITS’ WAS YOUR HIGHEST SCORING WORD (32)";
-    self.noteLabel.font = layout_manager.game_note_font();
+    self.noteLabel.font = layout.game_note_font();
     self.noteLabel.textColorCategory = UPColorCategoryInformation;
     self.noteLabel.textAlignment = NSTextAlignmentCenter;
-    self.noteLabel.frame = layout_manager.dialog_over_interstitial_note_label_frame();
+    self.noteLabel.frame = layout.dialog_over_interstitial_note_label_frame();
     [self addSubview:self.noteLabel];
 
     [self updateThemeColors];

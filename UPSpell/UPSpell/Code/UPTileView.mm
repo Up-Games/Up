@@ -53,7 +53,7 @@ static uint32_t _InstanceCount;
         return self;
     }
 
-    SpellLayout &layout_manager = SpellLayout::instance();
+    SpellLayout &layout = SpellLayout::instance();
     TilePaths &tile_paths = TilePaths::instance();
 
     self.canonicalSize = SpellLayout::CanonicalTileSize;
@@ -64,7 +64,7 @@ static uint32_t _InstanceCount;
     [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
     [self setFillColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     
-    [self setStrokePath:layout_manager.tile_stroke_path()];
+    [self setStrokePath:layout.tile_stroke_path()];
     [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
     [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
     [self setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];

@@ -119,6 +119,7 @@ public:
 
     UIFont *game_information_font() const { return m_game_information_font; }
     const FontMetrics &game_information_font_metrics() const { return m_game_information_font_metrics; }
+    UIFont *game_information_superscript_font() const { return m_game_information_superscript_font; }
     const FontMetrics &game_information_superscript_font_metrics() const { return m_game_information_superscript_font_metrics; }
     CGRect game_play_time_label_frame() const { return m_game_play_time_label_frame; }
     CGRect game_play_score_label_frame() const { return m_game_play_score_label_frame; }
@@ -191,6 +192,7 @@ private:
     void set_game_controls_button_charge_size(CGSize size) { m_game_controls_button_charge_size = size; }
     void set_game_information_font(UIFont *font) { m_game_information_font = font; }
     void set_game_information_font_metrics(const FontMetrics &metrics) { m_game_information_font_metrics = metrics; }
+    void set_game_information_superscript_font(UIFont *font) { m_game_information_superscript_font = font; }
     void set_game_information_superscript_font_metrics(const FontMetrics &metrics) { m_game_information_superscript_font_metrics = metrics; }
     void set_game_note_font(UIFont *font) { m_game_note_font = font; }
     void set_game_note_font_metrics(const FontMetrics &metrics) { m_game_note_font_metrics = metrics; }
@@ -283,7 +285,8 @@ private:
 
     __strong UIFont *m_game_information_font;
     FontMetrics m_game_information_font_metrics;
-    FontMetrics m_game_information_superscript_font_metrics;
+    __strong UIFont *m_game_information_superscript_font;
+   FontMetrics m_game_information_superscript_font_metrics;
     __strong UIFont *m_game_note_font;
     FontMetrics m_game_note_font_metrics;
 

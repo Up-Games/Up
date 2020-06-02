@@ -37,21 +37,21 @@ using UP::SpellLayout;
 
 - (instancetype)_init
 {
-    SpellLayout &layout_manager = SpellLayout::instance();
-    self = [super initWithFrame:layout_manager.canvas_frame()];
+    SpellLayout &layout = SpellLayout::instance();
+    self = [super initWithFrame:layout.canvas_frame()];
 
     self.titlePathView = [UPBezierPathView bezierPathView];
     self.titlePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
     self.titlePathView.path = UP::TextPathDialogPaused();
-    self.titlePathView.frame = layout_manager.dialog_pause_title_layout_frame();
+    self.titlePathView.frame = layout.dialog_pause_title_layout_frame();
     [self addSubview:self.titlePathView];
 
     self.quitButton = [UPControl textButtonQuit];
-    self.quitButton.frame = layout_manager.dialog_pause_button_quit_frame();
+    self.quitButton.frame = layout.dialog_pause_button_quit_frame();
     [self addSubview:self.quitButton];
 
     self.resumeButton = [UPControl textButtonResume];
-    self.resumeButton.frame = layout_manager.dialog_pause_button_resume_frame();
+    self.resumeButton.frame = layout.dialog_pause_button_resume_frame();
     [self addSubview:self.resumeButton];
 
     [self updateThemeColors];

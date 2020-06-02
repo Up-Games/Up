@@ -292,7 +292,9 @@ static uint32_t _InstanceCount;
 - (void)stopAnimation:(BOOL)withoutFinishing
 {
     [self.inner stopAnimation:withoutFinishing];
-    UP::TimeSpanning::remove(self);
+    if (withoutFinishing) {
+        UP::TimeSpanning::remove(self);
+    }
 }
 
 - (void)finishAnimationAtPosition:(UIViewAnimatingPosition)finalPosition
@@ -319,7 +321,7 @@ static uint32_t _InstanceCount;
 
 - (void)cancel
 {
-    [self stopAnimation:NO];
+    [self stopAnimation:YES];
 }
 
 @end

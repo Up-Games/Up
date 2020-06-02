@@ -15,6 +15,7 @@
 #import "UPDialogGameOver.h"
 #import "UPDialogPause.h"
 #import "UPSceneDelegate.h"
+#import "UPSpellGameView.h"
 #import "UPSpellModel.h"
 #import "UPSpellLayout.h"
 #import "UPTileModel.h"
@@ -65,18 +66,9 @@ using UP::RoleModeUI;
 
 @interface UPSpellGameController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
-@property (nonatomic) UPControl *wordTrayView;
-@property (nonatomic) UIView *tileContainerView;
-@property (nonatomic) UPBezierPathView *tileContainerClipView;
-@property (nonatomic) UPControl *roundButtonPause;
-@property (nonatomic) UPControl *roundButtonTrash;
-@property (nonatomic) UPControl *roundButtonClear;
-@property (nonatomic) BOOL showingRoundButtonClear;
+@property (nonatomic) UPSpellGameView *gameView;
 @property (nonatomic) UPGameTimer *gameTimer;
-@property (nonatomic) UPGameTimerLabel *gameTimerLabel;
-@property (nonatomic) UPLabel *scoreLabel;
-@property (nonatomic) UIFont *gameInformationFont;
-@property (nonatomic) UIFont *gameInformationSuperscriptFont;
+@property (nonatomic) BOOL showingRoundButtonClear;
 @property (nonatomic) UPTileView *pickedView;
 @property (nonatomic) TilePosition pickedPosition;
 @property (nonatomic) CGPoint panStartPoint;
@@ -85,6 +77,7 @@ using UP::RoleModeUI;
 @property (nonatomic) BOOL panEverMovedUp;
 @property (nonatomic) UPDialogGameOver *dialogGameOver;
 @property (nonatomic) UPDialogPause *dialogPause;
+@property (nonatomic) NSInteger userInterfaceLockCount;
 @property (nonatomic) SpellModel *model;
 @end
 
@@ -113,102 +106,44 @@ using UP::RoleModeUI;
     
     [UIColor setThemeStyle:UPColorStyleLight];
     [UIColor setThemeHue:310];
-    SpellLayout &layout_manager = SpellLayout::create_instance();
+    SpellLayout &layout = SpellLayout::create_instance();
     TilePaths::create_instance();
     
-    layout_manager.set_screen_bounds([[UIScreen mainScreen] bounds]);
-    layout_manager.set_screen_scale([[UIScreen mainScreen] scale]);
-    layout_manager.set_canvas_frame([[UPSceneDelegate instance] canvasFrame]);
-    layout_manager.calculate();
+    layout.set_screen_bounds([[UIScreen mainScreen] bounds]);
+    layout.set_screen_scale([[UIScreen mainScreen] scale]);
+    layout.set_canvas_frame([[UPSceneDelegate instance] canvasFrame]);
+    layout.calculate();
     
     self.infinityView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.infinityView.frame = layout.screen_bounds();
     self.infinityView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
     [self.view addSubview:self.infinityView];
-        
-    self.wordTrayView = [UPControl wordTray];
-    self.wordTrayView.role = RoleGameUI;
-    self.wordTrayView.frame = layout_manager.word_tray_layout_frame();
-    [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forEvents:UPControlEventTouchUpInside];
-    [self.view addSubview:self.wordTrayView];
 
-    self.tileContainerView = [[UPContainerView alloc] initWithFrame:CGRectZero];
-    [self.view addSubview:self.tileContainerView];
+    self.gameView = [UPSpellGameView instance];
+    [self.gameView.wordTrayView addTarget:self action:@selector(wordTrayTapped) forEvents:UPControlEventTouchUpInside];
+    [self.gameView.roundButtonPause addTarget:self action:@selector(roundButtonPauseTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.gameView.roundButtonTrash addTarget:self action:@selector(roundButtonTrashTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.gameView.roundButtonClear addTarget:self action:@selector(roundButtonClearTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.view addSubview:self.gameView];
 
-    UIBezierPath *wordTrayMaskPath = [self wordTrayMaskPath];
-    self.tileContainerClipView = [UPBezierPathView bezierPathView];
-    self.tileContainerClipView.canonicalSize = UP::SpellLayout::CanonicalWordTrayMaskFrame.size;
-    self.tileContainerClipView.path = wordTrayMaskPath;
-    self.tileContainerClipView.fillColor = [UIColor blackColor];
-    self.tileContainerView.layer.mask = self.tileContainerClipView.shapeLayer;
-
-    self.roundButtonPause = [UPControl roundButtonPause];
-    self.roundButtonPause.role = RoleGameUI;
-    self.roundButtonPause.frame = layout_manager.game_controls_left_button_frame();
-    self.roundButtonPause.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundButtonPause addTarget:self action:@selector(roundButtonPauseTapped:) forEvents:UPControlEventTouchUpInside];
-    [self.view addSubview:self.roundButtonPause];
-
-    self.roundButtonTrash = [UPControl roundButtonTrash];
-    self.roundButtonTrash.role = RoleGameUI;
-    self.roundButtonTrash.frame = layout_manager.game_controls_right_button_frame();
-    self.roundButtonTrash.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundButtonTrash addTarget:self action:@selector(roundButtonTrashTapped:) forEvents:UPControlEventTouchUpInside];
-    [self.view addSubview:self.roundButtonTrash];
-
-    self.roundButtonClear = [UPControl roundButtonClear];
-    self.roundButtonClear.role = RoleGameUI;
-    self.roundButtonClear.frame = layout_manager.game_controls_right_button_frame();
-    self.roundButtonClear.chargeSize = layout_manager.game_controls_button_charge_size();
-    [self.roundButtonClear addTarget:self action:@selector(roundButtonClearTapped:) forEvents:UPControlEventTouchUpInside];
-    [self.view addSubview:self.roundButtonClear];
-
-    UIFont *font = [UIFont gameInformationFontOfSize:layout_manager.game_information_font_metrics().point_size()];
-    UIFont *superscriptFont = [UIFont gameInformationFontOfSize:layout_manager.game_information_superscript_font_metrics().point_size()];
-
-    self.gameInformationFont = font;
-    self.gameInformationSuperscriptFont = superscriptFont;
-
-    self.gameTimerLabel = [UPGameTimerLabel label];
-    self.gameTimerLabel.font = font;
-    self.gameTimerLabel.superscriptFont = superscriptFont;
-    self.gameTimerLabel.superscriptBaselineAdjustment = layout_manager.game_information_superscript_font_metrics().baseline_adjustment();
-    self.gameTimerLabel.superscriptKerning = layout_manager.game_information_superscript_font_metrics().kerning();
-    
     self.gameTimer = [UPGameTimer defaultGameTimer];
-    [self.gameTimer addObserver:self.gameTimerLabel];
+    [self.gameTimer addObserver:self.gameView.gameTimerLabel];
     [self.gameTimer addObserver:self];
     [self.gameTimer notifyObservers];
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.gameTimer start];
-    });
-
-    self.gameTimerLabel.textColorCategory = UPColorCategoryInformation;
-    self.gameTimerLabel.textAlignment = NSTextAlignmentRight;
-    self.gameTimerLabel.frame = layout_manager.game_play_time_label_frame();
-    [self.view addSubview:self.gameTimerLabel];
-
-    self.scoreLabel = [UPLabel label];
-    self.scoreLabel.string = @"0";
-    self.scoreLabel.font = font;
-    self.scoreLabel.textColorCategory = UPColorCategoryInformation;
-    self.scoreLabel.textAlignment = NSTextAlignmentRight;
-    self.scoreLabel.frame = layout_manager.game_play_score_label_frame();
-    [self.view addSubview:self.scoreLabel];
 
     self.dialogGameOver = [UPDialogGameOver instance];
     [self.view addSubview:self.dialogGameOver];
 //    [self.dialogPause.quitButton addTarget:self action:@selector(dialogPauseQuitButtonTapped:) forEvents:UPControlEventTouchUpInside];
 //    [self.dialogPause.resumeButton addTarget:self action:@selector(dialogPauseResumeButtonTapped:) forEvents:UPControlEventTouchUpInside];
     self.dialogGameOver.hidden = YES;
-    self.dialogGameOver.frame = layout_manager.screen_bounds();
+    self.dialogGameOver.frame = layout.screen_bounds();
 
     self.dialogPause = [UPDialogPause instance];
     [self.view addSubview:self.dialogPause];
     [self.dialogPause.quitButton addTarget:self action:@selector(dialogPauseQuitButtonTapped:) forEvents:UPControlEventTouchUpInside];
     [self.dialogPause.resumeButton addTarget:self action:@selector(dialogPauseResumeButtonTapped:) forEvents:UPControlEventTouchUpInside];
     self.dialogPause.hidden = YES;
-    self.dialogPause.frame = layout_manager.screen_bounds();
+    self.dialogPause.frame = layout.screen_bounds();
 
     [self viewOpUpdateGameControls];
 
@@ -219,6 +154,10 @@ using UP::RoleModeUI;
     self.mode = UPSpellGameModeCountdown;
     self.mode = UPSpellGameModePlay;
 
+    delay(RoleGameDelay, 1.0, ^{
+        [self.gameTimer start];
+    });
+
     delay(RoleGameDelay, 0.2, ^{
         [self viewOpFillPlayerTray];
     });
@@ -227,45 +166,6 @@ using UP::RoleModeUI;
 - (void)dealloc
 {
     delete self.model;
-}
-
-- (void)viewDidLayoutSubviews
-{
-    SpellLayout &layout_manager = SpellLayout::instance();
-    self.infinityView.frame = self.view.bounds;
-    self.tileContainerView.frame = self.view.bounds;
-    self.tileContainerClipView.frame = layout_manager.word_tray_mask_frame();
-}
-
-- (UIBezierPath *)wordTrayMaskPath
-{
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint: CGPointMake(874.89, 42.17)];
-    [path addCurveToPoint: CGPointMake(874.92, 29.27) controlPoint1: CGPointMake(874.89, 37.87) controlPoint2: CGPointMake(874.9, 33.57)];
-    [path addLineToPoint: CGPointMake(874.77, 29.3)];
-    [path addCurveToPoint: CGPointMake(874.67, 21.61) controlPoint1: CGPointMake(874.74, 26.73) controlPoint2: CGPointMake(874.71, 24.17)];
-    [path addCurveToPoint: CGPointMake(868.51, 10.28) controlPoint1: CGPointMake(874.43, 16.58) controlPoint2: CGPointMake(872.87, 12.34)];
-    [path addCurveToPoint: CGPointMake(861.45, 7.53) controlPoint1: CGPointMake(866.21, 9.19) controlPoint2: CGPointMake(863.87, 8.03)];
-    [path addCurveToPoint: CGPointMake(843.92, 4.64) controlPoint1: CGPointMake(855.64, 6.34) controlPoint2: CGPointMake(849.8, 5.14)];
-    [path addCurveToPoint: CGPointMake(658, 0.19) controlPoint1: CGPointMake(782.07, -0.48) controlPoint2: CGPointMake(719.98, 0.61)];
-    [path addCurveToPoint: CGPointMake(437.5, 0.01) controlPoint1: CGPointMake(586.97, 0.02) controlPoint2: CGPointMake(508.65, -0.02)];
-    [path addCurveToPoint: CGPointMake(217, 0.19) controlPoint1: CGPointMake(366.35, -0.02) controlPoint2: CGPointMake(288.03, 0.02)];
-    [path addCurveToPoint: CGPointMake(31.08, 4.64) controlPoint1: CGPointMake(155.02, 0.61) controlPoint2: CGPointMake(92.93, -0.48)];
-    [path addCurveToPoint: CGPointMake(13.55, 7.53) controlPoint1: CGPointMake(25.2, 5.14) controlPoint2: CGPointMake(19.36, 6.34)];
-    [path addCurveToPoint: CGPointMake(6.49, 10.28) controlPoint1: CGPointMake(11.13, 8.03) controlPoint2: CGPointMake(8.79, 9.19)];
-    [path addCurveToPoint: CGPointMake(0.33, 21.61) controlPoint1: CGPointMake(2.13, 12.34) controlPoint2: CGPointMake(0.57, 16.58)];
-    [path addCurveToPoint: CGPointMake(0.23, 29.3) controlPoint1: CGPointMake(0.29, 24.17) controlPoint2: CGPointMake(0.26, 26.73)];
-    [path addLineToPoint: CGPointMake(0.08, 29.27)];
-    [path addCurveToPoint: CGPointMake(0.11, 42.16) controlPoint1: CGPointMake(0.1, 33.57) controlPoint2: CGPointMake(0.11, 37.87)];
-    [path addCurveToPoint: CGPointMake(0.07, 132) controlPoint1: CGPointMake(-0.02, 59.55) controlPoint2: CGPointMake(-0.03, 107.78)];
-    [path addLineToPoint: CGPointMake(-0, 132)];
-    [path addLineToPoint: CGPointMake(-0, 420)];
-    [path addLineToPoint: CGPointMake(875, 420)];
-    [path addLineToPoint: CGPointMake(875, 132)];
-    [path addLineToPoint: CGPointMake(874.93, 132)];
-    [path addCurveToPoint: CGPointMake(874.89, 42.17) controlPoint1: CGPointMake(875.04, 107.78) controlPoint2: CGPointMake(875.02, 59.55)];
-    [path closePath];
-    return path;
 }
 
 #pragma mark - UPGameTimerObserver
@@ -352,7 +252,7 @@ using UP::RoleModeUI;
 
 - (void)wordTrayTapped
 {
-    if (self.wordTrayView.active) {
+    if (self.gameView.wordTrayView.active) {
         [self applyActionSubmit];
     }
     else if (self.model->word_length() == 0) {
@@ -419,15 +319,15 @@ using UP::RoleModeUI;
         }
         case UIGestureRecognizerStateChanged: {
             ASSERT(self.pickedView == tileView);
-            SpellLayout &layout_manager = SpellLayout::instance();
+            SpellLayout &layout = SpellLayout::instance();
             CGPoint t = [pan translationInView:tileView];
             CGPoint newCenter = CGPointMake(self.panStartPoint.x + t.x, self.panStartPoint.y + t.y);
-            newCenter = up_point_with_exponential_barrier(newCenter, layout_manager.tile_drag_barrier_frame());
+            newCenter = up_point_with_exponential_barrier(newCenter, layout.tile_drag_barrier_frame());
             self.panFurthestDistance = UPMaxT(CGFloat, self.panFurthestDistance, up_point_distance(CGPointZero, t));
             self.panCurrentDistance = up_point_distance(self.panStartPoint, newCenter);
             self.panEverMovedUp = self.panEverMovedUp || [pan velocityInView:tileView].y < 0;
             tileView.center = newCenter;
-            BOOL tileInsideWordTray = CGRectContainsPoint(layout_manager.word_tray_layout_frame(), newCenter);
+            BOOL tileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), newCenter);
             Tile &tile = self.model->find_tile(tileView);
             if (tileInsideWordTray) {
                 [self applyActionHoverIfNeeded:tile];
@@ -439,15 +339,15 @@ using UP::RoleModeUI;
         }
         case UIGestureRecognizerStateEnded: {
             ASSERT(self.pickedView == tileView);
-            SpellLayout &layout_manager = SpellLayout::instance();
+            SpellLayout &layout = SpellLayout::instance();
             CGPoint v = [pan velocityInView:tileView];
             BOOL pannedFar = self.panFurthestDistance >= 25;
             BOOL putBack = self.panCurrentDistance < 10;
             BOOL movingUp = v.y < -50;
             CGFloat movingDownVelocity = UPMaxT(CGFloat, v.y, 0.0);
-            BOOL tileInsideWordTray = CGRectContainsPoint(layout_manager.word_tray_layout_frame(), tileView.center);
+            BOOL tileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), tileView.center);
             CGPoint projectedDownCenter = CGPointMake(tileView.center.x, tileView.center.y + (movingDownVelocity * 0.15));
-            BOOL projectedTileInsideWordTray = CGRectContainsPoint(layout_manager.word_tray_layout_frame(), projectedDownCenter);
+            BOOL projectedTileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), projectedDownCenter);
             LOG(Gestures, "pan ended: f: %.2f ; c: %.2f ; v: %.2f", self.panFurthestDistance, self.panCurrentDistance, v.y);
             LOG(Gestures, "   center:     %@", NSStringFromCGPoint(tileView.center));
             LOG(Gestures, "   projected:  %@", NSStringFromCGPoint(projectedDownCenter));
@@ -511,8 +411,8 @@ using UP::RoleModeUI;
     // find the word position closest to the tile
     size_t word_length = self.pickedPosition.in_word_tray() ? self.model->word_length() : self.model->word_length() + 1;
     
-    SpellLayout &layout_manager = SpellLayout::instance();
-    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(word_length);
+    SpellLayout &layout = SpellLayout::instance();
+    const auto &word_tray_tile_centers = layout.word_tray_tile_centers(word_length);
     CGPoint center = tileView.center;
     CGFloat min_d = std::numeric_limits<CGFloat>::max();
     TilePosition pos;
@@ -547,15 +447,15 @@ using UP::RoleModeUI;
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, tile.position(), word_pos));
 
-    SpellLayout &layout_manager = SpellLayout::instance();
+    SpellLayout &layout = SpellLayout::instance();
     if (needSlide) {
-        start(slide(RoleGameUI, wordTrayTileViews, 0.15, layout_manager.word_tray_tile_offset(), nil));
+        start(slide(RoleGameUI, wordTrayTileViews, 0.15, layout.word_tray_tile_offset(), nil));
     }
     
-    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
+    const auto &word_tray_tile_centers = layout.word_tray_tile_centers(self.model->word_length());
     CGPoint word_tray_center = word_tray_tile_centers[word_pos.index()];
     UPTileView *tileView = tile.view();
-    [self.tileContainerView bringSubviewToFront:tileView];
+    [self.gameView.tileContainerView bringSubviewToFront:tileView];
     start(bloop(RoleGameUI, @[tileView], 0.4, word_tray_center, nil));
 
     tileView.highlighted = NO;
@@ -576,10 +476,10 @@ using UP::RoleModeUI;
 
     [self viewOpSlideWordTrayViewsIntoPlace];
 
-    SpellLayout &layout_manager = SpellLayout::instance();
-    const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
+    SpellLayout &layout = SpellLayout::instance();
+    const auto &player_tray_tile_centers = layout.player_tray_tile_centers();
     CGPoint center = player_tray_tile_centers[self.model->player_tray_index(tileView)];
-    [self.tileContainerView bringSubviewToFront:tileView];
+    [self.gameView.tileContainerView bringSubviewToFront:tileView];
     start(bloop(RoleGameUI, @[tileView], 0.4, center, nil));
 
     tileView.highlighted = NO;
@@ -619,7 +519,7 @@ using UP::RoleModeUI;
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::PICK, tile.position()));
 
-    [self.tileContainerView bringSubviewToFront:tileView];
+    [self.gameView.tileContainerView bringSubviewToFront:tileView];
     CGPoint pointInView = [tileView.pan locationInView:tileView];
     CGPoint center = up_rect_center(tileView.bounds);
     CGFloat dx = center.x - pointInView.x;
@@ -681,14 +581,14 @@ using UP::RoleModeUI;
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DROP, self.pickedPosition));
 
     if (self.pickedPosition.in_word_tray()) {
-        SpellLayout &layout_manager = SpellLayout::instance();
-        const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(self.model->word_length());
+        SpellLayout &layout = SpellLayout::instance();
+        const auto &word_tray_tile_centers = layout.word_tray_tile_centers(self.model->word_length());
         CGPoint tile_center = word_tray_tile_centers[self.pickedPosition.index()];
         start(bloop(RoleGameUI, @[tileView], 0.4, tile_center, nil));
     }
     else {
-        SpellLayout &layout_manager = SpellLayout::instance();
-        const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
+        SpellLayout &layout = SpellLayout::instance();
+        const auto &player_tray_tile_centers = layout.player_tray_tile_centers();
         CGPoint tile_center = player_tray_tile_centers[self.model->player_tray_index(tileView)];
         start(bloop(RoleGameUI, @[tileView], 0.4, tile_center, nil));
     }
@@ -731,10 +631,10 @@ using UP::RoleModeUI;
 
     // assess time penalty and shake word tray side-to-side
     [self viewOpPenaltyForReject:self.model->all_tile_views()];
-    SpellLayout &layout_manager = SpellLayout::instance();
-    NSMutableArray *views = [NSMutableArray arrayWithObject:self.wordTrayView];
+    SpellLayout &layout = SpellLayout::instance();
+    NSMutableArray *views = [NSMutableArray arrayWithObject:self.gameView.wordTrayView];
     [views addObjectsFromArray:[self wordTrayTileViews]];
-    start(shake(RoleGameUI, views, 0.9, layout_manager.word_tray_shake_offset(), ^(UIViewAnimatingPosition) {
+    start(shake(RoleGameUI, views, 0.9, layout.word_tray_shake_offset(), ^(UIViewAnimatingPosition) {
         delay(RoleGameDelay, 0.25, ^{
             [self viewOpPenaltyFinished];
             delay(RoleGameDelay, 0.1, ^{
@@ -774,21 +674,21 @@ using UP::RoleModeUI;
 - (void)viewOpUpdateGameControls
 {
     // word tray
-    self.wordTrayView.active = self.model->word_in_lexicon();
+    self.gameView.wordTrayView.active = self.model->word_in_lexicon();
 
     // trash/clear button
     if (self.model->word_length()) {
         self.showingRoundButtonClear = YES;
-        self.roundButtonClear.hidden = NO;
-        self.roundButtonTrash.hidden = YES;
+        self.gameView.roundButtonClear.hidden = NO;
+        self.gameView.roundButtonTrash.hidden = YES;
     }
     else {
         self.showingRoundButtonClear = NO;
-        self.roundButtonClear.hidden = YES;
-        self.roundButtonTrash.hidden = NO;
+        self.gameView.roundButtonClear.hidden = YES;
+        self.gameView.roundButtonTrash.hidden = NO;
     }
     
-    self.scoreLabel.string = [NSString stringWithFormat:@"%d", self.model->score()];
+    self.gameView.scoreLabel.string = [NSString stringWithFormat:@"%d", self.model->score()];
 }
 
 - (void)viewOpApplyTranslationToFrame:(NSArray *)tileViews
@@ -808,9 +708,9 @@ using UP::RoleModeUI;
         return;
     }
 
-    SpellLayout &layout_manager = SpellLayout::instance();
+    SpellLayout &layout = SpellLayout::instance();
     size_t word_length = self.model->word_length();
-    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(word_length);
+    const auto &word_tray_tile_centers = layout.word_tray_tile_centers(word_length);
 
     for (UPTileView *tileView in wordTrayTileViews) {
         const Tile &tile = self.model->find_tile(tileView);
@@ -829,9 +729,9 @@ using UP::RoleModeUI;
 
     [self viewOpApplyTranslationToFrame:wordTrayTileViews];
 
-    SpellLayout &layout_manager = SpellLayout::instance();
+    SpellLayout &layout = SpellLayout::instance();
     size_t word_length = self.pickedPosition.in_word_tray() ? self.model->word_length() : self.model->word_length() + 1;
-    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(word_length);
+    const auto &word_tray_tile_centers = layout.word_tray_tile_centers(word_length);
 
     if (self.pickedPosition.in_player_tray()) {
         for (UPTileView *tileView in wordTrayTileViews) {
@@ -871,9 +771,9 @@ using UP::RoleModeUI;
 
     [self viewOpApplyTranslationToFrame:wordTrayTileViews];
 
-    SpellLayout &layout_manager = SpellLayout::instance();
+    SpellLayout &layout = SpellLayout::instance();
     size_t word_length = self.pickedPosition.in_word_tray() ? self.model->word_length() - 1 : self.model->word_length();
-    const auto &word_tray_tile_centers = layout_manager.word_tray_tile_centers(word_length);
+    const auto &word_tray_tile_centers = layout.word_tray_tile_centers(word_length);
 
     if (self.pickedPosition.in_player_tray()) {
         for (UPTileView *tileView in wordTrayTileViews) {
@@ -903,8 +803,8 @@ using UP::RoleModeUI;
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
     ASSERT(wordTrayTileViews.count > 0);
 
-    SpellLayout &layout_manager = SpellLayout::instance();
-    const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
+    SpellLayout &layout = SpellLayout::instance();
+    const auto &player_tray_tile_centers = layout.player_tray_tile_centers();
     
     for (UPTileView *tileView in wordTrayTileViews) {
         TileIndex idx = self.model->player_tray_index(tileView);
@@ -915,7 +815,7 @@ using UP::RoleModeUI;
 
 - (void)viewOpScoreWord
 {
-    SpellLayout &layout_manager = SpellLayout::instance();
+    SpellLayout &layout = SpellLayout::instance();
 
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
     
@@ -924,14 +824,14 @@ using UP::RoleModeUI;
         [tileView clearGestures];
     }
 
-    CGPoint slidePoint = CGPointMake(UP::NotACoordinate, layout_manager.score_tile_center_y());
+    CGPoint slidePoint = CGPointMake(UP::NotACoordinate, layout.score_tile_center_y());
     UPAnimator *slideAnimator = slide_to(RoleGameUI, wordTrayTileViews, 0.1, slidePoint, ^(UIViewAnimatingPosition) {
-        LOG(Leaks, "views [1]: %@", self.tileContainerView.subviews);
+        LOG(Leaks, "views [1]: %@", self.gameView.tileContainerView.subviews);
         [wordTrayTileViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        LOG(Leaks, "views [2]: %@", self.tileContainerView.subviews);
+        LOG(Leaks, "views [2]: %@", self.gameView.tileContainerView.subviews);
     });
 
-    UIOffset springOffset = UIOffsetMake(0, layout_manager.score_tile_spring_down_offset_y());
+    UIOffset springOffset = UIOffsetMake(0, layout.score_tile_spring_down_offset_y());
     UPAnimator *springAnimator = spring(RoleGameUI, wordTrayTileViews, 0.13, springOffset, ^(UIViewAnimatingPosition) {
         start(slideAnimator);
     });
@@ -941,9 +841,9 @@ using UP::RoleModeUI;
 
 - (void)viewOpDumpPlayerTray:(NSArray *)playerTrayTileViews
 {
-    SpellLayout &layout_manager = SpellLayout::instance();
+    SpellLayout &layout = SpellLayout::instance();
     Random &random = Random::instance();
-    const auto &offscreen_tray_tile_centers = layout_manager.prefill_tile_centers();
+    const auto &offscreen_tray_tile_centers = layout.prefill_tile_centers();
 
     std::array<size_t, TileCount> idxs;
     for (TileIndex idx = 0; idx < TileCount; idx++) {
@@ -975,9 +875,9 @@ using UP::RoleModeUI;
 
 - (void)viewOpFillPlayerTrayWithPostFillOp:(void (^)(void))postFillOp completion:(void (^)(void))completion
 {
-    SpellLayout &layout_manager = SpellLayout::instance();
-    const auto &prefill_tile_frames = layout_manager.prefill_tile_frames();
-    const auto &player_tray_tile_centers = layout_manager.player_tray_tile_centers();
+    SpellLayout &layout = SpellLayout::instance();
+    const auto &prefill_tile_frames = layout.prefill_tile_frames();
+    const auto &player_tray_tile_centers = layout.player_tray_tile_centers();
 
     TileIndex idx = 0;
     for (auto &tile : self.model->tiles()) {
@@ -987,7 +887,7 @@ using UP::RoleModeUI;
             tileView.role = RoleGameUI;
             tileView.gestureDelegate = self;
             tileView.frame = prefill_tile_frames[idx];
-            [self.tileContainerView addSubview:tileView];
+            [self.gameView.tileContainerView addSubview:tileView];
             start(bloop(RoleGameUI, @[tileView], 0.3, player_tray_tile_centers[idx], nil));
         }
         idx++;
@@ -1009,10 +909,10 @@ using UP::RoleModeUI;
 {
     ASSERT(!self.view.userInteractionEnabled);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
-    self.roundButtonTrash.highlightedOverride = YES;
-    self.roundButtonTrash.highlighted = YES;
-    self.wordTrayView.alpha = disabledAlpha;
-    self.roundButtonPause.alpha = disabledAlpha;
+    self.gameView.roundButtonTrash.highlightedOverride = YES;
+    self.gameView.roundButtonTrash.highlighted = YES;
+    self.gameView.wordTrayView.alpha = disabledAlpha;
+    self.gameView.roundButtonPause.alpha = disabledAlpha;
     for (UPTileView *tileView in tileViews) {
         tileView.alpha = disabledAlpha;
     }
@@ -1022,9 +922,9 @@ using UP::RoleModeUI;
 {
     ASSERT(!self.view.userInteractionEnabled);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
-    self.wordTrayView.alpha = disabledAlpha;
-    self.roundButtonPause.alpha = disabledAlpha;
-    self.roundButtonClear.alpha = disabledAlpha;
+    self.gameView.wordTrayView.alpha = disabledAlpha;
+    self.gameView.roundButtonPause.alpha = disabledAlpha;
+    self.gameView.roundButtonClear.alpha = disabledAlpha;
     for (UPTileView *tileView in tileViews) {
         tileView.alpha = disabledAlpha;
     }
@@ -1033,15 +933,15 @@ using UP::RoleModeUI;
 - (void)viewOpPenaltyFinished
 {
     ASSERT(!self.view.userInteractionEnabled);
-    self.roundButtonTrash.highlightedOverride = NO;
-    self.roundButtonTrash.highlighted = NO;
-    self.wordTrayView.alpha = 1.0;
-    self.roundButtonPause.alpha = 1.0;
+    self.gameView.roundButtonTrash.highlightedOverride = NO;
+    self.gameView.roundButtonTrash.highlighted = NO;
+    self.gameView.wordTrayView.alpha = 1.0;
+    self.gameView.roundButtonPause.alpha = 1.0;
     if (self.showingRoundButtonClear) {
-        self.roundButtonClear.alpha = 1.0;
+        self.gameView.roundButtonClear.alpha = 1.0;
     }
     else {
-        self.roundButtonTrash.alpha = 1.0;
+        self.gameView.roundButtonTrash.alpha = 1.0;
     }
     NSArray *playerTrayTileViews = self.model->all_tile_views();
     for (UPTileView *tileView in playerTrayTileViews) {
@@ -1053,32 +953,32 @@ using UP::RoleModeUI;
 {
     const CGFloat alpha = [UIColor themeModalBackgroundAlpha];
     if (mode == UPSpellGameModePause) {
-        self.roundButtonPause.highlightedOverride = YES;
-        self.roundButtonPause.highlighted = YES;
-        self.roundButtonPause.alpha = [UIColor themeModalActiveAlpha];
-        self.gameTimerLabel.alpha = alpha;
-        self.scoreLabel.alpha = alpha;
+        self.gameView.roundButtonPause.highlightedOverride = YES;
+        self.gameView.roundButtonPause.highlighted = YES;
+        self.gameView.roundButtonPause.alpha = [UIColor themeModalActiveAlpha];
+        self.gameView.gameTimerLabel.alpha = alpha;
+        self.gameView.scoreLabel.alpha = alpha;
     }
     else if (mode == UPSpellGameModeOverInterstitial) {
-        self.roundButtonPause.alpha = alpha;
+        self.gameView.roundButtonPause.alpha = alpha;
     }
     else {
-        self.gameTimerLabel.alpha = alpha;
-        self.scoreLabel.alpha = alpha;
-        self.roundButtonPause.alpha = alpha;
+        self.gameView.gameTimerLabel.alpha = alpha;
+        self.gameView.scoreLabel.alpha = alpha;
+        self.gameView.roundButtonPause.alpha = alpha;
     }
     if (self.showingRoundButtonClear) {
-        self.roundButtonClear.alpha = alpha;
+        self.gameView.roundButtonClear.alpha = alpha;
     }
     else {
-        self.roundButtonTrash.alpha = alpha;
+        self.gameView.roundButtonTrash.alpha = alpha;
     }
-    self.wordTrayView.alpha = alpha;
+    self.gameView.wordTrayView.alpha = alpha;
 
-    self.wordTrayView.userInteractionEnabled = NO;
-    self.roundButtonTrash.userInteractionEnabled = NO;
-    self.roundButtonClear.userInteractionEnabled = NO;
-    self.roundButtonPause.userInteractionEnabled = NO;
+    self.gameView.wordTrayView.userInteractionEnabled = NO;
+    self.gameView.roundButtonTrash.userInteractionEnabled = NO;
+    self.gameView.roundButtonClear.userInteractionEnabled = NO;
+    self.gameView.roundButtonPause.userInteractionEnabled = NO;
 
     for (UPTileView *tileView in self.model->all_tile_views()) {
         tileView.alpha = alpha;
@@ -1088,24 +988,24 @@ using UP::RoleModeUI;
 
 - (void)viewOpExitModal
 {
-    self.roundButtonPause.highlightedOverride = NO;
-    self.roundButtonPause.highlighted = NO;
-    self.roundButtonPause.alpha = 1.0;
+    self.gameView.roundButtonPause.highlightedOverride = NO;
+    self.gameView.roundButtonPause.highlighted = NO;
+    self.gameView.roundButtonPause.alpha = 1.0;
 
-    self.wordTrayView.alpha = 1.0;
+    self.gameView.wordTrayView.alpha = 1.0;
     if (self.showingRoundButtonClear) {
-        self.roundButtonClear.alpha = 1.0;
+        self.gameView.roundButtonClear.alpha = 1.0;
     }
     else {
-        self.roundButtonTrash.alpha = 1.0;
+        self.gameView.roundButtonTrash.alpha = 1.0;
     }
-    self.gameTimerLabel.alpha = 1.0;
-    self.scoreLabel.alpha = 1.0;
+    self.gameView.gameTimerLabel.alpha = 1.0;
+    self.gameView.scoreLabel.alpha = 1.0;
 
-    self.wordTrayView.userInteractionEnabled = YES;
-    self.roundButtonTrash.userInteractionEnabled = YES;
-    self.roundButtonClear.userInteractionEnabled = YES;
-    self.roundButtonPause.userInteractionEnabled = YES;
+    self.gameView.wordTrayView.userInteractionEnabled = YES;
+    self.gameView.roundButtonTrash.userInteractionEnabled = YES;
+    self.gameView.roundButtonClear.userInteractionEnabled = YES;
+    self.gameView.roundButtonPause.userInteractionEnabled = YES;
 
     for (UPTileView *tileView in self.model->all_tile_views()) {
         tileView.alpha = 1.0;
@@ -1115,14 +1015,17 @@ using UP::RoleModeUI;
 
 - (void)viewOpLockUserInterface
 {
-    ASSERT(self.view.userInteractionEnabled);
+    self.userInterfaceLockCount++;
     self.view.userInteractionEnabled = NO;
 }
 
 - (void)viewOpUnlockUserInterface
 {
-    ASSERT(!self.view.userInteractionEnabled);
-    self.view.userInteractionEnabled = YES;
+    ASSERT(self.userInterfaceLockCount > 0);
+    self.userInterfaceLockCount = UPMaxT(NSInteger, self.userInterfaceLockCount - 1, 0);
+    if (self.userInterfaceLockCount == 0) {
+        self.view.userInteractionEnabled = YES;
+    }
 }
 
 #pragma mark - Modes
@@ -1378,7 +1281,7 @@ using UP::RoleModeUI;
 
 - (void)modeTransitionFromPauseToPlay:(BOOL)animated
 {
-    SpellLayout &layout_manager = SpellLayout::instance();
+    SpellLayout &layout = SpellLayout::instance();
 
     [self viewOpLockUserInterface];
     CGPoint center = self.dialogPause.center;
@@ -1394,13 +1297,13 @@ using UP::RoleModeUI;
             [self.gameTimer start];
             start(RoleGameDelay);
             start(RoleGameUI);
-            self.roundButtonPause.highlightedOverride = NO;
-            self.roundButtonPause.highlighted = NO;
+            self.gameView.roundButtonPause.highlightedOverride = NO;
+            self.gameView.roundButtonPause.highlighted = NO;
             [self viewOpUnlockUserInterface];
         }];
     });
 
-    UIOffset springOffset = UIOffsetMake(0, layout_manager.dialog_spring_dismiss_offset_y());
+    UIOffset springOffset = UIOffsetMake(0, layout.dialog_spring_dismiss_offset_y());
     UPAnimator *springAnimator = spring(RoleModeUI, @[self.dialogPause], 0.13, springOffset, ^(UIViewAnimatingPosition) {
         start(slideAnimator);
     });
@@ -1414,16 +1317,16 @@ using UP::RoleModeUI;
 
 - (void)modeTransitionFromPlayToOverInterstitial:(BOOL)animated
 {
-    SpellLayout &layout_manager = SpellLayout::instance();
-    self.dialogGameOver.titlePathView.frame = layout_manager.dialog_over_interstitial_title_layout_frame();
-    self.dialogGameOver.menuButton.frame = layout_manager.dialog_over_interstitial_button_left_frame();
-    self.dialogGameOver.playButton.frame = layout_manager.dialog_over_interstitial_button_right_frame();
-    self.dialogGameOver.noteLabel.frame = layout_manager.dialog_over_interstitial_note_label_frame();
+    SpellLayout &layout = SpellLayout::instance();
+    self.dialogGameOver.titlePathView.frame = layout.dialog_over_interstitial_title_layout_frame();
+    self.dialogGameOver.menuButton.frame = layout.dialog_over_interstitial_button_left_frame();
+    self.dialogGameOver.playButton.frame = layout.dialog_over_interstitial_button_right_frame();
+    self.dialogGameOver.noteLabel.frame = layout.dialog_over_interstitial_note_label_frame();
     self.dialogGameOver.menuButton.hidden = YES;
     self.dialogGameOver.playButton.hidden = YES;
     self.dialogGameOver.noteLabel.hidden = YES;
 
-    pause(RoleGameAll);
+    cancel(RoleGameAll);
     [self viewOpLockUserInterface];
 
     [UIView animateWithDuration:0.1 animations:^{
@@ -1446,24 +1349,24 @@ using UP::RoleModeUI;
 {
     [self viewOpUnlockUserInterface];
 
-    SpellLayout &layout_manager = SpellLayout::instance();
-    self.dialogGameOver.titlePathView.frame = layout_manager.dialog_over_interstitial_title_layout_frame();
-    self.dialogGameOver.menuButton.frame = layout_manager.dialog_over_interstitial_button_left_frame();
-    self.dialogGameOver.playButton.frame = layout_manager.dialog_over_interstitial_button_right_frame();
-    self.dialogGameOver.noteLabel.frame = layout_manager.dialog_over_interstitial_note_label_frame();
+    SpellLayout &layout = SpellLayout::instance();
+    self.dialogGameOver.titlePathView.frame = layout.dialog_over_interstitial_title_layout_frame();
+    self.dialogGameOver.menuButton.frame = layout.dialog_over_interstitial_button_left_frame();
+    self.dialogGameOver.playButton.frame = layout.dialog_over_interstitial_button_right_frame();
+    self.dialogGameOver.noteLabel.frame = layout.dialog_over_interstitial_note_label_frame();
     self.dialogGameOver.menuButton.hidden = NO;
     self.dialogGameOver.playButton.hidden = NO;
     self.dialogGameOver.noteLabel.hidden = NO;
 
-    CGPoint menuButtonCenter = up_rect_center(layout_manager.dialog_over_button_left_frame());
-    CGPoint playButtonCenter = up_rect_center(layout_manager.dialog_over_button_right_frame());
-    CGPoint noteLabelCenter = up_rect_center(layout_manager.dialog_over_note_label_frame());
-    CGPoint scoreLabelCenter = up_rect_center(layout_manager.calculate_game_over_score_label_frame(self.scoreLabel.string));
+    CGPoint menuButtonCenter = up_rect_center(layout.dialog_over_button_left_frame());
+    CGPoint playButtonCenter = up_rect_center(layout.dialog_over_button_right_frame());
+    CGPoint noteLabelCenter = up_rect_center(layout.dialog_over_note_label_frame());
+    CGPoint scoreLabelCenter = up_rect_center(layout.calculate_game_over_score_label_frame(self.gameView.scoreLabel.string));
     start(slide_to(RoleModeUI, @[self.dialogGameOver.menuButton], 0.75, menuButtonCenter, nil));
     start(slide_to(RoleModeUI, @[self.dialogGameOver.playButton], 0.75, playButtonCenter, nil));
     start(slide_to(RoleModeUI, @[self.dialogGameOver.noteLabel], 0.75, noteLabelCenter, nil));
-    start(fade(RoleModeUI, @[self.gameTimerLabel], 0.3, nil));
-    start(slide_to(RoleModeUI, @[self.scoreLabel], 0.75, scoreLabelCenter, nil));
+    start(fade(RoleModeUI, @[self.gameView.gameTimerLabel], 0.3, nil));
+    start(slide_to(RoleModeUI, @[self.gameView.scoreLabel], 0.75, scoreLabelCenter, nil));
 }
 
 - (void)modeTransitionFromOverToCountdown:(BOOL)animated

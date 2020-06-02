@@ -303,6 +303,7 @@ void SpellLayout::calculate_game_information_superscript_font_metrics()
 {
     CGFloat cap_height = CanonicalGameInformationSuperscriptCapHeight * layout_scale();
     UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
+    set_game_information_superscript_font(font);
     CGFloat baseline_adjustment = CanonicalGameInformationSuperscriptBaselineAdjustment * layout_scale();
     CGFloat kerning = CanonicalGameInformationSuperscriptKerning * layout_scale();
     set_game_information_superscript_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment, kerning));

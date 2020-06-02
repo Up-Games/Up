@@ -18,6 +18,7 @@
 		5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E0432476BF41008D3015 /* UPTileView.mm */; };
 		5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E078247D723A008D3015 /* UPSpellModel.mm */; };
 		5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */; };
+		5DB9B1AC248705FA00A4AAA8 /* UPSpellGameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AB248705FA00A4AAA8 /* UPSpellGameView.mm */; };
 		5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */; };
 		5DF9DF5C2466165700B2199D /* UPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5B2466165700B2199D /* UPAppDelegate.m */; };
 		5DF9DF5F2466165700B2199D /* UPSceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */; };
@@ -79,6 +80,8 @@
 		5DA8E04524775A2E008D3015 /* UPTileSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileSequence.h; sourceTree = "<group>"; };
 		5DA8E077247D723A008D3015 /* UPSpellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellModel.h; sourceTree = "<group>"; };
 		5DA8E078247D723A008D3015 /* UPSpellModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellModel.mm; sourceTree = "<group>"; };
+		5DB9B1AA248705FA00A4AAA8 /* UPSpellGameView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellGameView.h; sourceTree = "<group>"; };
+		5DB9B1AB248705FA00A4AAA8 /* UPSpellGameView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellGameView.mm; sourceTree = "<group>"; };
 		5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTilePaths.mm; sourceTree = "<group>"; };
 		5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTilePaths.h; sourceTree = "<group>"; };
 		5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPTilePaths-private.mm"; sourceTree = "<group>"; };
@@ -138,6 +141,8 @@
 				5DF9DF602466165700B2199D /* UPSpellGameController.h */,
 				5DF9DF612466165700B2199D /* UPSpellGameController.mm */,
 				5D5EA1492486A76E006264D2 /* UPSpellGameMode.h */,
+				5DB9B1AA248705FA00A4AAA8 /* UPSpellGameView.h */,
+				5DB9B1AB248705FA00A4AAA8 /* UPSpellGameView.mm */,
 				5D5216EA246C7E9E005A2E9F /* UPSpellLayout.h */,
 				5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */,
 				5DC67DF424730207009BCDBB /* UPSpellMacros.h */,
@@ -325,6 +330,7 @@
 				5DF9DF622466165700B2199D /* UPSpellGameController.mm in Sources */,
 				5DF9DF5C2466165700B2199D /* UPAppDelegate.m in Sources */,
 				5D54078424841631003F193D /* UPSpellNavigationController.mm in Sources */,
+				5DB9B1AC248705FA00A4AAA8 /* UPSpellGameView.mm in Sources */,
 				5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */,
 				5DF9DF6D2466165800B2199D /* main.m in Sources */,
 				5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */,

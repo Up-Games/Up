@@ -116,8 +116,10 @@ UPAnimator *set_color(UP::Role role, NSArray<UPControl *> *controls, CFTimeInter
 void cancel(NSObject<UPTimeSpanning> *obj)
 {
     if (obj) {
+        NSObject<UPTimeSpanning> *ref = obj;
         erase(obj.serialNumber);
         [obj cancel];
+        ref = nil;
     }
 }
 
@@ -126,8 +128,10 @@ void cancel(uint32_t serial_number)
     auto it = g_map->find(serial_number);
     if (it != g_map->end()) {
         NSObject<UPTimeSpanning> *obj = it->second;
+        NSObject<UPTimeSpanning> *ref = obj;
         g_map->erase(it);
         [obj cancel];
+        ref = nil;
 #if !LOG_DISABLED
         LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
 #endif
@@ -139,12 +143,14 @@ void cancel(NSArray<UIView *> *views)
     for (auto it = g_map->begin(); it != g_map->end();) {
         NSObject<UPTimeSpanning> *obj = it->second;
         if ([obj isKindOfClass:[UPAnimator class]] && [views isEqualToArray:((UPAnimator *)obj).views]) {
+            NSObject<UPTimeSpanning> *ref = obj;
             uint32_t serial_number = obj.serialNumber;
             it = g_map->erase(it);
+            [obj cancel];
 #if !LOG_DISABLED
             LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
 #endif
-            [obj cancel];
+            ref = nil;
         }
         else {
             ++it;
@@ -157,12 +163,14 @@ void cancel(UP::Role role)
     for (auto it = g_map->begin(); it != g_map->end();) {
         NSObject<UPTimeSpanning> *obj = it->second;
         if (role_match(role, obj.role)) {
+            NSObject<UPTimeSpanning> *ref = obj;
             uint32_t serial_number = obj.serialNumber;
             it = g_map->erase(it);
+            [obj cancel];
 #if !LOG_DISABLED
             LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
 #endif
-            [obj cancel];
+            ref = nil;
         }
         else {
             ++it;

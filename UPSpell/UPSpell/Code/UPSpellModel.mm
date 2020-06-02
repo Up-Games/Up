@@ -135,8 +135,9 @@ NSArray *SpellModel::all_tile_views() const
 {
     NSMutableArray *array = [NSMutableArray array];
     for (const auto &tile : tiles()) {
-        ASSERT(tile.has_view());
-        [array addObject:tile.view()];
+        if (tile.has_view()) {
+            [array addObject:tile.view()];
+        }
     }
     return array;
 }
@@ -145,8 +146,7 @@ NSArray *SpellModel::player_tray_tile_views() const
 {
     NSMutableArray *array = [NSMutableArray array];
     for (const auto &tile : tiles()) {
-        if (tile.in_player_tray()) {
-            ASSERT(tile.has_view());
+        if (tile.in_player_tray() && tile.has_view()) {
             [array addObject:tile.view()];
         }
     }
@@ -157,8 +157,7 @@ NSArray *SpellModel::word_tray_tile_views() const
 {
     NSMutableArray *array = [NSMutableArray array];
     for (const auto &tile : tiles()) {
-        if (tile.in_word_tray()) {
-            ASSERT(tile.has_view());
+        if (tile.in_word_tray() && tile.has_view()) {
             [array addObject:tile.view()];
         }
     }
