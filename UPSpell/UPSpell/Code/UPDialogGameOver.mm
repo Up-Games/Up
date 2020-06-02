@@ -56,6 +56,14 @@ using UP::SpellLayout;
     self.playButton.frame = layout_manager.dialog_over_interstitial_button_right_frame();
     [self addSubview:self.playButton];
 
+    self.noteLabel = [UPLabel label];
+    self.noteLabel.string = @"‘GRUBMITS’ WAS YOUR HIGHEST SCORING WORD (32)";
+    self.noteLabel.font = layout_manager.game_note_font();
+    self.noteLabel.textColorCategory = UPColorCategoryInformation;
+    self.noteLabel.textAlignment = NSTextAlignmentCenter;
+    self.noteLabel.frame = layout_manager.dialog_over_interstitial_note_label_frame();
+    [self addSubview:self.noteLabel];
+
     [self updateThemeColors];
 
     return self;

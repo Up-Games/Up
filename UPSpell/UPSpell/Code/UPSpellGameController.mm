@@ -1461,7 +1461,7 @@ using UP::RoleModeUI;
     CGPoint scoreLabelCenter = up_rect_center(layout_manager.calculate_game_over_score_label_frame(self.scoreLabel.string));
     start(slide_to(RoleModeUI, @[self.dialogGameOver.menuButton], 0.75, menuButtonCenter, nil));
     start(slide_to(RoleModeUI, @[self.dialogGameOver.playButton], 0.75, playButtonCenter, nil));
-//    start(slide_to(RoleModeUI, @[self.dialogGameOver.noteLabel], 0.75, noteLabelCenter, nil));
+    start(slide_to(RoleModeUI, @[self.dialogGameOver.noteLabel], 0.75, noteLabelCenter, nil));
     start(fade(RoleModeUI, @[self.gameTimerLabel], 0.3, nil));
     start(slide_to(RoleModeUI, @[self.scoreLabel], 0.75, scoreLabelCenter, nil));
 }

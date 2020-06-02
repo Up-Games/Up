@@ -88,6 +88,7 @@ void SpellLayout::calculate()
     calculate_game_controls_button_charge_size();
     calculate_game_information_font_metrics();
     calculate_game_information_superscript_font_metrics();
+    calculate_game_note_font_metrics();
     calculate_game_play_time_label_frame();
     calculate_game_play_score_label_frame();
     calculate_tile_stroke_width();
@@ -305,6 +306,14 @@ void SpellLayout::calculate_game_information_superscript_font_metrics()
     CGFloat baseline_adjustment = CanonicalGameInformationSuperscriptBaselineAdjustment * layout_scale();
     CGFloat kerning = CanonicalGameInformationSuperscriptKerning * layout_scale();
     set_game_information_superscript_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment, kerning));
+}
+
+void SpellLayout::calculate_game_note_font_metrics()
+{
+    CGFloat cap_height = CanonicalDialogOverNoteFontCapHeight * layout_scale();
+    UIFont *font = [UIFont gameNoteFontWithCapHeight:cap_height];
+    set_game_note_font(font);
+    set_game_note_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
 void SpellLayout::calculate_game_play_time_label_frame()

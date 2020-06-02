@@ -22,9 +22,8 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>MalloryCond-Bold.otf</string>
-		<string>MalloryMPNrrw-Bold.otf</string>
 		<string>MalloryNrrw-Bold.otf</string>
+		<string>MalloryCond-BlackItalic.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

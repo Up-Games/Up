@@ -8,6 +8,7 @@
 #import "UIFont+UPSpell.h"
 
 NSString * const UPGameInformationFontName = @"MalloryNarrow-Bold";
+NSString * const UPGameNoteFontName = @"MalloryCondensed-BlackItalic";
 
 //
 //  Below, the UIFontFeatureTypeIdentifierKey and UIFontFeatureSelectorIdentifierKey are set from
@@ -43,6 +44,19 @@ NSString * const UPGameInformationFontName = @"MalloryNarrow-Bold";
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
     return [UIFont gameInformationFontOfSize:pointSize];
+}
+
++ (UIFont *)gameNoteFontOfSize:(CGFloat)fontSize
+{
+    return [UIFont fontWithName:UPGameNoteFontName size:fontSize];
+}
+
++ (UIFont *)gameNoteFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPGameNoteFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont gameNoteFontOfSize:pointSize];
 }
 
 @end

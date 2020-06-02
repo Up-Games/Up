@@ -13,12 +13,11 @@
 		5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1412485B49E006264D2 /* UPDialogPause.mm */; };
 		5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1442485B820006264D2 /* UPTextPaths.mm */; };
 		5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */; };
-		5D72311C246B3717006027A3 /* MalloryCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D723119246B3713006027A3 /* MalloryCond-Bold.otf */; };
-		5D72311D246B3717006027A3 /* MalloryMPNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D72311B246B3713006027A3 /* MalloryMPNrrw-Bold.otf */; };
-		5D72311E246B3717006027A3 /* MalloryNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D72311A246B3713006027A3 /* MalloryNrrw-Bold.otf */; };
+		5D5EA14C248702BF006264D2 /* MalloryCond-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D5EA14A24870128006264D2 /* MalloryCond-BlackItalic.otf */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.m */; };
 		5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E0432476BF41008D3015 /* UPTileView.mm */; };
 		5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E078247D723A008D3015 /* UPSpellModel.mm */; };
+		5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */; };
 		5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */; };
 		5DF9DF5C2466165700B2199D /* UPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5B2466165700B2199D /* UPAppDelegate.m */; };
 		5DF9DF5F2466165700B2199D /* UPSceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */; };
@@ -70,10 +69,9 @@
 		5D5EA1462486A1D2006264D2 /* UPDialogGameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogGameOver.h; sourceTree = "<group>"; };
 		5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameOver.mm; sourceTree = "<group>"; };
 		5D5EA1492486A76E006264D2 /* UPSpellGameMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellGameMode.h; sourceTree = "<group>"; };
+		5D5EA14A24870128006264D2 /* MalloryCond-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-BlackItalic.otf"; sourceTree = "<group>"; };
+		5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryNrrw-Bold.otf"; sourceTree = "<group>"; };
 		5D723114246B34C0006027A3 /* UPTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileView.h; sourceTree = "<group>"; };
-		5D723119246B3713006027A3 /* MalloryCond-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Bold.otf"; sourceTree = "<group>"; };
-		5D72311A246B3713006027A3 /* MalloryNrrw-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryNrrw-Bold.otf"; sourceTree = "<group>"; };
-		5D72311B246B3713006027A3 /* MalloryMPNrrw-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryMPNrrw-Bold.otf"; sourceTree = "<group>"; };
 		5D72311F246B3917006027A3 /* UIFont+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UPSpell.h"; sourceTree = "<group>"; };
 		5D723120246B3996006027A3 /* UIFont+UPSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+UPSpell.m"; sourceTree = "<group>"; };
 		5DA8E0422476128C008D3015 /* UPTileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTileModel.h; sourceTree = "<group>"; };
@@ -163,9 +161,8 @@
 		5D723118246B3694006027A3 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				5D723119246B3713006027A3 /* MalloryCond-Bold.otf */,
-				5D72311B246B3713006027A3 /* MalloryMPNrrw-Bold.otf */,
-				5D72311A246B3713006027A3 /* MalloryNrrw-Bold.otf */,
+				5D5EA14A24870128006264D2 /* MalloryCond-BlackItalic.otf */,
+				5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -301,11 +298,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D72311E246B3717006027A3 /* MalloryNrrw-Bold.otf in Resources */,
 				5DF9DF6A2466165800B2199D /* LaunchScreen.storyboard in Resources */,
-				5D72311C246B3717006027A3 /* MalloryCond-Bold.otf in Resources */,
+				5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */,
 				5DF9DF672466165800B2199D /* Assets.xcassets in Resources */,
-				5D72311D246B3717006027A3 /* MalloryMPNrrw-Bold.otf in Resources */,
+				5D5EA14C248702BF006264D2 /* MalloryCond-BlackItalic.otf in Resources */,
 				5DF9DF652466165700B2199D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
