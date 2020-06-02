@@ -4,6 +4,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreText/CoreText.h>
 
 #import <UpKit/UPAssertions.h>
 #import <UpKit/UIFont+UP.h>
@@ -87,8 +88,8 @@ void SpellLayout::calculate()
     calculate_game_controls_button_charge_size();
     calculate_game_information_font_metrics();
     calculate_game_information_superscript_font_metrics();
-    calculate_game_time_label_frame();
-    calculate_game_score_label_frame();
+    calculate_game_play_time_label_frame();
+    calculate_game_play_score_label_frame();
     calculate_tile_stroke_width();
     calculate_dialog_title_layout_frame();
     calculate_dialog_spring_dismiss_offset_y();
@@ -129,7 +130,7 @@ void SpellLayout::calculate_controls_layout_frame()
             break;
         }
     }
-    LOG(Layout, "controls layout frame:   %@", NSStringFromCGRect(controls_layout_frame()));
+    LOG(Layout, "controls_layout_frame: %@", NSStringFromCGRect(controls_layout_frame()));
 }
 
 void SpellLayout::calculate_word_tray_layout_frame()
@@ -154,7 +155,7 @@ void SpellLayout::calculate_word_tray_layout_frame()
             break;
         }
     }
-    LOG(Layout, "word tray layout frame: %@", NSStringFromCGRect(word_tray_layout_frame()));
+    LOG(Layout, "word_tray_layout_frame: %@", NSStringFromCGRect(word_tray_layout_frame()));
 }
 
 void SpellLayout::calculate_word_tray_mask_frame()
@@ -179,7 +180,7 @@ void SpellLayout::calculate_word_tray_mask_frame()
             break;
         }
     }
-    LOG(Layout, "word tray mask frame: %@", NSStringFromCGRect(word_tray_mask_frame()));
+    LOG(Layout, "word_tray_mask_frame: %@", NSStringFromCGRect(word_tray_mask_frame()));
 }
 
 void SpellLayout::calculate_word_tray_tile_reposition_frame()
@@ -187,7 +188,7 @@ void SpellLayout::calculate_word_tray_tile_reposition_frame()
     CGFloat word_tray_stroke = up_float_scaled(CanonicalWordTrayStroke, layout_scale());
     CGRect frame = CGRectInset(word_tray_layout_frame(), word_tray_stroke, word_tray_stroke);
     set_word_tray_tile_reposition_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "tile_drag_barrier_frame: %@", NSStringFromCGRect(word_tray_tile_reposition_frame()));
+    LOG(Layout, "word_tray_tile_reposition_frame: %@", NSStringFromCGRect(word_tray_tile_reposition_frame()));
 }
 
 void SpellLayout::calculate_tile_drag_barrier_frame()
@@ -222,7 +223,7 @@ void SpellLayout::calculate_player_tray_layout_frame()
             break;
         }
     }
-    LOG(Layout, "   tiles layout frame:  %@", NSStringFromCGRect(player_tray_layout_frame()));
+    LOG(Layout, "player_tray_layout_frame: %@", NSStringFromCGRect(player_tray_layout_frame()));
 }
 
 void SpellLayout::calculate_tile_size()
@@ -252,7 +253,7 @@ void SpellLayout::calculate_tile_stroke_width()
     [path closePath];
     m_tile_stroke_path = path;
 
-    LOG(Layout, "   tile stroke width:   %.2f", tile_stroke_width());
+    LOG(Layout, "tile_stroke_width: %.2f", tile_stroke_width());
 }
 
 void SpellLayout::calculate_game_controls_left_button_frame()
@@ -265,7 +266,7 @@ void SpellLayout::calculate_game_controls_left_button_frame()
         up_size_height(size)
     );
     set_game_controls_left_button_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "   pause button frame:  %@", NSStringFromCGRect(game_controls_left_button_frame()));
+    LOG(Layout, "game_controls_left_button_frame: %@", NSStringFromCGRect(game_controls_left_button_frame()));
 }
 
 void SpellLayout::calculate_game_controls_right_button_frame()
@@ -278,7 +279,7 @@ void SpellLayout::calculate_game_controls_right_button_frame()
         up_size_height(size)
     );
     set_game_controls_right_button_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "   trash button frame:  %@", NSStringFromCGRect(game_controls_right_button_frame()));
+    LOG(Layout, "game_controls_right_button_frame: %@", NSStringFromCGRect(game_controls_right_button_frame()));
 }
 
 void SpellLayout::calculate_game_controls_button_charge_size()
@@ -286,13 +287,14 @@ void SpellLayout::calculate_game_controls_button_charge_size()
     CGSize size = up_size_scaled(CanonicalRoundButtonSize, layout_scale());
     CGSize charge_size = CGSizeMake(up_size_width(size) * 0.65, up_size_height(size) * 0.15);
     set_game_controls_button_charge_size(up_pixel_size(charge_size, screen_scale()));
-    LOG(Layout, "   button charge size:  %@", NSStringFromCGSize(game_controls_button_charge_size()));
+    LOG(Layout, "game_controls_button_charge_size: %@", NSStringFromCGSize(game_controls_button_charge_size()));
 }
 
 void SpellLayout::calculate_game_information_font_metrics()
 {
     CGFloat cap_height = CanonicalGameInformationCapHeight * layout_scale();
     UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
+    set_game_information_font(font);
     set_game_information_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
@@ -305,7 +307,7 @@ void SpellLayout::calculate_game_information_superscript_font_metrics()
     set_game_information_superscript_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment, kerning));
 }
 
-void SpellLayout::calculate_game_time_label_frame()
+void SpellLayout::calculate_game_play_time_label_frame()
 {
     const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
@@ -315,11 +317,11 @@ void SpellLayout::calculate_game_time_label_frame()
     CGFloat y = up_rect_mid_y(controls_layout_frame()) - cap_height;
     CGFloat h = font_metrics.line_height();
     CGRect frame = CGRectMake(x, y, w, h);
-    set_game_time_label_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "   time label frame:    %@", NSStringFromCGRect(game_time_label_frame()));
+    set_game_play_time_label_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "game_play_time_label_frame: %@", NSStringFromCGRect(game_play_time_label_frame()));
 }
 
-void SpellLayout::calculate_game_score_label_frame()
+void SpellLayout::calculate_game_play_score_label_frame()
 {
     const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
@@ -329,8 +331,34 @@ void SpellLayout::calculate_game_score_label_frame()
     CGFloat y = up_rect_mid_y(controls_layout_frame()) - cap_height;
     CGFloat h = font_metrics.line_height();
     CGRect frame = CGRectMake(x, y, w, h);
-    set_game_score_label_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "   score label frame:   %@", NSStringFromCGRect(game_score_label_frame()));
+    set_game_play_score_label_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "game_play_score_label_frame: %@", NSStringFromCGRect(game_play_score_label_frame()));
+}
+
+CGRect SpellLayout::calculate_game_over_score_label_frame(NSString *string) const
+{
+    NSAttributedString *richText = [[NSAttributedString alloc] initWithString:string attributes:@{
+        NSFontAttributeName: game_information_font() }
+    ];
+    CGPathRef path = CGPathCreateWithRect(CGRectMake(0, 0, CGFLOAT_MAX, CGFLOAT_MAX), NULL);
+    CGFloat width = 0.0;
+    CTFramesetterRef setter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)richText);
+    CTFrameRef frame = CTFramesetterCreateFrame(setter, CFRangeMake(0, string.length), path, NULL);
+    NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frame);
+    for (id item in lines) {
+        CTLineRef line = (__bridge CTLineRef)item;
+        width = UPMaxT(CGFloat, width, CTLineGetTypographicBounds(line, NULL, NULL, NULL));
+    }
+    CFRelease(frame);
+    CFRelease(setter);
+    CFRelease(path);
+    
+    // center right-aligned label
+    CGPoint center = up_rect_center(canvas_frame());
+    CGRect labelFrame = game_play_score_label_frame();;
+    labelFrame = up_rect_centered_x_in_rect(labelFrame, canvas_frame());
+    labelFrame.origin.x = center.x - up_rect_width(labelFrame) + (width * 0.5);
+    return up_pixel_rect(labelFrame, screen_scale());
 }
 
 void SpellLayout::calculate_word_tray_shake_offset()
@@ -428,7 +456,7 @@ void SpellLayout::calculate_word_tray_tile_frames()
 
     int idx = 0;
     for (const auto &r : word_tray_tile_frames(2)) {
-        LOG(Layout, "   word tray frame [%d]:  %@", idx, NSStringFromCGRect(r));
+        LOG(Layout, "word_tray_tile_frame [%d]:  %@", idx, NSStringFromCGRect(r));
         idx++;
     }
 }

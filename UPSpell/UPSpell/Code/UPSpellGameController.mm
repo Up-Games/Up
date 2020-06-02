@@ -185,6 +185,7 @@ using UP::RoleModeUI;
 
     self.gameTimerLabel.textColorCategory = UPColorCategoryInformation;
     self.gameTimerLabel.textAlignment = NSTextAlignmentRight;
+    self.gameTimerLabel.frame = layout_manager.game_play_time_label_frame();
     [self.view addSubview:self.gameTimerLabel];
 
     self.scoreLabel = [UPLabel label];
@@ -192,6 +193,7 @@ using UP::RoleModeUI;
     self.scoreLabel.font = font;
     self.scoreLabel.textColorCategory = UPColorCategoryInformation;
     self.scoreLabel.textAlignment = NSTextAlignmentRight;
+    self.scoreLabel.frame = layout_manager.game_play_score_label_frame();
     [self.view addSubview:self.scoreLabel];
 
     self.dialogGameOver = [UPDialogGameOver instance];
@@ -233,8 +235,6 @@ using UP::RoleModeUI;
     self.infinityView.frame = self.view.bounds;
     self.tileContainerView.frame = self.view.bounds;
     self.tileContainerClipView.frame = layout_manager.word_tray_mask_frame();
-    self.gameTimerLabel.frame = layout_manager.game_time_label_frame();
-    self.scoreLabel.frame = layout_manager.game_score_label_frame();
 }
 
 - (UIBezierPath *)wordTrayMaskPath
@@ -1458,9 +1458,12 @@ using UP::RoleModeUI;
     CGPoint menuButtonCenter = up_rect_center(layout_manager.dialog_over_button_left_frame());
     CGPoint playButtonCenter = up_rect_center(layout_manager.dialog_over_button_right_frame());
     CGPoint noteLabelCenter = up_rect_center(layout_manager.dialog_over_note_label_frame());
+    CGPoint scoreLabelCenter = up_rect_center(layout_manager.calculate_game_over_score_label_frame(self.scoreLabel.string));
     start(slide_to(RoleModeUI, @[self.dialogGameOver.menuButton], 0.75, menuButtonCenter, nil));
     start(slide_to(RoleModeUI, @[self.dialogGameOver.playButton], 0.75, playButtonCenter, nil));
 //    start(slide_to(RoleModeUI, @[self.dialogGameOver.noteLabel], 0.75, noteLabelCenter, nil));
+    start(fade(RoleModeUI, @[self.gameTimerLabel], 0.3, nil));
+    start(slide_to(RoleModeUI, @[self.scoreLabel], 0.75, scoreLabelCenter, nil));
 }
 
 - (void)modeTransitionFromOverToCountdown:(BOOL)animated

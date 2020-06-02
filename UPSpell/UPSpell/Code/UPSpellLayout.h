@@ -116,10 +116,12 @@ public:
     CGRect game_controls_right_button_frame() const { return m_game_controls_right_button_frame; }
     CGSize game_controls_button_charge_size() const { return m_game_controls_button_charge_size; }
 
+    UIFont *game_information_font() const { return m_game_information_font; }
     const FontMetrics &game_information_font_metrics() const { return m_game_information_font_metrics; }
     const FontMetrics &game_information_superscript_font_metrics() const { return m_game_information_superscript_font_metrics; }
-    CGRect game_time_label_frame() const { return m_game_time_label_frame; }
-    CGRect game_score_label_frame() const { return m_game_score_label_frame; }
+    CGRect game_play_time_label_frame() const { return m_game_play_time_label_frame; }
+    CGRect game_play_score_label_frame() const { return m_game_play_score_label_frame; }
+    CGRect calculate_game_over_score_label_frame(NSString *) const;
 
     const TileRectArray &player_tray_tile_frames() const { return m_player_tray_tile_frames; }
     const TilePointArray &player_tray_tile_centers() const { return m_player_tray_tile_centers; }
@@ -184,10 +186,11 @@ private:
     void set_game_controls_left_button_frame(CGRect rect) { m_game_controls_left_button_frame = rect; }
     void set_game_controls_right_button_frame(CGRect rect) { m_game_controls_right_button_frame = rect; }
     void set_game_controls_button_charge_size(CGSize size) { m_game_controls_button_charge_size = size; }
+    void set_game_information_font(UIFont *font) { m_game_information_font = font; }
     void set_game_information_font_metrics(const FontMetrics &metrics) { m_game_information_font_metrics = metrics; }
     void set_game_information_superscript_font_metrics(const FontMetrics &metrics) { m_game_information_superscript_font_metrics = metrics; }
-    void set_game_time_label_frame(CGRect rect) { m_game_time_label_frame = rect; }
-    void set_game_score_label_frame(CGRect rect) { m_game_score_label_frame = rect; }
+    void set_game_play_time_label_frame(CGRect rect) { m_game_play_time_label_frame = rect; }
+    void set_game_play_score_label_frame(CGRect rect) { m_game_play_score_label_frame = rect; }
     void set_score_tile_spring_down_offset_y(CGFloat f) { m_score_tile_spring_down_offset_y = f; }
     void set_score_tile_center_y(CGFloat f) { m_score_tile_center_y = f; }
     void set_dialog_title_layout_frame(CGRect rect) { m_dialog_title_layout_frame = rect; }
@@ -225,8 +228,8 @@ private:
     void calculate_game_controls_button_charge_size();
     void calculate_game_information_font_metrics();
     void calculate_game_information_superscript_font_metrics();
-    void calculate_game_time_label_frame();
-    void calculate_game_score_label_frame();
+    void calculate_game_play_time_label_frame();
+    void calculate_game_play_score_label_frame();
     void calculate_dialog_title_layout_frame();
     void calculate_dialog_spring_dismiss_offset_y();
     void calculate_dialog_pause_title_layout_frame();
@@ -272,11 +275,12 @@ private:
     CGRect m_game_controls_right_button_frame = CGRectZero;
     CGSize m_game_controls_button_charge_size = CGSizeZero;
 
+    __strong UIFont *m_game_information_font;
     FontMetrics m_game_information_font_metrics;
     FontMetrics m_game_information_superscript_font_metrics;
 
-    CGRect m_game_time_label_frame = CGRectZero;
-    CGRect m_game_score_label_frame = CGRectZero;
+    CGRect m_game_play_time_label_frame = CGRectZero;
+    CGRect m_game_play_score_label_frame = CGRectZero;
 
     TileRectArray m_player_tray_tile_frames;
     TilePointArray m_player_tray_tile_centers;
