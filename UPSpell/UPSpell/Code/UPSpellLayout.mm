@@ -91,6 +91,7 @@ void SpellLayout::calculate()
     calculate_game_score_label_frame();
     calculate_tile_stroke_width();
     calculate_dialog_title_layout_frame();
+    calculate_dialog_spring_dismiss_offset_y();
     calculate_dialog_pause_buttons_layout_frame();
     calculate_dialog_pause_button_quit_frame();
     calculate_dialog_pause_button_resume_frame();
@@ -484,6 +485,13 @@ void SpellLayout::calculate_dialog_title_layout_frame()
 {
     set_dialog_title_layout_frame(word_tray_layout_frame());
     LOG(Layout, "dialog_title_layout_frame: %@", NSStringFromCGRect(dialog_title_layout_frame()));
+}
+
+void SpellLayout::calculate_dialog_spring_dismiss_offset_y()
+{
+    CGFloat y = up_rect_height(dialog_title_layout_frame()) * 0.08;
+    set_dialog_spring_dismiss_offset_y(up_pixel_float(-y, screen_scale()));
+    LOG(Layout, "dialog_spring_dismiss_offset_y:    %.2f", dialog_spring_dismiss_offset_y());
 }
 
 void SpellLayout::calculate_dialog_pause_buttons_layout_frame()

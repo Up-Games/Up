@@ -110,7 +110,7 @@ using UP::RoleModeUI;
     self.model = new SpellModel(game_code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
-    [UIColor setThemeHue:190];
+    [UIColor setThemeHue:310];
     SpellLayout &layout_manager = SpellLayout::create_instance();
     TilePaths::create_instance();
     
@@ -314,61 +314,7 @@ using UP::RoleModeUI;
     return array;
 }
 
-#pragma mark - Pause
-
-- (void)pause
-{
-    self.mode = UPSpellGameModePause;
-    [self.gameTimer stop];
-    pause(RoleGameAll);
-    [self viewOpLockUserInterface];
-    [UIView animateWithDuration:0.1 animations:^{
-        [self viewOpEnterModal:self.model->all_tile_views()];
-    }];
-    CGPoint center = self.view.center;
-    CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
-    self.dialogPause.center = offscreenCenter;
-    self.dialogPause.transform = CGAffineTransformIdentity;
-    self.dialogPause.hidden = NO;
-    self.dialogPause.alpha = 1.0;
-    start(bloop(RoleModeUI, @[self.dialogPause], 0.3, center, ^(UIViewAnimatingPosition) {
-        [self viewOpUnlockUserInterface];
-    }));
-}
-
-- (void)resume
-{
-    SpellLayout &layout_manager = SpellLayout::instance();
-
-    [self viewOpLockUserInterface];
-    CGPoint center = self.dialogPause.center;
-    CGPoint offscreenCenter = CGPointMake(center.x, center.y - (up_rect_height(self.view.bounds) * 0.5));
-
-    UPAnimator *slideAnimator = slide_to(RoleModeUI, @[self.dialogPause], 0.15, offscreenCenter, ^(UIViewAnimatingPosition) {
-        self.dialogPause.center = self.view.center;
-        self.dialogPause.hidden = YES;
-        self.dialogPause.alpha = 1.0;
-        [UIView animateWithDuration:0.3 animations:^{
-            [self viewOpExitModal:self.model->all_tile_views()];
-        } completion:^(BOOL finished) {
-            self.mode = UPSpellGameModePlay;
-            [self.gameTimer start];
-            start(RoleGameDelay);
-            start(RoleGameUI);
-            self.roundButtonPause.highlightedOverride = NO;
-            self.roundButtonPause.highlighted = NO;
-            [self viewOpUnlockUserInterface];
-        }];
-    });
-
-    UIOffset springOffset = UIOffsetMake(0, layout_manager.score_tile_spring_down_offset_y());
-    UPAnimator *springAnimator = spring(RoleModeUI, @[self.dialogPause], 0.13, springOffset, ^(UIViewAnimatingPosition) {
-        start(slideAnimator);
-        start(fade(RoleModeUI, @[self.dialogPause], 0.15, nil));
-    });
-
-    start(springAnimator);
-}
+#pragma mark - Control target/action and gestures
 
 - (void)dialogPauseQuitButtonTapped:(id)sender
 {
@@ -376,14 +322,12 @@ using UP::RoleModeUI;
 
 - (void)dialogPauseResumeButtonTapped:(id)sender
 {
-    [self resume];
+    [self setMode:UPSpellGameModePlay animated:YES];
 }
-
-#pragma mark - Control target/action and gestures
 
 - (void)roundButtonPauseTapped:(id)sender
 {
-    [self pause];
+    [self setMode:UPSpellGameModePause animated:YES];
 }
 
 - (void)roundButtonTrashTapped:(id)sender
@@ -1175,7 +1119,6 @@ using UP::RoleModeUI;
         return;
     }
     UPSpellGameMode prev = _mode;
-    _mode = mode;
     
     switch (prev) {
         case UPSpellGameModeStart: {
@@ -1354,6 +1297,9 @@ using UP::RoleModeUI;
             }
             break;
     }
+
+    // Change the mode
+    _mode = mode;
 }
 
 - (void)modeTransitionFromNoneToMenu:(BOOL)animated
@@ -1394,10 +1340,53 @@ using UP::RoleModeUI;
 
 - (void)modeTransitionFromPlayToPause:(BOOL)animated
 {
+    [self.gameTimer stop];
+    pause(RoleGameAll);
+    [self viewOpLockUserInterface];
+    [UIView animateWithDuration:0.1 animations:^{
+        [self viewOpEnterModal:self.model->all_tile_views()];
+    }];
+    CGPoint center = self.view.center;
+    CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
+    self.dialogPause.center = offscreenCenter;
+    self.dialogPause.transform = CGAffineTransformIdentity;
+    self.dialogPause.hidden = NO;
+    self.dialogPause.alpha = 1.0;
+    start(bloop(RoleModeUI, @[self.dialogPause], 0.3, center, ^(UIViewAnimatingPosition) {
+        [self viewOpUnlockUserInterface];
+    }));
 }
 
 - (void)modeTransitionFromPauseToPlay:(BOOL)animated
 {
+    SpellLayout &layout_manager = SpellLayout::instance();
+
+    [self viewOpLockUserInterface];
+    CGPoint center = self.dialogPause.center;
+    CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
+
+    UPAnimator *slideAnimator = slide_to(RoleModeUI, @[self.dialogPause], 0.15, offscreenCenter, ^(UIViewAnimatingPosition) {
+        self.dialogPause.center = self.view.center;
+        self.dialogPause.hidden = YES;
+        self.dialogPause.alpha = 1.0;
+        [UIView animateWithDuration:0.3 animations:^{
+            [self viewOpExitModal:self.model->all_tile_views()];
+        } completion:^(BOOL finished) {
+            [self.gameTimer start];
+            start(RoleGameDelay);
+            start(RoleGameUI);
+            self.roundButtonPause.highlightedOverride = NO;
+            self.roundButtonPause.highlighted = NO;
+            [self viewOpUnlockUserInterface];
+        }];
+    });
+
+    UIOffset springOffset = UIOffsetMake(0, layout_manager.dialog_spring_dismiss_offset_y());
+    UPAnimator *springAnimator = spring(RoleModeUI, @[self.dialogPause], 0.13, springOffset, ^(UIViewAnimatingPosition) {
+        start(slideAnimator);
+    });
+
+    start(springAnimator);
 }
 
 - (void)modeTransitionFromPauseToMenu:(BOOL)animated

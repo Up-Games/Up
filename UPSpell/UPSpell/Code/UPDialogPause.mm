@@ -65,7 +65,7 @@ using UP::SpellLayout;
 
 - (void)updateThemeColors
 {
-    self.titlePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
+    self.titlePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryDialogTitle];
 }
 
 @end

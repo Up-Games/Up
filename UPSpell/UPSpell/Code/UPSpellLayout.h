@@ -139,10 +139,11 @@ public:
     const TileRectArray &prefill_tile_frames() const { return m_prefill_tile_frames; }
     const TilePointArray &prefill_tile_centers() const { return m_prefill_tile_centers; }
 
-    CGFloat score_tile_spring_down_offset_y() const { return m_score_tile_spring_down_offset_y; }
     CGFloat score_tile_center_y() const { return m_score_tile_center_y; }
+    CGFloat score_tile_spring_down_offset_y() const { return m_score_tile_spring_down_offset_y; }
 
     CGRect dialog_title_layout_frame() const { return m_dialog_title_layout_frame; }
+    CGFloat dialog_spring_dismiss_offset_y() const { return m_dialog_spring_dismiss_offset_y; }
     CGRect dialog_pause_buttons_layout_frame() const { return m_dialog_pause_buttons_layout_frame; }
     CGRect dialog_pause_button_quit_frame() const { return m_dialog_pause_button_quit_frame; }
     CGRect dialog_pause_button_resume_frame() const { return m_dialog_pause_button_resume_frame; }
@@ -181,6 +182,7 @@ private:
     void set_dialog_pause_buttons_layout_frame(CGRect rect) { m_dialog_pause_buttons_layout_frame = rect; }
     void set_dialog_pause_button_quit_frame(CGRect rect) { m_dialog_pause_button_quit_frame = rect; }
     void set_dialog_pause_button_resume_frame(CGRect rect) { m_dialog_pause_button_resume_frame = rect; }
+    void set_dialog_spring_dismiss_offset_y(CGFloat f) { m_dialog_spring_dismiss_offset_y = f; }
 
     void calculate_controls_layout_frame();
     void calculate_word_tray_layout_frame();
@@ -204,6 +206,7 @@ private:
     void calculate_game_time_label_frame();
     void calculate_game_score_label_frame();
     void calculate_dialog_title_layout_frame();
+    void calculate_dialog_spring_dismiss_offset_y();
     void calculate_dialog_pause_buttons_layout_frame();
     void calculate_dialog_pause_button_quit_frame();
     void calculate_dialog_pause_button_resume_frame();
@@ -254,6 +257,7 @@ private:
     CGFloat m_score_tile_center_y = 0.0;
     
     CGRect m_dialog_title_layout_frame;
+    CGFloat m_dialog_spring_dismiss_offset_y;
     CGRect m_dialog_pause_buttons_layout_frame;
     CGRect m_dialog_pause_button_quit_frame;
     CGRect m_dialog_pause_button_resume_frame;

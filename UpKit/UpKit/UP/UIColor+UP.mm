@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import "UPAssertions.h"
 #import "UIColor+UP.h"
 #import "UPColor.h"
 #import "UPMath.h"
@@ -54,20 +55,61 @@ static CGFloat _ThemeHue = 222;
 
 + (UIColor *)themeColorWithStyle:(UPColorStyle)style hue:(CGFloat)hue category:(UPColorCategory)category
 {
-    switch (category) {
+    UPColorCategory effectiveCategory = category;
+
+    if (effectiveCategory == UPColorCategoryDialogTitle) {
+        switch (style) {
+            case UPColorStyleDefault:
+            case UPColorStyleLight:
+            case UPColorStyleDark:
+                effectiveCategory = UPColorCategoryPrimaryFill;
+                break;
+            case UPColorStyleLightStark:
+            case UPColorStyleDarkStark:
+                effectiveCategory = UPColorCategoryPrimaryStroke;
+                break;
+        }
+    }
+
+    switch (effectiveCategory) {
         case UPColorCategoryWhite:
             return [UIColor whiteColor];
         case UPColorCategoryBlack:
             return [UIColor blackColor];
         case UPColorCategoryClear:
             return [UIColor clearColor];
-        default: {
+        case UPColorCategoryDialogTitle:
+            ASSERT_NOT_REACHED();
+            return nil;
+        case UPColorCategoryDefault:
+        case UPColorCategoryPrimaryFill:
+        case UPColorCategoryInactiveFill:
+        case UPColorCategoryActiveFill:
+        case UPColorCategoryHighlightedFill:
+        case UPColorCategorySecondaryFill:
+        case UPColorCategorySecondaryInactiveFill:
+        case UPColorCategorySecondaryActiveFill:
+        case UPColorCategorySecondaryHighlightedFill:
+        case UPColorCategoryPrimaryStroke:
+        case UPColorCategoryInactiveStroke:
+        case UPColorCategoryActiveStroke:
+        case UPColorCategoryHighlightedStroke:
+        case UPColorCategorySecondaryStroke:
+        case UPColorCategorySecondaryInactiveStroke:
+        case UPColorCategorySecondaryActiveStroke:
+        case UPColorCategorySecondaryHighlightedStroke:
+        case UPColorCategoryContent:
+        case UPColorCategoryInactiveContent:
+        case UPColorCategoryActiveContent:
+        case UPColorCategoryHighlightedContent:
+        case UPColorCategoryInformation:
+        case UPColorCategoryInfinity: {
             static const size_t ColorsPerHue = 22;
             static const size_t HueCount = 360;
             size_t themeOffset = (style == UPColorStyleDefault ? 0 : (size_t)style - 1) * HueCount;
             CGFloat effectiveHue = UPClampT(CGFloat, hue, 0, 360);
             size_t hueOffset = (effectiveHue * ColorsPerHue);
-            size_t categoryOffset = (category == UPColorCategoryDefault ? 0 : (size_t)category - 1);
+            size_t categoryOffset = (effectiveCategory == UPColorCategoryDefault ? 0 : (size_t)effectiveCategory - 1);
             size_t idx = (themeOffset * ColorsPerHue) + hueOffset + categoryOffset;
             _UPRGBColorComponents c = _UPThemeColorComponents[idx];
             return [UIColor colorWithRed:c.r green:c.g blue:c.b alpha:c.a];

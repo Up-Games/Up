@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
     UPColorCategoryInformation,
     UPColorCategoryInfinity,
 
+    UPColorCategoryDialogTitle,
+
     UPColorCategoryWhite,
     UPColorCategoryBlack,
     UPColorCategoryClear,
