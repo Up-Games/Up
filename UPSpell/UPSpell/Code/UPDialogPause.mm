@@ -61,12 +61,6 @@ using UP::SpellLayout;
 
 #pragma mark - Layout
 
-- (void)layoutSubviews
-{
-//    SpellLayout &layout_manager = SpellLayout::instance();
-//    self.titlePathView.frame = layout_manager.dialog_title_layout_frame();
-}
-
 #pragma mark - Theme colors
 
 - (void)updateThemeColors
