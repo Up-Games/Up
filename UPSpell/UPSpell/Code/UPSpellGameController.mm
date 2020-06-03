@@ -915,7 +915,7 @@ using UP::RoleModeUI;
 
 - (void)viewOpPenaltyForDump
 {
-    ASSERT(!self.view.userInteractionEnabled);
+    //ASSERT(!self.view.userInteractionEnabled);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.gameView.roundButtonTrash.highlightedOverride = YES;
     self.gameView.roundButtonTrash.highlighted = YES;
@@ -940,7 +940,7 @@ using UP::RoleModeUI;
 
 - (void)viewOpPenaltyFinished
 {
-    ASSERT(!self.view.userInteractionEnabled);
+    //ASSERT(!self.view.userInteractionEnabled);
     self.gameView.roundButtonTrash.highlightedOverride = NO;
     self.gameView.roundButtonTrash.highlighted = NO;
     self.gameView.wordTrayView.alpha = 1.0;
@@ -1024,6 +1024,17 @@ using UP::RoleModeUI;
 {
     self.userInterfaceLockCount++;
     self.view.userInteractionEnabled = NO;
+
+    UIView *roundButtonPause = self.gameView.roundButtonPause;
+    for (UIView *view in self.gameView.subviews) {
+        if (view == roundButtonPause) {
+            continue;
+        }
+        view.userInteractionEnabled = NO;
+    }
+    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
+        tileView.userInteractionEnabled = NO;
+    }
 }
 
 - (void)viewOpUnlockUserInterface
@@ -1032,6 +1043,12 @@ using UP::RoleModeUI;
     self.userInterfaceLockCount = UPMaxT(NSInteger, self.userInterfaceLockCount - 1, 0);
     if (self.userInterfaceLockCount == 0) {
         self.view.userInteractionEnabled = YES;
+        for (UIView *view in self.gameView.subviews) {
+            view.userInteractionEnabled = YES;
+        }
+        for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
+            tileView.userInteractionEnabled = YES;
+        }
     }
 }
 
@@ -1334,6 +1351,7 @@ using UP::RoleModeUI;
     self.dialogGameOver.playButton.hidden = YES;
     self.dialogGameOver.noteLabel.hidden = YES;
 
+    pause(RoleGameAll);
     cancel(RoleGameAll);
     [self viewOpLockUserInterface];
     [self viewOpEnterModal:UPSpellGameModeOverInterstitial];

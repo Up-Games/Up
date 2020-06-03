@@ -109,7 +109,6 @@ static const NSUInteger _StringLength = 5;
 
 - (void)gameTimerStopped:(UPGameTimer *)gameTimer
 {
-    [self.formattedTimeString setString:@""];
     [self _updateLabel:gameTimer];
 }
 
@@ -124,6 +123,8 @@ static const NSUInteger _StringLength = 5;
 
 - (void)gameTimerExpired:(UPGameTimer *)gameTimer
 {
+    [self.formattedTimeString setString:@""];
+    [self _updateLabel:gameTimer];
 }
 
 @end

@@ -105,7 +105,7 @@ const CFTimeInterval UPGameTimerDefaultDuration = 3;
 @dynamic isRunning;
 - (BOOL)isRunning
 {
-    return self.timer != nil;
+    return self.timer != nil && self.remainingTime > 0.0;
 }
 
 @dynamic elapsedSincePreviousCallback;

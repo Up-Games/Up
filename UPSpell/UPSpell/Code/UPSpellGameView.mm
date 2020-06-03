@@ -33,7 +33,7 @@ using UP::RoleGameUI;
 - (instancetype)_init
 {
     SpellLayout &layout = SpellLayout::instance();
-    self = [super initWithFrame:layout.canvas_frame()];
+    self = [super initWithFrame:layout.screen_bounds()];
 
     self.wordTrayView = [UPControl wordTray];
     self.wordTrayView.role = RoleGameUI;

@@ -73,14 +73,12 @@ static uint32_t _InstanceCount;
     self.previousTick = 0;
     self.state = UPDelayedActionStatePaused;
     [[UPTicker instance] removeTicking:self];
-    UP::TimeSpanning::remove(self);
 }
 
 - (void)reset
 {
     self.state = UPDelayedActionStateRunning;
     self.remainingDuration = self.duration;
-    [[UPTicker instance] addTicking:self];
     UP::TimeSpanning::add(self);
 }
 
@@ -110,6 +108,9 @@ static uint32_t _InstanceCount;
 
 - (void)tick:(CFTimeInterval)now
 {
+    if (self.state != UPDelayedActionStateRunning) {
+        return;
+    }
     if (up_is_fuzzy_zero(self.previousTick)) {
         self.remainingDuration -= UPTickerInterval;
     }
