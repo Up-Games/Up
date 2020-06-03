@@ -658,7 +658,7 @@ using UP::RoleModeUI;
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DUMP));
 
-    [self viewOpPenaltyForDump:playerTrayTileViews];
+    [self viewOpPenaltyForDump];
     [self viewOpDumpPlayerTray:playerTrayTileViews];
     delay(RoleGameDelay, 1.65, ^{
         [self viewOpFillPlayerTrayWithPostFillOp:^{
@@ -833,6 +833,7 @@ using UP::RoleModeUI;
 
     UIOffset springOffset = UIOffsetMake(0, layout.score_tile_spring_down_offset_y());
     UPAnimator *springAnimator = spring(RoleGameUI, wordTrayTileViews, 0.13, springOffset, ^(UIViewAnimatingPosition) {
+        
         start(slideAnimator);
     });
     
@@ -862,7 +863,9 @@ using UP::RoleModeUI;
             [tileView removeFromSuperview];
         });
         delay(RoleGameDelay, count * baseDelay, ^{
-            start(animator);
+            if (self.mode == UPSpellGameModePlay) {
+                start(animator);
+            }
         });
         count++;
     }
@@ -905,7 +908,7 @@ using UP::RoleModeUI;
     });
 }
 
-- (void)viewOpPenaltyForDump:(NSArray *)tileViews
+- (void)viewOpPenaltyForDump
 {
     ASSERT(!self.view.userInteractionEnabled);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
@@ -913,7 +916,7 @@ using UP::RoleModeUI;
     self.gameView.roundButtonTrash.highlighted = YES;
     self.gameView.wordTrayView.alpha = disabledAlpha;
     self.gameView.roundButtonPause.alpha = disabledAlpha;
-    for (UPTileView *tileView in tileViews) {
+    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
         tileView.alpha = disabledAlpha;
     }
 }
@@ -943,8 +946,7 @@ using UP::RoleModeUI;
     else {
         self.gameView.roundButtonTrash.alpha = 1.0;
     }
-    NSArray *playerTrayTileViews = self.model->all_tile_views();
-    for (UPTileView *tileView in playerTrayTileViews) {
+    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
         tileView.alpha = 1.0;
     }
 }
@@ -980,7 +982,7 @@ using UP::RoleModeUI;
     self.gameView.roundButtonClear.userInteractionEnabled = NO;
     self.gameView.roundButtonPause.userInteractionEnabled = NO;
 
-    for (UPTileView *tileView in self.model->all_tile_views()) {
+    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
         tileView.alpha = alpha;
         tileView.userInteractionEnabled = NO;
     }
@@ -1007,7 +1009,7 @@ using UP::RoleModeUI;
     self.gameView.roundButtonClear.userInteractionEnabled = YES;
     self.gameView.roundButtonPause.userInteractionEnabled = YES;
 
-    for (UPTileView *tileView in self.model->all_tile_views()) {
+    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
         tileView.alpha = 1.0;
         tileView.userInteractionEnabled = YES;
     }
@@ -1265,15 +1267,16 @@ using UP::RoleModeUI;
     [self.gameTimer stop];
     pause(RoleGameAll);
     [self viewOpLockUserInterface];
-    [UIView animateWithDuration:0.1 animations:^{
-        [self viewOpEnterModal:UPSpellGameModePause];
-    }];
+    [self viewOpEnterModal:UPSpellGameModePause];
     CGPoint center = self.view.center;
     CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
     self.dialogPause.center = offscreenCenter;
     self.dialogPause.transform = CGAffineTransformIdentity;
     self.dialogPause.hidden = NO;
-    self.dialogPause.alpha = 1.0;
+    self.dialogPause.alpha = 0.0;
+    [UIView animateWithDuration:0.15 animations:^{
+        self.dialogPause.alpha = 1.0;
+    }];
     start(bloop(RoleModeUI, @[self.dialogPause], 0.3, center, ^(UIViewAnimatingPosition) {
         [self viewOpUnlockUserInterface];
     }));
@@ -1328,16 +1331,17 @@ using UP::RoleModeUI;
 
     cancel(RoleGameAll);
     [self viewOpLockUserInterface];
+    [self viewOpEnterModal:UPSpellGameModeOverInterstitial];
 
-    [UIView animateWithDuration:0.1 animations:^{
-        [self viewOpEnterModal:UPSpellGameModeOverInterstitial];
-    }];
     CGPoint center = self.view.center;
     CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
     self.dialogGameOver.center = offscreenCenter;
     self.dialogGameOver.transform = CGAffineTransformIdentity;
     self.dialogGameOver.hidden = NO;
-    self.dialogGameOver.alpha = 1.0;
+    self.dialogGameOver.alpha = 0.0;
+    [UIView animateWithDuration:0.15 animations:^{
+        self.dialogGameOver.alpha = 1.0;
+    }];
     start(bloop(RoleModeUI, @[self.dialogGameOver], 0.3, center, ^(UIViewAnimatingPosition) {
         delay(RoleModeUI, 1.0, ^{
             [self setMode:UPSpellGameModeOver animated:YES];
