@@ -8,7 +8,6 @@
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPControl.h>
 #import <UpKit/UPGeometry.h>
-#import <UpKit/UPLayoutRule.h>
 
 #import "UPControl+UPSpell.h"
 #import "UPDialogPause.h"
@@ -58,8 +57,6 @@ using UP::SpellLayout;
 
     return self;
 }
-
-#pragma mark - Layout
 
 #pragma mark - Theme colors
 

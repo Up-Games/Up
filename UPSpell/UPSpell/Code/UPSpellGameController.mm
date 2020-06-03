@@ -13,6 +13,7 @@
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
 #import "UPDialogGameOver.h"
+#import "UPDialogMenu.h"
 #import "UPDialogPause.h"
 #import "UPSceneDelegate.h"
 #import "UPSpellGameView.h"
@@ -76,6 +77,7 @@ using UP::RoleModeUI;
 @property (nonatomic) CGFloat panCurrentDistance;
 @property (nonatomic) BOOL panEverMovedUp;
 @property (nonatomic) UPDialogGameOver *dialogGameOver;
+@property (nonatomic) UPDialogMenu *dialogMenu;
 @property (nonatomic) UPDialogPause *dialogPause;
 @property (nonatomic) NSInteger userInterfaceLockCount;
 @property (nonatomic) SpellModel *model;
@@ -137,6 +139,13 @@ using UP::RoleModeUI;
     self.dialogGameOver.hidden = YES;
     self.dialogGameOver.frame = layout.screen_bounds();
 
+    self.dialogMenu = [UPDialogMenu instance];
+    [self.view addSubview:self.dialogMenu];
+//    [self.dialogPause.quitButton addTarget:self action:@selector(dialogPauseQuitButtonTapped:) forEvents:UPControlEventTouchUpInside];
+//    [self.dialogPause.resumeButton addTarget:self action:@selector(dialogPauseResumeButtonTapped:) forEvents:UPControlEventTouchUpInside];
+    self.dialogMenu.hidden = YES;
+    self.dialogMenu.frame = layout.screen_bounds();
+
     self.dialogPause = [UPDialogPause instance];
     [self.view addSubview:self.dialogPause];
     [self.dialogPause.quitButton addTarget:self action:@selector(dialogPauseQuitButtonTapped:) forEvents:UPControlEventTouchUpInside];
@@ -150,13 +159,14 @@ using UP::RoleModeUI;
     self.pickedPosition = TilePosition();
 
     self.mode = UPSpellGameModeMenu;
+
     self.mode = UPSpellGameModeCountdown;
     self.mode = UPSpellGameModePlay;
-
-    delay(RoleGameDelay, 1.0, ^{
-        [self.gameTimer start];
-    });
-
+//
+//    delay(RoleGameDelay, 1.0, ^{
+//        [self.gameTimer start];
+//    });
+//
     delay(RoleGameDelay, 0.2, ^{
         [self viewOpFillPlayerTray];
     });
@@ -1260,6 +1270,13 @@ using UP::RoleModeUI;
 
 - (void)modeTransitionFromNoneToMenu:(BOOL)animated
 {
+    self.dialogMenu.transform = CGAffineTransformIdentity;
+    self.dialogMenu.hidden = NO;
+    self.dialogMenu.alpha = 1.0;
+
+    SpellLayout &layout = SpellLayout::instance();
+    self.gameView.transform = layout.menu_game_view_transform();
+    self.gameView.alpha = [UIColor themeDisabledAlpha];
 }
 
 - (void)modeTransitionFromMenuToOffscreenLeft:(BOOL)animated

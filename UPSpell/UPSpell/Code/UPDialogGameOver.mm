@@ -9,7 +9,6 @@
 #import <UpKit/UPControl.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPLabel.h>
-#import <UpKit/UPLayoutRule.h>
 
 #import "UPControl+UPSpell.h"
 #import "UPDialogGameOver.h"

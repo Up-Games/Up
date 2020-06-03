@@ -107,6 +107,11 @@ void SpellLayout::calculate()
     calculate_dialog_over_interstitial_button_left_frame();
     calculate_dialog_over_interstitial_button_right_frame();
     calculate_dialog_over_interstitial_note_label_frame();
+    calculate_menu_game_view_transform();
+    calculate_menu_buttons_layout_frame();
+    calculate_menu_button_left_layout_frame();
+    calculate_menu_button_center_layout_frame();
+    calculate_menu_button_right_layout_frame();
 }
 
 void SpellLayout::calculate_controls_layout_frame()
@@ -630,7 +635,6 @@ void SpellLayout::calculate_dialog_over_buttons_layout_frame()
         }
     }
     LOG(Layout, "set_dialog_over_buttons_layout_frame: %@", NSStringFromCGRect(dialog_over_buttons_layout_frame()));
-
 }
 
 void SpellLayout::calculate_dialog_over_button_left_frame()
@@ -714,6 +718,60 @@ void SpellLayout::calculate_dialog_over_interstitial_note_label_frame()
     frame.origin.y = up_rect_max_y(screen_bounds()) + (up_rect_height(frame) * 1.2);
     set_dialog_over_interstitial_note_label_frame(up_pixel_rect(frame, screen_scale()));
     LOG(Layout, "dialog_over_interstitial_note_label_frame: %@", NSStringFromCGRect(dialog_over_interstitial_note_label_frame()));
+}
+
+void SpellLayout::calculate_menu_game_view_transform()
+{
+    CGAffineTransform t = CGAffineTransformMakeScale(CanonicalGameViewMenuScale, CanonicalGameViewMenuScale);
+    CGFloat dy = ((1.0 - CanonicalGameViewMenuScale) / 2.0) * up_rect_height(screen_bounds());
+    t = CGAffineTransformTranslate(t, 0, dy);
+    set_menu_game_view_transform(t);
+    LOG(Layout, "menu_game_view_transform: %@", NSStringFromCGAffineTransform(menu_game_view_transform()));
+}
+
+void SpellLayout::calculate_menu_buttons_layout_frame()
+{
+    set_menu_buttons_layout_frame(dialog_over_buttons_layout_frame());
+    LOG(Layout, "set_menu_buttons_layout_frame: %@", NSStringFromCGRect(menu_buttons_layout_frame()));
+}
+
+void SpellLayout::calculate_menu_button_left_layout_frame()
+{
+    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
+    CGRect frame = CGRectMake(
+        up_rect_min_x(menu_buttons_layout_frame()),
+        up_rect_min_y(menu_buttons_layout_frame()),
+        up_size_width(size),
+        up_size_height(size)
+    );
+    set_menu_button_left_layout_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "menu_button_left_layout_frame:  %@", NSStringFromCGRect(menu_button_left_layout_frame()));
+}
+
+void SpellLayout::calculate_menu_button_center_layout_frame()
+{
+    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
+    CGRect frame = CGRectMake(
+        up_rect_mid_x(menu_buttons_layout_frame()) - (up_size_width(size) * 0.5),
+        up_rect_min_y(menu_buttons_layout_frame()),
+        up_size_width(size),
+        up_size_height(size)
+    );
+    set_menu_button_center_layout_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "menu_button_center_layout_frame:  %@", NSStringFromCGRect(menu_button_center_layout_frame()));
+}
+
+void SpellLayout::calculate_menu_button_right_layout_frame()
+{
+    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
+    CGRect frame = CGRectMake(
+        up_rect_max_x(menu_buttons_layout_frame()) - up_size_width(size),
+        up_rect_min_y(menu_buttons_layout_frame()),
+        up_size_width(size),
+        up_size_height(size)
+    );
+    set_menu_button_right_layout_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "menu_button_right_layout_frame:  %@", NSStringFromCGRect(menu_button_right_layout_frame()));
 }
 
 }  // namespace UP
