@@ -68,6 +68,22 @@
 
 #define NO_RETURN_DUE_TO_CRASH NO_RETURN
 
+#ifndef UP_ALWAYS_INLINE
+#ifdef NDEBUG
+#define UP_ALWAYS_INLINE inline __attribute__ ((__visibility__("hidden"), __always_inline__))
+#else
+#define UP_ALWAYS_INLINE inline
+#endif
+#endif
+
+#ifndef UP_NEVER_INLINE
+#ifdef NDEBUG
+#define UP_NEVER_INLINE __attribute__ ((__visibility__("hidden"), noinline))
+#else
+#define UP_NEVER_INLINE
+#endif
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif

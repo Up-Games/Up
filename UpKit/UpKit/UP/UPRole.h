@@ -6,7 +6,6 @@
 #import <UPKit/UPAssertions.h>
 
 #import <string.h>
-#import <fnmatch.h>
 
 namespace UP {
 
@@ -22,7 +21,14 @@ static constexpr Role RoleTest = "test";
 
 template <bool B = true> bool role_match(Role pattern, Role role)
 {
-    bool b = (pattern == role) || (strcmp(pattern, role) == 0) || (fnmatch(pattern, role, 0) == 0);
+    bool b = (pattern == role) || (strcmp(pattern, role) == 0);
+    if (!b) {
+        const char *star = strchr(pattern, '*');
+        if (star) {
+            size_t len = star - pattern;
+            b = strncmp(pattern, role, len) == 0;
+        }
+    }
     return b == B;
 }
 

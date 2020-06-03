@@ -87,7 +87,7 @@ using UP::RoleModeUI;
 {
     LOG_CHANNEL_ON(General);
     //LOG_CHANNEL_ON(Gestures);
-    LOG_CHANNEL_ON(Layout);
+    //LOG_CHANNEL_ON(Layout);
     //LOG_CHANNEL_ON(Leaks);
     //LOG_CHANNEL_ON(Mode);
 
@@ -634,14 +634,19 @@ using UP::RoleModeUI;
     SpellLayout &layout = SpellLayout::instance();
     NSMutableArray *views = [NSMutableArray arrayWithObject:self.gameView.wordTrayView];
     [views addObjectsFromArray:[self wordTrayTileViews]];
-    start(shake(RoleGameUI, views, 0.9, layout.word_tray_shake_offset(), ^(UIViewAnimatingPosition) {
-        delay(RoleGameDelay, 0.25, ^{
-            [self viewOpPenaltyFinished];
-            delay(RoleGameDelay, 0.1, ^{
-                [self applyActionClear];
-                [self viewOpUnlockUserInterface];
+    start(shake(RoleGameUI, views, 0.9, layout.word_tray_shake_offset(), ^(UIViewAnimatingPosition finishedPosition) {
+        if (finishedPosition == UIViewAnimatingPositionEnd) {
+            delay(RoleGameDelay, 0.25, ^{
+                [self viewOpPenaltyFinished];
+                delay(RoleGameDelay, 0.1, ^{
+                    [self applyActionClear];
+                    [self viewOpUnlockUserInterface];
+                });
             });
-        });
+        }
+        else {
+            [self viewOpUnlockUserInterface];
+        }
     }));
 }
 

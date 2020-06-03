@@ -22,6 +22,8 @@
 
 @end
 
+static uint32_t _InstanceCount;
+
 @implementation UPDelayedAction
 
 + (UPDelayedAction *)delayedAction:(const char *)role duration:(CFTimeInterval)duration block:(void (^)(void))block
@@ -40,8 +42,23 @@
     self.serialNumber = UP::next_serial_number();
     
     self.previousTick = 0;
-    
+
+    _InstanceCount++;
+    LOG(Leaks, "delay+: %@ (%d)", self, _InstanceCount);
+
     return self;
+}
+
+- (void)dealloc
+{
+    _InstanceCount--;
+    LOG(Leaks, "delay-: %@ (%d)", self, _InstanceCount);
+    UP::TimeSpanning::remove(self);
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@:%d : %s> ", self.class, self.serialNumber, self.role];
 }
 
 - (void)start

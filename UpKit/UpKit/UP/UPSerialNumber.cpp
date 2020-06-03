@@ -1,5 +1,5 @@
 //
-//  UPSerialNumber.h
+//  UPSerialNumber.cpp
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -7,14 +7,14 @@
 
 #import <UpKit/UPAssertions.h>
 
-#import <atomic>
-#import <limits>
+#import "UPSerialNumber.h"
 
 namespace UP {
 
-static constexpr uint32_t NotASerialNumber = std::numeric_limits<uint32_t>::max();
-
-uint32_t next_serial_number();
+UP_NEVER_INLINE uint32_t next_serial_number() {
+    static std::atomic_uint32_t g_counter;
+    return ++g_counter;
+}
 
 }  // namespace UP
 
