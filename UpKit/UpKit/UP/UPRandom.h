@@ -28,16 +28,7 @@ public:
     Random(Random const &) = delete;
     void operator=(Random const &) = delete;
 
-    static Random &create_instance() {
-        std::uniform_int_distribution<int> dist(0, 511);
-        std::random_device rd;
-        g_instance = new Random({ dist(rd), dist(rd), dist(rd) });
-        return *g_instance;
-    }
-
-    static Random &instance() {
-        return *g_instance;
-    }
+    static Random &instance();
 
     std::mt19937 &generator() { return m_generator; }
 
@@ -80,8 +71,6 @@ public:
     }
 
 private:
-    UP_STATIC_INLINE Random *g_instance;
-
     std::mt19937 m_generator;
 };
 

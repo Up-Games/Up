@@ -94,7 +94,6 @@ using UP::RoleModeUI;
     [super viewDidLoad];
 
     UP::TimeSpanning::init();
-    Random::create_instance();
     Lexicon::set_language(UPLexiconLanguageEnglish);
 
     GameCode game_code = GameCode::random();
