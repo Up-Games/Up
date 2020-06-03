@@ -170,6 +170,23 @@ static CGFloat _ThemeHue = 222;
     return [UIColor themeModalActiveAlphaForStyle:_ThemeStyle];
 }
 
++ (CGFloat)themeModalInterstitialAlphaForStyle:(UPColorStyle)style
+{
+    switch (_ThemeStyle) {
+        case UPColorStyleDefault:
+        case UPColorStyleLight:
+        case UPColorStyleLightStark:
+        case UPColorStyleDark:
+        case UPColorStyleDarkStark:
+            return 0.2;
+    }
+}
+
++ (CGFloat)themeModalInterstitialAlpha
+{
+    return [UIColor themeModalInterstitialAlphaForStyle:_ThemeStyle];
+}
+
 // https://stackoverflow.com/a/9177602
 + (UIColor *)colorizedGray:(CGFloat)gray hue:(CGFloat)hue saturation:(CGFloat)saturation
 {

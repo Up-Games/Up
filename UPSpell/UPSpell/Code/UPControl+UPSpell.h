@@ -20,5 +20,6 @@
 + (UPControl *)textButtonPlay;
 + (UPControl *)textButtonQuit;
 + (UPControl *)textButtonResume;
++ (UPControl *)textButtonStats;
 
 @end

@@ -8,7 +8,14 @@
 #if __cplusplus
 
 namespace UP {
-    
+
+UIBezierPath *TextPathContentAbout();
+UIBezierPath *TextPathContentExtras();
+UIBezierPath *TextPathContentMenu();
+UIBezierPath *TextPathContentPlay();
+UIBezierPath *TextPathContentQuit();
+UIBezierPath *TextPathContentResume();
+UIBezierPath *TextPathContentStats();
 UIBezierPath *TextPathDialogGameOver();
 UIBezierPath *TextPathDialogPaused();
 

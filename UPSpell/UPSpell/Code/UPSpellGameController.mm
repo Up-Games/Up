@@ -955,7 +955,22 @@ using UP::RoleModeUI;
 
 - (void)viewOpEnterModal:(UPSpellGameMode)mode
 {
-    const CGFloat alpha = [UIColor themeModalBackgroundAlpha];
+    CGFloat alpha = [UIColor themeModalBackgroundAlpha];
+    switch (mode) {
+        case UPSpellGameModeStart:
+        case UPSpellGameModeOffscreenLeft:
+        case UPSpellGameModeOffscreenRight:
+        case UPSpellGameModeMenu:
+        case UPSpellGameModeCountdown:
+        case UPSpellGameModePlay:
+        case UPSpellGameModePause:
+        case UPSpellGameModeOver:
+            // no-op
+            break;
+        case UPSpellGameModeOverInterstitial:
+            alpha = [UIColor themeModalInterstitialAlpha];
+            break;
+    }
     if (mode == UPSpellGameModePause) {
         self.gameView.roundButtonPause.highlightedOverride = YES;
         self.gameView.roundButtonPause.highlighted = YES;
@@ -963,7 +978,7 @@ using UP::RoleModeUI;
         self.gameView.gameTimerLabel.alpha = alpha;
         self.gameView.scoreLabel.alpha = alpha;
     }
-    else if (mode == UPSpellGameModeOverInterstitial) {
+    else if (mode == UPSpellGameModeOverInterstitial || mode == UPSpellGameModeOver) {
         self.gameView.roundButtonPause.alpha = alpha;
     }
     else {
@@ -1361,7 +1376,7 @@ using UP::RoleModeUI;
         self.dialogGameOver.alpha = 1.0;
     }];
     start(bloop(RoleModeUI, @[self.dialogGameOver], 0.3, center, ^(UIViewAnimatingPosition) {
-        delay(RoleModeUI, 1.0, ^{
+        delay(RoleModeUI, 1.75, ^{
             [self setMode:UPSpellGameModeOver animated:YES];
         });
     }));
@@ -1389,6 +1404,9 @@ using UP::RoleModeUI;
     start(slide_to(RoleModeUI, @[self.dialogGameOver.noteLabel], 0.75, noteLabelCenter, nil));
     start(fade(RoleModeUI, @[self.gameView.gameTimerLabel], 0.3, nil));
     start(slide_to(RoleModeUI, @[self.gameView.scoreLabel], 0.75, scoreLabelCenter, nil));
+    [UIView animateWithDuration:0.75 animations:^{
+        [self viewOpEnterModal:UPSpellGameModeOver];
+    }];
 }
 
 - (void)modeTransitionFromOverToCountdown:(BOOL)animated
