@@ -625,7 +625,7 @@ using UP::RoleModeUI;
 {
     cancel(RoleGameDelay);
 
-    [self viewOpLockUserInterface];
+    [self viewOpLockUserInterfaceIncludingPause:NO];
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::REJECT));
 
@@ -656,7 +656,7 @@ using UP::RoleModeUI;
 
     cancel(RoleGameDelay);
 
-    [self viewOpLockUserInterface];
+    [self viewOpLockUserInterfaceIncludingPause:NO];
 
     NSArray *playerTrayTileViews = self.model->player_tray_tile_views();
     ASSERT(playerTrayTileViews.count == TileCount);
@@ -915,12 +915,11 @@ using UP::RoleModeUI;
 
 - (void)viewOpPenaltyForDump
 {
-    //ASSERT(!self.view.userInteractionEnabled);
+    ASSERT(self.userInterfaceLockCount > 0);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.gameView.roundButtonTrash.highlightedOverride = YES;
     self.gameView.roundButtonTrash.highlighted = YES;
     self.gameView.wordTrayView.alpha = disabledAlpha;
-    self.gameView.roundButtonPause.alpha = disabledAlpha;
     for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
         tileView.alpha = disabledAlpha;
     }
@@ -928,10 +927,9 @@ using UP::RoleModeUI;
 
 - (void)viewOpPenaltyForReject:(NSArray *)tileViews
 {
-    ASSERT(!self.view.userInteractionEnabled);
+    ASSERT(self.userInterfaceLockCount > 0);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.gameView.wordTrayView.alpha = disabledAlpha;
-    self.gameView.roundButtonPause.alpha = disabledAlpha;
     self.gameView.roundButtonClear.alpha = disabledAlpha;
     for (UPTileView *tileView in tileViews) {
         tileView.alpha = disabledAlpha;
@@ -940,7 +938,7 @@ using UP::RoleModeUI;
 
 - (void)viewOpPenaltyFinished
 {
-    //ASSERT(!self.view.userInteractionEnabled);
+    ASSERT(self.userInterfaceLockCount > 0);
     self.gameView.roundButtonTrash.highlightedOverride = NO;
     self.gameView.roundButtonTrash.highlighted = NO;
     self.gameView.wordTrayView.alpha = 1.0;
@@ -1020,14 +1018,13 @@ using UP::RoleModeUI;
     }
 }
 
-- (void)viewOpLockUserInterface
+- (void)viewOpLockUserInterfaceIncludingPause:(BOOL)includingPause
 {
     self.userInterfaceLockCount++;
-    self.view.userInteractionEnabled = NO;
 
     UIView *roundButtonPause = self.gameView.roundButtonPause;
     for (UIView *view in self.gameView.subviews) {
-        if (view == roundButtonPause) {
+        if (!includingPause && view == roundButtonPause) {
             continue;
         }
         view.userInteractionEnabled = NO;
@@ -1042,7 +1039,6 @@ using UP::RoleModeUI;
     ASSERT(self.userInterfaceLockCount > 0);
     self.userInterfaceLockCount = UPMaxT(NSInteger, self.userInterfaceLockCount - 1, 0);
     if (self.userInterfaceLockCount == 0) {
-        self.view.userInteractionEnabled = YES;
         for (UIView *view in self.gameView.subviews) {
             view.userInteractionEnabled = YES;
         }
@@ -1288,7 +1284,7 @@ using UP::RoleModeUI;
 {
     [self.gameTimer stop];
     pause(RoleGameAll);
-    [self viewOpLockUserInterface];
+    [self viewOpLockUserInterfaceIncludingPause:YES];
     [self viewOpEnterModal:UPSpellGameModePause];
     CGPoint center = self.view.center;
     CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
@@ -1308,7 +1304,7 @@ using UP::RoleModeUI;
 {
     SpellLayout &layout = SpellLayout::instance();
 
-    [self viewOpLockUserInterface];
+    [self viewOpLockUserInterfaceIncludingPause:YES];
     CGPoint center = self.dialogPause.center;
     CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
 
@@ -1353,7 +1349,7 @@ using UP::RoleModeUI;
 
     pause(RoleGameAll);
     cancel(RoleGameAll);
-    [self viewOpLockUserInterface];
+    [self viewOpLockUserInterfaceIncludingPause:YES];
     [self viewOpEnterModal:UPSpellGameModeOverInterstitial];
 
     CGPoint center = self.view.center;
