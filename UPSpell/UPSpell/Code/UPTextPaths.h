@@ -18,6 +18,7 @@ UIBezierPath *TextPathContentResume();
 UIBezierPath *TextPathContentStats();
 UIBezierPath *TextPathDialogGameOver();
 UIBezierPath *TextPathDialogPaused();
+UIBezierPath *TextPathDialogReady();
 
 }  // namespace UP
 

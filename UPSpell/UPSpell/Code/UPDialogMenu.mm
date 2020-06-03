@@ -5,16 +5,19 @@
 
 #import <UpKit/UIColor+UP.h>
 #import <UpKit/UIView+UP.h>
+#import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPControl.h>
 #import <UpKit/UPGeometry.h>
 
 #import "UPControl+UPSpell.h"
 #import "UPDialogMenu.h"
 #import "UPSpellLayout.h"
+#import "UPTextPaths.h"
 
 using UP::SpellLayout;
 
 @interface UPDialogMenu ()
+@property (nonatomic, readwrite) UPBezierPathView *titlePathView;
 @property (nonatomic, readwrite) UPControl *extrasButton;
 @property (nonatomic, readwrite) UPControl *playButton;
 @property (nonatomic, readwrite) UPControl *aboutButton;
@@ -37,6 +40,12 @@ using UP::SpellLayout;
     SpellLayout &layout = SpellLayout::instance();
     self = [super initWithFrame:layout.canvas_frame()];
 
+    self.titlePathView = [UPBezierPathView bezierPathView];
+    self.titlePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
+    self.titlePathView.path = UP::TextPathDialogReady();
+    self.titlePathView.frame = layout.menu_title_layout_frame();
+    [self addSubview:self.titlePathView];
+
     self.extrasButton = [UPControl textButtonExtras];
     self.extrasButton.frame = layout.menu_button_left_layout_frame();
     [self addSubview:self.extrasButton];
@@ -49,7 +58,16 @@ using UP::SpellLayout;
     self.aboutButton.frame = layout.menu_button_right_layout_frame();
     [self addSubview:self.aboutButton];
 
+    [self updateThemeColors];
+
     return self;
+}
+
+#pragma mark - Theme colors
+
+- (void)updateThemeColors
+{
+    self.titlePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryDialogTitle];
 }
 
 @end

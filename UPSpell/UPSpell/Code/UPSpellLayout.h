@@ -69,6 +69,7 @@ public:
     static inline constexpr CGRect CanonicalDialogOverButtonsLayoutFrame =   {  80,  28,  840,  85 };
     static inline constexpr CGRect CanonicalDialogOverNoteLayoutFrame =      {   0, 385, 1000,  40 };
     static inline constexpr CGFloat CanonicalDialogOverNoteFontCapHeight = 26;
+    static inline constexpr CGFloat CanonicalMenuButtonDismissedYOffset = -CanonicalTextButtonSize.height * 2;
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
 
@@ -169,10 +170,15 @@ public:
     CGRect dialog_over_interstitial_note_label_frame() const { return m_dialog_over_interstitial_note_label_frame; }
 
     CGAffineTransform menu_game_view_transform() const { return m_menu_game_view_transform; }
+    CGRect menu_title_layout_frame() const { return m_menu_title_layout_frame; }
+    CGRect menu_title_dismissed_layout_frame() const { return m_menu_title_dismissed_layout_frame; }
     CGRect menu_buttons_layout_frame() const { return m_menu_buttons_layout_frame; }
     CGRect menu_button_left_layout_frame() const { return m_menu_button_left_layout_frame; }
     CGRect menu_button_center_layout_frame() const { return m_menu_button_center_layout_frame; }
     CGRect menu_button_right_layout_frame() const { return m_menu_button_right_layout_frame; }
+    CGRect menu_button_left_dismissed_layout_frame() const { return m_menu_button_left_dismissed_layout_frame; }
+    CGRect menu_button_center_dismissed_layout_frame() const { return m_menu_button_center_dismissed_layout_frame; }
+    CGRect menu_button_right_dismissed_layout_frame() const { return m_menu_button_right_dismissed_layout_frame; }
 
 private:
     SpellLayout() {}
@@ -224,10 +230,15 @@ private:
     void set_dialog_over_interstitial_button_right_frame(CGRect rect) { m_dialog_over_interstitial_button_right_frame = rect; }
     void set_dialog_over_interstitial_note_label_frame(CGRect rect) { m_dialog_over_interstitial_note_label_frame = rect; }
     void set_menu_game_view_transform(CGAffineTransform t) { m_menu_game_view_transform = t; }
+    void set_menu_title_layout_frame(CGRect rect) { m_menu_title_layout_frame = rect; }
+    void set_menu_title_dismissed_layout_frame(CGRect rect) { m_menu_title_dismissed_layout_frame = rect; }
     void set_menu_buttons_layout_frame(CGRect rect) { m_menu_buttons_layout_frame = rect; }
     void set_menu_button_left_layout_frame(CGRect rect) { m_menu_button_left_layout_frame = rect; }
     void set_menu_button_center_layout_frame(CGRect rect) { m_menu_button_center_layout_frame = rect; }
     void set_menu_button_right_layout_frame(CGRect rect) { m_menu_button_right_layout_frame = rect; }
+    void set_menu_button_left_dismissed_layout_frame(CGRect rect) { m_menu_button_left_dismissed_layout_frame = rect; }
+    void set_menu_button_center_dismissed_layout_frame(CGRect rect) { m_menu_button_center_dismissed_layout_frame = rect; }
+    void set_menu_button_right_dismissed_layout_frame(CGRect rect) { m_menu_button_right_dismissed_layout_frame = rect; }
 
     void calculate_controls_layout_frame();
     void calculate_word_tray_layout_frame();
@@ -267,6 +278,7 @@ private:
     void calculate_dialog_over_interstitial_button_right_frame();
     void calculate_dialog_over_interstitial_note_label_frame();
     void calculate_menu_game_view_transform();
+    void calculate_menu_title_layout_frame();
     void calculate_menu_buttons_layout_frame();
     void calculate_menu_button_left_layout_frame();
     void calculate_menu_button_center_layout_frame();
@@ -341,10 +353,15 @@ private:
     CGRect m_dialog_over_interstitial_note_label_frame;
     
     CGAffineTransform m_menu_game_view_transform;
+    CGRect m_menu_title_layout_frame;
+    CGRect m_menu_title_dismissed_layout_frame;
     CGRect m_menu_buttons_layout_frame;
     CGRect m_menu_button_left_layout_frame;
     CGRect m_menu_button_center_layout_frame;
     CGRect m_menu_button_right_layout_frame;
+    CGRect m_menu_button_left_dismissed_layout_frame;
+    CGRect m_menu_button_center_dismissed_layout_frame;
+    CGRect m_menu_button_right_dismissed_layout_frame;
 };
 
 }  // namespace UP

@@ -9,7 +9,7 @@
 #import "UPMath.h"
 
 const CFTimeInterval UPGameTimerInterval = 0.1;
-const CFTimeInterval UPGameTimerDefaultDuration = 3;
+const CFTimeInterval UPGameTimerDefaultDuration = 120;
 
 @interface UPGameTimer ()
 @property (nonatomic, readwrite) CFTimeInterval duration;
@@ -93,7 +93,6 @@ const CFTimeInterval UPGameTimerDefaultDuration = 3;
     for (id observer in self.observers) {
         [observer gameTimerReset:self];
     }
-    [self start];
 }
 
 @dynamic elapsedTime;

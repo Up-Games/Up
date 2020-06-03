@@ -141,7 +141,7 @@ using UP::RoleModeUI;
 
     self.dialogMenu = [UPDialogMenu instance];
     [self.view addSubview:self.dialogMenu];
-//    [self.dialogPause.quitButton addTarget:self action:@selector(dialogPauseQuitButtonTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.dialogMenu.playButton addTarget:self action:@selector(dialogMenuPlayButtonTapped:) forEvents:UPControlEventTouchUpInside];
 //    [self.dialogPause.resumeButton addTarget:self action:@selector(dialogPauseResumeButtonTapped:) forEvents:UPControlEventTouchUpInside];
     self.dialogMenu.hidden = YES;
     self.dialogMenu.frame = layout.screen_bounds();
@@ -160,8 +160,8 @@ using UP::RoleModeUI;
 
     self.mode = UPSpellGameModeMenu;
 
-    self.mode = UPSpellGameModeCountdown;
-    self.mode = UPSpellGameModePlay;
+//    self.mode = UPSpellGameModeCountdown;
+//    self.mode = UPSpellGameModePlay;
 //
 //    delay(RoleGameDelay, 1.0, ^{
 //        [self.gameTimer start];
@@ -234,6 +234,11 @@ using UP::RoleModeUI;
 }
 
 #pragma mark - Control target/action and gestures
+
+- (void)dialogMenuPlayButtonTapped:(id)sender
+{
+    [self setMode:UPSpellGameModeCountdown animated:YES];
+}
 
 - (void)dialogPauseQuitButtonTapped:(id)sender
 {
@@ -1042,9 +1047,24 @@ using UP::RoleModeUI;
     }
 }
 
+- (void)viewOpLockUserInterface
+{
+    [self viewOpLockUserInterfaceIncludingPause:YES];
+}
+
 - (void)viewOpLockUserInterfaceIncludingPause:(BOOL)includingPause
 {
     self.userInterfaceLockCount++;
+
+    self.dialogGameOver.menuButton.userInteractionEnabled = NO;
+    self.dialogGameOver.playButton.userInteractionEnabled = NO;
+
+    self.dialogMenu.extrasButton.userInteractionEnabled = NO;
+    self.dialogMenu.playButton.userInteractionEnabled = NO;
+    self.dialogMenu.aboutButton.userInteractionEnabled = NO;
+
+    self.dialogPause.resumeButton.userInteractionEnabled = NO;
+    self.dialogPause.quitButton.userInteractionEnabled = NO;
 
     UIView *roundButtonPause = self.gameView.roundButtonPause;
     for (UIView *view in self.gameView.subviews) {
@@ -1062,13 +1082,25 @@ using UP::RoleModeUI;
 {
     ASSERT(self.userInterfaceLockCount > 0);
     self.userInterfaceLockCount = UPMaxT(NSInteger, self.userInterfaceLockCount - 1, 0);
-    if (self.userInterfaceLockCount == 0) {
-        for (UIView *view in self.gameView.subviews) {
-            view.userInteractionEnabled = YES;
-        }
-        for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
-            tileView.userInteractionEnabled = YES;
-        }
+    if (self.userInterfaceLockCount > 0) {
+        return;
+    }
+
+    self.dialogGameOver.menuButton.userInteractionEnabled = YES;
+    self.dialogGameOver.playButton.userInteractionEnabled = YES;
+
+    self.dialogMenu.extrasButton.userInteractionEnabled = YES;
+    self.dialogMenu.playButton.userInteractionEnabled = YES;
+    self.dialogMenu.aboutButton.userInteractionEnabled = YES;
+
+    self.dialogPause.resumeButton.userInteractionEnabled = YES;
+    self.dialogPause.quitButton.userInteractionEnabled = YES;
+
+    for (UIView *view in self.gameView.subviews) {
+        view.userInteractionEnabled = YES;
+    }
+    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
+        tileView.userInteractionEnabled = YES;
     }
 }
 
@@ -1170,15 +1202,13 @@ using UP::RoleModeUI;
                 case UPSpellGameModeOffscreenRight:
                 case UPSpellGameModeMenu:
                 case UPSpellGameModeCountdown:
+                case UPSpellGameModePause:
                 case UPSpellGameModeOverInterstitial:
                 case UPSpellGameModeOver:
                     ASSERT_NOT_REACHED();
                     break;
                 case UPSpellGameModePlay:
                     [self modeTransitionFromCountdownToPlay:animated];
-                    break;
-                case UPSpellGameModePause:
-                    [self modeTransitionFromCountdownToPause:animated];
                     break;
             }
             break;
@@ -1270,11 +1300,13 @@ using UP::RoleModeUI;
 
 - (void)modeTransitionFromNoneToMenu:(BOOL)animated
 {
+    SpellLayout &layout = SpellLayout::instance();
+
     self.dialogMenu.transform = CGAffineTransformIdentity;
     self.dialogMenu.hidden = NO;
     self.dialogMenu.alpha = 1.0;
+    self.dialogMenu.titlePathView.frame = layout.menu_title_dismissed_layout_frame();
 
-    SpellLayout &layout = SpellLayout::instance();
     self.gameView.transform = layout.menu_game_view_transform();
     self.gameView.alpha = [UIColor themeDisabledAlpha];
 }
@@ -1297,6 +1329,37 @@ using UP::RoleModeUI;
 
 - (void)modeTransitionFromMenuToCountdown:(BOOL)animated
 {
+    SpellLayout &layout = SpellLayout::instance();
+
+    [self viewOpLockUserInterface];
+    
+    self.dialogMenu.playButton.highlightedOverride = YES;
+    self.dialogMenu.playButton.highlighted = YES;
+
+    UIOffset slideExtrasAndAboutOffset = UIOffsetMake(0, -150);
+    NSArray <UIView *> *extrasAndAboutViews = @[self.dialogMenu.extrasButton, self.dialogMenu.aboutButton];
+
+    UPAnimator *slideExtrasAndAboutAnimator = slide(RoleModeUI, extrasAndAboutViews, 0.15, slideExtrasAndAboutOffset, ^(UIViewAnimatingPosition) {
+        delay(RoleModeDelay, 0.2, ^{
+            [self.gameTimer reset];
+            [UIView animateWithDuration:0.6 animations:^{
+                self.dialogMenu.playButton.frame = layout.menu_button_center_dismissed_layout_frame();
+                self.dialogMenu.titlePathView.frame = layout.menu_title_layout_frame();
+                self.gameView.transform = CGAffineTransformIdentity;
+                [self viewOpEnterModal:UPSpellGameModeCountdown];
+            } completion:^(BOOL finished) {
+                [self viewOpUnlockUserInterface];
+                [self setMode:UPSpellGameModePlay animated:YES];
+            }];
+        });
+    });
+    
+    UIOffset springOffset = UIOffsetMake(0, -layout.dialog_spring_dismiss_offset_y());
+    UPAnimator *springExtrasAndAboutAnimator = spring(RoleModeUI, extrasAndAboutViews, 0.13, springOffset, ^(UIViewAnimatingPosition) {
+        start(slideExtrasAndAboutAnimator);
+    });
+    
+    start(springExtrasAndAboutAnimator);
 }
 
 - (void)modeTransitionFromCountdownToPause:(BOOL)animated
@@ -1309,13 +1372,30 @@ using UP::RoleModeUI;
 
 - (void)modeTransitionFromCountdownToPlay:(BOOL)animated
 {
+    SpellLayout &layout = SpellLayout::instance();
+
+    delay(RoleModeDelay, 1.5, ^{
+        UIOffset springOffset = UIOffsetMake(0, layout.dialog_spring_dismiss_offset_y());
+        UPAnimator *springAnimator = spring(RoleModeUI, @[self.dialogMenu.titlePathView], 0.13, springOffset, ^(UIViewAnimatingPosition) {
+            [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationCurveLinear animations:^{
+                self.dialogMenu.titlePathView.frame = layout.menu_title_dismissed_layout_frame();
+                [self viewOpExitModal];
+            } completion:^(BOOL finished) {
+                self.dialogMenu.hidden = YES;
+                self.gameView.alpha = 1.0;
+                [self.gameTimer start];
+            }];
+        });
+        
+        start(springAnimator);
+    });
 }
 
 - (void)modeTransitionFromPlayToPause:(BOOL)animated
 {
     [self.gameTimer stop];
     pause(RoleGameAll);
-    [self viewOpLockUserInterfaceIncludingPause:YES];
+    [self viewOpLockUserInterface];
     [self viewOpEnterModal:UPSpellGameModePause];
     CGPoint center = self.view.center;
     CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
@@ -1335,7 +1415,7 @@ using UP::RoleModeUI;
 {
     SpellLayout &layout = SpellLayout::instance();
 
-    [self viewOpLockUserInterfaceIncludingPause:YES];
+    [self viewOpLockUserInterface];
     CGPoint center = self.dialogPause.center;
     CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
 
