@@ -8,12 +8,12 @@
 #import "UPAnimator.h"
 #import "UPBezierPathView.h"
 #import "UPGeometry.h"
-#import "UPRole.h"
+#import "UPBand.h"
 #import "UPTickingAnimator.h"
 #import "UPUnitFunction.h"
 
 @interface UPAnimator ()
-@property (nonatomic, readwrite) UP::Role role;
+@property (nonatomic, readwrite) UP::Band band;
 @property (nonatomic, readwrite) uint32_t serialNumber;
 @property (nonatomic) NSObject<UIViewAnimating> *inner;
 @property (nonatomic) NSString *type;
@@ -24,10 +24,10 @@ static uint32_t _InstanceCount;
 
 @implementation UPAnimator
 
-+ (UPAnimator *)bloopAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)bloopAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     position:(CGPoint)position completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UPAnimator *animator = [[self alloc] _initWithRole:role type:@"bloop" views:views];
+    UPAnimator *animator = [[self alloc] _initInBand:band type:@"bloop" views:views];
     UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7 animations:^{
         for (UIView *view in views) {
             view.center = position;
@@ -46,10 +46,10 @@ static uint32_t _InstanceCount;
     return animator;
 }
 
-+ (UPAnimator *)fadeAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)fadeAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 {
-    UPAnimator *animator = [[self alloc] _initWithRole:role type:@"fade" views:views];
+    UPAnimator *animator = [[self alloc] _initInBand:band type:@"fade" views:views];
     UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration curve:UIViewAnimationCurveEaseOut animations:^{
         for (UIView *view in views) {
             view.alpha = 0;
@@ -68,12 +68,12 @@ static uint32_t _InstanceCount;
     return animator;
 }
 
-+ (UPAnimator *)shakeAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)shakeAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UPAnimator *animator = [[self alloc] _initWithRole:role type:@"shake" views:views];
+    UPAnimator *animator = [[self alloc] _initInBand:band type:@"shake" views:views];
     __block UIOffset roffset = UIOffsetZero;
-    UPTickingAnimator *inner = [UPTickingAnimator animatorWithRole:role duration:duration
+    UPTickingAnimator *inner = [UPTickingAnimator AnimatorInBand:band duration:duration
         unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear]
         applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
             CGFloat factor = sin(5 * M_PI * fractionCompleted);
@@ -96,10 +96,10 @@ static uint32_t _InstanceCount;
     return animator;
 }
 
-+ (UPAnimator *)slideAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)slideAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UPAnimator *animator = [[self alloc] _initWithRole:role type:@"slide" views:views];
+    UPAnimator *animator = [[self alloc] _initInBand:band type:@"slide" views:views];
     UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration
         curve:UIViewAnimationCurveLinear animations:^{
             for (UIView *view in views) {
@@ -120,10 +120,10 @@ static uint32_t _InstanceCount;
     return animator;
 }
 
-+ (UPAnimator *)slideToAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)slideToAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     point:(CGPoint)point completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UPAnimator *animator = [[self alloc] _initWithRole:role type:@"slide_to" views:views];
+    UPAnimator *animator = [[self alloc] _initInBand:band type:@"slide_to" views:views];
     UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration
         curve:UIViewAnimationCurveEaseInOut animations:^{
             for (UIView *view in views) {
@@ -147,10 +147,10 @@ static uint32_t _InstanceCount;
     return animator;
 }
 
-+ (UPAnimator *)springAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)springAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UPAnimator *animator = [[self alloc] _initWithRole:role type:@"spring" views:views];
+    UPAnimator *animator = [[self alloc] _initInBand:band type:@"spring" views:views];
     UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7
          animations:^{
             for (UIView *view in views) {
@@ -171,12 +171,12 @@ static uint32_t _InstanceCount;
     return animator;
 }
 
-+ (UPAnimator *)setColorAnimatorWithRole:(UP::Role)role controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
++ (UPAnimator *)setColorAnimatorInBand:(UP::Band)band controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
     element:(UPControlElement)element fromControlState:(UPControlState)fromControlState toControlState:(UPControlState)toControlState
         completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 {
-    UPAnimator *animator = [[self alloc] _initWithRole:role type:@"set_color" views:controls];
-    UPTickingAnimator *inner = [UPTickingAnimator animatorWithRole:role duration:duration
+    UPAnimator *animator = [[self alloc] _initInBand:band type:@"set_color" views:controls];
+    UPTickingAnimator *inner = [UPTickingAnimator AnimatorInBand:band duration:duration
         unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInEaseOutExpo]
         applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
             if (element & UPControlElementFill) {
@@ -213,12 +213,12 @@ static uint32_t _InstanceCount;
     return animator;
 }
 
-- (instancetype)_initWithRole:(UP::Role)role type:(NSString *)type views:(NSArray<UIView *> *)views
+- (instancetype)_initInBand:(UP::Band)band type:(NSString *)type views:(NSArray<UIView *> *)views
 {
-    ASSERT(role);
+    ASSERT(band);
 
     self = [super init];
-    self.role = role;
+    self.band = band;
     self.type = type;
     self.views = views;
     self.serialNumber = UP::next_serial_number();
@@ -238,7 +238,7 @@ static uint32_t _InstanceCount;
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@:%d : %s:%@> ", self.class, self.serialNumber, self.role, self.type];
+    return [NSString stringWithFormat:@"<%@:%d : %s:%@> ", self.class, self.serialNumber, self.band, self.type];
 }
 
 #pragma mark - UIViewAnimating

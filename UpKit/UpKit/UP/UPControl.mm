@@ -750,7 +750,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         CFTimeInterval duration = [self fillColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.fillPathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            UPAnimator *animator = set_color(self.role, @[self], duration, UPControlElementFill, self.previousState, state,
+            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementFill, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.fillColorAnimatorSerialNumber = UP::NotASerialNumber;
                 }
@@ -772,7 +772,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         CFTimeInterval duration = [self strokeColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.strokePathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            UPAnimator *animator = set_color(self.role, @[self], duration, UPControlElementStroke, self.previousState, state,
+            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementStroke, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.strokeColorAnimatorSerialNumber = UP::NotASerialNumber;
                 }
@@ -794,7 +794,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_content(UPControlState controlState)
         CFTimeInterval duration = [self contentColorAnimationDuration:self.previousState toState:state];
         BOOL colorsDiffer = ![self.contentPathView.fillColor isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            UPAnimator *animator = set_color(self.role, @[self], duration, UPControlElementContentPath, self.previousState, state,
+            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementContentPath, self.previousState, state,
                 ^(UIViewAnimatingPosition) {
                     self.contentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
                 }

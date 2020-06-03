@@ -48,66 +48,66 @@ UP_STATIC_INLINE void erase(uint32_t serial_number)
 #endif
 }
 
-NSObject<UPTimeSpanning> *delay(UP::Role role, double delay_in_seconds, void (^block)(void))
+NSObject<UPTimeSpanning> *delay(UP::Band band, double delay_in_seconds, void (^block)(void))
 {
-    UPDelayedAction *action = [UPDelayedAction delayedAction:role duration:delay_in_seconds block:block];
+    UPDelayedAction *action = [UPDelayedAction delayedAction:band duration:delay_in_seconds block:block];
     emplace(action.serialNumber, action);
     [action start];
     return action;
 }
 
-UPAnimator *bloop(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
+UPAnimator *bloop(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator bloopAnimatorWithRole:role views:views duration:duration position:position completion:completion];
+    UPAnimator *animator = [UPAnimator bloopAnimatorInBand:band views:views duration:duration position:position completion:completion];
     emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *fade(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration,
+UPAnimator *fade(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator fadeAnimatorWithRole:role views:views duration:duration completion:completion];
+    UPAnimator *animator = [UPAnimator fadeAnimatorInBand:band views:views duration:duration completion:completion];
     emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *shake(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+UPAnimator *shake(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator shakeAnimatorWithRole:role views:views duration:duration offset:offset completion:completion];
+    UPAnimator *animator = [UPAnimator shakeAnimatorInBand:band views:views duration:duration offset:offset completion:completion];
     emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *slide(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+UPAnimator *slide(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator slideAnimatorWithRole:role views:views duration:duration offset:offset completion:completion];
+    UPAnimator *animator = [UPAnimator slideAnimatorInBand:band views:views duration:duration offset:offset completion:completion];
     emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *slide_to(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point,
+UPAnimator *slide_to(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator slideToAnimatorWithRole:role views:views duration:duration point:point completion:completion];
+    UPAnimator *animator = [UPAnimator slideToAnimatorInBand:band views:views duration:duration point:point completion:completion];
     emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *spring(UP::Role role, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
+UPAnimator *spring(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator springAnimatorWithRole:role views:views duration:duration offset:offset completion:completion];
+    UPAnimator *animator = [UPAnimator springAnimatorInBand:band views:views duration:duration offset:offset completion:completion];
     emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *set_color(UP::Role role, NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
+UPAnimator *set_color(UP::Band band, NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
     UPControlState fromControlState, UPControlState toControlState, void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator setColorAnimatorWithRole:role controls:controls duration:duration element:element
+    UPAnimator *animator = [UPAnimator setColorAnimatorInBand:band controls:controls duration:duration element:element
         fromControlState:fromControlState toControlState:toControlState completion:completion];
     emplace(animator.serialNumber, animator);
     return animator;
@@ -158,11 +158,11 @@ void cancel(NSArray<UIView *> *views)
     }
 }
 
-void cancel(UP::Role role)
+void cancel(UP::Band band)
 {
     for (auto it = g_map->begin(); it != g_map->end();) {
         NSObject<UPTimeSpanning> *obj = it->second;
-        if (role_match(role, obj.role)) {
+        if (band_match(band, obj.band)) {
             NSObject<UPTimeSpanning> *ref = obj;
             uint32_t serial_number = obj.serialNumber;
             it = g_map->erase(it);
@@ -201,11 +201,11 @@ void pause(uint32_t serial_number)
     }
 }
 
-void pause(UP::Role role)
+void pause(UP::Band band)
 {
     for (const auto &it : *g_map) {
         NSObject<UPTimeSpanning> *obj = it.second;
-        if (role_match(role, obj.role)) {
+        if (band_match(band, obj.band)) {
             [obj pause];
         }
     }
@@ -223,11 +223,11 @@ void start(NSObject<UPTimeSpanning> *obj)
     [obj start];
 }
 
-void start(UP::Role role)
+void start(UP::Band band)
 {
     for (const auto &it : *g_map) {
         NSObject<UPTimeSpanning> *obj = it.second;
-        if (role_match(role, obj.role)) {
+        if (band_match(band, obj.band)) {
             [obj start];
         }
     }

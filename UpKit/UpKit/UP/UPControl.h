@@ -5,7 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <UPKit/UPRole.h>
+#import <UPKit/UPBand.h>
 
 @class UPBezierPathView;
 
@@ -63,7 +63,7 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @property (nonatomic) CGSize canonicalSize;
 @property (nonatomic) CGSize chargeSize;
 
-@property (nonatomic) UP::Role role;
+@property (nonatomic) UP::Band band;
 
 + (UPControl *)control;
 

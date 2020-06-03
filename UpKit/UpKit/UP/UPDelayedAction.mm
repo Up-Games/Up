@@ -10,7 +10,7 @@
 
 @interface UPDelayedAction ()
 
-@property (nonatomic, readwrite) UP::Role role;
+@property (nonatomic, readwrite) UP::Band band;
 @property (nonatomic, readwrite) uint32_t serialNumber;
 
 @property (nonatomic, readwrite) UPDelayedActionState state;
@@ -26,16 +26,16 @@ static uint32_t _InstanceCount;
 
 @implementation UPDelayedAction
 
-+ (UPDelayedAction *)delayedAction:(const char *)role duration:(CFTimeInterval)duration block:(void (^)(void))block
++ (UPDelayedAction *)delayedAction:(const char *)band duration:(CFTimeInterval)duration block:(void (^)(void))block
 {
-    return [[self alloc] init:role duration:duration block:block];
+    return [[self alloc] init:band duration:duration block:block];
 }
 
-- (instancetype)init:(const char *)role duration:(CFTimeInterval)duration block:(void (^)(void))block
+- (instancetype)init:(const char *)band duration:(CFTimeInterval)duration block:(void (^)(void))block
 {
     self = [super init];
     self.state = UPDelayedActionStateNone;
-    self.role = role;
+    self.band = band;
     self.duration = duration;
     self.remainingDuration = self.duration;
     self.block = block;
@@ -58,7 +58,7 @@ static uint32_t _InstanceCount;
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@:%d : %s> ", self.class, self.serialNumber, self.role];
+    return [NSString stringWithFormat:@"<%@:%d : %s> ", self.class, self.serialNumber, self.band];
 }
 
 - (void)start

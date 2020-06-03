@@ -56,7 +56,7 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 @interface UPTickingAnimator ()
 
-@property (nonatomic, readwrite) UP::Role role;
+@property (nonatomic, readwrite) UP::Band band;
 @property (nonatomic) CFTimeInterval duration;
 @property (nonatomic) UPUnitFunction *unitFunction;
 @property (nonatomic) NSUInteger repeatCount;
@@ -81,28 +81,28 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 @implementation UPTickingAnimator
 
-+ (UPTickingAnimator *)animatorWithRole:(UP::Role)role duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
++ (UPTickingAnimator *)AnimatorInBand:(UP::Band)band duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion
 {
-    return [self animatorWithRole:role duration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO
+    return [self AnimatorInBand:band duration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO
         applier:applier completion:completion];
 }
 
-+ (UPTickingAnimator *)animatorWithRole:(UP::Role)role duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
++ (UPTickingAnimator *)AnimatorInBand:(UP::Band)band duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     repeatCount:(NSUInteger)repeatCount rebounds:(BOOL)rebounds applier:(UPTickingAnimatorApplier)applier
         completion:(UPTickingAnimatorCompletion)completion
 {
-    return [[self alloc] initWithRole:role duration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO
+    return [[self alloc] initInBand:band duration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO
         applier:applier completion:completion];
 }
 
-- (instancetype)initWithRole:(UP::Role)role duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
+- (instancetype)initInBand:(UP::Band)band duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     repeatCount:(NSUInteger)repeatCount rebounds:(BOOL)rebounds
         applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion;
 {
     self = [super init];
 
-    self.role = role;
+    self.band = band;
     self.duration = duration;
     self.unitFunction = unitFunction;
     self.repeatCount = repeatCount;
@@ -208,7 +208,7 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 - (void)startAnimationAfterDelay:(NSTimeInterval)delay
 {
-    UP::TimeSpanning::delay(self.role, delay, ^{
+    UP::TimeSpanning::delay(self.band, delay, ^{
         [self startAnimation];
     });
 }

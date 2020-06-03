@@ -58,12 +58,12 @@ using UP::TimeSpanning::pause;
 using UP::TimeSpanning::start_all;
 using UP::TimeSpanning::start;
 
-using UP::RoleGameAll;
-using UP::RoleGameDelay;
-using UP::RoleGameUI;
-using UP::RoleModeAll;
-using UP::RoleModeDelay;
-using UP::RoleModeUI;
+using UP::BandGameAll;
+using UP::BandGameDelay;
+using UP::BandGameUI;
+using UP::BandModeAll;
+using UP::BandModeDelay;
+using UP::BandModeUI;
 
 @interface UPSpellGameController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
@@ -163,11 +163,11 @@ using UP::RoleModeUI;
 //    self.mode = UPSpellGameModeCountdown;
 //    self.mode = UPSpellGameModePlay;
 //
-//    delay(RoleGameDelay, 1.0, ^{
+//    delay(BandGameDelay, 1.0, ^{
 //        [self.gameTimer start];
 //    });
 //
-    delay(RoleGameDelay, 0.2, ^{
+    delay(BandGameDelay, 0.2, ^{
         [self viewOpFillPlayerTray];
     });
 }
@@ -447,7 +447,7 @@ using UP::RoleModeUI;
     ASSERT(tile.has_view());
     ASSERT(tile.in_player_tray());
 
-    cancel(RoleGameDelay);
+    cancel(BandGameDelay);
 
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
 
@@ -463,14 +463,14 @@ using UP::RoleModeUI;
 
     SpellLayout &layout = SpellLayout::instance();
     if (needSlide) {
-        start(slide(RoleGameUI, wordTrayTileViews, 0.15, layout.word_tray_tile_offset(), nil));
+        start(slide(BandGameUI, wordTrayTileViews, 0.15, layout.word_tray_tile_offset(), nil));
     }
     
     const auto &word_tray_tile_centers = layout.word_tray_tile_centers(self.model->word_length());
     CGPoint word_tray_center = word_tray_tile_centers[word_pos.index()];
     UPTileView *tileView = tile.view();
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
-    start(bloop(RoleGameUI, @[tileView], 0.4, word_tray_center, nil));
+    start(bloop(BandGameUI, @[tileView], 0.4, word_tray_center, nil));
 
     tileView.highlighted = NO;
     [self viewOpUpdateGameControls];
@@ -482,7 +482,7 @@ using UP::RoleModeUI;
     ASSERT(self.pickedView);
     ASSERT_POS(self.pickedPosition);
 
-    cancel(RoleGameDelay);
+    cancel(BandGameDelay);
 
     UPTileView *tileView = tile.view();
 
@@ -494,7 +494,7 @@ using UP::RoleModeUI;
     const auto &player_tray_tile_centers = layout.player_tray_tile_centers();
     CGPoint center = player_tray_tile_centers[self.model->player_tray_index(tileView)];
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
-    start(bloop(RoleGameUI, @[tileView], 0.4, center, nil));
+    start(bloop(BandGameUI, @[tileView], 0.4, center, nil));
 
     tileView.highlighted = NO;
     [self viewOpUpdateGameControls];
@@ -505,7 +505,7 @@ using UP::RoleModeUI;
     ASSERT(tile.has_view());
     ASSERT(position.in_word_tray());
 
-    cancel(RoleGameAll);
+    cancel(BandGameAll);
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::MOVE, tile.position(), position));
 
@@ -522,7 +522,7 @@ using UP::RoleModeUI;
     ASSERT(self.pickedView == nil);
     ASSERT_NPOS(self.pickedPosition);
 
-    cancel(RoleGameAll);
+    cancel(BandGameAll);
 
     UPTileView *tileView = tile.view();
     [tileView cancelAnimations];
@@ -553,7 +553,7 @@ using UP::RoleModeUI;
     ASSERT(self.pickedView == tile.view());
     ASSERT_POS(self.pickedPosition);
 
-    cancel(RoleGameDelay);
+    cancel(BandGameDelay);
 
     TilePosition hover_pos = [self calculateHoverPosition:tile];
     ASSERT_POS(hover_pos);
@@ -569,7 +569,7 @@ using UP::RoleModeUI;
     ASSERT(self.pickedView == tile.view());
     ASSERT_POS(self.pickedPosition);
 
-    cancel(RoleGameDelay);
+    cancel(BandGameDelay);
 
     const State &state = self.model->back_state();
     if (state.action().opcode() != SpellModel::Opcode::HOVER) {
@@ -588,7 +588,7 @@ using UP::RoleModeUI;
     ASSERT(self.pickedView == tile.view());
     ASSERT_POS(self.pickedPosition);
 
-    cancel(RoleGameDelay);
+    cancel(BandGameDelay);
 
     UPTileView *tileView = tile.view();
 
@@ -598,13 +598,13 @@ using UP::RoleModeUI;
         SpellLayout &layout = SpellLayout::instance();
         const auto &word_tray_tile_centers = layout.word_tray_tile_centers(self.model->word_length());
         CGPoint tile_center = word_tray_tile_centers[self.pickedPosition.index()];
-        start(bloop(RoleGameUI, @[tileView], 0.4, tile_center, nil));
+        start(bloop(BandGameUI, @[tileView], 0.4, tile_center, nil));
     }
     else {
         SpellLayout &layout = SpellLayout::instance();
         const auto &player_tray_tile_centers = layout.player_tray_tile_centers();
         CGPoint tile_center = player_tray_tile_centers[self.model->player_tray_index(tileView)];
-        start(bloop(RoleGameUI, @[tileView], 0.4, tile_center, nil));
+        start(bloop(BandGameUI, @[tileView], 0.4, tile_center, nil));
     }
 
     tileView.highlighted = NO;
@@ -614,8 +614,8 @@ using UP::RoleModeUI;
 
 - (void)applyActionClear
 {
-    cancel(RoleGameDelay);
-    cancel(RoleGameUI);
+    cancel(BandGameDelay);
+    cancel(BandGameUI);
 
     [self viewOpApplyTranslationToFrame:[self wordTrayTileViews]];
     [self viewOpClearWordTray];
@@ -625,11 +625,11 @@ using UP::RoleModeUI;
 
 - (void)applyActionSubmit
 {
-    cancel(RoleGameDelay);
+    cancel(BandGameDelay);
 
     [self viewOpScoreWord];
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::SUBMIT));
-    delay(RoleGameDelay, 0.25, ^{
+    delay(BandGameDelay, 0.25, ^{
         [self viewOpFillPlayerTray];
         [self viewOpUpdateGameControls];
     });
@@ -637,7 +637,7 @@ using UP::RoleModeUI;
 
 - (void)applyActionReject
 {
-    cancel(RoleGameDelay);
+    cancel(BandGameDelay);
 
     [self viewOpLockUserInterfaceIncludingPause:NO];
 
@@ -648,11 +648,11 @@ using UP::RoleModeUI;
     SpellLayout &layout = SpellLayout::instance();
     NSMutableArray *views = [NSMutableArray arrayWithObject:self.gameView.wordTrayView];
     [views addObjectsFromArray:[self wordTrayTileViews]];
-    start(shake(RoleGameUI, views, 0.9, layout.word_tray_shake_offset(), ^(UIViewAnimatingPosition finishedPosition) {
+    start(shake(BandGameUI, views, 0.9, layout.word_tray_shake_offset(), ^(UIViewAnimatingPosition finishedPosition) {
         if (finishedPosition == UIViewAnimatingPositionEnd) {
-            delay(RoleGameDelay, 0.25, ^{
+            delay(BandGameDelay, 0.25, ^{
                 [self viewOpPenaltyFinished];
-                delay(RoleGameDelay, 0.1, ^{
+                delay(BandGameDelay, 0.1, ^{
                     [self applyActionClear];
                     [self viewOpUnlockUserInterface];
                 });
@@ -668,7 +668,7 @@ using UP::RoleModeUI;
 {
     ASSERT(self.wordTrayTileViews.count == 0);
 
-    cancel(RoleGameDelay);
+    cancel(BandGameDelay);
 
     [self viewOpLockUserInterfaceIncludingPause:NO];
 
@@ -679,7 +679,7 @@ using UP::RoleModeUI;
 
     [self viewOpPenaltyForDump];
     [self viewOpDumpPlayerTray:playerTrayTileViews];
-    delay(RoleGameDelay, 1.65, ^{
+    delay(BandGameDelay, 1.65, ^{
         [self viewOpFillPlayerTrayWithPostFillOp:^{
             [self viewOpPenaltyFinished];
         } completion:^{
@@ -735,7 +735,7 @@ using UP::RoleModeUI;
         const Tile &tile = self.model->find_tile(tileView);
         TileIndex idx = tile.position().index();
         CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
-        start(slide_to(RoleGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
+        start(slide_to(BandGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
     }
 }
 
@@ -761,7 +761,7 @@ using UP::RoleModeUI;
             if (idx >= hover_pos.index()) {
                 word_tray_tile_center = word_tray_tile_centers[idx + 1];
             }
-            start(slide_to(RoleGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
+            start(slide_to(BandGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
         }
     }
     else {
@@ -776,7 +776,7 @@ using UP::RoleModeUI;
             else if (idx > self.pickedPosition.index() && hover_pos.index() >= idx) {
                 word_tray_tile_center = word_tray_tile_centers[idx - 1];
             }
-            start(slide_to(RoleGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
+            start(slide_to(BandGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
         }
     }
 }
@@ -800,7 +800,7 @@ using UP::RoleModeUI;
             const Tile &tile = self.model->find_tile(tileView);
             TileIndex idx = tile.position().index();
             CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
-            start(slide_to(RoleGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
+            start(slide_to(BandGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
         }
     }
     else {
@@ -812,7 +812,7 @@ using UP::RoleModeUI;
             if (idx > self.pickedPosition.index()) {
                 word_tray_tile_center = word_tray_tile_centers[idx - 1];
             }
-            start(slide_to(RoleGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
+            start(slide_to(BandGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
         }
     }
 }
@@ -828,7 +828,7 @@ using UP::RoleModeUI;
     for (UPTileView *tileView in wordTrayTileViews) {
         TileIndex idx = self.model->player_tray_index(tileView);
         CGPoint player_tray_center = player_tray_tile_centers[idx];
-        start(bloop(RoleGameUI, @[tileView], 0.4, player_tray_center, nil));
+        start(bloop(BandGameUI, @[tileView], 0.4, player_tray_center, nil));
     }
 }
 
@@ -844,14 +844,14 @@ using UP::RoleModeUI;
     }
 
     CGPoint slidePoint = CGPointMake(UP::NotACoordinate, layout.score_tile_center_y());
-    UPAnimator *slideAnimator = slide_to(RoleGameUI, wordTrayTileViews, 0.1, slidePoint, ^(UIViewAnimatingPosition) {
+    UPAnimator *slideAnimator = slide_to(BandGameUI, wordTrayTileViews, 0.1, slidePoint, ^(UIViewAnimatingPosition) {
         LOG(Leaks, "views [1]: %@", self.gameView.tileContainerView.subviews);
         [wordTrayTileViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         LOG(Leaks, "views [2]: %@", self.gameView.tileContainerView.subviews);
     });
 
     UIOffset springOffset = UIOffsetMake(0, layout.score_tile_spring_down_offset_y());
-    UPAnimator *springAnimator = spring(RoleGameUI, wordTrayTileViews, 0.13, springOffset, ^(UIViewAnimatingPosition) {
+    UPAnimator *springAnimator = spring(BandGameUI, wordTrayTileViews, 0.13, springOffset, ^(UIViewAnimatingPosition) {
         
         start(slideAnimator);
     });
@@ -878,10 +878,10 @@ using UP::RoleModeUI;
         CGPoint center = tileView.center;
         CGPoint offscreenPoint = offscreen_tray_tile_centers[idx];
         UIOffset offset = UIOffsetMake(offscreenPoint.x - center.x, offscreenPoint.y - center.y);
-        UPAnimator *animator = slide(RoleGameUI, @[tileView], 1.1, offset, ^(UIViewAnimatingPosition) {
+        UPAnimator *animator = slide(BandGameUI, @[tileView], 1.1, offset, ^(UIViewAnimatingPosition) {
             [tileView removeFromSuperview];
         });
-        delay(RoleGameDelay, count * baseDelay, ^{
+        delay(BandGameDelay, count * baseDelay, ^{
             if (self.mode == UPSpellGameModePlay) {
                 start(animator);
             }
@@ -906,11 +906,11 @@ using UP::RoleModeUI;
         if (tile.has_view<false>()) {
             UPTileView *tileView = [UPTileView viewWithGlyph:tile.model().glyph() score:tile.model().score() multiplier:tile.model().multiplier()];
             tile.set_view(tileView);
-            tileView.role = RoleGameUI;
+            tileView.band = BandGameUI;
             tileView.gestureDelegate = self;
             tileView.frame = prefill_tile_frames[idx];
             [self.gameView.tileContainerView addSubview:tileView];
-            start(bloop(RoleGameUI, @[tileView], 0.3, player_tray_tile_centers[idx], nil));
+            start(bloop(BandGameUI, @[tileView], 0.3, player_tray_tile_centers[idx], nil));
         }
         idx++;
     }
@@ -920,7 +920,7 @@ using UP::RoleModeUI;
     }
 
     // FIXME: make it possible to bloop views to their respective points as a collection
-    delay(RoleGameDelay, 0.3, ^{
+    delay(BandGameDelay, 0.3, ^{
         if (completion) {
             completion();
         }
@@ -1339,8 +1339,8 @@ using UP::RoleModeUI;
     UIOffset slideExtrasAndAboutOffset = UIOffsetMake(0, -150);
     NSArray <UIView *> *extrasAndAboutViews = @[self.dialogMenu.extrasButton, self.dialogMenu.aboutButton];
 
-    UPAnimator *slideExtrasAndAboutAnimator = slide(RoleModeUI, extrasAndAboutViews, 0.15, slideExtrasAndAboutOffset, ^(UIViewAnimatingPosition) {
-        delay(RoleModeDelay, 0.2, ^{
+    UPAnimator *slideExtrasAndAboutAnimator = slide(BandModeUI, extrasAndAboutViews, 0.15, slideExtrasAndAboutOffset, ^(UIViewAnimatingPosition) {
+        delay(BandModeDelay, 0.2, ^{
             [self.gameTimer reset];
             [UIView animateWithDuration:0.6 animations:^{
                 self.dialogMenu.playButton.frame = layout.menu_button_center_dismissed_layout_frame();
@@ -1355,7 +1355,7 @@ using UP::RoleModeUI;
     });
     
     UIOffset springOffset = UIOffsetMake(0, -layout.dialog_spring_dismiss_offset_y());
-    UPAnimator *springExtrasAndAboutAnimator = spring(RoleModeUI, extrasAndAboutViews, 0.13, springOffset, ^(UIViewAnimatingPosition) {
+    UPAnimator *springExtrasAndAboutAnimator = spring(BandModeUI, extrasAndAboutViews, 0.13, springOffset, ^(UIViewAnimatingPosition) {
         start(slideExtrasAndAboutAnimator);
     });
     
@@ -1374,9 +1374,9 @@ using UP::RoleModeUI;
 {
     SpellLayout &layout = SpellLayout::instance();
 
-    delay(RoleModeDelay, 1.5, ^{
+    delay(BandModeDelay, 1.5, ^{
         UIOffset springOffset = UIOffsetMake(0, layout.dialog_spring_dismiss_offset_y());
-        UPAnimator *springAnimator = spring(RoleModeUI, @[self.dialogMenu.titlePathView], 0.13, springOffset, ^(UIViewAnimatingPosition) {
+        UPAnimator *springAnimator = spring(BandModeUI, @[self.dialogMenu.titlePathView], 0.13, springOffset, ^(UIViewAnimatingPosition) {
             [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationCurveLinear animations:^{
                 self.dialogMenu.titlePathView.frame = layout.menu_title_dismissed_layout_frame();
                 [self viewOpExitModal];
@@ -1394,7 +1394,7 @@ using UP::RoleModeUI;
 - (void)modeTransitionFromPlayToPause:(BOOL)animated
 {
     [self.gameTimer stop];
-    pause(RoleGameAll);
+    pause(BandGameAll);
     [self viewOpLockUserInterface];
     [self viewOpEnterModal:UPSpellGameModePause];
     CGPoint center = self.view.center;
@@ -1406,7 +1406,7 @@ using UP::RoleModeUI;
     [UIView animateWithDuration:0.15 animations:^{
         self.dialogPause.alpha = 1.0;
     }];
-    start(bloop(RoleModeUI, @[self.dialogPause], 0.3, center, ^(UIViewAnimatingPosition) {
+    start(bloop(BandModeUI, @[self.dialogPause], 0.3, center, ^(UIViewAnimatingPosition) {
         [self viewOpUnlockUserInterface];
     }));
 }
@@ -1419,7 +1419,7 @@ using UP::RoleModeUI;
     CGPoint center = self.dialogPause.center;
     CGPoint offscreenCenter = CGPointMake(center.x, center.y + (up_rect_height(self.view.bounds) * 0.5));
 
-    UPAnimator *slideAnimator = slide_to(RoleModeUI, @[self.dialogPause], 0.15, offscreenCenter, ^(UIViewAnimatingPosition) {
+    UPAnimator *slideAnimator = slide_to(BandModeUI, @[self.dialogPause], 0.15, offscreenCenter, ^(UIViewAnimatingPosition) {
         self.dialogPause.center = self.view.center;
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
@@ -1427,8 +1427,8 @@ using UP::RoleModeUI;
             [self viewOpExitModal];
         } completion:^(BOOL finished) {
             [self.gameTimer start];
-            start(RoleGameDelay);
-            start(RoleGameUI);
+            start(BandGameDelay);
+            start(BandGameUI);
             self.gameView.roundButtonPause.highlightedOverride = NO;
             self.gameView.roundButtonPause.highlighted = NO;
             [self viewOpUnlockUserInterface];
@@ -1436,7 +1436,7 @@ using UP::RoleModeUI;
     });
 
     UIOffset springOffset = UIOffsetMake(0, layout.dialog_spring_dismiss_offset_y());
-    UPAnimator *springAnimator = spring(RoleModeUI, @[self.dialogPause], 0.13, springOffset, ^(UIViewAnimatingPosition) {
+    UPAnimator *springAnimator = spring(BandModeUI, @[self.dialogPause], 0.13, springOffset, ^(UIViewAnimatingPosition) {
         start(slideAnimator);
     });
 
@@ -1458,8 +1458,8 @@ using UP::RoleModeUI;
     self.dialogGameOver.playButton.hidden = YES;
     self.dialogGameOver.noteLabel.hidden = YES;
 
-    pause(RoleGameAll);
-    cancel(RoleGameAll);
+    pause(BandGameAll);
+    cancel(BandGameAll);
     [self viewOpLockUserInterfaceIncludingPause:YES];
     [self viewOpEnterModal:UPSpellGameModeOverInterstitial];
 
@@ -1472,8 +1472,8 @@ using UP::RoleModeUI;
     [UIView animateWithDuration:0.15 animations:^{
         self.dialogGameOver.alpha = 1.0;
     }];
-    start(bloop(RoleModeUI, @[self.dialogGameOver], 0.3, center, ^(UIViewAnimatingPosition) {
-        delay(RoleModeUI, 1.75, ^{
+    start(bloop(BandModeUI, @[self.dialogGameOver], 0.3, center, ^(UIViewAnimatingPosition) {
+        delay(BandModeUI, 1.75, ^{
             [self setMode:UPSpellGameModeOver animated:YES];
         });
     }));
@@ -1496,11 +1496,11 @@ using UP::RoleModeUI;
     CGPoint playButtonCenter = up_rect_center(layout.dialog_over_button_right_frame());
     CGPoint noteLabelCenter = up_rect_center(layout.dialog_over_note_label_frame());
     CGPoint scoreLabelCenter = up_rect_center(layout.calculate_game_over_score_label_frame(self.gameView.scoreLabel.string));
-    start(slide_to(RoleModeUI, @[self.dialogGameOver.menuButton], 0.75, menuButtonCenter, nil));
-    start(slide_to(RoleModeUI, @[self.dialogGameOver.playButton], 0.75, playButtonCenter, nil));
-    start(slide_to(RoleModeUI, @[self.dialogGameOver.noteLabel], 0.75, noteLabelCenter, nil));
-    start(fade(RoleModeUI, @[self.gameView.gameTimerLabel], 0.3, nil));
-    start(slide_to(RoleModeUI, @[self.gameView.scoreLabel], 0.75, scoreLabelCenter, nil));
+    start(slide_to(BandModeUI, @[self.dialogGameOver.menuButton], 0.75, menuButtonCenter, nil));
+    start(slide_to(BandModeUI, @[self.dialogGameOver.playButton], 0.75, playButtonCenter, nil));
+    start(slide_to(BandModeUI, @[self.dialogGameOver.noteLabel], 0.75, noteLabelCenter, nil));
+    start(fade(BandModeUI, @[self.gameView.gameTimerLabel], 0.3, nil));
+    start(slide_to(BandModeUI, @[self.gameView.scoreLabel], 0.75, scoreLabelCenter, nil));
     [UIView animateWithDuration:0.75 animations:^{
         [self viewOpEnterModal:UPSpellGameModeOver];
     }];

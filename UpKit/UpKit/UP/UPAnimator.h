@@ -16,25 +16,25 @@ namespace UP {
 
 @interface UPAnimator : NSObject <UIViewAnimating, UPTimeSpanning>
 
-+ (UPAnimator *)bloopAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)bloopAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     position:(CGPoint)position completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
-+ (UPAnimator *)fadeAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)fadeAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
-+ (UPAnimator *)shakeAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)shakeAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
-+ (UPAnimator *)slideAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)slideAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
-+ (UPAnimator *)slideToAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)slideToAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     point:(CGPoint)point completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
-+ (UPAnimator *)springAnimatorWithRole:(UP::Role)role views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
++ (UPAnimator *)springAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
-+ (UPAnimator *)setColorAnimatorWithRole:(UP::Role)role controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
++ (UPAnimator *)setColorAnimatorInBand:(UP::Band)band controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
     element:(UPControlElement)element fromControlState:(UPControlState)fromControlState toControlState:(UPControlState)toControlState
         completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
@@ -57,7 +57,7 @@ namespace UP {
 - (void)finishAnimationAtPosition:(UIViewAnimatingPosition)finalPosition;
 
 // UPTimeSpanning
-@property(nonatomic, readonly) UP::Role role;
+@property(nonatomic, readonly) UP::Band band;
 @property(nonatomic, readonly) uint32_t serialNumber;
 - (void)start;
 - (void)pause;
