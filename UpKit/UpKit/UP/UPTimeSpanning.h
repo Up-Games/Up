@@ -9,6 +9,7 @@
 #import <UPKit/UPMacros.h>
 #import <UPKit/UPBand.h>
 #import <UPKit/UPSerialNumber.h>
+#import <UPKit/UPViewTo.h>
 
 @class UPAnimator;
 
@@ -30,6 +31,8 @@ void init();
 
 UPAnimator *bloop(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
     void (^completion)(UIViewAnimatingPosition));
+
+UPAnimator *bloop_to(UP::Band band, NSArray<UPViewTo *> *viewTos, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
 
 UPAnimator *fade(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
 

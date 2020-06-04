@@ -58,6 +58,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5D34613624887918009FB46D /* UPViewTo+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UPViewTo+UPSpell.h"; sourceTree = "<group>"; };
 		5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellLayout.mm; sourceTree = "<group>"; };
 		5D5216EA246C7E9E005A2E9F /* UPSpellLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellLayout.h; sourceTree = "<group>"; };
 		5D54078224841631003F193D /* UPSpellNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellNavigationController.h; sourceTree = "<group>"; };
@@ -164,6 +165,7 @@
 				5DA8E04524775A2E008D3015 /* UPTileSequence.h */,
 				5D723114246B34C0006027A3 /* UPTileView.h */,
 				5DA8E0432476BF41008D3015 /* UPTileView.mm */,
+				5D34613624887918009FB46D /* UPViewTo+UPSpell.h */,
 			);
 			path = Code;
 			sourceTree = "<group>";

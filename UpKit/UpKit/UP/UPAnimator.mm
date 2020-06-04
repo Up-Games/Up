@@ -4,6 +4,7 @@
 //
 
 #import "UIColor+UP.h"
+#import "UIView+UP.h"
 #import "UPAssertions.h"
 #import "UPAnimator.h"
 #import "UPBezierPathView.h"
@@ -18,6 +19,7 @@
 @property (nonatomic) NSObject<UIViewAnimating> *inner;
 @property (nonatomic) NSString *type;
 @property (nonatomic, readwrite) NSArray *views;
+@property (nonatomic, readwrite) NSArray *viewTos;
 @end
 
 static uint32_t _InstanceCount;
@@ -44,6 +46,47 @@ static uint32_t _InstanceCount;
     }
     animator.inner = inner;
     return animator;
+}
+
++ (UPAnimator *)bloopToAnimatorInBand:(UP::Band)band viewTos:(NSArray<UPViewTo *> *)viewTos duration:(CFTimeInterval)duration
+                           completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
+{
+//    UPAnimator *animator = [[self alloc] _initInBand:band type:@"bloop_to" viewTos:viewTos];
+//    UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7 animations:^{
+//        for (UPViewTo *viewTo in viewTos) {
+//            viewTo.view.center = viewTo.destination;
+//        }
+//    }
+//                                     ];
+//    uint32_t serialNumber = animator.serialNumber;
+//    [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
+//        UP::TimeSpanning::remove(serialNumber);
+//    }];
+//    if (completion) {
+//        [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
+//            completion(finalPosition);
+//        }];
+//    }
+//    animator.inner = inner;
+//    return animator;
+
+    UPAnimator *animator = [[self alloc] _initInBand:band type:@"bloop_to" viewTos:viewTos];
+    UPTickingAnimator *inner = [UPTickingAnimator AnimatorInBand:band duration:duration
+                                                    unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutBack]
+                                                         applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
+        for (UPViewTo *viewTo in viewTos) {
+            viewTo.view.center = up_lerp_points(viewTo.beginning, viewTo.destination, fractionCompleted);
+        }
+    } completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+        if (completion) {
+            completion(finalPosition);
+        }
+        [inner clearBlocks];
+        UP::TimeSpanning::remove(animator);
+    }];
+    animator.inner = inner;
+    return animator;
+
 }
 
 + (UPAnimator *)fadeAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
@@ -216,16 +259,32 @@ static uint32_t _InstanceCount;
 - (instancetype)_initInBand:(UP::Band)band type:(NSString *)type views:(NSArray<UIView *> *)views
 {
     ASSERT(band);
-
+    
     self = [super init];
     self.band = band;
     self.type = type;
     self.views = views;
     self.serialNumber = UP::next_serial_number();
-
+    
     _InstanceCount++;
     LOG(Leaks, "anim+: %@ (%d)", self, _InstanceCount);
+    
+    return self;
+}
 
+- (instancetype)_initInBand:(UP::Band)band type:(NSString *)type viewTos:(NSArray<UPViewTo *> *)viewTos
+{
+    ASSERT(band);
+    
+    self = [super init];
+    self.band = band;
+    self.type = type;
+    self.viewTos = viewTos;
+    self.serialNumber = UP::next_serial_number();
+    
+    _InstanceCount++;
+    LOG(Leaks, "anim+: %@ (%d)", self, _InstanceCount);
+    
     return self;
 }
 

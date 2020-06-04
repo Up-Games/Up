@@ -40,4 +40,19 @@
     self.frame = [self.layoutRule layoutFrameForBoundsSize:self.bounds.size];
 }
 
+#pragma mark - Destination
+
+@dynamic destination;
+
+- (void)setDestination:(CGPoint)destination
+{
+    objc_setAssociatedObject(self, @selector(destination), [NSValue valueWithCGPoint:destination], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGPoint)destination
+{
+    NSValue *value = objc_getAssociatedObject(self, @selector(destination));
+    return value ? [value CGPointValue] : self.center;
+}
+
 @end

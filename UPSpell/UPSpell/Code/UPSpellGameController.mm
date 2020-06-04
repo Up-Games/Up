@@ -23,6 +23,7 @@
 #import "UPTileView.h"
 #import "UPTilePaths.h"
 #import "UPSpellGameController.h"
+#import "UPViewTo+UPSpell.h"
 
 using Action = UP::SpellModel::Action;
 using Opcode = UP::SpellModel::Opcode;
@@ -44,6 +45,7 @@ using UP::TileSequence;
 using UP::valid;
 
 using UP::TimeSpanning::bloop;
+using UP::TimeSpanning::bloop_to;
 using UP::TimeSpanning::fade;
 using UP::TimeSpanning::shake;
 using UP::TimeSpanning::slide;
@@ -64,6 +66,11 @@ using UP::BandGameUI;
 using UP::BandModeAll;
 using UP::BandModeDelay;
 using UP::BandModeUI;
+
+using UP::role_for;
+using Location = UP::SpellLayout::Location;
+using Role = UP::SpellLayout::Role;
+using Spot = UP::SpellLayout::Spot;
 
 @interface UPSpellGameController () <UPGameTimerObserver, UPTileViewGestureDelegate>
 @property (nonatomic) UIView *infinityView;
@@ -627,7 +634,7 @@ using UP::BandModeUI;
 {
     cancel(BandGameDelay);
 
-    [self viewOpScoreWord];
+    [self viewOpSubmitWord];
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::SUBMIT));
     delay(BandGameDelay, 0.25, ^{
         [self viewOpFillPlayerTray];
@@ -832,7 +839,7 @@ using UP::BandModeUI;
     }
 }
 
-- (void)viewOpScoreWord
+- (void)viewOpSubmitWord
 {
     SpellLayout &layout = SpellLayout::instance();
 
@@ -852,7 +859,6 @@ using UP::BandModeUI;
 
     UIOffset springOffset = UIOffsetMake(0, layout.score_tile_spring_down_offset_y());
     UPAnimator *springAnimator = spring(BandGameUI, wordTrayTileViews, 0.13, springOffset, ^(UIViewAnimatingPosition) {
-        
         start(slideAnimator);
     });
     
@@ -898,33 +904,32 @@ using UP::BandModeUI;
 - (void)viewOpFillPlayerTrayWithPostFillOp:(void (^)(void))postFillOp completion:(void (^)(void))completion
 {
     SpellLayout &layout = SpellLayout::instance();
-    const auto &prefill_tile_frames = layout.prefill_tile_frames();
-    const auto &player_tray_tile_centers = layout.player_tray_tile_centers();
 
+    NSMutableArray<UPViewTo *> *viewTos = [NSMutableArray array];
     TileIndex idx = 0;
     for (auto &tile : self.model->tiles()) {
         if (tile.has_view<false>()) {
-            UPTileView *tileView = [UPTileView viewWithGlyph:tile.model().glyph() score:tile.model().score() multiplier:tile.model().multiplier()];
+            const TileModel &model = tile.model();
+            UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
             tile.set_view(tileView);
             tileView.band = BandGameUI;
             tileView.gestureDelegate = self;
-            tileView.frame = prefill_tile_frames[idx];
+            Role role = role_for(TilePosition(TileTray::Player, idx));
+            tileView.frame = layout.frame_for(Location(role, Spot::OffBottom));
             [self.gameView.tileContainerView addSubview:tileView];
-            start(bloop(BandGameUI, @[tileView], 0.3, player_tray_tile_centers[idx], nil));
+            [viewTos addObject:UPViewToMake(tileView, Location(role, Spot::Default))];
         }
         idx++;
     }
+    start(bloop_to(BandGameUI, viewTos, 0.25, ^(UIViewAnimatingPosition) {
+        if (completion) {
+            completion();
+        }
+    }));
 
     if (postFillOp) {
         postFillOp();
     }
-
-    // FIXME: make it possible to bloop views to their respective points as a collection
-    delay(BandGameDelay, 0.3, ^{
-        if (completion) {
-            completion();
-        }
-    });
 }
 
 - (void)viewOpPenaltyForDump

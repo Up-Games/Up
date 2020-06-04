@@ -7,6 +7,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import <UpKit/UPAssertions.h>
 #import <UpKit/UPFontMetrics.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPMacros.h>
@@ -16,6 +17,7 @@
 #if __cplusplus
 
 #import <array>
+#import <map>
 #import <unordered_map>
 
 namespace UP {
@@ -31,6 +33,38 @@ public:
         TallerThanCanonical
     };
 
+    enum class Role {
+        None,
+        PlayerTile1, PlayerTile2, PlayerTile3, PlayerTile4, PlayerTile5, PlayerTile6, PlayerTile7,
+        WordTile1, WordTile2, WordTile3, WordTile4, WordTile5, WordTile6, WordTile7,
+        WordTray,
+        GameButtonLeft, GameButtonRight, GameTimer, GameScore,
+        MenuPlacard, MenuButtonLeft, MenuButtonCenter, MenuButtonRight, MenuNote,
+        DialogPlacard, DialogButtonLeft, DialogButtonCenter, DialogButtonRight,
+    };
+
+    enum class Spot {
+        Default,
+        OffTop,
+        OffBottom,
+        OffLeft,
+        OffRight,
+        SubmittedTile,
+    };
+
+    class Location {
+    public:
+        constexpr Location() {}
+        constexpr Location(Role role, Spot spot) : m_role(role), m_spot(spot) {}
+        
+        Role role() const { return m_role; }
+        Spot spot() const { return m_spot; }
+
+    private:
+        Role m_role = Role::None;
+        Spot m_spot = Spot::Default;
+    };
+    
     static constexpr CGFloat CanonicalCanvasWidth = 1000;
     static constexpr CGFloat CanonicalCanvasMidX = CanonicalCanvasWidth / 2;
     static constexpr CGFloat CanonicalCanvasHeight = 500;
@@ -72,6 +106,7 @@ public:
     static inline constexpr CGFloat CanonicalMenuButtonDismissedYOffset = -CanonicalTextButtonSize.height * 2;
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
+    static inline constexpr CGFloat CanonicalOffscreenFrameFactor = 1.3;
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
@@ -83,6 +118,9 @@ public:
     }
 
     void calculate();
+
+    CGRect frame_for(const Location &);
+    CGPoint center_for(const Location &);
 
     void set_screen_bounds(CGRect screen_bounds) { m_screen_bounds = screen_bounds; }
     CGRect screen_bounds() const { return m_screen_bounds; }
@@ -101,12 +139,11 @@ public:
     CGRect layout_frame() const { return m_layout_frame; }
     CGFloat layout_scale() const { return m_layout_scale; }
 
-    CGRect controls_layout_frame() const { return m_controls_layout_frame; }
+    CGRect controls_layout_frame() const { return m_game_controls_layout_frame; }
     CGRect word_tray_layout_frame() const { return m_word_tray_layout_frame; }
     CGRect player_tray_layout_frame() const { return m_player_tray_layout_frame; }
 
     CGRect word_tray_mask_frame() const { return m_word_tray_mask_frame; }
-    CGRect word_tray_tile_reposition_frame() const { return m_word_tray_tile_reposition_frame; }
 
     CGSize tile_size() const { return m_tile_size; }
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
@@ -181,6 +218,7 @@ public:
     CGRect menu_button_right_dismissed_layout_frame() const { return m_menu_button_right_dismissed_layout_frame; }
 
 private:
+    
     SpellLayout() {}
 
     UP_STATIC_INLINE SpellLayout *g_instance;
@@ -191,10 +229,9 @@ private:
     void set_letterbox_insets(UIEdgeInsets insets) { m_letterbox_insets = insets; }
     void set_layout_frame(CGRect rect) { m_layout_frame = rect; }
     void set_layout_scale(CGFloat f) { m_layout_scale = f; }
-    void set_controls_layout_frame(CGRect rect) { m_controls_layout_frame = rect; }
+    void set_controls_layout_frame(CGRect rect) { m_game_controls_layout_frame = rect; }
     void set_word_tray_layout_frame(CGRect rect) { m_word_tray_layout_frame = rect; }
     void set_word_tray_mask_frame(CGRect rect) { m_word_tray_mask_frame = rect; }
-    void set_word_tray_tile_reposition_frame(CGRect rect) { m_word_tray_tile_reposition_frame = rect; }
     void set_player_tray_layout_frame(CGRect rect) { m_player_tray_layout_frame = rect; }
     void set_tile_size(CGSize size) { m_tile_size = size; }
     void set_tile_stroke_width(CGFloat f) { m_tile_stroke_width = f; }
@@ -240,17 +277,21 @@ private:
     void set_menu_button_center_dismissed_layout_frame(CGRect rect) { m_menu_button_center_dismissed_layout_frame = rect; }
     void set_menu_button_right_dismissed_layout_frame(CGRect rect) { m_menu_button_right_dismissed_layout_frame = rect; }
 
-    void calculate_controls_layout_frame();
-    void calculate_word_tray_layout_frame();
-    void calculate_player_tray_layout_frame();
     void calculate_tile_size();
     void calculate_tile_stroke_width();
+    void calculate_game_controls_layout_frame();
+    void calculate_player_tray_layout_frame();
+    void calculate_word_tray_layout_frame();
     void calculate_word_tray_mask_frame();
-    void calculate_word_tray_tile_reposition_frame();
-    void calculate_tile_drag_barrier_frame();
     void calculate_word_tray_shake_offset();
+    void calculate_tile_drag_barrier_frame();
     void calculate_word_tray_tile_frames();
     void calculate_player_tray_tile_frames();
+    
+    void calculate_locations();
+    void calculate_player_tile_locations();
+
+    
     void calculate_prefill_tile_frames();
     void calculate_score_tile_spring_down_offset_y();
     void calculate_score_tile_center_y();
@@ -284,6 +325,8 @@ private:
     void calculate_menu_button_center_layout_frame();
     void calculate_menu_button_right_layout_frame();
 
+    std::map<Location, CGRect> m_location_frames;
+
     CGRect m_screen_bounds = CGRectZero;
     CGFloat m_screen_scale = 2.0;
     AspectMode m_aspect_mode = AspectMode::Canonical;
@@ -295,19 +338,23 @@ private:
     CGFloat m_layout_scale = 1.0;
     UIEdgeInsets m_letterbox_insets = UIEdgeInsetsZero;
 
-    CGRect m_controls_layout_frame = CGRectZero;
-    CGRect m_word_tray_layout_frame = CGRectZero;
-    CGRect m_player_tray_layout_frame = CGRectZero;
-
-    CGRect m_word_tray_mask_frame = CGRectZero;
-    CGRect m_word_tray_tile_reposition_frame = CGRectZero;
-    UIOffset m_word_tray_shake_offset;
-    UIOffset m_word_tray_tile_offset;
-
     CGSize m_tile_size = CGSizeZero;
     CGFloat m_tile_stroke_width = 0.0;
     UIBezierPath *m_tile_stroke_path = nil;
+    
+    CGRect m_game_controls_layout_frame = CGRectZero;
+    CGRect m_player_tray_layout_frame = CGRectZero;
+    CGRect m_word_tray_layout_frame = CGRectZero;
+    CGRect m_word_tray_mask_frame = CGRectZero;
+    UIOffset m_word_tray_shake_offset;
     CGRect m_tile_drag_barrier_frame = CGRectZero;
+
+    TileRectArray m_player_tray_tile_frames;
+    TilePointArray m_player_tray_tile_centers;
+    std::array<TileRectArray, TileCount> m_word_tray_tile_frames;
+    std::array<TilePointArray, TileCount> m_word_tray_tile_centers;
+
+    UIOffset m_word_tray_tile_offset;
 
     CGRect m_game_controls_left_button_frame = CGRectZero;
     CGRect m_game_controls_right_button_frame = CGRectZero;
@@ -323,10 +370,6 @@ private:
     CGRect m_game_play_time_label_frame = CGRectZero;
     CGRect m_game_play_score_label_frame = CGRectZero;
 
-    TileRectArray m_player_tray_tile_frames;
-    TilePointArray m_player_tray_tile_centers;
-    std::array<TileRectArray, TileCount> m_word_tray_tile_frames;
-    std::array<TilePointArray, TileCount> m_word_tray_tile_centers;
     TileRectArray m_prefill_tile_frames;
     TilePointArray m_prefill_tile_centers;
 
@@ -363,6 +406,45 @@ private:
     CGRect m_menu_button_center_dismissed_layout_frame;
     CGRect m_menu_button_right_dismissed_layout_frame;
 };
+
+UP_STATIC_INLINE bool operator==(const SpellLayout::Location &a, const SpellLayout::Location &b) {
+    return a.role() == b.role() && a.spot() == b.spot();
+}
+
+UP_STATIC_INLINE bool operator!=(const SpellLayout::Location &a, const SpellLayout::Location &b) {
+    return !(a==b);
+}
+
+UP_STATIC_INLINE bool operator<(const SpellLayout::Location &a, const SpellLayout::Location &b) {
+    return a.role() != b.role() ? a.role() < b.role() : a.spot() < b.spot();
+}
+
+UP_STATIC_INLINE SpellLayout::Role role_for(TilePosition pos) {
+    switch (pos.index()) {
+        case 0:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile1 : SpellLayout::Role::WordTile1;
+        case 1:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile2 : SpellLayout::Role::WordTile2;
+        case 2:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile3 : SpellLayout::Role::WordTile3;
+        case 3:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile4 : SpellLayout::Role::WordTile4;
+        case 4:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile5 : SpellLayout::Role::WordTile5;
+        case 5:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile6 : SpellLayout::Role::WordTile6;
+        case 6:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile7 : SpellLayout::Role::WordTile7;
+    }
+    ASSERT_NOT_REACHED();
+    return SpellLayout::Role::None;
+}
+
+template <class ...Args>
+SpellLayout::Role role_for(Args... args) {
+    return role_for(TilePosition(std::forward<Args>(args)...));
+}
+
 
 }  // namespace UP
 

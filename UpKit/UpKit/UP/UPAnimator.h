@@ -9,6 +9,7 @@
 
 #import <UpKit/UPControl.h>
 #import <UpKit/UPTimeSpanning.h>
+#import <UpKit/UPViewTo.h>
 
 namespace UP {
     static constexpr CGFloat NotACoordinate = std::numeric_limits<CGFloat>::quiet_NaN();
@@ -18,6 +19,9 @@ namespace UP {
 
 + (UPAnimator *)bloopAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     position:(CGPoint)position completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
+
++ (UPAnimator *)bloopToAnimatorInBand:(UP::Band)band viewTos:(NSArray<UPViewTo *> *)viewTos duration:(CFTimeInterval)duration
+                           completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
 + (UPAnimator *)fadeAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
@@ -32,7 +36,7 @@ namespace UP {
     point:(CGPoint)point completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
 + (UPAnimator *)springAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
-    offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
+                              offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
 + (UPAnimator *)setColorAnimatorInBand:(UP::Band)band controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
     element:(UPControlElement)element fromControlState:(UPControlState)fromControlState toControlState:(UPControlState)toControlState

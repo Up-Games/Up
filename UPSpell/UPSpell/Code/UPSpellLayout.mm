@@ -70,16 +70,19 @@ void SpellLayout::calculate()
         LOG(Layout, "     letterbox_insets:  %@", NSStringFromUIEdgeInsets(letterbox_insets()));
     }
 
-    calculate_controls_layout_frame();
     calculate_tile_size();
+    calculate_tile_stroke_width();
+    calculate_game_controls_layout_frame();
+    calculate_player_tray_layout_frame();
     calculate_word_tray_layout_frame();
     calculate_word_tray_mask_frame();
-    calculate_word_tray_tile_reposition_frame();
-    calculate_tile_drag_barrier_frame();
     calculate_word_tray_shake_offset();
-    calculate_player_tray_layout_frame();
-    calculate_word_tray_tile_frames();
+    calculate_tile_drag_barrier_frame();
     calculate_player_tray_tile_frames();
+    calculate_word_tray_tile_frames();
+
+    calculate_locations();
+
     calculate_prefill_tile_frames();
     calculate_score_tile_spring_down_offset_y();
     calculate_score_tile_center_y();
@@ -91,7 +94,6 @@ void SpellLayout::calculate()
     calculate_game_note_font_metrics();
     calculate_game_play_time_label_frame();
     calculate_game_play_score_label_frame();
-    calculate_tile_stroke_width();
     calculate_dialog_title_layout_frame();
     calculate_dialog_spring_dismiss_offset_y();
     calculate_dialog_pause_title_layout_frame();
@@ -115,7 +117,48 @@ void SpellLayout::calculate()
     calculate_menu_button_right_layout_frame();
 }
 
-void SpellLayout::calculate_controls_layout_frame()
+CGRect SpellLayout::frame_for(const Location &loc)
+{
+    auto it = m_location_frames.find(loc);
+    return it == m_location_frames.end() ? CGRectZero : it->second;
+}
+
+CGPoint SpellLayout::center_for(const Location &loc)
+{
+    return up_rect_center(frame_for(loc));
+}
+
+void SpellLayout::calculate_tile_size()
+{
+    CGSize size = up_size_scaled(CanonicalTileSize, layout_scale());
+    set_tile_size(up_pixel_size(size, screen_scale()));
+}
+
+void SpellLayout::calculate_tile_stroke_width()
+{
+    CGFloat stroke_width = CanonicalTileStrokeWidth * layout_scale();
+    set_tile_stroke_width(stroke_width);
+    
+    CGRect stroke_bounds = CGRectMake(0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize));
+    CGRect stroke_inset = CGRectInset(stroke_bounds, CanonicalTileStrokeWidth, CanonicalTileStrokeWidth);
+    
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint: CGPointMake(up_rect_max_x(stroke_inset), up_rect_min_y(stroke_inset))];
+    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_inset), up_rect_min_y(stroke_inset))];
+    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_inset), up_rect_max_y(stroke_inset))];
+    [path addLineToPoint: CGPointMake(up_rect_max_x(stroke_inset), up_rect_max_y(stroke_inset))];
+    [path closePath];
+    [path moveToPoint: CGPointMake(up_rect_max_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
+    [path addLineToPoint: CGPointMake(up_rect_max_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
+    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
+    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
+    [path closePath];
+    m_tile_stroke_path = path;
+    
+    LOG(Layout, "tile_stroke_width: %.2f", tile_stroke_width());
+}
+
+void SpellLayout::calculate_game_controls_layout_frame()
 {
     switch (aspect_mode()) {
         case AspectMode::Canonical: {
@@ -138,6 +181,31 @@ void SpellLayout::calculate_controls_layout_frame()
         }
     }
     LOG(Layout, "controls_layout_frame: %@", NSStringFromCGRect(controls_layout_frame()));
+}
+
+void SpellLayout::calculate_player_tray_layout_frame()
+{
+    switch (aspect_mode()) {
+        case AspectMode::Canonical: {
+            set_player_tray_layout_frame(CanonicalTilesLayoutFrame);
+            break;
+        }
+        case AspectMode::WiderThanCanonical: {
+            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalTilesLayoutFrame, layout_scale(), layout_frame());
+            set_player_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
+            break;
+        }
+        case AspectMode::TallerThanCanonical: {
+            CGRect frame = CanonicalTilesLayoutFrame;
+            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
+            // Frame is moved down in the UI by 25% of the letterbox inset
+            // That's what looks good.
+            frame.origin.y += letterbox_insets().top * 0.25;
+            set_player_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
+            break;
+        }
+    }
+    LOG(Layout, "player_tray_layout_frame: %@", NSStringFromCGRect(player_tray_layout_frame()));
 }
 
 void SpellLayout::calculate_word_tray_layout_frame()
@@ -190,12 +258,10 @@ void SpellLayout::calculate_word_tray_mask_frame()
     LOG(Layout, "word_tray_mask_frame: %@", NSStringFromCGRect(word_tray_mask_frame()));
 }
 
-void SpellLayout::calculate_word_tray_tile_reposition_frame()
+void SpellLayout::calculate_word_tray_shake_offset()
 {
-    CGFloat word_tray_stroke = up_float_scaled(CanonicalWordTrayStroke, layout_scale());
-    CGRect frame = CGRectInset(word_tray_layout_frame(), word_tray_stroke, word_tray_stroke);
-    set_word_tray_tile_reposition_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "word_tray_tile_reposition_frame: %@", NSStringFromCGRect(word_tray_tile_reposition_frame()));
+    CGFloat amount = CanonicalWordTrayShakeAmount * layout_scale();
+    set_word_tray_shake_offset(UIOffsetMake(up_pixel_float(amount, screen_scale()), 0));
 }
 
 void SpellLayout::calculate_tile_drag_barrier_frame()
@@ -208,60 +274,160 @@ void SpellLayout::calculate_tile_drag_barrier_frame()
     LOG(Layout, "tile_drag_barrier_frame: %@", NSStringFromCGRect(tile_drag_barrier_frame()));
 }
 
-void SpellLayout::calculate_player_tray_layout_frame()
+void SpellLayout::calculate_player_tray_tile_frames()
 {
-    switch (aspect_mode()) {
-        case AspectMode::Canonical: {
-            set_player_tray_layout_frame(CanonicalTilesLayoutFrame);
-            break;
-        }
-        case AspectMode::WiderThanCanonical: {
-            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalTilesLayoutFrame, layout_scale(), layout_frame());
-            set_player_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-        case AspectMode::TallerThanCanonical: {
-            CGRect frame = CanonicalTilesLayoutFrame;
-            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
-            // Frame is moved down in the UI by 25% of the letterbox inset
-            // That's what looks good.
-            frame.origin.y += letterbox_insets().top * 0.25;
-            set_player_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
+    CGSize canonicalSize = CanonicalTileSize;
+    CGSize size = up_size_scaled(canonicalSize, layout_scale());
+    CGFloat gap = CanonicalTileGap * layout_scale();
+    CGFloat x = up_rect_min_x(player_tray_layout_frame());
+    CGFloat y = up_rect_min_y(player_tray_layout_frame());
+    for (size_t idx = 0; idx < TileCount; idx++) {
+        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
+        CGRect frame = up_pixel_rect(rect, screen_scale());
+        m_player_tray_tile_frames[idx] = frame;
+        m_player_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
+        x += up_size_width(size) + gap;
     }
-    LOG(Layout, "player_tray_layout_frame: %@", NSStringFromCGRect(player_tray_layout_frame()));
+    int idx = 0;
+    for (const auto &r : player_tray_tile_frames()) {
+        LOG(Layout, "   tile tray frame [%d]: %@", idx, NSStringFromCGRect(r));
+        idx++;
+    }
 }
 
-void SpellLayout::calculate_tile_size()
+void SpellLayout::calculate_word_tray_tile_frames()
 {
-    CGSize size = up_size_scaled(CanonicalTileSize, layout_scale());
-    set_tile_size(up_pixel_size(size, screen_scale()));
+    CGSize canonicalSize = CanonicalTileSize;
+    CGSize size = up_size_scaled(canonicalSize, layout_scale());
+    CGFloat gap = CanonicalTileGap * layout_scale();
+    
+    CGFloat x = up_rect_min_x(player_tray_layout_frame());
+    CGFloat y = up_rect_min_y(word_tray_layout_frame());
+    TileRectArray rects;
+    TilePointArray centers;
+    for (size_t idx = 0; idx < TileCount; idx++) {
+        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
+        rect = up_rect_centered_y_in_rect(rect, word_tray_layout_frame());
+        CGRect frame = up_pixel_rect(rect, screen_scale());
+        rects[idx] = frame;
+        centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
+        x += up_size_width(size) + gap;
+    }
+    
+    TileRectArray odd_rects = rects;
+    TilePointArray odd_centers = centers;
+    
+    // length 7
+    m_word_tray_tile_frames[6] = odd_rects;
+    m_word_tray_tile_centers[6] = odd_centers;
+    
+    // length 5
+    shift_left(odd_rects.begin(), odd_rects.end(), 1);
+    std::fill(odd_rects.begin() + 5, odd_rects.end(), CGRectZero);
+    shift_left(odd_centers.begin(), odd_centers.end(), 1);
+    std::fill(odd_centers.begin() + 5, odd_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[4] = odd_rects;
+    m_word_tray_tile_centers[4] = odd_centers;
+    
+    // length 3
+    shift_left(odd_rects.begin(), odd_rects.end(), 1);
+    std::fill(odd_rects.begin() + 3, odd_rects.end(), CGRectZero);
+    shift_left(odd_centers.begin(), odd_centers.end(), 1);
+    std::fill(odd_centers.begin() + 3, odd_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[2] = odd_rects;
+    m_word_tray_tile_centers[2] = odd_centers;
+    
+    // length 1
+    shift_left(odd_rects.begin(), odd_rects.end(), 1);
+    std::fill(odd_rects.begin() + 1, odd_rects.end(), CGRectZero);
+    shift_left(odd_centers.begin(), odd_centers.end(), 1);
+    std::fill(odd_centers.begin() + 1, odd_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[0] = odd_rects;
+    m_word_tray_tile_centers[0] = odd_centers;
+    
+    // recentering
+    TileRectArray even_rects = rects;
+    TilePointArray even_centers = centers;
+    CGFloat offset_x = (up_size_width(size) + gap) * 0.5;
+    for (size_t idx = 0; idx < TileCount; idx++) {
+        even_rects[idx] = up_pixel_rect(CGRectOffset(even_rects[idx], -offset_x, 0), screen_scale());
+        even_centers[idx] = up_pixel_point(CGPointMake(even_centers[idx].x - offset_x, even_centers[idx].y), screen_scale());
+    }
+    
+    // length 6
+    shift_left(even_rects.begin(), even_rects.end(), 1);
+    std::fill(even_rects.begin() + 6, even_rects.end(), CGRectZero);
+    shift_left(even_centers.begin(), even_centers.end(), 1);
+    std::fill(even_centers.begin() + 6, even_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[5] = even_rects;
+    m_word_tray_tile_centers[5] = even_centers;
+    
+    // length 4
+    shift_left(even_rects.begin(), even_rects.end(), 1);
+    std::fill(even_rects.begin() + 4, even_rects.end(), CGRectZero);
+    shift_left(even_centers.begin(), even_centers.end(), 1);
+    std::fill(even_centers.begin() + 4, even_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[3] = even_rects;
+    m_word_tray_tile_centers[3] = even_centers;
+    
+    // length 2
+    shift_left(even_rects.begin(), even_rects.end(), 1);
+    std::fill(even_rects.begin() + 2, even_rects.end(), CGRectZero);
+    shift_left(even_centers.begin(), even_centers.end(), 1);
+    std::fill(even_centers.begin() + 2, even_centers.end(), CGPointZero);
+    m_word_tray_tile_frames[1] = even_rects;
+    m_word_tray_tile_centers[1] = even_centers;
+    
+    // single-tile offset
+    UIOffset offset = UIOffsetMake(up_pixel_float(-offset_x, screen_scale()), 0);
+    set_word_tray_tile_offset(offset);
+    
+    int idx = 0;
+    for (const auto &r : word_tray_tile_frames(2)) {
+        LOG(Layout, "word_tray_tile_frame [%d]:  %@", idx, NSStringFromCGRect(r));
+        idx++;
+    }
 }
 
-void SpellLayout::calculate_tile_stroke_width()
+void SpellLayout::calculate_locations()
 {
-    CGFloat stroke_width = CanonicalTileStrokeWidth * layout_scale();
-    set_tile_stroke_width(stroke_width);
-
-    CGRect stroke_bounds = CGRectMake(0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize));
-    CGRect stroke_inset = CGRectInset(stroke_bounds, CanonicalTileStrokeWidth, CanonicalTileStrokeWidth);
-
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint: CGPointMake(up_rect_max_x(stroke_inset), up_rect_min_y(stroke_inset))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_inset), up_rect_min_y(stroke_inset))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_inset), up_rect_max_y(stroke_inset))];
-    [path addLineToPoint: CGPointMake(up_rect_max_x(stroke_inset), up_rect_max_y(stroke_inset))];
-    [path closePath];
-    [path moveToPoint: CGPointMake(up_rect_max_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
-    [path addLineToPoint: CGPointMake(up_rect_max_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
-    [path closePath];
-    m_tile_stroke_path = path;
-
-    LOG(Layout, "tile_stroke_width: %.2f", tile_stroke_width());
+    calculate_player_tile_locations();
 }
+
+void SpellLayout::calculate_player_tile_locations()
+{
+    const auto &begin = m_player_tray_tile_frames.begin();
+    const CGFloat screen_min_x = up_rect_min_x(screen_bounds());
+    const CGFloat screen_min_y = up_rect_min_y(screen_bounds());
+    const CGFloat screen_max_x = up_rect_max_x(screen_bounds());
+    const CGFloat screen_max_y = up_rect_max_y(screen_bounds());
+    for (auto it = begin; it != m_player_tray_tile_frames.end(); ++it) {
+        const CGRect default_frame = *it;
+        const CGFloat df_min_x = up_rect_min_x(default_frame);
+        const CGFloat df_min_y = up_rect_min_y(default_frame);
+        const CGFloat df_w = up_rect_width(default_frame);
+        const CGFloat df_h = up_rect_height(default_frame);
+        const CGFloat df_off_x = df_w * CanonicalOffscreenFrameFactor;
+        const CGFloat df_off_y = df_h * CanonicalOffscreenFrameFactor;
+        const TileIndex idx = it - begin;
+        Role role = role_for(TilePosition(TileTray::Player, idx));
+        CGRect off_top_frame = CGRectMake(df_min_x, screen_min_y - df_off_y, df_w, df_h);
+        CGRect off_bottom_frame = CGRectMake(df_min_x, screen_max_y + df_off_y, df_w, df_h);
+        CGRect off_left_frame = CGRectMake(screen_min_x - df_off_x, df_min_y, df_w, df_h);
+        CGRect off_right_frame = CGRectMake(screen_max_x + df_off_x, df_min_y, df_w, df_h);
+        CGRect submitted_tile_frame = CGRectMake(df_min_x, up_rect_min_y(word_tray_layout_frame()) - df_h, df_w, df_h);
+        m_location_frames.emplace(Location(role, Spot::Default), default_frame);
+        m_location_frames.emplace(Location(role, Spot::OffTop), off_top_frame);
+        m_location_frames.emplace(Location(role, Spot::OffBottom), off_bottom_frame);
+        m_location_frames.emplace(Location(role, Spot::OffLeft), off_left_frame);
+        m_location_frames.emplace(Location(role, Spot::OffRight), off_right_frame);
+        m_location_frames.emplace(Location(role, Spot::SubmittedTile), submitted_tile_frame);
+    }
+}
+
+
+
+
 
 void SpellLayout::calculate_game_controls_left_button_frame()
 {
@@ -375,127 +541,6 @@ CGRect SpellLayout::calculate_game_over_score_label_frame(NSString *string) cons
     labelFrame = up_rect_centered_x_in_rect(labelFrame, canvas_frame());
     labelFrame.origin.x = center.x - up_rect_width(labelFrame) + (width * 0.5);
     return up_pixel_rect(labelFrame, screen_scale());
-}
-
-void SpellLayout::calculate_word_tray_shake_offset()
-{
-    CGFloat amount = CanonicalWordTrayShakeAmount * layout_scale();
-    set_word_tray_shake_offset(UIOffsetMake(up_pixel_float(amount, screen_scale()), 0));
-}
-
-void SpellLayout::calculate_word_tray_tile_frames()
-{
-    CGSize canonicalSize = CanonicalTileSize;
-    CGSize size = up_size_scaled(canonicalSize, layout_scale());
-    CGFloat gap = CanonicalTileGap * layout_scale();
-    
-    CGFloat x = up_rect_min_x(player_tray_layout_frame());
-    CGFloat y = up_rect_min_y(word_tray_layout_frame());
-    TileRectArray rects;
-    TilePointArray centers;
-    for (size_t idx = 0; idx < TileCount; idx++) {
-        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
-        rect = up_rect_centered_y_in_rect(rect, word_tray_layout_frame());
-        CGRect frame = up_pixel_rect(rect, screen_scale());
-        rects[idx] = frame;
-        centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
-        x += up_size_width(size) + gap;
-    }
-    
-    TileRectArray odd_rects = rects;
-    TilePointArray odd_centers = centers;
-
-    // length 7
-    m_word_tray_tile_frames[6] = odd_rects;
-    m_word_tray_tile_centers[6] = odd_centers;
-
-    // length 5
-    shift_left(odd_rects.begin(), odd_rects.end(), 1);
-    std::fill(odd_rects.begin() + 5, odd_rects.end(), CGRectZero);
-    shift_left(odd_centers.begin(), odd_centers.end(), 1);
-    std::fill(odd_centers.begin() + 5, odd_centers.end(), CGPointZero);
-    m_word_tray_tile_frames[4] = odd_rects;
-    m_word_tray_tile_centers[4] = odd_centers;
-
-    // length 3
-    shift_left(odd_rects.begin(), odd_rects.end(), 1);
-    std::fill(odd_rects.begin() + 3, odd_rects.end(), CGRectZero);
-    shift_left(odd_centers.begin(), odd_centers.end(), 1);
-    std::fill(odd_centers.begin() + 3, odd_centers.end(), CGPointZero);
-    m_word_tray_tile_frames[2] = odd_rects;
-    m_word_tray_tile_centers[2] = odd_centers;
-
-    // length 1
-    shift_left(odd_rects.begin(), odd_rects.end(), 1);
-    std::fill(odd_rects.begin() + 1, odd_rects.end(), CGRectZero);
-    shift_left(odd_centers.begin(), odd_centers.end(), 1);
-    std::fill(odd_centers.begin() + 1, odd_centers.end(), CGPointZero);
-    m_word_tray_tile_frames[0] = odd_rects;
-    m_word_tray_tile_centers[0] = odd_centers;
-
-    // recentering
-    TileRectArray even_rects = rects;
-    TilePointArray even_centers = centers;
-    CGFloat offset_x = (up_size_width(size) + gap) * 0.5;
-    for (size_t idx = 0; idx < TileCount; idx++) {
-        even_rects[idx] = up_pixel_rect(CGRectOffset(even_rects[idx], -offset_x, 0), screen_scale());
-        even_centers[idx] = up_pixel_point(CGPointMake(even_centers[idx].x - offset_x, even_centers[idx].y), screen_scale());
-    }
-    
-    // length 6
-    shift_left(even_rects.begin(), even_rects.end(), 1);
-    std::fill(even_rects.begin() + 6, even_rects.end(), CGRectZero);
-    shift_left(even_centers.begin(), even_centers.end(), 1);
-    std::fill(even_centers.begin() + 6, even_centers.end(), CGPointZero);
-    m_word_tray_tile_frames[5] = even_rects;
-    m_word_tray_tile_centers[5] = even_centers;
-
-    // length 4
-    shift_left(even_rects.begin(), even_rects.end(), 1);
-    std::fill(even_rects.begin() + 4, even_rects.end(), CGRectZero);
-    shift_left(even_centers.begin(), even_centers.end(), 1);
-    std::fill(even_centers.begin() + 4, even_centers.end(), CGPointZero);
-    m_word_tray_tile_frames[3] = even_rects;
-    m_word_tray_tile_centers[3] = even_centers;
-
-    // length 2
-    shift_left(even_rects.begin(), even_rects.end(), 1);
-    std::fill(even_rects.begin() + 2, even_rects.end(), CGRectZero);
-    shift_left(even_centers.begin(), even_centers.end(), 1);
-    std::fill(even_centers.begin() + 2, even_centers.end(), CGPointZero);
-    m_word_tray_tile_frames[1] = even_rects;
-    m_word_tray_tile_centers[1] = even_centers;
-
-    // single-tile offset
-    UIOffset offset = UIOffsetMake(up_pixel_float(-offset_x, screen_scale()), 0);
-    set_word_tray_tile_offset(offset);
-
-    int idx = 0;
-    for (const auto &r : word_tray_tile_frames(2)) {
-        LOG(Layout, "word_tray_tile_frame [%d]:  %@", idx, NSStringFromCGRect(r));
-        idx++;
-    }
-}
-
-void SpellLayout::calculate_player_tray_tile_frames()
-{
-    CGSize canonicalSize = CanonicalTileSize;
-    CGSize size = up_size_scaled(canonicalSize, layout_scale());
-    CGFloat gap = CanonicalTileGap * layout_scale();
-    CGFloat x = up_rect_min_x(player_tray_layout_frame());
-    CGFloat y = up_rect_min_y(player_tray_layout_frame());
-    for (size_t idx = 0; idx < TileCount; idx++) {
-        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
-        CGRect frame = up_pixel_rect(rect, screen_scale());
-        m_player_tray_tile_frames[idx] = frame;
-        m_player_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
-        x += up_size_width(size) + gap;
-    }
-    int idx = 0;
-    for (const auto &r : player_tray_tile_frames()) {
-        LOG(Layout, "   tile tray frame [%d]: %@", idx, NSStringFromCGRect(r));
-        idx++;
-    }
 }
 
 void SpellLayout::calculate_prefill_tile_frames()

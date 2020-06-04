@@ -16,4 +16,6 @@
 @property (nonatomic) UPLayoutRule *layoutRule;
 - (void)layoutWithRule;
 
+@property (nonatomic) CGPoint destination;
+
 @end

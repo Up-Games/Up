@@ -64,6 +64,13 @@ UPAnimator *bloop(UP::Band band, NSArray<UIView *> *views, CFTimeInterval durati
     return animator;
 }
 
+UPAnimator *bloop_to(UP::Band band, NSArray<UPViewTo *> *viewTos, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition))
+{
+    UPAnimator *animator = [UPAnimator bloopToAnimatorInBand:band viewTos:viewTos duration:duration completion:completion];
+    emplace(animator.serialNumber, animator);
+    return animator;
+}
+
 UPAnimator *fade(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration,
     void (^completion)(UIViewAnimatingPosition))
 {
