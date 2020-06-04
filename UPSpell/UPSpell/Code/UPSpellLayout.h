@@ -109,14 +109,9 @@ public:
     static inline constexpr CGRect CanonicalDialogTopButtonsLayoutFrame =      {  80,  28,  840,  85 };
     static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  75 };
     static inline constexpr CGRect CanonicalDialogNoteLayoutFrame =            {   0, 385, 1000,  40 };
-
     
     static inline constexpr CGSize CanonicalDialogTitleSize =                          {  875, 182 };
-    static inline constexpr CGRect CanonicalDialogPauseButtonsLayoutFrame =  { 257, 350,  480,  75 };
-    static inline constexpr CGRect CanonicalDialogOverButtonsLayoutFrame =   {  80,  28,  840,  85 };
-    static inline constexpr CGRect CanonicalDialogOverNoteLayoutFrame =      {   0, 385, 1000,  40 };
     static inline constexpr CGFloat CanonicalDialogOverNoteFontCapHeight = 26;
-    static inline constexpr CGFloat CanonicalMenuButtonDismissedYOffset = -CanonicalTextButtonSize.height * 2;
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
     static inline constexpr CGFloat CanonicalOffscreenFrameFactor = 1.3;
@@ -167,9 +162,6 @@ public:
     CGRect tile_drag_barrier_frame() const { return m_tile_drag_barrier_frame; }
 
     UIOffset word_tray_shake_offset() const { return m_word_tray_shake_offset; }
-    UIOffset word_tray_tile_offset() const { return m_word_tray_tile_offset; }
-
-    CGRect dialog_top_buttons_layout_frame() const { return m_dialog_top_buttons_layout_frame; }
     
     
     
@@ -208,41 +200,7 @@ public:
         return m_word_tray_tile_centers[word_length - 1];
     }
 
-    const TileRectArray &prefill_tile_frames() const { return m_prefill_tile_frames; }
-    const TilePointArray &prefill_tile_centers() const { return m_prefill_tile_centers; }
-
-    CGFloat score_tile_center_y() const { return m_score_tile_center_y; }
-    CGFloat score_tile_spring_down_offset_y() const { return m_score_tile_spring_down_offset_y; }
-
-    CGRect dialog_title_layout_frame() const { return m_dialog_title_layout_frame; }
-    CGFloat dialog_spring_dismiss_offset_y() const { return m_dialog_spring_dismiss_offset_y; }
-
-    CGRect dialog_pause_title_layout_frame() const { return m_dialog_pause_title_layout_frame; }
-    CGRect dialog_pause_buttons_layout_frame() const { return m_dialog_pause_buttons_layout_frame; }
-    CGRect dialog_pause_button_quit_frame() const { return m_dialog_pause_button_quit_frame; }
-    CGRect dialog_pause_button_resume_frame() const { return m_dialog_pause_button_resume_frame; }
-
-    CGRect dialog_over_title_layout_frame() const { return m_dialog_over_title_layout_frame; };
-    CGRect dialog_over_buttons_layout_frame() const { return m_dialog_over_buttons_layout_frame; };
-    CGRect dialog_over_button_left_frame() const { return m_dialog_over_button_left_frame; };
-    CGRect dialog_over_button_right_frame() const { return m_dialog_over_button_right_frame; };
-    CGRect dialog_over_note_label_frame() const { return m_dialog_over_note_label_frame; };
-
-    CGRect dialog_over_interstitial_title_layout_frame() const { return m_dialog_over_interstitial_title_layout_frame; }
-    CGRect dialog_over_interstitial_button_left_frame() const { return m_dialog_over_interstitial_button_left_frame; }
-    CGRect dialog_over_interstitial_button_right_frame() const { return m_dialog_over_interstitial_button_right_frame; }
-    CGRect dialog_over_interstitial_note_label_frame() const { return m_dialog_over_interstitial_note_label_frame; }
-
     CGAffineTransform menu_game_view_transform() const { return m_menu_game_view_transform; }
-    CGRect menu_title_layout_frame() const { return m_menu_title_layout_frame; }
-    CGRect menu_title_dismissed_layout_frame() const { return m_menu_title_dismissed_layout_frame; }
-    CGRect menu_buttons_layout_frame() const { return m_menu_buttons_layout_frame; }
-    CGRect menu_button_left_layout_frame() const { return m_menu_button_left_layout_frame; }
-    CGRect menu_button_center_layout_frame() const { return m_menu_button_center_layout_frame; }
-    CGRect menu_button_right_layout_frame() const { return m_menu_button_right_layout_frame; }
-    CGRect menu_button_left_dismissed_layout_frame() const { return m_menu_button_left_dismissed_layout_frame; }
-    CGRect menu_button_center_dismissed_layout_frame() const { return m_menu_button_center_dismissed_layout_frame; }
-    CGRect menu_button_right_dismissed_layout_frame() const { return m_menu_button_right_dismissed_layout_frame; }
 
 private:
     
@@ -266,7 +224,6 @@ private:
     void set_tile_stroke_width(CGFloat f) { m_tile_stroke_width = f; }
     void set_tile_drag_barrier_frame(CGRect rect) { m_tile_drag_barrier_frame = rect; }
     void set_word_tray_shake_offset(UIOffset offset) { m_word_tray_shake_offset = offset; }
-    void set_dialog_top_buttons_layout_frame(CGRect rect) { m_dialog_top_buttons_layout_frame = rect; }
     
     
     
@@ -275,7 +232,6 @@ private:
     
     
     
-    void set_word_tray_tile_offset(UIOffset offset) { m_word_tray_tile_offset = offset; }
     void set_game_controls_left_button_frame(CGRect rect) { m_game_controls_left_button_frame = rect; }
     void set_game_controls_right_button_frame(CGRect rect) { m_game_controls_right_button_frame = rect; }
     void set_game_controls_button_charge_size(CGSize size) { m_game_controls_button_charge_size = size; }
@@ -287,36 +243,13 @@ private:
     void set_game_note_font_metrics(const FontMetrics &metrics) { m_game_note_font_metrics = metrics; }
     void set_game_play_time_label_frame(CGRect rect) { m_game_play_time_label_frame = rect; }
     void set_game_play_score_label_frame(CGRect rect) { m_game_play_score_label_frame = rect; }
-    void set_score_tile_spring_down_offset_y(CGFloat f) { m_score_tile_spring_down_offset_y = f; }
-    void set_score_tile_center_y(CGFloat f) { m_score_tile_center_y = f; }
-    void set_dialog_title_layout_frame(CGRect rect) { m_dialog_title_layout_frame = rect; }
-    void set_dialog_spring_dismiss_offset_y(CGFloat f) { m_dialog_spring_dismiss_offset_y = f; }
-    void set_dialog_pause_title_layout_frame(CGRect rect) { m_dialog_pause_title_layout_frame = rect; }
-    void set_dialog_pause_buttons_layout_frame(CGRect rect) { m_dialog_pause_buttons_layout_frame = rect; }
-    void set_dialog_pause_button_quit_frame(CGRect rect) { m_dialog_pause_button_quit_frame = rect; }
-    void set_dialog_pause_button_resume_frame(CGRect rect) { m_dialog_pause_button_resume_frame = rect; }
-    void set_dialog_over_title_layout_frame(CGRect rect) { m_dialog_over_title_layout_frame = rect; }
-    void set_dialog_over_buttons_layout_frame(CGRect rect) { m_dialog_over_buttons_layout_frame = rect; }
-    void set_dialog_over_button_left_frame(CGRect rect) { m_dialog_over_button_left_frame = rect; }
-    void set_dialog_over_button_right_frame(CGRect rect) { m_dialog_over_button_right_frame = rect; }
-    void set_dialog_over_note_label_frame(CGRect rect) { m_dialog_over_note_label_frame = rect; }
-    void set_dialog_over_interstitial_title_layout_frame(CGRect rect) { m_dialog_over_interstitial_title_layout_frame = rect; }
-    void set_dialog_over_interstitial_button_left_frame(CGRect rect) { m_dialog_over_interstitial_button_left_frame = rect; }
-    void set_dialog_over_interstitial_button_right_frame(CGRect rect) { m_dialog_over_interstitial_button_right_frame = rect; }
-    void set_dialog_over_interstitial_note_label_frame(CGRect rect) { m_dialog_over_interstitial_note_label_frame = rect; }
     void set_menu_game_view_transform(CGAffineTransform t) { m_menu_game_view_transform = t; }
-    void set_menu_title_layout_frame(CGRect rect) { m_menu_title_layout_frame = rect; }
-    void set_menu_title_dismissed_layout_frame(CGRect rect) { m_menu_title_dismissed_layout_frame = rect; }
-    void set_menu_buttons_layout_frame(CGRect rect) { m_menu_buttons_layout_frame = rect; }
-    void set_menu_button_left_layout_frame(CGRect rect) { m_menu_button_left_layout_frame = rect; }
-    void set_menu_button_center_layout_frame(CGRect rect) { m_menu_button_center_layout_frame = rect; }
-    void set_menu_button_right_layout_frame(CGRect rect) { m_menu_button_right_layout_frame = rect; }
-    void set_menu_button_left_dismissed_layout_frame(CGRect rect) { m_menu_button_left_dismissed_layout_frame = rect; }
-    void set_menu_button_center_dismissed_layout_frame(CGRect rect) { m_menu_button_center_dismissed_layout_frame = rect; }
-    void set_menu_button_right_dismissed_layout_frame(CGRect rect) { m_menu_button_right_dismissed_layout_frame = rect; }
 
+    void calculate_menu_game_view_transform();
     void calculate_tile_size();
     void calculate_tile_stroke_width();
+    void calculate_game_information_font_metrics();
+    void calculate_game_information_superscript_font_metrics();
     void calculate_game_controls_layout_frame();
     void calculate_player_tray_layout_frame();
     void calculate_word_tray_layout_frame();
@@ -330,42 +263,16 @@ private:
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
     void calculate_dialog_locations();
-
-    void calculate_dialog_top_buttons_layout_frame();
+    void calculate_game_locations();
+    
     void calculate_and_set_locations(const Role role, const CGRect &frame);
 
-    void calculate_prefill_tile_frames();
-    void calculate_score_tile_spring_down_offset_y();
-    void calculate_score_tile_center_y();
     void calculate_game_controls_left_button_frame();
     void calculate_game_controls_right_button_frame();
     void calculate_game_controls_button_charge_size();
-    void calculate_game_information_font_metrics();
-    void calculate_game_information_superscript_font_metrics();
     void calculate_game_note_font_metrics();
     void calculate_game_play_time_label_frame();
     void calculate_game_play_score_label_frame();
-    void calculate_dialog_title_layout_frame();
-    void calculate_dialog_spring_dismiss_offset_y();
-    void calculate_dialog_pause_title_layout_frame();
-    void calculate_dialog_pause_buttons_layout_frame();
-    void calculate_dialog_pause_button_quit_frame();
-    void calculate_dialog_pause_button_resume_frame();
-    void calculate_dialog_over_title_layout_frame();
-    void calculate_dialog_over_buttons_layout_frame();
-    void calculate_dialog_over_button_left_frame();
-    void calculate_dialog_over_button_right_frame();
-    void calculate_dialog_over_note_label_frame();
-    void calculate_dialog_over_interstitial_title_layout_frame();
-    void calculate_dialog_over_interstitial_button_left_frame();
-    void calculate_dialog_over_interstitial_button_right_frame();
-    void calculate_dialog_over_interstitial_note_label_frame();
-    void calculate_menu_game_view_transform();
-    void calculate_menu_title_layout_frame();
-    void calculate_menu_buttons_layout_frame();
-    void calculate_menu_button_left_layout_frame();
-    void calculate_menu_button_center_layout_frame();
-    void calculate_menu_button_right_layout_frame();
 
     std::map<Location, CGRect> m_location_frames;
 
@@ -379,7 +286,15 @@ private:
     CGRect m_layout_frame = CGRectZero;
     CGFloat m_layout_scale = 1.0;
     UIEdgeInsets m_letterbox_insets = UIEdgeInsetsZero;
+    CGAffineTransform m_menu_game_view_transform;
 
+    __strong UIFont *m_game_information_font;
+    FontMetrics m_game_information_font_metrics;
+    __strong UIFont *m_game_information_superscript_font;
+    FontMetrics m_game_information_superscript_font_metrics;
+    __strong UIFont *m_game_note_font;
+    FontMetrics m_game_note_font_metrics;
+    
     CGSize m_tile_size = CGSizeZero;
     CGFloat m_tile_stroke_width = 0.0;
     UIBezierPath *m_tile_stroke_path = nil;
@@ -396,62 +311,12 @@ private:
     std::array<TileRectArray, TileCount> m_word_tray_tile_frames;
     std::array<TilePointArray, TileCount> m_word_tray_tile_centers;
 
-    CGRect m_dialog_top_buttons_layout_frame = CGRectZero;
-
-    
-    
-    
-    UIOffset m_word_tray_tile_offset;
-
     CGRect m_game_controls_left_button_frame = CGRectZero;
     CGRect m_game_controls_right_button_frame = CGRectZero;
     CGSize m_game_controls_button_charge_size = CGSizeZero;
 
-    __strong UIFont *m_game_information_font;
-    FontMetrics m_game_information_font_metrics;
-    __strong UIFont *m_game_information_superscript_font;
-   FontMetrics m_game_information_superscript_font_metrics;
-    __strong UIFont *m_game_note_font;
-    FontMetrics m_game_note_font_metrics;
-
     CGRect m_game_play_time_label_frame = CGRectZero;
     CGRect m_game_play_score_label_frame = CGRectZero;
-
-    TileRectArray m_prefill_tile_frames;
-    TilePointArray m_prefill_tile_centers;
-
-    CGFloat m_score_tile_spring_down_offset_y = 0.0;
-    CGFloat m_score_tile_center_y = 0.0;
-    
-    CGRect m_dialog_title_layout_frame;
-    CGFloat m_dialog_spring_dismiss_offset_y;
-
-    CGRect m_dialog_pause_title_layout_frame;
-    CGRect m_dialog_pause_buttons_layout_frame;
-    CGRect m_dialog_pause_button_quit_frame;
-    CGRect m_dialog_pause_button_resume_frame;
-
-    CGRect m_dialog_over_title_layout_frame;
-    CGRect m_dialog_over_buttons_layout_frame;
-    CGRect m_dialog_over_button_left_frame;
-    CGRect m_dialog_over_button_right_frame;
-    CGRect m_dialog_over_note_label_frame;
-
-    CGRect m_dialog_over_interstitial_title_layout_frame;
-    CGRect m_dialog_over_interstitial_button_left_frame;
-    CGRect m_dialog_over_interstitial_button_right_frame;
-    CGRect m_dialog_over_interstitial_note_label_frame;
-    
-    CGAffineTransform m_menu_game_view_transform;
-    CGRect m_menu_title_layout_frame;
-    CGRect m_menu_title_dismissed_layout_frame;
-    CGRect m_menu_buttons_layout_frame;
-    CGRect m_menu_button_left_layout_frame;
-    CGRect m_menu_button_center_layout_frame;
-    CGRect m_menu_button_right_layout_frame;
-    CGRect m_menu_button_left_dismissed_layout_frame;
-    CGRect m_menu_button_center_dismissed_layout_frame;
-    CGRect m_menu_button_right_dismissed_layout_frame;
 };
 
 UP_STATIC_INLINE bool operator==(const SpellLayout::Location &a, const SpellLayout::Location &b) {

@@ -218,8 +218,12 @@ void SpellLayout::calculate()
         LOG(Layout, "     letterbox_insets:  %@", NSStringFromUIEdgeInsets(letterbox_insets()));
     }
 
+    calculate_menu_game_view_transform();
     calculate_tile_size();
     calculate_tile_stroke_width();
+    calculate_game_information_font_metrics();
+    calculate_game_information_superscript_font_metrics();
+    calculate_game_note_font_metrics();
     calculate_game_controls_layout_frame();
     calculate_player_tray_layout_frame();
     calculate_word_tray_layout_frame();
@@ -228,41 +232,7 @@ void SpellLayout::calculate()
     calculate_tile_drag_barrier_frame();
     calculate_player_tray_tile_frames();
     calculate_word_tray_tile_frames();
-
     calculate_locations();
-
-    calculate_prefill_tile_frames();
-    calculate_score_tile_spring_down_offset_y();
-    calculate_score_tile_center_y();
-    calculate_game_controls_left_button_frame();
-    calculate_game_controls_right_button_frame();
-    calculate_game_controls_button_charge_size();
-    calculate_game_information_font_metrics();
-    calculate_game_information_superscript_font_metrics();
-    calculate_game_note_font_metrics();
-    calculate_game_play_time_label_frame();
-    calculate_game_play_score_label_frame();
-    calculate_dialog_title_layout_frame();
-    calculate_dialog_spring_dismiss_offset_y();
-    calculate_dialog_pause_title_layout_frame();
-    calculate_dialog_pause_buttons_layout_frame();
-    calculate_dialog_pause_button_quit_frame();
-    calculate_dialog_pause_button_resume_frame();
-    calculate_dialog_over_title_layout_frame();
-    calculate_dialog_over_buttons_layout_frame();
-    calculate_dialog_over_button_left_frame();
-    calculate_dialog_over_button_right_frame();
-    calculate_dialog_over_note_label_frame();
-    calculate_dialog_over_interstitial_title_layout_frame();
-    calculate_dialog_over_interstitial_button_left_frame();
-    calculate_dialog_over_interstitial_button_right_frame();
-    calculate_dialog_over_interstitial_note_label_frame();
-    calculate_menu_game_view_transform();
-    calculate_menu_title_layout_frame();
-    calculate_menu_buttons_layout_frame();
-    calculate_menu_button_left_layout_frame();
-    calculate_menu_button_center_layout_frame();
-    calculate_menu_button_right_layout_frame();
 }
 
 CGRect SpellLayout::frame_for(const Location &loc)
@@ -274,6 +244,15 @@ CGRect SpellLayout::frame_for(const Location &loc)
 CGPoint SpellLayout::center_for(const Location &loc)
 {
     return up_rect_center(frame_for(loc));
+}
+
+void SpellLayout::calculate_menu_game_view_transform()
+{
+    CGAffineTransform t = CGAffineTransformMakeScale(CanonicalGameViewMenuScale, CanonicalGameViewMenuScale);
+    CGFloat dy = ((1.0 - CanonicalGameViewMenuScale) / 2.0) * up_rect_height(screen_bounds());
+    t = CGAffineTransformTranslate(t, 0, dy);
+    set_menu_game_view_transform(t);
+    LOG(Layout, "menu_game_view_transform: %@", NSStringFromCGAffineTransform(menu_game_view_transform()));
 }
 
 void SpellLayout::calculate_tile_size()
@@ -304,6 +283,32 @@ void SpellLayout::calculate_tile_stroke_width()
     m_tile_stroke_path = path;
     
     LOG(Layout, "tile_stroke_width: %.2f", tile_stroke_width());
+}
+
+void SpellLayout::calculate_game_information_font_metrics()
+{
+    CGFloat cap_height = CanonicalGameInformationCapHeight * layout_scale();
+    UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
+    set_game_information_font(font);
+    set_game_information_font_metrics(FontMetrics(font.fontName, font.pointSize));
+}
+
+void SpellLayout::calculate_game_information_superscript_font_metrics()
+{
+    CGFloat cap_height = CanonicalGameInformationSuperscriptCapHeight * layout_scale();
+    UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
+    set_game_information_superscript_font(font);
+    CGFloat baseline_adjustment = CanonicalGameInformationSuperscriptBaselineAdjustment * layout_scale();
+    CGFloat kerning = CanonicalGameInformationSuperscriptKerning * layout_scale();
+    set_game_information_superscript_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment, kerning));
+}
+
+void SpellLayout::calculate_game_note_font_metrics()
+{
+    CGFloat cap_height = CanonicalDialogOverNoteFontCapHeight * layout_scale();
+    UIFont *font = [UIFont gameNoteFontWithCapHeight:cap_height];
+    set_game_note_font(font);
+    set_game_note_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
 void SpellLayout::calculate_game_controls_layout_frame()
@@ -450,10 +455,6 @@ void SpellLayout::calculate_word_tray_tile_frames()
     m_word_tray_tile_frames[1] = even_rects;
     m_word_tray_tile_centers[1] = even_centers;
     
-    // single-tile offset
-    UIOffset offset = UIOffsetMake(up_pixel_float(-offset_x, screen_scale()), 0);
-    set_word_tray_tile_offset(offset);
-    
     int idx = 0;
     for (const auto &r : word_tray_tile_frames(2)) {
         LOG(Layout, "word_tray_tile_frame [%d]:  %@", idx, NSStringFromCGRect(r));
@@ -466,6 +467,7 @@ void SpellLayout::calculate_locations()
     calculate_player_tile_locations();
     calculate_word_tile_locations();
     calculate_dialog_locations();
+    calculate_game_locations();
 }
 
 void SpellLayout::calculate_player_tile_locations()
@@ -553,6 +555,15 @@ void SpellLayout::calculate_dialog_locations()
     calculate_and_set_locations(Role::DialogButtonAlternativeResponse, up_left_aligned_rect(button_size, response_buttons_layout_frame));
 }
 
+void SpellLayout::calculate_game_locations()
+{
+    calculate_game_controls_left_button_frame();
+    calculate_game_controls_right_button_frame();
+    calculate_game_controls_button_charge_size();
+    calculate_game_play_time_label_frame();
+    calculate_game_play_score_label_frame();
+}
+
 void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &default_frame)
 {
     const CGFloat screen_min_x = up_rect_min_x(screen_bounds());
@@ -575,54 +586,6 @@ void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &def
     m_location_frames.emplace(Location(role, Spot::OffLeft), up_pixel_rect(off_left_frame, screen_scale()));
     m_location_frames.emplace(Location(role, Spot::OffRight), up_pixel_rect(off_right_frame, screen_scale()));
 }
-
-
-
-
-
-
-
-void SpellLayout::calculate_dialog_top_buttons_layout_frame()
-{
-    switch (aspect_mode()) {
-        case AspectMode::Canonical: {
-            set_dialog_top_buttons_layout_frame(CanonicalDialogTopButtonsLayoutFrame);
-            break;
-        }
-        case AspectMode::WiderThanCanonical: {
-            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalDialogTopButtonsLayoutFrame, layout_scale(), layout_frame());
-            set_dialog_top_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-        case AspectMode::TallerThanCanonical: {
-            CGRect frame = CanonicalDialogTopButtonsLayoutFrame;
-            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
-            // Frame is moved up in the UI by 20% of the letterbox inset
-            // That's what looks good.
-            frame.origin.y -= letterbox_insets().top * 0.2;
-            set_dialog_top_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-    }
-    LOG(Layout, "dialog_top_buttons_layout_frame: %@", NSStringFromCGRect(dialog_top_buttons_layout_frame()));
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void SpellLayout::calculate_game_controls_left_button_frame()
 {
@@ -656,32 +619,6 @@ void SpellLayout::calculate_game_controls_button_charge_size()
     CGSize charge_size = CGSizeMake(up_size_width(size) * 0.65, up_size_height(size) * 0.15);
     set_game_controls_button_charge_size(up_pixel_size(charge_size, screen_scale()));
     LOG(Layout, "game_controls_button_charge_size: %@", NSStringFromCGSize(game_controls_button_charge_size()));
-}
-
-void SpellLayout::calculate_game_information_font_metrics()
-{
-    CGFloat cap_height = CanonicalGameInformationCapHeight * layout_scale();
-    UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
-    set_game_information_font(font);
-    set_game_information_font_metrics(FontMetrics(font.fontName, font.pointSize));
-}
-
-void SpellLayout::calculate_game_information_superscript_font_metrics()
-{
-    CGFloat cap_height = CanonicalGameInformationSuperscriptCapHeight * layout_scale();
-    UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
-    set_game_information_superscript_font(font);
-    CGFloat baseline_adjustment = CanonicalGameInformationSuperscriptBaselineAdjustment * layout_scale();
-    CGFloat kerning = CanonicalGameInformationSuperscriptKerning * layout_scale();
-    set_game_information_superscript_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment, kerning));
-}
-
-void SpellLayout::calculate_game_note_font_metrics()
-{
-    CGFloat cap_height = CanonicalDialogOverNoteFontCapHeight * layout_scale();
-    UIFont *font = [UIFont gameNoteFontWithCapHeight:cap_height];
-    set_game_note_font(font);
-    set_game_note_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
 void SpellLayout::calculate_game_play_time_label_frame()
@@ -736,315 +673,6 @@ CGRect SpellLayout::calculate_game_over_score_label_frame(NSString *string) cons
     labelFrame = up_rect_centered_x_in_rect(labelFrame, canvas_frame());
     labelFrame.origin.x = center.x - up_rect_width(labelFrame) + (width * 0.5);
     return up_pixel_rect(labelFrame, screen_scale());
-}
-
-void SpellLayout::calculate_prefill_tile_frames()
-{
-    CGSize canonicalSize = CanonicalTileSize;
-    CGSize size = up_size_scaled(canonicalSize, layout_scale());
-    CGFloat gap = CanonicalTileGap * layout_scale();
-    CGFloat x = up_rect_min_x(player_tray_layout_frame());
-    CGFloat y = up_rect_max_y(screen_bounds()) + (up_size_height(size) * 0.8);
-    for (size_t idx = 0; idx < TileCount; idx++) {
-        CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
-        CGRect frame = up_pixel_rect(rect, screen_scale());
-        m_prefill_tile_frames[idx] = frame;
-        m_prefill_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
-        x += up_size_width(size) + gap;
-    }
-    int idx = 0;
-    for (const auto &r : prefill_tile_frames()) {
-        LOG(Layout, "prefill tray frame [%d]: %@", idx, NSStringFromCGRect(r));
-        idx++;
-    }
-}
-
-void SpellLayout::calculate_score_tile_spring_down_offset_y()
-{
-    CGSize size = up_size_scaled(CanonicalTileSize, layout_scale());
-    CGFloat y = up_size_height(size) * 0.11;
-    set_score_tile_spring_down_offset_y(up_pixel_float(y, screen_scale()));
-    LOG(Layout, "spring_down_offset_y:    %.2f", score_tile_spring_down_offset_y());
-}
-
-void SpellLayout::calculate_score_tile_center_y()
-{
-    CGSize size = up_size_scaled(CanonicalTileSize, layout_scale());
-    CGFloat y = up_rect_min_y(word_tray_layout_frame()) - (up_size_height(size));
-    set_score_tile_center_y(up_pixel_float(y, screen_scale()));
-    LOG(Layout, "score_tile_center_y:     %.2f", score_tile_center_y());
-}
-
-void SpellLayout::calculate_dialog_title_layout_frame()
-{
-    set_dialog_title_layout_frame(word_tray_layout_frame());
-    LOG(Layout, "dialog_title_layout_frame: %@", NSStringFromCGRect(dialog_title_layout_frame()));
-}
-
-void SpellLayout::calculate_dialog_spring_dismiss_offset_y()
-{
-    CGFloat y = up_rect_height(dialog_title_layout_frame()) * 0.08;
-    set_dialog_spring_dismiss_offset_y(up_pixel_float(-y, screen_scale()));
-    LOG(Layout, "dialog_spring_dismiss_offset_y:    %.2f", dialog_spring_dismiss_offset_y());
-}
-
-void SpellLayout::calculate_dialog_pause_title_layout_frame()
-{
-    set_dialog_pause_title_layout_frame(dialog_title_layout_frame());
-    LOG(Layout, "dialog_pause_title_layout_frame: %@", NSStringFromCGRect(dialog_pause_title_layout_frame()));
-}
-
-void SpellLayout::calculate_dialog_pause_buttons_layout_frame()
-{
-    switch (aspect_mode()) {
-        case AspectMode::Canonical: {
-            set_dialog_pause_buttons_layout_frame(CanonicalDialogPauseButtonsLayoutFrame);
-            break;
-        }
-        case AspectMode::WiderThanCanonical: {
-            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalDialogPauseButtonsLayoutFrame, layout_scale(), layout_frame());
-            set_dialog_pause_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-        case AspectMode::TallerThanCanonical: {
-            CGRect frame = CanonicalDialogPauseButtonsLayoutFrame;
-            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
-            // Frame is moved up in the UI by 20% of the letterbox inset
-            // That's what looks good.
-            frame.origin.y -= letterbox_insets().top * 0.2;
-            set_dialog_pause_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-    }
-    LOG(Layout, "dialog_pause_buttons_layout_frame: %@", NSStringFromCGRect(dialog_pause_buttons_layout_frame()));
-}
-
-void SpellLayout::calculate_dialog_pause_button_quit_frame()
-{
-    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
-    CGRect frame = CGRectMake(
-        up_rect_min_x(dialog_pause_buttons_layout_frame()),
-        up_rect_min_y(dialog_pause_buttons_layout_frame()),
-        up_size_width(size),
-        up_size_height(size)
-    );
-    set_dialog_pause_button_quit_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "dialog_pause_button_quit_frame:  %@", NSStringFromCGRect(dialog_pause_button_quit_frame()));
-}
-
-void SpellLayout::calculate_dialog_pause_button_resume_frame()
-{
-    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
-    CGRect frame = CGRectMake(
-        up_rect_max_x(dialog_pause_buttons_layout_frame()) - up_size_width(size),
-        up_rect_min_y(dialog_pause_buttons_layout_frame()),
-        up_size_width(size),
-        up_size_height(size)
-    );
-    set_dialog_pause_button_resume_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "dialog_pause_button_resume_frame:  %@", NSStringFromCGRect(dialog_pause_button_resume_frame()));
-}
-
-void SpellLayout::calculate_dialog_over_title_layout_frame()
-{
-    CGRect frame = up_rect_centered_in_rect(dialog_title_layout_frame(), screen_bounds());
-    frame.origin.y = up_rect_min_y(frame) - (up_rect_height(frame) * 0.05);
-    set_dialog_over_title_layout_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "dialog_over_title_layout_frame: %@", NSStringFromCGRect(dialog_over_title_layout_frame()));
-}
-
-void SpellLayout::calculate_dialog_over_buttons_layout_frame()
-{
-    switch (aspect_mode()) {
-        case AspectMode::Canonical: {
-            set_dialog_over_buttons_layout_frame(CanonicalDialogOverButtonsLayoutFrame);
-            break;
-        }
-        case AspectMode::WiderThanCanonical: {
-            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalDialogOverButtonsLayoutFrame, layout_scale(), layout_frame());
-            set_dialog_over_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-        case AspectMode::TallerThanCanonical: {
-            CGRect frame = CanonicalDialogOverButtonsLayoutFrame;
-            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
-            // Frame is moved up in the UI by 50% the letterbox inset
-            // That's what looks good.
-            frame.origin.y -= letterbox_insets().top * 0.5;
-            set_dialog_over_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-    }
-    LOG(Layout, "set_dialog_over_buttons_layout_frame: %@", NSStringFromCGRect(dialog_over_buttons_layout_frame()));
-}
-
-void SpellLayout::calculate_dialog_over_button_left_frame()
-{
-    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
-    CGRect frame = CGRectMake(
-        up_rect_min_x(dialog_over_buttons_layout_frame()),
-        up_rect_min_y(dialog_over_buttons_layout_frame()),
-        up_size_width(size),
-        up_size_height(size)
-    );
-    set_dialog_over_button_left_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "dialog_over_button_left_frame:  %@", NSStringFromCGRect(dialog_over_button_left_frame()));
-}
-
-void SpellLayout::calculate_dialog_over_button_right_frame()
-{
-    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
-    CGRect frame = CGRectMake(
-        up_rect_max_x(dialog_over_buttons_layout_frame()) - up_size_width(size),
-        up_rect_min_y(dialog_over_buttons_layout_frame()),
-        up_size_width(size),
-        up_size_height(size)
-    );
-    set_dialog_over_button_right_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "dialog_over_button_right_frame:  %@", NSStringFromCGRect(dialog_over_button_right_frame()));
-}
-
-void SpellLayout::calculate_dialog_over_note_label_frame()
-{
-    switch (aspect_mode()) {
-        case AspectMode::Canonical: {
-            set_dialog_over_note_label_frame(CanonicalDialogOverNoteLayoutFrame);
-            break;
-        }
-        case AspectMode::WiderThanCanonical: {
-            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalDialogOverNoteLayoutFrame, layout_scale(), layout_frame());
-            set_dialog_over_note_label_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-        case AspectMode::TallerThanCanonical: {
-            CGRect frame = CanonicalDialogOverNoteLayoutFrame;
-            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
-            // Frame is moved up in the UI by 20% of the letterbox inset
-            // That's what looks good.
-            frame.origin.y -= letterbox_insets().top * 0.2;
-            set_dialog_over_note_label_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-    }
-    LOG(Layout, "dialog_over_note_label_frame: %@", NSStringFromCGRect(dialog_over_note_label_frame()));
-}
-
-void SpellLayout::calculate_dialog_over_interstitial_title_layout_frame()
-{
-    CGRect frame = up_rect_centered_in_rect(dialog_title_layout_frame(), screen_bounds());
-    frame.origin.y = up_rect_min_y(frame) - (up_rect_height(frame) * 0.05);
-    set_dialog_over_interstitial_title_layout_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "dialog_over_interstitial_title_layout_frame: %@", NSStringFromCGRect(dialog_over_interstitial_title_layout_frame()));
-}
-
-void SpellLayout::calculate_dialog_over_interstitial_button_left_frame()
-{
-    CGRect frame = dialog_over_button_left_frame();
-    frame.origin.y = up_rect_min_y(screen_bounds()) - (up_rect_height(frame) * 1.2);
-    set_dialog_over_interstitial_button_left_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "dialog_over_interstitial_button_left_frame: %@", NSStringFromCGRect(dialog_over_interstitial_button_left_frame()));
-}
-
-void SpellLayout::calculate_dialog_over_interstitial_button_right_frame()
-{
-    CGRect frame = dialog_over_button_right_frame();
-    frame.origin.y = up_rect_min_y(screen_bounds()) - (up_rect_height(frame) * 1.2);
-    set_dialog_over_interstitial_button_right_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "dialog_over_interstitial_button_right_frame: %@", NSStringFromCGRect(dialog_over_interstitial_button_right_frame()));
-}
-
-void SpellLayout::calculate_dialog_over_interstitial_note_label_frame()
-{
-    CGRect frame = dialog_over_note_label_frame();
-    frame.origin.y = up_rect_max_y(screen_bounds()) + (up_rect_height(frame) * 1.2);
-    set_dialog_over_interstitial_note_label_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "dialog_over_interstitial_note_label_frame: %@", NSStringFromCGRect(dialog_over_interstitial_note_label_frame()));
-}
-
-void SpellLayout::calculate_menu_game_view_transform()
-{
-    CGAffineTransform t = CGAffineTransformMakeScale(CanonicalGameViewMenuScale, CanonicalGameViewMenuScale);
-    CGFloat dy = ((1.0 - CanonicalGameViewMenuScale) / 2.0) * up_rect_height(screen_bounds());
-    t = CGAffineTransformTranslate(t, 0, dy);
-    set_menu_game_view_transform(t);
-    LOG(Layout, "menu_game_view_transform: %@", NSStringFromCGAffineTransform(menu_game_view_transform()));
-}
-
-void SpellLayout::calculate_menu_title_layout_frame()
-{
-    CGRect frame = up_rect_centered_in_rect(dialog_title_layout_frame(), screen_bounds());
-    frame.origin.y = up_rect_min_y(frame) - (up_rect_height(frame) * 0.05);
-    set_menu_title_layout_frame(up_pixel_rect(frame, screen_scale()));
-
-    CGRect dismissed_frame = frame;
-    dismissed_frame.origin.y = up_float_scaled(dismissed_frame.origin.y + (up_rect_height(screen_bounds())), layout_scale());
-    set_menu_title_dismissed_layout_frame(up_pixel_rect(dismissed_frame, screen_scale()));
-
-    LOG(Layout, "menu_title_layout_frame: %@", NSStringFromCGRect(menu_title_layout_frame()));
-    LOG(Layout, "menu_title_dismissed_layout_frame: %@", NSStringFromCGRect(menu_title_dismissed_layout_frame()));
-}
-
-void SpellLayout::calculate_menu_buttons_layout_frame()
-{
-    set_menu_buttons_layout_frame(dialog_over_buttons_layout_frame());
-    LOG(Layout, "set_menu_buttons_layout_frame: %@", NSStringFromCGRect(menu_buttons_layout_frame()));
-}
-
-void SpellLayout::calculate_menu_button_left_layout_frame()
-{
-    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
-    CGRect frame = CGRectMake(
-        up_rect_min_x(menu_buttons_layout_frame()),
-        up_rect_min_y(menu_buttons_layout_frame()),
-        up_size_width(size),
-        up_size_height(size)
-    );
-    set_menu_button_left_layout_frame(up_pixel_rect(frame, screen_scale()));
-
-    CGRect dismissed_frame = frame;
-    dismissed_frame.origin.y = up_float_scaled(CanonicalMenuButtonDismissedYOffset, layout_scale());
-    set_menu_button_left_dismissed_layout_frame(up_pixel_rect(dismissed_frame, screen_scale()));
-
-    LOG(Layout, "menu_button_left_layout_frame:  %@", NSStringFromCGRect(menu_button_left_layout_frame()));
-    LOG(Layout, "menu_button_left_dismissed_layout_frame:  %@", NSStringFromCGRect(menu_button_left_dismissed_layout_frame()));
-}
-
-void SpellLayout::calculate_menu_button_center_layout_frame()
-{
-    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
-    CGRect frame = CGRectMake(
-        up_rect_mid_x(menu_buttons_layout_frame()) - (up_size_width(size) * 0.5),
-        up_rect_min_y(menu_buttons_layout_frame()),
-        up_size_width(size),
-        up_size_height(size)
-    );
-    set_menu_button_center_layout_frame(up_pixel_rect(frame, screen_scale()));
-
-    CGRect dismissed_frame = frame;
-    dismissed_frame.origin.y = up_float_scaled(CanonicalMenuButtonDismissedYOffset, layout_scale());
-    set_menu_button_center_dismissed_layout_frame(up_pixel_rect(dismissed_frame, screen_scale()));
-
-    LOG(Layout, "menu_button_center_layout_frame:  %@", NSStringFromCGRect(menu_button_center_layout_frame()));
-    LOG(Layout, "menu_button_center_dismissed_layout_frame:  %@", NSStringFromCGRect(menu_button_center_dismissed_layout_frame()));
-}
-
-void SpellLayout::calculate_menu_button_right_layout_frame()
-{
-    CGSize size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
-    CGRect frame = CGRectMake(
-        up_rect_max_x(menu_buttons_layout_frame()) - up_size_width(size),
-        up_rect_min_y(menu_buttons_layout_frame()),
-        up_size_width(size),
-        up_size_height(size)
-    );
-    set_menu_button_right_layout_frame(up_pixel_rect(frame, screen_scale()));
-
-    CGRect dismissed_frame = frame;
-    dismissed_frame.origin.y = up_float_scaled(CanonicalMenuButtonDismissedYOffset, layout_scale());
-    set_menu_button_right_dismissed_layout_frame(up_pixel_rect(dismissed_frame, screen_scale()));
-
-    LOG(Layout, "menu_button_right_layout_frame:  %@", NSStringFromCGRect(menu_button_right_layout_frame()));
-    LOG(Layout, "menu_button_right_dismissed_layout_frame:  %@", NSStringFromCGRect(menu_button_right_dismissed_layout_frame()));
 }
 
 }  // namespace UP
