@@ -48,7 +48,6 @@ using UP::TimeSpanning::bloop_in;
 using UP::TimeSpanning::bloop_out;
 using UP::TimeSpanning::fade;
 using UP::TimeSpanning::shake;
-using UP::TimeSpanning::slide_to;
 using UP::TimeSpanning::slide;
 
 using UP::TimeSpanning::cancel_all;
@@ -536,7 +535,6 @@ using Spot = UP::SpellLayout::Spot;
 
     self.pickedView = tileView;
     self.pickedPosition = tile.position();
-    [self viewOpApplyTranslationToFrame:@[self.pickedView]];
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::PICK, tile.position()));
 
@@ -621,7 +619,6 @@ using Spot = UP::SpellLayout::Spot;
     cancel(BandGameDelay);
     cancel(BandGameUI);
 
-    [self viewOpApplyTranslationToFrame:[self wordTrayTileViews]];
     [self viewOpClearWordTray];
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::CLEAR));
     [self viewOpUpdateGameControls];
@@ -714,16 +711,6 @@ using Spot = UP::SpellLayout::Spot;
     self.gameView.scoreLabel.string = [NSString stringWithFormat:@"%d", self.model->score()];
 }
 
-- (void)viewOpApplyTranslationToFrame:(NSArray *)tileViews
-{
-    for (UPTileView *tileView in tileViews) {
-        CGAffineTransform transform = tileView.transform;
-        tileView.transform = CGAffineTransformIdentity;
-        CGRect frame = CGRectOffset(tileView.frame, transform.tx, transform.ty);
-        tileView.frame = frame;
-    }
-}
-
 - (void)viewOpSlideWordTrayViewsIntoPlace
 {
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
@@ -731,8 +718,6 @@ using Spot = UP::SpellLayout::Spot;
         return;
     }
 
-    [self viewOpApplyTranslationToFrame:wordTrayTileViews];
-    
     cancel(BandGameUITile);
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
@@ -750,38 +735,38 @@ using Spot = UP::SpellLayout::Spot;
         return;
     }
 
-    [self viewOpApplyTranslationToFrame:wordTrayTileViews];
-
-    SpellLayout &layout = SpellLayout::instance();
     size_t word_length = self.pickedPosition.in_word_tray() ? self.model->word_length() : self.model->word_length() + 1;
-    const auto &word_tray_tile_centers = layout.word_tray_tile_centers(word_length);
 
     if (self.pickedPosition.in_player_tray()) {
+        NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
         for (UPTileView *tileView in wordTrayTileViews) {
             ASSERT(tileView != self.pickedView);
             const Tile &tile = self.model->find_tile(tileView);
             TileIndex idx = tile.position().index();
-            CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
             if (idx >= hover_pos.index()) {
-                word_tray_tile_center = word_tray_tile_centers[idx + 1];
+                idx++;
             }
-            start(slide_to(BandGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
+            Location location(role_in_word(idx, word_length));
+            [moves addObject:UPViewMoveMake(tileView, location)];
         }
+        start(slide(BandGameUI, moves, 0.15, nil));
     }
     else {
+        NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
         for (UPTileView *tileView in wordTrayTileViews) {
             ASSERT(tileView != self.pickedView);
             const Tile &tile = self.model->find_tile(tileView);
             TileIndex idx = tile.position().index();
-            CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
             if (idx < self.pickedPosition.index() && hover_pos.index() <= idx) {
-                word_tray_tile_center = word_tray_tile_centers[idx + 1];
+                idx++;
             }
             else if (idx > self.pickedPosition.index() && hover_pos.index() >= idx) {
-                word_tray_tile_center = word_tray_tile_centers[idx - 1];
+                idx--;
             }
-            start(slide_to(BandGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
+            Location location(role_in_word(idx, word_length));
+            [moves addObject:UPViewMoveMake(tileView, location)];
         }
+        start(slide(BandGameUI, moves, 0.15, nil));
     }
 }
 
@@ -792,32 +777,32 @@ using Spot = UP::SpellLayout::Spot;
         return;
     }
 
-    [self viewOpApplyTranslationToFrame:wordTrayTileViews];
-
-    SpellLayout &layout = SpellLayout::instance();
     size_t word_length = self.pickedPosition.in_word_tray() ? self.model->word_length() - 1 : self.model->word_length();
-    const auto &word_tray_tile_centers = layout.word_tray_tile_centers(word_length);
 
     if (self.pickedPosition.in_player_tray()) {
+        NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
         for (UPTileView *tileView in wordTrayTileViews) {
             ASSERT(tileView != self.pickedView);
             const Tile &tile = self.model->find_tile(tileView);
             TileIndex idx = tile.position().index();
-            CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
-            start(slide_to(BandGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
+            Location location(role_in_word(idx, word_length));
+            [moves addObject:UPViewMoveMake(tileView, location)];
         }
+        start(slide(BandGameUI, moves, 0.15, nil));
     }
     else {
+        NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
         for (UPTileView *tileView in wordTrayTileViews) {
             ASSERT(tileView != self.pickedView);
             const Tile &tile = self.model->find_tile(tileView);
             TileIndex idx = tile.position().index();
-            CGPoint word_tray_tile_center = word_tray_tile_centers[idx];
             if (idx > self.pickedPosition.index()) {
-                word_tray_tile_center = word_tray_tile_centers[idx - 1];
+                idx--;
             }
-            start(slide_to(BandGameUI, @[tileView], 0.2, word_tray_tile_center, nil));
+            Location location(role_in_word(idx, word_length));
+            [moves addObject:UPViewMoveMake(tileView, location)];
         }
+        start(slide(BandGameUI, moves, 0.15, nil));
     }
 }
 

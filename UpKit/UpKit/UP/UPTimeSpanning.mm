@@ -86,14 +86,6 @@ UPAnimator *shake(UP::Band band, NSArray<UIView *> *views, CFTimeInterval durati
     return animator;
 }
 
-UPAnimator *slide_to(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point,
-    void (^completion)(UIViewAnimatingPosition))
-{
-    UPAnimator *animator = [UPAnimator slideToAnimatorInBand:band views:views duration:duration point:point completion:completion];
-    emplace(animator.serialNumber, animator);
-    return animator;
-}
-
 UPAnimator *slide(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition))
 {
     UPAnimator *animator = [UPAnimator slideAnimatorInBand:band moves:moves duration:duration completion:completion];

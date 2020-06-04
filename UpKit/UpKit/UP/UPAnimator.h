@@ -29,12 +29,6 @@ namespace UP {
 + (UPAnimator *)shakeAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
     offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
-+ (UPAnimator *)slideAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
-    offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
-
-+ (UPAnimator *)slideToAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
-    point:(CGPoint)point completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
-
 + (UPAnimator *)slideAnimatorInBand:(UP::Band)band moves:(NSArray<UPViewMove *> *)moves duration:(CFTimeInterval)duration
                          completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
