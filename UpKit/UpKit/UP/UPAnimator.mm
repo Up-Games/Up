@@ -51,25 +51,6 @@ static uint32_t _InstanceCount;
 + (UPAnimator *)bloopToAnimatorInBand:(UP::Band)band viewTos:(NSArray<UPViewTo *> *)viewTos duration:(CFTimeInterval)duration
                            completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-//    UPAnimator *animator = [[self alloc] _initInBand:band type:@"bloop_to" viewTos:viewTos];
-//    UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7 animations:^{
-//        for (UPViewTo *viewTo in viewTos) {
-//            viewTo.view.center = viewTo.destination;
-//        }
-//    }
-//                                     ];
-//    uint32_t serialNumber = animator.serialNumber;
-//    [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
-//        UP::TimeSpanning::remove(serialNumber);
-//    }];
-//    if (completion) {
-//        [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
-//            completion(finalPosition);
-//        }];
-//    }
-//    animator.inner = inner;
-//    return animator;
-
     UPAnimator *animator = [[self alloc] _initInBand:band type:@"bloop_to" viewTos:viewTos];
     UPTickingAnimator *inner = [UPTickingAnimator AnimatorInBand:band duration:duration
                                                     unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutBack]

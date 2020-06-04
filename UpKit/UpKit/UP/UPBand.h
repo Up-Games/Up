@@ -14,6 +14,7 @@ using Band = const char * const;
 static constexpr Band BandGameAll = "game.*";
 static constexpr Band BandGameDelay = "game.delay";
 static constexpr Band BandGameUI = "game.ui";
+static constexpr Band BandGameUIAdditive = "game.ui.additive";
 static constexpr Band BandModeAll = "mode.*";
 static constexpr Band BandModeDelay = "mode.delay";
 static constexpr Band BandModeUI = "mode.ui";
