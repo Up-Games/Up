@@ -56,17 +56,16 @@ NSObject<UPTimeSpanning> *delay(UP::Band band, double delay_in_seconds, void (^b
     return action;
 }
 
-UPAnimator *bloop(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
-    void (^completion)(UIViewAnimatingPosition))
+UPAnimator *bloop_in(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator bloopAnimatorInBand:band views:views duration:duration position:position completion:completion];
+    UPAnimator *animator = [UPAnimator bloopInAnimatorInBand:band moves:moves duration:duration completion:completion];
     emplace(animator.serialNumber, animator);
     return animator;
 }
 
-UPAnimator *bloop_to(UP::Band band, NSArray<UPViewTo *> *viewTos, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition))
+UPAnimator *bloop_out(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator bloopToAnimatorInBand:band viewTos:viewTos duration:duration completion:completion];
+    UPAnimator *animator = [UPAnimator bloopOutAnimatorInBand:band moves:moves duration:duration completion:completion];
     emplace(animator.serialNumber, animator);
     return animator;
 }
@@ -87,14 +86,6 @@ UPAnimator *shake(UP::Band band, NSArray<UIView *> *views, CFTimeInterval durati
     return animator;
 }
 
-UPAnimator *slide(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
-    void (^completion)(UIViewAnimatingPosition))
-{
-    UPAnimator *animator = [UPAnimator slideAnimatorInBand:band views:views duration:duration offset:offset completion:completion];
-    emplace(animator.serialNumber, animator);
-    return animator;
-}
-
 UPAnimator *slide_to(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point,
     void (^completion)(UIViewAnimatingPosition))
 {
@@ -103,10 +94,9 @@ UPAnimator *slide_to(UP::Band band, NSArray<UIView *> *views, CFTimeInterval dur
     return animator;
 }
 
-UPAnimator *spring(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
-    void (^completion)(UIViewAnimatingPosition))
+UPAnimator *slide(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition))
 {
-    UPAnimator *animator = [UPAnimator springAnimatorInBand:band views:views duration:duration offset:offset completion:completion];
+    UPAnimator *animator = [UPAnimator slideAnimatorInBand:band moves:moves duration:duration completion:completion];
     emplace(animator.serialNumber, animator);
     return animator;
 }

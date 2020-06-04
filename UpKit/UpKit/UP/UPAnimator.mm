@@ -19,44 +19,22 @@
 @property (nonatomic) NSObject<UIViewAnimating> *inner;
 @property (nonatomic) NSString *type;
 @property (nonatomic, readwrite) NSArray *views;
-@property (nonatomic, readwrite) NSArray *viewTos;
+@property (nonatomic, readwrite) NSArray *moves;
 @end
 
 static uint32_t _InstanceCount;
 
 @implementation UPAnimator
 
-+ (UPAnimator *)bloopAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
-    position:(CGPoint)position completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
-{
-    UPAnimator *animator = [[self alloc] _initInBand:band type:@"bloop" views:views];
-    UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7 animations:^{
-        for (UIView *view in views) {
-            view.center = position;
-        }
-    }];
-    uint32_t serialNumber = animator.serialNumber;
-    [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
-        UP::TimeSpanning::remove(serialNumber);
-    }];
-    if (completion) {
-        [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
-            completion(finalPosition);
-        }];
-    }
-    animator.inner = inner;
-    return animator;
-}
-
-+ (UPAnimator *)bloopToAnimatorInBand:(UP::Band)band viewTos:(NSArray<UPViewTo *> *)viewTos duration:(CFTimeInterval)duration
++ (UPAnimator *)bloopInAnimatorInBand:(UP::Band)band moves:(NSArray<UPViewMove *> *)moves duration:(CFTimeInterval)duration
                            completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UPAnimator *animator = [[self alloc] _initInBand:band type:@"bloop_to" viewTos:viewTos];
+    UPAnimator *animator = [[self alloc] _initInBand:band type:@"bloop_in" moves:moves];
     UPTickingAnimator *inner = [UPTickingAnimator AnimatorInBand:band duration:duration
                                                     unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutBack]
-                                                         applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
-        for (UPViewTo *viewTo in viewTos) {
-            viewTo.view.center = up_lerp_points(viewTo.beginning, viewTo.destination, fractionCompleted);
+                                                         applier:^(UPTickingAnimator *animator) {
+        for (UPViewMove *move in moves) {
+            move.view.center = up_lerp_points(move.beginning, move.destination, animator.fractionComplete);
         }
     } completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
         if (completion) {
@@ -68,6 +46,28 @@ static uint32_t _InstanceCount;
     animator.inner = inner;
     return animator;
 
+}
+
++ (UPAnimator *)bloopOutAnimatorInBand:(UP::Band)band moves:(NSArray<UPViewMove *> *)moves duration:(CFTimeInterval)duration
+                           completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
+{
+    UPAnimator *animator = [[self alloc] _initInBand:band type:@"bloop_out" moves:moves];
+    UPTickingAnimator *inner = [UPTickingAnimator AnimatorInBand:band duration:duration
+                                                    unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInBack]
+                                                         applier:^(UPTickingAnimator *animator) {
+        for (UPViewMove *move in moves) {
+            move.view.center = up_lerp_points(move.beginning, move.destination, animator.fractionComplete);
+        }
+    } completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+        if (completion) {
+            completion(finalPosition);
+        }
+        [inner clearBlocks];
+        UP::TimeSpanning::remove(animator);
+    }];
+    animator.inner = inner;
+    return animator;
+    
 }
 
 + (UPAnimator *)fadeAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
@@ -99,8 +99,8 @@ static uint32_t _InstanceCount;
     __block UIOffset roffset = UIOffsetZero;
     UPTickingAnimator *inner = [UPTickingAnimator AnimatorInBand:band duration:duration
         unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear]
-        applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
-            CGFloat factor = sin(5 * M_PI * fractionCompleted);
+        applier:^(UPTickingAnimator *animator) {
+            CGFloat factor = sin(5 * M_PI * animator.fractionComplete);
             UIOffset foffset = UIOffsetMake(factor * offset.horizontal, factor * offset.vertical);
             UIOffset doffset = UIOffsetMake(foffset.horizontal - roffset.horizontal, foffset.vertical - roffset.vertical);
             roffset = foffset;
@@ -171,26 +171,24 @@ static uint32_t _InstanceCount;
     return animator;
 }
 
-+ (UPAnimator *)springAnimatorInBand:(UP::Band)band views:(NSArray<UIView *> *)views duration:(CFTimeInterval)duration
-    offset:(UIOffset)offset completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
++ (UPAnimator *)slideAnimatorInBand:(UP::Band)band moves:(NSArray<UPViewMove *> *)moves duration:(CFTimeInterval)duration
+                         completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
 {
-    UPAnimator *animator = [[self alloc] _initInBand:band type:@"spring" views:views];
-    UIViewPropertyAnimator *inner = [[UIViewPropertyAnimator alloc] initWithDuration:duration dampingRatio:0.7
-         animations:^{
-            for (UIView *view in views) {
-                view.transform = CGAffineTransformTranslate(view.transform, offset.horizontal, offset.vertical);
-            }
+    UPAnimator *animator = [[self alloc] _initInBand:band type:@"x_slide_to" moves:moves];
+    UPTickingAnimator *inner = [UPTickingAnimator AnimatorInBand:band duration:duration
+                                                    unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear]
+                                                         applier:^(UPTickingAnimator *animator) {
+        for (UPViewMove *move in moves) {
+            move.view.center = up_lerp_points(move.beginning, move.destination, animator.fractionComplete);
         }
-    ];
-    uint32_t serialNumber = animator.serialNumber;
-    [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
-        UP::TimeSpanning::remove(serialNumber);
-    }];
-    if (completion) {
-        [inner addCompletion:^(UIViewAnimatingPosition finalPosition) {
+    } completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+        if (completion) {
             completion(finalPosition);
-        }];
+        }
+        [inner clearBlocks];
+        UP::TimeSpanning::remove(animator);
     }
+                                ];
     animator.inner = inner;
     return animator;
 }
@@ -202,26 +200,26 @@ static uint32_t _InstanceCount;
     UPAnimator *animator = [[self alloc] _initInBand:band type:@"set_color" views:controls];
     UPTickingAnimator *inner = [UPTickingAnimator AnimatorInBand:band duration:duration
         unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInEaseOutExpo]
-        applier:^(UPTickingAnimator *animator, CGFloat fractionCompleted) {
+        applier:^(UPTickingAnimator *animator) {
             if (element & UPControlElementFill) {
                 for (UPControl *control in controls) {
                     UIColor *c1 = [control fillColorForState:fromControlState];
                     UIColor *c2 = [control fillColorForState:toControlState];
-                    control.fillPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
+                    control.fillPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
                 }
             }
             if (element & UPControlElementStroke) {
                 for (UPControl *control in controls) {
                     UIColor *c1 = [control strokeColorForState:fromControlState];
                     UIColor *c2 = [control strokeColorForState:toControlState];
-                    control.strokePathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
+                    control.strokePathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
                 }
             }
             if (element & UPControlElementContentPath) {
                 for (UPControl *control in controls) {
                     UIColor *c1 = [control contentColorForState:fromControlState];
                     UIColor *c2 = [control contentColorForState:toControlState];
-                    control.contentPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:fractionCompleted];
+                    control.contentPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
                 }
             }
         }
@@ -253,14 +251,14 @@ static uint32_t _InstanceCount;
     return self;
 }
 
-- (instancetype)_initInBand:(UP::Band)band type:(NSString *)type viewTos:(NSArray<UPViewTo *> *)viewTos
+- (instancetype)_initInBand:(UP::Band)band type:(NSString *)type moves:(NSArray<UPViewMove *> *)moves
 {
     ASSERT(band);
     
     self = [super init];
     self.band = band;
     self.type = type;
-    self.viewTos = viewTos;
+    self.moves = moves;
     self.serialNumber = UP::next_serial_number();
     
     _InstanceCount++;

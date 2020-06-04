@@ -19,6 +19,154 @@
 
 namespace UP {
 
+SpellLayout::Role role_for(TilePosition pos)
+{
+    switch (pos.index()) {
+        case 0:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile1 : SpellLayout::Role::WordTile1;
+        case 1:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile2 : SpellLayout::Role::WordTile2;
+        case 2:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile3 : SpellLayout::Role::WordTile3;
+        case 3:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile4 : SpellLayout::Role::WordTile4;
+        case 4:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile5 : SpellLayout::Role::WordTile5;
+        case 5:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile6 : SpellLayout::Role::WordTile6;
+        case 6:
+            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile7 : SpellLayout::Role::WordTile7;
+    }
+    ASSERT_NOT_REACHED();
+    return SpellLayout::Role::None;
+}
+
+SpellLayout::Role role_in_word(TileIndex idx, size_t word_length)
+{
+    ASSERT_IDX(idx);
+    switch (word_length) {
+        case 0: {
+            return SpellLayout::Role::None;
+        }
+        case 1: {
+            return SpellLayout::Role::WordTile1of1;
+        }
+        case 2: {
+            switch (idx) {
+                case 0:
+                    return SpellLayout::Role::WordTile1of2;
+                case 1:
+                    return SpellLayout::Role::WordTile2of2;
+                default:
+                    return SpellLayout::Role::None;
+            }
+        }
+        case 3: {
+            switch (idx) {
+                case 0:
+                    return SpellLayout::Role::WordTile1of3;
+                case 1:
+                    return SpellLayout::Role::WordTile2of3;
+                case 2:
+                    return SpellLayout::Role::WordTile3of3;
+                default:
+                    return SpellLayout::Role::None;
+            }
+        }
+        case 4: {
+            switch (idx) {
+                case 0:
+                    return SpellLayout::Role::WordTile1of4;
+                case 1:
+                    return SpellLayout::Role::WordTile2of4;
+                case 2:
+                    return SpellLayout::Role::WordTile3of4;
+                case 3:
+                    return SpellLayout::Role::WordTile4of4;
+                default:
+                    return SpellLayout::Role::None;
+            }
+        }
+        case 5: {
+            switch (idx) {
+                case 0:
+                    return SpellLayout::Role::WordTile1of5;
+                case 1:
+                    return SpellLayout::Role::WordTile2of5;
+                case 2:
+                    return SpellLayout::Role::WordTile3of5;
+                case 3:
+                    return SpellLayout::Role::WordTile4of5;
+                case 4:
+                    return SpellLayout::Role::WordTile5of5;
+                default:
+                    return SpellLayout::Role::None;
+            }
+        }
+        case 6: {
+            switch (idx) {
+                case 0:
+                    return SpellLayout::Role::WordTile1of6;
+                case 1:
+                    return SpellLayout::Role::WordTile2of6;
+                case 2:
+                    return SpellLayout::Role::WordTile3of6;
+                case 3:
+                    return SpellLayout::Role::WordTile4of6;
+                case 4:
+                    return SpellLayout::Role::WordTile5of6;
+                case 5:
+                    return SpellLayout::Role::WordTile6of6;
+                default:
+                    return SpellLayout::Role::None;
+            }
+        }
+        case 7: {
+            switch (idx) {
+                case 0:
+                    return SpellLayout::Role::WordTile1of7;
+                case 1:
+                    return SpellLayout::Role::WordTile2of7;
+                case 2:
+                    return SpellLayout::Role::WordTile3of7;
+                case 3:
+                    return SpellLayout::Role::WordTile4of7;
+                case 4:
+                    return SpellLayout::Role::WordTile5of7;
+                case 5:
+                    return SpellLayout::Role::WordTile6of7;
+                case 6:
+                    return SpellLayout::Role::WordTile7of7;
+                default:
+                    return SpellLayout::Role::None;
+            }
+        }
+    }
+    ASSERT_NOT_REACHED();
+    return SpellLayout::Role::None;
+}
+
+CGRect SpellLayout::layout_aspect_rect(CGRect rect)
+{
+    switch (aspect_mode()) {
+        case AspectMode::Canonical: {
+            return rect;
+        }
+        case AspectMode::WiderThanCanonical: {
+            CGRect r = up_rect_scaled_centered_x_in_rect(rect, layout_scale(), layout_frame());
+            return up_pixel_rect(r, screen_scale());
+        }
+        case AspectMode::TallerThanCanonical: {
+            CGRect r = up_rect_scaled_centered_x_in_rect(rect, layout_scale(), layout_frame());
+            // Frame is moved up in the UI by 20% of the letterbox inset
+            // That's what looks good.
+            r.origin.y -= letterbox_insets().top * 0.2;
+            return up_pixel_rect(r, screen_scale());
+        }
+    }
+    ASSERT_NOT_REACHED();
+}
+
 void SpellLayout::calculate()
 {
     set_aspect_ratio(up_aspect_ratio_for_rect(canvas_frame()));
@@ -143,15 +291,15 @@ void SpellLayout::calculate_tile_stroke_width()
     CGRect stroke_inset = CGRectInset(stroke_bounds, CanonicalTileStrokeWidth, CanonicalTileStrokeWidth);
     
     UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint: CGPointMake(up_rect_max_x(stroke_inset), up_rect_min_y(stroke_inset))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_inset), up_rect_min_y(stroke_inset))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_inset), up_rect_max_y(stroke_inset))];
-    [path addLineToPoint: CGPointMake(up_rect_max_x(stroke_inset), up_rect_max_y(stroke_inset))];
+    [path moveToPoint:CGPointMake(up_rect_max_x(stroke_inset), up_rect_min_y(stroke_inset))];
+    [path addLineToPoint:CGPointMake(up_rect_min_x(stroke_inset), up_rect_min_y(stroke_inset))];
+    [path addLineToPoint:CGPointMake(up_rect_min_x(stroke_inset), up_rect_max_y(stroke_inset))];
+    [path addLineToPoint:CGPointMake(up_rect_max_x(stroke_inset), up_rect_max_y(stroke_inset))];
     [path closePath];
-    [path moveToPoint: CGPointMake(up_rect_max_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
-    [path addLineToPoint: CGPointMake(up_rect_max_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
-    [path addLineToPoint: CGPointMake(up_rect_min_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
+    [path moveToPoint:CGPointMake(up_rect_max_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
+    [path addLineToPoint:CGPointMake(up_rect_max_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
+    [path addLineToPoint:CGPointMake(up_rect_min_x(stroke_bounds), up_rect_max_y(stroke_bounds))];
+    [path addLineToPoint:CGPointMake(up_rect_min_x(stroke_bounds), up_rect_min_y(stroke_bounds))];
     [path closePath];
     m_tile_stroke_path = path;
     
@@ -160,101 +308,25 @@ void SpellLayout::calculate_tile_stroke_width()
 
 void SpellLayout::calculate_game_controls_layout_frame()
 {
-    switch (aspect_mode()) {
-        case AspectMode::Canonical: {
-            set_controls_layout_frame(CanonicalControlsLayoutFrame);
-            break;
-        }
-        case AspectMode::WiderThanCanonical: {
-            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalControlsLayoutFrame, layout_scale(), layout_frame());
-            set_controls_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-        case AspectMode::TallerThanCanonical: {
-            CGRect frame = CanonicalControlsLayoutFrame;
-            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
-            // Frame is moved up in the UI by 50% the letterbox inset
-            // That's what looks good.
-            frame.origin.y -= letterbox_insets().top * 0.5;
-            set_controls_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-    }
-    LOG(Layout, "controls_layout_frame: %@", NSStringFromCGRect(controls_layout_frame()));
+    set_controls_layout_frame(layout_aspect_rect(CanonicalControlsLayoutFrame));
+    LOG(Layout, "player_tray_layout_frame: %@", NSStringFromCGRect(controls_layout_frame()));
 }
 
 void SpellLayout::calculate_player_tray_layout_frame()
 {
-    switch (aspect_mode()) {
-        case AspectMode::Canonical: {
-            set_player_tray_layout_frame(CanonicalTilesLayoutFrame);
-            break;
-        }
-        case AspectMode::WiderThanCanonical: {
-            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalTilesLayoutFrame, layout_scale(), layout_frame());
-            set_player_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-        case AspectMode::TallerThanCanonical: {
-            CGRect frame = CanonicalTilesLayoutFrame;
-            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
-            // Frame is moved down in the UI by 25% of the letterbox inset
-            // That's what looks good.
-            frame.origin.y += letterbox_insets().top * 0.25;
-            set_player_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-    }
+    set_player_tray_layout_frame(layout_aspect_rect(CanonicalTilesLayoutFrame));
     LOG(Layout, "player_tray_layout_frame: %@", NSStringFromCGRect(player_tray_layout_frame()));
 }
 
 void SpellLayout::calculate_word_tray_layout_frame()
 {
-    switch (aspect_mode()) {
-        case AspectMode::Canonical: {
-            set_word_tray_layout_frame(CanonicalWordTrayFrame);
-            break;
-        }
-        case AspectMode::WiderThanCanonical: {
-            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalWordTrayFrame, layout_scale(), layout_frame());
-            set_word_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-        case AspectMode::TallerThanCanonical: {
-            CGRect frame = CanonicalWordTrayFrame;
-            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
-            // Frame is moved up in the UI by 20% of the letterbox inset
-            // That's what looks good.
-            frame.origin.y -= letterbox_insets().top * 0.2;
-            set_word_tray_layout_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-    }
+    set_word_tray_layout_frame(layout_aspect_rect(CanonicalWordTrayFrame));
     LOG(Layout, "word_tray_layout_frame: %@", NSStringFromCGRect(word_tray_layout_frame()));
 }
 
 void SpellLayout::calculate_word_tray_mask_frame()
 {
-    switch (aspect_mode()) {
-        case AspectMode::Canonical: {
-            set_word_tray_mask_frame(CanonicalWordTrayMaskFrame);
-            break;
-        }
-        case AspectMode::WiderThanCanonical: {
-            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalWordTrayMaskFrame, layout_scale(), layout_frame());
-            set_word_tray_mask_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-        case AspectMode::TallerThanCanonical: {
-            CGRect frame = CanonicalWordTrayMaskFrame;
-            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
-            // Frame is moved up in the UI by 20% of the letterbox inset
-            // That's what looks good.
-            frame.origin.y -= letterbox_insets().top * 0.2;
-            set_word_tray_mask_frame(up_pixel_rect(frame, screen_scale()));
-            break;
-        }
-    }
+    set_word_tray_mask_frame(layout_aspect_rect(CanonicalWordTrayMaskFrame));
     LOG(Layout, "word_tray_mask_frame: %@", NSStringFromCGRect(word_tray_mask_frame()));
 }
 
@@ -392,6 +464,8 @@ void SpellLayout::calculate_word_tray_tile_frames()
 void SpellLayout::calculate_locations()
 {
     calculate_player_tile_locations();
+    calculate_word_tile_locations();
+    calculate_dialog_locations();
 }
 
 void SpellLayout::calculate_player_tile_locations()
@@ -416,14 +490,135 @@ void SpellLayout::calculate_player_tile_locations()
         CGRect off_left_frame = CGRectMake(screen_min_x - df_off_x, df_min_y, df_w, df_h);
         CGRect off_right_frame = CGRectMake(screen_max_x + df_off_x, df_min_y, df_w, df_h);
         CGRect submitted_tile_frame = CGRectMake(df_min_x, up_rect_min_y(word_tray_layout_frame()) - df_h, df_w, df_h);
-        m_location_frames.emplace(Location(role, Spot::Default), default_frame);
-        m_location_frames.emplace(Location(role, Spot::OffTop), off_top_frame);
-        m_location_frames.emplace(Location(role, Spot::OffBottom), off_bottom_frame);
-        m_location_frames.emplace(Location(role, Spot::OffLeft), off_left_frame);
-        m_location_frames.emplace(Location(role, Spot::OffRight), off_right_frame);
-        m_location_frames.emplace(Location(role, Spot::SubmittedTile), submitted_tile_frame);
+        m_location_frames.emplace(Location(role, Spot::Default), up_pixel_rect(default_frame, screen_scale()));
+        m_location_frames.emplace(Location(role, Spot::OffTop), up_pixel_rect(off_top_frame, screen_scale()));
+        m_location_frames.emplace(Location(role, Spot::OffBottom), up_pixel_rect(off_bottom_frame, screen_scale()));
+        m_location_frames.emplace(Location(role, Spot::OffLeft), up_pixel_rect(off_left_frame, screen_scale()));
+        m_location_frames.emplace(Location(role, Spot::OffRight), up_pixel_rect(off_right_frame, screen_scale()));
+        m_location_frames.emplace(Location(role, Spot::TileSubmitted), up_pixel_rect(submitted_tile_frame, screen_scale()));
     }
 }
+
+void SpellLayout::calculate_word_tile_locations()
+{
+    for (size_t widx = 0; widx < TileCount; widx++) {
+        TileRectArray word_tray_tile_frames = m_word_tray_tile_frames[widx];
+        const auto &begin = word_tray_tile_frames.begin();
+        const CGFloat screen_min_x = up_rect_min_x(screen_bounds());
+        const CGFloat screen_min_y = up_rect_min_y(screen_bounds());
+        const CGFloat screen_max_x = up_rect_max_x(screen_bounds());
+        const CGFloat screen_max_y = up_rect_max_y(screen_bounds());
+        for (auto it = begin; it != word_tray_tile_frames.end(); ++it) {
+            const CGRect default_frame = *it;
+            const CGFloat df_min_x = up_rect_min_x(default_frame);
+            const CGFloat df_min_y = up_rect_min_y(default_frame);
+            const CGFloat df_w = up_rect_width(default_frame);
+            const CGFloat df_h = up_rect_height(default_frame);
+            const CGFloat df_off_x = df_w * CanonicalOffscreenFrameFactor;
+            const CGFloat df_off_y = df_h * CanonicalOffscreenFrameFactor;
+            const TileIndex idx = it - begin;
+            Role role = role_in_word(idx, widx + 1);
+            CGRect off_top_frame = CGRectMake(df_min_x, screen_min_y - df_off_y, df_w, df_h);
+            CGRect off_bottom_frame = CGRectMake(df_min_x, screen_max_y + df_off_y, df_w, df_h);
+            CGRect off_left_frame = CGRectMake(screen_min_x - df_off_x, df_min_y, df_w, df_h);
+            CGRect off_right_frame = CGRectMake(screen_max_x + df_off_x, df_min_y, df_w, df_h);
+            CGRect submitted_tile_frame = CGRectMake(df_min_x, up_rect_min_y(word_tray_layout_frame()) - df_h, df_w, df_h);
+            m_location_frames.emplace(Location(role, Spot::Default), up_pixel_rect(default_frame, screen_scale()));
+            m_location_frames.emplace(Location(role, Spot::OffTop), up_pixel_rect(off_top_frame, screen_scale()));
+            m_location_frames.emplace(Location(role, Spot::OffBottom), up_pixel_rect(off_bottom_frame, screen_scale()));
+            m_location_frames.emplace(Location(role, Spot::OffLeft), up_pixel_rect(off_left_frame, screen_scale()));
+            m_location_frames.emplace(Location(role, Spot::OffRight), up_pixel_rect(off_right_frame, screen_scale()));
+            m_location_frames.emplace(Location(role, Spot::TileSubmitted), up_pixel_rect(submitted_tile_frame, screen_scale()));
+        }
+    }
+}
+
+void SpellLayout::calculate_dialog_locations()
+{
+    calculate_and_set_locations(Role::DialogMessageHigh, word_tray_layout_frame());
+    calculate_and_set_locations(Role::DialogNote, layout_aspect_rect(CanonicalDialogNoteLayoutFrame));
+
+    CGRect centered_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
+    centered_message_frame.origin.y = up_rect_min_y(centered_message_frame) - (up_rect_height(centered_message_frame) * 0.12);
+    calculate_and_set_locations(Role::DialogMessageCenter, centered_message_frame);
+
+    CGSize button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
+    CGRect top_buttons_layout_frame = layout_aspect_rect(CanonicalDialogTopButtonsLayoutFrame);
+    calculate_and_set_locations(Role::DialogButtonTopLeft, up_left_aligned_rect(button_size, top_buttons_layout_frame));
+    calculate_and_set_locations(Role::DialogButtonTopCenter, up_center_aligned_rect(button_size, top_buttons_layout_frame));
+    calculate_and_set_locations(Role::DialogButtonTopRight, up_right_aligned_rect(button_size, top_buttons_layout_frame));
+
+    CGRect response_buttons_layout_frame = layout_aspect_rect(CanonicalDialogResponseButtonsLayoutFrame);
+    calculate_and_set_locations(Role::DialogButtonDefaultResponse, up_right_aligned_rect(button_size, response_buttons_layout_frame));
+    calculate_and_set_locations(Role::DialogButtonAlternativeResponse, up_left_aligned_rect(button_size, response_buttons_layout_frame));
+}
+
+void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &default_frame)
+{
+    const CGFloat screen_min_x = up_rect_min_x(screen_bounds());
+    const CGFloat screen_min_y = up_rect_min_y(screen_bounds());
+    const CGFloat screen_max_x = up_rect_max_x(screen_bounds());
+    const CGFloat screen_max_y = up_rect_max_y(screen_bounds());
+    const CGFloat df_min_x = up_rect_min_x(default_frame);
+    const CGFloat df_min_y = up_rect_min_y(default_frame);
+    const CGFloat df_w = up_rect_width(default_frame);
+    const CGFloat df_h = up_rect_height(default_frame);
+    const CGFloat df_off_x = df_w * CanonicalOffscreenFrameFactor;
+    const CGFloat df_off_y = df_h * CanonicalOffscreenFrameFactor;
+    CGRect off_top_frame = CGRectMake(df_min_x, screen_min_y - df_off_y, df_w, df_h);
+    CGRect off_bottom_frame = CGRectMake(df_min_x, screen_max_y + df_off_y, df_w, df_h);
+    CGRect off_left_frame = CGRectMake(screen_min_x - df_off_x, df_min_y, df_w, df_h);
+    CGRect off_right_frame = CGRectMake(screen_max_x + df_off_x, df_min_y, df_w, df_h);
+    m_location_frames.emplace(Location(role, Spot::Default), up_pixel_rect(default_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Spot::OffTop), up_pixel_rect(off_top_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Spot::OffBottom), up_pixel_rect(off_bottom_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Spot::OffLeft), up_pixel_rect(off_left_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Spot::OffRight), up_pixel_rect(off_right_frame, screen_scale()));
+}
+
+
+
+
+
+
+
+void SpellLayout::calculate_dialog_top_buttons_layout_frame()
+{
+    switch (aspect_mode()) {
+        case AspectMode::Canonical: {
+            set_dialog_top_buttons_layout_frame(CanonicalDialogTopButtonsLayoutFrame);
+            break;
+        }
+        case AspectMode::WiderThanCanonical: {
+            CGRect frame = up_rect_scaled_centered_x_in_rect(CanonicalDialogTopButtonsLayoutFrame, layout_scale(), layout_frame());
+            set_dialog_top_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
+            break;
+        }
+        case AspectMode::TallerThanCanonical: {
+            CGRect frame = CanonicalDialogTopButtonsLayoutFrame;
+            frame = up_rect_scaled_centered_x_in_rect(frame, layout_scale(), layout_frame());
+            // Frame is moved up in the UI by 20% of the letterbox inset
+            // That's what looks good.
+            frame.origin.y -= letterbox_insets().top * 0.2;
+            set_dialog_top_buttons_layout_frame(up_pixel_rect(frame, screen_scale()));
+            break;
+        }
+    }
+    LOG(Layout, "dialog_top_buttons_layout_frame: %@", NSStringFromCGRect(dialog_top_buttons_layout_frame()));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -9,7 +9,7 @@
 #import <UPKit/UPMacros.h>
 #import <UPKit/UPBand.h>
 #import <UPKit/UPSerialNumber.h>
-#import <UPKit/UPViewTo.h>
+#import <UPKit/UPViewMove.h>
 
 @class UPAnimator;
 
@@ -29,24 +29,18 @@ namespace TimeSpanning {
 
 void init();
 
-UPAnimator *bloop(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint position,
-    void (^completion)(UIViewAnimatingPosition));
-
-UPAnimator *bloop_to(UP::Band band, NSArray<UPViewTo *> *viewTos, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
+UPAnimator *bloop_in(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
+UPAnimator *bloop_out(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
 
 UPAnimator *fade(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
 
 UPAnimator *shake(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
     void (^completion)(UIViewAnimatingPosition));
 
-UPAnimator *slide(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
-    void (^completion)(UIViewAnimatingPosition));
-
 UPAnimator *slide_to(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, CGPoint point,
     void (^completion)(UIViewAnimatingPosition));
 
-UPAnimator *spring(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
-    void (^completion)(UIViewAnimatingPosition));
+UPAnimator *slide(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
 
 UPAnimator *set_color(UP::Band band, NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
     UPControlState fromControlState, UPControlState toControlState, void (^completion)(UIViewAnimatingPosition));

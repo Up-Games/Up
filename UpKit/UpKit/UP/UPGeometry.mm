@@ -90,6 +90,30 @@ CGPoint up_rect_center(CGRect rect)
     return CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
 }
 
+CGRect up_left_aligned_rect(CGSize size, CGRect reference_rect)
+{
+    return CGRectMake(up_rect_min_x(reference_rect),
+                      up_rect_min_y(reference_rect),
+                      up_size_width(size),
+                      up_size_height(size));
+}
+
+CGRect up_center_aligned_rect(CGSize size, CGRect reference_rect)
+{
+    return CGRectMake(up_rect_mid_x(reference_rect) - (up_size_width(size) * 0.5),
+                      up_rect_min_y(reference_rect),
+                      up_size_width(size),
+                      up_size_height(size));
+}
+
+CGRect up_right_aligned_rect(CGSize size, CGRect reference_rect)
+{
+    return CGRectMake(up_rect_max_x(reference_rect) - up_size_width(size),
+                      up_rect_min_y(reference_rect),
+                      up_size_width(size),
+                      up_size_height(size));
+}
+
 CGFloat up_aspect_ratio_for_size(CGSize size)
 {
     return size.width / size.height;

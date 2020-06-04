@@ -37,10 +37,18 @@ public:
         None,
         PlayerTile1, PlayerTile2, PlayerTile3, PlayerTile4, PlayerTile5, PlayerTile6, PlayerTile7,
         WordTile1, WordTile2, WordTile3, WordTile4, WordTile5, WordTile6, WordTile7,
+        WordTile1of1,
+        WordTile1of2, WordTile2of2,
+        WordTile1of3, WordTile2of3, WordTile3of3,
+        WordTile1of4, WordTile2of4, WordTile3of4, WordTile4of4,
+        WordTile1of5, WordTile2of5, WordTile3of5, WordTile4of5, WordTile5of5,
+        WordTile1of6, WordTile2of6, WordTile3of6, WordTile4of6, WordTile5of6, WordTile6of6,
+        WordTile1of7, WordTile2of7, WordTile3of7, WordTile4of7, WordTile5of7, WordTile6of7, WordTile7of7,
         WordTray,
         GameButtonLeft, GameButtonRight, GameTimer, GameScore,
-        MenuPlacard, MenuButtonLeft, MenuButtonCenter, MenuButtonRight, MenuNote,
-        DialogPlacard, DialogButtonLeft, DialogButtonCenter, DialogButtonRight,
+        DialogMessageHigh, DialogMessageCenter, DialogNote,
+        DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
+        DialogButtonDefaultResponse, DialogButtonAlternativeResponse,
     };
 
     enum class Spot {
@@ -49,13 +57,13 @@ public:
         OffBottom,
         OffLeft,
         OffRight,
-        SubmittedTile,
+        TileSubmitted,
     };
 
     class Location {
     public:
         constexpr Location() {}
-        constexpr Location(Role role, Spot spot) : m_role(role), m_spot(spot) {}
+        constexpr Location(Role role, Spot spot = Spot::Default) : m_role(role), m_spot(spot) {}
         
         Role role() const { return m_role; }
         Spot spot() const { return m_spot; }
@@ -98,6 +106,11 @@ public:
     static inline constexpr CGFloat CanonicalWordTrayMaskXOffset = 10;
     static inline constexpr CGFloat CanonicalWordTrayShakeAmount = 30;
 
+    static inline constexpr CGRect CanonicalDialogTopButtonsLayoutFrame =      {  80,  28,  840,  85 };
+    static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  75 };
+    static inline constexpr CGRect CanonicalDialogNoteLayoutFrame =            {   0, 385, 1000,  40 };
+
+    
     static inline constexpr CGSize CanonicalDialogTitleSize =                          {  875, 182 };
     static inline constexpr CGRect CanonicalDialogPauseButtonsLayoutFrame =  { 257, 350,  480,  75 };
     static inline constexpr CGRect CanonicalDialogOverButtonsLayoutFrame =   {  80,  28,  840,  85 };
@@ -120,7 +133,10 @@ public:
     void calculate();
 
     CGRect frame_for(const Location &);
+    template <class ...Args> CGRect frame_for(Args... args) { return frame_for(Location(std::forward<Args>(args)...)); }
+
     CGPoint center_for(const Location &);
+    template <class ...Args> CGPoint center_for(Args... args) { return center_for(Location(std::forward<Args>(args)...)); }
 
     void set_screen_bounds(CGRect screen_bounds) { m_screen_bounds = screen_bounds; }
     CGRect screen_bounds() const { return m_screen_bounds; }
@@ -153,6 +169,17 @@ public:
     UIOffset word_tray_shake_offset() const { return m_word_tray_shake_offset; }
     UIOffset word_tray_tile_offset() const { return m_word_tray_tile_offset; }
 
+    CGRect dialog_top_buttons_layout_frame() const { return m_dialog_top_buttons_layout_frame; }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     CGRect game_controls_left_button_frame() const { return m_game_controls_left_button_frame; }
     CGRect game_controls_right_button_frame() const { return m_game_controls_right_button_frame; }
     CGSize game_controls_button_charge_size() const { return m_game_controls_button_charge_size; }
@@ -223,6 +250,8 @@ private:
 
     UP_STATIC_INLINE SpellLayout *g_instance;
     
+    CGRect layout_aspect_rect(CGRect);
+    
     void set_aspect_mode(AspectMode aspect_mode) { m_aspect_mode = aspect_mode; }
     void set_aspect_ratio(CGFloat f) { m_aspect_ratio = f; }
     void set_aspect_scale(CGFloat f) { m_aspect_scale = f; }
@@ -237,6 +266,15 @@ private:
     void set_tile_stroke_width(CGFloat f) { m_tile_stroke_width = f; }
     void set_tile_drag_barrier_frame(CGRect rect) { m_tile_drag_barrier_frame = rect; }
     void set_word_tray_shake_offset(UIOffset offset) { m_word_tray_shake_offset = offset; }
+    void set_dialog_top_buttons_layout_frame(CGRect rect) { m_dialog_top_buttons_layout_frame = rect; }
+    
+    
+    
+    
+    
+    
+    
+    
     void set_word_tray_tile_offset(UIOffset offset) { m_word_tray_tile_offset = offset; }
     void set_game_controls_left_button_frame(CGRect rect) { m_game_controls_left_button_frame = rect; }
     void set_game_controls_right_button_frame(CGRect rect) { m_game_controls_right_button_frame = rect; }
@@ -290,8 +328,12 @@ private:
     
     void calculate_locations();
     void calculate_player_tile_locations();
+    void calculate_word_tile_locations();
+    void calculate_dialog_locations();
 
-    
+    void calculate_dialog_top_buttons_layout_frame();
+    void calculate_and_set_locations(const Role role, const CGRect &frame);
+
     void calculate_prefill_tile_frames();
     void calculate_score_tile_spring_down_offset_y();
     void calculate_score_tile_center_y();
@@ -354,6 +396,11 @@ private:
     std::array<TileRectArray, TileCount> m_word_tray_tile_frames;
     std::array<TilePointArray, TileCount> m_word_tray_tile_centers;
 
+    CGRect m_dialog_top_buttons_layout_frame = CGRectZero;
+
+    
+    
+    
     UIOffset m_word_tray_tile_offset;
 
     CGRect m_game_controls_left_button_frame = CGRectZero;
@@ -419,32 +466,13 @@ UP_STATIC_INLINE bool operator<(const SpellLayout::Location &a, const SpellLayou
     return a.role() != b.role() ? a.role() < b.role() : a.spot() < b.spot();
 }
 
-UP_STATIC_INLINE SpellLayout::Role role_for(TilePosition pos) {
-    switch (pos.index()) {
-        case 0:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile1 : SpellLayout::Role::WordTile1;
-        case 1:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile2 : SpellLayout::Role::WordTile2;
-        case 2:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile3 : SpellLayout::Role::WordTile3;
-        case 3:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile4 : SpellLayout::Role::WordTile4;
-        case 4:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile5 : SpellLayout::Role::WordTile5;
-        case 5:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile6 : SpellLayout::Role::WordTile6;
-        case 6:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile7 : SpellLayout::Role::WordTile7;
-    }
-    ASSERT_NOT_REACHED();
-    return SpellLayout::Role::None;
-}
-
+SpellLayout::Role role_for(TilePosition pos);
 template <class ...Args>
 SpellLayout::Role role_for(Args... args) {
     return role_for(TilePosition(std::forward<Args>(args)...));
 }
 
+SpellLayout::Role role_in_word(TileIndex idx, size_t word_length);
 
 }  // namespace UP
 

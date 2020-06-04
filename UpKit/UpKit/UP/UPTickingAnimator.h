@@ -11,7 +11,7 @@
 @class UPTickingAnimator;
 @class UPUnitFunction;
 
-typedef void (^UPTickingAnimatorApplier)(UPTickingAnimator *animator, CGFloat fractionCompleted);
+typedef void (^UPTickingAnimatorApplier)(UPTickingAnimator *animator);
 typedef void (^UPTickingAnimatorCompletion)(UPTickingAnimator *animator, UIViewAnimatingPosition finalPosition);
 
 @interface UPTickingAnimator : NSObject <UIViewAnimating, UPTicking>
@@ -23,7 +23,9 @@ typedef void (^UPTickingAnimatorCompletion)(UPTickingAnimator *animator, UIViewA
     repeatCount:(NSUInteger)repeatCount rebounds:(BOOL)rebounds
         applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion;
 
+// UPTickingAnimator
 @property (nonatomic, readonly) UP::Band band;
+@property (nonatomic) CGFloat previousFractionComplete;
 
 // UIViewAnimating
 @property (nonatomic, readonly) UIViewAnimatingState state;

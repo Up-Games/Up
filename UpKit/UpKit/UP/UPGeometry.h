@@ -116,6 +116,10 @@ CGRect up_rect_scaled_centered_x_in_rect(CGRect rectToCenter, CGFloat scale, CGR
 CGRect up_rect_scaled_centered_y_in_rect(CGRect rectToCenter, CGFloat scale, CGRect referenceRect);
 CGRect up_rect_centered_around_point(CGRect rectToCenter, CGPoint referencePoint);
 CGPoint up_rect_center(CGRect);
+CGRect up_left_aligned_rect(CGSize size, CGRect reference_rect);
+CGRect up_center_aligned_rect(CGSize size, CGRect reference_rect);
+CGRect up_right_aligned_rect(CGSize size, CGRect reference_rect);
+
 CGFloat up_aspect_ratio_for_size(CGSize);
 CGFloat up_aspect_ratio_for_rect(CGRect);
 

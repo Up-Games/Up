@@ -17,7 +17,7 @@
 using UP::SpellLayout;
 
 @interface UPDialogPause ()
-@property (nonatomic) UPBezierPathView *titlePathView;
+@property (nonatomic, readwrite) UPBezierPathView *titlePathView;
 @property (nonatomic, readwrite) UPControl *quitButton;
 @property (nonatomic, readwrite) UPControl *resumeButton;
 @end
@@ -42,15 +42,15 @@ using UP::SpellLayout;
     self.titlePathView = [UPBezierPathView bezierPathView];
     self.titlePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
     self.titlePathView.path = UP::TextPathDialogPaused();
-    self.titlePathView.frame = layout.dialog_pause_title_layout_frame();
+    self.titlePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageHigh);
     [self addSubview:self.titlePathView];
 
     self.quitButton = [UPControl textButtonQuit];
-    self.quitButton.frame = layout.dialog_pause_button_quit_frame();
+    self.quitButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonAlternativeResponse);
     [self addSubview:self.quitButton];
 
     self.resumeButton = [UPControl textButtonResume];
-    self.resumeButton.frame = layout.dialog_pause_button_resume_frame();
+    self.resumeButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonDefaultResponse);
     [self addSubview:self.resumeButton];
 
     [self updateThemeColors];

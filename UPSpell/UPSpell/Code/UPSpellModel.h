@@ -44,7 +44,7 @@ enum class TileTray { None, Player, Word };
 class TilePosition {
 public:
     constexpr TilePosition() {}
-    TilePosition(TileTray tray, TileIndex index) : m_tray(tray), m_index(index) { /*ASSERT_IDX(m_index);*/ }
+    TilePosition(TileTray tray, TileIndex index) : m_tray(tray), m_index(index) { ASSERT_IDX(m_index); }
     TileTray tray() const { return m_tray; }
     TileIndex index() const { return m_index; }
     

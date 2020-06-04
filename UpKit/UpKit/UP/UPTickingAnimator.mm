@@ -115,7 +115,9 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
     self.animatingPosition = UIViewAnimatingPositionStart;
     self.remainingDuration = self.duration;
     self.previousTick = 0;
-
+    self.previousFractionComplete = 0;
+    _fractionComplete = 0;  // avoid setter due to UIViewAnimating API constraints
+    
     self.serialNumber = UP::next_serial_number();
 
     return self;
@@ -144,7 +146,8 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
     }
     self.previousTick = now;
     self.remainingDuration = UPMaxT(CFTimeInterval, self.remainingDuration, 0);
-
+    self.previousFractionComplete = _fractionComplete;
+    
     if (up_is_fuzzy_zero(self.remainingDuration)) {
         self.completed = YES;
         CGFloat effectiveFraction = 1.0;
@@ -156,17 +159,17 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
         _fractionComplete = effectiveFraction;
         self.animatingPosition = effectiveAnimatingPosition;
         if (self.applier) {
-            self.applier(self, effectiveFraction);
+            self.applier(self);
         }
         [self stopAnimation:NO];
     }
     else {
         CGFloat fraction = 1.0 - (self.remainingDuration / self.duration);
-        _fractionComplete = fraction;
         CGFloat completedFraction = compute_completed_fraction(self.rebounds, self.repeatCount);
         self.completed = fraction > completedFraction || up_is_fuzzy_equal(fraction, completedFraction);
         if (self.completed) {
             CGFloat effectiveFraction = compute_effective_fraction(completedFraction, self.rebounds, self.repeatCount, self.unitFunction);
+            _fractionComplete = effectiveFraction;
             UIViewAnimatingPosition effectiveAnimatingPosition = UIViewAnimatingPositionCurrent;
             if (up_is_fuzzy_zero(effectiveFraction)) {
                 effectiveAnimatingPosition = UIViewAnimatingPositionStart;
@@ -176,14 +179,15 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
             }
             self.animatingPosition = effectiveAnimatingPosition;
             if (self.applier) {
-                self.applier(self, effectiveFraction);
+                self.applier(self);
             }
             [self stopAnimation:NO];
         }
         else {
             CGFloat effectiveFraction = compute_effective_fraction(fraction, self.rebounds, self.repeatCount, self.unitFunction);
+            _fractionComplete = effectiveFraction;
             if (self.applier) {
-                self.applier(self, effectiveFraction);
+                self.applier(self);
             }
         }
     }
@@ -244,12 +248,14 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
     switch (finalPosition) {
         case UIViewAnimatingPositionEnd:
             if (self.applier) {
-                self.applier(self, 1.0);
+                _fractionComplete = 1.0;
+                self.applier(self);
             }
             break;
         case UIViewAnimatingPositionStart:
             if (self.applier) {
-                self.applier(self, 0.0);
+                _fractionComplete = 0.0;
+                self.applier(self);
             }
             break;
         case UIViewAnimatingPositionCurrent:
@@ -264,6 +270,8 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 - (void)setFractionComplete:(CGFloat)fractionComplete
 {
+    self.previousFractionComplete = _fractionComplete;
+    _fractionComplete = fractionComplete;
     self.remainingDuration = fractionComplete * self.duration;
 }
 

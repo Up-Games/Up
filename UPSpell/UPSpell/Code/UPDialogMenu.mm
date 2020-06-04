@@ -43,19 +43,19 @@ using UP::SpellLayout;
     self.titlePathView = [UPBezierPathView bezierPathView];
     self.titlePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
     self.titlePathView.path = UP::TextPathDialogReady();
-    self.titlePathView.frame = layout.menu_title_layout_frame();
+    self.titlePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageCenter);
     [self addSubview:self.titlePathView];
 
     self.extrasButton = [UPControl textButtonExtras];
-    self.extrasButton.frame = layout.menu_button_left_layout_frame();
+    self.extrasButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopLeft);
     [self addSubview:self.extrasButton];
 
     self.playButton = [UPControl textButtonPlay];
-    self.playButton.frame = layout.menu_button_center_layout_frame();
+    self.playButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopCenter);
     [self addSubview:self.playButton];
 
     self.aboutButton = [UPControl textButtonAbout];
-    self.aboutButton.frame = layout.menu_button_right_layout_frame();
+    self.aboutButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopRight);
     [self addSubview:self.aboutButton];
 
     [self updateThemeColors];

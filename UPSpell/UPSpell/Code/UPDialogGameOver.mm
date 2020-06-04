@@ -44,15 +44,15 @@ using UP::SpellLayout;
     self.titlePathView = [UPBezierPathView bezierPathView];
     self.titlePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
     self.titlePathView.path = UP::TextPathDialogGameOver();
-    self.titlePathView.frame = layout.dialog_over_interstitial_title_layout_frame();
+    self.titlePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageCenter);
     [self addSubview:self.titlePathView];
 
     self.menuButton = [UPControl textButtonMenu];
-    self.menuButton.frame = layout.dialog_over_interstitial_button_left_frame();
+    self.menuButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopLeft);
     [self addSubview:self.menuButton];
 
     self.playButton = [UPControl textButtonPlay];
-    self.playButton.frame = layout.dialog_over_interstitial_button_right_frame();
+    self.playButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopRight);
     [self addSubview:self.playButton];
 
     self.noteLabel = [UPLabel label];
@@ -60,7 +60,7 @@ using UP::SpellLayout;
     self.noteLabel.font = layout.game_note_font();
     self.noteLabel.textColorCategory = UPColorCategoryInformation;
     self.noteLabel.textAlignment = NSTextAlignmentCenter;
-    self.noteLabel.frame = layout.dialog_over_interstitial_note_label_frame();
+    self.noteLabel.frame = layout.frame_for(SpellLayout::Role::DialogNote);
     [self addSubview:self.noteLabel];
 
     [self updateThemeColors];
