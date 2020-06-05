@@ -832,7 +832,7 @@ using Spot = UP::SpellLayout::Spot;
     for (UPTileView *tileView in wordTrayTileViews) {
         Tile &tile = self.model->find_tile(tileView);
         ASSERT(tile.position().in_word_tray());
-        Location location(role_in_word(tile.position().index(), self.model->word_length()), Spot::TileSubmitted);
+        Location location(role_in_word(tile.position().index(), self.model->word_length()), Spot::OffTopNear);
         [moves addObject:UPViewMoveMake(tileView, location)];
     }
     start(UP::TimeSpanning::bloop_out(BandGameUI, moves, 0.3, nil));
@@ -852,7 +852,7 @@ using Spot = UP::SpellLayout::Spot;
     int count = 0;
     for (const auto idx : idxs) {
         UPTileView *tileView = playerTrayTileViews[idx];
-        Location location(role_for(TilePosition(TileTray::Player, idx)), Spot::OffBottom);
+        Location location(role_for(TilePosition(TileTray::Player, idx)), Spot::OffBottomNear);
         UPAnimator *animator = slide(BandGameUI, @[UPViewMoveMake(tileView, location)], 1.1, ^(UIViewAnimatingPosition) {
             [tileView removeFromSuperview];
         });
@@ -884,7 +884,7 @@ using Spot = UP::SpellLayout::Spot;
             tileView.band = BandGameUI;
             tileView.gestureDelegate = self;
             Role role = role_for(TilePosition(TileTray::Player, idx));
-            tileView.frame = layout.frame_for(Location(role, Spot::OffBottom));
+            tileView.frame = layout.frame_for(Location(role, Spot::OffBottomNear));
             [self.gameView.tileContainerView addSubview:tileView];
             [moves addObject:UPViewMoveMake(tileView, Location(role, Spot::Default))];
         }
@@ -1279,7 +1279,7 @@ using Spot = UP::SpellLayout::Spot;
     self.dialogMenu.transform = CGAffineTransformIdentity;
     self.dialogMenu.hidden = NO;
     self.dialogMenu.alpha = 1.0;
-    self.dialogMenu.titlePathView.frame = layout.frame_for(Role::DialogMessageCenter, Spot::OffBottom);
+    self.dialogMenu.titlePathView.frame = layout.frame_for(Role::DialogMessageCenter, Spot::OffBottomNear);
 
     self.gameView.transform = layout.menu_game_view_transform();
     self.gameView.alpha = [UIColor themeDisabledAlpha];
@@ -1309,13 +1309,13 @@ using Spot = UP::SpellLayout::Spot;
     self.dialogMenu.playButton.highlighted = YES;
 
     NSArray<UPViewMove *> *extrasAndAboutMoves = @[
-        UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffTop)),
-        UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffTop)),
+        UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffTopNear)),
+        UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffTopNear)),
     ];
     start(bloop_out(BandModeUI, extrasAndAboutMoves, 0.3, ^(UIViewAnimatingPosition) {
         delay(BandModeDelay, 0.4, ^{
             [self.gameTimer reset];
-            UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffTop));
+            UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
             UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.titlePathView, Location(Role::DialogMessageCenter));
             start(slide(BandModeUI, @[playButtonMove], 0.3, nil));
             delay(BandModeDelay, 0.6, ^{
@@ -1343,7 +1343,7 @@ using Spot = UP::SpellLayout::Spot;
 - (void)modeTransitionFromCountdownToPlay:(BOOL)animated
 {
     delay(BandModeDelay, 1.5, ^{
-        UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.titlePathView, Location(Role::DialogMessageCenter, Spot::OffBottom));
+        UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.titlePathView, Location(Role::DialogMessageCenter, Spot::OffBottomNear));
         start(bloop_out(BandModeUI, @[readyMove], 0.3, nil));
         [UIView animateWithDuration:0.1 delay:0.2 options:0 animations:^{
             [self viewOpExitModal];
@@ -1366,9 +1366,9 @@ using Spot = UP::SpellLayout::Spot;
     [self viewOpEnterModal:UPSpellGameModePause];
     
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogPause.titlePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottom);
-    self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Spot::OffBottom);
-    self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse, Spot::OffBottom);
+    self.dialogPause.titlePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
+    self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomNear);
+    self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse, Spot::OffBottomNear);
 
     NSArray<UPViewMove *> *moves = @[
         UPViewMoveMake(self.dialogPause.titlePathView, Role::DialogMessageHigh),
@@ -1395,9 +1395,9 @@ using Spot = UP::SpellLayout::Spot;
     } completion:nil];
 
     NSArray<UPViewMove *> *moves = @[
-        UPViewMoveMake(self.dialogPause.titlePathView, Location(Role::DialogMessageHigh, Spot::OffBottom)),
-        UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottom)),
-        UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottom)),
+        UPViewMoveMake(self.dialogPause.titlePathView, Location(Role::DialogMessageHigh, Spot::OffBottomNear)),
+        UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomNear)),
+        UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomNear)),
     ];
     start(bloop_out(BandModeUI, moves, 0.3, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;
@@ -1427,10 +1427,10 @@ using Spot = UP::SpellLayout::Spot;
     [self viewOpEnterModal:UPSpellGameModeOverInterstitial];
 
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogGameOver.titlePathView.center = layout.center_for(Role::DialogMessageCenter, Spot::OffBottom);
-    self.dialogGameOver.menuButton.center = layout.center_for(Role::DialogButtonTopLeft, Spot::OffTop);
-    self.dialogGameOver.playButton.center = layout.center_for(Role::DialogButtonTopRight, Spot::OffTop);
-    self.dialogGameOver.noteLabel.center = layout.center_for(Role::DialogNote, Spot::OffBottom);
+    self.dialogGameOver.titlePathView.center = layout.center_for(Role::DialogMessageCenter, Spot::OffBottomNear);
+    self.dialogGameOver.menuButton.center = layout.center_for(Role::DialogButtonTopLeft, Spot::OffTopNear);
+    self.dialogGameOver.playButton.center = layout.center_for(Role::DialogButtonTopRight, Spot::OffTopNear);
+    self.dialogGameOver.noteLabel.center = layout.center_for(Role::DialogNote, Spot::OffBottomNear);
 
     NSArray<UPViewMove *> *moves = @[
         UPViewMoveMake(self.dialogGameOver.titlePathView, Role::DialogMessageCenter),

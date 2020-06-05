@@ -54,11 +54,14 @@ public:
 
     enum class Spot {
         Default,
-        OffTop,
-        OffBottom,
-        OffLeft,
-        OffRight,
-        TileSubmitted,
+        OffTopNear,
+        OffBottomNear,
+        OffLeftNear,
+        OffRightNear,
+        OffTopFar,
+        OffBottomFar,
+        OffLeftFar,
+        OffRightFar,
     };
 
     class Location {

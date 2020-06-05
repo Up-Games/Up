@@ -9,7 +9,7 @@
 #import "UPMath.h"
 
 const CFTimeInterval UPGameTimerInterval = 0.1;
-const CFTimeInterval UPGameTimerDefaultDuration = 4;
+const CFTimeInterval UPGameTimerDefaultDuration = 120;
 
 @interface UPGameTimer ()
 @property (nonatomic, readwrite) CFTimeInterval duration;
