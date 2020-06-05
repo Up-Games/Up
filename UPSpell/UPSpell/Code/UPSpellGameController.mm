@@ -135,7 +135,7 @@ using Spot = UP::SpellLayout::Spot;
     [self.view addSubview:self.gameView];
 
     self.gameTimer = [UPGameTimer defaultGameTimer];
-    [self.gameTimer addObserver:self.gameView.gameTimerLabel];
+    [self.gameTimer addObserver:self.gameView.timerLabel];
     [self.gameTimer addObserver:self];
     [self.gameTimer notifyObservers];
 
@@ -964,14 +964,14 @@ using Spot = UP::SpellLayout::Spot;
         self.gameView.roundButtonPause.highlightedOverride = YES;
         self.gameView.roundButtonPause.highlighted = YES;
         self.gameView.roundButtonPause.alpha = [UIColor themeModalActiveAlpha];
-        self.gameView.gameTimerLabel.alpha = alpha;
+        self.gameView.timerLabel.alpha = alpha;
         self.gameView.scoreLabel.alpha = alpha;
     }
     else if (mode == UPSpellGameModeOverInterstitial || mode == UPSpellGameModeOver) {
         self.gameView.roundButtonPause.alpha = alpha;
     }
     else {
-        self.gameView.gameTimerLabel.alpha = alpha;
+        self.gameView.timerLabel.alpha = alpha;
         self.gameView.scoreLabel.alpha = alpha;
         self.gameView.roundButtonPause.alpha = alpha;
     }
@@ -1007,7 +1007,7 @@ using Spot = UP::SpellLayout::Spot;
     else {
         self.gameView.roundButtonTrash.alpha = 1.0;
     }
-    self.gameView.gameTimerLabel.alpha = 1.0;
+    self.gameView.timerLabel.alpha = 1.0;
     self.gameView.scoreLabel.alpha = 1.0;
 
     self.gameView.wordTrayView.userInteractionEnabled = YES;
@@ -1459,9 +1459,8 @@ using Spot = UP::SpellLayout::Spot;
     ];
 
     start(slide(BandModeUI, buttonMoves, 0.75, nil));
-    start(fade(BandModeUI, @[self.gameView.gameTimerLabel], 0.3, nil));
-    //start(slide_to(BandModeUI, @[self.gameView.scoreLabel], 0.75, scoreLabelCenter, nil));
-
+    start(slide(BandModeUI, @[UPViewMoveMake(self.gameView.scoreLabel, UP::role_for_score(self.model->score()))], 0.75, nil));
+    start(fade(BandModeUI, @[self.gameView.timerLabel], 0.3, nil));
     [UIView animateWithDuration:0.75 animations:^{
         [self viewOpEnterModal:UPSpellGameModeOver];
     }];

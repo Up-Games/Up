@@ -146,6 +146,20 @@ SpellLayout::Role role_in_word(TileIndex idx, size_t word_length)
     return SpellLayout::Role::None;
 }
 
+SpellLayout::Role role_for_score(int score)
+{
+    if (score >= 1000) {
+        return SpellLayout::Role::GameScoreGameOver4;
+    }
+    if (score >= 100) {
+        return SpellLayout::Role::GameScoreGameOver3;
+    }
+    if (score >= 10) {
+        return SpellLayout::Role::GameScoreGameOver2;
+    }
+    return SpellLayout::Role::GameScoreGameOver1;
+}
+
 CGRect SpellLayout::layout_aspect_rect(CGRect rect)
 {
     switch (aspect_mode()) {
@@ -563,9 +577,15 @@ void SpellLayout::calculate_game_locations()
     calculate_and_set_locations(Role::GameButtonLeft, up_left_aligned_rect(button_size, controls_layout_frame));
     calculate_and_set_locations(Role::GameButtonRight, up_right_aligned_rect(button_size, controls_layout_frame));
 
-    
-    calculate_game_play_time_label_frame();
-    calculate_game_play_score_label_frame();
+    calculate_game_timer_frame();
+    calculate_and_set_locations(Role::GameTimer, game_timer_frame());
+
+    calculate_game_score_frame();
+    calculate_and_set_locations(Role::GameScore, game_score_frame());
+    calculate_and_set_locations(Role::GameScoreGameOver1, layout_game_over_score_frame(@"1"));
+    calculate_and_set_locations(Role::GameScoreGameOver2, layout_game_over_score_frame(@"10"));
+    calculate_and_set_locations(Role::GameScoreGameOver3, layout_game_over_score_frame(@"100"));
+    calculate_and_set_locations(Role::GameScoreGameOver4, layout_game_over_score_frame(@"1000"));
 }
 
 void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &default_frame)
@@ -599,7 +619,7 @@ void SpellLayout::calculate_game_controls_button_charge_size()
     LOG(Layout, "game_controls_button_charge_size: %@", NSStringFromCGSize(game_controls_button_charge_size()));
 }
 
-void SpellLayout::calculate_game_play_time_label_frame()
+void SpellLayout::calculate_game_timer_frame()
 {
     const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
@@ -609,11 +629,11 @@ void SpellLayout::calculate_game_play_time_label_frame()
     CGFloat y = up_rect_mid_y(controls_layout_frame()) - cap_height;
     CGFloat h = font_metrics.line_height();
     CGRect frame = CGRectMake(x, y, w, h);
-    set_game_play_time_label_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "game_play_time_label_frame: %@", NSStringFromCGRect(game_play_time_label_frame()));
+    set_game_timer_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "game_timer_frame: %@", NSStringFromCGRect(game_timer_frame()));
 }
 
-void SpellLayout::calculate_game_play_score_label_frame()
+void SpellLayout::calculate_game_score_frame()
 {
     const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
@@ -623,11 +643,11 @@ void SpellLayout::calculate_game_play_score_label_frame()
     CGFloat y = up_rect_mid_y(controls_layout_frame()) - cap_height;
     CGFloat h = font_metrics.line_height();
     CGRect frame = CGRectMake(x, y, w, h);
-    set_game_play_score_label_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "game_play_score_label_frame: %@", NSStringFromCGRect(game_play_score_label_frame()));
+    set_game_score_frame(up_pixel_rect(frame, screen_scale()));
+    LOG(Layout, "game_score_frame: %@", NSStringFromCGRect(game_score_frame()));
 }
 
-CGRect SpellLayout::calculate_game_over_score_label_frame(NSString *string) const
+CGRect SpellLayout::layout_game_over_score_frame(NSString *string) const
 {
     NSAttributedString *richText = [[NSAttributedString alloc] initWithString:string attributes:@{
         NSFontAttributeName: game_information_font() }
@@ -647,7 +667,7 @@ CGRect SpellLayout::calculate_game_over_score_label_frame(NSString *string) cons
     
     // center right-aligned label
     CGPoint center = up_rect_center(canvas_frame());
-    CGRect labelFrame = game_play_score_label_frame();;
+    CGRect labelFrame = game_score_frame();;
     labelFrame = up_rect_centered_x_in_rect(labelFrame, canvas_frame());
     labelFrame.origin.x = center.x - up_rect_width(labelFrame) + (width * 0.5);
     return up_pixel_rect(labelFrame, screen_scale());

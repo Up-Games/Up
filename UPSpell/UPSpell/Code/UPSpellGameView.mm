@@ -74,23 +74,23 @@ using Spot = UP::SpellLayout::Spot;
     self.roundButtonClear.chargeSize = layout.game_controls_button_charge_size();
     [self addSubview:self.roundButtonClear];
 
-    self.gameTimerLabel = [UPGameTimerLabel label];
-    self.gameTimerLabel.font = layout.game_information_font();
-    self.gameTimerLabel.superscriptFont = layout.game_information_superscript_font();
-    self.gameTimerLabel.superscriptBaselineAdjustment = layout.game_information_superscript_font_metrics().baseline_adjustment();
-    self.gameTimerLabel.superscriptKerning = layout.game_information_superscript_font_metrics().kerning();
+    self.timerLabel = [UPGameTimerLabel label];
+    self.timerLabel.font = layout.game_information_font();
+    self.timerLabel.superscriptFont = layout.game_information_superscript_font();
+    self.timerLabel.superscriptBaselineAdjustment = layout.game_information_superscript_font_metrics().baseline_adjustment();
+    self.timerLabel.superscriptKerning = layout.game_information_superscript_font_metrics().kerning();
     
-    self.gameTimerLabel.textColorCategory = UPColorCategoryInformation;
-    self.gameTimerLabel.textAlignment = NSTextAlignmentRight;
-    self.gameTimerLabel.frame = layout.game_play_time_label_frame();
-    [self addSubview:self.gameTimerLabel];
+    self.timerLabel.textColorCategory = UPColorCategoryInformation;
+    self.timerLabel.textAlignment = NSTextAlignmentRight;
+    self.timerLabel.frame = layout.frame_for(Role::GameTimer);
+    [self addSubview:self.timerLabel];
 
     self.scoreLabel = [UPLabel label];
     self.scoreLabel.string = @"0";
     self.scoreLabel.font = layout.game_information_font();
     self.scoreLabel.textColorCategory = UPColorCategoryInformation;
     self.scoreLabel.textAlignment = NSTextAlignmentRight;
-    self.scoreLabel.frame = layout.game_play_score_label_frame();
+    self.scoreLabel.frame = layout.frame_for(Role::GameScore);
     [self addSubview:self.scoreLabel];
 
     return self;

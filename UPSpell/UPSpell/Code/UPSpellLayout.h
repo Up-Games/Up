@@ -46,6 +46,7 @@ public:
         WordTile1of7, WordTile2of7, WordTile3of7, WordTile4of7, WordTile5of7, WordTile6of7, WordTile7of7,
         WordTray,
         GameButtonLeft, GameButtonRight, GameTimer, GameScore,
+        GameScoreGameOver1, GameScoreGameOver2, GameScoreGameOver3, GameScoreGameOver4,
         DialogMessageHigh, DialogMessageCenter, DialogNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse,
@@ -169,9 +170,6 @@ public:
     const FontMetrics &game_information_font_metrics() const { return m_game_information_font_metrics; }
     UIFont *game_information_superscript_font() const { return m_game_information_superscript_font; }
     const FontMetrics &game_information_superscript_font_metrics() const { return m_game_information_superscript_font_metrics; }
-    CGRect game_play_time_label_frame() const { return m_game_play_time_label_frame; }
-    CGRect game_play_score_label_frame() const { return m_game_play_score_label_frame; }
-    CGRect calculate_game_over_score_label_frame(NSString *) const;
     UIFont *game_note_font() const { return m_game_note_font; }
     const FontMetrics &game_note_font_metrics() const { return m_game_note_font_metrics; }
     CGAffineTransform menu_game_view_transform() const { return m_menu_game_view_transform; }
@@ -183,7 +181,8 @@ private:
     UP_STATIC_INLINE SpellLayout *g_instance;
     
     CGRect layout_aspect_rect(CGRect);
-    
+    CGRect layout_game_over_score_frame(NSString *) const;
+
     void set_aspect_mode(AspectMode aspect_mode) { m_aspect_mode = aspect_mode; }
     void set_aspect_ratio(CGFloat f) { m_aspect_ratio = f; }
     void set_aspect_scale(CGFloat f) { m_aspect_scale = f; }
@@ -206,8 +205,8 @@ private:
     void set_game_note_font(UIFont *font) { m_game_note_font = font; }
     void set_game_note_font_metrics(const FontMetrics &metrics) { m_game_note_font_metrics = metrics; }
     void set_game_controls_button_charge_size(CGSize size) { m_game_controls_button_charge_size = size; }
-    void set_game_play_time_label_frame(CGRect rect) { m_game_play_time_label_frame = rect; }
-    void set_game_play_score_label_frame(CGRect rect) { m_game_play_score_label_frame = rect; }
+    void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
+    void set_game_score_frame(CGRect rect) { m_game_score_frame = rect; }
 
     void calculate_menu_game_view_transform();
     void calculate_tile_size();
@@ -232,8 +231,11 @@ private:
 
     void calculate_and_set_locations(const Role role, const CGRect &frame);
 
-    void calculate_game_play_time_label_frame();
-    void calculate_game_play_score_label_frame();
+    void calculate_game_timer_frame();
+    void calculate_game_score_frame();
+
+    CGRect game_timer_frame() const { return m_game_timer_frame; }
+    CGRect game_score_frame() const { return m_game_score_frame; }
 
     const TileRectArray &player_tray_tile_frames() const { return m_player_tray_tile_frames; }
     const TilePointArray &player_tray_tile_centers() const { return m_player_tray_tile_centers; }
@@ -288,8 +290,8 @@ private:
 
     CGSize m_game_controls_button_charge_size = CGSizeZero;
 
-    CGRect m_game_play_time_label_frame = CGRectZero;
-    CGRect m_game_play_score_label_frame = CGRectZero;
+    CGRect m_game_timer_frame = CGRectZero;
+    CGRect m_game_score_frame = CGRectZero;
 };
 
 UP_STATIC_INLINE bool operator==(const SpellLayout::Location &a, const SpellLayout::Location &b) {
@@ -305,12 +307,9 @@ UP_STATIC_INLINE bool operator<(const SpellLayout::Location &a, const SpellLayou
 }
 
 SpellLayout::Role role_for(TilePosition pos);
-template <class ...Args>
-SpellLayout::Role role_for(Args... args) {
-    return role_for(TilePosition(std::forward<Args>(args)...));
-}
-
+template <class ...Args> SpellLayout::Role role_for(Args... args) { return role_for(TilePosition(std::forward<Args>(args)...)); }
 SpellLayout::Role role_in_word(TileIndex idx, size_t word_length);
+SpellLayout::Role role_for_score(int score);
 
 }  // namespace UP
 

@@ -18,7 +18,7 @@
 @property (nonatomic) UPControl *roundButtonPause;
 @property (nonatomic) UPControl *roundButtonTrash;
 @property (nonatomic) UPControl *roundButtonClear;
-@property (nonatomic) UPGameTimerLabel *gameTimerLabel;
+@property (nonatomic) UPGameTimerLabel *timerLabel;
 @property (nonatomic) UPLabel *scoreLabel;
 
 + (UPSpellGameView *)instance;
