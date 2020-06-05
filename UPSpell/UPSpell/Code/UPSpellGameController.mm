@@ -1367,8 +1367,8 @@ using Spot = UP::SpellLayout::Spot;
     
     SpellLayout &layout = SpellLayout::instance();
     self.dialogPause.titlePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
-    self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomNear);
-    self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse, Spot::OffBottomNear);
+    self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar);
+    self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse, Spot::OffBottomFar);
 
     NSArray<UPViewMove *> *moves = @[
         UPViewMoveMake(self.dialogPause.titlePathView, Role::DialogMessageHigh),
@@ -1396,8 +1396,8 @@ using Spot = UP::SpellLayout::Spot;
 
     NSArray<UPViewMove *> *moves = @[
         UPViewMoveMake(self.dialogPause.titlePathView, Location(Role::DialogMessageHigh, Spot::OffBottomNear)),
-        UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomNear)),
-        UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomNear)),
+        UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
     ];
     start(bloop_out(BandModeUI, moves, 0.3, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;

@@ -118,7 +118,7 @@ public:
     static inline constexpr CGFloat CanonicalDialogOverNoteFontCapHeight = 26;
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
-    static inline constexpr CGFloat CanonicalOffscreenFrameFactor = 1.3;
+    static inline constexpr CGFloat CanonicalOffscreenNearFrameFactor = 1.2;
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
