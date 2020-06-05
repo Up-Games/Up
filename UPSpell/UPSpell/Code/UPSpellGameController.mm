@@ -1370,14 +1370,18 @@ using Spot = UP::SpellLayout::Spot;
     self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar);
     self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse, Spot::OffBottomFar);
 
-    NSArray<UPViewMove *> *moves = @[
-        UPViewMoveMake(self.dialogPause.titlePathView, Role::DialogMessageHigh),
+    NSArray<UPViewMove *> *farMoves = @[
         UPViewMoveMake(self.dialogPause.quitButton, Role::DialogButtonAlternativeResponse),
         UPViewMoveMake(self.dialogPause.resumeButton, Role::DialogButtonDefaultResponse),
     ];
-    start(bloop_in(BandModeUI, moves, 0.3, ^(UIViewAnimatingPosition) {
+    start(bloop_in(BandModeUI, farMoves, 0.35, ^(UIViewAnimatingPosition) {
         [self viewOpUnlockUserInterface];
     }));
+
+    NSArray<UPViewMove *> *nearMoves = @[
+        UPViewMoveMake(self.dialogPause.titlePathView, Role::DialogMessageHigh),
+    ];
+    start(bloop_in(BandModeUI, nearMoves, 0.3, nil));
 
     self.dialogPause.hidden = NO;
     self.dialogPause.alpha = 0.0;
@@ -1394,12 +1398,17 @@ using Spot = UP::SpellLayout::Spot;
         self.dialogPause.alpha = 0.0;
     } completion:nil];
 
-    NSArray<UPViewMove *> *moves = @[
+    NSArray<UPViewMove *> *nearMoves = @[
         UPViewMoveMake(self.dialogPause.titlePathView, Location(Role::DialogMessageHigh, Spot::OffBottomNear)),
+    ];
+    NSArray<UPViewMove *> *farMoves = @[
         UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
         UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
     ];
-    start(bloop_out(BandModeUI, moves, 0.3, ^(UIViewAnimatingPosition) {
+
+    start(bloop_out(BandModeUI, farMoves, 0.3, nil));
+
+    start(bloop_out(BandModeUI, nearMoves, 0.35, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         [UIView animateWithDuration:0.3 animations:^{
