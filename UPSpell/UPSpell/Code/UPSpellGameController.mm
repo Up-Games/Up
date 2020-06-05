@@ -427,17 +427,16 @@ using Spot = UP::SpellLayout::Spot;
 
     // find the word position closest to the tile
     size_t word_length = self.pickedPosition.in_word_tray() ? self.model->word_length() : self.model->word_length() + 1;
-    
     SpellLayout &layout = SpellLayout::instance();
-    const auto &word_tray_tile_centers = layout.word_tray_tile_centers(word_length);
     CGPoint center = tileView.center;
     CGFloat min_d = std::numeric_limits<CGFloat>::max();
     TilePosition pos;
-    for (auto it = word_tray_tile_centers.begin(); it != word_tray_tile_centers.end(); ++it) {
-        CGFloat d = up_point_distance(center, *it);
+    for (TileIndex idx = 0; idx < word_length; idx++) {
+        CGPoint p = layout.center_for(role_in_word(idx, word_length));
+        CGFloat d = up_point_distance(center, p);
         if (d < min_d) {
             min_d = d;
-            pos = TilePosition(TileTray::Word, it - word_tray_tile_centers.begin());
+            pos = TilePosition(TileTray::Word, idx);
         }
     }
     return pos;

@@ -221,10 +221,6 @@ void SpellLayout::calculate()
     calculate_menu_game_view_transform();
     calculate_tile_size();
     calculate_tile_stroke_width();
-    calculate_game_information_font_metrics();
-    calculate_game_information_superscript_font_metrics();
-    calculate_game_note_font_metrics();
-    calculate_game_controls_layout_frame();
     calculate_player_tray_layout_frame();
     calculate_word_tray_layout_frame();
     calculate_word_tray_mask_frame();
@@ -232,6 +228,11 @@ void SpellLayout::calculate()
     calculate_tile_drag_barrier_frame();
     calculate_player_tray_tile_frames();
     calculate_word_tray_tile_frames();
+    calculate_game_information_font_metrics();
+    calculate_game_information_superscript_font_metrics();
+    calculate_game_note_font_metrics();
+    calculate_game_controls_layout_frame();
+    calculate_game_controls_button_charge_size();
     calculate_locations();
 }
 
@@ -557,9 +558,12 @@ void SpellLayout::calculate_dialog_locations()
 
 void SpellLayout::calculate_game_locations()
 {
-    calculate_game_controls_left_button_frame();
-    calculate_game_controls_right_button_frame();
-    calculate_game_controls_button_charge_size();
+    CGSize button_size = up_size_scaled(CanonicalRoundButtonSize, layout_scale());
+    CGRect controls_layout_frame = layout_aspect_rect(CanonicalControlsLayoutFrame);
+    calculate_and_set_locations(Role::GameButtonLeft, up_left_aligned_rect(button_size, controls_layout_frame));
+    calculate_and_set_locations(Role::GameButtonRight, up_right_aligned_rect(button_size, controls_layout_frame));
+
+    
     calculate_game_play_time_label_frame();
     calculate_game_play_score_label_frame();
 }
@@ -585,32 +589,6 @@ void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &def
     m_location_frames.emplace(Location(role, Spot::OffBottom), up_pixel_rect(off_bottom_frame, screen_scale()));
     m_location_frames.emplace(Location(role, Spot::OffLeft), up_pixel_rect(off_left_frame, screen_scale()));
     m_location_frames.emplace(Location(role, Spot::OffRight), up_pixel_rect(off_right_frame, screen_scale()));
-}
-
-void SpellLayout::calculate_game_controls_left_button_frame()
-{
-    CGSize size = up_size_scaled(CanonicalRoundButtonSize, layout_scale());
-    CGRect frame = CGRectMake(
-        up_rect_min_x(controls_layout_frame()),
-        up_rect_min_y(controls_layout_frame()),
-        up_size_width(size),
-        up_size_height(size)
-    );
-    set_game_controls_left_button_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "game_controls_left_button_frame: %@", NSStringFromCGRect(game_controls_left_button_frame()));
-}
-
-void SpellLayout::calculate_game_controls_right_button_frame()
-{
-    CGSize size = up_size_scaled(CanonicalRoundButtonSize, layout_scale());
-    CGRect frame = CGRectMake(
-        up_rect_max_x(controls_layout_frame()) - up_size_width(size),
-        up_rect_min_y(controls_layout_frame()),
-        up_size_width(size),
-        up_size_height(size)
-    );
-    set_game_controls_right_button_frame(up_pixel_rect(frame, screen_scale()));
-    LOG(Layout, "game_controls_right_button_frame: %@", NSStringFromCGRect(game_controls_right_button_frame()));
 }
 
 void SpellLayout::calculate_game_controls_button_charge_size()

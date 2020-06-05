@@ -17,6 +17,11 @@
 
 using UP::SpellLayout;
 using UP::BandGameUI;
+using UP::role_for;
+using UP::role_in_word;
+using Location = UP::SpellLayout::Location;
+using Role = UP::SpellLayout::Role;
+using Spot = UP::SpellLayout::Spot;
 
 @implementation UPSpellGameView
 
@@ -38,7 +43,6 @@ using UP::BandGameUI;
     self.wordTrayView = [UPControl wordTray];
     self.wordTrayView.band = BandGameUI;
     self.wordTrayView.frame = layout.word_tray_layout_frame();
-//    [self.wordTrayView addTarget:self action:@selector(wordTrayTapped) forEvents:UPControlEventTouchUpInside];
     [self addSubview:self.wordTrayView];
     self.tileContainerView = [[UPContainerView alloc] initWithFrame:CGRectZero];
     self.tileContainerView.frame = layout.screen_bounds();
@@ -54,23 +58,20 @@ using UP::BandGameUI;
 
     self.roundButtonPause = [UPControl roundButtonPause];
     self.roundButtonPause.band = BandGameUI;
-    self.roundButtonPause.frame = layout.game_controls_left_button_frame();
+    self.roundButtonPause.frame = layout.frame_for(Role::GameButtonLeft);
     self.roundButtonPause.chargeSize = layout.game_controls_button_charge_size();
-//    [self.roundButtonPause addTarget:self action:@selector(roundButtonPauseTapped:) forEvents:UPControlEventTouchUpInside];
     [self addSubview:self.roundButtonPause];
 
     self.roundButtonTrash = [UPControl roundButtonTrash];
     self.roundButtonTrash.band = BandGameUI;
-    self.roundButtonTrash.frame = layout.game_controls_right_button_frame();
+    self.roundButtonTrash.frame = layout.frame_for(Role::GameButtonRight);
     self.roundButtonTrash.chargeSize = layout.game_controls_button_charge_size();
-//    [self.roundButtonTrash addTarget:self action:@selector(roundButtonTrashTapped:) forEvents:UPControlEventTouchUpInside];
     [self addSubview:self.roundButtonTrash];
 
     self.roundButtonClear = [UPControl roundButtonClear];
     self.roundButtonClear.band = BandGameUI;
-    self.roundButtonClear.frame = layout.game_controls_right_button_frame();
+    self.roundButtonClear.frame = layout.frame_for(Role::GameButtonRight);
     self.roundButtonClear.chargeSize = layout.game_controls_button_charge_size();
-//    [self.roundButtonClear addTarget:self action:@selector(roundButtonClearTapped:) forEvents:UPControlEventTouchUpInside];
     [self addSubview:self.roundButtonClear];
 
     self.gameTimerLabel = [UPGameTimerLabel label];

@@ -163,17 +163,6 @@ public:
 
     UIOffset word_tray_shake_offset() const { return m_word_tray_shake_offset; }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    CGRect game_controls_left_button_frame() const { return m_game_controls_left_button_frame; }
-    CGRect game_controls_right_button_frame() const { return m_game_controls_right_button_frame; }
     CGSize game_controls_button_charge_size() const { return m_game_controls_button_charge_size; }
 
     UIFont *game_information_font() const { return m_game_information_font; }
@@ -185,21 +174,6 @@ public:
     CGRect calculate_game_over_score_label_frame(NSString *) const;
     UIFont *game_note_font() const { return m_game_note_font; }
     const FontMetrics &game_note_font_metrics() const { return m_game_note_font_metrics; }
-
-    const TileRectArray &player_tray_tile_frames() const { return m_player_tray_tile_frames; }
-    const TilePointArray &player_tray_tile_centers() const { return m_player_tray_tile_centers; }
-
-    const TileRectArray &word_tray_tile_frames(size_t word_length) const {
-        ASSERT(word_length > 0);
-        ASSERT_IDX_END(word_length);
-        return m_word_tray_tile_frames[word_length - 1];
-    }
-    const TilePointArray &word_tray_tile_centers(size_t word_length) const {
-        ASSERT(word_length > 0);
-        ASSERT_IDX_END(word_length);
-        return m_word_tray_tile_centers[word_length - 1];
-    }
-
     CGAffineTransform menu_game_view_transform() const { return m_menu_game_view_transform; }
 
 private:
@@ -224,33 +198,20 @@ private:
     void set_tile_stroke_width(CGFloat f) { m_tile_stroke_width = f; }
     void set_tile_drag_barrier_frame(CGRect rect) { m_tile_drag_barrier_frame = rect; }
     void set_word_tray_shake_offset(UIOffset offset) { m_word_tray_shake_offset = offset; }
-    
-    
-    
-    
-    
-    
-    
-    
-    void set_game_controls_left_button_frame(CGRect rect) { m_game_controls_left_button_frame = rect; }
-    void set_game_controls_right_button_frame(CGRect rect) { m_game_controls_right_button_frame = rect; }
-    void set_game_controls_button_charge_size(CGSize size) { m_game_controls_button_charge_size = size; }
+    void set_menu_game_view_transform(CGAffineTransform t) { m_menu_game_view_transform = t; }
     void set_game_information_font(UIFont *font) { m_game_information_font = font; }
     void set_game_information_font_metrics(const FontMetrics &metrics) { m_game_information_font_metrics = metrics; }
     void set_game_information_superscript_font(UIFont *font) { m_game_information_superscript_font = font; }
     void set_game_information_superscript_font_metrics(const FontMetrics &metrics) { m_game_information_superscript_font_metrics = metrics; }
     void set_game_note_font(UIFont *font) { m_game_note_font = font; }
     void set_game_note_font_metrics(const FontMetrics &metrics) { m_game_note_font_metrics = metrics; }
+    void set_game_controls_button_charge_size(CGSize size) { m_game_controls_button_charge_size = size; }
     void set_game_play_time_label_frame(CGRect rect) { m_game_play_time_label_frame = rect; }
     void set_game_play_score_label_frame(CGRect rect) { m_game_play_score_label_frame = rect; }
-    void set_menu_game_view_transform(CGAffineTransform t) { m_menu_game_view_transform = t; }
 
     void calculate_menu_game_view_transform();
     void calculate_tile_size();
     void calculate_tile_stroke_width();
-    void calculate_game_information_font_metrics();
-    void calculate_game_information_superscript_font_metrics();
-    void calculate_game_controls_layout_frame();
     void calculate_player_tray_layout_frame();
     void calculate_word_tray_layout_frame();
     void calculate_word_tray_mask_frame();
@@ -258,21 +219,35 @@ private:
     void calculate_tile_drag_barrier_frame();
     void calculate_word_tray_tile_frames();
     void calculate_player_tray_tile_frames();
-    
+    void calculate_game_information_font_metrics();
+    void calculate_game_information_superscript_font_metrics();
+    void calculate_game_note_font_metrics();
+    void calculate_game_controls_layout_frame();
     void calculate_locations();
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
     void calculate_dialog_locations();
     void calculate_game_locations();
-    
+    void calculate_game_controls_button_charge_size();
+
     void calculate_and_set_locations(const Role role, const CGRect &frame);
 
-    void calculate_game_controls_left_button_frame();
-    void calculate_game_controls_right_button_frame();
-    void calculate_game_controls_button_charge_size();
-    void calculate_game_note_font_metrics();
     void calculate_game_play_time_label_frame();
     void calculate_game_play_score_label_frame();
+
+    const TileRectArray &player_tray_tile_frames() const { return m_player_tray_tile_frames; }
+    const TilePointArray &player_tray_tile_centers() const { return m_player_tray_tile_centers; }
+    
+    const TileRectArray &word_tray_tile_frames(size_t word_length) const {
+        ASSERT(word_length > 0);
+        ASSERT_IDX_END(word_length);
+        return m_word_tray_tile_frames[word_length - 1];
+    }
+    const TilePointArray &word_tray_tile_centers(size_t word_length) const {
+        ASSERT(word_length > 0);
+        ASSERT_IDX_END(word_length);
+        return m_word_tray_tile_centers[word_length - 1];
+    }
 
     std::map<Location, CGRect> m_location_frames;
 
@@ -311,8 +286,6 @@ private:
     std::array<TileRectArray, TileCount> m_word_tray_tile_frames;
     std::array<TilePointArray, TileCount> m_word_tray_tile_centers;
 
-    CGRect m_game_controls_left_button_frame = CGRectZero;
-    CGRect m_game_controls_right_button_frame = CGRectZero;
     CGSize m_game_controls_button_charge_size = CGSizeZero;
 
     CGRect m_game_play_time_label_frame = CGRectZero;
