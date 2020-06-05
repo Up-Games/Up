@@ -160,7 +160,7 @@ SpellLayout::Role role_for_score(int score)
     return SpellLayout::Role::GameScoreGameOver1;
 }
 
-CGRect SpellLayout::layout_aspect_rect(CGRect rect)
+CGRect SpellLayout::layout_aspect_rect(CGRect rect) const
 {
     switch (aspect_mode()) {
         case AspectMode::Canonical: {
@@ -235,9 +235,7 @@ void SpellLayout::calculate()
     calculate_menu_game_view_transform();
     calculate_tile_size();
     calculate_tile_stroke_width();
-    calculate_player_tray_layout_frame();
     calculate_word_tray_layout_frame();
-    calculate_word_tray_mask_frame();
     calculate_word_tray_shake_offset();
     calculate_tile_drag_barrier_frame();
     calculate_player_tray_tile_frames();
@@ -245,7 +243,6 @@ void SpellLayout::calculate()
     calculate_game_information_font_metrics();
     calculate_game_information_superscript_font_metrics();
     calculate_game_note_font_metrics();
-    calculate_game_controls_layout_frame();
     calculate_game_controls_button_charge_size();
     calculate_locations();
 }
@@ -326,28 +323,10 @@ void SpellLayout::calculate_game_note_font_metrics()
     set_game_note_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
-void SpellLayout::calculate_game_controls_layout_frame()
-{
-    set_controls_layout_frame(layout_aspect_rect(CanonicalControlsLayoutFrame));
-    LOG(Layout, "player_tray_layout_frame: %@", NSStringFromCGRect(controls_layout_frame()));
-}
-
-void SpellLayout::calculate_player_tray_layout_frame()
-{
-    set_player_tray_layout_frame(layout_aspect_rect(CanonicalTilesLayoutFrame));
-    LOG(Layout, "player_tray_layout_frame: %@", NSStringFromCGRect(player_tray_layout_frame()));
-}
-
 void SpellLayout::calculate_word_tray_layout_frame()
 {
     set_word_tray_layout_frame(layout_aspect_rect(CanonicalWordTrayFrame));
     LOG(Layout, "word_tray_layout_frame: %@", NSStringFromCGRect(word_tray_layout_frame()));
-}
-
-void SpellLayout::calculate_word_tray_mask_frame()
-{
-    set_word_tray_mask_frame(layout_aspect_rect(CanonicalWordTrayMaskFrame));
-    LOG(Layout, "word_tray_mask_frame: %@", NSStringFromCGRect(word_tray_mask_frame()));
 }
 
 void SpellLayout::calculate_word_tray_shake_offset()
@@ -358,7 +337,7 @@ void SpellLayout::calculate_word_tray_shake_offset()
 
 void SpellLayout::calculate_tile_drag_barrier_frame()
 {
-    CGRect frame = CGRectIntersection(word_tray_mask_frame(), canvas_frame());
+    CGRect frame = CGRectIntersection(layout_aspect_rect(CanonicalWordTrayMaskFrame), canvas_frame());
     frame = CGRectIntersection(frame, CGRectInset(screen_bounds(), 20, 20));
     frame = CGRectInset(frame, up_size_width(tile_size()) * 0.85, up_size_height(tile_size()) * 0.65);
     frame = CGRectOffset(frame, 0, up_size_height(tile_size()) * 0.11);
@@ -368,11 +347,12 @@ void SpellLayout::calculate_tile_drag_barrier_frame()
 
 void SpellLayout::calculate_player_tray_tile_frames()
 {
+    CGRect player_tray_layout_frame = layout_aspect_rect(CanonicalTilesLayoutFrame);
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
     CGFloat gap = CanonicalTileGap * layout_scale();
-    CGFloat x = up_rect_min_x(player_tray_layout_frame());
-    CGFloat y = up_rect_min_y(player_tray_layout_frame());
+    CGFloat x = up_rect_min_x(player_tray_layout_frame);
+    CGFloat y = up_rect_min_y(player_tray_layout_frame);
     for (size_t idx = 0; idx < TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
         CGRect frame = up_pixel_rect(rect, screen_scale());
@@ -389,17 +369,19 @@ void SpellLayout::calculate_player_tray_tile_frames()
 
 void SpellLayout::calculate_word_tray_tile_frames()
 {
+    CGRect player_tray_layout_frame = layout_aspect_rect(CanonicalTilesLayoutFrame);
+    CGRect word_tray_layout_frame = layout_aspect_rect(CanonicalWordTrayFrame);
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
     CGFloat gap = CanonicalTileGap * layout_scale();
     
-    CGFloat x = up_rect_min_x(player_tray_layout_frame());
-    CGFloat y = up_rect_min_y(word_tray_layout_frame());
+    CGFloat x = up_rect_min_x(player_tray_layout_frame);
+    CGFloat y = up_rect_min_y(word_tray_layout_frame);
     TileRectArray rects;
     TilePointArray centers;
     for (size_t idx = 0; idx < TileCount; idx++) {
         CGRect rect = CGRectMake(x, y, up_size_width(size), up_size_height(size));
-        rect = up_rect_centered_y_in_rect(rect, word_tray_layout_frame());
+        rect = up_rect_centered_y_in_rect(rect, word_tray_layout_frame);
         CGRect frame = up_pixel_rect(rect, screen_scale());
         rects[idx] = frame;
         centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
@@ -621,12 +603,13 @@ void SpellLayout::calculate_game_controls_button_charge_size()
 
 void SpellLayout::calculate_game_timer_frame()
 {
+    CGRect controls_layout_frame = layout_aspect_rect(CanonicalControlsLayoutFrame);
     const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
     CGPoint baseline_point = up_point_scaled(CanonicalGameTimeLabelRightAlignedBaselinePointRelativeToTDC, layout_scale());
     CGFloat w = CanonicalGameTimeLabelWidth * layout_scale();
-    CGFloat x = up_rect_mid_x(controls_layout_frame()) + baseline_point.x - w;
-    CGFloat y = up_rect_mid_y(controls_layout_frame()) - cap_height;
+    CGFloat x = up_rect_mid_x(controls_layout_frame) + baseline_point.x - w;
+    CGFloat y = up_rect_mid_y(controls_layout_frame) - cap_height;
     CGFloat h = font_metrics.line_height();
     CGRect frame = CGRectMake(x, y, w, h);
     set_game_timer_frame(up_pixel_rect(frame, screen_scale()));
@@ -635,12 +618,13 @@ void SpellLayout::calculate_game_timer_frame()
 
 void SpellLayout::calculate_game_score_frame()
 {
+    CGRect controls_layout_frame = layout_aspect_rect(CanonicalControlsLayoutFrame);
     const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
     CGPoint baseline_point = up_point_scaled(CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTDC, layout_scale());
     CGFloat w = CanonicalGameScoreLabelWidth * layout_scale();
-    CGFloat x = up_rect_mid_x(controls_layout_frame()) + baseline_point.x;
-    CGFloat y = up_rect_mid_y(controls_layout_frame()) - cap_height;
+    CGFloat x = up_rect_mid_x(controls_layout_frame) + baseline_point.x;
+    CGFloat y = up_rect_mid_y(controls_layout_frame) - cap_height;
     CGFloat h = font_metrics.line_height();
     CGRect frame = CGRectMake(x, y, w, h);
     set_game_score_frame(up_pixel_rect(frame, screen_scale()));

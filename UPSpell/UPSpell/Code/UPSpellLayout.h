@@ -151,11 +151,9 @@ public:
     CGRect layout_frame() const { return m_layout_frame; }
     CGFloat layout_scale() const { return m_layout_scale; }
 
-    CGRect controls_layout_frame() const { return m_game_controls_layout_frame; }
     CGRect word_tray_layout_frame() const { return m_word_tray_layout_frame; }
-    CGRect player_tray_layout_frame() const { return m_player_tray_layout_frame; }
 
-    CGRect word_tray_mask_frame() const { return m_word_tray_mask_frame; }
+    CGRect word_tray_mask_frame() const { return layout_aspect_rect(CanonicalWordTrayMaskFrame); }
 
     CGSize tile_size() const { return m_tile_size; }
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
@@ -180,7 +178,7 @@ private:
 
     UP_STATIC_INLINE SpellLayout *g_instance;
     
-    CGRect layout_aspect_rect(CGRect);
+    CGRect layout_aspect_rect(CGRect) const;
     CGRect layout_game_over_score_frame(NSString *) const;
 
     void set_aspect_mode(AspectMode aspect_mode) { m_aspect_mode = aspect_mode; }
@@ -189,10 +187,7 @@ private:
     void set_letterbox_insets(UIEdgeInsets insets) { m_letterbox_insets = insets; }
     void set_layout_frame(CGRect rect) { m_layout_frame = rect; }
     void set_layout_scale(CGFloat f) { m_layout_scale = f; }
-    void set_controls_layout_frame(CGRect rect) { m_game_controls_layout_frame = rect; }
     void set_word_tray_layout_frame(CGRect rect) { m_word_tray_layout_frame = rect; }
-    void set_word_tray_mask_frame(CGRect rect) { m_word_tray_mask_frame = rect; }
-    void set_player_tray_layout_frame(CGRect rect) { m_player_tray_layout_frame = rect; }
     void set_tile_size(CGSize size) { m_tile_size = size; }
     void set_tile_stroke_width(CGFloat f) { m_tile_stroke_width = f; }
     void set_tile_drag_barrier_frame(CGRect rect) { m_tile_drag_barrier_frame = rect; }
@@ -211,9 +206,7 @@ private:
     void calculate_menu_game_view_transform();
     void calculate_tile_size();
     void calculate_tile_stroke_width();
-    void calculate_player_tray_layout_frame();
     void calculate_word_tray_layout_frame();
-    void calculate_word_tray_mask_frame();
     void calculate_word_tray_shake_offset();
     void calculate_tile_drag_barrier_frame();
     void calculate_word_tray_tile_frames();
@@ -221,7 +214,6 @@ private:
     void calculate_game_information_font_metrics();
     void calculate_game_information_superscript_font_metrics();
     void calculate_game_note_font_metrics();
-    void calculate_game_controls_layout_frame();
     void calculate_locations();
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
@@ -276,10 +268,7 @@ private:
     CGFloat m_tile_stroke_width = 0.0;
     UIBezierPath *m_tile_stroke_path = nil;
     
-    CGRect m_game_controls_layout_frame = CGRectZero;
-    CGRect m_player_tray_layout_frame = CGRectZero;
     CGRect m_word_tray_layout_frame = CGRectZero;
-    CGRect m_word_tray_mask_frame = CGRectZero;
     UIOffset m_word_tray_shake_offset;
     CGRect m_tile_drag_barrier_frame = CGRectZero;
 
