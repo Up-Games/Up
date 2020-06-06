@@ -471,16 +471,14 @@ using Spot = UP::SpellLayout::Spot;
         for (UPTileView *tileView in wordTrayTileViews) {
             Tile &tile = self.model->find_tile(tileView);
             ASSERT(tile.position().in_word_tray());
-            Location location(role_in_word(tile.position().index(), self.model->word_length()));
-            [moves addObject:UPViewMoveMake(tileView, location)];
+            [moves addObject:UPViewMoveMake(tileView, role_in_word(tile.position().index(), self.model->word_length()))];
         }
         start(UP::TimeSpanning::slide(BandGameUI, moves, 0.15, nil));
     }
     
     UPTileView *tileView = tile.view();
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
-    Location location(role_in_word(word_pos.index(), self.model->word_length()), Spot::Default);
-    start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], 0.3, nil));
+    start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_in_word(word_pos.index(), self.model->word_length()))], 0.3, nil));
 
     tileView.highlighted = NO;
     [self viewOpUpdateGameControls];
@@ -500,8 +498,7 @@ using Spot = UP::SpellLayout::Spot;
 
     UPTileView *tileView = tile.view();
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
-    Location location(role_for(TileTray::Player, self.model->player_tray_index(tileView)));
-    start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], 0.3, nil));
+    start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, self.model->player_tray_index(tileView)))], 0.3, nil));
 
     tileView.highlighted = NO;
     [self viewOpUpdateGameControls];
@@ -607,8 +604,7 @@ using Spot = UP::SpellLayout::Spot;
     }
     else {
         Tile &tile = self.model->find_tile(tileView);
-        Location location(role_for(TileTray::Player, tile.position().index()));
-        start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], 0.3, nil));
+        start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, tile.position().index()))], 0.3, nil));
     }
 
     tileView.highlighted = NO;
@@ -730,8 +726,7 @@ using Spot = UP::SpellLayout::Spot;
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
         Tile &tile = self.model->find_tile(tileView);
-        Location location(role_in_word(tile.position().index(), self.model->word_length()));
-        [moves addObject:UPViewMoveMake(tileView, location)];
+        [moves addObject:UPViewMoveMake(tileView, role_in_word(tile.position().index(), self.model->word_length()))];
     }
     start(UP::TimeSpanning::slide(BandGameUI, moves, 0.15, nil));
 }
@@ -754,8 +749,7 @@ using Spot = UP::SpellLayout::Spot;
             if (idx >= hover_pos.index()) {
                 idx++;
             }
-            Location location(role_in_word(idx, word_length));
-            [moves addObject:UPViewMoveMake(tileView, location)];
+            [moves addObject:UPViewMoveMake(tileView, role_in_word(idx, word_length))];
         }
         start(slide(BandGameUI, moves, 0.15, nil));
     }

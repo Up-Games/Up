@@ -111,7 +111,6 @@ public:
     static inline constexpr CGRect CanonicalTilesLayoutFrame =       {    0, 348, CanonicalTilesLayoutWidth, 120 };
 
     static inline constexpr CGFloat CanonicalWordTrayStroke =      10;
-    static inline constexpr CGFloat CanonicalWordTrayMaskXOffset = 10;
     static inline constexpr CGFloat CanonicalWordTrayShakeAmount = 30;
 
     static inline constexpr CGRect CanonicalWordScoreLayoutFrame = CanonicalWordTrayFrame;

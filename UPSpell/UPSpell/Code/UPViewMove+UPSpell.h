@@ -14,11 +14,6 @@ UP_STATIC_INLINE UPViewMove *UPViewMoveMake(UIView *view, const UP::SpellLayout:
     return [UPViewMove view:view beginning:view.center destination:layout.center_for(location)];
 }
 
-UP_STATIC_INLINE UPViewMove *UPViewMoveMake(UIView *view,
-                                            const UP::SpellLayout::Location &beginningLocation,
-                                            const UP::SpellLayout::Location &destinationLocation) {
-    UP::SpellLayout &layout = UP::SpellLayout::instance();
-    CGPoint beginning = layout.center_for(beginningLocation);
-    CGPoint destination = layout.center_for(destinationLocation);
-    return [UPViewMove view:view beginning:beginning destination:destination];
+template <class ...Args> UPViewMove *UPViewMoveMake(UIView *view, Args... args) {
+    return UPViewMoveMake(view, UP::SpellLayout::Location(std::forward<Args>(args)...));
 }
