@@ -9,6 +9,7 @@
 
 NSString * const UPGameInformationFontName = @"MalloryNarrow-Bold";
 NSString * const UPGameNoteFontName = @"MalloryCondensed-BlackItalic";
+NSString * const UPWordScoreBonusFontName = @"MalloryCondensed-BlackItalic";
 
 //
 //  Below, the UIFontFeatureTypeIdentifierKey and UIFontFeatureSelectorIdentifierKey are set from
@@ -57,6 +58,40 @@ NSString * const UPGameNoteFontName = @"MalloryCondensed-BlackItalic";
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
     return [UIFont gameNoteFontOfSize:pointSize];
+}
+
++ (UIFont *)wordScoreFontOfSize:(CGFloat)fontSize
+{
+    return [UIFont gameInformationFontOfSize:fontSize];
+}
+
++ (UIFont *)wordScoreFontWithCapHeight:(CGFloat)capHeight
+{
+    return [UIFont gameInformationFontWithCapHeight:capHeight];
+}
+
++ (UIFont *)wordScoreBonusFontOfSize:(CGFloat)fontSize
+{
+    UIFont *font = [UIFont fontWithName:UPWordScoreBonusFontName size:fontSize];
+    UIFontDescriptor *descriptor = [font fontDescriptor];
+    NSDictionary *attributes = @{
+        UIFontDescriptorFeatureSettingsAttribute: @[
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+                }
+        ]
+    };
+    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
+}
+
++ (UIFont *)wordScoreBonusFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPWordScoreBonusFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont wordScoreBonusFontOfSize:pointSize];
 }
 
 @end

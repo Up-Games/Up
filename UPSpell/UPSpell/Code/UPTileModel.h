@@ -40,7 +40,6 @@ public:
     char32_t glyph() const { return m_glyph; }
     int multiplier() const { return m_multiplier; }
     int score() const { return score_for(glyph()); }
-    int effective_score() const { return multiplier() * score(); }
 
     template <bool B = true> bool is_sentinel() const { return (glyph() == SentinelGlyph) == B; }
 

@@ -47,6 +47,7 @@ public:
         WordTray,
         GameButtonLeft, GameButtonRight, GameTimer, GameScore,
         GameScoreGameOver1, GameScoreGameOver2, GameScoreGameOver3, GameScoreGameOver4,
+        WordScore, WordScoreBonus,
         DialogMessageHigh, DialogMessageCenter, DialogNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse,
@@ -94,6 +95,9 @@ public:
     static inline constexpr CGPoint CanonicalGameTimeLabelRightAlignedBaselinePointRelativeToTDC =  { -30, 91.7 };
     static inline constexpr CGPoint CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTDC = {  30, 91.7 };
     static inline constexpr CGFloat CanonicalGameScoreLabelWidth =  175;
+    static inline constexpr CGFloat CanonicalWordScoreCapHeight = 52;
+    static inline constexpr CGFloat CanonicalWordScoreBonusCapHeight = 30;
+    static inline constexpr CGFloat CanonicalWordScoreBonusBaselineAdjustment = 14;
 
     static inline constexpr CGSize CanonicalTileSize = { 100, 120 };
     static inline constexpr CGRect CanonicalTileFrame = { 0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize) };
@@ -101,20 +105,21 @@ public:
     static inline constexpr CGFloat CanonicalTileGap = 15;
     static inline constexpr CGFloat CanonicalTilesLayoutWidth = up_size_width(CanonicalTileSize) * 7 + (CanonicalTileGap * 6);
 
-    static inline constexpr CGRect CanonicalControlsLayoutFrame = {   92,  22, 816,  84 };
-    static inline constexpr CGRect CanonicalWordTrayFrame =       { 62.5, 133, 875, 182 };
-    static inline constexpr CGRect CanonicalWordTrayMaskFrame =   { 62.5, 143, 875, 420 };
-    static inline constexpr CGRect CanonicalTilesLayoutFrame =    {    0, 348, CanonicalTilesLayoutWidth, 120 };
+    static inline constexpr CGRect CanonicalControlsLayoutFrame =    {   92,  22, 816,  84 };
+    static inline constexpr CGRect CanonicalWordTrayFrame =          { 62.5, 133, 875, 182 };
+    static inline constexpr CGRect CanonicalWordTrayTileMaskFrame =  { 62.5, 143, 875, 420 };
+    static inline constexpr CGRect CanonicalTilesLayoutFrame =       {    0, 348, CanonicalTilesLayoutWidth, 120 };
 
     static inline constexpr CGFloat CanonicalWordTrayStroke =      10;
     static inline constexpr CGFloat CanonicalWordTrayMaskXOffset = 10;
     static inline constexpr CGFloat CanonicalWordTrayShakeAmount = 30;
 
+    static inline constexpr CGRect CanonicalWordScoreLayoutFrame = CanonicalWordTrayFrame;
+
     static inline constexpr CGRect CanonicalDialogTopButtonsLayoutFrame =      {  80,  28,  840,  85 };
     static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  75 };
     static inline constexpr CGRect CanonicalDialogNoteLayoutFrame =            {   0, 385, 1000,  40 };
-    
-    static inline constexpr CGSize CanonicalDialogTitleSize =                          {  875, 182 };
+    static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
     static inline constexpr CGFloat CanonicalDialogOverNoteFontCapHeight = 26;
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
@@ -156,7 +161,7 @@ public:
 
     CGRect word_tray_layout_frame() const { return m_word_tray_layout_frame; }
 
-    CGRect word_tray_mask_frame() const { return layout_aspect_rect(CanonicalWordTrayMaskFrame); }
+    CGRect word_tray_mask_frame() const { return layout_aspect_rect(CanonicalWordTrayTileMaskFrame); }
 
     CGSize tile_size() const { return m_tile_size; }
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
@@ -173,6 +178,10 @@ public:
     const FontMetrics &game_information_superscript_font_metrics() const { return m_game_information_superscript_font_metrics; }
     UIFont *game_note_font() const { return m_game_note_font; }
     const FontMetrics &game_note_font_metrics() const { return m_game_note_font_metrics; }
+    UIFont *word_score_font() const { return m_word_score_font; }
+    const FontMetrics &word_score_font_metrics() const { return m_word_score_font_metrics; }
+    UIFont *word_score_bonus_font() const { return m_word_score_bonus_font; }
+    const FontMetrics &word_score_bonus_font_metrics() const { return m_word_score_bonus_font_metrics; }
     CGAffineTransform menu_game_view_transform() const { return m_menu_game_view_transform; }
 
 private:
@@ -202,6 +211,10 @@ private:
     void set_game_information_superscript_font_metrics(const FontMetrics &metrics) { m_game_information_superscript_font_metrics = metrics; }
     void set_game_note_font(UIFont *font) { m_game_note_font = font; }
     void set_game_note_font_metrics(const FontMetrics &metrics) { m_game_note_font_metrics = metrics; }
+    void set_word_score_font(UIFont *font) { m_word_score_font = font; }
+    void set_word_score_font_metrics(const FontMetrics &metrics) { m_word_score_font_metrics = metrics; }
+    void set_word_score_bonus_font(UIFont *font) { m_word_score_bonus_font = font; }
+    void set_word_score_bonus_font_metrics(const FontMetrics &metrics) { m_word_score_bonus_font_metrics = metrics; }
     void set_game_controls_button_charge_size(CGSize size) { m_game_controls_button_charge_size = size; }
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
     void set_game_score_frame(CGRect rect) { m_game_score_frame = rect; }
@@ -217,6 +230,8 @@ private:
     void calculate_game_information_font_metrics();
     void calculate_game_information_superscript_font_metrics();
     void calculate_game_note_font_metrics();
+    void calculate_word_score_font_metrics();
+    void calculate_word_score_bonus_font_metrics();
     void calculate_locations();
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
@@ -266,7 +281,11 @@ private:
     FontMetrics m_game_information_superscript_font_metrics;
     __strong UIFont *m_game_note_font;
     FontMetrics m_game_note_font_metrics;
-    
+    __strong UIFont *m_word_score_font;
+    FontMetrics m_word_score_font_metrics;
+    __strong UIFont *m_word_score_bonus_font;
+    FontMetrics m_word_score_bonus_font_metrics;
+
     CGSize m_tile_size = CGSizeZero;
     CGFloat m_tile_stroke_width = 0.0;
     UIBezierPath *m_tile_stroke_path = nil;

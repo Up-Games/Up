@@ -77,6 +77,7 @@ using Spot = UP::SpellLayout::Spot;
 @property (nonatomic) UPSpellGameView *gameView;
 @property (nonatomic) UPGameTimer *gameTimer;
 @property (nonatomic) BOOL showingRoundButtonClear;
+@property (nonatomic) BOOL showingWordScoreLabel;
 @property (nonatomic) UPTileView *pickedView;
 @property (nonatomic) TilePosition pickedPosition;
 @property (nonatomic) CGPoint panStartPoint;
@@ -450,6 +451,7 @@ using Spot = UP::SpellLayout::Spot;
     ASSERT(tile.in_player_tray());
 
     cancel(BandGameDelay);
+    [self viewOpOrderOutWordScoreLabel];
 
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
 
@@ -528,6 +530,7 @@ using Spot = UP::SpellLayout::Spot;
     ASSERT_NPOS(self.pickedPosition);
 
     cancel(BandGameAll);
+    [self viewOpOrderOutWordScoreLabel];
 
     UPTileView *tileView = tile.view();
     [tileView cancelAnimations];
@@ -600,12 +603,12 @@ using Spot = UP::SpellLayout::Spot;
 
     if (self.pickedPosition.in_word_tray()) {
         Location location(role_in_word(self.pickedPosition.index(), self.model->word_length()));
-        start(UP::TimeSpanning::bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], 0.3, nil));
+        start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], 0.3, nil));
     }
     else {
         Tile &tile = self.model->find_tile(tileView);
         Location location(role_for(TileTray::Player, tile.position().index()));
-        start(UP::TimeSpanning::bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], 0.3, nil));
+        start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], 0.3, nil));
     }
 
     tileView.highlighted = NO;
@@ -625,6 +628,11 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)applyActionSubmit
 {
+    const State &state = self.model->back_state();
+    if (state.action().opcode() == SpellModel::Opcode::SUBMIT) {
+        return;
+    }
+
     cancel(BandGameDelay);
 
     [self viewOpSubmitWord];
@@ -669,6 +677,7 @@ using Spot = UP::SpellLayout::Spot;
     ASSERT(self.wordTrayTileViews.count == 0);
 
     cancel(BandGameDelay);
+    [self viewOpOrderOutWordScoreLabel];
 
     [self viewOpLockUserInterfaceIncludingPause:NO];
 
@@ -707,7 +716,7 @@ using Spot = UP::SpellLayout::Spot;
         self.gameView.roundButtonTrash.hidden = NO;
     }
     
-    self.gameView.scoreLabel.string = [NSString stringWithFormat:@"%d", self.model->score()];
+    self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", self.model->game_score()];
 }
 
 - (void)viewOpSlideWordTrayViewsIntoPlace
@@ -815,7 +824,7 @@ using Spot = UP::SpellLayout::Spot;
         TileIndex idx = self.model->player_tray_index(tileView);
         [moves addObject:UPViewMoveMake(tileView, Location(role_for(TileTray::Player, idx)))];
     }
-    start(UP::TimeSpanning::bloop_in(BandGameUI, moves, 0.3, nil));
+    start(bloop_in(BandGameUI, moves, 0.3, nil));
 }
 
 - (void)viewOpSubmitWord
@@ -828,6 +837,7 @@ using Spot = UP::SpellLayout::Spot;
     }
 
     cancel(BandGameUITile);
+
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
         Tile &tile = self.model->find_tile(tileView);
@@ -835,7 +845,90 @@ using Spot = UP::SpellLayout::Spot;
         Location location(role_in_word(tile.position().index(), self.model->word_length()), Spot::OffTopNear);
         [moves addObject:UPViewMoveMake(tileView, location)];
     }
-    start(UP::TimeSpanning::bloop_out(BandGameUI, moves, 0.3, nil));
+    start(bloop_out(BandGameUI, moves, 0.3, nil));
+    
+    [self viewOpUpdateWordScoreLabel];
+
+    Role role = (self.model->word_length() >= 5 || self.model->word_multiplier() > 1) ? Role::WordScoreBonus : Role::WordScore;
+
+    SpellLayout &layout = SpellLayout::instance();
+    self.gameView.wordScoreLabel.frame = layout.frame_for(role, Spot::OffBottomFar);
+    self.gameView.wordScoreLabel.hidden = NO;
+    
+    UPViewMove *wordScoreInMove = UPViewMoveMake(self.gameView.wordScoreLabel, Location(role, Spot::Default));
+
+    delay(BandGameDelay, 0.25, ^{
+        self.showingWordScoreLabel = YES;
+        start(bloop_in(BandGameUI, @[wordScoreInMove], 0.3, ^(UIViewAnimatingPosition) {
+            delay(BandGameDelay, 1.5, ^{
+                if (self.showingWordScoreLabel) {
+                    UPViewMove *wordScoreOutMove = UPViewMoveMake(self.gameView.wordScoreLabel, Location(role, Spot::OffTopNear));
+                    start(bloop_out(BandGameUI, @[wordScoreOutMove], 0.3, ^(UIViewAnimatingPosition) {
+                        self.showingWordScoreLabel = NO;
+                        self.gameView.wordScoreLabel.hidden = YES;
+                    }));
+                }
+            });
+        }));
+    });
+}
+
+- (void)viewOpUpdateWordScoreLabel
+{
+    UIColor *wordScoreColor = [UIColor themeColorWithCategory:self.gameView.wordScoreLabel.textColorCategory];
+    
+    SpellLayout &layout = SpellLayout::instance();
+    NSString *string = [NSString stringWithFormat:@"+%d \n", self.model->word_score()];
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
+    NSRange range = NSMakeRange(0, string.length);
+    [attrString addAttribute:NSFontAttributeName value:layout.word_score_font() range:range];
+    [attrString addAttribute:NSForegroundColorAttributeName value:wordScoreColor range:range];
+    
+    Role role = Role::WordScore;
+    
+    const size_t word_length = self.model->word_length();
+    const int word_multiplier = self.model->word_multiplier();
+    BOOL has_length_bonus = word_length >= 5;
+    BOOL has_multiplier_bonus = word_multiplier > 1;
+    if (has_length_bonus || has_multiplier_bonus) {
+        role = Role::WordScoreBonus;
+        NSMutableString *bonusString = [NSMutableString string];
+        if (has_length_bonus) {
+            switch (word_length) {
+                case 5:
+                    [bonusString appendFormat:@"+%d FIVE TILES", SpellModel::FiveLetterWordBonus];
+                    break;
+                case 6:
+                    [bonusString appendFormat:@"+%d SIX TILES", SpellModel::SixLetterWordBonus];
+                    break;
+                case 7:
+                    [bonusString appendFormat:@"+%d SEVEN TILES", SpellModel::SevenLetterWordBonus];
+                    break;
+            }
+        }
+        if (has_multiplier_bonus) {
+            if (has_length_bonus) {
+                [bonusString appendString:@"  &  "];
+            }
+            [bonusString appendFormat:@"%d× WORD SCORE", word_multiplier];
+        }
+        
+        NSMutableAttributedString *bonusAttrString = [[NSMutableAttributedString alloc] initWithString:bonusString];
+        NSRange bonusRange = NSMakeRange(0, bonusString.length);
+        [bonusAttrString addAttribute:NSFontAttributeName value:layout.word_score_bonus_font() range:bonusRange];
+        [bonusAttrString addAttribute:NSForegroundColorAttributeName value:wordScoreColor range:bonusRange];
+        CGFloat baseline_adjustment = layout.word_score_bonus_font_metrics().baseline_adjustment();
+        [bonusAttrString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baseline_adjustment) range:bonusRange];
+        [attrString appendAttributedString:bonusAttrString];
+    }
+    
+    self.gameView.wordScoreLabel.attributedString = attrString;
+}
+
+- (void)viewOpOrderOutWordScoreLabel
+{
+    self.gameView.wordScoreLabel.hidden = YES;
+    self.showingWordScoreLabel = NO;
 }
 
 - (void)viewOpDumpPlayerTray:(NSArray *)playerTrayTileViews
@@ -965,14 +1058,14 @@ using Spot = UP::SpellLayout::Spot;
         self.gameView.roundButtonPause.highlighted = YES;
         self.gameView.roundButtonPause.alpha = [UIColor themeModalActiveAlpha];
         self.gameView.timerLabel.alpha = alpha;
-        self.gameView.scoreLabel.alpha = alpha;
+        self.gameView.gameScoreLabel.alpha = alpha;
     }
     else if (mode == UPSpellGameModeOverInterstitial || mode == UPSpellGameModeOver) {
         self.gameView.roundButtonPause.alpha = alpha;
     }
     else {
         self.gameView.timerLabel.alpha = alpha;
-        self.gameView.scoreLabel.alpha = alpha;
+        self.gameView.gameScoreLabel.alpha = alpha;
         self.gameView.roundButtonPause.alpha = alpha;
     }
     if (self.showingRoundButtonClear) {
@@ -982,6 +1075,7 @@ using Spot = UP::SpellLayout::Spot;
         self.gameView.roundButtonTrash.alpha = alpha;
     }
     self.gameView.wordTrayView.alpha = alpha;
+    self.gameView.wordScoreLabel.alpha = alpha;
 
     self.gameView.wordTrayView.userInteractionEnabled = NO;
     self.gameView.roundButtonTrash.userInteractionEnabled = NO;
@@ -1000,7 +1094,6 @@ using Spot = UP::SpellLayout::Spot;
     self.gameView.roundButtonPause.highlighted = NO;
     self.gameView.roundButtonPause.alpha = 1.0;
 
-    self.gameView.wordTrayView.alpha = 1.0;
     if (self.showingRoundButtonClear) {
         self.gameView.roundButtonClear.alpha = 1.0;
     }
@@ -1008,7 +1101,9 @@ using Spot = UP::SpellLayout::Spot;
         self.gameView.roundButtonTrash.alpha = 1.0;
     }
     self.gameView.timerLabel.alpha = 1.0;
-    self.gameView.scoreLabel.alpha = 1.0;
+    self.gameView.gameScoreLabel.alpha = 1.0;
+    self.gameView.wordTrayView.alpha = 1.0;
+    self.gameView.wordScoreLabel.alpha = 1.0;
 
     self.gameView.wordTrayView.userInteractionEnabled = YES;
     self.gameView.roundButtonTrash.userInteractionEnabled = YES;
@@ -1468,7 +1563,7 @@ using Spot = UP::SpellLayout::Spot;
     ];
 
     start(slide(BandModeUI, buttonMoves, 0.75, nil));
-    start(slide(BandModeUI, @[UPViewMoveMake(self.gameView.scoreLabel, UP::role_for_score(self.model->score()))], 0.75, nil));
+    start(slide(BandModeUI, @[UPViewMoveMake(self.gameView.gameScoreLabel, UP::role_for_score(self.model->game_score()))], 0.75, nil));
     start(fade(BandModeUI, @[self.gameView.timerLabel], 0.3, nil));
     [UIView animateWithDuration:0.75 animations:^{
         [self viewOpEnterModal:UPSpellGameModeOver];

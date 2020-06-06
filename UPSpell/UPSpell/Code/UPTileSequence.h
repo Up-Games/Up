@@ -35,12 +35,12 @@ public:
         }
         char32_t c = m_letters.back();
         m_letters.pop_back();
-        int r = m_random.uint32_less_than(30);
+        int r = m_random.uint32_less_than(100);
         int m = 1;
-        if (r >= 29) {
+        if (r >= 98) {
             m = 3;
         }
-        else if (r > 24) {
+        else if (r >= 94) {
             m = 2;
         }
         return TileModel(c, m);

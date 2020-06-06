@@ -238,13 +238,16 @@ void SpellModel::update_word()
     bzero(chars, sizeof(chars));
     size_t count = 0;
     m_word_score = 0;
+    m_word_multiplier = 1;
     for (auto &tile : m_tiles) {
         if (tile.in_word_tray()) {
             chars[tile.position().index()] = tile.model().glyph();
-            m_word_score += tile.model().effective_score();
+            m_word_score += tile.model().score();
+            m_word_multiplier *= tile.model().multiplier();
             count++;
         }
     }
+    m_word_score *= m_word_multiplier;
 #if !ASSERT_DISABLED
     for (size_t idx = 0; idx < TileCount; idx++) {
         if (idx < count) {
@@ -450,7 +453,7 @@ const SpellModel::State &SpellModel::apply(const Action &action)
 //        tile.clear_view();
 //    }
 
-    return m_states.emplace_back(action, tiles(), score());
+    return m_states.emplace_back(action, tiles(), game_score());
 }
 
 void SpellModel::apply_init(const Action &action)
@@ -623,7 +626,7 @@ void SpellModel::apply_submit(const Action &action)
     ASSERT(word_score() > 0);
     ASSERT(positions_valid());
 
-    m_score += word_score();
+    m_game_score += word_score();
     clear_and_sentinelize_word_tray();
     fill_player_tray();
     update_word();

@@ -14,12 +14,12 @@
 @interface UPSpellGameView : UIView
 @property (nonatomic) UPControl *wordTrayView;
 @property (nonatomic) UIView *tileContainerView;
-@property (nonatomic) UPBezierPathView *tileContainerClipView;
 @property (nonatomic) UPControl *roundButtonPause;
 @property (nonatomic) UPControl *roundButtonTrash;
 @property (nonatomic) UPControl *roundButtonClear;
 @property (nonatomic) UPGameTimerLabel *timerLabel;
-@property (nonatomic) UPLabel *scoreLabel;
+@property (nonatomic) UPLabel *gameScoreLabel;
+@property (nonatomic) UPLabel *wordScoreLabel;
 
 + (UPSpellGameView *)instance;
 

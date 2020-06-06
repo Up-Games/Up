@@ -243,6 +243,8 @@ void SpellLayout::calculate()
     calculate_game_information_font_metrics();
     calculate_game_information_superscript_font_metrics();
     calculate_game_note_font_metrics();
+    calculate_word_score_font_metrics();
+    calculate_word_score_bonus_font_metrics();
     calculate_game_controls_button_charge_size();
     calculate_locations();
 }
@@ -323,6 +325,23 @@ void SpellLayout::calculate_game_note_font_metrics()
     set_game_note_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
+void SpellLayout::calculate_word_score_font_metrics()
+{
+    CGFloat cap_height = CanonicalWordScoreCapHeight * layout_scale();
+    UIFont *font = [UIFont wordScoreFontWithCapHeight:cap_height];
+    set_word_score_font(font);
+    set_word_score_font_metrics(FontMetrics(font.fontName, font.pointSize));
+}
+
+void SpellLayout::calculate_word_score_bonus_font_metrics()
+{
+    CGFloat cap_height = CanonicalWordScoreBonusCapHeight * layout_scale();
+    UIFont *font = [UIFont wordScoreBonusFontOfSize:cap_height];
+    set_word_score_bonus_font(font);
+    CGFloat baseline_adjustment = CanonicalWordScoreBonusBaselineAdjustment * layout_scale();
+    set_word_score_bonus_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
+}
+
 void SpellLayout::calculate_word_tray_layout_frame()
 {
     set_word_tray_layout_frame(layout_aspect_rect(CanonicalWordTrayFrame));
@@ -337,7 +356,7 @@ void SpellLayout::calculate_word_tray_shake_offset()
 
 void SpellLayout::calculate_tile_drag_barrier_frame()
 {
-    CGRect frame = CGRectIntersection(layout_aspect_rect(CanonicalWordTrayMaskFrame), canvas_frame());
+    CGRect frame = CGRectIntersection(layout_aspect_rect(CanonicalWordTrayTileMaskFrame), canvas_frame());
     frame = CGRectIntersection(frame, CGRectInset(screen_bounds(), 20, 20));
     frame = CGRectInset(frame, up_size_width(tile_size()) * 0.85, up_size_height(tile_size()) * 0.65);
     frame = CGRectOffset(frame, 0, up_size_height(tile_size()) * 0.11);
@@ -374,7 +393,7 @@ void SpellLayout::calculate_word_tray_tile_frames()
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
     CGFloat gap = CanonicalTileGap * layout_scale();
-    
+
     CGFloat x = up_rect_min_x(player_tray_layout_frame);
     CGFloat y = up_rect_min_y(word_tray_layout_frame);
     TileRectArray rects;
@@ -528,6 +547,18 @@ void SpellLayout::calculate_game_locations()
     calculate_and_set_locations(Role::GameScoreGameOver2, layout_game_over_score_frame(@"10"));
     calculate_and_set_locations(Role::GameScoreGameOver3, layout_game_over_score_frame(@"100"));
     calculate_and_set_locations(Role::GameScoreGameOver4, layout_game_over_score_frame(@"1000"));
+
+    CGRect word_score_frame = up_rect_scaled(CanonicalWordScoreLayoutFrame, layout_scale());
+    word_score_frame.size.height = word_score_font_metrics().line_height();
+    word_score_frame = up_rect_centered_in_rect(word_score_frame, word_tray_layout_frame());
+    word_score_frame.origin.y -= (word_score_frame.size.height) * 0.05;
+    calculate_and_set_locations(Role::WordScore, word_score_frame);
+
+    CGRect word_score_bonus_frame = up_rect_scaled(CanonicalWordScoreLayoutFrame, layout_scale());
+    word_score_bonus_frame.size.height = word_score_font_metrics().line_height() + word_score_bonus_font_metrics().line_height();
+    word_score_bonus_frame = up_rect_centered_in_rect(word_score_bonus_frame, word_tray_layout_frame());
+    word_score_bonus_frame.origin.y -= (word_score_bonus_frame.size.height) * 0.04;
+    calculate_and_set_locations(Role::WordScoreBonus, word_score_bonus_frame);
 }
 
 void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &default_frame)

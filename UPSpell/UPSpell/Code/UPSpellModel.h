@@ -140,9 +140,9 @@ public:
         QUIT    // quit the game early
     };
 
-    static constexpr int SevenLetterWordBonus = 50;
-    static constexpr int SixLetterWordBonus = 20;
-    static constexpr int FiveLetterWordBonus = 10;
+    static constexpr int SevenLetterWordBonus = 25;
+    static constexpr int SixLetterWordBonus = 10;
+    static constexpr int FiveLetterWordBonus = 5;
 
     class Action {
     public:
@@ -207,9 +207,10 @@ public:
     const std::u32string &word_string() const { return m_word_string; }
     size_t word_length() const { return m_word_string.length(); }
     int word_score() const { return m_word_score; }
+    int word_multiplier() const { return m_word_multiplier; }
     bool word_in_lexicon() const { return m_word_in_lexicon; }
 
-    int score() const { return m_score; }
+    int game_score() const { return m_game_score; }
 
     const State &apply(const Action &action);
 
@@ -254,9 +255,10 @@ private:
 
     std::u32string m_word_string;
     int m_word_score = 0;
+    int m_word_multiplier = 0;
     bool m_word_in_lexicon = false;
     
-    int m_score = 0;
+    int m_game_score = 0;
 };
 
 // =========================================================================================================================================
