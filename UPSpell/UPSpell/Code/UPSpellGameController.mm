@@ -114,7 +114,7 @@ using Spot = UP::SpellLayout::Spot;
     self.model = new SpellModel(game_code);
     
     [UIColor setThemeStyle:UPColorStyleLight];
-    [UIColor setThemeHue:310];
+    [UIColor setThemeHue:222];
     SpellLayout &layout = SpellLayout::create_instance();
     TilePaths::create_instance();
     
