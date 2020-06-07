@@ -63,19 +63,19 @@ using Spot = UP::SpellLayout::Spot;
 
     self.roundButtonPause = [UPControl roundButtonMinusSign];
     self.roundButtonPause.band = BandGameUI;
-    self.roundButtonPause.frame = layout.frame_for(Role::GameButtonLeft);
+    self.roundButtonPause.frame = layout.frame_for(Role::ControlButtonLeft);
     self.roundButtonPause.chargeSize = layout.game_controls_button_charge_size();
     [self addSubview:self.roundButtonPause];
 
     self.roundButtonTrash = [UPControl roundButtonTrash];
     self.roundButtonTrash.band = BandGameUI;
-    self.roundButtonTrash.frame = layout.frame_for(Role::GameButtonRight);
+    self.roundButtonTrash.frame = layout.frame_for(Role::ControlButtonRight);
     self.roundButtonTrash.chargeSize = layout.game_controls_button_charge_size();
     [self addSubview:self.roundButtonTrash];
 
     self.roundButtonClear = [UPControl roundButtonDownArrow];
     self.roundButtonClear.band = BandGameUI;
-    self.roundButtonClear.frame = layout.frame_for(Role::GameButtonRight);
+    self.roundButtonClear.frame = layout.frame_for(Role::ControlButtonRight);
     self.roundButtonClear.chargeSize = layout.game_controls_button_charge_size();
     [self addSubview:self.roundButtonClear];
 

@@ -45,8 +45,8 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
     // there's the option to bitwise-OR them together with UPControlState values.
     UPControlElementFill =        0x00100000,
     UPControlElementStroke =      0x00200000,
-    UPControlElementContentPath = 0x00400000,
-    UPControlElementContentText = 0x00800000,
+    UPControlElementContent =     0x00400000,
+    UPControlElementAuxiliary =   0x00800000,
 };
 
 @interface UPControl : UIView
@@ -117,6 +117,15 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (UIColor *)contentColorForState:(UPControlState)state;
 - (void)setContentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)contentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
+
+- (void)setAuxiliaryPath:(UIBezierPath *)path;
+- (void)setAuxiliaryPath:(UIBezierPath *)path forState:(UPControlState)state;
+- (UIBezierPath *)auxiliaryPathForState:(UPControlState)state;
+- (void)setAuxiliaryColor:(UIColor *)color;
+- (void)setAuxiliaryColor:(UIColor *)color forState:(UPControlState)state;
+- (UIColor *)auxiliaryColorForState:(UPControlState)state;
+- (void)setAuxiliaryColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
+- (CFTimeInterval)auxiliaryColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
 
 - (void)controlUpdate;
 

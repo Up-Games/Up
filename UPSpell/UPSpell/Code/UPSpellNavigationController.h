@@ -5,10 +5,17 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
+@interface UPSpellNavigationController : UINavigationController <UIViewControllerTransitioningDelegate>
 
-@interface UPSpellNavigationController : UINavigationController
++ (UPSpellNavigationController *)instance;
+
+- (void)presentExtrasController;
+- (void)dismissExtrasController;
+
+- (void)presentAboutController;
+- (void)dismissAboutController;
 
 @end
 
-NS_ASSUME_NONNULL_END
+@interface UPSpellExtrasPresentAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
+@end

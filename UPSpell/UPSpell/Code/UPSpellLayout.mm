@@ -480,10 +480,12 @@ void SpellLayout::calculate_word_tray_tile_frames()
 
 void SpellLayout::calculate_locations()
 {
+    calculate_and_set_locations(Role::Screen, screen_bounds(), 1.0);
     calculate_player_tile_locations();
     calculate_word_tile_locations();
     calculate_dialog_locations();
     calculate_game_locations();
+    calculate_choice_locations();
 }
 
 void SpellLayout::calculate_player_tile_locations()
@@ -535,8 +537,8 @@ void SpellLayout::calculate_game_locations()
 {
     CGSize button_size = up_size_scaled(CanonicalRoundButtonSize, layout_scale());
     CGRect controls_layout_frame = layout_aspect_rect(CanonicalControlsLayoutFrame);
-    calculate_and_set_locations(Role::GameButtonLeft, up_left_aligned_rect(button_size, controls_layout_frame));
-    calculate_and_set_locations(Role::GameButtonRight, up_right_aligned_rect(button_size, controls_layout_frame));
+    calculate_and_set_locations(Role::ControlButtonLeft, up_left_aligned_rect(button_size, controls_layout_frame));
+    calculate_and_set_locations(Role::ControlButtonRight, up_right_aligned_rect(button_size, controls_layout_frame));
 
     calculate_game_timer_frame();
     calculate_and_set_locations(Role::GameTimer, game_timer_frame());
@@ -561,7 +563,32 @@ void SpellLayout::calculate_game_locations()
     calculate_and_set_locations(Role::WordScoreBonus, word_score_bonus_frame);
 }
 
-void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &default_frame)
+void SpellLayout::calculate_choice_locations()
+{
+    CGSize choice_size = up_size_scaled(CanonicalChoiceRowSize, layout_scale());
+
+    CGRect title_layout_frame = layout_aspect_rect(CanonicalChoiceTitleRowLayoutFrame);
+    calculate_and_set_locations(Role::ChoiceTitleLeft, up_left_aligned_rect(choice_size, title_layout_frame));
+    calculate_and_set_locations(Role::ChoiceTitleRight, up_right_aligned_rect(choice_size, title_layout_frame));
+
+    CGRect item_row1_layout_frame = layout_aspect_rect(CanonicalChoiceItemRow1LayoutFrame);
+    calculate_and_set_locations(Role::ChoiceItem1Left, up_left_aligned_rect(choice_size, item_row1_layout_frame));
+    calculate_and_set_locations(Role::ChoiceItem1Right, up_right_aligned_rect(choice_size, item_row1_layout_frame));
+
+    CGRect item_row2_layout_frame = layout_aspect_rect(CanonicalChoiceItemRow2LayoutFrame);
+    calculate_and_set_locations(Role::ChoiceItem2Left, up_left_aligned_rect(choice_size, item_row2_layout_frame));
+    calculate_and_set_locations(Role::ChoiceItem2Right, up_right_aligned_rect(choice_size, item_row2_layout_frame));
+
+    CGRect item_row3_layout_frame = layout_aspect_rect(CanonicalChoiceItemRow3LayoutFrame);
+    calculate_and_set_locations(Role::ChoiceItem3Left, up_left_aligned_rect(choice_size, item_row3_layout_frame));
+    calculate_and_set_locations(Role::ChoiceItem3Right, up_right_aligned_rect(choice_size, item_row3_layout_frame));
+
+    CGRect item_row4_layout_frame = layout_aspect_rect(CanonicalChoiceItemRow4LayoutFrame);
+    calculate_and_set_locations(Role::ChoiceItem4Left, up_left_aligned_rect(choice_size, item_row4_layout_frame));
+    calculate_and_set_locations(Role::ChoiceItem4Right, up_right_aligned_rect(choice_size, item_row4_layout_frame));
+}
+
+void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &default_frame, CGFloat near_factor)
 {
     const CGFloat screen_min_x = up_rect_min_x(screen_bounds());
     const CGFloat screen_min_y = up_rect_min_y(screen_bounds());
@@ -576,8 +603,8 @@ void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &def
 
     m_location_frames.emplace(Location(role, Spot::Default), up_pixel_rect(default_frame, screen_scale()));
 
-    const CGFloat df_off_near_x = df_w * CanonicalOffscreenNearFrameFactor;
-    const CGFloat df_off_near_y = df_h * CanonicalOffscreenNearFrameFactor;
+    const CGFloat df_off_near_x = df_w * near_factor;
+    const CGFloat df_off_near_y = df_h * near_factor;
     CGRect off_top_near_frame = CGRectMake(df_min_x, screen_min_y - df_off_near_y, df_w, df_h);
     CGRect off_bottom_near_frame = CGRectMake(df_min_x, screen_max_y + df_off_near_y, df_w, df_h);
     CGRect off_left_near_frame = CGRectMake(screen_min_x - df_off_near_x, df_min_y, df_w, df_h);

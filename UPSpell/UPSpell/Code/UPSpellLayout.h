@@ -35,6 +35,7 @@ public:
 
     enum class Role {
         None,
+        Screen,
         PlayerTile1, PlayerTile2, PlayerTile3, PlayerTile4, PlayerTile5, PlayerTile6, PlayerTile7,
         WordTile1, WordTile2, WordTile3, WordTile4, WordTile5, WordTile6, WordTile7,
         WordTile1of1,
@@ -45,12 +46,15 @@ public:
         WordTile1of6, WordTile2of6, WordTile3of6, WordTile4of6, WordTile5of6, WordTile6of6,
         WordTile1of7, WordTile2of7, WordTile3of7, WordTile4of7, WordTile5of7, WordTile6of7, WordTile7of7,
         WordTray,
-        GameButtonLeft, GameButtonRight, GameTimer, GameScore,
+        ControlButtonLeft, ControlButtonRight,
+        GameTimer, GameScore,
         GameScoreGameOver1, GameScoreGameOver2, GameScoreGameOver3, GameScoreGameOver4,
         WordScore, WordScoreBonus,
         DialogMessageHigh, DialogMessageCenter, DialogNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse,
+        ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
+        ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
     };
 
     enum class Spot {
@@ -123,6 +127,13 @@ public:
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
     static inline constexpr CGFloat CanonicalOffscreenNearFrameFactor = 1.2;
+
+    static inline constexpr CGRect CanonicalChoiceTitleRowLayoutFrame =      {  0,  26.5, 1000, 88 };
+    static inline constexpr CGRect CanonicalChoiceItemRow1LayoutFrame =      {  0, 132,   1000, 88 };
+    static inline constexpr CGRect CanonicalChoiceItemRow2LayoutFrame =      {  0, 220,   1000, 88 };
+    static inline constexpr CGRect CanonicalChoiceItemRow3LayoutFrame =      {  0, 308,   1000, 88 };
+    static inline constexpr CGRect CanonicalChoiceItemRow4LayoutFrame =      {  0, 396,   1000, 88 };
+    static inline constexpr CGSize CanonicalChoiceRowSize =                              { 420, 88 };
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
@@ -237,8 +248,9 @@ private:
     void calculate_dialog_locations();
     void calculate_game_locations();
     void calculate_game_controls_button_charge_size();
+    void calculate_choice_locations();
 
-    void calculate_and_set_locations(const Role role, const CGRect &frame);
+    void calculate_and_set_locations(const Role role, const CGRect &frame, CGFloat near_factor = CanonicalOffscreenNearFrameFactor);
 
     void calculate_game_timer_frame();
     void calculate_game_score_frame();

@@ -23,6 +23,7 @@
 #import "UPTileView.h"
 #import "UPTilePaths.h"
 #import "UPSpellGameController.h"
+#import "UPSpellNavigationController.h"
 #import "UPViewMove+UPSpell.h"
 
 using Action = UP::SpellModel::Action;
@@ -73,7 +74,6 @@ using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Spot;
 
 @interface UPSpellGameController () <UPGameTimerObserver, UPTileViewGestureDelegate>
-@property (nonatomic) UIView *infinityView;
 @property (nonatomic) UPSpellGameView *gameView;
 @property (nonatomic) UPGameTimer *gameTimer;
 @property (nonatomic) BOOL showingRoundButtonClear;
@@ -95,38 +95,15 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)viewDidLoad
 {
-    LOG_CHANNEL_ON(General);
-    //LOG_CHANNEL_ON(Gestures);
-    //LOG_CHANNEL_ON(Layout);
-    //LOG_CHANNEL_ON(Leaks);
-    //LOG_CHANNEL_ON(Mode);
-
     [super viewDidLoad];
-
-    UP::TimeSpanning::init();
-    Lexicon::set_language(UPLexiconLanguageEnglish);
 
     GameCode game_code = GameCode::random();
 //    GameCode game_code = GameCode("WPQ-2701");
 //    LOG(General, "code: %s", game_code.string().c_str());
 //    LOG(General, "code: %d", game_code.value());
-//
     self.model = new SpellModel(game_code);
     
-    [UIColor setThemeStyle:UPColorStyleLight];
-    [UIColor setThemeHue:222];
-    SpellLayout &layout = SpellLayout::create_instance();
-    TilePaths::create_instance();
-    
-    layout.set_screen_bounds([[UIScreen mainScreen] bounds]);
-    layout.set_screen_scale([[UIScreen mainScreen] scale]);
-    layout.set_canvas_frame([[UPSceneDelegate instance] canvasFrame]);
-    layout.calculate();
-    
-    self.infinityView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.infinityView.frame = layout.screen_bounds();
-    self.infinityView.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
-    [self.view addSubview:self.infinityView];
+    SpellLayout &layout = SpellLayout::instance();
 
     self.gameView = [UPSpellGameView instance];
     [self.gameView.wordTrayView addTarget:self action:@selector(wordTrayTapped) forEvents:UPControlEventTouchUpInside];
@@ -150,7 +127,8 @@ using Spot = UP::SpellLayout::Spot;
     self.dialogMenu = [UPDialogMenu instance];
     [self.view addSubview:self.dialogMenu];
     [self.dialogMenu.playButton addTarget:self action:@selector(dialogMenuPlayButtonTapped:) forEvents:UPControlEventTouchUpInside];
-//    [self.dialogPause.resumeButton addTarget:self action:@selector(dialogPauseResumeButtonTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.dialogMenu.extrasButton addTarget:self action:@selector(dialogMenuExtrasButtonTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.dialogMenu.aboutButton addTarget:self action:@selector(dialogMenuAboutButtonTapped:) forEvents:UPControlEventTouchUpInside];
     self.dialogMenu.hidden = YES;
     self.dialogMenu.frame = layout.screen_bounds();
 
@@ -168,8 +146,8 @@ using Spot = UP::SpellLayout::Spot;
 
     self.mode = UPSpellGameModeMenu;
 
-    self.mode = UPSpellGameModeCountdown;
-    self.mode = UPSpellGameModePlay;
+//    self.mode = UPSpellGameModeCountdown;
+//    self.mode = UPSpellGameModePlay;
 
     delay(BandGameDelay, 0.2, ^{
         [self viewOpFillPlayerTray];
@@ -179,6 +157,16 @@ using Spot = UP::SpellLayout::Spot;
 - (void)dealloc
 {
     delete self.model;
+}
+
+#pragma mark - UPSpellNavigationController
+
+- (UPSpellNavigationController *)spellNavigationController
+{
+    if ([self.navigationController isKindOfClass:[UPSpellNavigationController class]]) {
+        return (UPSpellNavigationController *)self.navigationController;
+    }
+    return nil;
 }
 
 #pragma mark - UPGameTimerObserver
@@ -242,6 +230,17 @@ using Spot = UP::SpellLayout::Spot;
 - (void)dialogMenuPlayButtonTapped:(id)sender
 {
     [self setMode:UPSpellGameModeCountdown animated:YES];
+}
+
+- (void)dialogMenuExtrasButtonTapped:(id)sender
+{
+    [[self spellNavigationController] presentExtrasController];
+    [self setMode:UPSpellGameModeOffscreenRight animated:YES];
+    
+}
+
+- (void)dialogMenuAboutButtonTapped:(id)sender
+{
 }
 
 - (void)dialogPauseQuitButtonTapped:(id)sender
@@ -1380,6 +1379,37 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)modeTransitionFromMenuToOffscreenRight:(BOOL)animated
 {
+    [self viewOpLockUserInterface];
+    
+    self.dialogMenu.extrasButton.highlightedOverride = YES;
+    self.dialogMenu.extrasButton.highlighted = YES;
+
+    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
+    UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
+    UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopCenter));
+    UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffRightNear));
+
+    CFTimeInterval duration = 0.75;
+    
+    start(bloop_out(BandModeUI, @[aboutButtonMove], duration, ^(UIViewAnimatingPosition) {
+    }));
+    delay(BandModeDelay, 0.1, ^{
+        start(bloop_out(BandModeUI, @[playButtonMove], duration - 0.1, ^(UIViewAnimatingPosition) {
+        }));
+    });
+    delay(BandModeDelay, 0.2, ^{
+        start(bloop_out(BandModeUI, @[gameViewMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+        }));
+    });
+    delay(BandModeDelay, 0.5, ^{
+        self.dialogMenu.extrasButton.highlightedOverride = NO;
+        self.dialogMenu.extrasButton.highlighted = NO;
+        self.dialogMenu.extrasButton.userInteractionEnabled = NO;
+        
+        start(bloop_in(BandModeUI, @[extrasButtonMove], 0.75, ^(UIViewAnimatingPosition) {
+            [self viewOpUnlockUserInterface];
+        }));
+    });
 }
 
 - (void)modeTransitionFromOffscreenLeftToMenu:(BOOL)animated

@@ -25,4 +25,7 @@
 + (UPControl *)textButtonResume;
 + (UPControl *)textButtonStats;
 
++ (UPControl *)choiceTitleRowLeftExtras;
++ (UPControl *)choiceItemRowLeftColors;
+
 @end
