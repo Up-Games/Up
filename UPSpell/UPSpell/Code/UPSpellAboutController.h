@@ -6,4 +6,9 @@
 #import <UIKit/UIKit.h>
 
 @interface UPSpellAboutController : UIViewController
+@property (nonatomic, readonly) UPControl *backButton;
+@property (nonatomic, readonly) UPControl *choiceItem1;
+@property (nonatomic, readonly) UPControl *choiceItem2;
+@property (nonatomic, readonly) UPControl *choiceItem3;
+@property (nonatomic, readonly) UPControl *choiceItem4;
 @end

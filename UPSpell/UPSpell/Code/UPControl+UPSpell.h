@@ -31,4 +31,9 @@
 + (UPControl *)choiceItemRowLeftStats;
 + (UPControl *)choiceItemRowLeftGameKeys;
 
++ (UPControl *)choiceItemRowRightUpSpell;
++ (UPControl *)choiceItemRowRightRules;
++ (UPControl *)choiceItemRowRightLegal;
++ (UPControl *)choiceItemRowRightThanks;
+
 @end

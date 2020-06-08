@@ -19,3 +19,6 @@
 
 @interface UPSpellExtrasPresentAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
 @end
+
+@interface UPSpellAboutPresentAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
+@end

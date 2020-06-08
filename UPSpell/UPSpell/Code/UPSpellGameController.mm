@@ -240,6 +240,8 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)dialogMenuAboutButtonTapped:(id)sender
 {
+    [[self spellNavigationController] presentAboutController];
+    [self setMode:UPSpellGameModeOffscreenLeft animated:YES];
 }
 
 - (void)dialogPauseQuitButtonTapped:(id)sender
@@ -1374,13 +1376,39 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)modeTransitionFromMenuToOffscreenLeft:(BOOL)animated
 {
+    [self viewOpLockUserInterface];
+    
+    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffLeftFar));
+    UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffLeftFar));
+    UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::ChoiceTitleRight));
+    UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffLeftNear));
+    
+    CFTimeInterval duration = 0.75;
+    
+    start(bloop_out(BandModeUI, @[extrasButtonMove], duration, ^(UIViewAnimatingPosition) {
+    }));
+    delay(BandModeDelay, 0.1, ^{
+        start(bloop_out(BandModeUI, @[playButtonMove], duration - 0.1, ^(UIViewAnimatingPosition) {
+        }));
+    });
+    delay(BandModeDelay, 0.2, ^{
+        start(bloop_out(BandModeUI, @[gameViewMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+        }));
+    });
+    delay(BandModeDelay, 0.5, ^{
+        self.dialogMenu.extrasButton.userInteractionEnabled = NO;
+        
+        start(slide(BandModeUI, @[aboutButtonMove], 0.75, ^(UIViewAnimatingPosition) {
+            [self viewOpUnlockUserInterface];
+        }));
+    });
 }
 
 - (void)modeTransitionFromMenuToOffscreenRight:(BOOL)animated
 {
     [self viewOpLockUserInterface];
     
-    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
+    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffRightFar));
     UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
     UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::ChoiceTitleLeft));
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffRightNear));

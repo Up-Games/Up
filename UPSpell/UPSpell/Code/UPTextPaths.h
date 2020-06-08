@@ -25,6 +25,11 @@ UIBezierPath *TextPathChoiceRowLeftSounds();
 UIBezierPath *TextPathChoiceRowLeftStats();
 UIBezierPath *TextPathChoiceRowLeftGameKeys();
 
+UIBezierPath *TextPathChoiceRowRightUpSpell();
+UIBezierPath *TextPathChoiceRowRightRules();
+UIBezierPath *TextPathChoiceRowRightLegal();
+UIBezierPath *TextPathChoiceRowRightThanks();
+
 }  // namespace UP
 
 #endif  // __cplusplus

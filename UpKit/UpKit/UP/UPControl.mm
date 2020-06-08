@@ -919,7 +919,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
         if (a.events() & events) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [a.target() performSelector:a.action() withObject:a.target()];
+            [a.target() performSelector:a.action() withObject:self];
 #pragma clang diagnostic pop
         }
     }
