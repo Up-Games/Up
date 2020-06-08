@@ -85,8 +85,8 @@ using Spot = UP::SpellLayout::Spot;
 @property (nonatomic) CGFloat panCurrentDistance;
 @property (nonatomic) BOOL panEverMovedUp;
 @property (nonatomic) UPDialogGameOver *dialogGameOver;
-@property (nonatomic) UPDialogMenu *dialogMenu;
 @property (nonatomic) UPDialogPause *dialogPause;
+@property (nonatomic) UPDialogMenu *dialogMenu;
 @property (nonatomic) NSInteger userInterfaceLockCount;
 @property (nonatomic) SpellModel *model;
 @end
@@ -125,12 +125,6 @@ using Spot = UP::SpellLayout::Spot;
     self.dialogGameOver.frame = layout.screen_bounds();
 
     self.dialogMenu = [UPDialogMenu instance];
-    [self.view addSubview:self.dialogMenu];
-    [self.dialogMenu.playButton addTarget:self action:@selector(dialogMenuPlayButtonTapped:) forEvents:UPControlEventTouchUpInside];
-    [self.dialogMenu.extrasButton addTarget:self action:@selector(dialogMenuExtrasButtonTapped:) forEvents:UPControlEventTouchUpInside];
-    [self.dialogMenu.aboutButton addTarget:self action:@selector(dialogMenuAboutButtonTapped:) forEvents:UPControlEventTouchUpInside];
-    self.dialogMenu.hidden = YES;
-    self.dialogMenu.frame = layout.screen_bounds();
 
     self.dialogPause = [UPDialogPause instance];
     [self.view addSubview:self.dialogPause];
@@ -226,23 +220,6 @@ using Spot = UP::SpellLayout::Spot;
 }
 
 #pragma mark - Control target/action and gestures
-
-- (void)dialogMenuPlayButtonTapped:(id)sender
-{
-    [self setMode:UPSpellGameModeCountdown animated:YES];
-}
-
-- (void)dialogMenuExtrasButtonTapped:(id)sender
-{
-    [[self spellNavigationController] presentExtrasController];
-    [self setMode:UPSpellGameModeOffscreenRight animated:YES];
-}
-
-- (void)dialogMenuAboutButtonTapped:(id)sender
-{
-    [[self spellNavigationController] presentAboutController];
-    [self setMode:UPSpellGameModeOffscreenLeft animated:YES];
-}
 
 - (void)dialogPauseQuitButtonTapped:(id)sender
 {

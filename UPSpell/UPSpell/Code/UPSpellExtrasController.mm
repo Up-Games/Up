@@ -27,10 +27,10 @@ using Spot = UP::SpellLayout::Spot;
 
 @implementation UPSpellExtrasController
 
-- (void)viewDidLoad
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    [super viewDidLoad];
-
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
     SpellLayout &layout = SpellLayout::instance();
 
     self.backButton = [UPControl roundBackButtonLeftArrow];
@@ -61,6 +61,8 @@ using Spot = UP::SpellLayout::Spot;
     self.choiceItem4.frame = layout.frame_for(Role::ChoiceItem4Left);
     [self.choiceItem4 addTarget:self action:@selector(choiceItemTapped:) forEvents:UPControlEventTouchDown];
     [self.view addSubview:self.choiceItem4];
+    
+    return self;
 }
 
 - (id<UIViewControllerTransitioningDelegate>)transitioningDelegate

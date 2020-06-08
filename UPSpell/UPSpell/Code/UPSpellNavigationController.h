@@ -10,15 +10,18 @@
 + (UPSpellNavigationController *)instance;
 
 - (void)presentExtrasController;
-- (void)dismissExtrasController;
-
 - (void)presentAboutController;
-- (void)dismissAboutController;
 
 @end
 
 @interface UPSpellExtrasPresentAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
 @end
 
+@interface UPSpellExtrasDismissAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
+@end
+
 @interface UPSpellAboutPresentAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
+@end
+
+@interface UPSpellAboutDismissAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
 @end
