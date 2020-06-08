@@ -88,8 +88,9 @@ public:
     static constexpr CGSize CanonicalCanvasSize = { CanonicalCanvasWidth, CanonicalCanvasHeight };
     static constexpr CGFloat CanonicalAspectRatio = CanonicalCanvasWidth / CanonicalCanvasHeight;
 
-    static inline constexpr CGSize CanonicalRoundButtonSize = { 84, 84 };
-    static inline constexpr CGSize CanonicalTextButtonSize = { 188, 75 };
+    static inline constexpr CGSize CanonicalRoundGameButtonSize = { 84, 84 };
+    static inline constexpr CGSize CanonicalRoundBackButtonSize = { 56, 56 };
+    static inline constexpr CGSize CanonicalTextButtonSize =     { 188, 75 };
 
     static inline constexpr CGFloat CanonicalGameInformationCapHeight = 57;
     static inline constexpr CGFloat CanonicalGameInformationSuperscriptCapHeight = 39;
@@ -119,7 +120,7 @@ public:
 
     static inline constexpr CGRect CanonicalWordScoreLayoutFrame = CanonicalWordTrayFrame;
 
-    static inline constexpr CGRect CanonicalDialogTopButtonsLayoutFrame =      {  80,  28,  840,  85 };
+    static inline constexpr CGRect CanonicalDialogTopButtonsLayoutFrame =      {  80,  28,  840,  84 };
     static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  75 };
     static inline constexpr CGRect CanonicalDialogNoteLayoutFrame =            {   0, 385, 1000,  40 };
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };

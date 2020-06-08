@@ -9,11 +9,12 @@
 
 @interface UPControl (UPSpell)
 
-+ (UPControl *)roundButtonMinusSign;
-+ (UPControl *)roundButtonTrash;
-+ (UPControl *)roundButtonDownArrow;
-+ (UPControl *)roundButtonLeftArrow;
-+ (UPControl *)roundButtonRightArrow;
++ (UPControl *)roundGameButtonMinusSign;
++ (UPControl *)roundGameButtonTrash;
++ (UPControl *)roundGameButtonDownArrow;
+
++ (UPControl *)roundBackButtonLeftArrow;
++ (UPControl *)roundBackButtonRightArrow;
 
 + (UPControl *)wordTray;
 

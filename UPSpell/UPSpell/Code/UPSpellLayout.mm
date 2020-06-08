@@ -535,7 +535,7 @@ void SpellLayout::calculate_dialog_locations()
 
 void SpellLayout::calculate_game_locations()
 {
-    CGSize button_size = up_size_scaled(CanonicalRoundButtonSize, layout_scale());
+    CGSize button_size = up_size_scaled(CanonicalRoundGameButtonSize, layout_scale());
     CGRect controls_layout_frame = layout_aspect_rect(CanonicalControlsLayoutFrame);
     calculate_and_set_locations(Role::ControlButtonLeft, up_left_aligned_rect(button_size, controls_layout_frame));
     calculate_and_set_locations(Role::ControlButtonRight, up_right_aligned_rect(button_size, controls_layout_frame));
@@ -626,7 +626,7 @@ void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &def
 
 void SpellLayout::calculate_game_controls_button_charge_size()
 {
-    CGSize size = up_size_scaled(CanonicalRoundButtonSize, layout_scale());
+    CGSize size = up_size_scaled(CanonicalRoundGameButtonSize, layout_scale());
     CGSize charge_size = CGSizeMake(up_size_width(size) * 0.65, up_size_height(size) * 0.15);
     set_game_controls_button_charge_size(up_pixel_size(charge_size, screen_scale()));
     LOG(Layout, "game_controls_button_charge_size: %@", NSStringFromCGSize(game_controls_button_charge_size()));
