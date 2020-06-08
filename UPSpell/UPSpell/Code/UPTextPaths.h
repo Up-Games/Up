@@ -20,6 +20,11 @@ UIBezierPath *TextPathDialogGameOver();
 UIBezierPath *TextPathDialogPaused();
 UIBezierPath *TextPathDialogReady();
 
+UIBezierPath *TextPathChoiceRowLeftColors();
+UIBezierPath *TextPathChoiceRowLeftSounds();
+UIBezierPath *TextPathChoiceRowLeftStats();
+UIBezierPath *TextPathChoiceRowLeftGameKeys();
+
 }  // namespace UP
 
 #endif  // __cplusplus

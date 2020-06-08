@@ -14,8 +14,8 @@
 #import "UPTextPaths.h"
 
 @interface UPSpellExtrasController ()
-@property (nonatomic, readwrite) UPControl *choiceTitle;
-@property (nonatomic, readwrite) UPControl *choiceItemColors;
+@property (nonatomic, readwrite) UPControl *backButton;
+@property (nonatomic, readwrite) UPControl *choiceItem1;
 @property (nonatomic, readwrite) UPControl *choiceItem2;
 @property (nonatomic, readwrite) UPControl *choiceItem3;
 @property (nonatomic, readwrite) UPControl *choiceItem4;
@@ -33,16 +33,17 @@ using Spot = UP::SpellLayout::Spot;
 
     SpellLayout &layout = SpellLayout::instance();
 
-    self.choiceTitle = [UPControl choiceTitleRowLeftExtras];
-    self.choiceTitle.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
-    self.choiceTitle.frame = layout.frame_for(Role::ChoiceTitleLeft);
-    [self.view addSubview:self.choiceTitle];
-    
-    self.choiceItemColors = [UPControl choiceItemRowLeftColors];
-    self.choiceItemColors.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
-    self.choiceItemColors.frame = layout.frame_for(Role::ChoiceItem1Left);
-    [self.choiceItemColors addTarget:self action:@selector(choiceItemTapped:) forEvents:UPControlEventTouchUpInside];
-    [self.view addSubview:self.choiceItemColors];
+    self.backButton = [UPControl roundBackButtonLeftArrow];
+    self.backButton.canonicalSize = SpellLayout::CanonicalRoundBackButtonSize;
+    self.backButton.frame = layout.frame_for(Role::ChoiceBackLeft);
+    [self.backButton addTarget:self action:@selector(choiceItemTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.view addSubview:self.backButton];
+
+    self.choiceItem1 = [UPControl choiceItemRowLeftColors];
+    self.choiceItem1.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
+    self.choiceItem1.frame = layout.frame_for(Role::ChoiceItem1Left);
+    [self.choiceItem1 addTarget:self action:@selector(choiceItemTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.view addSubview:self.choiceItem1];
     
     self.choiceItem2 = [UPControl choiceItemRowLeftSounds];
     self.choiceItem2.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
@@ -56,13 +57,11 @@ using Spot = UP::SpellLayout::Spot;
     [self.choiceItem3 addTarget:self action:@selector(choiceItemTapped:) forEvents:UPControlEventTouchUpInside];
     [self.view addSubview:self.choiceItem3];
     
-    self.choiceItem4 = [UPControl choiceItemRowLeftGameCodes];
+    self.choiceItem4 = [UPControl choiceItemRowLeftGameKeys];
     self.choiceItem4.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
     self.choiceItem4.frame = layout.frame_for(Role::ChoiceItem4Left);
     [self.choiceItem4 addTarget:self action:@selector(choiceItemTapped:) forEvents:UPControlEventTouchUpInside];
     [self.view addSubview:self.choiceItem4];
-    
-    [self updateThemeColors];
 }
 
 - (id<UIViewControllerTransitioningDelegate>)transitioningDelegate
@@ -76,12 +75,5 @@ using Spot = UP::SpellLayout::Spot;
 {
 }
 
-
-#pragma mark - Theme colors
-
-- (void)updateThemeColors
-{
-//    self.titlePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryDialogTitle];
-}
 
 @end

@@ -10,27 +10,27 @@
 #import <UpKit/UPGeometry.h>
 
 #import "UPControl+UPSpell.h"
-#import "UPDialogChooser.h"
+#import "UPDialogMenu.h"
 #import "UPSpellLayout.h"
 #import "UPTextPaths.h"
 
 using UP::SpellLayout;
 
-@interface UPDialogChooser ()
+@interface UPDialogMenu ()
 @property (nonatomic, readwrite) UPBezierPathView *titlePathView;
 @property (nonatomic, readwrite) UPControl *extrasButton;
 @property (nonatomic, readwrite) UPControl *playButton;
 @property (nonatomic, readwrite) UPControl *aboutButton;
 @end
 
-@implementation UPDialogChooser
+@implementation UPDialogMenu
 
-+ (UPDialogChooser *)instance
++ (UPDialogMenu *)instance
 {
     static dispatch_once_t onceToken;
-    static UPDialogChooser *_Instance;
+    static UPDialogMenu *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPDialogChooser alloc] _init];
+        _Instance = [[UPDialogMenu alloc] _init];
     });
     return _Instance;
 }

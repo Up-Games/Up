@@ -53,8 +53,8 @@ public:
         DialogMessageHigh, DialogMessageCenter, DialogNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse,
-        ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
-        ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
+        ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
+        ChoiceBackRight, ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
     };
 
     enum class Spot {
@@ -89,8 +89,8 @@ public:
     static constexpr CGFloat CanonicalAspectRatio = CanonicalCanvasWidth / CanonicalCanvasHeight;
 
     static inline constexpr CGSize CanonicalRoundGameButtonSize = { 84, 84 };
-    static inline constexpr CGSize CanonicalRoundBackButtonSize = { 56, 56 };
-    static inline constexpr CGSize CanonicalTextButtonSize =     { 188, 75 };
+    static inline constexpr CGSize CanonicalRoundBackButtonSize = { 64, 64 };
+    static inline constexpr CGSize CanonicalTextButtonSize =     { 188, 76 };
 
     static inline constexpr CGFloat CanonicalGameInformationCapHeight = 57;
     static inline constexpr CGFloat CanonicalGameInformationSuperscriptCapHeight = 39;
@@ -120,8 +120,8 @@ public:
 
     static inline constexpr CGRect CanonicalWordScoreLayoutFrame = CanonicalWordTrayFrame;
 
-    static inline constexpr CGRect CanonicalDialogTopButtonsLayoutFrame =      {  80,  28,  840,  84 };
-    static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  75 };
+    static inline constexpr CGRect CanonicalDialogTopButtonsLayoutFrame =      {  83,  26,  834,  76 };
+    static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  76 };
     static inline constexpr CGRect CanonicalDialogNoteLayoutFrame =            {   0, 385, 1000,  40 };
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
     static inline constexpr CGFloat CanonicalDialogOverNoteFontCapHeight = 26;
@@ -129,12 +129,13 @@ public:
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
     static inline constexpr CGFloat CanonicalOffscreenNearFrameFactor = 1.2;
 
-    static inline constexpr CGRect CanonicalChoiceTitleRowLayoutFrame =      {  0,  26.5, 1000, 88 };
-    static inline constexpr CGRect CanonicalChoiceItemRow1LayoutFrame =      {  0, 132,   1000, 88 };
-    static inline constexpr CGRect CanonicalChoiceItemRow2LayoutFrame =      {  0, 220,   1000, 88 };
-    static inline constexpr CGRect CanonicalChoiceItemRow3LayoutFrame =      {  0, 308,   1000, 88 };
-    static inline constexpr CGRect CanonicalChoiceItemRow4LayoutFrame =      {  0, 396,   1000, 88 };
-    static inline constexpr CGSize CanonicalChoiceRowSize =                              { 420, 88 };
+    static inline constexpr CGRect CanonicalChoiceBackButtonRowLayoutFrame = {  20,  30,    960, 64 };
+    static inline constexpr CGRect CanonicalChoiceTitleLayoutFrame =         {  83,  26,    834, 76 };
+    static inline constexpr CGRect CanonicalChoiceItemRow1LayoutFrame =      {  30, 120,    940, 76 };
+    static inline constexpr CGRect CanonicalChoiceItemRow2LayoutFrame =      {  30, 204,    940, 76 };
+    static inline constexpr CGRect CanonicalChoiceItemRow3LayoutFrame =      {  30, 288,    940, 76 };
+    static inline constexpr CGRect CanonicalChoiceItemRow4LayoutFrame =      {  30, 372,    940, 76 };
+    static inline constexpr CGSize CanonicalChoiceRowSize =                              {  300, 76 };
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();

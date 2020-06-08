@@ -26,10 +26,9 @@
 + (UPControl *)textButtonResume;
 + (UPControl *)textButtonStats;
 
-+ (UPControl *)choiceTitleRowLeftExtras;
 + (UPControl *)choiceItemRowLeftColors;
 + (UPControl *)choiceItemRowLeftSounds;
 + (UPControl *)choiceItemRowLeftStats;
-+ (UPControl *)choiceItemRowLeftGameCodes;
++ (UPControl *)choiceItemRowLeftGameKeys;
 
 @end

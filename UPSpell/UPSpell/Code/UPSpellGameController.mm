@@ -236,7 +236,6 @@ using Spot = UP::SpellLayout::Spot;
 {
     [[self spellNavigationController] presentExtrasController];
     [self setMode:UPSpellGameModeOffscreenRight animated:YES];
-    
 }
 
 - (void)dialogMenuAboutButtonTapped:(id)sender
@@ -1381,12 +1380,9 @@ using Spot = UP::SpellLayout::Spot;
 {
     [self viewOpLockUserInterface];
     
-    self.dialogMenu.extrasButton.highlightedOverride = YES;
-    self.dialogMenu.extrasButton.highlighted = YES;
-
     UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
     UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
-    UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopCenter));
+    UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::ChoiceTitleLeft));
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffRightNear));
 
     CFTimeInterval duration = 0.75;
@@ -1402,11 +1398,9 @@ using Spot = UP::SpellLayout::Spot;
         }));
     });
     delay(BandModeDelay, 0.5, ^{
-        self.dialogMenu.extrasButton.highlightedOverride = NO;
-        self.dialogMenu.extrasButton.highlighted = NO;
         self.dialogMenu.extrasButton.userInteractionEnabled = NO;
         
-        start(bloop_in(BandModeUI, @[extrasButtonMove], 0.75, ^(UIViewAnimatingPosition) {
+        start(slide(BandModeUI, @[extrasButtonMove], 0.75, ^(UIViewAnimatingPosition) {
             [self viewOpUnlockUserInterface];
         }));
     });

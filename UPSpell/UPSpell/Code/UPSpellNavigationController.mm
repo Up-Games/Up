@@ -80,8 +80,8 @@ using UP::TimeSpanning::start;
     self.extrasController.modalPresentationStyle = UIModalPresentationCustom;
     
     NSArray<UIViewController *> *viewControllers = @[
-        //self.gameController
-        self.extrasController
+        self.gameController
+        //self.extrasController
     ];
     [self setViewControllers:viewControllers animated:NO];
 }
@@ -147,11 +147,12 @@ using UP::TimeSpanning::start;
     [transitionContext.containerView addSubview:extrasController.view];
 
     transitionContext.containerView.frame = layout.frame_for(Role::Screen);
-//    extrasController.backButton.frame = layout.frame_for(Role::ControlButtonLeft, Spot::OffLeftFar);
 
-//    CFTimeInterval duration = [self transitionDuration:transitionContext];
+    extrasController.backButton.frame = layout.frame_for(Role::ChoiceBackLeft, Spot::OffLeftNear);
 
-//    UPViewMove *backButtonMove = UPViewMoveMake(extrasController.backButton, Role::ControlButtonLeft);
+    CFTimeInterval duration = [self transitionDuration:transitionContext];
+
+    UPViewMove *backButtonMove = UPViewMoveMake(extrasController.backButton, Role::ChoiceBackLeft);
 //    UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
 //    UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopRight, Spot::OffRightNear));
 //    UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffRightNear));
@@ -159,10 +160,9 @@ using UP::TimeSpanning::start;
 //    start(slide(BandModeUI, @[containerViewMove], duration * 0.75, ^(UIViewAnimatingPosition) {
 //    }));
 
-//    start(bloop_in(BandModeUI, @[backButtonMove], duration, ^(UIViewAnimatingPosition) {
-//        [transitionContext completeTransition:YES];
-//    }));
-
+    start(bloop_in(BandModeUI, @[backButtonMove], duration, ^(UIViewAnimatingPosition) {
+        [transitionContext completeTransition:YES];
+    }));
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
