@@ -27,5 +27,8 @@
 
 + (UPControl *)choiceTitleRowLeftExtras;
 + (UPControl *)choiceItemRowLeftColors;
++ (UPControl *)choiceItemRowLeftSounds;
++ (UPControl *)choiceItemRowLeftStats;
++ (UPControl *)choiceItemRowLeftGameCodes;
 
 @end

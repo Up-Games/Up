@@ -35,18 +35,18 @@ typedef NS_OPTIONS(NSUInteger, UPControlState) {
     UPControlStateDisabled =    0x00000002,
     UPControlStateSelected =    0x00000004,
     UPControlStateActive =      0x00010000,
-    UPControlStateApplication = 0x00FF0000,
-    UPControlStateReserved =    0xFF000000,
+    UPControlStateReserved =    0xFFFF0000,
     UPControlStateInvalid =     0x01000000,
 };
 
 typedef NS_OPTIONS(NSUInteger, UPControlElement) {
-    // Values chosen to be in the UPControlStateApplication range, so
+    // Values chosen to be in the UPControlStateReserved range, so
     // there's the option to bitwise-OR them together with UPControlState values.
     UPControlElementFill =        0x00100000,
     UPControlElementStroke =      0x00200000,
     UPControlElementContent =     0x00400000,
     UPControlElementAuxiliary =   0x00800000,
+    UPControlElementAccent =      0x01000000,
 };
 
 @interface UPControl : UIView
@@ -58,6 +58,8 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;  // default is NO. this gets set/cleared automatically when touch enters/exits
 @property (nonatomic, getter=isActive) BOOL active;
 @property (nonatomic) BOOL autoHighlights;
+@property (nonatomic) BOOL autoSelects;
+@property (nonatomic) BOOL autoDeselects;
 @property (nonatomic) BOOL highlightedOverride;
 
 @property (nonatomic) CGSize canonicalSize;
@@ -90,6 +92,11 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @property (nonatomic, readonly) UPBezierPathView *fillPathView;
 @property (nonatomic, readonly) UPBezierPathView *strokePathView;
 @property (nonatomic, readonly) UPBezierPathView *contentPathView;
+@property (nonatomic, readonly) UPBezierPathView *auxiliaryPathView;
+@property (nonatomic, readonly) UPBezierPathView *accentPathView;
+
+- (void)bringPathViewToFront:(UPBezierPathView *)view;
+- (void)sendPathViewToFront:(UPBezierPathView *)view;
 
 - (void)setFillPath:(UIBezierPath *)path;
 - (void)setFillPath:(UIBezierPath *)path forState:(UPControlState)state;
@@ -126,6 +133,15 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (UIColor *)auxiliaryColorForState:(UPControlState)state;
 - (void)setAuxiliaryColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)auxiliaryColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
+
+- (void)setAccentPath:(UIBezierPath *)path;
+- (void)setAccentPath:(UIBezierPath *)path forState:(UPControlState)state;
+- (UIBezierPath *)accentPathForState:(UPControlState)state;
+- (void)setAccentColor:(UIColor *)color;
+- (void)setAccentColor:(UIColor *)color forState:(UPControlState)state;
+- (UIColor *)accentColorForState:(UPControlState)state;
+- (void)setAccentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
+- (CFTimeInterval)accentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
 
 - (void)controlUpdate;
 

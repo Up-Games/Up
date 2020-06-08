@@ -7,7 +7,7 @@
 
 @interface UPSpellExtrasController : UIViewController
 @property (nonatomic, readonly) UPControl *choiceTitle;
-@property (nonatomic, readonly) UPControl *choiceItem1;
+@property (nonatomic, readonly) UPControl *choiceItemColors;
 @property (nonatomic, readonly) UPControl *choiceItem2;
 @property (nonatomic, readonly) UPControl *choiceItem3;
 @property (nonatomic, readonly) UPControl *choiceItem4;
