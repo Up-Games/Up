@@ -1008,12 +1008,15 @@ static UIBezierPath *_ChoiceRowRightFillPathSelected()
     [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:(UPControlStateSelected | UPControlStateHighlighted)];
     [control setFillColor:[UIColor clearColor] forState:UPControlStateSelected];
     [control setFillColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+    [control setFillColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
     [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:(UPControlStateSelected | UPControlStateHighlighted)];
     [control setStrokeColor:[UIColor clearColor] forState:UPControlStateSelected];
     [control setStrokeColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+    [control setStrokeColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
     [control setContentPath:UP::TextPathContentExtras() forState:UPControlStateNormal];
     [control setContentColor:[UIColor themeColorWithCategory:UPColorCategoryDialogTitle] forState:UPControlStateSelected];
     [control setContentColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+    [control setContentColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
     control.autoHighlights = YES;
     control.autoSelects = YES;
     control.band = UP::BandModeUI;

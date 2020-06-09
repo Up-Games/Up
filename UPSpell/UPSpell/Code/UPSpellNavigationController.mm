@@ -33,6 +33,8 @@ using UP::BandModeDelay;
 using UP::BandModeUI;
 
 using UP::TimeSpanning::bloop_in;
+using UP::TimeSpanning::bloop_out;
+using UP::TimeSpanning::delay;
 using UP::TimeSpanning::slide;
 using UP::TimeSpanning::start;
 
@@ -132,6 +134,9 @@ using UP::TimeSpanning::start;
 - (void)dismissPresentedController:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:^{
+        self.dialogMenu.extrasButton.selected = NO;
+        self.dialogMenu.aboutButton.selected = NO;
+        [self.gameController setMode:UPSpellGameModeMenu animated:YES];
     }];
 }
 
@@ -186,16 +191,23 @@ using UP::TimeSpanning::start;
     [transitionContext.containerView addSubview:extrasController.view];
     transitionContext.containerView.frame = layout.frame_for(Role::Screen);
     
-    extrasController.backButton.frame = layout.frame_for(Role::ChoiceBackLeft, Spot::OffLeftNear);
-    UPViewMove *backButtonMove = UPViewMoveMake(extrasController.backButton, Role::ChoiceBackLeft);
-    start(bloop_in(BandModeUI, @[backButtonMove], [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
-        [transitionContext completeTransition:YES];
-    }));
+    delay(BandModeDelay, 0.7, ^{
+        NSArray <UPViewMove *> *itemMoves = @[
+            UPViewMoveMake(extrasController.backButton, Role::ChoiceBackLeft),
+            UPViewMoveMake(extrasController.choiceItem1, Role::ChoiceItem1Left),
+            UPViewMoveMake(extrasController.choiceItem2, Role::ChoiceItem2Left),
+            UPViewMoveMake(extrasController.choiceItem3, Role::ChoiceItem3Left),
+            UPViewMoveMake(extrasController.choiceItem4, Role::ChoiceItem4Left),
+        ];
+        start(bloop_in(BandModeUI, itemMoves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
+            [transitionContext completeTransition:YES];
+        }));
+    });
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    return 1.35;
+    return 0.65;
 }
 
 @end
@@ -217,22 +229,27 @@ using UP::TimeSpanning::start;
 {
     UPSpellNavigationController *spellNavigationController = [UPSpellNavigationController instance];
     UPSpellExtrasController *extrasController = spellNavigationController.extrasController;
-
+    
     SpellLayout &layout = SpellLayout::instance();
 
     [transitionContext.containerView addSubview:extrasController.view];
     transitionContext.containerView.frame = layout.frame_for(Role::Screen);
 
-    extrasController.backButton.frame = layout.frame_for(Role::ChoiceBackLeft);
-    UPViewMove *backButtonMove = UPViewMoveMake(extrasController.backButton, Role::ChoiceBackLeft, Spot::OffLeftNear);
-    start(bloop_in(BandModeUI, @[backButtonMove], [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
+    NSArray <UPViewMove *> *moves = @[
+        UPViewMoveMake(extrasController.backButton, Role::ChoiceBackLeft, Spot::OffLeftNear),
+        UPViewMoveMake(extrasController.choiceItem1, Role::ChoiceItem1Left, Spot::OffLeftNear),
+        UPViewMoveMake(extrasController.choiceItem2, Role::ChoiceItem2Left, Spot::OffLeftNear),
+        UPViewMoveMake(extrasController.choiceItem3, Role::ChoiceItem3Left, Spot::OffLeftNear),
+        UPViewMoveMake(extrasController.choiceItem4, Role::ChoiceItem4Left, Spot::OffLeftNear),
+    ];
+    start(bloop_out(BandModeUI, moves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
         [transitionContext completeTransition:YES];
     }));
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    return 1.35;
+    return 0.5;
 }
 
 @end
@@ -260,16 +277,23 @@ using UP::TimeSpanning::start;
     [transitionContext.containerView addSubview:aboutController.view];
     transitionContext.containerView.frame = layout.frame_for(Role::Screen);
     
-    aboutController.backButton.frame = layout.frame_for(Role::ChoiceBackRight, Spot::OffRightNear);
-    UPViewMove *backButtonMove = UPViewMoveMake(aboutController.backButton, Role::ChoiceBackRight);
-    start(bloop_in(BandModeUI, @[backButtonMove], [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
-        [transitionContext completeTransition:YES];
-    }));
+    delay(BandModeDelay, 0.7, ^{
+        NSArray <UPViewMove *> *itemMoves = @[
+            UPViewMoveMake(aboutController.backButton, Role::ChoiceBackRight),
+            UPViewMoveMake(aboutController.choiceItem1, Role::ChoiceItem1Right),
+            UPViewMoveMake(aboutController.choiceItem2, Role::ChoiceItem2Right),
+            UPViewMoveMake(aboutController.choiceItem3, Role::ChoiceItem3Right),
+            UPViewMoveMake(aboutController.choiceItem4, Role::ChoiceItem4Right),
+        ];
+        start(bloop_in(BandModeUI, itemMoves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
+            [transitionContext completeTransition:YES];
+        }));
+    });
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    return 1.35;
+    return 0.65;
 }
 
 @end
@@ -297,16 +321,21 @@ using UP::TimeSpanning::start;
     [transitionContext.containerView addSubview:aboutController.view];
     transitionContext.containerView.frame = layout.frame_for(Role::Screen);
     
-    aboutController.backButton.frame = layout.frame_for(Role::ChoiceBackRight);
-    UPViewMove *backButtonMove = UPViewMoveMake(aboutController.backButton, Role::ChoiceBackRight, Spot::OffRightNear);
-    start(bloop_in(BandModeUI, @[backButtonMove], [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
+    NSArray <UPViewMove *> *moves = @[
+        UPViewMoveMake(aboutController.backButton, Role::ChoiceBackLeft, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choiceItem1, Role::ChoiceItem1Left, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choiceItem2, Role::ChoiceItem2Left, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choiceItem3, Role::ChoiceItem3Left, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choiceItem4, Role::ChoiceItem4Left, Spot::OffRightNear),
+    ];
+    start(bloop_out(BandModeUI, moves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
         [transitionContext completeTransition:YES];
     }));
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    return 1.35;
+    return 0.5;
 }
 
 @end

@@ -35,30 +35,30 @@ using Spot = UP::SpellLayout::Spot;
 
     self.backButton = [UPControl roundBackButtonLeftArrow];
     self.backButton.canonicalSize = SpellLayout::CanonicalRoundBackButtonSize;
-    self.backButton.frame = layout.frame_for(Role::ChoiceBackLeft);
+    self.backButton.frame = layout.frame_for(Role::ChoiceBackLeft, Spot::OffLeftNear);
     [self.view addSubview:self.backButton];
 
     self.choiceItem1 = [UPControl choiceItemRowLeftColors];
     self.choiceItem1.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
-    self.choiceItem1.frame = layout.frame_for(Role::ChoiceItem1Left);
+    self.choiceItem1.frame = layout.frame_for(Role::ChoiceItem1Left, Spot::OffLeftNear);
     [self.choiceItem1 addTarget:self action:@selector(choiceItemTapped:) forEvents:UPControlEventTouchDown];
     [self.view addSubview:self.choiceItem1];
     
     self.choiceItem2 = [UPControl choiceItemRowLeftSounds];
     self.choiceItem2.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
-    self.choiceItem2.frame = layout.frame_for(Role::ChoiceItem2Left);
+    self.choiceItem2.frame = layout.frame_for(Role::ChoiceItem2Left, Spot::OffLeftNear);
     [self.choiceItem2 addTarget:self action:@selector(choiceItemTapped:) forEvents:UPControlEventTouchDown];
     [self.view addSubview:self.choiceItem2];
     
     self.choiceItem3 = [UPControl choiceItemRowLeftStats];
     self.choiceItem3.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
-    self.choiceItem3.frame = layout.frame_for(Role::ChoiceItem3Left);
+    self.choiceItem3.frame = layout.frame_for(Role::ChoiceItem3Left, Spot::OffLeftNear);
     [self.choiceItem3 addTarget:self action:@selector(choiceItemTapped:) forEvents:UPControlEventTouchDown];
     [self.view addSubview:self.choiceItem3];
     
     self.choiceItem4 = [UPControl choiceItemRowLeftGameKeys];
     self.choiceItem4.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
-    self.choiceItem4.frame = layout.frame_for(Role::ChoiceItem4Left);
+    self.choiceItem4.frame = layout.frame_for(Role::ChoiceItem4Left, Spot::OffLeftNear);
     [self.choiceItem4 addTarget:self action:@selector(choiceItemTapped:) forEvents:UPControlEventTouchDown];
     [self.view addSubview:self.choiceItem4];
     

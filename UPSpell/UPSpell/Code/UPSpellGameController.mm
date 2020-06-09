@@ -1357,7 +1357,6 @@ using Spot = UP::SpellLayout::Spot;
     
     UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffLeftFar));
     UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffLeftFar));
-    UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::ChoiceTitleRight));
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffLeftNear));
     
     CFTimeInterval duration = 0.75;
@@ -1370,12 +1369,7 @@ using Spot = UP::SpellLayout::Spot;
     });
     delay(BandModeDelay, 0.2, ^{
         start(bloop_out(BandModeUI, @[gameViewMove], duration - 0.2, ^(UIViewAnimatingPosition) {
-        }));
-    });
-    delay(BandModeDelay, 0.5, ^{
-        self.dialogMenu.extrasButton.userInteractionEnabled = NO;
-        
-        start(slide(BandModeUI, @[aboutButtonMove], 0.75, ^(UIViewAnimatingPosition) {
+            self.dialogMenu.aboutButton.userInteractionEnabled = NO;
             [self viewOpUnlockUserInterface];
         }));
     });
@@ -1387,7 +1381,6 @@ using Spot = UP::SpellLayout::Spot;
     
     UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffRightFar));
     UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
-    UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::ChoiceTitleLeft));
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffRightNear));
 
     CFTimeInterval duration = 0.75;
@@ -1400,12 +1393,7 @@ using Spot = UP::SpellLayout::Spot;
     });
     delay(BandModeDelay, 0.2, ^{
         start(bloop_out(BandModeUI, @[gameViewMove], duration - 0.2, ^(UIViewAnimatingPosition) {
-        }));
-    });
-    delay(BandModeDelay, 0.5, ^{
-        self.dialogMenu.extrasButton.userInteractionEnabled = NO;
-        
-        start(slide(BandModeUI, @[extrasButtonMove], 0.75, ^(UIViewAnimatingPosition) {
+            self.dialogMenu.extrasButton.userInteractionEnabled = NO;
             [self viewOpUnlockUserInterface];
         }));
     });
@@ -1413,10 +1401,50 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)modeTransitionFromOffscreenLeftToMenu:(BOOL)animated
 {
+    [self viewOpLockUserInterface];
+    
+    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Role::DialogButtonTopCenter);
+    UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Role::DialogButtonTopLeft);
+    UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Role::Screen);
+    
+    CFTimeInterval duration = 0.75;
+    
+    start(bloop_in(BandModeUI, @[extrasButtonMove], duration, ^(UIViewAnimatingPosition) {
+    }));
+    delay(BandModeDelay, 0.1, ^{
+        start(bloop_in(BandModeUI, @[playButtonMove], duration - 0.1, ^(UIViewAnimatingPosition) {
+        }));
+    });
+    delay(BandModeDelay, 0.2, ^{
+        start(bloop_in(BandModeUI, @[gameViewMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+            self.dialogMenu.aboutButton.userInteractionEnabled = YES;
+            [self viewOpUnlockUserInterface];
+        }));
+    });
 }
 
 - (void)modeTransitionFromOffscreenRightToMenu:(BOOL)animated
 {
+    [self viewOpLockUserInterface];
+    
+    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Role::DialogButtonTopCenter);
+    UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Role::DialogButtonTopRight);
+    UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Role::Screen);
+    
+    CFTimeInterval duration = 0.75;
+    
+    start(bloop_in(BandModeUI, @[aboutButtonMove], duration, ^(UIViewAnimatingPosition) {
+    }));
+    delay(BandModeDelay, 0.1, ^{
+        start(bloop_in(BandModeUI, @[playButtonMove], duration - 0.1, ^(UIViewAnimatingPosition) {
+        }));
+    });
+    delay(BandModeDelay, 0.2, ^{
+        start(bloop_in(BandModeUI, @[gameViewMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+            self.dialogMenu.extrasButton.userInteractionEnabled = YES;
+            [self viewOpUnlockUserInterface];
+        }));
+    });
 }
 
 - (void)modeTransitionFromMenuToCountdown:(BOOL)animated
