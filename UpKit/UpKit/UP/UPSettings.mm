@@ -33,8 +33,45 @@ using UP::ObjCProperty;
 @interface UPSettings (NSUserDefaults)
 
 - (id)valueForKey:(NSString *)key;
-- (NSInteger)getIntegerKey:(NSString *)key;
-- (void)setInteger:(NSInteger)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (char)getCharKey:(NSString *)key;
+- (void)setChar:(char)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (int)getIntKey:(NSString *)key;
+- (void)setInt:(int)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (short)getShortKey:(NSString *)key;
+- (void)setShort:(short)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (long)getLongKey:(NSString *)key;
+- (void)setLong:(long)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (long long)getLongLongKey:(NSString *)key;
+- (void)setLongLong:(long long)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (unsigned char)getUnsignedCharKey:(NSString *)key;
+- (void)setUnsignedChar:(unsigned char)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (unsigned short)getUnsignedShortKey:(NSString *)key;
+- (void)setUnsignedShort:(unsigned short)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (unsigned int)getUnsignedIntKey:(NSString *)key;
+- (void)setUnsignedInt:(unsigned int)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (unsigned long)getUnsignedLongKey:(NSString *)key;
+- (void)setUnsignedLong:(unsigned long)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (unsigned long long)getUnsignedLongLongKey:(NSString *)key;
+- (void)setUnsignedLongLong:(unsigned long long)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (float)getFloatKey:(NSString *)key;
+- (void)setFloat:(float)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (double)getDoubleKey:(NSString *)key;
+- (void)setDouble:(double)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
+- (BOOL)getBoolKey:(NSString *)key;
+- (void)setBool:(BOOL)value key:(NSString *)key overwrite:(BOOL)overwrite;
 
 @end
 
@@ -77,31 +114,43 @@ PropertyGlue::PropertyGlue(NSString *defaults_key_prefix, const std::string &pro
                     ASSERT_NOT_REACHED();
                     break;
                 case ObjCProperty::Type::Char:
-                    break;
-                case ObjCProperty::Type::Int:
+                    m_defaults_selector = @selector(getCharKey:);
                     break;
                 case ObjCProperty::Type::Short:
+                    m_defaults_selector = @selector(getShortKey:);
+                    break;
+                case ObjCProperty::Type::Int:
+                    m_defaults_selector = @selector(getIntKey:);
                     break;
                 case ObjCProperty::Type::Long:
+                    m_defaults_selector = @selector(getLongKey:);
                     break;
                 case ObjCProperty::Type::LongLong:
-                    m_defaults_selector = @selector(getIntegerKey:);
+                    m_defaults_selector = @selector(getLongLongKey:);
                     break;
                 case ObjCProperty::Type::UChar:
+                    m_defaults_selector = @selector(getUnsignedCharKey:);
                     break;
                 case ObjCProperty::Type::UShort:
+                    m_defaults_selector = @selector(getUnsignedShortKey:);
                     break;
                 case ObjCProperty::Type::UInt:
+                    m_defaults_selector = @selector(getUnsignedIntKey:);
                     break;
                 case ObjCProperty::Type::ULong:
+                    m_defaults_selector = @selector(getUnsignedLongKey:);
                     break;
                 case ObjCProperty::Type::ULongLong:
+                    m_defaults_selector = @selector(getUnsignedLongLongKey:);
                     break;
                 case ObjCProperty::Type::Float:
+                    m_defaults_selector = @selector(getFloatKey:);
                     break;
                 case ObjCProperty::Type::Double:
+                    m_defaults_selector = @selector(getDoubleKey:);
                     break;
                 case ObjCProperty::Type::Bool:
+                    m_defaults_selector = @selector(getBoolKey:);
                     break;
                 case ObjCProperty::Type::Object:
                     break;
@@ -114,31 +163,43 @@ PropertyGlue::PropertyGlue(NSString *defaults_key_prefix, const std::string &pro
                     ASSERT_NOT_REACHED();
                     break;
                 case ObjCProperty::Type::Char:
-                    break;
-                case ObjCProperty::Type::Int:
+                    m_defaults_selector = @selector(setChar:key:overwrite:);
                     break;
                 case ObjCProperty::Type::Short:
+                    m_defaults_selector = @selector(setShort:key:overwrite:);
+                    break;
+                case ObjCProperty::Type::Int:
+                    m_defaults_selector = @selector(setInt:key:overwrite:);
                     break;
                 case ObjCProperty::Type::Long:
+                    m_defaults_selector = @selector(setLong:key:overwrite:);
                     break;
                 case ObjCProperty::Type::LongLong:
-                    m_defaults_selector = @selector(setInteger:key:overwrite:);
+                    m_defaults_selector = @selector(setLongLong:key:overwrite:);
                     break;
                 case ObjCProperty::Type::UChar:
+                    m_defaults_selector = @selector(setUnsignedChar:key:overwrite:);
                     break;
                 case ObjCProperty::Type::UShort:
+                    m_defaults_selector = @selector(setUnsignedShort:key:overwrite:);
                     break;
                 case ObjCProperty::Type::UInt:
+                    m_defaults_selector = @selector(setUnsignedInt:key:overwrite:);
                     break;
                 case ObjCProperty::Type::ULong:
+                    m_defaults_selector = @selector(setUnsignedLong:key:overwrite:);
                     break;
                 case ObjCProperty::Type::ULongLong:
+                    m_defaults_selector = @selector(setUnsignedLongLong:key:overwrite:);
                     break;
                 case ObjCProperty::Type::Float:
+                    m_defaults_selector = @selector(setFloat:key:overwrite:);
                     break;
                 case ObjCProperty::Type::Double:
+                    m_defaults_selector = @selector(setDouble:key:overwrite:);
                     break;
                 case ObjCProperty::Type::Bool:
+                    m_defaults_selector = @selector(setBool:key:overwrite:);
                     break;
                 case ObjCProperty::Type::Object:
                     break;
@@ -294,18 +355,211 @@ static std::string up_property_setter_name(const std::string &property_name)
     return [[NSUserDefaults standardUserDefaults] objectForKey:key];
 }
 
-- (NSInteger)getIntegerKey:(NSString *)key
+- (char)getCharKey:(NSString *)key
 {
-    LOG(General, "getInteger: on %@", key);
-    return [[NSUserDefaults standardUserDefaults] integerForKey:key];
+    LOG(General, "getCharKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val charValue] : 0;
 }
 
-- (void)setInteger:(NSInteger)value key:(NSString *)key overwrite:(BOOL)overwrite
+- (void)setChar:(char)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setInteger: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    LOG(General, "setChar: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
-        [[NSUserDefaults standardUserDefaults] setInteger:value forKey:key];
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (short)getShortKey:(NSString *)key
+{
+    LOG(General, "getShortKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val shortValue] : 0;
+}
+
+- (void)setShort:(short)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setShort: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (int)getIntKey:(NSString *)key
+{
+    LOG(General, "getIntKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val intValue] : 0;
+}
+
+- (void)setInt:(int)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setInt: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (long)getLongKey:(NSString *)key
+{
+    LOG(General, "getLongKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val longValue] : 0;
+}
+
+- (void)setLong:(long)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setLong: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (long long)getLongLongKey:(NSString *)key
+{
+    LOG(General, "getLongLongKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val longLongValue] : 0;
+}
+
+- (void)setLongLong:(long long)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setLongLong: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (unsigned char)getUnsignedCharKey:(NSString *)key
+{
+    LOG(General, "getUnsignedCharKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val unsignedCharValue] : 0;
+}
+
+- (void)setUnsignedChar:(unsigned char)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setUnsignedChar: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (unsigned short)getUnsignedShortKey:(NSString *)key
+{
+    LOG(General, "getUnsignedShortKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val unsignedShortValue] : 0;
+}
+
+- (void)setUnsignedShort:(unsigned short)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setUnsignedShort: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (unsigned int)getUnsignedIntKey:(NSString *)key
+{
+    LOG(General, "getUnsignedIntKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val unsignedIntValue] : 0;
+}
+
+- (void)setUnsignedInt:(unsigned int)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setUnsignedInt: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (unsigned long)getUnsignedLongKey:(NSString *)key
+{
+    LOG(General, "getUnsignedLongKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val unsignedLongValue] : 0;
+}
+
+- (void)setUnsignedLong:(unsigned long)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setUnsignedLong: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (unsigned long long)getUnsignedLongLongKey:(NSString *)key
+{
+    LOG(General, "getUnsignedLongLongKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val unsignedLongLongValue] : 0;
+}
+
+- (void)setUnsignedLongLong:(unsigned long long)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setUnsignedLongLong: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (float)getFloatKey:(NSString *)key
+{
+    LOG(General, "getFloatKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val floatValue] : 0;
+}
+
+- (void)setFloat:(float)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setFloat: %.3f on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (double)getDoubleKey:(NSString *)key
+{
+    LOG(General, "getDoubleKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val doubleValue] : 0;
+}
+
+- (void)setDouble:(double)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setDouble: %.3f on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (BOOL)getBoolKey:(NSString *)key
+{
+    LOG(General, "getBoolKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ? [val boolValue] : 0;
+}
+
+- (void)setBool:(BOOL)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setBool: %s on %@ (%s : %s)", value ? "Y" : "N", key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 

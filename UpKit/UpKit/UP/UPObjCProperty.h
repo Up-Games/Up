@@ -26,9 +26,10 @@ public:
     
     enum class Type {
         Unsupported,
+        Bool,
         Char,
-        Int,
         Short,
+        Int,
         Long,
         LongLong,
         UChar,
@@ -38,7 +39,6 @@ public:
         ULongLong,
         Float,
         Double,
-        Bool,
         Object,
     };
 

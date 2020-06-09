@@ -99,6 +99,9 @@ ObjCProperty::ObjCProperty(const objc_property_t &property)
                         case 'd':
                             m_type = Type::Double;
                             break;
+                        case 'B':
+                            m_type = Type::Bool;
+                            break;
                     }
                 }
                 else if (attr.length() > 2) {

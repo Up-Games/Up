@@ -12,7 +12,7 @@
 using UP::ObjCProperty;
 
 @interface UPSpellSettings : UPSettings
-@property (nonatomic) NSInteger foo;
+@property (nonatomic) BOOL foo;
 @end
 
 @implementation UPSpellSettings
@@ -20,7 +20,7 @@ using UP::ObjCProperty;
 
 - (void)setDefaultValues
 {
-    self.foo = 17;
+    self.foo = YES;
 }
 
 @end
@@ -51,8 +51,8 @@ using UP::ObjCProperty;
 //    settings.foo = 37;
 //    settings.foo = 59;
     [settings resetDefaultValues];
-//    settings.foo = 37;
-    LOG(General, "foo: %ld", settings.foo);
+    settings.foo = NO;
+    LOG(General, "foo: %d", settings.foo);
     LOG(General, "ok");
 
     
