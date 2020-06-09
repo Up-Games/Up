@@ -13,6 +13,10 @@
 		5D2CAC86245B53F200B81332 /* NSValue+UP.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2CAC85245B53F200B81332 /* NSValue+UP.m */; };
 		5D3461342488760A009FB46D /* UPViewMove.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3461322488760A009FB46D /* UPViewMove.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D3461352488760A009FB46D /* UPViewMove.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D3461332488760A009FB46D /* UPViewMove.mm */; };
+		5D4AE82D248F1FE600213904 /* UPSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4AE82B248F1FE600213904 /* UPSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D4AE82E248F1FE600213904 /* UPSettings.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE82C248F1FE600213904 /* UPSettings.mm */; };
+		5D4AE831248FC9A900213904 /* UPObjCProperty.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE82F248FC9A800213904 /* UPObjCProperty.mm */; };
+		5D4AE832248FC9A900213904 /* UPObjCProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4AE830248FC9A800213904 /* UPObjCProperty.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D5216F2246D87DF005A2E9F /* UPControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5216F0246D87DF005A2E9F /* UPControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D5216F3246D87DF005A2E9F /* UPControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216F1246D87DF005A2E9F /* UPControl.mm */; };
 		5D54078624845488003F193D /* UPBand.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D54078524845488003F193D /* UPBand.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -115,6 +119,10 @@
 		5D2CAC85245B53F200B81332 /* NSValue+UP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValue+UP.m"; sourceTree = "<group>"; };
 		5D3461322488760A009FB46D /* UPViewMove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPViewMove.h; sourceTree = "<group>"; };
 		5D3461332488760A009FB46D /* UPViewMove.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPViewMove.mm; sourceTree = "<group>"; };
+		5D4AE82B248F1FE600213904 /* UPSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSettings.h; sourceTree = "<group>"; };
+		5D4AE82C248F1FE600213904 /* UPSettings.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSettings.mm; sourceTree = "<group>"; };
+		5D4AE82F248FC9A800213904 /* UPObjCProperty.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPObjCProperty.mm; sourceTree = "<group>"; };
+		5D4AE830248FC9A800213904 /* UPObjCProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPObjCProperty.h; sourceTree = "<group>"; };
 		5D5216F0246D87DF005A2E9F /* UPControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPControl.h; sourceTree = "<group>"; };
 		5D5216F1246D87DF005A2E9F /* UPControl.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPControl.mm; sourceTree = "<group>"; };
 		5D54078524845488003F193D /* UPBand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPBand.h; sourceTree = "<group>"; };
@@ -352,10 +360,14 @@
 				5DF9DF412465B35700B2199D /* UPLexicon.mm */,
 				5DEBE0172454CAFC00016047 /* UPMacros.h */,
 				5DFE62272453D11100D9CA0B /* UPMath.h */,
+				5D4AE82F248FC9A800213904 /* UPObjCProperty.mm */,
+				5D4AE830248FC9A800213904 /* UPObjCProperty.h */,
 				5DB9B1AF2487EA9800A4AAA8 /* UPRandom.cpp */,
 				5DF9DF982466412B00B2199D /* UPRandom.h */,
 				5DB9B1AD2487360900A4AAA8 /* UPSerialNumber.cpp */,
 				5DA8E06D247D50AB008D3015 /* UPSerialNumber.h */,
+				5D4AE82B248F1FE600213904 /* UPSettings.h */,
+				5D4AE82C248F1FE600213904 /* UPSettings.mm */,
 				5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */,
 				5DA8E03D2475E14D008D3015 /* UPStackTrace.h */,
 				5DEBE02C245716F900016047 /* UPStringTools.h */,
@@ -395,6 +407,7 @@
 				5DD71DA32458F39200F3F9E2 /* UPAny.h in Headers */,
 				5DEBE02E245716F900016047 /* UPStringTools.h in Headers */,
 				5D5216F2246D87DF005A2E9F /* UPControl.h in Headers */,
+				5D4AE832248FC9A900213904 /* UPObjCProperty.h in Headers */,
 				5D54078624845488003F193D /* UPBand.h in Headers */,
 				5DFE62282453D11100D9CA0B /* UPMath.h in Headers */,
 				5DA8E067247C2B04008D3015 /* UPDelayedAction.h in Headers */,
@@ -424,6 +437,7 @@
 				5DA8E06E247D50AB008D3015 /* UPSerialNumber.h in Headers */,
 				5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */,
 				5DA8E06B247C76A8008D3015 /* UPTimeSpanning.h in Headers */,
+				5D4AE82D248F1FE600213904 /* UPSettings.h in Headers */,
 				5DC67DFB247367D1009BCDBB /* UPGameTimerLabel.h in Headers */,
 				5DF8A8E72454892C00751E2E /* UPUnitFunction.h in Headers */,
 				5DA8E0372475962A008D3015 /* UPUtility.h in Headers */,
@@ -566,6 +580,7 @@
 				5D269CB2245CDB31000B6A1D /* UIImage+UP.m in Sources */,
 				5DB9B1AE2487360900A4AAA8 /* UPSerialNumber.cpp in Sources */,
 				5DB9B1B02487EA9800A4AAA8 /* UPRandom.cpp in Sources */,
+				5D4AE831248FC9A900213904 /* UPObjCProperty.mm in Sources */,
 				5DBADB7424678F4000D9D1FF /* UPGameCode.mm in Sources */,
 				5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */,
 				5D5216F3246D87DF005A2E9F /* UPControl.mm in Sources */,
@@ -578,6 +593,7 @@
 				5DC618BC246F045700090E7A /* UIFont+UP.mm in Sources */,
 				5DA8E054247AC79F008D3015 /* UPAnimator.mm in Sources */,
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
+				5D4AE82E248F1FE600213904 /* UPSettings.mm in Sources */,
 				5DA8E064247C063B008D3015 /* UPTicker.m in Sources */,
 				5DF9DF432465B35700B2199D /* UPLexicon.mm in Sources */,
 				5DA8E0402475E14D008D3015 /* UPStackTrace.cpp in Sources */,

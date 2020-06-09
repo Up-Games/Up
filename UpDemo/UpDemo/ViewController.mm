@@ -3,18 +3,35 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <string>
+
 #import <UpKit/UpKit.h>
 
 #import "ViewController.h"
 
-@interface ViewController ()
-@property (nonatomic) UPQuadView *v1;
-@property (nonatomic) UIView *v2;
-@property (nonatomic) UIView *v3;
-@property (nonatomic) UIImage *image;
-@property (nonatomic) UIImageView *imageView;
-@property (nonatomic) CGFloat hue;
+using UP::ObjCProperty;
 
+@interface UPSpellSettings : UPSettings
+@property (nonatomic) NSInteger foo;
+@end
+
+@implementation UPSpellSettings
+@dynamic foo;
+
+- (void)setDefaultValues
+{
+    self.foo = 17;
+}
+
+@end
+
+@interface ViewController ()
+//@property (nonatomic) UPQuadView *v1;
+//@property (nonatomic) UIView *v2;
+//@property (nonatomic) UIView *v3;
+//@property (nonatomic) UIImage *image;
+//@property (nonatomic) UIImageView *imageView;
+//@property (nonatomic) CGFloat hue;
 @end
 
 @implementation ViewController
@@ -25,22 +42,37 @@
 
     LOG_CHANNEL_ON(General);
 
-    CGRect rect = CGRectMake(100, 100, 100, 120);
+//    std::string name = ObjCProperty::name_from_selector("set:");
+    
+    UPSpellSettings *settings = [[UPSpellSettings alloc] init];
+//    NSInteger bar = settings.bar;
+//    LOG(General, "bar: %ld", bar);
+    //    NSInteger foo = settings.foo;
+//    settings.foo = 37;
+//    settings.foo = 59;
+    [settings resetDefaultValues];
+//    settings.foo = 37;
+    LOG(General, "foo: %ld", settings.foo);
+    LOG(General, "ok");
+
+    
+    
+//    CGRect rect = CGRectMake(100, 100, 100, 120);
 //    UPQuadOffsets offsets = UPQuadOffsetsMake(UPOffsetMake(10, 0), UPOffsetMake(-10, 0), UPOffsetMake(-10, 0), UPOffsetMake(10, 0));
 //    UPQuadOffsets offsets = UPQuadOffsetsMake(UPOffsetMake(0, 0), UPOffsetMake(0, 0), UPOffsetMake(-40, 0), UPOffsetMake(40, 0));
 //    UPQuad q = UPQuadMakeWithRectAndOffsets(rect, offsets);
 //    CGFloat a = up_quad_area(q);
 
-    self.v1 = [[UPQuadView alloc] initWithFrame:rect];
+//    self.v1 = [[UPQuadView alloc] initWithFrame:rect];
 //    self.v1.quadOffsets = offsets;
-    self.v1.backgroundColor = [UIColor testColor1];
-    [self.view addSubview:self.v1];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        CGRect viewLayoutRect = CGRectInset(self.view.bounds, 40, 100);
-        self.v1.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:viewLayoutRect hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalTop];
-        [self.v1 layoutWithRule];
-    });
+//    self.v1.backgroundColor = [UIColor testColor1];
+//    [self.view addSubview:self.v1];
+//
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        CGRect viewLayoutRect = CGRectInset(self.view.bounds, 40, 100);
+//        self.v1.layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:viewLayoutRect hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalTop];
+//        [self.v1 layoutWithRule];
+//    });
     
 //    CATransform3D t = up_transform_for_rect_to_quad(self.v1.frame, offsets);
 //    self.v1.layer.transform = t;
@@ -83,8 +115,8 @@
 
     
 
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleTap:)];
-    [self.view addGestureRecognizer:tap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleTap:)];
+//    [self.view addGestureRecognizer:tap];
 
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        [self colorize];
@@ -92,13 +124,13 @@
 
 }
 
-- (void)colorize
-{
-    self.hue++;
-    if (self.hue > 360) {
-        self.hue = 0;
-    }
-    
+//- (void)colorize
+//{
+//    self.hue++;
+//    if (self.hue > 360) {
+//        self.hue = 0;
+//    }
+//
 //    UIColor *color = [UIColor colorWithHue:self.hue/360.f saturation:0.8 brightness:0.9 alpha:1.0];
 //    UPColor *upcolor = [UPColor colorWithUIColor:color];
 //    UIColor *color1 = [[UPColor colorWithHue:self.hue chroma:90 lightness:80 alpha:1.0] rgbColor];
@@ -109,23 +141,23 @@
 //    UIColor *color2 = [[UPColor colorWithHue:self.hue saturation:0.60 value:0.60 alpha:1.0] rgbColor];
 //    UIColor *color3 = [[UPColor colorWithHue:self.hue saturation:0.50 value:0.40 alpha:1.0] rgbColor];
 
-    UIColor *color1 = [UIColor colorWithHue:self.hue/360.0 saturation:0.90 brightness:0.80 alpha:1.0];
-    UIColor *color2 = [UIColor colorWithHue:self.hue/360.0 saturation:0.60 brightness:0.60 alpha:1.0];
-    UIColor *color3 = [UIColor colorWithHue:self.hue/360.0 saturation:0.50 brightness:0.40 alpha:1.0];
+//    UIColor *color1 = [UIColor colorWithHue:self.hue/360.0 saturation:0.90 brightness:0.80 alpha:1.0];
+//    UIColor *color2 = [UIColor colorWithHue:self.hue/360.0 saturation:0.60 brightness:0.60 alpha:1.0];
+//    UIColor *color3 = [UIColor colorWithHue:self.hue/360.0 saturation:0.50 brightness:0.40 alpha:1.0];
 
 
 //    UIImage *image = [self.image colorizedWith:color];
 //    NSLog(@"hue: %.0f : %@", self.hue, color);
 //    self.imageView.image = image;
-
-    self.v1.backgroundColor = color1;
-    self.v2.backgroundColor = color2;
-    self.v3.backgroundColor = color3;
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.03 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self colorize];
-    });
-}
+//
+//    self.v1.backgroundColor = color1;
+//    self.v2.backgroundColor = color2;
+//    self.v3.backgroundColor = color3;
+//
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.03 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self colorize];
+//    });
+//}
 
 - (void)viewDidLayoutSubviews
 {
@@ -146,16 +178,16 @@
 //    [self.v3 layoutWithRule];
 }
 
-- (void)_handleTap:(UITapGestureRecognizer *)tap
-{
-    if (tap.state != UIGestureRecognizerStateRecognized) {
-        return;
-    }
-
-    CGPoint point = [tap locationInView:self.view];
-    [self.v1 bloopWithDuration:0.4 toPosition:point completion:nil];
-
-
+//- (void)_handleTap:(UITapGestureRecognizer *)tap
+//{
+//    if (tap.state != UIGestureRecognizerStateRecognized) {
+//        return;
+//    }
+//
+//    CGPoint point = [tap locationInView:self.view];
+//    [self.v1 bloopWithDuration:0.4 toPosition:point completion:nil];
+//
+//
 //    static bool flag;
 //    if (flag) {
 //        CGRect viewLayoutRect = CGRectInset(self.view.bounds, 40, 100);
@@ -170,6 +202,6 @@
 
 //    CGPoint point = [tap locationInView:self.view];
 //    [self.v1 bloopWithDuration:1.5 toPosition:point completion:nil];
-}
+//}
 
 @end

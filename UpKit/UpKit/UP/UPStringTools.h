@@ -58,6 +58,28 @@ UP_STATIC_INLINE std::string_view cpp_str_view(NSString *str) {
 
 #endif  // __OBJC__
 
+// https://stackoverflow.com/a/1493195
+template <class ContainerT>
+void tokenize(const std::string &str, ContainerT &tokens, const std::string &delimiters = " ", bool trim_empty = false)
+{
+    using value_type = typename ContainerT::value_type;
+    using size_type  = typename ContainerT::size_type;
+
+    const std::string::size_type length = str.length();
+    std::string::size_type last_pos = 0;
+    
+    while (last_pos < length + 1) {
+        std::string::size_type pos = str.find_first_of(delimiters, last_pos);
+        if (pos == std::string::npos) {
+            pos = length;
+        }
+        if (pos != last_pos || !trim_empty) {
+            tokens.push_back(value_type(str.data() + last_pos, (size_type)pos - last_pos));
+        }
+        last_pos = pos + 1;
+    }
+}
+
 }  // namespace UP
 
 #endif  // __cplusplus
