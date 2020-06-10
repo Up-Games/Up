@@ -15,4 +15,5 @@ typedef NS_ENUM(NSInteger, UPSpellGameMode) {
     UPSpellGameModePause,
     UPSpellGameModeOverInterstitial,
     UPSpellGameModeOver,
+    UPSpellGameModeQuit,
 };

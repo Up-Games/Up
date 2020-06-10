@@ -223,6 +223,7 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)dialogPauseQuitButtonTapped:(id)sender
 {
+    [self setMode:UPSpellGameModePlay animated:YES];
 }
 
 - (void)dialogPauseResumeButtonTapped:(id)sender
@@ -1018,6 +1019,7 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellGameModePlay:
         case UPSpellGameModePause:
         case UPSpellGameModeOver:
+        case UPSpellGameModeQuit:
             // no-op
             break;
         case UPSpellGameModeOverInterstitial:
@@ -1169,6 +1171,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModePause:
                 case UPSpellGameModeOverInterstitial:
                 case UPSpellGameModeOver:
+                case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
                 case UPSpellGameModeMenu:
@@ -1187,6 +1190,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModePause:
                 case UPSpellGameModeOverInterstitial:
                 case UPSpellGameModeOver:
+                case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
                 case UPSpellGameModeMenu:
@@ -1205,6 +1209,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModePause:
                 case UPSpellGameModeOverInterstitial:
                 case UPSpellGameModeOver:
+                case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
                 case UPSpellGameModeMenu:
@@ -1221,6 +1226,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModePause:
                 case UPSpellGameModeOverInterstitial:
                 case UPSpellGameModeOver:
+                case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
                 case UPSpellGameModeOffscreenLeft:
@@ -1245,6 +1251,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModePause:
                 case UPSpellGameModeOverInterstitial:
                 case UPSpellGameModeOver:
+                case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
                 case UPSpellGameModePlay:
@@ -1262,6 +1269,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModeCountdown:
                 case UPSpellGameModePlay:
                 case UPSpellGameModeOver:
+                case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
                 case UPSpellGameModePause:
@@ -1276,6 +1284,7 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellGameModePause: {
             switch (mode) {
                 case UPSpellGameModeStart:
+                case UPSpellGameModeMenu:
                 case UPSpellGameModeOffscreenLeft:
                 case UPSpellGameModeOffscreenRight:
                 case UPSpellGameModePause:
@@ -1286,11 +1295,11 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModeCountdown:
                     [self modeTransitionFromPauseToCountdown:animated];
                     break;
-                case UPSpellGameModeMenu:
-                    [self modeTransitionFromPauseToMenu:animated];
-                    break;
                 case UPSpellGameModePlay:
                     [self modeTransitionFromPauseToPlay:animated];
+                    break;
+                case UPSpellGameModeQuit:
+                    [self modeTransitionFromPauseToQuit:animated];
                     break;
             }
             break;
@@ -1305,6 +1314,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModePlay:
                 case UPSpellGameModePause:
                 case UPSpellGameModeOverInterstitial:
+                case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
                 case UPSpellGameModeOver:
@@ -1313,7 +1323,7 @@ using Spot = UP::SpellLayout::Spot;
             }
             break;
         }
-        case UPSpellGameModeOver:
+        case UPSpellGameModeOver: {
             switch (mode) {
                 case UPSpellGameModeStart:
                 case UPSpellGameModeOffscreenLeft:
@@ -1322,6 +1332,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModePause:
                 case UPSpellGameModeOverInterstitial:
                 case UPSpellGameModeOver:
+                case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
                 case UPSpellGameModeMenu:
@@ -1332,6 +1343,26 @@ using Spot = UP::SpellLayout::Spot;
                     break;
             }
             break;
+        }
+        case UPSpellGameModeQuit: {
+            switch (mode) {
+                case UPSpellGameModeStart:
+                case UPSpellGameModeOffscreenLeft:
+                case UPSpellGameModeOffscreenRight:
+                case UPSpellGameModeCountdown:
+                case UPSpellGameModePlay:
+                case UPSpellGameModePause:
+                case UPSpellGameModeOverInterstitial:
+                case UPSpellGameModeOver:
+                case UPSpellGameModeQuit:
+                    ASSERT_NOT_REACHED();
+                    break;
+                case UPSpellGameModeMenu:
+                    [self modeTransitionFromQuitToMenu:animated];
+                    break;
+            }
+            break;
+        }
     }
 
     // Change the mode
@@ -1574,6 +1605,10 @@ using Spot = UP::SpellLayout::Spot;
 {
 }
 
+- (void)modeTransitionFromPauseToQuit:(BOOL)animated
+{
+}
+
 - (void)modeTransitionFromPlayToOverInterstitial:(BOOL)animated
 {
     pause(BandGameAll);
@@ -1627,6 +1662,11 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)modeTransitionFromOverToMenu:(BOOL)animated
 {
+}
+
+- (void)modeTransitionFromQuitToMenu:(BOOL)animated
+{
+    
 }
 
 @end
