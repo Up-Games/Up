@@ -4,7 +4,7 @@
 //
 
 #import <UpKit/UPAssertions.h>
-#import <UpKit/UPGameCode.h>
+#import <UpKit/UPGameKey.h>
 #import <UpKit/UPMacros.h>
 
 #import "UPTileSequence.h"
@@ -181,7 +181,7 @@ public:
     };
 
     SpellModel() { apply_init(Action(Opcode::INIT)); }
-    SpellModel(const GameCode &game_code) : m_game_code(game_code), m_tile_sequence(game_code) { apply_init(Action(Opcode::INIT)); }
+    SpellModel(const GameKey &game_code) : m_game_code(game_code), m_tile_sequence(game_code) { apply_init(Action(Opcode::INIT)); }
 
     const TileArray &tiles() const { return m_tiles; }
     TileArray &tiles() { return m_tiles; }
@@ -248,7 +248,7 @@ private:
     void apply_game(const Action &action);
     void apply_quit(const Action &action);
 
-    GameCode m_game_code;
+    GameKey m_game_code;
     TileSequence m_tile_sequence;
     TileArray m_tiles;
     std::vector<State> m_states;

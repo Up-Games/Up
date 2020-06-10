@@ -33,7 +33,7 @@ using TileIndex = UP::TileIndex;
 using TilePosition = UP::TilePosition;
 using TileTray = UP::TileTray;
 
-using UP::GameCode;
+using UP::GameKey;
 using UP::Lexicon;
 using UP::Random;
 using UP::SpellLayout;
@@ -97,7 +97,7 @@ using Spot = UP::SpellLayout::Spot;
 {
     [super viewDidLoad];
 
-    GameCode game_code = GameCode::random();
+    GameKey game_code = GameKey::random();
 //    GameCode game_code = GameCode("WPQ-2701");
 //    LOG(General, "code: %s", game_code.string().c_str());
 //    LOG(General, "code: %d", game_code.value());

@@ -1,5 +1,5 @@
 //
-//  UPGameCode.h
+//  UPGameKey.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -16,7 +16,7 @@
 
 namespace UP {
 
-class GameCode {
+class GameKey {
 public:
     static constexpr size_t StringLength = 8;
     static constexpr size_t Permutations = 26 * 26 * 26 * 10 * 10 * 10 * 10;  // 175,760,000
@@ -25,12 +25,12 @@ public:
     static constexpr uint32_t DefaultValue = 0;
     static constexpr size_t MaxValue = Permutations - 1;
 
-    GameCode() : m_string(DefaultCharString), m_value(DefaultValue) {}
-    GameCode(const std::string &str) : m_string(validate(str)), m_value(parse_string(m_string)) {}
-    GameCode(uint32_t value) : m_string(format_string(validate(value))), m_value(validate(value)) {}
+    GameKey() : m_string(DefaultCharString), m_value(DefaultValue) {}
+    GameKey(const std::string &str) : m_string(validate(str)), m_value(parse_string(m_string)) {}
+    GameKey(uint32_t value) : m_string(format_string(validate(value))), m_value(validate(value)) {}
 
-    static GameCode random() {
-        return GameCode(Random::instance().uint32_less_than(Permutations));
+    static GameKey random() {
+        return GameKey(Random::instance().uint32_less_than(Permutations));
     }
 
     uint32_t value() const { return m_value; }
@@ -138,8 +138,8 @@ private:
     uint32_t m_value;
 };
 
-UP_STATIC_INLINE bool operator==(const GameCode &a, const GameCode &b) { return a.value() == b.value(); }
-UP_STATIC_INLINE bool operator!=(const GameCode &a, const GameCode &b) { return !(a == b); }
+UP_STATIC_INLINE bool operator==(const GameKey &a, const GameKey &b) { return a.value() == b.value(); }
+UP_STATIC_INLINE bool operator!=(const GameKey &a, const GameKey &b) { return !(a == b); }
 
 }  // namespace UP
 
@@ -148,11 +148,11 @@ UP_STATIC_INLINE bool operator!=(const GameCode &a, const GameCode &b) { return 
 // =========================================================================================================================================
 
 #if __OBJC__
-@interface UPGameCode : NSObject
+@interface UPGameKey : NSObject
 
-+ (UPGameCode *)randomGameCode;
-+ (UPGameCode *)gameCodeWithString:(NSString *)string;
-+ (UPGameCode *)gameCodeWithValue:(uint32_t)value;
++ (UPGameKey *)randomGameKey;
++ (UPGameKey *)gameKeyWithString:(NSString *)string;
++ (UPGameKey *)gameKeyWithValue:(uint32_t)value;
 
 - (instancetype)init NS_UNAVAILABLE;
 

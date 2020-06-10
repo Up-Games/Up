@@ -40,8 +40,8 @@
 		5DA8E06E247D50AB008D3015 /* UPSerialNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E06D247D50AB008D3015 /* UPSerialNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DB9B1AE2487360900A4AAA8 /* UPSerialNumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AD2487360900A4AAA8 /* UPSerialNumber.cpp */; };
 		5DB9B1B02487EA9800A4AAA8 /* UPRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AF2487EA9800A4AAA8 /* UPRandom.cpp */; };
-		5DBADB7324678F4000D9D1FF /* UPGameCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DBADB7424678F4000D9D1FF /* UPGameCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameCode.mm */; };
+		5DBADB7324678F4000D9D1FF /* UPGameKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DBADB7424678F4000D9D1FF /* UPGameKey.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameKey.mm */; };
 		5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B2246EF6CC00090E7A /* UPLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC618B5246EF6CC00090E7A /* UPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC618B3246EF6CC00090E7A /* UPLabel.m */; };
 		5DC618BB246F045700090E7A /* UIFont+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B9246F045700090E7A /* UIFont+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -146,8 +146,8 @@
 		5DA8E06D247D50AB008D3015 /* UPSerialNumber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSerialNumber.h; sourceTree = "<group>"; };
 		5DB9B1AD2487360900A4AAA8 /* UPSerialNumber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPSerialNumber.cpp; sourceTree = "<group>"; };
 		5DB9B1AF2487EA9800A4AAA8 /* UPRandom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPRandom.cpp; sourceTree = "<group>"; };
-		5DBADB7124678F4000D9D1FF /* UPGameCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameCode.h; sourceTree = "<group>"; };
-		5DBADB7224678F4000D9D1FF /* UPGameCode.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameCode.mm; sourceTree = "<group>"; };
+		5DBADB7124678F4000D9D1FF /* UPGameKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameKey.h; sourceTree = "<group>"; };
+		5DBADB7224678F4000D9D1FF /* UPGameKey.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameKey.mm; sourceTree = "<group>"; };
 		5DC618B2246EF6CC00090E7A /* UPLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLabel.h; sourceTree = "<group>"; };
 		5DC618B3246EF6CC00090E7A /* UPLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLabel.m; sourceTree = "<group>"; };
 		5DC618B9246F045700090E7A /* UIFont+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UP.h"; sourceTree = "<group>"; };
@@ -343,8 +343,8 @@
 				5DA8E065247C2B04008D3015 /* UPDelayedAction.h */,
 				5DA8E066247C2B04008D3015 /* UPDelayedAction.mm */,
 				5DC618BD24703A1500090E7A /* UPFontMetrics.h */,
-				5DBADB7124678F4000D9D1FF /* UPGameCode.h */,
-				5DBADB7224678F4000D9D1FF /* UPGameCode.mm */,
+				5DBADB7124678F4000D9D1FF /* UPGameKey.h */,
+				5DBADB7224678F4000D9D1FF /* UPGameKey.mm */,
 				5DC67DF52473069A009BCDBB /* UPGameTimer.h */,
 				5DC67DF62473069A009BCDBB /* UPGameTimer.m */,
 				5DC67DF9247367D1009BCDBB /* UPGameTimerLabel.h */,
@@ -432,7 +432,7 @@
 				5DEBE0202454F1D200016047 /* UIColor+UP.h in Headers */,
 				5DFE6219245364C700D9CA0B /* UpKit.h in Headers */,
 				5DD71D442457731700F3F9E2 /* UPLayoutRule.h in Headers */,
-				5DBADB7324678F4000D9D1FF /* UPGameCode.h in Headers */,
+				5DBADB7324678F4000D9D1FF /* UPGameKey.h in Headers */,
 				5DA8E063247C063B008D3015 /* UPTicker.h in Headers */,
 				5DA8E06E247D50AB008D3015 /* UPSerialNumber.h in Headers */,
 				5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */,
@@ -581,7 +581,7 @@
 				5DB9B1AE2487360900A4AAA8 /* UPSerialNumber.cpp in Sources */,
 				5DB9B1B02487EA9800A4AAA8 /* UPRandom.cpp in Sources */,
 				5D4AE831248FC9A900213904 /* UPObjCProperty.mm in Sources */,
-				5DBADB7424678F4000D9D1FF /* UPGameCode.mm in Sources */,
+				5DBADB7424678F4000D9D1FF /* UPGameKey.mm in Sources */,
 				5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */,
 				5D5216F3246D87DF005A2E9F /* UPControl.mm in Sources */,
 				5D3461352488760A009FB46D /* UPViewMove.mm in Sources */,

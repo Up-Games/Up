@@ -9,7 +9,7 @@
 #import <iostream>
 #import <vector>
 
-#import <UpKit/UPGameCode.h>
+#import <UpKit/UPGameKey.h>
 #import <UpKit/UPLexicon.h>
 #import <UpKit/UPRandom.h>
 #import <UpKit/UPStringTools.h>
@@ -20,10 +20,10 @@ namespace UP {
     
 class TileSequence {
 public:
-    TileSequence() : m_game_code(GameCode()) { m_random.seed_value(m_game_code.value()); }
-    TileSequence(const GameCode &game_code) : m_game_code(game_code) { m_random.seed_value(m_game_code.value()); }
+    TileSequence() : m_game_key(GameKey()) { m_random.seed_value(m_game_key.value()); }
+    TileSequence(const GameKey &game_key) : m_game_key(game_key) { m_random.seed_value(m_game_key.value()); }
 
-    GameCode game_code() const { return m_game_code; }
+    GameKey game_code() const { return m_game_key; }
     
     TileModel next() {
         if (m_letters.size() == 0) {
@@ -47,7 +47,7 @@ public:
     }
     
 private:
-    GameCode m_game_code;
+    GameKey m_game_key;
     Random m_random;
     std::vector<char32_t> m_letters;
 };
