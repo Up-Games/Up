@@ -23,18 +23,6 @@ using UP::ObjCProperty;
 }
 @end
 
-@interface UPSpellSettings2 : UPSpellSettings
-@property (nonatomic) int bar;
-@end
-
-@implementation UPSpellSettings2
-@dynamic bar;
-- (void)setDefaultValues
-{
-    self.bar = 17;
-}
-@end
-
 
 @interface ViewController ()
 //@property (nonatomic) UPQuadView *v1;
@@ -52,20 +40,19 @@ using UP::ObjCProperty;
     [super viewDidLoad];
 
     LOG_CHANNEL_ON(General);
+    //LOG_CHANNEL_ON(Settings);
 
 //    std::string name = ObjCProperty::name_from_selector("set:");
     
-    UPSpellSettings2 *settings = [[UPSpellSettings2 alloc] init];
+    UPSpellSettings *settings = [[UPSpellSettings alloc] init];
 //    NSInteger bar = settings.bar;
 //    LOG(General, "bar: %ld", bar);
     //    NSInteger foo = settings.foo;
 //    settings.foo = 37;
 //    settings.foo = 59;
-//    [settings resetDefaultValues];
+    [settings resetDefaultValues];
 //    settings.foo = @[ @(4), @(5), @(6) ];
-//    settings.bar = 39;
     LOG(General, "foo: %@", settings.foo);
-    LOG(General, "bar: %d", settings.bar);
     LOG(General, "ok");
 
     

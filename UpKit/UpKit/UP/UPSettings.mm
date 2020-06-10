@@ -6,9 +6,6 @@
 #import <sstream>
 #import <string>
 #import <map>
-#import <set>
-#import <unordered_map>
-#import <vector>
 
 #import <objc/runtime.h>
 
@@ -20,13 +17,6 @@
 using UP::cpp_str;
 using UP::ns_str;
 using UP::ObjCProperty;
-
-// =========================================================================================================================================
-
-@interface NSObject (UPSettings)
-- (void)ensureDefaultValues;
-- (void)resetDefaultValues;
-@end
 
 // =========================================================================================================================================
 
@@ -94,9 +84,8 @@ public:
     enum class Type { Getter, Setter };
     
     SettingsProperty() {}
-    SettingsProperty(NSString *defaults_key_prefix, const std::string &property_name, const ObjCProperty &property, Type type);
+    SettingsProperty(NSString *defaults_key_prefix, const ObjCProperty &property, Type type);
 
-    const std::string &property_name() const { return m_property_name; }
     const ObjCProperty &property() const { return m_property; }
     Type type() const { return m_type; }
     NSString *defaults_key() const { return m_defaults_key; }
@@ -110,8 +99,8 @@ private:
     SEL m_defaults_selector = nullptr;
 };
 
-SettingsProperty::SettingsProperty(NSString *defaults_key_prefix, const std::string &property_name, const ObjCProperty &property, Type type) :
-    m_property_name(property_name), m_property(property), m_type(type)
+SettingsProperty::SettingsProperty(NSString *defaults_key_prefix, const ObjCProperty &property, Type type) :
+    m_property(property), m_type(type)
 {
     NSMutableString *key = [NSMutableString stringWithString:defaults_key_prefix];
     [key appendString:ns_str(m_property_name)];
@@ -301,8 +290,8 @@ static SettingsMap m_map;
         std::string getter_name = property_name;
         std::string setter_name = up_property_setter_name(property_name);
         ObjCProperty up_objc_property(property);
-        property_map.emplace(getter_name, SettingsProperty(defaults_key_prefix, property_name, up_objc_property, SettingsProperty::Type::Getter));
-        property_map.emplace(setter_name, SettingsProperty(defaults_key_prefix, property_name, up_objc_property, SettingsProperty::Type::Setter));
+        property_map.emplace(getter_name, SettingsProperty(defaults_key_prefix, up_objc_property, SettingsProperty::Type::Getter));
+        property_map.emplace(setter_name, SettingsProperty(defaults_key_prefix, up_objc_property, SettingsProperty::Type::Setter));
     }
     
     m_map.emplace(self.class, property_map);
@@ -347,14 +336,14 @@ static SettingsMap m_map;
 - (void)forwardInvocation:(NSInvocation *)invocation
 {
     std::string selector_name = cpp_str(NSStringFromSelector(invocation.selector));
-    
+
     Class cls = self.class;
     do {
         SelectorPropertyMap selector_map = m_map[cls];
         const auto it = selector_map.find(selector_name);
         if (it != selector_map.end()) {
+            LOG(Settings, "forwardInvocation: %s", selector_name.c_str());
             const SettingsProperty &settings_property = it->second;
-            LOG(General, "forwardInvocation: %s", selector_name.c_str());
             invocation.selector = settings_property.defaults_selector();
             NSString *key = settings_property.defaults_key();
             switch (settings_property.type()) {
@@ -376,12 +365,7 @@ static SettingsMap m_map;
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
 {
-    LOG(General, "methodSignatureForSelector: %@ : %@", self, NSStringFromSelector(selector));
-
-    std::string property_name = ObjCProperty::name_from_selector(selector);
-    if (property_name.length() == 0) {
-        return [super methodSignatureForSelector:selector];
-    }
+    LOG(Settings, "methodSignatureForSelector: %@ : %@", self, NSStringFromSelector(selector));
 
     std::string selector_name = cpp_str(NSStringFromSelector(selector));
     Class cls = self.class;
@@ -409,7 +393,7 @@ static SettingsMap m_map;
 
 - (char)getCharKey:(NSString *)key
 {
-    LOG(General, "getCharKey: on %@", key);
+    LOG(Settings, "getCharKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val charValue] : 0;
 }
@@ -417,15 +401,15 @@ static SettingsMap m_map;
 - (void)setChar:(char)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setChar: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setChar: %ld on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (short)getShortKey:(NSString *)key
 {
-    LOG(General, "getShortKey: on %@", key);
+    LOG(Settings, "getShortKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val shortValue] : 0;
 }
@@ -433,15 +417,15 @@ static SettingsMap m_map;
 - (void)setShort:(short)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setShort: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setShort: %ld on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (int)getIntKey:(NSString *)key
 {
-    LOG(General, "getIntKey: on %@", key);
+    LOG(Settings, "getIntKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val intValue] : 0;
 }
@@ -449,15 +433,15 @@ static SettingsMap m_map;
 - (void)setInt:(int)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setInt: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setInt: %ld on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (long)getLongKey:(NSString *)key
 {
-    LOG(General, "getLongKey: on %@", key);
+    LOG(Settings, "getLongKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val longValue] : 0;
 }
@@ -465,15 +449,15 @@ static SettingsMap m_map;
 - (void)setLong:(long)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setLong: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setLong: %ld on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (long long)getLongLongKey:(NSString *)key
 {
-    LOG(General, "getLongLongKey: on %@", key);
+    LOG(Settings, "getLongLongKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val longLongValue] : 0;
 }
@@ -481,15 +465,15 @@ static SettingsMap m_map;
 - (void)setLongLong:(long long)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setLongLong: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setLongLong: %ld on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (unsigned char)getUnsignedCharKey:(NSString *)key
 {
-    LOG(General, "getUnsignedCharKey: on %@", key);
+    LOG(Settings, "getUnsignedCharKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val unsignedCharValue] : 0;
 }
@@ -497,15 +481,15 @@ static SettingsMap m_map;
 - (void)setUnsignedChar:(unsigned char)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setUnsignedChar: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setUnsignedChar: %ld on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (unsigned short)getUnsignedShortKey:(NSString *)key
 {
-    LOG(General, "getUnsignedShortKey: on %@", key);
+    LOG(Settings, "getUnsignedShortKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val unsignedShortValue] : 0;
 }
@@ -513,15 +497,15 @@ static SettingsMap m_map;
 - (void)setUnsignedShort:(unsigned short)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setUnsignedShort: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setUnsignedShort: %ld on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (unsigned int)getUnsignedIntKey:(NSString *)key
 {
-    LOG(General, "getUnsignedIntKey: on %@", key);
+    LOG(Settings, "getUnsignedIntKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val unsignedIntValue] : 0;
 }
@@ -529,15 +513,15 @@ static SettingsMap m_map;
 - (void)setUnsignedInt:(unsigned int)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setUnsignedInt: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setUnsignedInt: %ld on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (unsigned long)getUnsignedLongKey:(NSString *)key
 {
-    LOG(General, "getUnsignedLongKey: on %@", key);
+    LOG(Settings, "getUnsignedLongKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val unsignedLongValue] : 0;
 }
@@ -545,15 +529,15 @@ static SettingsMap m_map;
 - (void)setUnsignedLong:(unsigned long)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setUnsignedLong: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setUnsignedLong: %ld on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (unsigned long long)getUnsignedLongLongKey:(NSString *)key
 {
-    LOG(General, "getUnsignedLongLongKey: on %@", key);
+    LOG(Settings, "getUnsignedLongLongKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val unsignedLongLongValue] : 0;
 }
@@ -561,15 +545,15 @@ static SettingsMap m_map;
 - (void)setUnsignedLongLong:(unsigned long long)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setUnsignedLongLong: %ld on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setUnsignedLongLong: %ld on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (float)getFloatKey:(NSString *)key
 {
-    LOG(General, "getFloatKey: on %@", key);
+    LOG(Settings, "getFloatKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val floatValue] : 0;
 }
@@ -577,15 +561,15 @@ static SettingsMap m_map;
 - (void)setFloat:(float)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setFloat: %.3f on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setFloat: %.3f on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (double)getDoubleKey:(NSString *)key
 {
-    LOG(General, "getDoubleKey: on %@", key);
+    LOG(Settings, "getDoubleKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val doubleValue] : 0;
 }
@@ -593,15 +577,15 @@ static SettingsMap m_map;
 - (void)setDouble:(double)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setDouble: %.3f on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setDouble: %.3f on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (BOOL)getBoolKey:(NSString *)key
 {
-    LOG(General, "getBoolKey: on %@", key);
+    LOG(Settings, "getBoolKey: on %@", key);
     id val = [self valueForKey:key];
     return val ? [val boolValue] : 0;
 }
@@ -609,57 +593,57 @@ static SettingsMap m_map;
 - (void)setBool:(BOOL)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setBool: %s on %@ (%s : %s)", value ? "Y" : "N", key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setBool: %s on %@ (%s)", value ? "Y" : "N", key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
     }
 }
 
 - (NSString *)getStringKey:(NSString *)key
 {
-    LOG(General, "getStringKey: on %@", key);
+    LOG(Settings, "getStringKey: on %@", key);
     id val = [self valueForKey:key];
     return val && [val isKindOfClass:[NSString class]] ? (NSString *)val : @"";
 }
 
 - (NSData *)getDataKey:(NSString *)key
 {
-    LOG(General, "getDataKey: on %@", key);
+    LOG(Settings, "getDataKey: on %@", key);
     id val = [self valueForKey:key];
     return val && [val isKindOfClass:[NSData class]] ? (NSData *)val : [NSData data];
 }
 
 - (NSNumber *)getNumberKey:(NSString *)key
 {
-    LOG(General, "getNumberKey: on %@", key);
+    LOG(Settings, "getNumberKey: on %@", key);
     id val = [self valueForKey:key];
     return val && [val isKindOfClass:[NSNumber class]] ? (NSNumber *)val : @(0);
 }
 
 - (NSDate *)getDateKey:(NSString *)key
 {
-    LOG(General, "getDateKey: on %@", key);
+    LOG(Settings, "getDateKey: on %@", key);
     id val = [self valueForKey:key];
     return val && [val isKindOfClass:[NSDate class]] ? (NSDate *)val : [NSDate date];
 }
 
 - (NSArray *)getArrayKey:(NSString *)key
 {
-    LOG(General, "getArrayKey: on %@", key);
+    LOG(Settings, "getArrayKey: on %@", key);
     id val = [self valueForKey:key];
     return val && [val isKindOfClass:[NSArray class]] ? (NSArray *)val : @[];
 }
 
 - (NSDictionary *)getDictionaryKey:(NSString *)key
 {
-    LOG(General, "getDictionaryKey: on %@", key);
+    LOG(Settings, "getDictionaryKey: on %@", key);
     id val = [self valueForKey:key];
     return val && [val isKindOfClass:[NSDictionary class]] ? (NSDictionary *)val : @{};
 }
 
 - (id)getObjectKey:(NSString *)key
 {
-    LOG(General, "getObjectKey: on %@", key);
+    LOG(Settings, "getObjectKey: on %@", key);
     id val = [self valueForKey:key];
     return val ?: nil;
 }
@@ -667,8 +651,8 @@ static SettingsMap m_map;
 - (void)setObject:(NSObject *)value key:(NSString *)key overwrite:(BOOL)overwrite
 {
     BOOL write = overwrite || ![self valueForKey:key];
-    LOG(General, "setObject: %@ on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
+        LOG(Settings, "setObject: %@ on %@ (%s)", value, key, overwrite ? "Y" : "N");
         [[NSUserDefaults standardUserDefaults] setObject:value forKey:key];
     }
 }

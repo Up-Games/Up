@@ -58,8 +58,6 @@ public:
     uint32_t flags() const { return m_flags; }
 
     static const char * const c_str(Type);
-    static std::string name_from_selector(SEL);
-    static bool is_setter(SEL);
     
 private:
     Type m_type = Type::Unsupported;

@@ -215,40 +215,4 @@ const char * const ObjCProperty::c_str(Type type)
     }
 }
 
-std::string ObjCProperty::name_from_selector(SEL selector)
-{
-    std::string result;
-    
-    const char *selector_name = [NSStringFromSelector(selector) UTF8String];
-    size_t length = strlen(selector_name);
-    ASSERT(length > 0);
-    
-    // Check if selector is a property setter.
-    // This function recognizes setters with the form "setFoo:", where the property name is "foo".
-    constexpr char COLON = ':';
-    if (length >= 5 && strncmp(selector_name, "set", 3) == 0 && selector_name[length - 1] == COLON) {
-        size_t name_length = length - 4; // take away "set" and the trailing colon.
-        char chars[name_length + 1];     // put back a trailing NUL.
-        strncpy(chars, selector_name + 3, name_length);
-        chars[0] = std::tolower(chars[0]);
-        result = std::string(chars, name_length);
-    }
-    else {
-        // The assumption is that the name is just the selector_name itself.
-        result = selector_name;
-    }
-    
-    return result;
-}
-
-bool ObjCProperty::is_setter(SEL selector)
-{
-    const char *selector_name = [NSStringFromSelector(selector) UTF8String];
-    size_t length = strlen(selector_name);
-    ASSERT(length > 0);
-    
-    constexpr char COLON = ':';
-    return length >= 5 && strncmp(selector_name, "set", 3) == 0 && selector_name[length - 1] == COLON;
-}
-
 }  // namespace UP
