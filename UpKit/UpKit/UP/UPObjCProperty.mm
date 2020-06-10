@@ -108,8 +108,25 @@ ObjCProperty::ObjCProperty(const objc_property_t &property)
                     if (attr[1] == '@') {
                         // Yields "NSString" from a string in the form T@"NSString"
                         std::string type_str = attr.substr(3, attr.length() - 4);
-                        if (type_str == "NSString" || type_str == "NSData" || type_str == "NSNumber" ||
-                            type_str == "NSDate" || type_str == "NSArray" || type_str == "NSDictionary") {
+                        if (type_str == "NSString") {
+                            m_type = Type::String;
+                        }
+                        else if (type_str == "NSData") {
+                            m_type = Type::Data;
+                        }
+                        else if (type_str == "NSNumber") {
+                            m_type = Type::Number;
+                        }
+                        else if (type_str == "NSDate") {
+                            m_type = Type::Date;
+                        }
+                        else if (type_str == "NSArray") {
+                            m_type = Type::Array;
+                        }
+                        else if (type_str == "NSDictionary") {
+                            m_type = Type::Dictionary;
+                        }
+                        else {
                             m_type = Type::Object;
                         }
                     }
@@ -183,6 +200,18 @@ const char * const ObjCProperty::c_str(Type type)
             return "bool";
         case Type::Object:
             return "object";
+        case Type::String:
+            return "NSString";
+        case Type::Data:
+            return "NSData";
+        case Type::Number:
+            return "NSNumber";
+        case Type::Date:
+            return "NSDate";
+        case Type::Array:
+            return "NSArray";
+        case Type::Dictionary:
+            return "NSDictionary";
     }
 }
 

@@ -12,18 +12,29 @@
 using UP::ObjCProperty;
 
 @interface UPSpellSettings : UPSettings
-@property (nonatomic) BOOL foo;
+@property (nonatomic) NSArray *foo;
 @end
 
 @implementation UPSpellSettings
 @dynamic foo;
-
 - (void)setDefaultValues
 {
-    self.foo = YES;
+    self.foo = @[ @(1), @(2), @(3) ];
 }
-
 @end
+
+@interface UPSpellSettings2 : UPSpellSettings
+@property (nonatomic) int bar;
+@end
+
+@implementation UPSpellSettings2
+@dynamic bar;
+- (void)setDefaultValues
+{
+    self.bar = 17;
+}
+@end
+
 
 @interface ViewController ()
 //@property (nonatomic) UPQuadView *v1;
@@ -44,15 +55,17 @@ using UP::ObjCProperty;
 
 //    std::string name = ObjCProperty::name_from_selector("set:");
     
-    UPSpellSettings *settings = [[UPSpellSettings alloc] init];
+    UPSpellSettings2 *settings = [[UPSpellSettings2 alloc] init];
 //    NSInteger bar = settings.bar;
 //    LOG(General, "bar: %ld", bar);
     //    NSInteger foo = settings.foo;
 //    settings.foo = 37;
 //    settings.foo = 59;
-    [settings resetDefaultValues];
-    settings.foo = NO;
-    LOG(General, "foo: %d", settings.foo);
+//    [settings resetDefaultValues];
+//    settings.foo = @[ @(4), @(5), @(6) ];
+//    settings.bar = 39;
+    LOG(General, "foo: %@", settings.foo);
+    LOG(General, "bar: %d", settings.bar);
     LOG(General, "ok");
 
     

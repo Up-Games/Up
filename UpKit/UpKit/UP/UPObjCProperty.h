@@ -39,6 +39,12 @@ public:
         ULongLong,
         Float,
         Double,
+        String,
+        Data,
+        Number,
+        Date,
+        Array,
+        Dictionary,
         Object,
     };
 

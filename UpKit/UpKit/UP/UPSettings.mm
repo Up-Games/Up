@@ -73,18 +73,28 @@ using UP::ObjCProperty;
 - (BOOL)getBoolKey:(NSString *)key;
 - (void)setBool:(BOOL)value key:(NSString *)key overwrite:(BOOL)overwrite;
 
+- (NSString *)getStringKey:(NSString *)key;
+- (NSData *)getDataKey:(NSString *)key;
+- (NSNumber *)getNumberKey:(NSString *)key;
+- (NSDate *)getDateKey:(NSString *)key;
+- (NSArray *)getArrayKey:(NSString *)key;
+- (NSDictionary *)getDictionaryKey:(NSString *)key;
+
+- (id)getObjectKey:(NSString *)key;
+- (void)setObject:(NSObject *)value key:(NSString *)key overwrite:(BOOL)overwrite;
+
 @end
 
 // =========================================================================================================================================
 
 namespace UP {
 
-class PropertyGlue {
+class SettingsProperty {
 public:
     enum class Type { Getter, Setter };
     
-    PropertyGlue() {}
-    PropertyGlue(NSString *defaults_key_prefix, const std::string &property_name, const ObjCProperty &property, Type type);
+    SettingsProperty() {}
+    SettingsProperty(NSString *defaults_key_prefix, const std::string &property_name, const ObjCProperty &property, Type type);
 
     const std::string &property_name() const { return m_property_name; }
     const ObjCProperty &property() const { return m_property; }
@@ -97,10 +107,10 @@ private:
     ObjCProperty m_property;
     Type m_type = Type::Getter;
     __strong NSString *m_defaults_key;
-    SEL m_defaults_selector;
+    SEL m_defaults_selector = nullptr;
 };
 
-PropertyGlue::PropertyGlue(NSString *defaults_key_prefix, const std::string &property_name, const ObjCProperty &property, Type type) :
+SettingsProperty::SettingsProperty(NSString *defaults_key_prefix, const std::string &property_name, const ObjCProperty &property, Type type) :
     m_property_name(property_name), m_property(property), m_type(type)
 {
     NSMutableString *key = [NSMutableString stringWithString:defaults_key_prefix];
@@ -152,7 +162,26 @@ PropertyGlue::PropertyGlue(NSString *defaults_key_prefix, const std::string &pro
                 case ObjCProperty::Type::Bool:
                     m_defaults_selector = @selector(getBoolKey:);
                     break;
+                case ObjCProperty::Type::String:
+                    m_defaults_selector = @selector(getStringKey:);
+                    break;
+                case ObjCProperty::Type::Data:
+                    m_defaults_selector = @selector(getDataKey:);
+                    break;
+                case ObjCProperty::Type::Number:
+                    m_defaults_selector = @selector(getNumberKey:);
+                    break;
+                case ObjCProperty::Type::Date:
+                    m_defaults_selector = @selector(getDateKey:);
+                    break;
+                case ObjCProperty::Type::Array:
+                    m_defaults_selector = @selector(getArrayKey:);
+                    break;
+                case ObjCProperty::Type::Dictionary:
+                    m_defaults_selector = @selector(getDictionaryKey:);
+                    break;
                 case ObjCProperty::Type::Object:
+                    m_defaults_selector = @selector(getObjectKey:);
                     break;
             }
             break;
@@ -201,7 +230,14 @@ PropertyGlue::PropertyGlue(NSString *defaults_key_prefix, const std::string &pro
                 case ObjCProperty::Type::Bool:
                     m_defaults_selector = @selector(setBool:key:overwrite:);
                     break;
+                case ObjCProperty::Type::String:
+                case ObjCProperty::Type::Data:
+                case ObjCProperty::Type::Number:
+                case ObjCProperty::Type::Date:
+                case ObjCProperty::Type::Array:
+                case ObjCProperty::Type::Dictionary:
                 case ObjCProperty::Type::Object:
+                    m_defaults_selector = @selector(setObject:key:overwrite:);
                     break;
             }
         }
@@ -210,7 +246,7 @@ PropertyGlue::PropertyGlue(NSString *defaults_key_prefix, const std::string &pro
 
 }  // namespace UP
 
-using UP::PropertyGlue;
+using UP::SettingsProperty;
 
 // =========================================================================================================================================
 
@@ -227,19 +263,21 @@ static std::string up_property_setter_name(const std::string &property_name)
 
 // =========================================================================================================================================
 
+using SelectorPropertyMap = std::map<std::string, SettingsProperty>;
+using SettingsMap = std::map<Class, SelectorPropertyMap>;
+
+static SettingsMap m_map;
+
 @interface UPSettings ()
 {
-    std::map<std::string, PropertyGlue> m_glue_map;
     BOOL m_setter_always_overwrites;
 }
 @end
 
 @implementation UPSettings
 
-- (instancetype)init
++ (void)initialize
 {
-    self = [super init];
-
     std::vector<std::string> cls_names;
     Class settings_cls = objc_getClass("UPSettings");
     Class cls = self.class;
@@ -253,22 +291,26 @@ static std::string up_property_setter_name(const std::string &property_name)
         sstr << *it << "/";
     }
     NSString *defaults_key_prefix = [NSString stringWithUTF8String:sstr.str().c_str()];
+    
+    SelectorPropertyMap property_map;
+    unsigned int outCount;
+    objc_property_t *properties = class_copyPropertyList(self, &outCount);
+    for (unsigned int idx = 0; idx < outCount; idx++) {
+        objc_property_t property = properties[idx];
+        std::string property_name = property_getName(property);
+        std::string getter_name = property_name;
+        std::string setter_name = up_property_setter_name(property_name);
+        ObjCProperty up_objc_property(property);
+        property_map.emplace(getter_name, SettingsProperty(defaults_key_prefix, property_name, up_objc_property, SettingsProperty::Type::Getter));
+        property_map.emplace(setter_name, SettingsProperty(defaults_key_prefix, property_name, up_objc_property, SettingsProperty::Type::Setter));
+    }
+    
+    m_map.emplace(self.class, property_map);
+}
 
-    cls = self.class;
-    do {
-        unsigned int outCount;
-        objc_property_t *properties = class_copyPropertyList(cls, &outCount);
-        for (unsigned int idx = 0; idx < outCount; idx++) {
-            objc_property_t property = properties[idx];
-            std::string property_name = property_getName(property);
-            std::string getter_name = property_name;
-            std::string setter_name = up_property_setter_name(property_name);
-            ObjCProperty up_objc_property(property);
-            m_glue_map.emplace(getter_name, PropertyGlue(defaults_key_prefix, property_name, up_objc_property, PropertyGlue::Type::Getter));
-            m_glue_map.emplace(setter_name, PropertyGlue(defaults_key_prefix, property_name, up_objc_property, PropertyGlue::Type::Setter));
-        }
-        cls = class_getSuperclass(cls);
-    } while (cls != [UPSettings class]);
+- (instancetype)init
+{
+    self = [super init];
     
     [self ensureDefaultValues];
     
@@ -289,7 +331,7 @@ static std::string up_property_setter_name(const std::string &property_name)
     Class cls = self.class;
     SEL sel = @selector(setDefaultValues);
     do {
-        IMP imp = [cls instanceMethodForSelector:@selector(setDefaultValues)];
+        IMP imp = [cls instanceMethodForSelector:sel];
         typedef void (*fn)(id, SEL);
         fn f = (fn)imp;
         f(self, sel);
@@ -304,27 +346,32 @@ static std::string up_property_setter_name(const std::string &property_name)
 
 - (void)forwardInvocation:(NSInvocation *)invocation
 {
-    NSString *selectorName = NSStringFromSelector(invocation.selector);
-    const auto it = m_glue_map.find(cpp_str(selectorName));
-    if (it == m_glue_map.end()) {
-        [invocation invoke];
-    }
-    else {
-        const PropertyGlue &glue = it->second;
-        LOG(General, "forwardInvocation: %@", selectorName);
-        invocation.selector = glue.defaults_selector();
-        NSString *key = glue.defaults_key();
-        switch (glue.type()) {
-            case PropertyGlue::Type::Getter:
-                [invocation setArgument:&key atIndex:2];
-                break;
-            case PropertyGlue::Type::Setter:
-                [invocation setArgument:&key atIndex:3];
-                [invocation setArgument:&m_setter_always_overwrites atIndex:4];
-                break;
+    std::string selector_name = cpp_str(NSStringFromSelector(invocation.selector));
+    
+    Class cls = self.class;
+    do {
+        SelectorPropertyMap selector_map = m_map[cls];
+        const auto it = selector_map.find(selector_name);
+        if (it != selector_map.end()) {
+            const SettingsProperty &settings_property = it->second;
+            LOG(General, "forwardInvocation: %s", selector_name.c_str());
+            invocation.selector = settings_property.defaults_selector();
+            NSString *key = settings_property.defaults_key();
+            switch (settings_property.type()) {
+                case SettingsProperty::Type::Getter:
+                    [invocation setArgument:&key atIndex:2];
+                    break;
+                case SettingsProperty::Type::Setter:
+                    [invocation setArgument:&key atIndex:3];
+                    [invocation setArgument:&m_setter_always_overwrites atIndex:4];
+                    break;
+            }
+            break;
         }
-        [invocation invoke];
-    }
+        cls = class_getSuperclass(cls);
+    } while (cls != [UPSettings class]);
+
+    [invocation invoke];
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
@@ -337,12 +384,17 @@ static std::string up_property_setter_name(const std::string &property_name)
     }
 
     std::string selector_name = cpp_str(NSStringFromSelector(selector));
-    const auto it = m_glue_map.find(selector_name);
-    if (it != m_glue_map.end()) {
-        const PropertyGlue &glue = it->second;
-        return [self methodSignatureForSelector:glue.defaults_selector()];
-    }
-    
+    Class cls = self.class;
+    do {
+        SelectorPropertyMap selector_map = m_map[cls];
+        const auto it = selector_map.find(selector_name);
+        if (it != selector_map.end()) {
+            const SettingsProperty &settings_property = it->second;
+            return [cls instanceMethodSignatureForSelector:settings_property.defaults_selector()];
+        }
+        cls = class_getSuperclass(cls);
+    } while (cls != [UPSettings class]);
+
     return [super methodSignatureForSelector:selector];
 }
 
@@ -560,6 +612,64 @@ static std::string up_property_setter_name(const std::string &property_name)
     LOG(General, "setBool: %s on %@ (%s : %s)", value ? "Y" : "N", key, write ? "Y" : "N", overwrite ? "Y" : "N");
     if (write) {
         [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:key];
+    }
+}
+
+- (NSString *)getStringKey:(NSString *)key
+{
+    LOG(General, "getStringKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val && [val isKindOfClass:[NSString class]] ? (NSString *)val : @"";
+}
+
+- (NSData *)getDataKey:(NSString *)key
+{
+    LOG(General, "getDataKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val && [val isKindOfClass:[NSData class]] ? (NSData *)val : [NSData data];
+}
+
+- (NSNumber *)getNumberKey:(NSString *)key
+{
+    LOG(General, "getNumberKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val && [val isKindOfClass:[NSNumber class]] ? (NSNumber *)val : @(0);
+}
+
+- (NSDate *)getDateKey:(NSString *)key
+{
+    LOG(General, "getDateKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val && [val isKindOfClass:[NSDate class]] ? (NSDate *)val : [NSDate date];
+}
+
+- (NSArray *)getArrayKey:(NSString *)key
+{
+    LOG(General, "getArrayKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val && [val isKindOfClass:[NSArray class]] ? (NSArray *)val : @[];
+}
+
+- (NSDictionary *)getDictionaryKey:(NSString *)key
+{
+    LOG(General, "getDictionaryKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val && [val isKindOfClass:[NSDictionary class]] ? (NSDictionary *)val : @{};
+}
+
+- (id)getObjectKey:(NSString *)key
+{
+    LOG(General, "getObjectKey: on %@", key);
+    id val = [self valueForKey:key];
+    return val ?: nil;
+}
+
+- (void)setObject:(NSObject *)value key:(NSString *)key overwrite:(BOOL)overwrite
+{
+    BOOL write = overwrite || ![self valueForKey:key];
+    LOG(General, "setObject: %@ on %@ (%s : %s)", value, key, write ? "Y" : "N", overwrite ? "Y" : "N");
+    if (write) {
+        [[NSUserDefaults standardUserDefaults] setObject:value forKey:key];
     }
 }
 
