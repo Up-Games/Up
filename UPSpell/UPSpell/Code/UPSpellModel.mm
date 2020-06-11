@@ -448,11 +448,6 @@ const SpellModel::State &SpellModel::apply(const Action &action)
             break;
     }
 
-//    TileArray tiles_copy = tiles();
-//    for (auto &tile : tiles_copy) {
-//        tile.clear_view();
-//    }
-
     return m_states.emplace_back(action, tiles(), game_score());
 }
 
@@ -697,6 +692,20 @@ void SpellModel::apply_game(const Action &action)
 
 void SpellModel::apply_quit(const Action &action)
 {
+    ASSERT(action.opcode() == Opcode::QUIT);
+    ASSERT_NPOS(action.pos1());
+    ASSERT_NPOS(action.pos2());
+    ASSERT(positions_valid());
+    
+    clear_and_sentinelize();
+    fill_player_tray();
+    update_word();
+    m_game_score = 0;
+    
+    ASSERT(word_length() == 0);
+    ASSERT(!word_in_lexicon());
+    ASSERT(word_score() == 0);
+    ASSERT(positions_valid());
 }
 
 }  // namespace UP
