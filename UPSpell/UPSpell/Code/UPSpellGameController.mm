@@ -133,7 +133,7 @@ using Spot = UP::SpellLayout::Spot;
     self.pickedView = nil;
     self.pickedPosition = TilePosition();
 
-    self.mode = UPSpellGameModeMenu;
+    self.mode = UPSpellGameModeAttract;
 
     self.mode = UPSpellGameModeCountdown;
     self.mode = UPSpellGameModePlay;
@@ -1027,7 +1027,7 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellGameModeStart:
         case UPSpellGameModeOffscreenLeft:
         case UPSpellGameModeOffscreenRight:
-        case UPSpellGameModeMenu:
+        case UPSpellGameModeAttract:
         case UPSpellGameModeCountdown:
         case UPSpellGameModePlay:
         case UPSpellGameModePause:
@@ -1210,8 +1210,8 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
-                case UPSpellGameModeMenu:
-                    [self modeTransitionFromNoneToMenu:animated];
+                case UPSpellGameModeAttract:
+                    [self modeTransitionFromNoneToAttract:animated];
                     break;
             }
             break;
@@ -1229,8 +1229,8 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
-                case UPSpellGameModeMenu:
-                    [self modeTransitionFromOffscreenLeftToMenu:animated];
+                case UPSpellGameModeAttract:
+                    [self modeTransitionFromOffscreenLeftToAttract:animated];
                     break;
             }
             break;
@@ -1248,16 +1248,16 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
-                case UPSpellGameModeMenu:
-                    [self modeTransitionFromOffscreenRightToMenu:animated];
+                case UPSpellGameModeAttract:
+                    [self modeTransitionFromOffscreenRightToAttract:animated];
                     break;
             }
             break;
         }
-        case UPSpellGameModeMenu: {
+        case UPSpellGameModeAttract: {
             switch (mode) {
                 case UPSpellGameModeStart:
-                case UPSpellGameModeMenu:
+                case UPSpellGameModeAttract:
                 case UPSpellGameModePlay:
                 case UPSpellGameModePause:
                 case UPSpellGameModeOverInterstitial:
@@ -1282,7 +1282,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModeStart:
                 case UPSpellGameModeOffscreenLeft:
                 case UPSpellGameModeOffscreenRight:
-                case UPSpellGameModeMenu:
+                case UPSpellGameModeAttract:
                 case UPSpellGameModeCountdown:
                 case UPSpellGameModePause:
                 case UPSpellGameModeOverInterstitial:
@@ -1301,7 +1301,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModeStart:
                 case UPSpellGameModeOffscreenLeft:
                 case UPSpellGameModeOffscreenRight:
-                case UPSpellGameModeMenu:
+                case UPSpellGameModeAttract:
                 case UPSpellGameModeCountdown:
                 case UPSpellGameModePlay:
                 case UPSpellGameModeOver:
@@ -1320,7 +1320,7 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellGameModePause: {
             switch (mode) {
                 case UPSpellGameModeStart:
-                case UPSpellGameModeMenu:
+                case UPSpellGameModeAttract:
                 case UPSpellGameModeOffscreenLeft:
                 case UPSpellGameModeOffscreenRight:
                 case UPSpellGameModePause:
@@ -1345,7 +1345,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModeStart:
                 case UPSpellGameModeOffscreenLeft:
                 case UPSpellGameModeOffscreenRight:
-                case UPSpellGameModeMenu:
+                case UPSpellGameModeAttract:
                 case UPSpellGameModeCountdown:
                 case UPSpellGameModePlay:
                 case UPSpellGameModePause:
@@ -1371,7 +1371,7 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
-                case UPSpellGameModeMenu:
+                case UPSpellGameModeAttract:
                     [self modeTransitionFromOverToMenu:animated];
                     break;
                 case UPSpellGameModeCountdown:
@@ -1393,8 +1393,8 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
-                case UPSpellGameModeMenu:
-                    [self modeTransitionFromQuitToMenu:animated];
+                case UPSpellGameModeAttract:
+                    [self modeTransitionFromQuitToAttract:animated];
                     break;
             }
             break;
@@ -1405,7 +1405,7 @@ using Spot = UP::SpellLayout::Spot;
     _mode = mode;
 }
 
-- (void)modeTransitionFromNoneToMenu:(BOOL)animated
+- (void)modeTransitionFromNoneToAttract:(BOOL)animated
 {
     [self createNewGameModel];
     
@@ -1473,7 +1473,7 @@ using Spot = UP::SpellLayout::Spot;
     });
 }
 
-- (void)modeTransitionFromOffscreenLeftToMenu:(BOOL)animated
+- (void)modeTransitionFromOffscreenLeftToAttract:(BOOL)animated
 {
     [self viewOpLockUserInterface];
     
@@ -1497,7 +1497,7 @@ using Spot = UP::SpellLayout::Spot;
     });
 }
 
-- (void)modeTransitionFromOffscreenRightToMenu:(BOOL)animated
+- (void)modeTransitionFromOffscreenRightToAttract:(BOOL)animated
 {
     [self viewOpLockUserInterface];
     
@@ -1678,7 +1678,7 @@ using Spot = UP::SpellLayout::Spot;
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         delay(BandModeDelay, 0.35, ^{
-            [self setMode:UPSpellGameModeMenu animated:YES];
+            [self setMode:UPSpellGameModeAttract animated:YES];
         });
     }));
 }
@@ -1780,7 +1780,7 @@ using Spot = UP::SpellLayout::Spot;
 {
 }
 
-- (void)modeTransitionFromQuitToMenu:(BOOL)animated
+- (void)modeTransitionFromQuitToAttract:(BOOL)animated
 {
     [self modeOpDumpAllTilesFromCurrentPosition];
 

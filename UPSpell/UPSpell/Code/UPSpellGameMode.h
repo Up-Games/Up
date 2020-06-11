@@ -9,7 +9,7 @@ typedef NS_ENUM(NSInteger, UPSpellGameMode) {
     UPSpellGameModeStart,
     UPSpellGameModeOffscreenLeft,
     UPSpellGameModeOffscreenRight,
-    UPSpellGameModeMenu,
+    UPSpellGameModeAttract,
     UPSpellGameModeCountdown,
     UPSpellGameModePlay,
     UPSpellGameModePause,
