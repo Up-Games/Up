@@ -670,11 +670,10 @@ using Spot = UP::SpellLayout::Spot;
     [self viewOpPenaltyForDump];
     [self viewOpDumpPlayerTray:playerTrayTileViews];
     delay(BandGameDelay, 1.65, ^{
-        [self viewOpFillPlayerTrayWithPostFillOp:^{
-            [self viewOpPenaltyFinished];
-        } completion:^{
+        [self viewOpFillPlayerTrayWithCompletion:^{
             [self viewOpUnlockUserInterface];
         }];
+        [self viewOpPenaltyFinished];
     });
 }
 
@@ -945,10 +944,10 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)viewOpFillPlayerTray
 {
-    [self viewOpFillPlayerTrayWithPostFillOp:nil completion:nil];
+    [self viewOpFillPlayerTrayWithCompletion:nil];
 }
 
-- (void)viewOpFillPlayerTrayWithPostFillOp:(void (^)(void))postFillOp completion:(void (^)(void))completion
+- (void)viewOpFillPlayerTrayWithCompletion:(void (^)(void))completion
 {
     SpellLayout &layout = SpellLayout::instance();
 
@@ -973,10 +972,6 @@ using Spot = UP::SpellLayout::Spot;
             completion();
         }
     }));
-
-    if (postFillOp) {
-        postFillOp();
-    }
 }
 
 - (void)viewOpPenaltyForDump
@@ -1111,12 +1106,8 @@ using Spot = UP::SpellLayout::Spot;
 {
     self.userInterfaceLockCount++;
 
-    self.dialogMenu.extrasButton.userInteractionEnabled = NO;
-    self.dialogMenu.playButton.userInteractionEnabled = NO;
-    self.dialogMenu.aboutButton.userInteractionEnabled = NO;
-
-    self.dialogPause.resumeButton.userInteractionEnabled = NO;
-    self.dialogPause.quitButton.userInteractionEnabled = NO;
+    self.dialogMenu.userInteractionEnabled = NO;
+    self.dialogPause.userInteractionEnabled = NO;
 
     UIView *roundButtonPause = self.gameView.roundButtonPause;
     for (UIView *view in self.gameView.subviews) {
@@ -1138,12 +1129,8 @@ using Spot = UP::SpellLayout::Spot;
         return;
     }
 
-    self.dialogMenu.extrasButton.userInteractionEnabled = YES;
-    self.dialogMenu.playButton.userInteractionEnabled = YES;
-    self.dialogMenu.aboutButton.userInteractionEnabled = YES;
-
-    self.dialogPause.resumeButton.userInteractionEnabled = YES;
-    self.dialogPause.quitButton.userInteractionEnabled = YES;
+    self.dialogMenu.userInteractionEnabled = YES;
+    self.dialogPause.userInteractionEnabled = YES;
 
     for (UIView *view in self.gameView.subviews) {
         view.userInteractionEnabled = YES;
@@ -1530,6 +1517,7 @@ using Spot = UP::SpellLayout::Spot;
     // reset game controls
     self.model->reset_game_score();
     [self.gameTimer reset];
+    [self viewOpOrderOutWordScoreLabel];
     [self viewOpUpdateGameControls];
     
     // move existing tiles offscreen and remove them from view hierarchy
@@ -1621,7 +1609,7 @@ using Spot = UP::SpellLayout::Spot;
         self.dialogMenu.hidden = YES;
         // create new game model and start game
         [self createNewGameModel];
-        [self viewOpFillPlayerTrayWithPostFillOp:nil completion:^{
+        [self viewOpFillPlayerTrayWithCompletion:^{
             delay(BandModeDelay, 0.1, ^{
                 // start game
                 [self.gameTimer start];
@@ -1871,7 +1859,7 @@ using Spot = UP::SpellLayout::Spot;
                 UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight)),
             ];
             start(bloop_in(BandModeUI, menuButtonMoves, 0.25, nil));
-            [self viewOpFillPlayerTrayWithPostFillOp:nil completion:^{
+            [self viewOpFillPlayerTrayWithCompletion:^{
                 [self viewOpUnlockUserInterface];
             }];
         });
