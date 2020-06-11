@@ -211,6 +211,7 @@ public:
     bool word_in_lexicon() const { return m_word_in_lexicon; }
 
     int game_score() const { return m_game_score; }
+    void reset_game_score() { m_game_score = 0; }
 
     const State &apply(const Action &action);
 

@@ -135,8 +135,8 @@ using Spot = UP::SpellLayout::Spot;
 
     self.mode = UPSpellGameModeAttract;
 
-    self.mode = UPSpellGameModeCountdown;
-    self.mode = UPSpellGameModePlay;
+//    self.mode = UPSpellGameModeCountdown;
+//    self.mode = UPSpellGameModePlay;
 }
 
 - (void)dealloc
@@ -1266,13 +1266,13 @@ using Spot = UP::SpellLayout::Spot;
                     ASSERT_NOT_REACHED();
                     break;
                 case UPSpellGameModeOffscreenLeft:
-                    [self modeTransitionFromMenuToOffscreenLeft:animated];
+                    [self modeTransitionFromAttractToOffscreenLeft:animated];
                     break;
                 case UPSpellGameModeOffscreenRight:
-                    [self modeTransitionFromMenuToOffscreenRight:animated];
+                    [self modeTransitionFromAttractToOffscreenRight:animated];
                     break;
                 case UPSpellGameModeCountdown:
-                    [self modeTransitionFromMenuToCountdown:animated];
+                    [self modeTransitionFromAttractToCountdown:animated];
                     break;
             }
             break;
@@ -1323,13 +1323,11 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellGameModeAttract:
                 case UPSpellGameModeOffscreenLeft:
                 case UPSpellGameModeOffscreenRight:
+                case UPSpellGameModeCountdown:
                 case UPSpellGameModePause:
                 case UPSpellGameModeOverInterstitial:
                 case UPSpellGameModeOver:
                     ASSERT_NOT_REACHED();
-                    break;
-                case UPSpellGameModeCountdown:
-                    [self modeTransitionFromPauseToCountdown:animated];
                     break;
                 case UPSpellGameModePlay:
                     [self modeTransitionFromPauseToPlay:animated];
@@ -1425,7 +1423,7 @@ using Spot = UP::SpellLayout::Spot;
     });
 }
 
-- (void)modeTransitionFromMenuToOffscreenLeft:(BOOL)animated
+- (void)modeTransitionFromAttractToOffscreenLeft:(BOOL)animated
 {
     [self viewOpLockUserInterface];
     
@@ -1449,7 +1447,7 @@ using Spot = UP::SpellLayout::Spot;
     });
 }
 
-- (void)modeTransitionFromMenuToOffscreenRight:(BOOL)animated
+- (void)modeTransitionFromAttractToOffscreenRight:(BOOL)animated
 {
     [self viewOpLockUserInterface];
     
@@ -1521,61 +1519,116 @@ using Spot = UP::SpellLayout::Spot;
     });
 }
 
-- (void)modeTransitionFromMenuToCountdown:(BOOL)animated
+- (void)modeTransitionFromAttractToCountdown:(BOOL)animated
 {
     [self viewOpLockUserInterface];
     
+    // lock play button in highlighted state
     self.dialogMenu.playButton.highlightedOverride = YES;
     self.dialogMenu.playButton.highlighted = YES;
 
+    // reset game controls
+    self.model->reset_game_score();
+    [self.gameTimer reset];
+    [self viewOpUpdateGameControls];
+    
+    // move existing tiles offscreen and remove them from view hierarchy
+    NSMutableArray<UPViewMove *> *tileMoves = [NSMutableArray array];
+    for (const auto &tile : self.model->tiles()) {
+        if (tile.has_view()) {
+            UPTileView *tileView = tile.view();
+            [tileMoves addObject:UPViewMoveMake(tileView, role_for(tile.position()), Spot::OffBottomNear)];
+        }
+    }
+    start(bloop_out(BandModeUI, tileMoves, 0.3, ^(UIViewAnimatingPosition) {
+        [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+
+        // fill model with empty tiles and bloop in empty tile views
+        for (auto &tile : self.model->tiles()) {
+            tile.set_model(TileModel::empty());
+        }
+        SpellLayout &layout = SpellLayout::instance();
+        NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
+        TileIndex idx = 0;
+        for (auto &tile : self.model->tiles()) {
+            const TileModel &model = TileModel::empty();
+            tile.set_model(model);
+            UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
+            tile.set_view(tileView);
+            tileView.band = BandModeUI;
+            Role role = role_for(TilePosition(TileTray::Player, idx));
+            tileView.frame = layout.frame_for(Location(role, Spot::OffBottomNear));
+            [self.gameView.tileContainerView addSubview:tileView];
+            [moves addObject:UPViewMoveMake(tileView, Location(role, Spot::Default))];
+            idx++;
+        }
+        start(bloop_in(BandModeUI, moves, 0.3, nil));
+    }));
+
+    // move extras and about buttons offscreen
     NSArray<UPViewMove *> *extrasAndAboutMoves = @[
         UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffTopNear)),
         UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffTopNear)),
     ];
     start(bloop_out(BandModeUI, extrasAndAboutMoves, 0.3, ^(UIViewAnimatingPosition) {
-        delay(BandModeDelay, 0.4, ^{
-            [self.gameTimer reset];
+        delay(BandModeDelay, 0.3, ^{
+            // move play button
             UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
-            UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.titlePathView, Location(Role::DialogMessageCenter));
             start(slide(BandModeUI, @[playButtonMove], 0.3, nil));
-            delay(BandModeDelay, 0.6, ^{
-                start(bloop_in(BandModeUI, @[readyMove], 0.3, nil));
-            });
-            [UIView animateWithDuration:0.9 animations:^{
+            // change alpha of game view
+            [UIView animateWithDuration:0.75 animations:^{
                 self.gameView.transform = CGAffineTransformIdentity;
-                [self viewOpEnterModal:UPSpellGameModeCountdown];
-            } completion:^(BOOL finished) {
-                [self viewOpUnlockUserInterface];
-                [self setMode:UPSpellGameModePlay animated:YES];
+                self.gameView.alpha = [UIColor themeModalBackgroundAlpha];
             }];
+            delay(BandModeDelay, 0.45, ^{
+                // bloop in ready message
+                UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.titlePathView, Location(Role::DialogMessageCenter));
+                start(bloop_in(BandModeUI, @[readyMove], 0.3,  ^(UIViewAnimatingPosition) {
+                    delay(BandModeDelay, 1.5, ^{
+                        // go to play
+                        [self setMode:UPSpellGameModePlay];
+                    });
+                }));
+            });
         });
     }));
 }
 
-- (void)modeTransitionFromCountdownToPause:(BOOL)animated
-{
-}
-
-- (void)modeTransitionFromPauseToCountdown:(BOOL)animated
-{
-}
-
 - (void)modeTransitionFromCountdownToPlay:(BOOL)animated
 {
-    delay(BandModeDelay, 1.5, ^{
-        UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.titlePathView, Location(Role::DialogMessageCenter, Spot::OffBottomNear));
-        start(bloop_out(BandModeUI, @[readyMove], 0.3, nil));
-        [UIView animateWithDuration:0.1 delay:0.2 options:0 animations:^{
-            [self viewOpExitModal];
-        } completion:^(BOOL finished) {
-            self.gameView.alpha = 1.0;
-            self.dialogMenu.alpha = 1.0;
-            self.dialogMenu.hidden = YES;
+    // move existing tiles offscreen and remove them from view hierarchy
+    NSMutableArray<UPViewMove *> *tileMoves = [NSMutableArray array];
+    for (const auto &tile : self.model->tiles()) {
+        if (tile.has_view()) {
+            UPTileView *tileView = tile.view();
+            [tileMoves addObject:UPViewMoveMake(tileView, role_for(tile.position()), Spot::OffBottomNear)];
+        }
+    }
+    start(bloop_out(BandModeUI, tileMoves, 0.3, ^(UIViewAnimatingPosition) {
+        [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    }));
+
+    // bloop out ready message
+    UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.titlePathView, Location(Role::DialogMessageCenter, Spot::OffBottomNear));
+    start(bloop_out(BandModeUI, @[readyMove], 0.3, nil));
+    // animate game view to full alpha and fade out dialog menu
+    [UIView animateWithDuration:0.1 delay:0.2 options:0 animations:^{
+        self.gameView.alpha = 1.0;
+        self.dialogMenu.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        // animate game view to full alpha and restore alpha of dialog menu
+        self.dialogMenu.alpha = 1.0;
+        self.dialogMenu.hidden = YES;
+        // create new game model and start game
+        [self createNewGameModel];
+        [self viewOpFillPlayerTrayWithPostFillOp:nil completion:^{
             delay(BandModeDelay, 0.1, ^{
+                // start game
                 [self.gameTimer start];
+                [self viewOpUnlockUserInterface];
             });
         }];
-    });
+    }];
 }
 
 - (void)modeTransitionFromPlayToPause:(BOOL)animated
@@ -1746,6 +1799,17 @@ using Spot = UP::SpellLayout::Spot;
     
     self.dialogMenu.playButton.highlightedOverride = YES;
     self.dialogMenu.playButton.highlighted = YES;
+    
+    NSMutableArray<UPViewMove *> *tileMoves = [NSMutableArray array];
+    for (const Tile &tile : self.model->tiles()) {
+        if (tile.has_view()) {
+            UPTileView *tileView = tile.view();
+            [tileMoves addObject:UPViewMoveMake(tileView, role_for(tile.position()), Spot::OffBottomNear)];
+        }
+    }
+    start(bloop_out(BandModeUI, tileMoves, 0.3, ^(UIViewAnimatingPosition) {
+        [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    }));
     
     NSArray<UPViewMove *> *outMoves = @[
         UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffTopNear)),

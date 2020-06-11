@@ -15,7 +15,7 @@
 namespace UP {
 
 static constexpr char32_t SentinelGlyph = 0;
-static constexpr char32_t InvisibleGlyph = 32; // space
+static constexpr char32_t EmptyGlyph = 32; // space
 
 class TileModel {
 public:
@@ -37,6 +37,7 @@ public:
     TileModel(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {}
 
     static TileModel sentinel() { return TileModel(SentinelGlyph, 0); }
+    static TileModel empty() { return TileModel(EmptyGlyph, 0); }
 
     char32_t glyph() const { return m_glyph; }
     int multiplier() const { return m_multiplier; }
