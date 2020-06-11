@@ -114,6 +114,7 @@ static const NSUInteger _StringLength = 5;
 
 - (void)gameTimerReset:(UPGameTimer *)gameTimer
 {
+    [self _updateLabel:gameTimer.remainingTime gameTimerIsRunning:gameTimer.isRunning];
 }
 
 - (void)gameTimerUpdated:(UPGameTimer *)gameTimer

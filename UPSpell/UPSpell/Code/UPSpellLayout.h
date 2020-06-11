@@ -37,7 +37,6 @@ public:
         None,
         Screen,
         PlayerTile1, PlayerTile2, PlayerTile3, PlayerTile4, PlayerTile5, PlayerTile6, PlayerTile7,
-        WordTile1, WordTile2, WordTile3, WordTile4, WordTile5, WordTile6, WordTile7,
         WordTile1of1,
         WordTile1of2, WordTile2of2,
         WordTile1of3, WordTile2of3, WordTile3of3,
@@ -330,8 +329,8 @@ UP_STATIC_INLINE bool operator<(const SpellLayout::Location &a, const SpellLayou
     return a.role() != b.role() ? a.role() < b.role() : a.spot() < b.spot();
 }
 
-SpellLayout::Role role_for(TilePosition pos);
-template <class ...Args> SpellLayout::Role role_for(Args... args) { return role_for(TilePosition(std::forward<Args>(args)...)); }
+SpellLayout::Role role_in_player_tray(TilePosition pos);
+template <class ...Args> SpellLayout::Role role_for(Args... args) { return role_in_player_tray(TilePosition(std::forward<Args>(args)...)); }
 SpellLayout::Role role_in_word(TileIndex idx, size_t word_length);
 SpellLayout::Role role_for_score(int score);
 

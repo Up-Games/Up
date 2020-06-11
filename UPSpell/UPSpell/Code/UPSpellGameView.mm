@@ -17,7 +17,7 @@
 
 using UP::SpellLayout;
 using UP::BandGameUI;
-using UP::role_for;
+using UP::role_in_player_tray;
 using UP::role_in_word;
 using Location = UP::SpellLayout::Location;
 using Role = UP::SpellLayout::Role;

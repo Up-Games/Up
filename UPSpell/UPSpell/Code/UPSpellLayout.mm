@@ -19,23 +19,24 @@
 
 namespace UP {
 
-SpellLayout::Role role_for(TilePosition pos)
+SpellLayout::Role role_in_player_tray(TilePosition pos)
 {
+    ASSERT(pos.in_player_tray());
     switch (pos.index()) {
         case 0:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile1 : SpellLayout::Role::WordTile1;
+            return SpellLayout::Role::PlayerTile1;
         case 1:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile2 : SpellLayout::Role::WordTile2;
+            return SpellLayout::Role::PlayerTile2;
         case 2:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile3 : SpellLayout::Role::WordTile3;
+            return SpellLayout::Role::PlayerTile3;
         case 3:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile4 : SpellLayout::Role::WordTile4;
+            return SpellLayout::Role::PlayerTile4;
         case 4:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile5 : SpellLayout::Role::WordTile5;
+            return SpellLayout::Role::PlayerTile5;
         case 5:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile6 : SpellLayout::Role::WordTile6;
+            return SpellLayout::Role::PlayerTile6;
         case 6:
-            return pos.in_player_tray() ? SpellLayout::Role::PlayerTile7 : SpellLayout::Role::WordTile7;
+            return SpellLayout::Role::PlayerTile7;
     }
     ASSERT_NOT_REACHED();
     return SpellLayout::Role::None;
@@ -494,7 +495,7 @@ void SpellLayout::calculate_player_tile_locations()
     for (auto it = begin; it != m_player_tray_tile_frames.end(); ++it) {
         const CGRect default_frame = *it;
         const TileIndex idx = it - begin;
-        Role role = role_for(TilePosition(TileTray::Player, idx));
+        Role role = role_in_player_tray(TilePosition(TileTray::Player, idx));
         calculate_and_set_locations(role, default_frame);
     }
 }

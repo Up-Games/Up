@@ -10,7 +10,7 @@
 
 @interface UPDialogGameOver : UIView
 
-@property (nonatomic, readonly) UPBezierPathView *titlePathView;
+@property (nonatomic, readonly) UPBezierPathView *messagePathView;
 @property (nonatomic, readonly) UPLabel *noteLabel;
 
 + (UPDialogGameOver *)instance;

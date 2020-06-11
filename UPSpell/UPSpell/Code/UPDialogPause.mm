@@ -17,7 +17,7 @@
 using UP::SpellLayout;
 
 @interface UPDialogPause ()
-@property (nonatomic, readwrite) UPBezierPathView *titlePathView;
+@property (nonatomic, readwrite) UPBezierPathView *messagePathView;
 @property (nonatomic, readwrite) UPControl *quitButton;
 @property (nonatomic, readwrite) UPControl *resumeButton;
 @end
@@ -39,11 +39,11 @@ using UP::SpellLayout;
     SpellLayout &layout = SpellLayout::instance();
     self = [super initWithFrame:layout.canvas_frame()];
 
-    self.titlePathView = [UPBezierPathView bezierPathView];
-    self.titlePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
-    self.titlePathView.path = UP::TextPathDialogPaused();
-    self.titlePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageHigh);
-    [self addSubview:self.titlePathView];
+    self.messagePathView = [UPBezierPathView bezierPathView];
+    self.messagePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
+    self.messagePathView.path = UP::TextPathDialogPaused();
+    self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageHigh);
+    [self addSubview:self.messagePathView];
 
     self.quitButton = [UPControl textButtonQuit];
     self.quitButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonAlternativeResponse);
@@ -62,7 +62,7 @@ using UP::SpellLayout;
 
 - (void)updateThemeColors
 {
-    self.titlePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryDialogTitle];
+    self.messagePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryDialogTitle];
 }
 
 @end

@@ -18,7 +18,7 @@
 using UP::SpellLayout;
 
 @interface UPDialogGameOver ()
-@property (nonatomic, readwrite) UPBezierPathView *titlePathView;
+@property (nonatomic, readwrite) UPBezierPathView *messagePathView;
 @property (nonatomic, readwrite) UPLabel *noteLabel;
 @end
 
@@ -39,11 +39,11 @@ using UP::SpellLayout;
     SpellLayout &layout = SpellLayout::instance();
     self = [super initWithFrame:layout.canvas_frame()];
 
-    self.titlePathView = [UPBezierPathView bezierPathView];
-    self.titlePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
-    self.titlePathView.path = UP::TextPathDialogGameOver();
-    self.titlePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageCenter);
-    [self addSubview:self.titlePathView];
+    self.messagePathView = [UPBezierPathView bezierPathView];
+    self.messagePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
+    self.messagePathView.path = UP::TextPathDialogGameOver();
+    self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageCenter);
+    [self addSubview:self.messagePathView];
 
     self.noteLabel = [UPLabel label];
     self.noteLabel.string = @"‘GRUBMITS’ WAS YOUR HIGHEST SCORING WORD (32)";
@@ -62,7 +62,7 @@ using UP::SpellLayout;
 
 - (void)updateThemeColors
 {
-    self.titlePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryDialogTitle];
+    self.messagePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryDialogTitle];
 }
 
 @end

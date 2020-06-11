@@ -10,7 +10,7 @@
 
 @interface UPDialogPause : UIView
 
-@property (nonatomic, readonly) UPBezierPathView *titlePathView;
+@property (nonatomic, readonly) UPBezierPathView *messagePathView;
 @property (nonatomic, readonly) UPControl *quitButton;
 @property (nonatomic, readonly) UPControl *resumeButton;
 

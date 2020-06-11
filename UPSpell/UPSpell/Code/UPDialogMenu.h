@@ -10,7 +10,7 @@
 
 @interface UPDialogMenu : UIView
 
-@property (nonatomic, readonly) UPBezierPathView *titlePathView;
+@property (nonatomic, readonly) UPBezierPathView *messagePathView;
 @property (nonatomic, readonly) UPControl *extrasButton;
 @property (nonatomic, readonly) UPControl *playButton;
 @property (nonatomic, readonly) UPControl *aboutButton;
