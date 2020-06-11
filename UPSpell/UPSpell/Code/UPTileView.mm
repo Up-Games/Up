@@ -69,22 +69,24 @@ static uint32_t _InstanceCount;
     [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
     [self setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
-    UIBezierPath *contentPath = [UIBezierPath bezierPath];
-    [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
-    [contentPath appendPath:tile_paths.tile_path_for_score(self.score)];
-    if (self.multiplier != 1) {
-        [contentPath appendPath:tile_paths.tile_path_for_multiplier(self.multiplier)];
+    if (glyph != UP::InvisibleGlyph) {
+        UIBezierPath *contentPath = [UIBezierPath bezierPath];
+        [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
+        [contentPath appendPath:tile_paths.tile_path_for_score(self.score)];
+        if (self.multiplier != 1) {
+            [contentPath appendPath:tile_paths.tile_path_for_multiplier(self.multiplier)];
+        }
+        [self setContentPath:contentPath];
+
+        self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
+        self.tap.delegate = self;
+        [self addGestureRecognizer:self.tap];
+        
+        self.pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan)];
+        self.pan.delegate = self;
+        [self addGestureRecognizer:self.pan];
     }
-    [self setContentPath:contentPath];
     
-    self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
-    self.tap.delegate = self;
-    [self addGestureRecognizer:self.tap];
-
-    self.pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan)];
-    self.pan.delegate = self;
-    [self addGestureRecognizer:self.pan];
-
     return self;
 }
 

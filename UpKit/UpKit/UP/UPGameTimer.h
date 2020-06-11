@@ -30,6 +30,7 @@ extern const CFTimeInterval UPGameTimerDefaultDuration;
 - (void)start;
 - (void)stop;
 - (void)reset;
+- (void)cancel;
 
 - (void)addObserver:(NSObject<UPGameTimerObserver> *)observer;
 - (void)removeObserver:(NSObject<UPGameTimerObserver> *)observer;
@@ -43,4 +44,5 @@ extern const CFTimeInterval UPGameTimerDefaultDuration;
 - (void)gameTimerReset:(UPGameTimer *)gameTimer;
 - (void)gameTimerUpdated:(UPGameTimer *)gameTimer;
 - (void)gameTimerExpired:(UPGameTimer *)gameTimer; // ran to full duration
+- (void)gameTimerCanceled:(UPGameTimer *)gameTimer;
 @end

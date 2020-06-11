@@ -190,6 +190,10 @@ using Spot = UP::SpellLayout::Spot;
     [self setMode:UPSpellGameModeOverInterstitial animated:YES];
 }
 
+- (void)gameTimerCanceled:(UPGameTimer *)gameTimer
+{
+}
+
 #pragma mark - View mapping
 
 - (NSArray *)wordTrayTileViews
@@ -223,7 +227,7 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)dialogPauseQuitButtonTapped:(id)sender
 {
-    [self setMode:UPSpellGameModePlay animated:YES];
+    [self setMode:UPSpellGameModeQuit animated:YES];
 }
 
 - (void)dialogPauseResumeButtonTapped:(id)sender
@@ -1019,9 +1023,9 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellGameModePlay:
         case UPSpellGameModePause:
         case UPSpellGameModeOver:
-        case UPSpellGameModeQuit:
             // no-op
             break;
+        case UPSpellGameModeQuit:
         case UPSpellGameModeOverInterstitial:
             alpha = [UIColor themeModalInterstitialAlpha];
             break;
@@ -1601,12 +1605,90 @@ using Spot = UP::SpellLayout::Spot;
     }));
 }
 
-- (void)modeTransitionFromPauseToMenu:(BOOL)animated
-{
-}
-
 - (void)modeTransitionFromPauseToQuit:(BOOL)animated
 {
+    [self viewOpLockUserInterface];
+
+    cancel(BandGameDelay);
+    cancel(BandGameUI);
+    [self.gameTimer cancel];
+
+    [self.gameView.roundButtonPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.gameView.roundButtonPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    self.gameView.roundButtonPause.highlightedOverride = NO;
+    self.gameView.roundButtonPause.highlighted = NO;
+    self.gameView.roundButtonPause.alpha = [UIColor themeModalBackgroundAlpha];
+    [self.gameView.roundButtonPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.gameView.roundButtonPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+
+    [UIView animateWithDuration:0.15 delay:0.15 options:0 animations:^{
+        self.dialogPause.alpha = 0.0;
+    } completion:nil];
+    
+    NSArray<UPViewMove *> *nearMoves = @[
+        UPViewMoveMake(self.dialogPause.titlePathView, Location(Role::DialogMessageHigh, Spot::OffBottomNear)),
+    ];
+    NSArray<UPViewMove *> *farMoves = @[
+        UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
+    ];
+    start(bloop_out(BandModeUI, farMoves, 0.3, nil));
+    start(bloop_out(BandModeUI, nearMoves, 0.35, ^(UIViewAnimatingPosition) {
+        self.dialogPause.hidden = YES;
+        self.dialogPause.alpha = 1.0;
+    }));
+
+    Random &random = Random::instance();
+    
+    std::array<size_t, TileCount> idxs;
+    for (TileIndex idx = 0; idx < TileCount; idx++) {
+        idxs[idx] = idx;
+    }
+    std::shuffle(idxs.begin(), idxs.end(), random.generator());
+
+    SpellLayout &layout = SpellLayout::instance();
+    
+    delay(BandModeDelay, 0.35, ^{
+        [UIView animateWithDuration:1.5 animations:^{
+            self.gameView.transform = layout.menu_game_view_transform();
+            self.gameView.alpha = [UIColor themeDisabledAlpha];
+            [self viewOpExitModal];
+        } completion:^(BOOL finished) {
+            self.dialogMenu.hidden = NO;
+            self.dialogMenu.alpha = 1;
+            self.dialogMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft, Spot::OffTopNear));
+            self.dialogMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
+            self.dialogMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Spot::OffTopNear));
+            self.dialogMenu.playButton.highlightedOverride = NO;
+            self.dialogMenu.playButton.highlighted = NO;
+            NSArray<UPViewMove *> *menuButtonMoves = @[
+                UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
+                UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter)),
+                UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight)),
+            ];
+            start(bloop_in(BandModeUI, menuButtonMoves, 0.35, ^(UIViewAnimatingPosition) {
+//                [self viewOpFillPlayerTray];
+            }));
+        }];
+
+        const UP::TileArray &tiles = self.model->tiles();
+        CFTimeInterval baseDelay = 0.125;
+        int count = 0;
+        for (const auto idx : idxs) {
+            const Tile &tile = tiles[idx];
+            if (tile.has_view()) {
+                UPTileView *tileView = tile.view();
+                Location location(role_for(tile.position()), Spot::OffBottomNear);
+                UPAnimator *animator = slide(BandGameUI, @[UPViewMoveMake(tileView, location)], 1.1, ^(UIViewAnimatingPosition) {
+                    [tileView removeFromSuperview];
+                });
+                delay(BandModeDelay, count * baseDelay, ^{
+                    start(animator);
+                });
+            }
+            count++;
+        }
+    });
 }
 
 - (void)modeTransitionFromPlayToOverInterstitial:(BOOL)animated

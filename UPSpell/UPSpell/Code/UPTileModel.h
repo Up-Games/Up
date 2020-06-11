@@ -15,6 +15,7 @@
 namespace UP {
 
 static constexpr char32_t SentinelGlyph = 0;
+static constexpr char32_t InvisibleGlyph = 32; // space
 
 class TileModel {
 public:

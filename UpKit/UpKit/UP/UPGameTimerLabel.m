@@ -36,10 +36,10 @@ static const NSUInteger _StringLength = 5;
     return self;
 }
 
-- (void)_updateLabel:(UPGameTimer *)gameTimer
+- (void)_updateLabel:(CFTimeInterval)remainingTime gameTimerIsRunning:(BOOL)gameTimerIsRunning
 {
     double integer_part;
-    double fractional_part = modf(gameTimer.remainingTime, &integer_part);
+    double fractional_part = modf(remainingTime, &integer_part);
     NSInteger t = integer_part;
     NSInteger minutes = t / 60;
     t -= (minutes * 60);
@@ -47,7 +47,7 @@ static const NSUInteger _StringLength = 5;
     t -= (secondsTens * 10);
     NSInteger secondsOnes = t;
     NSInteger secondsTenths = fractional_part * 10;
-    self.autoHidesSecondsInTenths = !gameTimer.isRunning || integer_part > 4;
+    self.autoHidesSecondsInTenths = !gameTimerIsRunning || integer_part > 4;
     self.effectiveHidesSecondsInTenths = (self.hidesSecondsInTenths || self.autoHidesSecondsInTenths);
     
     if (self.formattedTimeString.length != 0 &&
@@ -104,12 +104,12 @@ static const NSUInteger _StringLength = 5;
 - (void)gameTimerStarted:(UPGameTimer *)gameTimer
 {
     [self.formattedTimeString setString:@""];
-    [self _updateLabel:gameTimer];
+    [self _updateLabel:gameTimer.remainingTime gameTimerIsRunning:gameTimer.isRunning];
 }
 
 - (void)gameTimerStopped:(UPGameTimer *)gameTimer
 {
-    [self _updateLabel:gameTimer];
+    [self _updateLabel:gameTimer.remainingTime gameTimerIsRunning:gameTimer.isRunning];
 }
 
 - (void)gameTimerReset:(UPGameTimer *)gameTimer
@@ -118,13 +118,19 @@ static const NSUInteger _StringLength = 5;
 
 - (void)gameTimerUpdated:(UPGameTimer *)gameTimer
 {
-    [self _updateLabel:gameTimer];
+    [self _updateLabel:gameTimer.remainingTime gameTimerIsRunning:gameTimer.isRunning];
 }
 
 - (void)gameTimerExpired:(UPGameTimer *)gameTimer
 {
     [self.formattedTimeString setString:@""];
-    [self _updateLabel:gameTimer];
+    [self _updateLabel:gameTimer.remainingTime gameTimerIsRunning:gameTimer.isRunning];
+}
+
+- (void)gameTimerCanceled:(UPGameTimer *)gameTimer
+{
+    [self.formattedTimeString setString:@""];
+    [self _updateLabel:gameTimer.remainingTime gameTimerIsRunning:gameTimer.isRunning];
 }
 
 @end
