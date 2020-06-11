@@ -19,8 +19,6 @@ using UP::SpellLayout;
 
 @interface UPDialogGameOver ()
 @property (nonatomic, readwrite) UPBezierPathView *titlePathView;
-@property (nonatomic, readwrite) UPControl *menuButton;
-@property (nonatomic, readwrite) UPControl *playButton;
 @property (nonatomic, readwrite) UPLabel *noteLabel;
 @end
 
@@ -46,14 +44,6 @@ using UP::SpellLayout;
     self.titlePathView.path = UP::TextPathDialogGameOver();
     self.titlePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageCenter);
     [self addSubview:self.titlePathView];
-
-    self.menuButton = [UPControl textButtonMenu];
-    self.menuButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopLeft);
-    [self addSubview:self.menuButton];
-
-    self.playButton = [UPControl textButtonPlay];
-    self.playButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopRight);
-    [self addSubview:self.playButton];
 
     self.noteLabel = [UPLabel label];
     self.noteLabel.string = @"‘GRUBMITS’ WAS YOUR HIGHEST SCORING WORD (32)";

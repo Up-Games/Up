@@ -1026,13 +1026,6 @@ static UIBezierPath *_ChoiceRowRightFillPathSelected()
     return control;
 }
 
-+ (UPControl *)textButtonMenu
-{
-    UPControl *control = [UPControl _textButton];
-    [control setContentPath:UP::TextPathContentMenu() forState:UPControlStateNormal];
-    return control;
-}
-
 + (UPControl *)textButtonPlay
 {
     UPControl *control = [UPControl _textButton];

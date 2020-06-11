@@ -11,7 +11,6 @@ namespace UP {
 
 UIBezierPath *TextPathContentAbout();
 UIBezierPath *TextPathContentExtras();
-UIBezierPath *TextPathContentMenu();
 UIBezierPath *TextPathContentPlay();
 UIBezierPath *TextPathContentQuit();
 UIBezierPath *TextPathContentResume();

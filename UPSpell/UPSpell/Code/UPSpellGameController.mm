@@ -113,12 +113,15 @@ using Spot = UP::SpellLayout::Spot;
 
     self.dialogGameOver = [UPDialogGameOver instance];
     [self.view addSubview:self.dialogGameOver];
-    [self.dialogGameOver.menuButton addTarget:self action:@selector(dialogGameOverMenuButtonTapped:) forEvents:UPControlEventTouchUpInside];
-    [self.dialogGameOver.playButton addTarget:self action:@selector(dialogGameOverPlayButtonTapped:) forEvents:UPControlEventTouchUpInside];
     self.dialogGameOver.hidden = YES;
     self.dialogGameOver.frame = layout.screen_bounds();
 
     self.dialogMenu = [UPDialogMenu instance];
+    [self.view addSubview:self.dialogPause];
+    [self.dialogPause.quitButton addTarget:self action:@selector(dialogPauseQuitButtonTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.dialogPause.resumeButton addTarget:self action:@selector(dialogPauseResumeButtonTapped:) forEvents:UPControlEventTouchUpInside];
+    self.dialogPause.hidden = YES;
+    self.dialogPause.frame = layout.screen_bounds();
 
     self.dialogPause = [UPDialogPause instance];
     [self.view addSubview:self.dialogPause];
@@ -224,16 +227,6 @@ using Spot = UP::SpellLayout::Spot;
 }
 
 #pragma mark - Control target/action and gestures
-
-- (void)dialogGameOverMenuButtonTapped:(id)sender
-{
-    [self setMode:UPSpellGameModeMenu animated:YES];
-}
-
-- (void)dialogGameOverPlayButtonTapped:(id)sender
-{
-    [self setMode:UPSpellGameModeCountdown animated:YES];
-}
 
 - (void)dialogPauseQuitButtonTapped:(id)sender
 {
@@ -1118,9 +1111,6 @@ using Spot = UP::SpellLayout::Spot;
 {
     self.userInterfaceLockCount++;
 
-    self.dialogGameOver.menuButton.userInteractionEnabled = NO;
-    self.dialogGameOver.playButton.userInteractionEnabled = NO;
-
     self.dialogMenu.extrasButton.userInteractionEnabled = NO;
     self.dialogMenu.playButton.userInteractionEnabled = NO;
     self.dialogMenu.aboutButton.userInteractionEnabled = NO;
@@ -1147,9 +1137,6 @@ using Spot = UP::SpellLayout::Spot;
     if (self.userInterfaceLockCount > 0) {
         return;
     }
-
-    self.dialogGameOver.menuButton.userInteractionEnabled = YES;
-    self.dialogGameOver.playButton.userInteractionEnabled = YES;
 
     self.dialogMenu.extrasButton.userInteractionEnabled = YES;
     self.dialogMenu.playButton.userInteractionEnabled = YES;
@@ -1705,8 +1692,6 @@ using Spot = UP::SpellLayout::Spot;
 
     SpellLayout &layout = SpellLayout::instance();
     self.dialogGameOver.titlePathView.center = layout.center_for(Role::DialogMessageCenter, Spot::OffBottomNear);
-    self.dialogGameOver.menuButton.center = layout.center_for(Role::DialogButtonTopLeft, Spot::OffTopNear);
-    self.dialogGameOver.playButton.center = layout.center_for(Role::DialogButtonTopRight, Spot::OffTopNear);
     self.dialogGameOver.noteLabel.center = layout.center_for(Role::DialogNote, Spot::OffBottomNear);
 
     NSArray<UPViewMove *> *moves = @[
@@ -1727,72 +1712,61 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)modeTransitionFromOverInterstitialToOver:(BOOL)animated
 {
-    [self viewOpUnlockUserInterface];
-
-    NSArray<UPViewMove *> *buttonMoves = @[
-        UPViewMoveMake(self.dialogGameOver.menuButton, Role::DialogButtonTopLeft),
-        UPViewMoveMake(self.dialogGameOver.playButton, Role::DialogButtonTopRight),
-        UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogNote),
-    ];
-
-    start(slide(BandModeUI, buttonMoves, 0.75, nil));
-    start(slide(BandModeUI, @[UPViewMoveMake(self.gameView.gameScoreLabel, UP::role_for_score(self.model->game_score()))], 0.75, nil));
-    start(fade(BandModeUI, @[self.gameView.timerLabel], 0.3, nil));
-    [UIView animateWithDuration:0.75 animations:^{
-        [self viewOpEnterModal:UPSpellGameModeOver];
+    SpellLayout &layout = SpellLayout::instance();
+    
+    [UIView animateWithDuration:1.0 animations:^{
+        self.dialogGameOver.titlePathView.transform = layout.menu_game_view_transform();
+        self.gameView.transform = layout.menu_game_view_transform();
+        self.gameView.alpha = [UIColor themeDisabledAlpha];
     }];
+
+    delay(BandModeDelay, 0.75, ^{
+        self.dialogMenu.hidden = NO;
+        self.dialogMenu.alpha = 1;
+        self.dialogMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft, Spot::OffTopNear));
+        self.dialogMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
+        self.dialogMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Spot::OffTopNear));
+        self.dialogMenu.playButton.highlightedOverride = NO;
+        self.dialogMenu.playButton.highlighted = NO;
+        NSArray<UPViewMove *> *buttonMoves = @[
+            UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
+            UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter)),
+            UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight)),
+            UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogNote),
+        ];
+        start(bloop_in(BandModeUI, buttonMoves, 0.5, ^(UIViewAnimatingPosition) {
+            [self viewOpUnlockUserInterface];
+        }));
+    });
 }
 
 - (void)modeTransitionFromOverToCountdown:(BOOL)animated
 {
-//    [self viewOpUnlockUserInterface];
-//
-//    SpellLayout &layout = SpellLayout::instance();
-//
-//    UPViewMoveMake(self.dialogGameOver.playButton, Role::DialogMessageCenter, Spot::OffBottomNear),
-//
-//    NSArray<UPViewMove *> *moves = @[
-//        UPViewMoveMake(self.dialogGameOver.titlePathView, Role::DialogMessageCenter, Spot::OffBottomNear),
-//        UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogMessageCenter, Spot::OffBottomNear),
-//        UPViewMoveMake(self.dialogGameOver.menuButton, Role::DialogMessageCenter, Spot::OffTopNear),
-//    ];
-//    start(bloop_out(BandModeUI, moves, 0.3, ^(UIViewAnimatingPosition) {
-//        self.dialogGameOver.hidden = YES;
-//        self.dialogGameOver.alpha = 1.0;
-//    }));
-//
-//    [UIView animateWithDuration:0.15 animations:^{
-//        self.dialogGameOver.alpha = 0.0;
-//    }];
-
     [self viewOpLockUserInterface];
     
-    self.dialogGameOver.playButton.highlightedOverride = YES;
-    self.dialogGameOver.playButton.highlighted = YES;
-
-    start(slide(BandModeUI, @[UPViewMoveMake(self.gameView.gameScoreLabel, Role::GameScore)], 0.3, nil));
-    [self.gameTimer reset];
-    [UIView animateWithDuration:0.3 animations:^{
-        self.gameView.timerLabel.alpha = 1;
-    }];
-
-    NSArray<UPViewMove *> *moves = @[
+    self.dialogMenu.playButton.highlightedOverride = YES;
+    self.dialogMenu.playButton.highlighted = YES;
+    
+    NSArray<UPViewMove *> *outMoves = @[
+        UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffTopNear)),
+        UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffTopNear)),
         UPViewMoveMake(self.dialogGameOver.titlePathView, Role::DialogMessageCenter, Spot::OffBottomNear),
         UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogMessageCenter, Spot::OffBottomNear),
-        UPViewMoveMake(self.dialogGameOver.menuButton, Location(Role::DialogButtonTopLeft, Spot::OffTopNear)),
     ];
-    start(bloop_out(BandModeUI, moves, 0.3, ^(UIViewAnimatingPosition) {
+    start(bloop_out(BandModeUI, outMoves, 0.3, ^(UIViewAnimatingPosition) {
+        self.dialogGameOver.titlePathView.transform = CGAffineTransformIdentity;
         delay(BandModeDelay, 0.4, ^{
-            UPViewMove *playButtonMove = UPViewMoveMake(self.dialogGameOver.playButton, Location(Role::DialogButtonTopRight, Spot::OffTopNear));
+            [self createNewGameModel];
+            [self.gameTimer reset];
+            [self viewOpUpdateGameControls];
+            UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
             UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.titlePathView, Location(Role::DialogMessageCenter));
-            start(slide(BandModeUI, @[playButtonMove], 0.3, ^(UIViewAnimatingPosition) {
-                self.dialogGameOver.playButton.highlightedOverride = NO;
-                self.dialogGameOver.playButton.highlighted = NO;
-            }));
+            start(slide(BandModeUI, @[playButtonMove], 0.3, nil));
             delay(BandModeDelay, 0.6, ^{
                 start(bloop_in(BandModeUI, @[readyMove], 0.3, nil));
             });
             [UIView animateWithDuration:0.9 animations:^{
+                self.gameView.transform = CGAffineTransformIdentity;
                 [self viewOpEnterModal:UPSpellGameModeCountdown];
             } completion:^(BOOL finished) {
                 [self viewOpUnlockUserInterface];
@@ -1800,8 +1774,6 @@ using Spot = UP::SpellLayout::Spot;
             }];
         });
     }));
-
-    
 }
 
 - (void)modeTransitionFromOverToMenu:(BOOL)animated

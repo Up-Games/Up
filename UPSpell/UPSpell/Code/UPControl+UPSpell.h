@@ -20,7 +20,6 @@
 
 + (UPControl *)textButtonAbout;
 + (UPControl *)textButtonExtras;
-+ (UPControl *)textButtonMenu;
 + (UPControl *)textButtonPlay;
 + (UPControl *)textButtonQuit;
 + (UPControl *)textButtonResume;
