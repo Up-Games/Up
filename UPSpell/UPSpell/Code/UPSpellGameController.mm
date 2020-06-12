@@ -1170,21 +1170,23 @@ using Spot = UP::SpellLayout::Spot;
     [self.gameTimer reset];
     [self viewOpOrderOutWordScoreLabel];
     [self viewOpUpdateGameControls];
-        
-    NSArray<UPViewMove *> *gameOverMoves = @[
+
+    delay(BandModeDelay, 0.1, ^{
+        [UIView animateWithDuration:0.2 animations:^{
+            [self viewOpEnterModal:[UIColor themeDisabledAlpha]];
+        }];
+    });
+    
+    // move extras and about buttons offscreen
+    NSArray<UPViewMove *> *outMoves = @[
         UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageCenter, Spot::OffBottomNear),
         UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogMessageCenter, Spot::OffBottomFar),
-    ];
-    start(bloop_out(BandModeUI, gameOverMoves, 0.3, nil));
-
-    // move extras and about buttons offscreen
-    NSArray<UPViewMove *> *buttonOutMoves = @[
         UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffTopNear)),
         UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffTopNear)),
     ];
-    start(bloop_out(BandModeUI, buttonOutMoves, 0.3, ^(UIViewAnimatingPosition) {
+    start(bloop_out(BandModeUI, outMoves, 0.3, ^(UIViewAnimatingPosition) {
         self.dialogGameOver.messagePathView.transform = CGAffineTransformIdentity;
-
+        
         delay(BandModeDelay, 0.35, ^{
             // move play button
             UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
@@ -1192,7 +1194,6 @@ using Spot = UP::SpellLayout::Spot;
             // change transform of game view
             [UIView animateWithDuration:0.75 animations:^{
                 self.gameView.transform = CGAffineTransformIdentity;
-                [self viewOpEnterModal:[UIColor themeDisabledAlpha]];
             }];
             delay(BandModeDelay, 0.45, ^{
                 // bloop in ready message
