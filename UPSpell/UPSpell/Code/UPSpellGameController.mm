@@ -101,9 +101,9 @@ using Spot = UP::SpellLayout::Spot;
 
     self.gameView = [UPSpellGameView instance];
     [self.gameView.wordTrayView addTarget:self action:@selector(wordTrayTapped) forEvents:UPControlEventTouchUpInside];
-    [self.gameView.roundButtonPause addTarget:self action:@selector(roundButtonPauseTapped:) forEvents:UPControlEventTouchUpInside];
-    [self.gameView.roundButtonTrash addTarget:self action:@selector(roundButtonTrashTapped:) forEvents:UPControlEventTouchUpInside];
-    [self.gameView.roundButtonClear addTarget:self action:@selector(roundButtonClearTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.gameView.roundGameButtonPause addTarget:self action:@selector(roundButtonPauseTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.gameView.roundGameButtonTrash addTarget:self action:@selector(roundButtonTrashTapped:) forEvents:UPControlEventTouchUpInside];
+    [self.gameView.roundGameButtonClear addTarget:self action:@selector(roundButtonClearTapped:) forEvents:UPControlEventTouchUpInside];
     [self.view addSubview:self.gameView];
 
     self.gameTimer = [UPGameTimer defaultGameTimer];
@@ -693,13 +693,13 @@ using Spot = UP::SpellLayout::Spot;
     // trash/clear button
     if (self.model->word_length()) {
         self.showingRoundButtonClear = YES;
-        self.gameView.roundButtonClear.hidden = NO;
-        self.gameView.roundButtonTrash.hidden = YES;
+        self.gameView.roundGameButtonClear.hidden = NO;
+        self.gameView.roundGameButtonTrash.hidden = YES;
     }
     else {
         self.showingRoundButtonClear = NO;
-        self.gameView.roundButtonClear.hidden = YES;
-        self.gameView.roundButtonTrash.hidden = NO;
+        self.gameView.roundGameButtonClear.hidden = YES;
+        self.gameView.roundGameButtonTrash.hidden = NO;
     }
     
     self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", self.model->game_score()];
@@ -978,8 +978,8 @@ using Spot = UP::SpellLayout::Spot;
 {
     ASSERT(self.userInterfaceLockCount > 0);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
-    self.gameView.roundButtonTrash.highlightedOverride = YES;
-    self.gameView.roundButtonTrash.highlighted = YES;
+    self.gameView.roundGameButtonTrash.highlightedOverride = YES;
+    self.gameView.roundGameButtonTrash.highlighted = YES;
     self.gameView.wordTrayView.alpha = disabledAlpha;
     for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
         tileView.alpha = disabledAlpha;
@@ -991,7 +991,7 @@ using Spot = UP::SpellLayout::Spot;
     ASSERT(self.userInterfaceLockCount > 0);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.gameView.wordTrayView.alpha = disabledAlpha;
-    self.gameView.roundButtonClear.alpha = disabledAlpha;
+    self.gameView.roundGameButtonClear.alpha = disabledAlpha;
     for (UPTileView *tileView in tileViews) {
         tileView.alpha = disabledAlpha;
     }
@@ -1000,15 +1000,15 @@ using Spot = UP::SpellLayout::Spot;
 - (void)viewOpPenaltyFinished
 {
     ASSERT(self.userInterfaceLockCount > 0);
-    self.gameView.roundButtonTrash.highlightedOverride = NO;
-    self.gameView.roundButtonTrash.highlighted = NO;
+    self.gameView.roundGameButtonTrash.highlightedOverride = NO;
+    self.gameView.roundGameButtonTrash.highlighted = NO;
     self.gameView.wordTrayView.alpha = 1.0;
-    self.gameView.roundButtonPause.alpha = 1.0;
+    self.gameView.roundGameButtonPause.alpha = 1.0;
     if (self.showingRoundButtonClear) {
-        self.gameView.roundButtonClear.alpha = 1.0;
+        self.gameView.roundGameButtonClear.alpha = 1.0;
     }
     else {
-        self.gameView.roundButtonTrash.alpha = 1.0;
+        self.gameView.roundGameButtonTrash.alpha = 1.0;
     }
     for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
         tileView.alpha = 1.0;
@@ -1024,36 +1024,36 @@ using Spot = UP::SpellLayout::Spot;
 {
     self.gameView.timerLabel.alpha = alpha;
     self.gameView.gameScoreLabel.alpha = alpha;
-    self.gameView.roundButtonPause.alpha = alpha;
+    self.gameView.roundGameButtonPause.alpha = alpha;
 
     if (self.showingRoundButtonClear) {
-        self.gameView.roundButtonClear.alpha = alpha;
+        self.gameView.roundGameButtonClear.alpha = alpha;
     }
     else {
-        self.gameView.roundButtonTrash.alpha = alpha;
+        self.gameView.roundGameButtonTrash.alpha = alpha;
     }
     self.gameView.wordTrayView.alpha = alpha;
     self.gameView.wordScoreLabel.alpha = alpha;
     self.gameView.tileContainerView.alpha = alpha;
 
     self.gameView.wordTrayView.userInteractionEnabled = NO;
-    self.gameView.roundButtonTrash.userInteractionEnabled = NO;
-    self.gameView.roundButtonClear.userInteractionEnabled = NO;
-    self.gameView.roundButtonPause.userInteractionEnabled = NO;
+    self.gameView.roundGameButtonTrash.userInteractionEnabled = NO;
+    self.gameView.roundGameButtonClear.userInteractionEnabled = NO;
+    self.gameView.roundGameButtonPause.userInteractionEnabled = NO;
     self.gameView.tileContainerView.userInteractionEnabled = NO;
 }
 
 - (void)viewOpExitModal
 {
-    self.gameView.roundButtonPause.highlightedOverride = NO;
-    self.gameView.roundButtonPause.highlighted = NO;
-    self.gameView.roundButtonPause.alpha = 1.0;
+    self.gameView.roundGameButtonPause.highlightedOverride = NO;
+    self.gameView.roundGameButtonPause.highlighted = NO;
+    self.gameView.roundGameButtonPause.alpha = 1.0;
 
     if (self.showingRoundButtonClear) {
-        self.gameView.roundButtonClear.alpha = 1.0;
+        self.gameView.roundGameButtonClear.alpha = 1.0;
     }
     else {
-        self.gameView.roundButtonTrash.alpha = 1.0;
+        self.gameView.roundGameButtonTrash.alpha = 1.0;
     }
     self.gameView.timerLabel.alpha = 1.0;
     self.gameView.gameScoreLabel.alpha = 1.0;
@@ -1062,9 +1062,9 @@ using Spot = UP::SpellLayout::Spot;
     self.gameView.tileContainerView.alpha = 1.0;
 
     self.gameView.wordTrayView.userInteractionEnabled = YES;
-    self.gameView.roundButtonTrash.userInteractionEnabled = YES;
-    self.gameView.roundButtonClear.userInteractionEnabled = YES;
-    self.gameView.roundButtonPause.userInteractionEnabled = YES;
+    self.gameView.roundGameButtonTrash.userInteractionEnabled = YES;
+    self.gameView.roundGameButtonClear.userInteractionEnabled = YES;
+    self.gameView.roundGameButtonPause.userInteractionEnabled = YES;
     self.gameView.tileContainerView.userInteractionEnabled = YES;
 }
 
@@ -1080,7 +1080,7 @@ using Spot = UP::SpellLayout::Spot;
     self.dialogMenu.userInteractionEnabled = NO;
     self.dialogPause.userInteractionEnabled = NO;
 
-    UIView *roundButtonPause = self.gameView.roundButtonPause;
+    UIView *roundButtonPause = self.gameView.roundGameButtonPause;
     for (UIView *view in self.gameView.subviews) {
         if (!includingPause && view == roundButtonPause) {
             continue;
@@ -1628,9 +1628,9 @@ using Spot = UP::SpellLayout::Spot;
     [self viewOpEnterModal];
 
     // special modal fixups for pause
-    self.gameView.roundButtonPause.highlightedOverride = YES;
-    self.gameView.roundButtonPause.highlighted = YES;
-    self.gameView.roundButtonPause.alpha = [UIColor themeModalActiveAlpha];
+    self.gameView.roundGameButtonPause.highlightedOverride = YES;
+    self.gameView.roundGameButtonPause.highlighted = YES;
+    self.gameView.roundGameButtonPause.alpha = [UIColor themeModalActiveAlpha];
 
     SpellLayout &layout = SpellLayout::instance();
     self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
@@ -1684,8 +1684,8 @@ using Spot = UP::SpellLayout::Spot;
             [self.gameTimer start];
             start(BandGameDelay);
             start(BandGameUI);
-            self.gameView.roundButtonPause.highlightedOverride = NO;
-            self.gameView.roundButtonPause.highlighted = NO;
+            self.gameView.roundGameButtonPause.highlightedOverride = NO;
+            self.gameView.roundGameButtonPause.highlighted = NO;
             [self viewOpUnlockUserInterface];
         }];
     }));
@@ -1701,13 +1701,13 @@ using Spot = UP::SpellLayout::Spot;
     [self viewOpOrderOutWordScoreLabel];
     [self viewOpUpdateGameControls];
     
-    [self.gameView.roundButtonPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    [self.gameView.roundButtonPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    self.gameView.roundButtonPause.highlightedOverride = NO;
-    self.gameView.roundButtonPause.highlighted = NO;
-    self.gameView.roundButtonPause.alpha = [UIColor themeModalBackgroundAlpha];
-    [self.gameView.roundButtonPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    [self.gameView.roundButtonPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.gameView.roundGameButtonPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.gameView.roundGameButtonPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    self.gameView.roundGameButtonPause.highlightedOverride = NO;
+    self.gameView.roundGameButtonPause.highlighted = NO;
+    self.gameView.roundGameButtonPause.alpha = [UIColor themeModalBackgroundAlpha];
+    [self.gameView.roundGameButtonPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.gameView.roundGameButtonPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
     [UIView animateWithDuration:0.15 delay:0.15 options:0 animations:^{
         self.dialogPause.alpha = 0.0;

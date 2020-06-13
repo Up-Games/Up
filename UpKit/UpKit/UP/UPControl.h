@@ -10,43 +10,43 @@
 @class UPBezierPathView;
 
 typedef NS_OPTIONS(NSUInteger, UPControlEvents) {
-    UPControlEventTouchDown                                         = 1 <<  0,      // on all touch downs
-    UPControlEventTouchDownRepeat                                   = 1 <<  1,      // on multiple touchdowns (tap count > 1)
-    UPControlEventTouchDragInside                                   = 1 <<  2,
-    UPControlEventTouchDragOutside                                  = 1 <<  3,
-    UPControlEventTouchDragEnter                                    = 1 <<  4,
-    UPControlEventTouchDragExit                                     = 1 <<  5,
-    UPControlEventTouchUpInside                                     = 1 <<  6,
-    UPControlEventTouchUpOutside                                    = 1 <<  7,
-    UPControlEventTouchCancel                                       = 1 <<  8,
+    UPControlEventTouchDown               = 1 <<  0,      // on all touch downs
+    UPControlEventTouchDownRepeat         = 1 <<  1,      // on multiple touchdowns (tap count > 1)
+    UPControlEventTouchDragInside         = 1 <<  2,
+    UPControlEventTouchDragOutside        = 1 <<  3,
+    UPControlEventTouchDragEnter          = 1 <<  4,
+    UPControlEventTouchDragExit           = 1 <<  5,
+    UPControlEventTouchUpInside           = 1 <<  6,
+    UPControlEventTouchUpOutside          = 1 <<  7,
+    UPControlEventTouchCancel             = 1 <<  8,
 
-    UPControlEventValueChanged                                      = 1 << 12,     // sliders, etc.
-    UPControlEventPrimaryActionTriggered                            = 1 << 13,     // semantic action: for buttons, etc.
+    UPControlEventValueChanged            = 1 << 12,     // sliders, etc.
+    UPControlEventPrimaryActionTriggered  = 1 << 13,     // semantic action: for buttons, etc.
 
     UPControlEventAllTouchEvents                                    = 0x00000FFF,  // for touch events
-    UPControlEventApplicationReserved                               = 0x0F000000,  // range available for application use
-    UPControlEventSystemReserved                                    = 0xF0000000,  // range reserved for internal framework use
-    UPControlEventAllEvents                                         = 0xFFFFFFFF
+    UPControlEventApplicationReserved     = 0x0F000000,  // range available for application use
+    UPControlEventSystemReserved          = 0xF0000000,  // range reserved for internal framework use
+    UPControlEventAllEvents               = 0xFFFFFFFF
 };
 
 typedef NS_OPTIONS(NSUInteger, UPControlState) {
-    UPControlStateNormal =      0x00000000,
-    UPControlStateHighlighted = 0x00000001,
-    UPControlStateDisabled =    0x00000002,
-    UPControlStateSelected =    0x00000004,
-    UPControlStateActive =      0x00010000,
-    UPControlStateReserved =    0xFFFF0000,
-    UPControlStateInvalid =     0x01000000,
+    UPControlStateNormal =            0x00000000,
+    UPControlStateHighlighted =       0x00000001,
+    UPControlStateDisabled =          0x00000002,
+    UPControlStateSelected =          0x00000004,
+    UPControlStateActive =            0x00010000,
+    UPControlStateReserved =          0xFFFF0000,
+    UPControlStateInvalid =           0x80000000,
 };
 
 typedef NS_OPTIONS(NSUInteger, UPControlElement) {
     // Values chosen to be in the UPControlStateReserved range, so
-    // there's the option to bitwise-OR them together with UPControlState values.
-    UPControlElementFill =        0x00100000,
-    UPControlElementStroke =      0x00200000,
-    UPControlElementContent =     0x00400000,
-    UPControlElementAuxiliary =   0x00800000,
-    UPControlElementAccent =      0x01000000,
+    // they can be bitwise-OR'ed together with UPControlState values.
+    UPControlElementFill =            0x00010000,
+    UPControlElementStroke =          0x00020000,
+    UPControlElementContent =         0x00040000,
+    UPControlElementAuxiliary =       0x00080000,
+    UPControlElementAccent =          0x00100000,
 };
 
 @interface UPControl : UIView
@@ -146,5 +146,7 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (void)controlUpdate;
 
 - (void)cancelAnimations;
+
+- (void)swapContentAndAuxiliaryPathsForState:(UPControlState)state;
 
 @end

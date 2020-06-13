@@ -487,6 +487,13 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     return nil;
 }
 
+- (void)swapContentAndAuxiliaryPathsForState:(UPControlState)state
+{
+    UIBezierPath *tmp = [self contentPathForState:state];
+    [self setContentPath:[self auxiliaryPathForState:state] forState:state];
+    [self setAuxiliaryPath:tmp forState:state];
+}
+
 # pragma mark - Colors
 
 - (void)setFillColor:(UIColor *)color
