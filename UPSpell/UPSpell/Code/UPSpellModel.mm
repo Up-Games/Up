@@ -745,7 +745,14 @@ void SpellModel::apply_over(const Action &action)
     ASSERT_NPOS(action.pos2());
     ASSERT(positions_valid());
 
-    // otherwise, a no-op
+    clear_word_tray();
+    update_word();
+
+    ASSERT(word_length() == 0);
+    ASSERT(!word_in_lexicon());
+    ASSERT(word_score() == 0);
+    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(positions_valid());
 }
 
 void SpellModel::apply_quit(const Action &action)
