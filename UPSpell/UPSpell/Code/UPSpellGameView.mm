@@ -67,13 +67,8 @@ using Spot = UP::SpellLayout::Spot;
     self.roundGameButtonPause.chargeSize = layout.game_controls_button_charge_size();
     [self addSubview:self.roundGameButtonPause];
 
-    self.roundGameButtonTrash = [UPControl roundGameButtonTrash];
-    self.roundGameButtonTrash.band = BandGameUI;
-    self.roundGameButtonTrash.frame = layout.frame_for(Role::ControlButtonRight);
-    self.roundGameButtonTrash.chargeSize = layout.game_controls_button_charge_size();
-    [self addSubview:self.roundGameButtonTrash];
-
-    self.roundGameButtonClear = [UPControl roundGameButtonDownArrow];
+    self.roundGameButtonClear = [UPControl roundGameButton];
+    [self.roundGameButtonClear setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
     self.roundGameButtonClear.band = BandGameUI;
     self.roundGameButtonClear.frame = layout.frame_for(Role::ControlButtonRight);
     self.roundGameButtonClear.chargeSize = layout.game_controls_button_charge_size();

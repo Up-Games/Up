@@ -7,12 +7,32 @@
 
 #import <UpKit/UPControl.h>
 
+namespace UP {
+
+UIBezierPath *RoundGameButtonFillPath();
+UIBezierPath *RoundGameButtonStrokePath();
+UIBezierPath *RoundBackButtonFillPath();
+UIBezierPath *RoundBackButtonStrokePath();
+UIBezierPath *RoundGameButtonMinusSignIconPath();
+UIBezierPath *RoundGameButtonTrashIconPath();
+UIBezierPath *RoundGameButtonDownArrowIconPath();
+UIBezierPath *RoundBackButtonLeftArrowIconPath();
+UIBezierPath *RoundBackButtonRightArrowIconPath();
+UIBezierPath *TextButtonFillPath();
+UIBezierPath *TextButtonStrokePath();
+UIBezierPath *WordTrayFillPath();
+UIBezierPath *WordTrayStrokePath();
+UIBezierPath *ChoiceRowLeftFillPathSelected();
+UIBezierPath *ChoiceRowRightFillPathSelected();
+
+}  // namespace UP
+
 @interface UPControl (UPSpell)
 
++ (UPControl *)roundGameButton;
 + (UPControl *)roundGameButtonMinusSign;
-+ (UPControl *)roundGameButtonTrash;
-+ (UPControl *)roundGameButtonDownArrow;
 
++ (UPControl *)roundBackButton;
 + (UPControl *)roundBackButtonLeftArrow;
 + (UPControl *)roundBackButtonRightArrow;
 

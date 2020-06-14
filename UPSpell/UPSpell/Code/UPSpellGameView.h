@@ -15,7 +15,6 @@
 @property (nonatomic) UPControl *wordTrayView;
 @property (nonatomic) UIView *tileContainerView;
 @property (nonatomic) UPControl *roundGameButtonPause;
-@property (nonatomic) UPControl *roundGameButtonTrash;
 @property (nonatomic) UPControl *roundGameButtonClear;
 @property (nonatomic) UPGameTimerLabel *timerLabel;
 @property (nonatomic) UPLabel *gameScoreLabel;

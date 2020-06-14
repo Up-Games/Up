@@ -124,7 +124,8 @@ class SpellModel {
 public:
     enum class Opcode: uint8_t {
         NOP,    // no-op
-        INIT,   // create the initial game state
+        START,  // the start state for every game
+        PLAY,   // start playing a game
         ADD,    // move a player tray to the word tray
         REMOVE, // remove a tile from the word tray, tightening up the remaining tiles (if any)
         MOVE,   // move a word tray tile to a new word tray position
@@ -136,8 +137,9 @@ public:
         REJECT, // reject submission of tiles in the word tray to score points
         CLEAR,  // return the tiles in the word to their positions in the player tray
         DUMP,   // dump player tray tiles and replace them with a new set of tiles
-        GAME,   // game over
-        QUIT    // quit the game early
+        OVER,   // game over
+        QUIT,   // quit the game early
+        END,    // the end state after game over or quit
     };
 
     static constexpr int SevenLetterWordBonus = 25;
@@ -171,7 +173,8 @@ public:
             m_action(action), m_tiles(tiles), m_score(game_score) {}
 
         Action action() const { return m_action; }
-        const TileArray &tiles() { return m_tiles; }
+        const TileArray &tiles() const { return m_tiles; }
+        TileArray &tiles() { return m_tiles; }
         int score() const { return m_score; }
 
     private:
@@ -180,8 +183,8 @@ public:
         int m_score = 0;
     };
 
-    SpellModel() { apply_init(Action(Opcode::INIT)); }
-    SpellModel(const GameKey &game_code) : m_game_code(game_code), m_tile_sequence(game_code) { apply_init(Action(Opcode::INIT)); }
+    SpellModel() { apply_start(Action(Opcode::START)); }
+    SpellModel(const GameKey &game_code) : m_game_code(game_code), m_tile_sequence(game_code) { apply_start(Action(Opcode::START)); }
 
     const TileArray &tiles() const { return m_tiles; }
     TileArray &tiles() { return m_tiles; }
@@ -215,12 +218,22 @@ public:
 
     const State &apply(const Action &action);
 
+    bool is_sentinel_filled() const;
+    template <bool B> bool is_sentinel_filled() const { return is_sentinel_filled() == B; }
+    bool is_blank_filled() const;
+    template <bool B> bool is_blank_filled() const { return is_blank_filled() == B; }
+    bool is_word_tray_positioned_up_to(TileIndex) const;
+    bool not_word_tray_positioned_after(TileIndex) const;
+    bool is_player_tray_filled() const;
+    bool positions_valid() const;
+    
 private:
     std::string tiles_description() const;
     void fill_player_tray();
     void clear_word_tray();
     void clear_and_sentinelize_word_tray();
     void clear_and_sentinelize();
+    void clear_and_blank();
     void update_word();
 
     void append_to_word(const TilePosition &player_pos);
@@ -228,13 +241,8 @@ private:
     void add_to_word(const TilePosition &player_pos, const TilePosition &word_pos);
     void remove_from_word(const TilePosition &word_pos);
 
-    bool is_sentinel_filled() const;
-    template <bool B> bool is_sentinel_filled() const { return is_sentinel_filled() == B; }
-    bool is_word_tray_positioned_up_to(TileIndex) const;
-    bool not_word_tray_positioned_after(TileIndex) const;
-    bool positions_valid() const;
-
-    void apply_init(const Action &action);
+    void apply_start(const Action &action);
+    void apply_play(const Action &action);
     void apply_add(const Action &action);
     void apply_remove(const Action &action);
     void apply_move(const Action &action);
@@ -246,8 +254,9 @@ private:
     void apply_reject(const Action &action);
     void apply_clear(const Action &action);
     void apply_dump(const Action &action);
-    void apply_game(const Action &action);
+    void apply_over(const Action &action);
     void apply_quit(const Action &action);
+    void apply_end(const Action &action);
 
     GameKey m_game_code;
     TileSequence m_tile_sequence;

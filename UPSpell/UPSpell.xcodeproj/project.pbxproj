@@ -79,7 +79,6 @@
 		5D5EA1442485B820006264D2 /* UPTextPaths.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTextPaths.mm; sourceTree = "<group>"; };
 		5D5EA1462486A1D2006264D2 /* UPDialogGameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogGameOver.h; sourceTree = "<group>"; };
 		5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameOver.mm; sourceTree = "<group>"; };
-		5D5EA1492486A76E006264D2 /* UPSpellGameMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellGameMode.h; sourceTree = "<group>"; };
 		5D5EA14A24870128006264D2 /* MalloryCond-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-BlackItalic.otf"; sourceTree = "<group>"; };
 		5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryNrrw-Bold.otf"; sourceTree = "<group>"; };
 		5D723114246B34C0006027A3 /* UPTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileView.h; sourceTree = "<group>"; };
@@ -156,7 +155,6 @@
 				5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */,
 				5DF9DF602466165700B2199D /* UPSpellGameController.h */,
 				5DF9DF612466165700B2199D /* UPSpellGameController.mm */,
-				5D5EA1492486A76E006264D2 /* UPSpellGameMode.h */,
 				5DB9B1AA248705FA00A4AAA8 /* UPSpellGameView.h */,
 				5DB9B1AB248705FA00A4AAA8 /* UPSpellGameView.mm */,
 				5D5216EA246C7E9E005A2E9F /* UPSpellLayout.h */,

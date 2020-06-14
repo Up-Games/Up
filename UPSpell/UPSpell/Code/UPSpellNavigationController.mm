@@ -104,7 +104,7 @@ using UP::TimeSpanning::start;
 
 - (void)dialogMenuPlayButtonTapped:(id)sender
 {
-    [self.gameController setMode:UPSpellGameModeCountdown animated:YES];
+    [self.gameController setMode:UPSpellControllerModeReady];
 }
 
 - (void)dialogMenuExtrasButtonTapped:(id)sender
@@ -119,16 +119,14 @@ using UP::TimeSpanning::start;
 
 - (void)presentExtrasController
 {
-    [self.gameController setMode:UPSpellGameModeOffscreenRight animated:YES];
-    [self presentViewController:self.extrasController animated:YES completion:^{
-    }];
+    [self.gameController setMode:UPSpellControllerModeExtras];
+    [self presentViewController:self.extrasController animated:YES completion:nil];
 }
 
 - (void)presentAboutController
 {
-    [self.gameController setMode:UPSpellGameModeOffscreenLeft animated:YES];
-    [self presentViewController:self.aboutController animated:YES completion:^{
-    }];
+    [self.gameController setMode:UPSpellControllerModeAbout];
+    [self presentViewController:self.aboutController animated:YES completion:nil];
 }
 
 - (void)dismissPresentedController:(id)sender
@@ -136,7 +134,7 @@ using UP::TimeSpanning::start;
     [self dismissViewControllerAnimated:YES completion:^{
         self.dialogMenu.extrasButton.selected = NO;
         self.dialogMenu.aboutButton.selected = NO;
-        [self.gameController setMode:UPSpellGameModeAttract animated:YES];
+        [self.gameController setMode:UPSpellControllerModeStart];
     }];
 }
 

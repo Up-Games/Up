@@ -69,7 +69,7 @@ static uint32_t _InstanceCount;
     [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
     [self setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
-    if (glyph != UP::EmptyGlyph) {
+    if (glyph != UP::BlankGlyph) {
         UIBezierPath *contentPath = [UIBezierPath bezierPath];
         [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
         [contentPath appendPath:tile_paths.tile_path_for_score(self.score)];

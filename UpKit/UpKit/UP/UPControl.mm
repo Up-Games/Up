@@ -77,6 +77,7 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 @property (nonatomic) uint32_t contentPathColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t auxiliaryPathColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t accentPathColorAnimatorSerialNumber;
+@property (nonatomic) BOOL needsControlUpdate;
 @end
 
 UP_STATIC_INLINE NSUInteger up_control_key_fill(UPControlState controlState)
@@ -485,13 +486,6 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
         return nval->second;
     }
     return nil;
-}
-
-- (void)swapContentAndAuxiliaryPathsForState:(UPControlState)state
-{
-    UIBezierPath *tmp = [self contentPathForState:state];
-    [self setContentPath:[self auxiliaryPathForState:state] forState:state];
-    [self setAuxiliaryPath:tmp forState:state];
 }
 
 # pragma mark - Colors
@@ -970,12 +964,18 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     self.accentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
 }
 
+- (void)setNeedsControlUpdate
+{
+    self.needsControlUpdate = YES;
+}
+
 - (void)controlUpdate
 {
     UPControlState state = self.state;
-    if (state == self.previousState) {
+    if (!self.needsControlUpdate && state == self.previousState) {
         return;
     }
+    self.needsControlUpdate = NO;
     
     if (self.fillPathView) {
         self.fillPathView.path = [self fillPathForState:state];

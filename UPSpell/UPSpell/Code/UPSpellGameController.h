@@ -5,12 +5,22 @@
 
 #import <UIKit/UIKit.h>
 
-#import "UPSpellGameMode.h"
+typedef NS_ENUM(NSInteger, UPSpellControllerMode) {
+    UPSpellControllerModeNone,
+    UPSpellControllerModeStart,
+    UPSpellControllerModeAbout,
+    UPSpellControllerModeExtras,
+    UPSpellControllerModeAttract,
+    UPSpellControllerModeReady,
+    UPSpellControllerModePlay,
+    UPSpellControllerModePause,
+    UPSpellControllerModeGameOver,
+    UPSpellControllerModeQuit,
+    UPSpellControllerModeEnd,
+};
 
 @interface UPSpellGameController : UIViewController
 
-@property (nonatomic) UPSpellGameMode mode;
-
-- (void)setMode:(UPSpellGameMode)mode animated:(BOOL)animated;
+@property (nonatomic) UPSpellControllerMode mode;
 
 @end

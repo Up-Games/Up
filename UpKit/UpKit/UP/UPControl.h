@@ -30,23 +30,23 @@ typedef NS_OPTIONS(NSUInteger, UPControlEvents) {
 };
 
 typedef NS_OPTIONS(NSUInteger, UPControlState) {
-    UPControlStateNormal =            0x00000000,
-    UPControlStateHighlighted =       0x00000001,
-    UPControlStateDisabled =          0x00000002,
-    UPControlStateSelected =          0x00000004,
-    UPControlStateActive =            0x00010000,
-    UPControlStateReserved =          0xFFFF0000,
-    UPControlStateInvalid =           0x80000000,
+    UPControlStateNormal =      0x00000000,
+    UPControlStateHighlighted = 0x00000001,
+    UPControlStateDisabled =    0x00000002,
+    UPControlStateSelected =    0x00000004,
+    UPControlStateActive =      0x00010000,
+    UPControlStateReserved =    0xFFFF0000,
+    UPControlStateInvalid =     0x01000000,
 };
 
 typedef NS_OPTIONS(NSUInteger, UPControlElement) {
     // Values chosen to be in the UPControlStateReserved range, so
     // they can be bitwise-OR'ed together with UPControlState values.
-    UPControlElementFill =            0x00010000,
-    UPControlElementStroke =          0x00020000,
-    UPControlElementContent =         0x00040000,
-    UPControlElementAuxiliary =       0x00080000,
-    UPControlElementAccent =          0x00100000,
+    UPControlElementFill =      0x00100000,
+    UPControlElementStroke =    0x00200000,
+    UPControlElementContent =   0x00400000,
+    UPControlElementAuxiliary = 0x00800000,
+    UPControlElementAccent =    0x01000000,
 };
 
 @interface UPControl : UIView
@@ -143,10 +143,9 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (void)setAccentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)accentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
 
+- (void)setNeedsControlUpdate;
 - (void)controlUpdate;
 
 - (void)cancelAnimations;
-
-- (void)swapContentAndAuxiliaryPathsForState:(UPControlState)state;
 
 @end

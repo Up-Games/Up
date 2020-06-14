@@ -170,7 +170,7 @@ static CGFloat _ThemeHue = 222;
     return [UIColor themeModalActiveAlphaForStyle:_ThemeStyle];
 }
 
-+ (CGFloat)themeModalInterstitialAlphaForStyle:(UPColorStyle)style
++ (CGFloat)themeModalGameOverAlphaForStyle:(UPColorStyle)style
 {
     switch (_ThemeStyle) {
         case UPColorStyleDefault:
@@ -182,9 +182,9 @@ static CGFloat _ThemeHue = 222;
     }
 }
 
-+ (CGFloat)themeModalInterstitialAlpha
++ (CGFloat)themeModalGameOverAlpha
 {
-    return [UIColor themeModalInterstitialAlphaForStyle:_ThemeStyle];
+    return [UIColor themeModalGameOverAlphaForStyle:_ThemeStyle];
 }
 
 // https://stackoverflow.com/a/9177602
