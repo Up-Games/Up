@@ -7,6 +7,8 @@
 
 #import <UPKit/UPControl.h>
 
+#import "UPSpellLayout.h"
+
 @protocol UPTileViewGestureDelegate;
 
 @interface UPTileView : UPControl
@@ -20,6 +22,7 @@
 @property (nonatomic) BOOL tapEnabled;
 @property (nonatomic) BOOL panEnabled;
 @property (nonatomic) NSObject<UPTileViewGestureDelegate> *gestureDelegate;
+@property (nonatomic) UP::SpellLayout::Location submitLocation;
 
 + (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier;
 

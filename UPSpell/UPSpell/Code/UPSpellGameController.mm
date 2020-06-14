@@ -89,8 +89,8 @@ using Spot = UP::SpellLayout::Spot;
 @property (nonatomic) SpellModel *model;
 @end
 
-static constexpr CFTimeInterval DefaultTileBloopDuration = 0.3;
-static constexpr CFTimeInterval GameOverTileBloopDuration = 0.5;
+static constexpr CFTimeInterval DefaultBloopDuration = 0.3;
+static constexpr CFTimeInterval GameOverBloopDuration = 0.5;
 
 @implementation UPSpellGameController
 
@@ -820,6 +820,7 @@ static constexpr CFTimeInterval GameOverTileBloopDuration = 0.5;
         Tile &tile = self.model->find_tile(tileView);
         ASSERT(tile.position().in_word_tray());
         Location location(role_in_word(tile.position().index(), self.model->word_length()), Spot::OffTopNear);
+        tileView.submitLocation = location;
         [moves addObject:UPViewMoveMake(tileView, location)];
     }
     start(bloop_out(BandGameUI, moves, 0.3, nil));
@@ -838,13 +839,7 @@ static constexpr CFTimeInterval GameOverTileBloopDuration = 0.5;
         self.showingWordScoreLabel = YES;
         start(bloop_in(BandGameUI, @[wordScoreInMove], 0.3, ^(UIViewAnimatingPosition) {
             delay(BandGameDelay, 1.5, ^{
-                if (self.showingWordScoreLabel) {
-                    UPViewMove *wordScoreOutMove = UPViewMoveMake(self.gameView.wordScoreLabel, Location(role, Spot::OffTopNear));
-                    start(bloop_out(BandGameUI, @[wordScoreOutMove], 0.3, ^(UIViewAnimatingPosition) {
-                        self.showingWordScoreLabel = NO;
-                        self.gameView.wordScoreLabel.hidden = YES;
-                    }));
-                }
+                [self viewBloopOutWordScoreLabelWithDuration:DefaultBloopDuration];
             });
         }));
     });
@@ -900,6 +895,17 @@ static constexpr CFTimeInterval GameOverTileBloopDuration = 0.5;
     }
     
     self.gameView.wordScoreLabel.attributedString = attrString;
+}
+
+- (void)viewBloopOutWordScoreLabelWithDuration:(CFTimeInterval)duration
+{
+    if (self.showingWordScoreLabel) {
+        UPViewMove *wordScoreOutMove = UPViewMoveMake(self.gameView.wordScoreLabel, Location(Role::WordScore, Spot::OffTopNear));
+        start(bloop_out(BandGameUI, @[wordScoreOutMove], duration, ^(UIViewAnimatingPosition) {
+            self.showingWordScoreLabel = NO;
+            self.gameView.wordScoreLabel.hidden = YES;
+        }));
+    }
 }
 
 - (void)viewOrderOutWordScoreLabel
@@ -1103,25 +1109,31 @@ static constexpr CFTimeInterval GameOverTileBloopDuration = 0.5;
 
 - (void)viewBloopOutExistingTileViewsWithCompletion:(void (^)(void))completion
 {
-    [self viewBloopOutExistingTileViewsWithDuration:DefaultTileBloopDuration completion:completion];
+    [self viewBloopOutExistingTileViewsWithDuration:DefaultBloopDuration completion:completion];
 }
 
 - (void)viewBloopOutExistingTileViewsWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
 {
-    NSMutableArray<UPViewMove *> *tileMoves = [NSMutableArray array];
+    NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
+    NSMutableSet *submittedTileViews = [NSMutableSet setWithArray:self.gameView.tileContainerView.subviews];
     for (const auto &tile : self.model->tiles()) {
         if (tile.has_view()) {
             UPTileView *tileView = tile.view();
             if (tile.in_word_tray()) {
                 Role role = role_in_word(tile.position().index(), self.model->word_length());
-                [tileMoves addObject:UPViewMoveMake(tileView, role, Spot::OffBottomNear)];
+                [moves addObject:UPViewMoveMake(tileView, role, Spot::OffBottomNear)];
             }
             else {
-                [tileMoves addObject:UPViewMoveMake(tileView, role_in_player_tray(tile.position()), Spot::OffBottomNear)];
+                [moves addObject:UPViewMoveMake(tileView, role_in_player_tray(tile.position()), Spot::OffBottomNear)];
             }
+            [submittedTileViews removeObject:tileView];
         }
     }
-    start(bloop_out(BandModeUI, tileMoves, duration, ^(UIViewAnimatingPosition) {
+    for (UPTileView *tileView in submittedTileViews) {
+        ASSERT(tileView.submitLocation.role() != Role::None);
+        [moves addObject:UPViewMoveMake(tileView, tileView.submitLocation)];
+    }
+    start(bloop_out(BandModeUI, moves, duration, ^(UIViewAnimatingPosition) {
         [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         if (completion) {
             completion();
@@ -1131,7 +1143,7 @@ static constexpr CFTimeInterval GameOverTileBloopDuration = 0.5;
 
 - (void)viewBloopInBlankTileViewsWithCompletion:(void (^)(void))completion
 {
-    [self viewBloopInBlankTileViewsWithDuration:DefaultTileBloopDuration completion:completion];
+    [self viewBloopInBlankTileViewsWithDuration:DefaultBloopDuration completion:completion];
 }
 
 - (void)viewBloopInBlankTileViewsWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
@@ -1221,9 +1233,9 @@ static constexpr CFTimeInterval GameOverTileBloopDuration = 0.5;
     [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
 
     SpellLayout &layout = SpellLayout::instance();
+    self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageCenter, Spot::OffBottomNear);
+    self.dialogGameOver.noteLabel.center = layout.center_for(Role::DialogMessageCenter, Spot::OffBottomFar);
     self.dialogGameOver.transform = CGAffineTransformIdentity;
-    self.dialogGameOver.messagePathView.frame = layout.frame_for(Role::DialogMessageCenter, Spot::OffBottomNear);
-    self.dialogGameOver.noteLabel.frame = layout.frame_for(Role::DialogMessageCenter, Spot::OffBottomFar);
     self.dialogGameOver.hidden = YES;
 }
 
@@ -1850,6 +1862,7 @@ static constexpr CFTimeInterval GameOverTileBloopDuration = 0.5;
     self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
     self.dialogGameOver.noteLabel.center = layout.center_for(Role::DialogNote, Spot::OffBottomNear);
 
+    self.dialogGameOver.center = layout.center_for(Location(Role::Screen));
     self.dialogGameOver.hidden = NO;
     self.dialogGameOver.alpha = 0.0;
     [UIView animateWithDuration:0.15 animations:^{
@@ -1879,11 +1892,11 @@ static constexpr CFTimeInterval GameOverTileBloopDuration = 0.5;
     self.gameView.timerLabel.alpha = [UIColor themeModalActiveAlpha];
     self.gameView.gameScoreLabel.alpha = [UIColor themeModalActiveAlpha];
 
-    [self viewOrderOutWordScoreLabel];
+    [self viewBloopOutWordScoreLabelWithDuration:GameOverBloopDuration];
 
-    [self viewBloopOutExistingTileViewsWithDuration:GameOverTileBloopDuration completion:^{
+    [self viewBloopOutExistingTileViewsWithDuration:GameOverBloopDuration completion:^{
         self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::END));
-        [self viewBloopInBlankTileViewsWithDuration:GameOverTileBloopDuration completion:nil];
+        [self viewBloopInBlankTileViewsWithDuration:GameOverBloopDuration completion:nil];
 
         self.dialogMenu.hidden = NO;
         self.dialogMenu.alpha = 1;
@@ -1908,7 +1921,7 @@ static constexpr CFTimeInterval GameOverTileBloopDuration = 0.5;
 {
     ASSERT(self.lockCount == 0);
     [self viewLock];
-    [self viewOrderInExtrasWithCompletion:^{
+    [self viewOrderInAboutWithCompletion:^{
         [self viewOrderOutGameEnd];
         [self viewUnlock];
     }];
