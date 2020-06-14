@@ -78,6 +78,7 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 @property (nonatomic) uint32_t auxiliaryPathColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t accentPathColorAnimatorSerialNumber;
 @property (nonatomic) BOOL needsControlUpdate;
+@property (nonatomic) BOOL touchesCancelled;
 @end
 
 UP_STATIC_INLINE NSUInteger up_control_key_fill(UPControlState controlState)
@@ -780,9 +781,13 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    ASSERT(self.userInteractionEnabled);
+    
     if (!self.isEnabled) {
         return;
     }
+    
+    self.touchesCancelled = NO;
     
     UITouch *touch = [touches anyObject];
     self.tracking = [self beginTrackingWithTouch:touch withEvent:event];
@@ -800,7 +805,14 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    LOG(General, "touchesMoved: %s", self.userInteractionEnabled ? "Y" : "N");
+    if (self.touchesCancelled) {
+        return;
+    }
+    
+    if (!self.userInteractionEnabled) {
+        [self touchesCancelled:touches withEvent:event];
+        return;
+    }
 
     if (!self.isEnabled) {
         return;
@@ -839,8 +851,15 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    LOG(General, "touchesEnded: %s", self.userInteractionEnabled ? "Y" : "N");
+    if (self.touchesCancelled) {
+        return;
+    }
     
+    if (!self.userInteractionEnabled) {
+        [self touchesCancelled:touches withEvent:event];
+        return;
+    }
+
     if (!self.isEnabled) {
         return;
     }
@@ -867,9 +886,9 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    LOG(General, "touchesCancelled: %s", self.userInteractionEnabled ? "Y" : "N");
-
+    self.touchesCancelled = YES;
     self.tracking = NO;
+    self.touchInside = NO;
     if (self.autoHighlights) {
         self.highlighted = NO;
     }
@@ -877,8 +896,6 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
         self.selected = NO;
     }
     [self cancelTrackingWithEvent:event];
-    
-    [super touchesCancelled:touches withEvent:event];
 }
 
 #pragma mark - Tracking
@@ -928,6 +945,10 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 
 - (void)sendActionsForControlEvents:(UPControlEvents)events
 {
+    if (!self.userInteractionEnabled || self.touchesCancelled) {
+        return;
+    }
+    
     for (const auto &a : m_actions) {
         if (a.events() & events) {
 #pragma clang diagnostic push
