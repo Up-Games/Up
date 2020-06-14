@@ -7,7 +7,7 @@
 
 typedef NS_ENUM(NSInteger, UPSpellControllerMode) {
     UPSpellControllerModeNone,
-    UPSpellControllerModeStart,
+    UPSpellControllerModeInit,
     UPSpellControllerModeAbout,
     UPSpellControllerModeExtras,
     UPSpellControllerModeAttract,

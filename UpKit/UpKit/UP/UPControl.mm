@@ -158,7 +158,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 
 - (void)setHighlighted:(BOOL)highlighted
 {
-    if (self.highlightedOverride && !highlighted) {
+    if (self.highlightedLocked && !highlighted) {
         return;
     }
     if (highlighted) {

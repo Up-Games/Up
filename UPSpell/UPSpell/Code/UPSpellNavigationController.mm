@@ -134,7 +134,7 @@ using UP::TimeSpanning::start;
     [self dismissViewControllerAnimated:YES completion:^{
         self.dialogMenu.extrasButton.selected = NO;
         self.dialogMenu.aboutButton.selected = NO;
-        [self.gameController setMode:UPSpellControllerModeStart];
+        [self.gameController setMode:UPSpellControllerModeInit];
     }];
 }
 

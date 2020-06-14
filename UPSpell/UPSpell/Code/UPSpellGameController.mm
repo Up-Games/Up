@@ -85,9 +85,12 @@ using Spot = UP::SpellLayout::Spot;
 @property (nonatomic) UPDialogGameOver *dialogGameOver;
 @property (nonatomic) UPDialogPause *dialogPause;
 @property (nonatomic) UPDialogMenu *dialogMenu;
-@property (nonatomic) NSInteger userInterfaceLockCount;
+@property (nonatomic) NSInteger lockCount;
 @property (nonatomic) SpellModel *model;
 @end
+
+static constexpr CFTimeInterval DefaultTileBloopDuration = 0.3;
+static constexpr CFTimeInterval GameOverTileBloopDuration = 0.5;
 
 @implementation UPSpellGameController
 
@@ -130,7 +133,7 @@ using Spot = UP::SpellLayout::Spot;
     self.pickedView = nil;
     self.pickedPosition = TilePosition();
 
-    self.mode = UPSpellControllerModeStart;
+    self.mode = UPSpellControllerModeInit;
 
 //    self.mode = UPSpellControllerModeReady;
 //    self.mode = UPSpellControllerModePlay;
@@ -175,7 +178,7 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)gameTimerExpired:(UPGameTimer *)gameTimer
 {
-    [self applyActionOver];
+    self.mode = UPSpellControllerModeGameOver;
 }
 
 - (void)gameTimerCanceled:(UPGameTimer *)gameTimer
@@ -215,17 +218,17 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)dialogPauseQuitButtonTapped:(id)sender
 {
-    [self setMode:UPSpellControllerModeQuit];
+    self.mode = UPSpellControllerModeQuit;
 }
 
 - (void)dialogPauseResumeButtonTapped:(id)sender
 {
-    [self setMode:UPSpellControllerModePlay];
+    self.mode = UPSpellControllerModePlay;
 }
 
 - (void)roundButtonPauseTapped:(id)sender
 {
-    [self setMode:UPSpellControllerModePause];
+    self.mode = UPSpellControllerModePause;
 }
 
 - (void)roundButtonTrashTapped:(id)sender
@@ -415,13 +418,6 @@ using Spot = UP::SpellLayout::Spot;
 
 #pragma mark - Actions
 
-- (void)applyActionPlay
-{
-//    [self applyActionInit];
-//    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::PLAY));
-//    [self setMode:UPSpellControllerModePlay];
-}
-
 - (void)applyActionAdd:(const Tile &)tile
 {
     ASSERT(tile.has_view());
@@ -575,13 +571,18 @@ using Spot = UP::SpellLayout::Spot;
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DROP, self.pickedPosition));
 
+    CFTimeInterval duration = 0.3;
+    if (self.mode == UPSpellControllerModeGameOver) {
+        duration = 0.85;
+    }
+    
     if (self.pickedPosition.in_word_tray()) {
         Location location(role_in_word(self.pickedPosition.index(), self.model->word_length()));
-        start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], 0.3, nil));
+        start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], duration, nil));
     }
     else {
         Tile &tile = self.model->find_tile(tileView);
-        start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, tile.position().index()))], 0.3, nil));
+        start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, tile.position().index()))], duration, nil));
     }
 
     tileView.highlighted = NO;
@@ -620,7 +621,7 @@ using Spot = UP::SpellLayout::Spot;
 {
     cancel(BandGameDelay);
 
-    [self viewLockUserInterfaceIncludingPause:NO];
+    [self viewLockIncludingPause:NO];
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::REJECT));
 
@@ -635,12 +636,12 @@ using Spot = UP::SpellLayout::Spot;
                 [self viewPenaltyFinished];
                 delay(BandGameDelay, 0.1, ^{
                     [self applyActionClear];
-                    [self viewUnlockUserInterface];
+                    [self viewUnlock];
                 });
             });
         }
         else {
-            [self viewUnlockUserInterface];
+            [self viewUnlock];
         }
     }));
 }
@@ -652,7 +653,7 @@ using Spot = UP::SpellLayout::Spot;
     cancel(BandGameDelay);
     [self viewOrderOutWordScoreLabel];
 
-    [self viewLockUserInterfaceIncludingPause:NO];
+    [self viewLockIncludingPause:NO];
 
     NSArray *playerTrayTileViews = self.model->player_tray_tile_views();
     ASSERT(playerTrayTileViews.count == TileCount);
@@ -663,22 +664,16 @@ using Spot = UP::SpellLayout::Spot;
     [self viewDumpPlayerTray:playerTrayTileViews];
     delay(BandGameDelay, 1.65, ^{
         [self viewFillPlayerTrayWithCompletion:^{
-            [self viewUnlockUserInterface];
+            [self viewUnlock];
         }];
         [self viewPenaltyFinished];
     });
 }
 
-- (void)applyActionOver
-{
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::OVER));
-    [self setMode:UPSpellControllerModeGameOver];
-}
-
 - (void)applyActionQuit
 {
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::QUIT));
-    [self setMode:UPSpellControllerModeQuit];
+    self.mode = UPSpellControllerModeQuit;
 }
 
 #pragma mark - View ops
@@ -974,9 +969,9 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)viewPenaltyForDump
 {
-    ASSERT(self.userInterfaceLockCount > 0);
+    ASSERT(self.lockCount > 0);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
-    self.gameView.roundGameButtonClear.highlightedOverride = YES;
+    self.gameView.roundGameButtonClear.highlightedLocked = YES;
     self.gameView.roundGameButtonClear.highlighted = YES;
     self.gameView.wordTrayView.alpha = disabledAlpha;
     self.gameView.tileContainerView.alpha = disabledAlpha;
@@ -984,7 +979,7 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)viewPenaltyForReject
 {
-    ASSERT(self.userInterfaceLockCount > 0);
+    ASSERT(self.lockCount > 0);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.gameView.wordTrayView.alpha = disabledAlpha;
     self.gameView.roundGameButtonClear.alpha = disabledAlpha;
@@ -993,60 +988,38 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)viewPenaltyFinished
 {
-    ASSERT(self.userInterfaceLockCount > 0);
-    self.gameView.roundGameButtonClear.highlightedOverride = NO;
+    ASSERT(self.lockCount > 0);
+    self.gameView.roundGameButtonClear.highlightedLocked = NO;
     self.gameView.roundGameButtonClear.highlighted = NO;
     self.gameView.roundGameButtonClear.alpha = 1.0;
     self.gameView.wordTrayView.alpha = 1.0;
     self.gameView.tileContainerView.alpha = 1.0;
 }
 
-- (void)viewEnterModal
+- (void)viewSetGameAlpha:(CGFloat)alpha
 {
-    [self viewEnterModal:[UIColor themeModalBackgroundAlpha]];
-}
-
-- (void)viewEnterModal:(CGFloat)alpha
-{
-    self.gameView.timerLabel.alpha = alpha;
-    self.gameView.gameScoreLabel.alpha = alpha;
-    self.gameView.roundGameButtonPause.alpha = alpha;
-    self.gameView.roundGameButtonClear.alpha = alpha;
-
-    self.gameView.wordTrayView.alpha = alpha;
-    self.gameView.wordScoreLabel.alpha = alpha;
-    self.gameView.tileContainerView.alpha = alpha;
-
+    ASSERT(self.lockCount > 0);
     for (UIView *view in self.gameView.subviews) {
-        view.userInteractionEnabled = NO;
+        view.alpha = alpha;
     }
 }
 
-- (void)viewExitModal
+- (void)viewRestoreGameAlpha
 {
-    self.gameView.roundGameButtonPause.highlightedOverride = NO;
-    self.gameView.roundGameButtonPause.highlighted = NO;
-    self.gameView.roundGameButtonPause.alpha = 1.0;
-    self.gameView.roundGameButtonClear.alpha = 1.0;
-    self.gameView.timerLabel.alpha = 1.0;
-    self.gameView.gameScoreLabel.alpha = 1.0;
-    self.gameView.wordTrayView.alpha = 1.0;
-    self.gameView.wordScoreLabel.alpha = 1.0;
-    self.gameView.tileContainerView.alpha = 1.0;
-
+    ASSERT(self.lockCount > 0);
     for (UIView *view in self.gameView.subviews) {
-        view.userInteractionEnabled = YES;
+        view.alpha = 1.0;
     }
 }
 
-- (void)viewLockUserInterface
+- (void)viewLock
 {
-    [self viewLockUserInterfaceIncludingPause:YES];
+    [self viewLockIncludingPause:YES];
 }
 
-- (void)viewLockUserInterfaceIncludingPause:(BOOL)includingPause
+- (void)viewLockIncludingPause:(BOOL)includingPause
 {
-    self.userInterfaceLockCount++;
+    self.lockCount++;
 
     self.dialogMenu.userInteractionEnabled = NO;
     self.dialogPause.userInteractionEnabled = NO;
@@ -1060,11 +1033,11 @@ using Spot = UP::SpellLayout::Spot;
     }
 }
 
-- (void)viewUnlockUserInterface
+- (void)viewUnlock
 {
-    ASSERT(self.userInterfaceLockCount > 0);
-    self.userInterfaceLockCount = UPMaxT(NSInteger, self.userInterfaceLockCount - 1, 0);
-    if (self.userInterfaceLockCount > 0) {
+    ASSERT(self.lockCount > 0);
+    self.lockCount = UPMaxT(NSInteger, self.lockCount - 1, 0);
+    if (self.lockCount > 0) {
         return;
     }
 
@@ -1128,9 +1101,13 @@ using Spot = UP::SpellLayout::Spot;
     }
 }
 
-- (void)viewBloopOutTileViewsWithCompletion:(void (^)(void))completion
+- (void)viewBloopOutExistingTileViewsWithCompletion:(void (^)(void))completion
 {
-    // move existing tiles offscreen and remove them from view hierarchy
+    [self viewBloopOutExistingTileViewsWithDuration:DefaultTileBloopDuration completion:completion];
+}
+
+- (void)viewBloopOutExistingTileViewsWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
+{
     NSMutableArray<UPViewMove *> *tileMoves = [NSMutableArray array];
     for (const auto &tile : self.model->tiles()) {
         if (tile.has_view()) {
@@ -1144,7 +1121,7 @@ using Spot = UP::SpellLayout::Spot;
             }
         }
     }
-    start(bloop_out(BandModeUI, tileMoves, 0.3, ^(UIViewAnimatingPosition) {
+    start(bloop_out(BandModeUI, tileMoves, duration, ^(UIViewAnimatingPosition) {
         [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         if (completion) {
             completion();
@@ -1153,6 +1130,11 @@ using Spot = UP::SpellLayout::Spot;
 }
 
 - (void)viewBloopInBlankTileViewsWithCompletion:(void (^)(void))completion
+{
+    [self viewBloopInBlankTileViewsWithDuration:DefaultTileBloopDuration completion:completion];
+}
+
+- (void)viewBloopInBlankTileViewsWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
 {
     ASSERT(self.model->is_blank_filled());
     ASSERT(self.model->is_player_tray_filled());
@@ -1171,17 +1153,18 @@ using Spot = UP::SpellLayout::Spot;
         [tileInMoves addObject:UPViewMoveMake(tileView, Location(role, Spot::Default))];
         idx++;
     }
-    start(bloop_in(BandModeUI, tileInMoves, 0.3, nil));
+    start(bloop_in(BandModeUI, tileInMoves, duration, nil));
 }
 
 - (void)viewOrderInAboutWithCompletion:(void (^)(void))completion
 {
-    [self viewLockUserInterface];
+    [self viewLock];
     
     UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffLeftFar));
     UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffLeftFar));
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffLeftNear));
-    
+    UPViewMove *dialogGameOverMove = UPViewMoveMake(self.dialogGameOver, Location(Role::Screen, Spot::OffRightNear));
+
     CFTimeInterval duration = 0.75;
     
     start(bloop_out(BandModeUI, @[extrasButtonMove], duration, nil));
@@ -1189,9 +1172,9 @@ using Spot = UP::SpellLayout::Spot;
         start(bloop_out(BandModeUI, @[playButtonMove], duration - 0.1, nil));
     });
     delay(BandModeDelay, 0.2, ^{
-        start(bloop_out(BandModeUI, @[gameViewMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove], duration - 0.2, ^(UIViewAnimatingPosition) {
             self.dialogMenu.aboutButton.userInteractionEnabled = NO;
-            [self viewUnlockUserInterface];
+            [self viewUnlock];
             if (completion) {
                 completion();
             }
@@ -1201,24 +1184,24 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)viewOrderInExtrasWithCompletion:(void (^)(void))completion
 {
-    [self viewLockUserInterface];
+    [self viewLock];
 
     UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffRightFar));
     UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffRightNear));
+    UPViewMove *dialogGameOverMove = UPViewMoveMake(self.dialogGameOver, Location(Role::Screen, Spot::OffRightNear));
 
     CFTimeInterval duration = 0.75;
 
-    start(bloop_out(BandModeUI, @[aboutButtonMove], duration, ^(UIViewAnimatingPosition) {
-    }));
+    start(bloop_out(BandModeUI, @[aboutButtonMove], duration, nil));
     delay(BandModeDelay, 0.1, ^{
         start(bloop_out(BandModeUI, @[playButtonMove], duration - 0.1, ^(UIViewAnimatingPosition) {
         }));
     });
     delay(BandModeDelay, 0.2, ^{
-        start(bloop_out(BandModeUI, @[gameViewMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove], duration - 0.2, ^(UIViewAnimatingPosition) {
             self.dialogMenu.extrasButton.userInteractionEnabled = NO;
-            [self viewUnlockUserInterface];
+            [self viewUnlock];
             if (completion) {
                 completion();
             }
@@ -1226,14 +1209,31 @@ using Spot = UP::SpellLayout::Spot;
     });
 }
 
+- (void)viewOrderOutGameEnd
+{
+    ASSERT(self.lockCount > 0);
+
+    // reset game controls
+    self.model->reset_game_score();
+    [self.gameTimer reset];
+    [self viewOrderOutWordScoreLabel];
+    [self viewUpdateGameControls];
+    [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
+
+    SpellLayout &layout = SpellLayout::instance();
+    self.dialogGameOver.transform = CGAffineTransformIdentity;
+    self.dialogGameOver.messagePathView.frame = layout.frame_for(Role::DialogMessageCenter, Spot::OffBottomNear);
+    self.dialogGameOver.noteLabel.frame = layout.frame_for(Role::DialogMessageCenter, Spot::OffBottomFar);
+    self.dialogGameOver.hidden = YES;
+}
+
 - (void)viewMakeReadyWithCompletion:(void (^)(void))completion
 {
     ASSERT(self.model->is_blank_filled());
-
-    [self viewLockUserInterface];
+    ASSERT(self.lockCount > 0);
     
     // lock play button in highlighted state
-    self.dialogMenu.playButton.highlightedOverride = YES;
+    self.dialogMenu.playButton.highlightedLocked = YES;
     self.dialogMenu.playButton.highlighted = YES;
     
     // reset game controls
@@ -1244,7 +1244,7 @@ using Spot = UP::SpellLayout::Spot;
     
     delay(BandModeDelay, 0.1, ^{
         [UIView animateWithDuration:0.2 animations:^{
-            [self viewEnterModal:[UIColor themeDisabledAlpha]];
+            [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
         }];
     });
     
@@ -1281,6 +1281,16 @@ using Spot = UP::SpellLayout::Spot;
     }));
 }
 
+- (void)viewClearTileGestures
+{
+    for (auto &tile : self.model->tiles()) {
+        if (tile.has_view()) {
+            UPTileView *tileView = tile.view();
+            [tileView clearGestures];
+        }
+    }
+}
+
 #pragma mark - Model management
 
 - (void)createNewGameModel
@@ -1300,7 +1310,8 @@ using Spot = UP::SpellLayout::Spot;
         return;
     }
     UPSpellControllerMode prev = _mode;
-    
+    _mode = mode;
+
     switch (prev) {
         case UPSpellControllerModeNone: {
             switch (mode) {
@@ -1316,16 +1327,16 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellControllerModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
-                case UPSpellControllerModeStart:
-                    [self modeTransitionFromNoneToStart];
+                case UPSpellControllerModeInit:
+                    [self modeTransitionFromNoneToInit];
                     break;
             }
             break;
         }
-        case UPSpellControllerModeStart: {
+        case UPSpellControllerModeInit: {
             switch (mode) {
                 case UPSpellControllerModeNone:
-                case UPSpellControllerModeStart:
+                case UPSpellControllerModeInit:
                 case UPSpellControllerModePlay:
                 case UPSpellControllerModePause:
                 case UPSpellControllerModeGameOver:
@@ -1334,16 +1345,16 @@ using Spot = UP::SpellLayout::Spot;
                     ASSERT_NOT_REACHED();
                     break;
                 case UPSpellControllerModeAttract:
-                    [self modeTransitionFromStartToAttract];
+                    [self modeTransitionFromInitToAttract];
                     break;
                 case UPSpellControllerModeAbout:
-                    [self modeTransitionFromStartToAbout];
+                    [self modeTransitionFromInitToAbout];
                     break;
                 case UPSpellControllerModeExtras:
-                    [self modeTransitionFromStartToExtras];
+                    [self modeTransitionFromInitToExtras];
                     break;
                 case UPSpellControllerModeReady:
-                    [self modeTransitionFromStartToReady];
+                    [self modeTransitionFromInitToReady];
                     break;
             }
             break;
@@ -1362,8 +1373,8 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellControllerModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
-                case UPSpellControllerModeStart:
-                    [self modeTransitionFromAboutToStart];
+                case UPSpellControllerModeInit:
+                    [self modeTransitionFromAboutToInit];
                     break;
             }
             break;
@@ -1382,8 +1393,8 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellControllerModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
-                case UPSpellControllerModeStart:
-                    [self modeTransitionFromExtrasToStart];
+                case UPSpellControllerModeInit:
+                    [self modeTransitionFromExtrasToInit];
                     break;
             }
             break;
@@ -1391,7 +1402,7 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellControllerModeAttract: {
             switch (mode) {
                 case UPSpellControllerModeNone:
-                case UPSpellControllerModeStart:
+                case UPSpellControllerModeInit:
                 case UPSpellControllerModeAttract:
                 case UPSpellControllerModePlay:
                 case UPSpellControllerModePause:
@@ -1415,7 +1426,7 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellControllerModeReady: {
             switch (mode) {
                 case UPSpellControllerModeNone:
-                case UPSpellControllerModeStart:
+                case UPSpellControllerModeInit:
                 case UPSpellControllerModeAbout:
                 case UPSpellControllerModeExtras:
                 case UPSpellControllerModeAttract:
@@ -1435,7 +1446,7 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellControllerModePlay: {
             switch (mode) {
                 case UPSpellControllerModeNone:
-                case UPSpellControllerModeStart:
+                case UPSpellControllerModeInit:
                 case UPSpellControllerModeAbout:
                 case UPSpellControllerModeExtras:
                 case UPSpellControllerModeAttract:
@@ -1457,7 +1468,7 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellControllerModePause: {
             switch (mode) {
                 case UPSpellControllerModeNone:
-                case UPSpellControllerModeStart:
+                case UPSpellControllerModeInit:
                 case UPSpellControllerModeAttract:
                 case UPSpellControllerModeAbout:
                 case UPSpellControllerModeExtras:
@@ -1479,7 +1490,7 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellControllerModeGameOver: {
             switch (mode) {
                 case UPSpellControllerModeNone:
-                case UPSpellControllerModeStart:
+                case UPSpellControllerModeInit:
                 case UPSpellControllerModeAbout:
                 case UPSpellControllerModeExtras:
                 case UPSpellControllerModeAttract:
@@ -1499,9 +1510,7 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellControllerModeEnd: {
             switch (mode) {
                 case UPSpellControllerModeNone:
-                case UPSpellControllerModeStart:
-                case UPSpellControllerModeAbout:
-                case UPSpellControllerModeExtras:
+                case UPSpellControllerModeInit:
                 case UPSpellControllerModeAttract:
                 case UPSpellControllerModePlay:
                 case UPSpellControllerModePause:
@@ -1510,8 +1519,14 @@ using Spot = UP::SpellLayout::Spot;
                 case UPSpellControllerModeQuit:
                     ASSERT_NOT_REACHED();
                     break;
+                case UPSpellControllerModeAbout:
+                    [self modeTransitionFromEndToAbout];
+                    break;
+                case UPSpellControllerModeExtras:
+                    [self modeTransitionFromEndToExtras];
+                    break;
                 case UPSpellControllerModeReady:
-                    [self modeTransitionFromOverToReady];
+                    [self modeTransitionFromEndToReady];
                     break;
             }
             break;
@@ -1519,7 +1534,7 @@ using Spot = UP::SpellLayout::Spot;
         case UPSpellControllerModeQuit: {
             switch (mode) {
                 case UPSpellControllerModeNone:
-                case UPSpellControllerModeStart:
+                case UPSpellControllerModeInit:
                 case UPSpellControllerModeAbout:
                 case UPSpellControllerModeExtras:
                 case UPSpellControllerModeReady:
@@ -1537,12 +1552,9 @@ using Spot = UP::SpellLayout::Spot;
             break;
         }
     }
-
-    // Change the mode
-    _mode = mode;
 }
 
-- (void)modeTransitionFromNoneToStart
+- (void)modeTransitionFromNoneToInit
 {
     [self createNewGameModel];
     
@@ -1556,37 +1568,49 @@ using Spot = UP::SpellLayout::Spot;
     self.gameView.transform = layout.menu_game_view_transform();
     [self viewUpdateGameControls];
     [self viewFillBlankTileViews];
-    [self viewEnterModal:[UIColor themeDisabledAlpha]];
+    [self viewLock];
+    [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
+    [self viewUnlock];
 }
 
-- (void)modeTransitionFromStartToAttract
+- (void)modeTransitionFromInitToAttract
 {
     ASSERT_NOT_REACHED();
 }
 
-- (void)modeTransitionFromStartToAbout
+- (void)modeTransitionFromInitToAbout
 {
-    [self viewOrderInAboutWithCompletion:nil];
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
+    [self viewOrderInAboutWithCompletion:^{
+        [self viewUnlock];
+    }];
 }
 
-- (void)modeTransitionFromStartToExtras
+- (void)modeTransitionFromInitToExtras
 {
-    [self viewOrderInExtrasWithCompletion:nil];
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
+    [self viewOrderInExtrasWithCompletion:^{
+        [self viewUnlock];
+    }];
 }
 
-- (void)modeTransitionFromStartToReady
+- (void)modeTransitionFromInitToReady
 {
     ASSERT(self.model->is_blank_filled());
-    
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
     [self viewMakeReadyWithCompletion:^{
-        [self viewBloopOutTileViewsWithCompletion:nil];
+        [self viewBloopOutExistingTileViewsWithCompletion:nil];
         self.mode = UPSpellControllerModePlay;
     }];
 }
 
-- (void)modeTransitionFromAboutToStart
+- (void)modeTransitionFromAboutToInit
 {
-    [self viewLockUserInterface];
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
     
     UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Role::DialogButtonTopCenter);
     UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Role::DialogButtonTopLeft);
@@ -1594,8 +1618,7 @@ using Spot = UP::SpellLayout::Spot;
     
     CFTimeInterval duration = 0.75;
     
-    start(bloop_in(BandModeUI, @[extrasButtonMove], duration, ^(UIViewAnimatingPosition) {
-    }));
+    start(bloop_in(BandModeUI, @[extrasButtonMove], duration, nil));
     delay(BandModeDelay, 0.1, ^{
         start(bloop_in(BandModeUI, @[playButtonMove], duration - 0.1, ^(UIViewAnimatingPosition) {
         }));
@@ -1603,14 +1626,15 @@ using Spot = UP::SpellLayout::Spot;
     delay(BandModeDelay, 0.2, ^{
         start(bloop_in(BandModeUI, @[gameViewMove], duration - 0.2, ^(UIViewAnimatingPosition) {
             self.dialogMenu.aboutButton.userInteractionEnabled = YES;
-            [self viewUnlockUserInterface];
+            [self viewUnlock];
         }));
     });
 }
 
-- (void)modeTransitionFromExtrasToStart
+- (void)modeTransitionFromExtrasToInit
 {
-    [self viewLockUserInterface];
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
     
     UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Role::DialogButtonTopCenter);
     UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Role::DialogButtonTopRight);
@@ -1618,8 +1642,7 @@ using Spot = UP::SpellLayout::Spot;
     
     CFTimeInterval duration = 0.75;
     
-    start(bloop_in(BandModeUI, @[aboutButtonMove], duration, ^(UIViewAnimatingPosition) {
-    }));
+    start(bloop_in(BandModeUI, @[aboutButtonMove], duration, nil));
     delay(BandModeDelay, 0.1, ^{
         start(bloop_in(BandModeUI, @[playButtonMove], duration - 0.1, ^(UIViewAnimatingPosition) {
         }));
@@ -1627,32 +1650,39 @@ using Spot = UP::SpellLayout::Spot;
     delay(BandModeDelay, 0.2, ^{
         start(bloop_in(BandModeUI, @[gameViewMove], duration - 0.2, ^(UIViewAnimatingPosition) {
             self.dialogMenu.extrasButton.userInteractionEnabled = YES;
-            [self viewUnlockUserInterface];
+            [self viewUnlock];
         }));
     });
 }
 
 - (void)modeTransitionFromAttractToAbout
 {
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
     [self viewOrderInAboutWithCompletion:^{
         // FIXME: clean up after attract, return game view to start
+        [self viewUnlock];
     }];
 }
 
 - (void)modeTransitionFromAttractToExtras
 {
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
     [self viewOrderInExtrasWithCompletion:^{
         // FIXME: clean up after attract, return game view to start
+        [self viewUnlock];
     }];
 }
 
 - (void)modeTransitionFromAttractToReady
 {
-    [self viewBloopOutTileViewsWithCompletion:^{
+    [self viewBloopOutExistingTileViewsWithCompletion:^{
         [self createNewGameModel];
         [self viewBloopInBlankTileViewsWithCompletion:^{
+            [self viewLock];
             [self viewMakeReadyWithCompletion:^{
-                [self viewBloopOutTileViewsWithCompletion:nil];
+                [self viewBloopOutExistingTileViewsWithCompletion:nil];
                 self.mode = UPSpellControllerModePlay;
             }];
         }];
@@ -1661,6 +1691,7 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)modeTransitionFromReadyToPlay
 {
+    ASSERT(self.lockCount == 1);
     self.model->apply(Action(Opcode::PLAY));
     
     // bloop out ready message
@@ -1668,7 +1699,7 @@ using Spot = UP::SpellLayout::Spot;
     start(bloop_out(BandModeUI, @[readyMove], 0.3, nil));
     // animate game view to full alpha and fade out dialog menu
     [UIView animateWithDuration:0.1 delay:0.1 options:0 animations:^{
-        [self viewExitModal];
+        [self viewRestoreGameAlpha];
         self.dialogMenu.alpha = 0.0;
     } completion:^(BOOL finished) {
         // animate game view to full alpha and restore alpha of dialog menu
@@ -1682,7 +1713,7 @@ using Spot = UP::SpellLayout::Spot;
                 delay(BandModeDelay, 0.1, ^{
                     // start game
                     [self.gameTimer start];
-                    [self viewUnlockUserInterface];
+                    [self viewUnlock];
                 });
             }];
         });
@@ -1693,11 +1724,11 @@ using Spot = UP::SpellLayout::Spot;
 {
     [self.gameTimer stop];
     pause(BandGameAll);
-    [self viewLockUserInterface];
-    [self viewEnterModal];
+    [self viewLock];
+    [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
 
     // special modal fixups for pause
-    self.gameView.roundGameButtonPause.highlightedOverride = YES;
+    self.gameView.roundGameButtonPause.highlightedLocked = YES;
     self.gameView.roundGameButtonPause.highlighted = YES;
     self.gameView.roundGameButtonPause.alpha = [UIColor themeModalActiveAlpha];
 
@@ -1711,7 +1742,7 @@ using Spot = UP::SpellLayout::Spot;
         UPViewMoveMake(self.dialogPause.resumeButton, Role::DialogButtonDefaultResponse),
     ];
     start(bloop_in(BandModeUI, farMoves, 0.3, ^(UIViewAnimatingPosition) {
-        [self viewUnlockUserInterface];
+        [self viewUnlock];
     }));
 
     NSArray<UPViewMove *> *nearMoves = @[
@@ -1728,7 +1759,7 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)modeTransitionFromPauseToPlay
 {
-    [self viewLockUserInterface];
+    [self viewLock];
 
     [UIView animateWithDuration:0.15 delay:0.15 options:0 animations:^{
         self.dialogPause.alpha = 0.0;
@@ -1748,21 +1779,23 @@ using Spot = UP::SpellLayout::Spot;
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         [UIView animateWithDuration:0.3 animations:^{
-            [self viewExitModal];
+            self.gameView.roundGameButtonPause.highlightedLocked = NO;
+            self.gameView.roundGameButtonPause.highlighted = NO;
+            [self viewRestoreGameAlpha];
         } completion:^(BOOL finished) {
             [self.gameTimer start];
             start(BandGameDelay);
             start(BandGameUI);
-            self.gameView.roundGameButtonPause.highlightedOverride = NO;
+            self.gameView.roundGameButtonPause.highlightedLocked = NO;
             self.gameView.roundGameButtonPause.highlighted = NO;
-            [self viewUnlockUserInterface];
+            [self viewUnlock];
         }];
     }));
 }
 
 - (void)modeTransitionFromPauseToQuit
 {
-    [self viewLockUserInterface];
+    [self viewLock];
 
     cancel(BandGameDelay);
     cancel(BandGameUI);
@@ -1772,7 +1805,7 @@ using Spot = UP::SpellLayout::Spot;
     
     [self.gameView.roundGameButtonPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     [self.gameView.roundGameButtonPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    self.gameView.roundGameButtonPause.highlightedOverride = NO;
+    self.gameView.roundGameButtonPause.highlightedLocked = NO;
     self.gameView.roundGameButtonPause.highlighted = NO;
     self.gameView.roundGameButtonPause.alpha = [UIColor themeModalBackgroundAlpha];
     [self.gameView.roundGameButtonPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
@@ -1794,19 +1827,24 @@ using Spot = UP::SpellLayout::Spot;
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         delay(BandModeDelay, 0.35, ^{
-            [self setMode:UPSpellControllerModeAttract];
+            self.mode = UPSpellControllerModeAttract;
         });
     }));
 }
 
 - (void)modeTransitionFromPlayToOver
 {
+    ASSERT(self.lockCount == 0);
+
     pause(BandGameAll);
     cancel(BandGameAll);
-    [self viewLockUserInterface];
-    [self viewEnterModal:[UIColor themeModalGameOverAlpha]];
+    [self viewLock];
+    [self viewClearTileGestures];
+    [self viewSetGameAlpha:[UIColor themeModalGameOverAlpha]];
     self.gameView.timerLabel.alpha = [UIColor themeModalActiveAlpha];
     self.gameView.gameScoreLabel.alpha = [UIColor themeModalActiveAlpha];
+
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::OVER));
 
     SpellLayout &layout = SpellLayout::instance();
     self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
@@ -1823,34 +1861,36 @@ using Spot = UP::SpellLayout::Spot;
     ];
     start(bloop_in(BandModeUI, moves, 0.3, ^(UIViewAnimatingPosition) {
         delay(BandModeUI, 1.75, ^{
-            [self setMode:UPSpellControllerModeEnd];
+            self.mode = UPSpellControllerModeEnd;
         });
     }));
 }
 
 - (void)modeTransitionFromOverToEnd
 {
-    [self viewBloopOutTileViewsWithCompletion:^{
-        self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::END));
-        [self viewBloopInBlankTileViewsWithCompletion:nil];
-    }];
-    
+    ASSERT(self.lockCount == 1);
+
     SpellLayout &layout = SpellLayout::instance();
     [UIView animateWithDuration:1.0 animations:^{
         self.dialogGameOver.transform = layout.menu_game_view_transform();
         self.gameView.transform = layout.menu_game_view_transform();
-        [self viewEnterModal:[UIColor themeModalBackgroundAlpha]];
+        [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
     }];
     self.gameView.timerLabel.alpha = [UIColor themeModalActiveAlpha];
     self.gameView.gameScoreLabel.alpha = [UIColor themeModalActiveAlpha];
 
-    delay(BandModeDelay, 0.5, ^{
+    [self viewOrderOutWordScoreLabel];
+
+    [self viewBloopOutExistingTileViewsWithDuration:GameOverTileBloopDuration completion:^{
+        self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::END));
+        [self viewBloopInBlankTileViewsWithDuration:GameOverTileBloopDuration completion:nil];
+
         self.dialogMenu.hidden = NO;
         self.dialogMenu.alpha = 1;
         self.dialogMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft, Spot::OffTopNear));
         self.dialogMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
         self.dialogMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Spot::OffTopNear));
-        self.dialogMenu.playButton.highlightedOverride = NO;
+        self.dialogMenu.playButton.highlightedLocked = NO;
         self.dialogMenu.playButton.highlighted = NO;
         NSArray<UPViewMove *> *buttonMoves = @[
             UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
@@ -1859,17 +1899,38 @@ using Spot = UP::SpellLayout::Spot;
             UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogNote),
         ];
         start(bloop_in(BandModeUI, buttonMoves, 0.5, ^(UIViewAnimatingPosition) {
-            [self viewUnlockUserInterface];
+            [self viewUnlock];
         }));
-    });
+    }];
 }
 
-- (void)modeTransitionFromOverToReady
+- (void)modeTransitionFromEndToAbout
+{
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
+    [self viewOrderInExtrasWithCompletion:^{
+        [self viewOrderOutGameEnd];
+        [self viewUnlock];
+    }];
+}
+
+- (void)modeTransitionFromEndToExtras
+{
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
+    [self viewOrderInExtrasWithCompletion:^{
+        [self viewOrderOutGameEnd];
+        [self viewUnlock];
+    }];
+}
+
+- (void)modeTransitionFromEndToReady
 {
     [self createNewGameModel];
+    [self viewLock];
     [self viewFillBlankTileViews];
     [self viewMakeReadyWithCompletion:^{
-        [self viewBloopOutTileViewsWithCompletion:nil];
+        [self viewBloopOutExistingTileViewsWithCompletion:nil];
         self.mode = UPSpellControllerModePlay;
     }];
 }
@@ -1886,14 +1947,14 @@ using Spot = UP::SpellLayout::Spot;
 
     [UIView animateWithDuration:1.5 animations:^{
         self.gameView.transform = layout.menu_game_view_transform();
-        [self viewEnterModal:[UIColor themeDisabledAlpha]];
+        [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
     } completion:^(BOOL finished) {
         self.dialogMenu.hidden = NO;
         self.dialogMenu.alpha = 1;
         self.dialogMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft, Spot::OffTopNear));
         self.dialogMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
         self.dialogMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Spot::OffTopNear));
-        self.dialogMenu.playButton.highlightedOverride = NO;
+        self.dialogMenu.playButton.highlightedLocked = NO;
         self.dialogMenu.playButton.highlighted = NO;
         delay(BandModeDelay, 0.4, ^{
             NSArray<UPViewMove *> *menuButtonMoves = @[
@@ -1903,7 +1964,7 @@ using Spot = UP::SpellLayout::Spot;
             ];
             start(bloop_in(BandModeUI, menuButtonMoves, 0.25, nil));
             [self viewFillPlayerTrayWithCompletion:^{
-                [self viewUnlockUserInterface];
+                [self viewUnlock];
             }];
         });
     }];

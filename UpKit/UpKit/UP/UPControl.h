@@ -60,7 +60,7 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @property (nonatomic) BOOL autoHighlights;
 @property (nonatomic) BOOL autoSelects;
 @property (nonatomic) BOOL autoDeselects;
-@property (nonatomic) BOOL highlightedOverride;
+@property (nonatomic) BOOL highlightedLocked;
 
 @property (nonatomic) CGSize canonicalSize;
 @property (nonatomic) CGSize chargeSize;
