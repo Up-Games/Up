@@ -87,6 +87,7 @@ using Spot = UP::SpellLayout::Spot;
 @property (nonatomic) UPDialogMenu *dialogMenu;
 @property (nonatomic) NSInteger lockCount;
 @property (nonatomic) SpellModel *model;
+@property (nonatomic) BOOL modeTransitionImmediate;
 @end
 
 static constexpr CFTimeInterval DefaultBloopDuration = 0.3;
@@ -138,14 +139,53 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     self.mode = UPSpellControllerModeInit;
 
-//    self.mode = UPSpellControllerModeReady;
-//    self.mode = UPSpellControllerModePlay;
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+
+    [nc addObserverForName:UIApplicationDidBecomeActiveNotification object:nil queue:NSOperationQueue.mainQueue
+                usingBlock:^(NSNotification *note) {
+        LOG(General, "UIApplicationDidBecomeActiveNotification");
+        if (self.mode == UPSpellControllerModePlay) {
+            self.modeTransitionImmediate = YES;
+            self.mode = UPSpellControllerModePause;
+            self.modeTransitionImmediate = NO;
+        }
+    }];
+
+    [nc addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:NSOperationQueue.mainQueue
+                usingBlock:^(NSNotification *note) {
+        LOG(General, "UIApplicationWillEnterForegroundNotification");
+    }];
+    
+    [nc addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:NSOperationQueue.mainQueue
+                usingBlock:^(NSNotification *note) {
+        LOG(General, "UIApplicationWillResignActiveNotification");
+        if (self.mode == UPSpellControllerModePlay) {
+            self.modeTransitionImmediate = YES;
+            self.mode = UPSpellControllerModePause;
+            self.modeTransitionImmediate = NO;
+        }
+//        if (self.mode == UPSpellControllerModePlay) {
+//            [self.gameTimer stop];
+//            pause(BandGameAll);
+//        }
+    }];
+    [nc addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:NSOperationQueue.mainQueue
+                usingBlock:^(NSNotification *note) {
+        LOG(General, "UIApplicationDidEnterBackgroundNotification");
+        if (self.mode == UPSpellControllerModePlay) {
+            self.modeTransitionImmediate = YES;
+            self.mode = UPSpellControllerModePause;
+            self.modeTransitionImmediate = NO;
+        }
+    }];
 }
 
 - (void)dealloc
 {
     delete self.model;
 }
+
+#pragma mark - Lifecycle
 
 #pragma mark - UPSpellNavigationController
 
@@ -1872,30 +1912,41 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.gameView.roundGameButtonPause.highlightedLocked = YES;
     self.gameView.roundGameButtonPause.highlighted = YES;
     self.gameView.roundGameButtonPause.alpha = [UIColor themeModalActiveAlpha];
-
-    SpellLayout &layout = SpellLayout::instance();
-    self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
-    self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar);
-    self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse, Spot::OffBottomFar);
-
-    NSArray<UPViewMove *> *farMoves = @[
-        UPViewMoveMake(self.dialogPause.quitButton, Role::DialogButtonAlternativeResponse),
-        UPViewMoveMake(self.dialogPause.resumeButton, Role::DialogButtonDefaultResponse),
-    ];
-    start(bloop_in(BandModeUI, farMoves, DefaultBloopDuration, ^(UIViewAnimatingPosition) {
-        [self viewUnlock];
-    }));
-
-    NSArray<UPViewMove *> *nearMoves = @[
-        UPViewMoveMake(self.dialogPause.messagePathView, Role::DialogMessageHigh),
-    ];
-    start(bloop_in(BandModeUI, nearMoves, 0.25, nil));
-
-    self.dialogPause.hidden = NO;
-    self.dialogPause.alpha = 0.0;
-    [UIView animateWithDuration:0.15 animations:^{
+    
+    if (self.modeTransitionImmediate) {
+        SpellLayout &layout = SpellLayout::instance();
+        self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageHigh);
+        self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse);
+        self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse);
+        self.dialogPause.hidden = NO;
         self.dialogPause.alpha = 1.0;
-    }];
+        [self viewUnlock];
+    }
+    else {
+        SpellLayout &layout = SpellLayout::instance();
+        self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
+        self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar);
+        self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse, Spot::OffBottomFar);
+        
+        NSArray<UPViewMove *> *farMoves = @[
+            UPViewMoveMake(self.dialogPause.quitButton, Role::DialogButtonAlternativeResponse),
+            UPViewMoveMake(self.dialogPause.resumeButton, Role::DialogButtonDefaultResponse),
+        ];
+        start(bloop_in(BandModeUI, farMoves, DefaultBloopDuration, ^(UIViewAnimatingPosition) {
+            [self viewUnlock];
+        }));
+        
+        NSArray<UPViewMove *> *nearMoves = @[
+            UPViewMoveMake(self.dialogPause.messagePathView, Role::DialogMessageHigh),
+        ];
+        start(bloop_in(BandModeUI, nearMoves, 0.25, nil));
+        
+        self.dialogPause.hidden = NO;
+        self.dialogPause.alpha = 0.0;
+        [UIView animateWithDuration:0.15 animations:^{
+            self.dialogPause.alpha = 1.0;
+        }];
+    }
 }
 
 - (void)modeTransitionFromPauseToPlay

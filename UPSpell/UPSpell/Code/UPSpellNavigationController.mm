@@ -59,15 +59,15 @@ using UP::TimeSpanning::start;
     
     self.navigationBarHidden = YES;
     self.delegate = self;
-
-    UP::TimeSpanning::init();
-    UP::Lexicon::set_language(UPLexiconLanguageEnglish);
     
     [UIColor setThemeStyle:UPColorStyleLight];
     [UIColor setThemeHue:222];
-    SpellLayout &layout = SpellLayout::create_instance();
+
+    UP::TimeSpanning::init();
+    UP::Lexicon::set_language(UPLexiconLanguageEnglish);
     UP::TilePaths::create_instance();
-    
+
+    SpellLayout &layout = SpellLayout::create_instance();
     layout.set_screen_bounds([[UIScreen mainScreen] bounds]);
     layout.set_screen_scale([[UIScreen mainScreen] scale]);
     layout.set_canvas_frame([[UPSceneDelegate instance] canvasFrame]);
@@ -95,7 +95,6 @@ using UP::TimeSpanning::start;
     
     NSArray<UIViewController *> *viewControllers = @[
         self.gameController
-        //self.extrasController
     ];
     [self setViewControllers:viewControllers animated:NO];
 }

@@ -5,6 +5,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class UPSpellGameController;
+
 @interface UPSpellNavigationController : UINavigationController <UIViewControllerTransitioningDelegate>
 
 + (UPSpellNavigationController *)instance;
