@@ -5,10 +5,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "UPSpellGameMode.h"
+#import "UPMode.h"
 
 @interface UPSpellGameController : UIViewController
 
-@property (nonatomic) UP::SpellGameMode mode;
+@property (nonatomic) UP::Mode mode;
 
 @end

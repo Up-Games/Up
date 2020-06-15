@@ -71,9 +71,13 @@ using UP::role_in_word;
 using Location = UP::SpellLayout::Location;
 using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Spot;
-using SpellGameMode = UP::SpellGameMode;
+using Mode = UP::Mode;
+using ModeTransitionTable = UP::ModeTransitionTable;
 
 @interface UPSpellGameController () <UPGameTimerObserver, UPTileViewGestureDelegate>
+{
+    ModeTransitionTable m_default_transition_table;
+}
 @property (nonatomic) UPSpellGameView *gameView;
 @property (nonatomic) UPGameTimer *gameTimer;
 @property (nonatomic) BOOL showingWordScoreLabel;
@@ -138,16 +142,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.pickedView = nil;
     self.pickedPosition = TilePosition();
 
-    self.mode = SpellGameMode::Init;
+    self.mode = Mode::Init;
 
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 
     [nc addObserverForName:UIApplicationDidBecomeActiveNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
         LOG(General, "UIApplicationDidBecomeActiveNotification");
-        if (self.mode == SpellGameMode::Play) {
+        if (self.mode == Mode::Play) {
             self.modeTransitionImmediate = YES;
-            self.mode = SpellGameMode::Pause;
+            self.mode = Mode::Pause;
             self.modeTransitionImmediate = NO;
         }
     }];
@@ -160,12 +164,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [nc addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
         LOG(General, "UIApplicationWillResignActiveNotification");
-        if (self.mode == SpellGameMode::Play) {
+        if (self.mode == Mode::Play) {
             self.modeTransitionImmediate = YES;
-            self.mode = SpellGameMode::Pause;
+            self.mode = Mode::Pause;
             self.modeTransitionImmediate = NO;
         }
-//        if (self.mode == SpellGameMode::Play) {
+//        if (self.mode == Mode::Play) {
 //            [self.gameTimer stop];
 //            pause(BandGameAll);
 //        }
@@ -173,12 +177,17 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [nc addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
         LOG(General, "UIApplicationDidEnterBackgroundNotification");
-        if (self.mode == SpellGameMode::Play) {
+        if (self.mode == Mode::Play) {
             self.modeTransitionImmediate = YES;
-            self.mode = SpellGameMode::Pause;
+            self.mode = Mode::Pause;
             self.modeTransitionImmediate = NO;
         }
     }];
+    
+    m_default_transition_table = {
+        { Mode::None, Mode::Init, @selector(spellNavigationController) },
+    };
+    
 }
 
 - (void)dealloc
@@ -222,7 +231,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)gameTimerExpired:(UPGameTimer *)gameTimer
 {
-    self.mode = SpellGameMode::GameOver;
+    self.mode = Mode::GameOver;
 }
 
 - (void)gameTimerCanceled:(UPGameTimer *)gameTimer
@@ -262,37 +271,37 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)dialogPauseQuitButtonTapped:(id)sender
 {
-    ASSERT(self.mode == SpellGameMode::Pause);
-    self.mode = SpellGameMode::Quit;
+    ASSERT(self.mode == Mode::Pause);
+    self.mode = Mode::Quit;
 }
 
 - (void)dialogPauseResumeButtonTapped:(id)sender
 {
-    ASSERT(self.mode == SpellGameMode::Pause);
-    self.mode = SpellGameMode::Play;
+    ASSERT(self.mode == Mode::Pause);
+    self.mode = Mode::Play;
 }
 
 - (void)roundButtonPauseTapped:(id)sender
 {
-    ASSERT(self.mode == SpellGameMode::Play);
-    self.mode = SpellGameMode::Pause;
+    ASSERT(self.mode == Mode::Play);
+    self.mode = Mode::Pause;
 }
 
 - (void)roundButtonTrashTapped:(id)sender
 {
-    ASSERT(self.mode == SpellGameMode::Play);
+    ASSERT(self.mode == Mode::Play);
     [self applyActionDump];
 }
 
 - (void)roundButtonClearTapped:(id)sender
 {
-    ASSERT(self.mode == SpellGameMode::Play);
+    ASSERT(self.mode == Mode::Play);
     [self applyActionClear];
 }
 
 - (void)wordTrayTapped
 {
-    ASSERT(self.mode == SpellGameMode::Play);
+    ASSERT(self.mode == Mode::Play);
 
     if (self.gameView.wordTrayView.active) {
         [self applyActionSubmit];
@@ -308,7 +317,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (BOOL)beginTracking:(UPTileView *)tileView touch:(UITouch *)touch event:(UIEvent *)event
 {
-    ASSERT(self.mode == SpellGameMode::Play);
+    ASSERT(self.mode == Mode::Play);
 
     const Tile &tile = self.model->find_tile(tileView);
     if (tile.in_word_tray()) {
@@ -323,7 +332,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (BOOL)continueTracking:(UPTileView *)tileView touch:(UITouch *)touch event:(UIEvent *)event
 {
-    ASSERT(self.mode == SpellGameMode::Play);
+    ASSERT(self.mode == Mode::Play);
     return YES;
 }
 
@@ -337,7 +346,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)tileViewTapped:(UPTileView *)tileView
 {
-    ASSERT(self.mode == SpellGameMode::Play);
+    ASSERT(self.mode == Mode::Play);
     
     if (tileView.tap.state != UIGestureRecognizerStateRecognized) {
         return;
@@ -361,12 +370,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             break;
         }
         case UIGestureRecognizerStateBegan: {
-            ASSERT(self.mode == SpellGameMode::Play);
+            ASSERT(self.mode == Mode::Play);
             [self applyActionPick:self.model->find_tile(tileView)];
             break;
         }
         case UIGestureRecognizerStateChanged: {
-            ASSERT(self.mode == SpellGameMode::Play);
+            ASSERT(self.mode == Mode::Play);
             ASSERT(self.pickedView == tileView);
             SpellLayout &layout = SpellLayout::instance();
             CGPoint t = [pan translationInView:tileView];
@@ -387,7 +396,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             break;
         }
         case UIGestureRecognizerStateEnded: {
-            ASSERT(self.mode == SpellGameMode::Play);
+            ASSERT(self.mode == Mode::Play);
             ASSERT(self.pickedView == tileView);
             SpellLayout &layout = SpellLayout::instance();
             CGPoint v = [pan velocityInView:tileView];
@@ -447,7 +456,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         case UIGestureRecognizerStateCancelled: {
             if (self.pickedView) {
                 ASSERT(self.pickedView == tileView);
-                if (self.mode == SpellGameMode::GameOver) {
+                if (self.mode == Mode::GameOver) {
                     [self applyActionDropForGameOver:self.model->find_tile(tileView)];
                 }
                 else {
@@ -766,7 +775,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)applyActionQuit
 {
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::QUIT));
-    self.mode = SpellGameMode::Quit;
+    self.mode = Mode::Quit;
 }
 
 #pragma mark - View ops
@@ -1026,7 +1035,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             [tileView removeFromSuperview];
         });
         delay(BandGameDelay, count * baseDelay, ^{
-            if (self.mode == SpellGameMode::Play) {
+            if (self.mode == Mode::Play) {
                 start(animator);
             }
         });
@@ -1481,163 +1490,43 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 #pragma mark - Modes
 
-- (void)setMode:(SpellGameMode)mode
+- (void)setMode:(Mode)mode
 {
     if (_mode == mode) {
         return;
     }
-    SpellGameMode prev = _mode;
+    Mode prev = _mode;
     _mode = mode;
 
-    switch (prev) {
-        case SpellGameMode::None: {
-            switch (mode) {
-                default:
-                    ASSERT_NOT_REACHED();
-                    break;
-                case SpellGameMode::Init:
-                    [self modeTransitionFromNoneToInit];
-                    break;
-            }
-            break;
-        }
-        case SpellGameMode::Init: {
-            switch (mode) {
-                default:
-                    ASSERT_NOT_REACHED();
-                    break;
-                case SpellGameMode::Attract:
-                    [self modeTransitionFromInitToAttract];
-                    break;
-                case SpellGameMode::About:
-                    [self modeTransitionFromInitToAbout];
-                    break;
-                case SpellGameMode::Extras:
-                    [self modeTransitionFromInitToExtras];
-                    break;
-                case SpellGameMode::Ready:
-                    [self modeTransitionFromInitToReady];
-                    break;
-            }
-            break;
-        }
-        case SpellGameMode::About: {
-            switch (mode) {
-                default:
-                    ASSERT_NOT_REACHED();
-                    break;
-                case SpellGameMode::Init:
-                    [self modeTransitionFromAboutToInit];
-                    break;
-            }
-            break;
-        }
-        case SpellGameMode::Extras: {
-            switch (mode) {
-                default:
-                    ASSERT_NOT_REACHED();
-                    break;
-                case SpellGameMode::Init:
-                    [self modeTransitionFromExtrasToInit];
-                    break;
-            }
-            break;
-        }
-        case SpellGameMode::Attract: {
-            switch (mode) {
-                default:
-                    ASSERT_NOT_REACHED();
-                    break;
-                case SpellGameMode::About:
-                    [self modeTransitionFromAttractToAbout];
-                    break;
-                case SpellGameMode::Extras:
-                    [self modeTransitionFromAttractToExtras];
-                    break;
-                case SpellGameMode::Ready:
-                    [self modeTransitionFromAttractToReady];
-                    break;
-            }
-            break;
-        }
-        case SpellGameMode::Ready: {
-            switch (mode) {
-                default:
-                    ASSERT_NOT_REACHED();
-                    break;
-                case SpellGameMode::Play:
-                    [self modeTransitionFromReadyToPlay];
-                    break;
-            }
-            break;
-        }
-        case SpellGameMode::Play: {
-            switch (mode) {
-                default:
-                    ASSERT_NOT_REACHED();
-                    break;
-                case SpellGameMode::Pause:
-                    [self modeTransitionFromPlayToPause];
-                    break;
-                case SpellGameMode::GameOver:
-                    [self modeTransitionFromPlayToOver];
-                    break;
-            }
-            break;
-        }
-        case SpellGameMode::Pause: {
-            switch (mode) {
-                default:
-                    ASSERT_NOT_REACHED();
-                    break;
-                case SpellGameMode::Play:
-                    [self modeTransitionFromPauseToPlay];
-                    break;
-                case SpellGameMode::Quit:
-                    [self modeTransitionFromPauseToQuit];
-                    break;
-            }
-            break;
-        }
-        case SpellGameMode::GameOver: {
-            switch (mode) {
-                default:
-                    ASSERT_NOT_REACHED();
-                    break;
-                case SpellGameMode::End:
-                    [self modeTransitionFromOverToEnd];
-                    break;
-            }
-            break;
-        }
-        case SpellGameMode::End: {
-            switch (mode) {
-                default:
-                    ASSERT_NOT_REACHED();
-                    break;
-                case SpellGameMode::About:
-                    [self modeTransitionFromEndToAbout];
-                    break;
-                case SpellGameMode::Extras:
-                    [self modeTransitionFromEndToExtras];
-                    break;
-                case SpellGameMode::Ready:
-                    [self modeTransitionFromEndToReady];
-                    break;
-            }
-            break;
-        }
-        case SpellGameMode::Quit: {
-            switch (mode) {
-                default:
-                    ASSERT_NOT_REACHED();
-                    break;
-                case SpellGameMode::Attract:
-                    [self modeTransitionFromQuitToAttract];
-                    break;
-            }
-            break;
-        }
+    m_default_transition_table = {
+        { Mode::None,     Mode::Init,     @selector(modeTransitionFromNoneToInit) },
+        { Mode::Init,     Mode::Attract,  @selector(modeTransitionFromInitToAttract) },
+        { Mode::Init,     Mode::About,    @selector(modeTransitionFromInitToAbout) },
+        { Mode::Init,     Mode::Extras,   @selector(modeTransitionFromInitToExtras) },
+        { Mode::Init,     Mode::Ready,    @selector(modeTransitionFromInitToReady) },
+        { Mode::About,    Mode::Init,     @selector(modeTransitionFromAboutToInit) },
+        { Mode::Extras,   Mode::Init,     @selector(modeTransitionFromExtrasToInit) },
+        { Mode::Attract,  Mode::About,    @selector(modeTransitionFromAttractToAbout) },
+        { Mode::Attract,  Mode::Extras,   @selector(modeTransitionFromAttractToExtras) },
+        { Mode::Attract,  Mode::Ready,    @selector(modeTransitionFromAttractToReady) },
+        { Mode::Ready,    Mode::Play,     @selector(modeTransitionFromReadyToPlay) },
+        { Mode::Play,     Mode::Pause,    @selector(modeTransitionFromPlayToPause) },
+        { Mode::Play,     Mode::GameOver, @selector(modeTransitionFromPlayToGameOver) },
+        { Mode::Pause,    Mode::Play,     @selector(modeTransitionFromPauseToPlay) },
+        { Mode::Pause,    Mode::Quit,     @selector(modeTransitionFromPauseToQuit) },
+        { Mode::GameOver, Mode::End,      @selector(modeTransitionFromOverToEnd) },
+        { Mode::End,      Mode::About,    @selector(modeTransitionFromEndToAbout) },
+        { Mode::End,      Mode::Extras,   @selector(modeTransitionFromEndToAbout) },
+        { Mode::End,      Mode::Ready,    @selector(modeTransitionFromEndToReady) },
+        { Mode::Quit,     Mode::Attract,  @selector(modeTransitionFromQuitToAttract) },
+    };
+
+    SEL selector = UP::transition_selector(prev, mode, m_default_transition_table);
+    if (selector) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [self performSelector:selector];
+#pragma clang diagnostic pop
     }
 }
 
@@ -1690,7 +1579,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewLock];
     [self viewMakeReadyWithCompletion:^{
         [self viewBloopOutExistingTileViewsWithCompletion:nil];
-        self.mode = SpellGameMode::Play;
+        self.mode = Mode::Play;
     }];
 }
 
@@ -1770,7 +1659,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             [self viewLock];
             [self viewMakeReadyWithCompletion:^{
                 [self viewBloopOutExistingTileViewsWithCompletion:nil];
-                self.mode = SpellGameMode::Play;
+                self.mode = Mode::Play;
             }];
         }];
     }];
@@ -1935,12 +1824,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         delay(BandModeDelay, 0.35, ^{
-            self.mode = SpellGameMode::Attract;
+            self.mode = Mode::Attract;
         });
     }));
 }
 
-- (void)modeTransitionFromPlayToOver
+- (void)modeTransitionFromPlayToGameOver
 {
     cancel(BandGameAll);
 
@@ -1976,7 +1865,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ];
     start(bloop_in(BandModeUI, moves, 0.3, ^(UIViewAnimatingPosition) {
         delay(BandModeUI, 1.75, ^{
-            self.mode = SpellGameMode::End;
+            self.mode = Mode::End;
         });
     }));
 }
@@ -2048,7 +1937,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewFillUpSpellTileViews];
     [self viewMakeReadyWithCompletion:^{
         [self viewBloopOutExistingTileViewsWithCompletion:nil];
-        self.mode = SpellGameMode::Play;
+        self.mode = Mode::Play;
     }];
 }
 
