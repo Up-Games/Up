@@ -1088,9 +1088,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             continue;
         }
         view.userInteractionEnabled = NO;
-        if (self.mode == UPSpellControllerModeGameOver) {
-            LOG(General, "view lock: %@", view);
-        }
     }
     
     // This lock/unlock do-si-do cancels gestures and touches on tile views
@@ -1117,6 +1114,17 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
 }
 
+- (void)viewUnhighlightTileViews
+{
+    for (auto &tile : self.model->tiles()) {
+        if (tile.has_view()) {
+            UPTileView *tileView = tile.view();
+            tileView.highlightedLocked = NO;
+            tileView.highlighted = NO;
+        }
+    }
+}
+    
 - (void)viewFillBlankTileViews
 {
     ASSERT(self.model->is_blank_filled());
@@ -1920,19 +1928,19 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromPlayToOver
 {
+    cancel(BandGameAll);
+
     ASSERT(self.lockCount == 0);
+
+    [self viewUpdateGameControls];
 
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::OVER));
 
-    pause(BandGameAll);
-    cancel(BandGameAll);
-
     [self viewLock];
-    
+
     [self viewClearTileGestures];
-    delay(BandModeDelay, GameOverRespositionBloopDelay, ^{
-        [self viewBloopTileViewsToPlayerTrayWithDuration:GameOverRespositionBloopDuration completion:nil];
-    });
+    [self viewUnhighlightTileViews];
+    [self viewBloopTileViewsToPlayerTrayWithDuration:GameOverRespositionBloopDuration completion:nil];
     
     [self viewSetGameAlpha:[UIColor themeModalGameOverAlpha]];
     self.gameView.timerLabel.alpha = [UIColor themeModalActiveAlpha];

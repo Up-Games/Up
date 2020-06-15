@@ -228,14 +228,10 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 - (void)stopAnimation:(BOOL)withoutFinishing
 {
-    if (self.state == UIViewAnimatingStateStopped) {
-        return;
-    }
+    ASSERT(self.state == UIViewAnimatingStateActive);
     self.running = NO;
     self.previousTick = 0;
-    if (self.state == UIViewAnimatingStateActive) {
-        self.state = UIViewAnimatingStateStopped;
-    }
+    self.state = UIViewAnimatingStateStopped;
     [[UPTicker instance] removeTicking:self];
     if (!withoutFinishing) {
         [self finishAnimationAtPosition:self.animatingPosition];

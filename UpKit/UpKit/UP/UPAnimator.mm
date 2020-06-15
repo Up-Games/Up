@@ -373,7 +373,7 @@ static uint32_t _InstanceCount;
 
 - (void)cancel
 {
-    [self stopAnimation:YES];
+    [self stopAnimation:NO];
 }
 
 @end
