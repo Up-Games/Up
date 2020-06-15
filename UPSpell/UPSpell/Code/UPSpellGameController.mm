@@ -1124,7 +1124,49 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         }
     }
 }
+
+- (void)viewFillUpSpellTileViews
+{
+    ASSERT(self.model->is_blank_filled());
     
+    [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    SpellLayout &layout = SpellLayout::instance();
+    TileIndex idx = 0;
+    for (auto &tile : self.model->tiles()) {
+        TileModel model;
+        switch (idx) {
+            case 0:
+                model = TileModel(U'U');
+                break;
+            case 1:
+                model = TileModel(U'P');
+                break;
+            case 2:
+                model = TileModel(U'S');
+                break;
+            case 3:
+                model = TileModel(U'P');
+                break;
+            case 4:
+                model = TileModel(U'E');
+                break;
+            case 5:
+                model = TileModel(U'L');
+                break;
+            case 6:
+                model = TileModel(U'L');
+                break;
+        }
+        UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
+        tile.set_view(tileView);
+        tileView.band = BandGameUI;
+        tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, idx)));
+        [self.gameView.tileContainerView addSubview:tileView];
+        idx++;
+    }
+}
+
 - (void)viewFillBlankTileViews
 {
     ASSERT(self.model->is_blank_filled());
@@ -1661,7 +1703,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     self.gameView.transform = layout.menu_game_view_transform();
     [self viewUpdateGameControls];
-    [self viewFillBlankTileViews];
+    [self viewFillUpSpellTileViews];
     [self viewLock];
     [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
     [self viewUnlock];
@@ -1792,8 +1834,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.messagePathView, Location(Role::DialogMessageHigh, Spot::OffBottomNear));
     start(bloop_out(BandModeUI, @[readyMove], 0.3, nil));
     // animate game view to full alpha and fade out dialog menu
-    [UIView animateWithDuration:0.1 delay:0.1 options:0 animations:^{
+    [UIView animateWithDuration:0.1 delay:0.2 options:0 animations:^{
         [self viewRestoreGameAlpha];
+    } completion:nil];
+    // keep the tile views alpha disabled until just before filling them with game tiles
+    self.gameView.tileContainerView.alpha = [UIColor themeDisabledAlpha];
+    [UIView animateWithDuration:0.1 delay:0.1 options:0 animations:^{
         self.dialogMenu.alpha = 0.0;
     } completion:^(BOOL finished) {
         // animate game view to full alpha and restore alpha of dialog menu
@@ -1803,6 +1849,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         self.dialogGameOver.hidden = YES;
         delay(BandModeDelay, 0.1, ^{
             // create new game model and start game
+            [self viewRestoreGameAlpha];
             [self viewFillPlayerTrayWithCompletion:^{
                 delay(BandModeDelay, 0.1, ^{
                     // start game
@@ -2011,6 +2058,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewLock];
     [self viewOrderInAboutWithCompletion:^{
         [self viewOrderOutGameEnd];
+        [self viewFillUpSpellTileViews];
         [self viewUnlock];
     }];
 }
@@ -2021,6 +2069,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewLock];
     [self viewOrderInExtrasWithCompletion:^{
         [self viewOrderOutGameEnd];
+        [self viewFillUpSpellTileViews];
         [self viewUnlock];
     }];
 }
@@ -2029,7 +2078,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     [self createNewGameModel];
     [self viewLock];
-    [self viewFillBlankTileViews];
+    [self viewFillUpSpellTileViews];
     [self viewMakeReadyWithCompletion:^{
         [self viewBloopOutExistingTileViewsWithCompletion:nil];
         self.mode = UPSpellControllerModePlay;

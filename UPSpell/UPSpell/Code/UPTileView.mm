@@ -72,7 +72,9 @@ static uint32_t _InstanceCount;
     if (glyph != UP::BlankGlyph) {
         UIBezierPath *contentPath = [UIBezierPath bezierPath];
         [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
-        [contentPath appendPath:tile_paths.tile_path_for_score(self.score)];
+        if (self.score > 0) {
+            [contentPath appendPath:tile_paths.tile_path_for_score(self.score)];
+        }
         if (self.multiplier != 1) {
             [contentPath appendPath:tile_paths.tile_path_for_multiplier(self.multiplier)];
         }
