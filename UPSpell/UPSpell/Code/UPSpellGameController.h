@@ -5,22 +5,10 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, UPSpellControllerMode) {
-    UPSpellControllerModeNone,
-    UPSpellControllerModeInit,
-    UPSpellControllerModeAbout,
-    UPSpellControllerModeExtras,
-    UPSpellControllerModeAttract,
-    UPSpellControllerModeReady,
-    UPSpellControllerModePlay,
-    UPSpellControllerModePause,
-    UPSpellControllerModeGameOver,
-    UPSpellControllerModeQuit,
-    UPSpellControllerModeEnd,
-};
+#import "UPSpellGameMode.h"
 
 @interface UPSpellGameController : UIViewController
 
-@property (nonatomic) UPSpellControllerMode mode;
+@property (nonatomic) UP::SpellGameMode mode;
 
 @end
