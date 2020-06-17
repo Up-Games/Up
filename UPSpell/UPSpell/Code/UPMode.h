@@ -11,6 +11,14 @@
 #import <UpKit/UPAssertions.h>
 #import <UpKit/UPMacros.h>
 
+typedef NS_ENUM(NSInteger, UPModeTransitionScenario) {
+    UPModeTransitionScenarioDefault,
+    UPModeTransitionScenarioDidBecomeActive,
+    UPModeTransitionScenarioWillEnterForeground,
+    UPModeTransitionScenarioWillResignActive,
+    UPModeTransitionScenarioDidEnterBackground,
+};
+
 namespace UP {
 
 enum class Mode {
@@ -60,14 +68,26 @@ UP_STATIC_INLINE const char *cstr_for(Mode mode)
 using ModeTransition = std::tuple<Mode, Mode, SEL>;
 using ModeTransitionTable = std::vector<ModeTransition>;
 
-UP_STATIC_INLINE SEL transition_selector(const Mode from_mode, const Mode to_mode, const ModeTransitionTable &table)
+//UP_STATIC_INLINE SEL transition_selector(const Mode from_mode, const Mode to_mode, const ModeTransitionTable &table)
+//{
+//    for (const auto &transition : table) {
+//        if (std::get<0>(transition) == from_mode && std::get<1>(transition) == to_mode) {
+//            return std::get<2>(transition);
+//        }
+//    }
+//    ASSERT_WITH_MESSAGE(false, "No mode transition from %d to %d", (int)from_mode, (int)to_mode);
+//    return nullptr;
+//}
+
+template <class ForwardIt>
+SEL transition_selector(const Mode from_mode, const Mode to_mode, const ForwardIt &table)
 {
     for (const auto &transition : table) {
         if (std::get<0>(transition) == from_mode && std::get<1>(transition) == to_mode) {
             return std::get<2>(transition);
         }
     }
-    ASSERT_WITH_MESSAGE(false, "No mode transition from %d to %d", (int)from_mode, (int)to_mode);
+    ASSERT_WITH_MESSAGE(false, "No mode transition from %s to %s", cstr_for(from_mode), cstr_for(to_mode));
     return nullptr;
 }
 
