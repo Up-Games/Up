@@ -81,14 +81,14 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
 @implementation UPTickingAnimator
 
-+ (UPTickingAnimator *)AnimatorInBand:(UP::Band)band duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
++ (UPTickingAnimator *)animatorInBand:(UP::Band)band duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion
 {
-    return [self AnimatorInBand:band duration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO
+    return [self animatorInBand:band duration:duration unitFunction:unitFunction repeatCount:1 rebounds:NO
         applier:applier completion:completion];
 }
 
-+ (UPTickingAnimator *)AnimatorInBand:(UP::Band)band duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
++ (UPTickingAnimator *)animatorInBand:(UP::Band)band duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     repeatCount:(NSUInteger)repeatCount rebounds:(BOOL)rebounds applier:(UPTickingAnimatorApplier)applier
         completion:(UPTickingAnimatorCompletion)completion
 {

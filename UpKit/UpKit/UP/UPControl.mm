@@ -119,6 +119,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 {
     self = [super initWithFrame:frame];
     self.multipleTouchEnabled = NO;
+    self.exclusiveTouch = YES;
     self.autoHighlights = YES;
     self.previousState = UPControlStateInvalid;
     self.state = UPControlStateNormal;

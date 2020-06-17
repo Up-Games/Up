@@ -100,7 +100,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 @end
 
 static constexpr CFTimeInterval DefaultBloopDuration = 0.3;
-static constexpr CFTimeInterval DefaultTileSlideDuration = 0.15;
+static constexpr CFTimeInterval DefaultTileSlideDuration = 0.2;
 static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
 static constexpr CFTimeInterval GameOverRespositionBloopDelay = 0.4;
 static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
@@ -306,6 +306,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)tileViewTapped:(UPTileView *)tileView
 {
     ASSERT(self.mode == Mode::Play);
+    ASSERT(tileView.tap.state != UIGestureRecognizerStateCancelled);
     
     if (tileView.tap.state != UIGestureRecognizerStateRecognized) {
         return;
@@ -330,6 +331,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         }
         case UIGestureRecognizerStateBegan: {
             ASSERT(self.mode == Mode::Play);
+            LOG(General, "began: %@", tileView);
             [self applyActionPick:self.model->find_tile(tileView)];
             break;
         }
@@ -476,14 +478,20 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, tile.position(), word_pos));
 
     if (wordTrayTilesNeedMoves) {
-        cancel(BandGameUITile);
-        NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
-        for (UPTileView *tileView in wordTrayTileViews) {
-            Tile &tile = self.model->find_tile(tileView);
+//        SpellLayout &layout = SpellLayout::instance();
+//        cancel(BandGameUITile);
+//        NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
+//        cancel(BandGameUITile);
+        for (UPTileView *wordTrayTileView in wordTrayTileViews) {
+            cancel(@[wordTrayTileView], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
+            Tile &tile = self.model->find_tile(wordTrayTileView);
             ASSERT(tile.position().in_word_tray());
-            [moves addObject:UPViewMoveMake(tileView, role_in_word(tile.position().index(), self.model->word_length()))];
+            UPViewMove *move = UPViewMoveMake(wordTrayTileView, role_in_word(tile.position().index(), self.model->word_length()));
+            start(UP::TimeSpanning::slide(BandGameUI, @[move], DefaultTileSlideDuration, nil));
+//            wordTrayTileView.center = layout.center_for(role_in_word(tile.position().index(), self.model->word_length()));
+//            [moves addObject:UPViewMoveMake(wordTrayTileView, role_in_word(tile.position().index(), self.model->word_length()))];
         }
-        start(UP::TimeSpanning::slide(BandGameUI, moves, DefaultTileSlideDuration, nil));
+//        start(UP::TimeSpanning::slide(BandGameUITile, moves, DefaultTileSlideDuration, nil));
     }
     
     UPTileView *tileView = tile.view();
@@ -538,6 +546,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT_NPOS(self.pickedPosition);
 
     cancel(BandGameAll);
+    cancel(@[tile.view()], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
+
     [self viewOrderOutWordScoreLabel];
 
     UPTileView *tileView = tile.view();
@@ -569,6 +579,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT_POS(self.pickedPosition);
 
     cancel(BandGameDelay);
+    cancel(@[tile.view()], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
 
     TilePosition hover_pos = [self calculateHoverPosition:tile];
     ASSERT_POS(hover_pos);
@@ -585,6 +596,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT_POS(self.pickedPosition);
 
     cancel(BandGameDelay);
+    cancel(@[tile.view()], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
 
     const State &state = self.model->back_state();
     if (state.action().opcode() != SpellModel::Opcode::HOVER) {
@@ -1018,7 +1030,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             const TileModel &model = tile.model();
             UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
             tile.set_view(tileView);
-            tileView.band = BandGameUI;
+            tileView.band = UP::BandGameUIColor;
             tileView.gestureDelegate = self;
             Role role = role_in_player_tray(TilePosition(TileTray::Player, idx));
             tileView.frame = layout.frame_for(Location(role, Spot::OffBottomNear));

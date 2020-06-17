@@ -15,6 +15,16 @@ namespace UP {
     static constexpr CGFloat NotACoordinate = std::numeric_limits<CGFloat>::quiet_NaN();
 }
 
+typedef NS_OPTIONS(NSInteger, UPAnimatorType) {
+    UPAnimatorTypeNone       = 0,
+    UPAnimatorTypeBloopIn    = 1 << 0,
+    UPAnimatorTypeBloopOut   = 1 << 1,
+    UPAnimatorTypeFade       = 1 << 2,
+    UPAnimatorTypeShake      = 1 << 3,
+    UPAnimatorTypeSlide      = 1 << 4,
+    UPAnimatorTypeSetColor   = 1 << 5,
+};
+
 @interface UPAnimator : NSObject <UIViewAnimating, UPTimeSpanning>
 
 + (UPAnimator *)bloopInAnimatorInBand:(UP::Band)band moves:(NSArray<UPViewMove *> *)moves duration:(CFTimeInterval)duration
@@ -38,15 +48,16 @@ namespace UP {
 
 // UPAnimator
 
+@property (nonatomic, readonly) UPAnimatorType type;
 @property (nonatomic, readonly) NSArray<UIView *> *views;
 - (instancetype)init NS_UNAVAILABLE;
 
 // UIViewAnimating
 
-@property(nonatomic, readonly) UIViewAnimatingState state;
-@property(nonatomic, readonly, getter=isRunning) BOOL running;
-@property(nonatomic, getter=isReversed) BOOL reversed;
-@property(nonatomic) CGFloat fractionComplete;
+@property (nonatomic, readonly) UIViewAnimatingState state;
+@property (nonatomic, readonly, getter=isRunning) BOOL running;
+@property (nonatomic, getter=isReversed) BOOL reversed;
+@property (nonatomic) CGFloat fractionComplete;
 
 - (void)startAnimation;
 - (void)startAnimationAfterDelay:(NSTimeInterval)delay;
@@ -55,8 +66,8 @@ namespace UP {
 - (void)finishAnimationAtPosition:(UIViewAnimatingPosition)finalPosition;
 
 // UPTimeSpanning
-@property(nonatomic, readonly) UP::Band band;
-@property(nonatomic, readonly) uint32_t serialNumber;
+@property (nonatomic, readonly) UP::Band band;
+@property (nonatomic, readonly) uint32_t serialNumber;
 - (void)start;
 - (void)pause;
 - (void)reset;

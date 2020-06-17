@@ -167,6 +167,30 @@ void cancel(UP::Band band)
     }
 }
 
+void cancel(NSArray<UIView *> *views, uint32_t type)
+{
+    for (auto it = g_map->begin(); it != g_map->end();) {
+        NSObject<UPTimeSpanning> *obj = it->second;
+        if (![obj isKindOfClass:[UPAnimator class]]) {
+            continue;
+        }
+        UPAnimator *animator = (UPAnimator *)obj;
+        if ((animator.type & type) && [views isEqualToArray:animator.views]) {
+            NSObject<UPTimeSpanning> *ref = obj;
+            uint32_t serial_number = obj.serialNumber;
+            it = g_map->erase(it);
+            [obj cancel];
+#if !LOG_DISABLED
+            LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
+#endif
+            ref = nil;
+        }
+        else {
+            ++it;
+        }
+    }
+}
+
 void cancel_all()
 {
     for (const auto &it : *g_map) {

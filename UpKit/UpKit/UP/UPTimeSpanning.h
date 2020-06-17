@@ -48,6 +48,7 @@ void cancel(NSObject<UPTimeSpanning> *);
 void cancel(uint32_t);
 void cancel(NSArray<UIView *> *);
 void cancel(UP::Band);
+void cancel(NSArray<UIView *> *, uint32_t animator_type);
 void cancel_all();
 
 void pause(NSObject<UPTimeSpanning> *);

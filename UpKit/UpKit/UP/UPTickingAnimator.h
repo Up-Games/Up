@@ -16,10 +16,10 @@ typedef void (^UPTickingAnimatorCompletion)(UPTickingAnimator *animator, UIViewA
 
 @interface UPTickingAnimator : NSObject <UIViewAnimating, UPTicking>
 
-+ (UPTickingAnimator *)AnimatorInBand:(UP::Band)band duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
++ (UPTickingAnimator *)animatorInBand:(UP::Band)band duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion;
 
-+ (UPTickingAnimator *)AnimatorInBand:(UP::Band)band duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
++ (UPTickingAnimator *)animatorInBand:(UP::Band)band duration:(CFTimeInterval)duration unitFunction:(UPUnitFunction *)unitFunction
     repeatCount:(NSUInteger)repeatCount rebounds:(BOOL)rebounds
         applier:(UPTickingAnimatorApplier)applier completion:(UPTickingAnimatorCompletion)completion;
 

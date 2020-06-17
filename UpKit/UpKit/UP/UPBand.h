@@ -15,6 +15,7 @@ static constexpr Band BandGameAll = "game.*";
 static constexpr Band BandGameDelay = "game.delay";
 static constexpr Band BandGameUI = "game.ui";
 static constexpr Band BandGameUITile = "game.ui.tile";
+static constexpr Band BandGameUIColor = "game.ui.color";
 static constexpr Band BandModeAll = "mode.*";
 static constexpr Band BandModeDelay = "mode.delay";
 static constexpr Band BandModeUI = "mode.ui";
