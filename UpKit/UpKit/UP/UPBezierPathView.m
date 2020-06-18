@@ -11,33 +11,9 @@
 @interface UPBezierPathView ()
 @property (nonatomic, readwrite) CGAffineTransform pathTransform;
 @property (nonatomic) UIBezierPath *effectivePath;
-@property (nonatomic) BOOL needsPathUpdate;
 @end
 
 @implementation UPBezierPathView
-
-static NSMutableSet *_PathsNeedingUpdateSet;
-
-+ (void)initialize
-{
-    // support for calling -setNeedsPathUpdate.
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _PathsNeedingUpdateSet = [NSMutableSet set];
-        CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(NULL, kCFRunLoopBeforeWaiting, YES, 0,
-            ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) {
-                if (_PathsNeedingUpdateSet.count) {
-                    NSSet *set = [_PathsNeedingUpdateSet copy];
-                    [_PathsNeedingUpdateSet removeAllObjects];
-                    for (UPBezierPathView *view in set) {
-                        [view updatePath];
-                    }
-                }
-            }
-        );
-        CFRunLoopAddObserver(CFRunLoopGetMain(), observer, kCFRunLoopCommonModes);
-    });
-}
 
 + (Class)layerClass
 {
@@ -64,13 +40,13 @@ static NSMutableSet *_PathsNeedingUpdateSet;
 - (void)setPath:(UIBezierPath *)path
 {
     _path = path;
-    [self setNeedsPathUpdate];
+    [self setNeedsUpdate];
 }
 
 - (void)setCanonicalSize:(CGSize)canonicalSize
 {
     _canonicalSize = canonicalSize;
-    [self setNeedsPathUpdate];
+    [self setNeedsUpdate];
 }
 
 @dynamic shapeLayer;
@@ -131,15 +107,15 @@ static NSMutableSet *_PathsNeedingUpdateSet;
 
 #pragma mark - Geometry and Layout
 
-- (void)setNeedsPathUpdate
+- (void)setNeedsUpdate
 {
-    [_PathsNeedingUpdateSet addObject:self];
+    [[UPNeedsUpdater instance] setNeedsUpdate:self order:UPNeedsUpdaterOrderSecond];
 }
 
 - (void)setNeedsLayout
 {
     [super setNeedsLayout];
-    self.needsPathUpdate = YES;
+    [self setNeedsUpdate];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size
@@ -150,16 +126,16 @@ static NSMutableSet *_PathsNeedingUpdateSet;
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    [self setNeedsPathUpdate];
+    [self setNeedsUpdate];
 }
 
 - (void)setBounds:(CGRect)bounds
 {
     [super setBounds:bounds];
-    [self setNeedsPathUpdate];
+    [self setNeedsUpdate];
 }
 
-- (void)updatePath
+- (void)update
 {
     if (!self.path) {
         self.effectivePath = nil;

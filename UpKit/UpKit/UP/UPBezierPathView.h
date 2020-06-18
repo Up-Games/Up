@@ -5,7 +5,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UPBezierPathView : UIView
+#import <UpKit/UPNeedsUpdater.h>
+
+@interface UPBezierPathView : UIView <UPNeedsUpdatable>
 @property (nonatomic) UIBezierPath *path;
 @property (nonatomic) CGSize canonicalSize; // size used for scaling
 @property (nonatomic, readonly) CGAffineTransform pathTransform;
@@ -18,7 +20,5 @@
 
 + (UPBezierPathView *)bezierPathView;
 + (UPBezierPathView *)bezierPathViewWithFrame:(CGRect)frame;
-
-- (void)setNeedsPathUpdate;
 
 @end

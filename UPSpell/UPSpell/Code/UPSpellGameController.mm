@@ -116,7 +116,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     self.gameView = [UPSpellGameView instance];
     [self.gameView.wordTrayView setTarget:self action:@selector(wordTrayTapGesture:)];
-    [self.gameView.roundGameButtonPause setTarget:self action:@selector(roundButtonPauseTapped:)];
+    [self.gameView.roundGameButtonPause setTarget:self action:@selector(roundButtonPauseTapped)];
     [self.gameView.roundGameButtonClear setTarget:self action:@selector(roundButtonClearTapped:)];
     [self.view addSubview:self.gameView];
 
@@ -259,7 +259,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self setMode:Mode::Play];
 }
 
-- (void)roundButtonPauseTapped:(UITapGestureRecognizer *)gestureRecognizer
+- (void)roundButtonPauseTapped
 {
     ASSERT(self.mode == Mode::Play);
     [self setMode:Mode::Pause];

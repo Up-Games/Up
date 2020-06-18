@@ -99,7 +99,17 @@
             }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [self.target performSelector:self.action];
+            if ([self.target respondsToSelector:self.action]) {
+                if ([NSStringFromSelector(self.action) hasSuffix:@":"]) {
+                    [self.target performSelector:self.action withObject:self];
+                }
+                else {
+                    [self.target performSelector:self.action];
+                }
+            }
+            else {
+                LOG(General, "Target does not respond to selector: %@ : %@", self.target, NSStringFromSelector(self.action));
+            }
 #pragma clang diagnostic pop
             break;
         }
