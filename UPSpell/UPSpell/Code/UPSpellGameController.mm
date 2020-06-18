@@ -766,8 +766,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     // word tray
     self.gameView.wordTrayView.active = self.model->word_in_lexicon();
-    [self.gameView.wordTrayView setNeedsControlUpdate];
-    [self.gameView.wordTrayView controlUpdate];
+    [self.gameView.wordTrayView setNeedsUpdate];
 
     // clear button
     if (self.model->word_length()) {
@@ -776,8 +775,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     else {
         [self.gameView.roundGameButtonClear setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
     }
-    [self.gameView.roundGameButtonClear setNeedsControlUpdate];
-    [self.gameView.roundGameButtonClear controlUpdate];
+    [self.gameView.roundGameButtonClear setNeedsUpdate];
 
     self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", self.model->game_score()];
 }

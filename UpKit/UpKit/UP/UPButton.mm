@@ -45,57 +45,29 @@
             break;
         }
         case UIGestureRecognizerStateBegan: {
-            if (self.autoHighlights && self.autoSelects) {
-                [self setAggregateState:(self.state | UPControlStateHighlighted | UPControlStateSelected)];
+            if (self.autoHighlights) {
+                self.highlighted = gesture.touchInside;
             }
-            else {
-                if (self.autoHighlights) {
-                    self.highlighted = gesture.touchInside;
-                }
-                if (self.autoSelects) {
-                    self.selected = gesture.touchInside;
-                }
+            if (self.autoSelects) {
+                self.selected = gesture.touchInside;
             }
             break;
         }
         case UIGestureRecognizerStateChanged: {
-            if (self.autoHighlights && self.autoSelects) {
-                if (gesture.touchInside) {
-                    [self setAggregateState:(self.state | UPControlStateHighlighted | UPControlStateSelected)];
-                }
-                else {
-                    [self setAggregateState:(self.state & ~(UPControlStateHighlighted | UPControlStateSelected))];
-                }
+            if (self.autoHighlights) {
+                self.highlighted = gesture.touchInside;
             }
-            else {
-                if (self.autoHighlights) {
-                    self.highlighted = gesture.touchInside;
-                }
-                if (self.autoSelects) {
-                    self.selected = gesture.touchInside;
-                }
+            if (self.autoSelects) {
+                self.selected = gesture.touchInside;
             }
             break;
         }
         case UIGestureRecognizerStateEnded: {
-            if (self.autoHighlights && self.autoSelects) {
-                UPControlState tmp = self.state;
-                tmp &= ~UPControlStateHighlighted;
-                if (gesture.touchInside) {
-                    tmp |= UPControlStateSelected;
-                }
-                else {
-                    tmp &= ~UPControlStateSelected;
-                }
-                [self setAggregateState:tmp];
+            if (self.autoHighlights) {
+                self.highlighted = NO;
             }
-            else {
-                if (self.autoHighlights) {
-                    self.highlighted = NO;
-                }
-                if (self.autoSelects) {
-                    self.selected = gesture.touchInside;
-                }
+            if (self.autoSelects) {
+                self.selected = gesture.touchInside;
             }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -115,16 +87,11 @@
         }
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateFailed: {
-            if (self.autoHighlights && self.autoSelects) {
-                [self setAggregateState:(self.state & ~(UPControlStateHighlighted | UPControlStateSelected))];
+            if (self.autoHighlights) {
+                self.highlighted = NO;
             }
-            else {
-                if (self.autoHighlights) {
-                    self.highlighted = NO;
-                }
-                if (self.autoSelects) {
-                    self.selected = NO;
-                }
+            if (self.autoSelects) {
+                self.selected = NO;
             }
             break;
         }

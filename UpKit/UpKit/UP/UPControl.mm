@@ -13,6 +13,7 @@
 #import "UIColor+UP.h"
 #import "UPMacros.h"
 #import "UPMath.h"
+#import "UPNeedsUpdater.h"
 #import "UPTicker.h"
 #import "UPTickingAnimator.h"
 #import "UPTimeSpanning.h"
@@ -22,7 +23,7 @@ using UP::TimeSpanning::set_color;
 
 using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 
-@interface UPControl ()
+@interface UPControl () <UPNeedsUpdatable>
 {
     std::map<NSUInteger, __strong UIBezierPath *> m_paths;
     std::map<NSUInteger, __strong UIColor *> m_colors;
@@ -43,7 +44,6 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 @property (nonatomic) uint32_t contentPathColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t auxiliaryPathColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t accentPathColorAnimatorSerialNumber;
-@property (nonatomic) BOOL needsControlUpdate;
 @property (nonatomic) BOOL touchesCancelled;
 @end
 
@@ -108,7 +108,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 - (void)setAggregateState:(UPControlState)state
 {
     _state = state;
-    [self _controlStateChanged];
+    [self setNeedsUpdate];
 }
 
 @dynamic enabled, selected, highlighted, active;
@@ -121,7 +121,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         self.state &= ~UPControlStateSelected;
     }
-    [self _controlStateChanged];
+    [self setNeedsUpdate];
 }
 
 - (BOOL)isSelected
@@ -140,7 +140,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         self.state &= ~UPControlStateHighlighted;
     }
-    [self _controlStateChanged];
+    [self setNeedsUpdate];
 }
 
 - (BOOL)isHighlighted
@@ -156,7 +156,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         self.state &= ~UPControlStateDisabled;
     }
-    [self _controlStateChanged];
+    [self setNeedsUpdate];
 }
 
 - (void)setEnabled:(BOOL)enabled
@@ -177,7 +177,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         self.state &= ~UPControlStateActive;
     }
-    [self _controlStateChanged];
+    [self setNeedsUpdate];
 }
 
 - (BOOL)isActive
@@ -191,7 +191,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     [self setSelected:NO];
     [self setHighlighted:NO];
     [self setActive:NO];
-    [self _controlStateChanged];
+    [self setNeedsUpdate];
 }
 
 - (void)setHighlighted
@@ -200,7 +200,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     [self setSelected:NO];
     [self setHighlighted:YES];
     [self setActive:NO];
-    [self _controlStateChanged];
+    [self setNeedsUpdate];
 }
 
 - (void)setDisabled
@@ -209,7 +209,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     [self setSelected:NO];
     [self setHighlighted:NO];
     [self setActive:NO];
-    [self _controlStateChanged];
+    [self setNeedsUpdate];
 }
 
 - (void)setSelected
@@ -218,7 +218,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     [self setSelected:YES];
     [self setHighlighted:NO];
     [self setActive:NO];
-    [self _controlStateChanged];
+    [self setNeedsUpdate];
 }
 
 - (void)setActive
@@ -227,12 +227,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     [self setSelected:NO];
     [self setHighlighted:NO];
     [self setActive:YES];
-    [self _controlStateChanged];
-}
-
-- (void)_controlStateChanged
-{
-    [self controlUpdate];
+    [self setNeedsUpdate];
 }
 
 #pragma mark - View reordering
@@ -315,7 +310,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = path;
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (UIBezierPath *)fillPathForState:(UPControlState)state
@@ -444,7 +439,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = path;
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (UIBezierPath *)accentPathForState:(UPControlState)state
@@ -478,7 +473,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = color;
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (UIColor *)fillColorForState:(UPControlState)state
@@ -507,7 +502,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else if (up_is_fuzzy_zero(duration)) {
         m_color_animations.erase(it);
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (CFTimeInterval)fillColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState
@@ -532,7 +527,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = color;
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (UIColor *)strokeColorForState:(UPControlState)state
@@ -561,7 +556,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else if (up_is_fuzzy_zero(duration)) {
         m_color_animations.erase(it);
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (CFTimeInterval)strokeColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState
@@ -586,7 +581,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = color;
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (UIColor *)contentColorForState:(UPControlState)state
@@ -615,7 +610,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else if (up_is_fuzzy_zero(duration)) {
         m_color_animations.erase(it);
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (CFTimeInterval)contentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState
@@ -640,7 +635,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = color;
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (UIColor *)auxiliaryColorForState:(UPControlState)state
@@ -669,7 +664,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else if (up_is_fuzzy_zero(duration)) {
         m_color_animations.erase(it);
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (CFTimeInterval)auxiliaryColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState
@@ -694,7 +689,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = color;
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (UIColor *)accentColorForState:(UPControlState)state
@@ -723,7 +718,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else if (up_is_fuzzy_zero(duration)) {
         m_color_animations.erase(it);
     }
-    [self setNeedsLayout];
+    [self setNeedsUpdate];
 }
 
 - (CFTimeInterval)accentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState
@@ -767,7 +762,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     self.contentPathView.frame = bounds;
     self.auxiliaryPathView.frame = bounds;
     self.accentPathView.frame = bounds;
-    [self controlUpdate];
+    [self setNeedsUpdate];
 }
 
 #pragma mark - Updating
@@ -787,18 +782,17 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     self.accentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
 }
 
-- (void)setNeedsControlUpdate
+- (void)setNeedsUpdate
 {
-    self.needsControlUpdate = YES;
+    [[UPNeedsUpdater instance] setNeedsUpdate:self order:UPNeedsUpdaterOrderFirst];
 }
 
-- (void)controlUpdate
+- (void)update
 {
     UPControlState state = self.state;
-    if (!self.needsControlUpdate && state == self.previousState) {
+    if (state == self.previousState) {
         return;
     }
-    self.needsControlUpdate = NO;
     
     if (self.fillPathView) {
         self.fillPathView.path = [self fillPathForState:state];
