@@ -6,6 +6,7 @@
 #import <UIKit/UIKit.h>
 
 #import <UpKit/UPButton.h>
+#import <UpKit/UPChoice.h>
 #import <UpKit/UPControl.h>
 
 namespace UP {
@@ -23,24 +24,10 @@ UIBezierPath *TextButtonFillPath();
 UIBezierPath *TextButtonStrokePath();
 UIBezierPath *WordTrayFillPath();
 UIBezierPath *WordTrayStrokePath();
-UIBezierPath *ChoiceRowLeftFillPathSelected();
-UIBezierPath *ChoiceRowRightFillPathSelected();
+UIBezierPath *ChoiceLeftFillPathSelected();
+UIBezierPath *ChoiceRightFillPathSelected();
 
 }  // namespace UP
-
-@interface UPControl (UPSpell)
-
-+ (UPControl *)choiceItemRowLeftColors;
-+ (UPControl *)choiceItemRowLeftSounds;
-+ (UPControl *)choiceItemRowLeftStats;
-+ (UPControl *)choiceItemRowLeftGameKeys;
-
-+ (UPControl *)choiceItemRowRightUpSpell;
-+ (UPControl *)choiceItemRowRightRules;
-+ (UPControl *)choiceItemRowRightLegal;
-+ (UPControl *)choiceItemRowRightThanks;
-
-@end
 
 @interface UPButton (UPSpell)
 
@@ -59,5 +46,19 @@ UIBezierPath *ChoiceRowRightFillPathSelected();
 + (UPButton *)textButtonQuit;
 + (UPButton *)textButtonResume;
 + (UPButton *)textButtonStats;
+
+@end
+
+@interface UPChoice (UPSpell)
+
++ (UPChoice *)choiceLeftColors;
++ (UPChoice *)choiceLeftSounds;
++ (UPChoice *)choiceLeftStats;
++ (UPChoice *)choiceLeftGameKeys;
+
++ (UPChoice *)choiceRightUpSpell;
++ (UPChoice *)choiceRightRules;
++ (UPChoice *)choiceRightLegal;
++ (UPChoice *)choiceRightThanks;
 
 @end

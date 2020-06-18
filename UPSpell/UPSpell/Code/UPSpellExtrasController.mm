@@ -6,7 +6,7 @@
 #import <UpKit/UIColor+UP.h>
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPButton.h>
-#import <UpKit/UPControl.h>
+#import <UpKit/UPChoice.h>
 #import <UpKit/UPTouchGestureRecognizer.h>
 
 #import "UPControl+UPSpell.h"
@@ -17,10 +17,10 @@
 
 @interface UPSpellExtrasController ()
 @property (nonatomic, readwrite) UPButton *backButton;
-@property (nonatomic, readwrite) UPControl *choiceItem1;
-@property (nonatomic, readwrite) UPControl *choiceItem2;
-@property (nonatomic, readwrite) UPControl *choiceItem3;
-@property (nonatomic, readwrite) UPControl *choiceItem4;
+@property (nonatomic, readwrite) UPChoice *choice1;
+@property (nonatomic, readwrite) UPChoice *choice2;
+@property (nonatomic, readwrite) UPChoice *choice3;
+@property (nonatomic, readwrite) UPChoice *choice4;
 @end
 
 using UP::SpellLayout;
@@ -40,29 +40,29 @@ using Spot = UP::SpellLayout::Spot;
     self.backButton.frame = layout.frame_for(Role::ChoiceBackLeft, Spot::OffLeftNear);
     [self.view addSubview:self.backButton];
 
-    self.choiceItem1 = [UPControl choiceItemRowLeftColors];
-    self.choiceItem1.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
-    self.choiceItem1.frame = layout.frame_for(Role::ChoiceItem1Left, Spot::OffLeftNear);
-    [self.choiceItem1 addGestureRecognizer:[[UPTouchGestureRecognizer alloc] initWithTarget:self action:@selector(choiceItemTapped:)]];
-    [self.view addSubview:self.choiceItem1];
+    self.choice1 = [UPChoice choiceLeftColors];
+    self.choice1.canonicalSize = SpellLayout::CanonicalChoiceSize;
+    self.choice1.frame = layout.frame_for(Role::ChoiceItem1Left, Spot::OffLeftNear);
+    [self.choice1 setTarget:self action:@selector(choiceSelected:)];
+    [self.view addSubview:self.choice1];
     
-    self.choiceItem2 = [UPControl choiceItemRowLeftSounds];
-    self.choiceItem2.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
-    self.choiceItem2.frame = layout.frame_for(Role::ChoiceItem2Left, Spot::OffLeftNear);
-    [self.choiceItem2 addGestureRecognizer:[[UPTouchGestureRecognizer alloc] initWithTarget:self action:@selector(choiceItemTapped:)]];
-    [self.view addSubview:self.choiceItem2];
+    self.choice2 = [UPChoice choiceLeftSounds];
+    self.choice2.canonicalSize = SpellLayout::CanonicalChoiceSize;
+    self.choice2.frame = layout.frame_for(Role::ChoiceItem2Left, Spot::OffLeftNear);
+    [self.choice2 setTarget:self action:@selector(choiceSelected:)];
+    [self.view addSubview:self.choice2];
     
-    self.choiceItem3 = [UPControl choiceItemRowLeftStats];
-    self.choiceItem3.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
-    self.choiceItem3.frame = layout.frame_for(Role::ChoiceItem3Left, Spot::OffLeftNear);
-    [self.choiceItem3 addGestureRecognizer:[[UPTouchGestureRecognizer alloc] initWithTarget:self action:@selector(choiceItemTapped:)]];
-    [self.view addSubview:self.choiceItem3];
+    self.choice3 = [UPChoice choiceLeftStats];
+    self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
+    self.choice3.frame = layout.frame_for(Role::ChoiceItem3Left, Spot::OffLeftNear);
+    [self.choice3 setTarget:self action:@selector(choiceSelected:)];
+    [self.view addSubview:self.choice3];
     
-    self.choiceItem4 = [UPControl choiceItemRowLeftGameKeys];
-    self.choiceItem4.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
-    self.choiceItem4.frame = layout.frame_for(Role::ChoiceItem4Left, Spot::OffLeftNear);
-    [self.choiceItem4 addGestureRecognizer:[[UPTouchGestureRecognizer alloc] initWithTarget:self action:@selector(choiceItemTapped:)]];
-    [self.view addSubview:self.choiceItem4];
+    self.choice4 = [UPChoice choiceLeftGameKeys];
+    self.choice4.canonicalSize = SpellLayout::CanonicalChoiceSize;
+    self.choice4.frame = layout.frame_for(Role::ChoiceItem4Left, Spot::OffLeftNear);
+    [self.choice4 setTarget:self action:@selector(choiceSelected:)];
+    [self.view addSubview:self.choice4];
     
     return self;
 }
@@ -74,23 +74,19 @@ using Spot = UP::SpellLayout::Spot;
 
 #pragma mark - Target / Action
 
-- (void)choiceItemTapped:(UIGestureRecognizer *)gestureRecognizer
+- (void)choiceSelected:(UPChoice *)sender
 {
-    if (gestureRecognizer.state != UIGestureRecognizerStateRecognized) {
-        return;
+    if (self.choice1 != sender) {
+        self.choice1.selected = NO;
     }
-    
-    if (self.choiceItem1 != gestureRecognizer.view) {
-        self.choiceItem1.selected = NO;
+    if (self.choice2 != sender) {
+        self.choice2.selected = NO;
     }
-    if (self.choiceItem2 != gestureRecognizer.view) {
-        self.choiceItem2.selected = NO;
+    if (self.choice3 != sender) {
+        self.choice3.selected = NO;
     }
-    if (self.choiceItem3 != gestureRecognizer.view) {
-        self.choiceItem3.selected = NO;
-    }
-    if (self.choiceItem4 != gestureRecognizer.view) {
-        self.choiceItem4.selected = NO;
+    if (self.choice4 != sender) {
+        self.choice4.selected = NO;
     }
 }
 

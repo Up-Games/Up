@@ -19,15 +19,15 @@ UIBezierPath *TextPathDialogGameOver();
 UIBezierPath *TextPathDialogPaused();
 UIBezierPath *TextPathDialogReady();
 
-UIBezierPath *TextPathChoiceRowLeftColors();
-UIBezierPath *TextPathChoiceRowLeftSounds();
-UIBezierPath *TextPathChoiceRowLeftStats();
-UIBezierPath *TextPathChoiceRowLeftGameKeys();
+UIBezierPath *TextPathChoiceLeftColors();
+UIBezierPath *TextPathChoiceLeftSounds();
+UIBezierPath *TextPathChoiceLeftStats();
+UIBezierPath *TextPathChoiceLeftGameKeys();
 
-UIBezierPath *TextPathChoiceRowRightUpSpell();
-UIBezierPath *TextPathChoiceRowRightRules();
-UIBezierPath *TextPathChoiceRowRightLegal();
-UIBezierPath *TextPathChoiceRowRightThanks();
+UIBezierPath *TextPathChoiceRightUpSpell();
+UIBezierPath *TextPathChoiceRightRules();
+UIBezierPath *TextPathChoiceRightLegal();
+UIBezierPath *TextPathChoiceRightThanks();
 
 }  // namespace UP
 

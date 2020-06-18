@@ -784,7 +784,7 @@ UIBezierPath *WordTrayStrokePath()
     return path;
 }
 
-UIBezierPath *ChoiceRowLeftFillPathSelected()
+UIBezierPath *ChoiceLeftFillPathSelected()
 {
     // checkmark
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -839,7 +839,7 @@ UIBezierPath *ChoiceRowLeftFillPathSelected()
     return path;
 }
 
-UIBezierPath *ChoiceRowRightFillPathSelected()
+UIBezierPath *ChoiceRightFillPathSelected()
 {
     // checkmark
     UIBezierPath* path = [UIBezierPath bezierPath];
@@ -898,7 +898,7 @@ UIBezierPath *ChoiceRowRightFillPathSelected()
 
 using namespace UP;
 
-@implementation UPControl (UPSpell)
+@implementation UPButton (UPSpell)
 
 + (UPButton *)roundGameButton
 {
@@ -1051,81 +1051,86 @@ using namespace UP;
     return button;
 }
 
-+ (UPControl *)choiceItemRow
+@end
+
+
+@implementation UPChoice (UPSpell)
+
++ (UPChoice *)optionsChoice
 {
-    UPControl *control = [UPControl control];
-    control.canonicalSize = SpellLayout::CanonicalChoiceRowSize;
-    [control setAccentColor:[UIColor clearColor] forState:UPControlStateNormal];
-    [control setAccentColor:[UIColor themeColorWithCategory:UPColorCategoryActiveFill] forState:UPControlStateSelected];
-    [control setAccentPath:[UIBezierPath bezierPathWithRect:up_rect_make(control.canonicalSize)] forState:UPControlStateSelected];
-    [control setAuxiliaryColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateSelected];
-    control.autoSelects = YES;
-    control.autoHighlights = NO;
-    return control;
+    UPChoice *choice = [UPChoice choice];
+    choice.canonicalSize = SpellLayout::CanonicalChoiceSize;
+    [choice setAccentColor:[UIColor clearColor] forState:UPControlStateNormal];
+    [choice setAccentColor:[UIColor themeColorWithCategory:UPColorCategoryActiveFill] forState:UPControlStateSelected];
+    [choice setAccentPath:[UIBezierPath bezierPathWithRect:up_rect_make(choice.canonicalSize)] forState:UPControlStateSelected];
+    [choice setAuxiliaryColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateSelected];
+    choice.autoSelects = YES;
+    choice.autoHighlights = NO;
+    return choice;
 }
 
-+ (UPControl *)choiceItemRowLeftColors
++ (UPChoice *)choiceLeftColors
 {
-    UPControl *control = [UPControl choiceItemRow];
-    [control setFillPath:UP::TextPathChoiceRowLeftColors()];
-    [control setAuxiliaryPath:ChoiceRowLeftFillPathSelected() forState:UPControlStateSelected];
-    return control;
+    UPChoice *choice = [UPChoice optionsChoice];
+    [choice setFillPath:UP::TextPathChoiceLeftColors()];
+    [choice setAuxiliaryPath:ChoiceLeftFillPathSelected() forState:UPControlStateSelected];
+    return choice;
 }
 
-+ (UPControl *)choiceItemRowLeftSounds
++ (UPChoice *)choiceLeftSounds
 {
-    UPControl *control = [UPControl choiceItemRow];
-    [control setFillPath:UP::TextPathChoiceRowLeftSounds()];
-    [control setAuxiliaryPath:ChoiceRowLeftFillPathSelected() forState:UPControlStateSelected];
-    return control;
+    UPChoice *choice = [UPChoice optionsChoice];
+    [choice setFillPath:UP::TextPathChoiceLeftSounds()];
+    [choice setAuxiliaryPath:ChoiceLeftFillPathSelected() forState:UPControlStateSelected];
+    return choice;
 }
 
-+ (UPControl *)choiceItemRowLeftStats
++ (UPChoice *)choiceLeftStats
 {
-    UPControl *control = [UPControl choiceItemRow];
-    [control setFillPath:UP::TextPathChoiceRowLeftStats()];
-    [control setAuxiliaryPath:ChoiceRowLeftFillPathSelected() forState:UPControlStateSelected];
-    return control;
+    UPChoice *choice = [UPChoice optionsChoice];
+    [choice setFillPath:UP::TextPathChoiceLeftStats()];
+    [choice setAuxiliaryPath:ChoiceLeftFillPathSelected() forState:UPControlStateSelected];
+    return choice;
 }
 
-+ (UPControl *)choiceItemRowLeftGameKeys
++ (UPChoice *)choiceLeftGameKeys
 {
-    UPControl *control = [UPControl choiceItemRow];
-    [control setFillPath:UP::TextPathChoiceRowLeftGameKeys()];
-    [control setAuxiliaryPath:ChoiceRowLeftFillPathSelected() forState:UPControlStateSelected];
-    return control;
+    UPChoice *choice = [UPChoice optionsChoice];
+    [choice setFillPath:UP::TextPathChoiceLeftGameKeys()];
+    [choice setAuxiliaryPath:ChoiceLeftFillPathSelected() forState:UPControlStateSelected];
+    return choice;
 }
 
-+ (UPControl *)choiceItemRowRightUpSpell
++ (UPChoice *)choiceRightUpSpell
 {
-    UPControl *control = [UPControl choiceItemRow];
-    [control setFillPath:UP::TextPathChoiceRowRightUpSpell()];
-    [control setAuxiliaryPath:ChoiceRowRightFillPathSelected() forState:UPControlStateSelected];
-    return control;
+    UPChoice *choice = [UPChoice optionsChoice];
+    [choice setFillPath:UP::TextPathChoiceRightUpSpell()];
+    [choice setAuxiliaryPath:ChoiceRightFillPathSelected() forState:UPControlStateSelected];
+    return choice;
 }
 
-+ (UPControl *)choiceItemRowRightRules
++ (UPChoice *)choiceRightRules
 {
-    UPControl *control = [UPControl choiceItemRow];
-    [control setFillPath:UP::TextPathChoiceRowRightRules()];
-    [control setAuxiliaryPath:ChoiceRowRightFillPathSelected() forState:UPControlStateSelected];
-    return control;
+    UPChoice *choice = [UPChoice optionsChoice];
+    [choice setFillPath:UP::TextPathChoiceRightRules()];
+    [choice setAuxiliaryPath:ChoiceRightFillPathSelected() forState:UPControlStateSelected];
+    return choice;
 }
 
-+ (UPControl *)choiceItemRowRightLegal
++ (UPChoice *)choiceRightLegal
 {
-    UPControl *control = [UPControl choiceItemRow];
-    [control setFillPath:UP::TextPathChoiceRowRightLegal()];
-    [control setAuxiliaryPath:ChoiceRowRightFillPathSelected() forState:UPControlStateSelected];
-    return control;
+    UPChoice *choice = [UPChoice optionsChoice];
+    [choice setFillPath:UP::TextPathChoiceRightLegal()];
+    [choice setAuxiliaryPath:ChoiceRightFillPathSelected() forState:UPControlStateSelected];
+    return choice;
 }
 
-+ (UPControl *)choiceItemRowRightThanks
++ (UPChoice *)choiceRightThanks
 {
-    UPControl *control = [UPControl choiceItemRow];
-    [control setFillPath:UP::TextPathChoiceRowRightThanks()];
-    [control setAuxiliaryPath:ChoiceRowRightFillPathSelected() forState:UPControlStateSelected];
-    return control;
+    UPChoice *choice = [UPChoice optionsChoice];
+    [choice setFillPath:UP::TextPathChoiceRightThanks()];
+    [choice setAuxiliaryPath:ChoiceRightFillPathSelected() forState:UPControlStateSelected];
+    return choice;
 }
 
 @end

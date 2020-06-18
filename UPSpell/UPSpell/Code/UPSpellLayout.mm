@@ -567,7 +567,7 @@ void SpellLayout::calculate_game_locations()
 void SpellLayout::calculate_choice_locations()
 {
     CGSize back_button_size = up_size_scaled(CanonicalRoundBackButtonSize, layout_scale());
-    CGSize choice_item_row_size = up_size_scaled(CanonicalChoiceRowSize, layout_scale());
+    CGSize choice_item_row_size = up_size_scaled(CanonicalChoiceSize, layout_scale());
     CGSize text_button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
 
     CGRect back_layout_frame = layout_aspect_rect(CanonicalChoiceBackButtonRowLayoutFrame);
@@ -578,19 +578,19 @@ void SpellLayout::calculate_choice_locations()
     calculate_and_set_locations(Role::ChoiceTitleLeft, up_left_aligned_rect(text_button_size, title_layout_frame));
     calculate_and_set_locations(Role::ChoiceTitleRight, up_right_aligned_rect(text_button_size, title_layout_frame));
 
-    CGRect item_row1_layout_frame = layout_aspect_rect(CanonicalChoiceItemRow1LayoutFrame);
+    CGRect item_row1_layout_frame = layout_aspect_rect(CanonicalChoice1LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem1Left, up_left_aligned_rect(choice_item_row_size, item_row1_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem1Right, up_right_aligned_rect(choice_item_row_size, item_row1_layout_frame));
 
-    CGRect item_row2_layout_frame = layout_aspect_rect(CanonicalChoiceItemRow2LayoutFrame);
+    CGRect item_row2_layout_frame = layout_aspect_rect(CanonicalChoice2LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem2Left, up_left_aligned_rect(choice_item_row_size, item_row2_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem2Right, up_right_aligned_rect(choice_item_row_size, item_row2_layout_frame));
 
-    CGRect item_row3_layout_frame = layout_aspect_rect(CanonicalChoiceItemRow3LayoutFrame);
+    CGRect item_row3_layout_frame = layout_aspect_rect(CanonicalChoice3LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem3Left, up_left_aligned_rect(choice_item_row_size, item_row3_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem3Right, up_right_aligned_rect(choice_item_row_size, item_row3_layout_frame));
 
-    CGRect item_row4_layout_frame = layout_aspect_rect(CanonicalChoiceItemRow4LayoutFrame);
+    CGRect item_row4_layout_frame = layout_aspect_rect(CanonicalChoice4LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem4Left, up_left_aligned_rect(choice_item_row_size, item_row4_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem4Right, up_right_aligned_rect(choice_item_row_size, item_row4_layout_frame));
 }

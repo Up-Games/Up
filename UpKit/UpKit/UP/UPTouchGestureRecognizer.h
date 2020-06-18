@@ -6,4 +6,7 @@
 #import <UpKit/UpKit.h>
 
 @interface UPTouchGestureRecognizer : UPGestureRecognizer
+
++ (UPTouchGestureRecognizer *)gestureWithTarget:(id)target action:(SEL)action;
+
 @end

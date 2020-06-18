@@ -880,7 +880,7 @@ UIBezierPath *TextPathDialogReady()
     return path;
 }
 
-UIBezierPath *TextPathChoiceRowLeftColors()
+UIBezierPath *TextPathChoiceLeftColors()
 {
     // C
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -986,7 +986,7 @@ UIBezierPath *TextPathChoiceRowLeftColors()
     return path;
 }
 
-UIBezierPath *TextPathChoiceRowLeftSounds()
+UIBezierPath *TextPathChoiceLeftSounds()
 {
     // S
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -1095,7 +1095,7 @@ UIBezierPath *TextPathChoiceRowLeftSounds()
     return path;
 }
 
-UIBezierPath *TextPathChoiceRowLeftStats()
+UIBezierPath *TextPathChoiceLeftStats()
 {
     // S
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -1182,7 +1182,7 @@ UIBezierPath *TextPathChoiceRowLeftStats()
     return path;
 }
 
-UIBezierPath *TextPathChoiceRowLeftGameKeys()
+UIBezierPath *TextPathChoiceLeftGameKeys()
 {
     // G
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -1327,7 +1327,7 @@ UIBezierPath *TextPathChoiceRowLeftGameKeys()
     return path;
 }
 
-UIBezierPath *TextPathChoiceRowRightUpSpell()
+UIBezierPath *TextPathChoiceRightUpSpell()
 {
     // U
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -1441,7 +1441,7 @@ UIBezierPath *TextPathChoiceRowRightUpSpell()
     return path;
 }
 
-UIBezierPath *TextPathChoiceRowRightRules()
+UIBezierPath *TextPathChoiceRightRules()
 {
     // R
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -1530,7 +1530,7 @@ UIBezierPath *TextPathChoiceRowRightRules()
     return path;
 }
 
-UIBezierPath *TextPathChoiceRowRightLegal()
+UIBezierPath *TextPathChoiceRightLegal()
 {
     // L
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -1609,7 +1609,7 @@ UIBezierPath *TextPathChoiceRowRightLegal()
     return path;
 }
 
-UIBezierPath *TextPathChoiceRowRightThanks()
+UIBezierPath *TextPathChoiceRightThanks()
 {
     // T
     UIBezierPath *path = [UIBezierPath bezierPath];

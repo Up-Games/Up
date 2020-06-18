@@ -128,13 +128,13 @@ public:
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
     static inline constexpr CGFloat CanonicalOffscreenNearFrameFactor = 1.2;
 
-    static inline constexpr CGRect CanonicalChoiceBackButtonRowLayoutFrame = {  20,  30,    960, 64 };
-    static inline constexpr CGRect CanonicalChoiceTitleLayoutFrame =         {  83,  26,    834, 76 };
-    static inline constexpr CGRect CanonicalChoiceItemRow1LayoutFrame =      {  30, 120,    940, 76 };
-    static inline constexpr CGRect CanonicalChoiceItemRow2LayoutFrame =      {  30, 204,    940, 76 };
-    static inline constexpr CGRect CanonicalChoiceItemRow3LayoutFrame =      {  30, 288,    940, 76 };
-    static inline constexpr CGRect CanonicalChoiceItemRow4LayoutFrame =      {  30, 372,    940, 76 };
-    static inline constexpr CGSize CanonicalChoiceRowSize =                              {  300, 76 };
+    static inline constexpr CGRect CanonicalChoiceBackButtonRowLayoutFrame = {  20,  30, 960, 64 };
+    static inline constexpr CGRect CanonicalChoiceTitleLayoutFrame =         {  83,  26, 834, 76 };
+    static inline constexpr CGRect CanonicalChoice1LayoutFrame =             {  30, 120, 940, 76 };
+    static inline constexpr CGRect CanonicalChoice2LayoutFrame =             {  30, 204, 940, 76 };
+    static inline constexpr CGRect CanonicalChoice3LayoutFrame =             {  30, 288, 940, 76 };
+    static inline constexpr CGRect CanonicalChoice4LayoutFrame =             {  30, 372, 940, 76 };
+    static inline constexpr CGSize CanonicalChoiceSize =                              {  300, 76 };
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();

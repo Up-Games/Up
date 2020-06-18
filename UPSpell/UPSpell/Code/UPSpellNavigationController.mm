@@ -193,10 +193,10 @@ using UP::TimeSpanning::start;
     delay(BandModeDelay, 0.7, ^{
         NSArray <UPViewMove *> *itemMoves = @[
             UPViewMoveMake(extrasController.backButton, Role::ChoiceBackLeft),
-            UPViewMoveMake(extrasController.choiceItem1, Role::ChoiceItem1Left),
-            UPViewMoveMake(extrasController.choiceItem2, Role::ChoiceItem2Left),
-            UPViewMoveMake(extrasController.choiceItem3, Role::ChoiceItem3Left),
-            UPViewMoveMake(extrasController.choiceItem4, Role::ChoiceItem4Left),
+            UPViewMoveMake(extrasController.choice1, Role::ChoiceItem1Left),
+            UPViewMoveMake(extrasController.choice2, Role::ChoiceItem2Left),
+            UPViewMoveMake(extrasController.choice3, Role::ChoiceItem3Left),
+            UPViewMoveMake(extrasController.choice4, Role::ChoiceItem4Left),
         ];
         start(bloop_in(BandModeUI, itemMoves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
             [transitionContext completeTransition:YES];
@@ -236,10 +236,10 @@ using UP::TimeSpanning::start;
 
     NSArray <UPViewMove *> *moves = @[
         UPViewMoveMake(extrasController.backButton, Role::ChoiceBackLeft, Spot::OffLeftNear),
-        UPViewMoveMake(extrasController.choiceItem1, Role::ChoiceItem1Left, Spot::OffLeftNear),
-        UPViewMoveMake(extrasController.choiceItem2, Role::ChoiceItem2Left, Spot::OffLeftNear),
-        UPViewMoveMake(extrasController.choiceItem3, Role::ChoiceItem3Left, Spot::OffLeftNear),
-        UPViewMoveMake(extrasController.choiceItem4, Role::ChoiceItem4Left, Spot::OffLeftNear),
+        UPViewMoveMake(extrasController.choice1, Role::ChoiceItem1Left, Spot::OffLeftNear),
+        UPViewMoveMake(extrasController.choice2, Role::ChoiceItem2Left, Spot::OffLeftNear),
+        UPViewMoveMake(extrasController.choice3, Role::ChoiceItem3Left, Spot::OffLeftNear),
+        UPViewMoveMake(extrasController.choice4, Role::ChoiceItem4Left, Spot::OffLeftNear),
     ];
     start(bloop_out(BandModeUI, moves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
         [transitionContext completeTransition:YES];
@@ -279,10 +279,10 @@ using UP::TimeSpanning::start;
     delay(BandModeDelay, 0.7, ^{
         NSArray <UPViewMove *> *itemMoves = @[
             UPViewMoveMake(aboutController.backButton, Role::ChoiceBackRight),
-            UPViewMoveMake(aboutController.choiceItem1, Role::ChoiceItem1Right),
-            UPViewMoveMake(aboutController.choiceItem2, Role::ChoiceItem2Right),
-            UPViewMoveMake(aboutController.choiceItem3, Role::ChoiceItem3Right),
-            UPViewMoveMake(aboutController.choiceItem4, Role::ChoiceItem4Right),
+            UPViewMoveMake(aboutController.choice1, Role::ChoiceItem1Right),
+            UPViewMoveMake(aboutController.choice2, Role::ChoiceItem2Right),
+            UPViewMoveMake(aboutController.choice3, Role::ChoiceItem3Right),
+            UPViewMoveMake(aboutController.choice4, Role::ChoiceItem4Right),
         ];
         start(bloop_in(BandModeUI, itemMoves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
             [transitionContext completeTransition:YES];
@@ -322,10 +322,10 @@ using UP::TimeSpanning::start;
     
     NSArray <UPViewMove *> *moves = @[
         UPViewMoveMake(aboutController.backButton, Role::ChoiceBackLeft, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choiceItem1, Role::ChoiceItem1Left, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choiceItem2, Role::ChoiceItem2Left, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choiceItem3, Role::ChoiceItem3Left, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choiceItem4, Role::ChoiceItem4Left, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choice1, Role::ChoiceItem1Left, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choice2, Role::ChoiceItem2Left, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choice3, Role::ChoiceItem3Left, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choice4, Role::ChoiceItem4Left, Spot::OffRightNear),
     ];
     start(bloop_out(BandModeUI, moves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
         [transitionContext completeTransition:YES];

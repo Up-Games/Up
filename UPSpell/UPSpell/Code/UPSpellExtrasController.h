@@ -6,12 +6,12 @@
 #import <UIKit/UIKit.h>
 
 @class UPButton;
-@class UPControl;
+@class UPChoice;
 
 @interface UPSpellExtrasController : UIViewController
 @property (nonatomic, readonly) UPButton *backButton;
-@property (nonatomic, readonly) UPControl *choiceItem1;
-@property (nonatomic, readonly) UPControl *choiceItem2;
-@property (nonatomic, readonly) UPControl *choiceItem3;
-@property (nonatomic, readonly) UPControl *choiceItem4;
+@property (nonatomic, readonly) UPChoice *choice1;
+@property (nonatomic, readonly) UPChoice *choice2;
+@property (nonatomic, readonly) UPChoice *choice3;
+@property (nonatomic, readonly) UPChoice *choice4;
 @end
