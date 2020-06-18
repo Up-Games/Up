@@ -18,9 +18,9 @@ using UP::SpellLayout;
 
 @interface UPDialogMenu ()
 @property (nonatomic, readwrite) UPBezierPathView *messagePathView;
-@property (nonatomic, readwrite) UPControl *extrasButton;
-@property (nonatomic, readwrite) UPControl *playButton;
-@property (nonatomic, readwrite) UPControl *aboutButton;
+@property (nonatomic, readwrite) UPButton *extrasButton;
+@property (nonatomic, readwrite) UPButton *playButton;
+@property (nonatomic, readwrite) UPButton *aboutButton;
 @end
 
 @implementation UPDialogMenu
@@ -46,15 +46,15 @@ using UP::SpellLayout;
     self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageCenter);
     [self addSubview:self.messagePathView];
 
-    self.extrasButton = [UPControl textButtonExtras];
+    self.extrasButton = [UPButton textButtonExtras];
     self.extrasButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopLeft);
     [self addSubview:self.extrasButton];
 
-    self.playButton = [UPControl textButtonPlay];
+    self.playButton = [UPButton textButtonPlay];
     self.playButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopCenter);
     [self addSubview:self.playButton];
 
-    self.aboutButton = [UPControl textButtonAbout];
+    self.aboutButton = [UPButton textButtonAbout];
     self.aboutButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopRight);
     [self addSubview:self.aboutButton];
 

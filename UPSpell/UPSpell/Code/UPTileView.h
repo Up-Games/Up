@@ -1,5 +1,5 @@
 //
-//  UPTileControl.h
+//  UPTileView.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -8,8 +8,9 @@
 #import <UPKit/UPControl.h>
 
 #import "UPSpellLayout.h"
+#import "UPTileGestureRecognizer.h"
 
-@protocol UPTileViewGestureDelegate;
+@protocol UPTileGestureDelegate;
 
 @interface UPTileView : UPControl
 
@@ -17,11 +18,9 @@
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) int multiplier;
 
-@property (nonatomic, readonly) UITapGestureRecognizer *tap;
-@property (nonatomic, readonly) UIPanGestureRecognizer *pan;
-@property (nonatomic) BOOL tapEnabled;
-@property (nonatomic) BOOL panEnabled;
-@property (nonatomic) NSObject<UPTileViewGestureDelegate> *gestureDelegate;
+@property (nonatomic, readonly) UPTileGestureRecognizer *gesture;
+@property (nonatomic) NSObject<UPTileGestureDelegate> *gestureDelegate;
+
 @property (nonatomic) UP::SpellLayout::Location submitLocation;
 
 + (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier;
@@ -30,12 +29,7 @@
 
 @end
 
-@protocol UPTileViewGestureDelegate <NSObject>
-- (BOOL)beginTracking:(UPTileView *)tileView touch:(UITouch *)touch event:(UIEvent *)event;
-- (BOOL)continueTracking:(UPTileView *)tileView touch:(UITouch *)touch event:(UIEvent *)event;
-- (void)endTracking:(UPTileView *)tileView touch:(UITouch *)touch event:(UIEvent *)event;
-- (void)cancelTracking:(UPTileView *)tileView event:(UIEvent *)event;
-- (void)tileViewTapped:(UPTileView *)tileView;
-- (void)tileViewPanned:(UPTileView *)tileView;
+@protocol UPTileGestureDelegate <NSObject>
+- (void)handleTileGesture:(UPTileView *)tileView;
 @end
 

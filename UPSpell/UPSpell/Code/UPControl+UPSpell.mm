@@ -900,155 +900,155 @@ using namespace UP;
 
 @implementation UPControl (UPSpell)
 
-+ (UPControl *)roundGameButton
++ (UPButton *)roundGameButton
 {
-    UPControl *control = [UPControl control];
-    control.canonicalSize = SpellLayout::CanonicalRoundGameButtonSize;
-    [control setFillPath:RoundGameButtonFillPath() forState:UPControlStateNormal];
-    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateNormal];
-    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
-    [control setStrokePath:RoundGameButtonStrokePath() forState:UPControlStateNormal];
-    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
-    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
-    return control;
+    UPButton *button = [UPButton button];
+    button.canonicalSize = SpellLayout::CanonicalRoundGameButtonSize;
+    [button setFillPath:RoundGameButtonFillPath() forState:UPControlStateNormal];
+    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateNormal];
+    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
+    [button setStrokePath:RoundGameButtonStrokePath() forState:UPControlStateNormal];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
+    return button;
 }
 
-+ (UPControl *)roundGameButtonMinusSign
++ (UPButton *)roundGameButtonMinusSign
 {
-    UPControl *control = [UPControl roundGameButton];
-    [control setContentPath:RoundGameButtonMinusSignIconPath() forState:UPControlStateNormal];
-    return control;
+    UPButton *button = [UPButton roundGameButton];
+    [button setContentPath:RoundGameButtonMinusSignIconPath() forState:UPControlStateNormal];
+    return button;
 }
 
-+ (UPControl *)roundBackButton
++ (UPButton *)roundBackButton
 {
-    UPControl *control = [UPControl control];
-    control.canonicalSize = SpellLayout::CanonicalRoundBackButtonSize;
-    [control setFillPath:RoundBackButtonFillPath() forState:UPControlStateNormal];
-    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateNormal];
-    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
-    [control setStrokePath:RoundBackButtonStrokePath() forState:UPControlStateNormal];
-    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
-    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
-    return control;
+    UPButton *button = [UPButton button];
+    button.canonicalSize = SpellLayout::CanonicalRoundBackButtonSize;
+    [button setFillPath:RoundBackButtonFillPath() forState:UPControlStateNormal];
+    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateNormal];
+    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
+    [button setStrokePath:RoundBackButtonStrokePath() forState:UPControlStateNormal];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
+    return button;
 }
 
-+ (UPControl *)roundBackButtonLeftArrow
++ (UPButton *)roundBackButtonLeftArrow
 {
-    UPControl *control = [UPControl roundBackButton];
-    [control setContentPath:RoundBackButtonLeftArrowIconPath() forState:UPControlStateNormal];
-    return control;
+    UPButton *button = [UPButton roundBackButton];
+    [button setContentPath:RoundBackButtonLeftArrowIconPath() forState:UPControlStateNormal];
+    return button;
 }
 
-+ (UPControl *)roundBackButtonRightArrow
++ (UPButton *)roundBackButtonRightArrow
 {
-    UPControl *control = [UPControl roundBackButton];
-    [control setContentPath:RoundBackButtonRightArrowIconPath() forState:UPControlStateNormal];
-    return control;
+    UPButton *button = [UPButton roundBackButton];
+    [button setContentPath:RoundBackButtonRightArrowIconPath() forState:UPControlStateNormal];
+    return button;
 }
 
-+ (UPControl *)wordTray
++ (UPButton *)wordTray
 {
-    UPControl *control = [UPControl control];
-    control.canonicalSize = SpellLayout::CanonicalWordTrayFrame.size;
-    [control setFillPath:WordTrayFillPath() forState:UPControlStateNormal];
-    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveFill] forState:UPControlStateNormal];
-    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveFill] forState:UPControlStateActive];
-    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedFill] forState:(UPControlStateHighlighted | UPControlStateActive)];
-    [control setFillColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
-    [control setFillColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateNormal];
-    [control setFillColorAnimationDuration:0.25 fromState:UPControlStateActive toState:UPControlStateNormal];
-    [control setStrokePath:WordTrayStrokePath() forState:UPControlStateNormal];
-    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveStroke] forState:UPControlStateNormal];
-    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveStroke] forState:UPControlStateActive];
-    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedStroke] forState:(UPControlStateHighlighted | UPControlStateActive)];
-    [control setStrokeColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
-    [control setStrokeColorAnimationDuration:0.25 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    [control setStrokeColorAnimationDuration:0.25 fromState:UPControlStateActive toState:UPControlStateActive];
-    return control;
+    UPButton *button = [UPButton textButton];
+    button.canonicalSize = SpellLayout::CanonicalWordTrayFrame.size;
+    [button setFillPath:WordTrayFillPath() forState:UPControlStateNormal];
+    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveFill] forState:UPControlStateNormal];
+    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveFill] forState:UPControlStateActive];
+    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedFill] forState:(UPControlStateHighlighted | UPControlStateActive)];
+    [button setFillColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
+    [button setFillColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateNormal];
+    [button setFillColorAnimationDuration:0.25 fromState:UPControlStateActive toState:UPControlStateNormal];
+    [button setStrokePath:WordTrayStrokePath() forState:UPControlStateNormal];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveStroke] forState:UPControlStateNormal];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveStroke] forState:UPControlStateActive];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedStroke] forState:(UPControlStateHighlighted | UPControlStateActive)];
+    [button setStrokeColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
+    [button setStrokeColorAnimationDuration:0.25 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [button setStrokeColorAnimationDuration:0.25 fromState:UPControlStateActive toState:UPControlStateActive];
+    return button;
 }
 
-+ (UPControl *)_textButton
++ (UPButton *)textButton
 {
-    UPControl *control = [UPControl control];
-    control.canonicalSize = SpellLayout::CanonicalTextButtonSize;
-    [control setFillPath:TextButtonFillPath() forState:UPControlStateNormal];
-    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateNormal];
-    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
-    [control setStrokePath:TextButtonStrokePath() forState:UPControlStateNormal];
-    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
-    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
-    return control;
+    UPButton *button = [UPButton button];
+    button.canonicalSize = SpellLayout::CanonicalTextButtonSize;
+    [button setFillPath:TextButtonFillPath() forState:UPControlStateNormal];
+    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateNormal];
+    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
+    [button setStrokePath:TextButtonStrokePath() forState:UPControlStateNormal];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
+    return button;
 }
 
-+ (UPControl *)textButtonAbout
++ (UPButton *)textButtonAbout
 {
-    UPControl *control = [UPControl _textButton];
-    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:(UPControlStateSelected | UPControlStateHighlighted)];
-    [control setFillColor:[UIColor clearColor] forState:UPControlStateSelected];
-    [control setFillColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [control setFillColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:(UPControlStateSelected | UPControlStateHighlighted)];
-    [control setStrokeColor:[UIColor clearColor] forState:UPControlStateSelected];
-    [control setStrokeColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [control setStrokeColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    [control setContentPath:UP::TextPathContentAbout() forState:UPControlStateNormal];
-    [control setContentColor:[UIColor themeColorWithCategory:UPColorCategoryDialogTitle] forState:UPControlStateSelected];
-    [control setContentColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [control setContentColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    control.autoHighlights = YES;
-    control.autoSelects = YES;
-    control.band = UP::BandModeUI;
-    return control;
+    UPButton *button = [UPButton textButton];
+    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:(UPControlStateSelected | UPControlStateHighlighted)];
+    [button setFillColor:[UIColor clearColor] forState:UPControlStateSelected];
+    [button setFillColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+    [button setFillColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:(UPControlStateSelected | UPControlStateHighlighted)];
+    [button setStrokeColor:[UIColor clearColor] forState:UPControlStateSelected];
+    [button setStrokeColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+    [button setStrokeColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
+    [button setContentPath:UP::TextPathContentAbout() forState:UPControlStateNormal];
+    [button setContentColor:[UIColor themeColorWithCategory:UPColorCategoryDialogTitle] forState:UPControlStateSelected];
+    [button setContentColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+    [button setContentColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
+    button.autoHighlights = YES;
+    button.autoSelects = YES;
+    button.band = UP::BandModeUI;
+    return button;
 }
 
-+ (UPControl *)textButtonExtras
++ (UPButton *)textButtonExtras
 {
-    UPControl *control = [UPControl _textButton];
-    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:(UPControlStateSelected | UPControlStateHighlighted)];
-    [control setFillColor:[UIColor clearColor] forState:UPControlStateSelected];
-    [control setFillColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [control setFillColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:(UPControlStateSelected | UPControlStateHighlighted)];
-    [control setStrokeColor:[UIColor clearColor] forState:UPControlStateSelected];
-    [control setStrokeColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [control setStrokeColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    [control setContentPath:UP::TextPathContentExtras() forState:UPControlStateNormal];
-    [control setContentColor:[UIColor themeColorWithCategory:UPColorCategoryDialogTitle] forState:UPControlStateSelected];
-    [control setContentColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [control setContentColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    control.autoHighlights = YES;
-    control.autoSelects = YES;
-    control.band = UP::BandModeUI;
-    return control;
+    UPButton *button = [UPButton textButton];
+    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:(UPControlStateSelected | UPControlStateHighlighted)];
+    [button setFillColor:[UIColor clearColor] forState:UPControlStateSelected];
+    [button setFillColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+    [button setFillColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
+    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:(UPControlStateSelected | UPControlStateHighlighted)];
+    [button setStrokeColor:[UIColor clearColor] forState:UPControlStateSelected];
+    [button setStrokeColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+    [button setStrokeColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
+    [button setContentPath:UP::TextPathContentExtras() forState:UPControlStateNormal];
+    [button setContentColor:[UIColor themeColorWithCategory:UPColorCategoryDialogTitle] forState:UPControlStateSelected];
+    [button setContentColorAnimationDuration:0.75 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+    [button setContentColorAnimationDuration:0.75 fromState:UPControlStateSelected toState:UPControlStateNormal];
+    button.autoHighlights = YES;
+    button.autoSelects = YES;
+    button.band = UP::BandModeUI;
+    return button;
 }
 
-+ (UPControl *)textButtonPlay
++ (UPButton *)textButtonPlay
 {
-    UPControl *control = [UPControl _textButton];
-    [control setContentPath:UP::TextPathContentPlay() forState:UPControlStateNormal];
-    return control;
+    UPButton *button = [UPButton textButton];
+    [button setContentPath:UP::TextPathContentPlay() forState:UPControlStateNormal];
+    return button;
 }
 
-+ (UPControl *)textButtonQuit
++ (UPButton *)textButtonQuit
 {
-    UPControl *control = [UPControl _textButton];
-    [control setContentPath:UP::TextPathContentQuit() forState:UPControlStateNormal];
-    return control;
+    UPButton *button = [UPButton textButton];
+    [button setContentPath:UP::TextPathContentQuit() forState:UPControlStateNormal];
+    return button;
 }
 
-+ (UPControl *)textButtonResume
++ (UPButton *)textButtonResume
 {
-    UPControl *control = [UPControl _textButton];
-    [control setContentPath:UP::TextPathContentResume() forState:UPControlStateNormal];
-    return control;
+    UPButton *button = [UPButton textButton];
+    [button setContentPath:UP::TextPathContentResume() forState:UPControlStateNormal];
+    return button;
 }
 
-+ (UPControl *)textButtonStats
++ (UPButton *)textButtonStats
 {
-    UPControl *control = [UPControl _textButton];
-    [control setContentPath:UP::TextPathContentStats() forState:UPControlStateNormal];
-    return control;
+    UPButton *button = [UPButton textButton];
+    [button setContentPath:UP::TextPathContentStats() forState:UPControlStateNormal];
+    return button;
 }
 
 + (UPControl *)choiceItemRow

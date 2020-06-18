@@ -5,14 +5,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class UPControl;
+@class UPButton;
 @class UPLabel;
 
 @interface UPDialogPause : UIView
 
 @property (nonatomic, readonly) UPBezierPathView *messagePathView;
-@property (nonatomic, readonly) UPControl *quitButton;
-@property (nonatomic, readonly) UPControl *resumeButton;
+@property (nonatomic, readonly) UPButton *quitButton;
+@property (nonatomic, readonly) UPButton *resumeButton;
 
 + (UPDialogPause *)instance;
 

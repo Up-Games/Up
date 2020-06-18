@@ -52,14 +52,12 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @interface UPControl : UIView
 
 @property (nonatomic, readonly) UPControlState state;
-
 @property (nonatomic, getter=isEnabled) BOOL enabled;          // default is YES. if NO, ignores touch events and subclasses may draw differently
 @property (nonatomic, getter=isSelected) BOOL selected;        // default is NO may be used by some subclasses or by application
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;  // default is NO. this gets set/cleared automatically when touch enters/exits
 @property (nonatomic, getter=isActive) BOOL active;
 @property (nonatomic) BOOL autoHighlights;
 @property (nonatomic) BOOL autoSelects;
-@property (nonatomic) BOOL autoDeselects;
 @property (nonatomic) BOOL highlightedLocked;
 
 @property (nonatomic) CGSize canonicalSize;
@@ -68,6 +66,8 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @property (nonatomic) UP::Band band;
 
 + (UPControl *)control;
+
+- (void)setAggregateState:(UPControlState)state;
 
 - (void)setHighlighted:(BOOL)highlighted;
 - (void)setDisabled:(BOOL)disabled;
@@ -79,15 +79,6 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (void)setDisabled;
 - (void)setSelected;
 - (void)setActive;
-
-@property (nonatomic, readonly, getter=isTracking) BOOL tracking;
-@property (nonatomic, readonly, getter=isTouchInside) BOOL touchInside;
-- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event;
-- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event;
-- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event;
-
-- (void)addTarget:(id)target action:(SEL)action forEvents:(UPControlEvents)events;
-- (void)removeTarget:(id)target action:(SEL)action forEvents:(UPControlEvents)events;
 
 @property (nonatomic, readonly) UPBezierPathView *fillPathView;
 @property (nonatomic, readonly) UPBezierPathView *strokePathView;

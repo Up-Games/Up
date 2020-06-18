@@ -5,6 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import <UpKit/UPButton.h>
 #import <UpKit/UPControl.h>
 
 namespace UP {
@@ -29,22 +30,6 @@ UIBezierPath *ChoiceRowRightFillPathSelected();
 
 @interface UPControl (UPSpell)
 
-+ (UPControl *)roundGameButton;
-+ (UPControl *)roundGameButtonMinusSign;
-
-+ (UPControl *)roundBackButton;
-+ (UPControl *)roundBackButtonLeftArrow;
-+ (UPControl *)roundBackButtonRightArrow;
-
-+ (UPControl *)wordTray;
-
-+ (UPControl *)textButtonAbout;
-+ (UPControl *)textButtonExtras;
-+ (UPControl *)textButtonPlay;
-+ (UPControl *)textButtonQuit;
-+ (UPControl *)textButtonResume;
-+ (UPControl *)textButtonStats;
-
 + (UPControl *)choiceItemRowLeftColors;
 + (UPControl *)choiceItemRowLeftSounds;
 + (UPControl *)choiceItemRowLeftStats;
@@ -54,5 +39,25 @@ UIBezierPath *ChoiceRowRightFillPathSelected();
 + (UPControl *)choiceItemRowRightRules;
 + (UPControl *)choiceItemRowRightLegal;
 + (UPControl *)choiceItemRowRightThanks;
+
+@end
+
+@interface UPButton (UPSpell)
+
++ (UPButton *)roundGameButton;
++ (UPButton *)roundGameButtonMinusSign;
+
++ (UPButton *)roundBackButton;
++ (UPButton *)roundBackButtonLeftArrow;
++ (UPButton *)roundBackButtonRightArrow;
+
++ (UPButton *)wordTray;
+
++ (UPButton *)textButtonAbout;
++ (UPButton *)textButtonExtras;
++ (UPButton *)textButtonPlay;
++ (UPButton *)textButtonQuit;
++ (UPButton *)textButtonResume;
++ (UPButton *)textButtonStats;
 
 @end

@@ -6,14 +6,14 @@
 #import <UIKit/UIKit.h>
 
 @class UPBezierPathView;
-@class UPControl;
+@class UPButton;
 
 @interface UPDialogMenu : UIView
 
 @property (nonatomic, readonly) UPBezierPathView *messagePathView;
-@property (nonatomic, readonly) UPControl *extrasButton;
-@property (nonatomic, readonly) UPControl *playButton;
-@property (nonatomic, readonly) UPControl *aboutButton;
+@property (nonatomic, readonly) UPButton *extrasButton;
+@property (nonatomic, readonly) UPButton *playButton;
+@property (nonatomic, readonly) UPButton *aboutButton;
 
 + (UPDialogMenu *)instance;
 

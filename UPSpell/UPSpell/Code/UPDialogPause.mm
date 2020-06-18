@@ -18,8 +18,8 @@ using UP::SpellLayout;
 
 @interface UPDialogPause ()
 @property (nonatomic, readwrite) UPBezierPathView *messagePathView;
-@property (nonatomic, readwrite) UPControl *quitButton;
-@property (nonatomic, readwrite) UPControl *resumeButton;
+@property (nonatomic, readwrite) UPButton *quitButton;
+@property (nonatomic, readwrite) UPButton *resumeButton;
 @end
 
 @implementation UPDialogPause
@@ -45,11 +45,11 @@ using UP::SpellLayout;
     self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageHigh);
     [self addSubview:self.messagePathView];
 
-    self.quitButton = [UPControl textButtonQuit];
+    self.quitButton = [UPButton textButtonQuit];
     self.quitButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonAlternativeResponse);
     [self addSubview:self.quitButton];
 
-    self.resumeButton = [UPControl textButtonResume];
+    self.resumeButton = [UPButton textButtonResume];
     self.resumeButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonDefaultResponse);
     [self addSubview:self.resumeButton];
 

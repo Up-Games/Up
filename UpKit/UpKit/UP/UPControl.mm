@@ -17,39 +17,6 @@
 #import "UPTickingAnimator.h"
 #import "UPTimeSpanning.h"
 
-// =========================================================================================================================================
-
-namespace UP {
-
-class ControlAction {
-public:
-    ControlAction(id target, SEL action, UPControlEvents events) :
-        m_target(target), m_action(action), m_events(events) {}
-
-    id target() const { return m_target; }
-    SEL action() const { return m_action; }
-    UPControlEvents events() const { return m_events; }
-
-private:
-    __weak id m_target = nullptr;
-    SEL m_action;
-    UPControlEvents m_events = 0;
-};
-
-bool operator==(const ControlAction &a, const ControlAction &b) {
-    return a.target() == b.target() && a.action() == b.action() && a.events() == b.events();
-}
-
-bool operator!=(const ControlAction &a, const ControlAction &b) {
-    return !(a==b);
-}
-
-}  // namespace UP
-
-// =========================================================================================================================================
-
-using UP::ControlAction;
-
 using UP::TimeSpanning::cancel;
 using UP::TimeSpanning::set_color;
 
@@ -57,7 +24,6 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 
 @interface UPControl ()
 {
-    std::vector<ControlAction> m_actions;
     std::map<NSUInteger, __strong UIBezierPath *> m_paths;
     std::map<NSUInteger, __strong UIColor *> m_colors;
     std::map<NSUInteger, __strong NSAttributedString *> m_texts;
@@ -119,7 +85,6 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 {
     self = [super initWithFrame:frame];
     self.multipleTouchEnabled = NO;
-    self.exclusiveTouch = YES;
     self.autoHighlights = YES;
     self.previousState = UPControlStateInvalid;
     self.state = UPControlStateNormal;
@@ -139,6 +104,12 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 }
 
 #pragma mark - State
+
+- (void)setAggregateState:(UPControlState)state
+{
+    _state = state;
+    [self _controlStateChanged];
+}
 
 @dynamic enabled, selected, highlighted, active;
 
@@ -776,188 +747,6 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     }
     
     return NO;
-}
-
-#pragma mark - Touch events
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    ASSERT(self.userInteractionEnabled);
-    
-    if (!self.isEnabled) {
-        return;
-    }
-    
-    self.touchesCancelled = NO;
-    
-    UITouch *touch = [touches anyObject];
-    self.tracking = [self beginTrackingWithTouch:touch withEvent:event];
-    if (self.tracking) {
-        self.touchInside = [self pointInside:[touch locationInView:self] withEvent:event];
-        if (self.autoHighlights) {
-            self.highlighted = YES;
-        }
-        if (self.autoSelects) {
-            self.selected = YES;
-        }
-        [self sendActionsForControlEvents:UPControlEventTouchDown];
-    }
-}
-
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    if (self.touchesCancelled) {
-        return;
-    }
-    
-    if (!self.userInteractionEnabled) {
-        [self touchesCancelled:touches withEvent:event];
-        return;
-    }
-
-    if (!self.isEnabled) {
-        return;
-    }
-    
-    UITouch *touch = [touches anyObject];
-    self.tracking = [self continueTrackingWithTouch:touch withEvent:event];
-    if (self.tracking) {
-        BOOL wasTouchInside = self.touchInside;
-        self.touchInside = [self pointInside:[touch locationInView:self] withEvent:event];
-        if (!wasTouchInside && self.touchInside) {
-            if (self.autoHighlights) {
-                self.highlighted = YES;
-            }
-            [self sendActionsForControlEvents:UPControlEventTouchDragEnter];
-        }
-        else if (wasTouchInside && !self.touchInside) {
-            if (self.autoHighlights) {
-                self.highlighted = NO;
-            }
-            [self sendActionsForControlEvents:UPControlEventTouchDragExit];
-        }
-        else if (wasTouchInside && self.touchInside) {
-            [self sendActionsForControlEvents:UPControlEventTouchDragInside];
-        }
-        else if (!wasTouchInside && !self.touchInside) {
-            [self sendActionsForControlEvents:UPControlEventTouchDragOutside];
-        }
-    }
-    else {
-        if (self.autoHighlights) {
-            self.highlighted = NO;
-        }
-    }
-}
-
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    if (self.touchesCancelled) {
-        return;
-    }
-    
-    if (!self.userInteractionEnabled) {
-        [self touchesCancelled:touches withEvent:event];
-        return;
-    }
-
-    if (!self.isEnabled) {
-        return;
-    }
-
-    self.tracking = NO;
-    if (self.autoHighlights) {
-        self.highlighted = NO;
-    }
-    if (self.autoDeselects) {
-        self.selected = NO;
-    }
-
-    UITouch *touch = [touches anyObject];
-    [self endTrackingWithTouch:touch withEvent:event];
-
-    if (self.touchInside) {
-        [self sendActionsForControlEvents:UPControlEventTouchUpInside];
-    }
-    else {
-        [self sendActionsForControlEvents:UPControlEventTouchUpOutside];
-    }
-    self.touchInside = NO;
-}
-
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    self.touchesCancelled = YES;
-    self.tracking = NO;
-    self.touchInside = NO;
-    if (self.autoHighlights) {
-        self.highlighted = NO;
-    }
-    if (self.autoDeselects) {
-        self.selected = NO;
-    }
-    [self cancelTrackingWithEvent:event];
-}
-
-#pragma mark - Tracking
-
-- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    [self cancelAnimations];
-    return YES;
-}
-
-- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    return YES;
-}
-
-- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
-{
-}
-
-- (void)cancelTrackingWithEvent:(UIEvent *)event
-{
-}
-
-#pragma mark - Target/Action
-
-- (void)addTarget:(id)target action:(SEL)action forEvents:(UPControlEvents)events
-{
-    UP::ControlAction control_action(target, action, events);
-    for (const auto &a : m_actions) {
-        if (a == control_action) {
-            return;
-        }
-    }
-    m_actions.push_back(control_action);
-}
-
-- (void)removeTarget:(id)target action:(SEL)action forEvents:(UPControlEvents)events
-{
-    UP::ControlAction control_action(target, action, events);
-    for (auto it = m_actions.begin(); it != m_actions.end(); ++it) {
-        if (control_action == *it) {
-            m_actions.erase(it);
-            return;
-        }
-    }
-}
-
-- (void)sendActionsForControlEvents:(UPControlEvents)events
-{
-    if (!self.userInteractionEnabled || self.touchesCancelled) {
-        return;
-    }
-    
-    for (const auto &a : m_actions) {
-        if (a.events() & events) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [a.target() performSelector:a.action() withObject:self];
-#pragma clang diagnostic pop
-        }
-    }
 }
 
 #pragma mark - Lifecycle

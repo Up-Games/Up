@@ -22,6 +22,7 @@
 		5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E078247D723A008D3015 /* UPSpellModel.mm */; };
 		5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */; };
 		5DB9B1AC248705FA00A4AAA8 /* UPSpellGameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AB248705FA00A4AAA8 /* UPSpellGameView.mm */; };
+		5DBC20C9249AD62C002A6ADC /* UPTileGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBC20C8249AD62C002A6ADC /* UPTileGestureRecognizer.mm */; };
 		5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */; };
 		5DF9DF5C2466165700B2199D /* UPAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */; };
 		5DF9DF5F2466165700B2199D /* UPSceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */; };
@@ -92,6 +93,8 @@
 		5DB9B1AA248705FA00A4AAA8 /* UPSpellGameView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellGameView.h; sourceTree = "<group>"; };
 		5DB9B1AB248705FA00A4AAA8 /* UPSpellGameView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellGameView.mm; sourceTree = "<group>"; };
 		5DBC20C12497B9AD002A6ADC /* UPMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPMode.h; sourceTree = "<group>"; };
+		5DBC20C7249AD62C002A6ADC /* UPTileGestureRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileGestureRecognizer.h; sourceTree = "<group>"; };
+		5DBC20C8249AD62C002A6ADC /* UPTileGestureRecognizer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTileGestureRecognizer.mm; sourceTree = "<group>"; };
 		5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTilePaths.mm; sourceTree = "<group>"; };
 		5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTilePaths.h; sourceTree = "<group>"; };
 		5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPTilePaths-private.mm"; sourceTree = "<group>"; };
@@ -168,6 +171,8 @@
 				5D54078324841631003F193D /* UPSpellNavigationController.mm */,
 				5D5EA1432485B820006264D2 /* UPTextPaths.h */,
 				5D5EA1442485B820006264D2 /* UPTextPaths.mm */,
+				5DBC20C7249AD62C002A6ADC /* UPTileGestureRecognizer.h */,
+				5DBC20C8249AD62C002A6ADC /* UPTileGestureRecognizer.mm */,
 				5DA8E0422476128C008D3015 /* UPTileModel.h */,
 				5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */,
 				5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */,
@@ -345,6 +350,7 @@
 				5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */,
 				5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */,
 				5DF9DF622466165700B2199D /* UPSpellGameController.mm in Sources */,
+				5DBC20C9249AD62C002A6ADC /* UPTileGestureRecognizer.mm in Sources */,
 				5DF9DF5C2466165700B2199D /* UPAppDelegate.mm in Sources */,
 				5D54078424841631003F193D /* UPSpellNavigationController.mm in Sources */,
 				5DB9B1AC248705FA00A4AAA8 /* UPSpellGameView.mm in Sources */,

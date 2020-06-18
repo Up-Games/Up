@@ -79,17 +79,19 @@ using UP::TimeSpanning::start;
     
     self.aboutController = [[UPSpellAboutController alloc] initWithNibName:nil bundle:nil];
     self.aboutController.modalPresentationStyle = UIModalPresentationCustom;
-    [self.aboutController.backButton addTarget:self action:@selector(dismissPresentedController:) forEvents:UPControlEventTouchUpInside];
+    [self.aboutController.backButton setTarget:self action:@selector(dismissPresentedController)];
 
     self.extrasController = [[UPSpellExtrasController alloc] initWithNibName:nil bundle:nil];
     self.extrasController.modalPresentationStyle = UIModalPresentationCustom;
-    [self.extrasController.backButton addTarget:self action:@selector(dismissPresentedController:) forEvents:UPControlEventTouchUpInside];
+    [self.extrasController.backButton setTarget:self action:@selector(dismissPresentedController)];
 
     self.dialogMenu = [UPDialogMenu instance];
     [self.view addSubview:self.dialogMenu];
-    [self.dialogMenu.playButton addTarget:self action:@selector(dialogMenuPlayButtonTapped:) forEvents:UPControlEventTouchUpInside];
-    [self.dialogMenu.extrasButton addTarget:self action:@selector(dialogMenuExtrasButtonTapped:) forEvents:UPControlEventTouchUpInside];
-    [self.dialogMenu.aboutButton addTarget:self action:@selector(dialogMenuAboutButtonTapped:) forEvents:UPControlEventTouchUpInside];
+
+    [self.dialogMenu.playButton setTarget:self action:@selector(dialogMenuPlayButtonTapped)];
+    [self.dialogMenu.extrasButton setTarget:self action:@selector(dialogMenuExtrasButtonTapped)];
+    [self.dialogMenu.aboutButton setTarget:self action:@selector(dialogMenuAboutButtonTapped)];
+
     self.dialogMenu.hidden = YES;
     self.dialogMenu.frame = layout.screen_bounds();
     
@@ -101,17 +103,17 @@ using UP::TimeSpanning::start;
 
 #pragma mark - Control target/action and gestures
 
-- (void)dialogMenuPlayButtonTapped:(id)sender
+- (void)dialogMenuPlayButtonTapped
 {
     [self.gameController setMode:UP::Mode::Ready];
 }
 
-- (void)dialogMenuExtrasButtonTapped:(id)sender
+- (void)dialogMenuExtrasButtonTapped
 {
     [self presentExtrasController];
 }
 
-- (void)dialogMenuAboutButtonTapped:(id)sender
+- (void)dialogMenuAboutButtonTapped
 {
     [self presentAboutController];
 }
@@ -128,7 +130,7 @@ using UP::TimeSpanning::start;
     [self presentViewController:self.aboutController animated:YES completion:nil];
 }
 
-- (void)dismissPresentedController:(id)sender
+- (void)dismissPresentedController
 {
     [self dismissViewControllerAnimated:YES completion:^{
         self.dialogMenu.extrasButton.selected = NO;

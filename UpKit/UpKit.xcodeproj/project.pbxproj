@@ -42,6 +42,14 @@
 		5DB9B1B02487EA9800A4AAA8 /* UPRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AF2487EA9800A4AAA8 /* UPRandom.cpp */; };
 		5DBADB7324678F4000D9D1FF /* UPGameKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7424678F4000D9D1FF /* UPGameKey.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameKey.mm */; };
+		5DBC20C5249ACD91002A6ADC /* UPGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBC20C3249ACD91002A6ADC /* UPGestureRecognizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DBC20C6249ACD91002A6ADC /* UPGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBC20C4249ACD91002A6ADC /* UPGestureRecognizer.mm */; };
+		5DBC20CC249AD86C002A6ADC /* UPTapGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBC20CA249AD86C002A6ADC /* UPTapGestureRecognizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DBC20CD249AD86C002A6ADC /* UPTapGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBC20CB249AD86C002A6ADC /* UPTapGestureRecognizer.mm */; };
+		5DBC20D3249AE3E8002A6ADC /* UPTouchGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBC20D1249AE3E8002A6ADC /* UPTouchGestureRecognizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DBC20D4249AE3E8002A6ADC /* UPTouchGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBC20D2249AE3E8002A6ADC /* UPTouchGestureRecognizer.mm */; };
+		5DBC20D7249AEFF2002A6ADC /* UPButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBC20D5249AEFF2002A6ADC /* UPButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DBC20D8249AEFF2002A6ADC /* UPButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBC20D6249AEFF2002A6ADC /* UPButton.mm */; };
 		5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B2246EF6CC00090E7A /* UPLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC618B5246EF6CC00090E7A /* UPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC618B3246EF6CC00090E7A /* UPLabel.m */; };
 		5DC618BB246F045700090E7A /* UIFont+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B9246F045700090E7A /* UIFont+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -148,6 +156,14 @@
 		5DB9B1AF2487EA9800A4AAA8 /* UPRandom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPRandom.cpp; sourceTree = "<group>"; };
 		5DBADB7124678F4000D9D1FF /* UPGameKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameKey.h; sourceTree = "<group>"; };
 		5DBADB7224678F4000D9D1FF /* UPGameKey.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameKey.mm; sourceTree = "<group>"; };
+		5DBC20C3249ACD91002A6ADC /* UPGestureRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGestureRecognizer.h; sourceTree = "<group>"; };
+		5DBC20C4249ACD91002A6ADC /* UPGestureRecognizer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGestureRecognizer.mm; sourceTree = "<group>"; };
+		5DBC20CA249AD86C002A6ADC /* UPTapGestureRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTapGestureRecognizer.h; sourceTree = "<group>"; };
+		5DBC20CB249AD86C002A6ADC /* UPTapGestureRecognizer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTapGestureRecognizer.mm; sourceTree = "<group>"; };
+		5DBC20D1249AE3E8002A6ADC /* UPTouchGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTouchGestureRecognizer.h; sourceTree = "<group>"; };
+		5DBC20D2249AE3E8002A6ADC /* UPTouchGestureRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTouchGestureRecognizer.mm; sourceTree = "<group>"; };
+		5DBC20D5249AEFF2002A6ADC /* UPButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPButton.h; sourceTree = "<group>"; };
+		5DBC20D6249AEFF2002A6ADC /* UPButton.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPButton.mm; sourceTree = "<group>"; };
 		5DC618B2246EF6CC00090E7A /* UPLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLabel.h; sourceTree = "<group>"; };
 		5DC618B3246EF6CC00090E7A /* UPLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLabel.m; sourceTree = "<group>"; };
 		5DC618B9246F045700090E7A /* UIFont+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UP.h"; sourceTree = "<group>"; };
@@ -334,6 +350,8 @@
 				5D54078524845488003F193D /* UPBand.h */,
 				5DD71D9A2457AFB200F3F9E2 /* UPBezierPathView.h */,
 				5DD71D9B2457AFB200F3F9E2 /* UPBezierPathView.m */,
+				5DBC20D5249AEFF2002A6ADC /* UPButton.h */,
+				5DBC20D6249AEFF2002A6ADC /* UPButton.mm */,
 				5DEBE0192454E3AC00016047 /* UPColor.h */,
 				5DFE62252453CFCD00D9CA0B /* UPConstants.h */,
 				5DA8E05D247B361F008D3015 /* UPContainerView.h */,
@@ -351,6 +369,8 @@
 				5DC67DFA247367D1009BCDBB /* UPGameTimerLabel.m */,
 				5DD71D492457824A00F3F9E2 /* UPGeometry.h */,
 				5DD71D482457824A00F3F9E2 /* UPGeometry.mm */,
+				5DBC20C3249ACD91002A6ADC /* UPGestureRecognizer.h */,
+				5DBC20C4249ACD91002A6ADC /* UPGestureRecognizer.mm */,
 				5DFE620B245364C700D9CA0B /* UpKit.h */,
 				5DC618B2246EF6CC00090E7A /* UPLabel.h */,
 				5DC618B3246EF6CC00090E7A /* UPLabel.m */,
@@ -360,8 +380,8 @@
 				5DF9DF412465B35700B2199D /* UPLexicon.mm */,
 				5DEBE0172454CAFC00016047 /* UPMacros.h */,
 				5DFE62272453D11100D9CA0B /* UPMath.h */,
-				5D4AE82F248FC9A800213904 /* UPObjCProperty.mm */,
 				5D4AE830248FC9A800213904 /* UPObjCProperty.h */,
+				5D4AE82F248FC9A800213904 /* UPObjCProperty.mm */,
 				5DB9B1AF2487EA9800A4AAA8 /* UPRandom.cpp */,
 				5DF9DF982466412B00B2199D /* UPRandom.h */,
 				5DB9B1AD2487360900A4AAA8 /* UPSerialNumber.cpp */,
@@ -371,12 +391,16 @@
 				5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */,
 				5DA8E03D2475E14D008D3015 /* UPStackTrace.h */,
 				5DEBE02C245716F900016047 /* UPStringTools.h */,
+				5DBC20CA249AD86C002A6ADC /* UPTapGestureRecognizer.h */,
+				5DBC20CB249AD86C002A6ADC /* UPTapGestureRecognizer.mm */,
 				5DA8E061247C063B008D3015 /* UPTicker.h */,
 				5DA8E062247C063B008D3015 /* UPTicker.m */,
 				5DA8E059247ADC27008D3015 /* UPTickingAnimator.h */,
 				5DA8E05A247ADC27008D3015 /* UPTickingAnimator.mm */,
 				5DA8E069247C76A8008D3015 /* UPTimeSpanning.h */,
 				5DA8E06A247C76A8008D3015 /* UPTimeSpanning.mm */,
+				5DBC20D1249AE3E8002A6ADC /* UPTouchGestureRecognizer.h */,
+				5DBC20D2249AE3E8002A6ADC /* UPTouchGestureRecognizer.mm */,
 				5DFE6222245376D100D9CA0B /* UPTypes.h */,
 				5DF8A8E52454892B00751E2E /* UPUnitFunction.h */,
 				5DF8A8E62454892C00751E2E /* UPUnitFunction.mm */,
@@ -409,6 +433,7 @@
 				5D5216F2246D87DF005A2E9F /* UPControl.h in Headers */,
 				5D4AE832248FC9A900213904 /* UPObjCProperty.h in Headers */,
 				5D54078624845488003F193D /* UPBand.h in Headers */,
+				5DBC20C5249ACD91002A6ADC /* UPGestureRecognizer.h in Headers */,
 				5DFE62282453D11100D9CA0B /* UPMath.h in Headers */,
 				5DA8E067247C2B04008D3015 /* UPDelayedAction.h in Headers */,
 				5DF8A8E02454835F00751E2E /* UPTypes.h in Headers */,
@@ -423,7 +448,9 @@
 				5DA8E053247AC79F008D3015 /* UPAnimator.h in Headers */,
 				5DA8E05B247ADC27008D3015 /* UPTickingAnimator.h in Headers */,
 				5D3461342488760A009FB46D /* UPViewMove.h in Headers */,
+				5DBC20D7249AEFF2002A6ADC /* UPButton.h in Headers */,
 				5DA8E03F2475E14D008D3015 /* UPStackTrace.h in Headers */,
+				5DBC20CC249AD86C002A6ADC /* UPTapGestureRecognizer.h in Headers */,
 				5DF9DF992466412B00B2199D /* UPRandom.h in Headers */,
 				5DFE62262453CFCD00D9CA0B /* UPConstants.h in Headers */,
 				5DC618BB246F045700090E7A /* UIFont+UP.h in Headers */,
@@ -441,6 +468,7 @@
 				5DC67DFB247367D1009BCDBB /* UPGameTimerLabel.h in Headers */,
 				5DF8A8E72454892C00751E2E /* UPUnitFunction.h in Headers */,
 				5DA8E0372475962A008D3015 /* UPUtility.h in Headers */,
+				5DBC20D3249AE3E8002A6ADC /* UPTouchGestureRecognizer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,8 +609,11 @@
 				5DB9B1AE2487360900A4AAA8 /* UPSerialNumber.cpp in Sources */,
 				5DB9B1B02487EA9800A4AAA8 /* UPRandom.cpp in Sources */,
 				5D4AE831248FC9A900213904 /* UPObjCProperty.mm in Sources */,
+				5DBC20C6249ACD91002A6ADC /* UPGestureRecognizer.mm in Sources */,
 				5DBADB7424678F4000D9D1FF /* UPGameKey.mm in Sources */,
+				5DBC20D8249AEFF2002A6ADC /* UPButton.mm in Sources */,
 				5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */,
+				5DBC20D4249AE3E8002A6ADC /* UPTouchGestureRecognizer.mm in Sources */,
 				5D5216F3246D87DF005A2E9F /* UPControl.mm in Sources */,
 				5D3461352488760A009FB46D /* UPViewMove.mm in Sources */,
 				5DA8E03A2475C796008D3015 /* UPAssertions.mm in Sources */,
@@ -602,6 +633,7 @@
 				5DA8E05C247ADC27008D3015 /* UPTickingAnimator.mm in Sources */,
 				5DA8E060247B361F008D3015 /* UPContainerView.m in Sources */,
 				5DA8E06C247C76A8008D3015 /* UPTimeSpanning.mm in Sources */,
+				5DBC20CD249AD86C002A6ADC /* UPTapGestureRecognizer.mm in Sources */,
 				5DD71DA12458DA3A00F3F9E2 /* UIView+UP.mm in Sources */,
 				5DC618B5246EF6CC00090E7A /* UPLabel.m in Sources */,
 				5DA8E068247C2B04008D3015 /* UPDelayedAction.mm in Sources */,

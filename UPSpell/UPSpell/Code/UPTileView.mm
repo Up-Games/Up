@@ -80,13 +80,13 @@ static uint32_t _InstanceCount;
         }
         [self setContentPath:contentPath];
 
-        self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
-        self.tap.delegate = self;
-        [self addGestureRecognizer:self.tap];
-        
-        self.pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan)];
-        self.pan.delegate = self;
-        [self addGestureRecognizer:self.pan];
+//        self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
+//        self.tap.delegate = self;
+//        [self addGestureRecognizer:self.tap];
+//        
+//        self.pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan)];
+//        self.pan.delegate = self;
+//        [self addGestureRecognizer:self.pan];
     }
     
     return self;
@@ -116,72 +116,14 @@ static uint32_t _InstanceCount;
     self.gestureDelegate = nil;
 }
 
-- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    [self cancelAnimations];
-    if (!self.gestureDelegate) {
-        self.highlighted = YES;
-        return YES;
-    }
-    return [self.gestureDelegate beginTracking:self touch:touch event:event];
-}
-
-- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    if (!self.gestureDelegate) {
-        return YES;
-    }
-    return [self.gestureDelegate continueTracking:self touch:touch event:event];
-}
-
-- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    if (!self.gestureDelegate) {
-        self.highlighted = NO;
-        return;
-    }
-    [self.gestureDelegate endTracking:self touch:touch event:event];
-}
-
-- (void)cancelTrackingWithEvent:(UIEvent *)event
-{
-    if (!self.gestureDelegate) {
-        self.highlighted = NO;
-        return;
-    }
-    [self.gestureDelegate cancelTracking:self event:event];
-}
-
-- (void)handleTap
-{
-    [self.gestureDelegate tileViewTapped:self];
-}
-
-- (void)handlePan
-{
-    [self.gestureDelegate tileViewPanned:self];
-}
-
-@dynamic tapEnabled;
-- (void)setTapEnabled:(BOOL)enabled
-{
-    self.tap.enabled = enabled;
-}
-
-- (BOOL)tapEnabled
-{
-    return self.tap.enabled;
-}
-
-@dynamic panEnabled;
-- (void)setPanEnabled:(BOOL)enabled
-{
-    self.pan.enabled = enabled;
-}
-
-- (BOOL)panEnabled
-{
-    return self.pan.enabled;
-}
+//- (void)handleTap
+//{
+//    [self.gestureDelegate tileViewTapped:self];
+//}
+//
+//- (void)handlePan
+//{
+//    [self.gestureDelegate tileViewPanned:self];
+//}
 
 @end

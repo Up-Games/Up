@@ -46,7 +46,7 @@ using Spot = UP::SpellLayout::Spot;
     SpellLayout &layout = SpellLayout::instance();
     self = [super initWithFrame:layout.screen_bounds()];
 
-    self.wordTrayView = [UPControl wordTray];
+    self.wordTrayView = [UPButton wordTray];
     self.wordTrayView.band = BandGameUI;
     self.wordTrayView.frame = layout.word_tray_layout_frame();
     [self addSubview:self.wordTrayView];
@@ -61,13 +61,13 @@ using Spot = UP::SpellLayout::Spot;
     self.tileContainerClipView.fillColor = [UIColor blackColor];
     self.tileContainerView.layer.mask = self.tileContainerClipView.shapeLayer;
 
-    self.roundGameButtonPause = [UPControl roundGameButtonMinusSign];
+    self.roundGameButtonPause = [UPButton roundGameButtonMinusSign];
     self.roundGameButtonPause.band = BandGameUI;
     self.roundGameButtonPause.frame = layout.frame_for(Role::ControlButtonLeft);
     self.roundGameButtonPause.chargeSize = layout.game_controls_button_charge_size();
     [self addSubview:self.roundGameButtonPause];
 
-    self.roundGameButtonClear = [UPControl roundGameButton];
+    self.roundGameButtonClear = [UPButton roundGameButton];
     [self.roundGameButtonClear setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
     self.roundGameButtonClear.band = BandGameUI;
     self.roundGameButtonClear.frame = layout.frame_for(Role::ControlButtonRight);
