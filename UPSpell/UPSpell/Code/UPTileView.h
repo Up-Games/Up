@@ -18,18 +18,17 @@
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) int multiplier;
 
-@property (nonatomic, readonly) UPTileGestureRecognizer *gesture;
-@property (nonatomic) NSObject<UPTileGestureDelegate> *gestureDelegate;
+@property (nonatomic, readonly) UPTileGestureRecognizer *tileGesture;
+@property (nonatomic) NSObject<UPTileGestureDelegate> *tileGestureDelegate;
 
 @property (nonatomic) UP::SpellLayout::Location submitLocation;
 
 + (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier;
 
-- (void)clearGestures;
-
 @end
 
 @protocol UPTileGestureDelegate <NSObject>
 - (void)handleTileGesture:(UPTileView *)tileView;
+- (void)preemptActiveTileGestureInFavorOfTileView:(UPTileView *)tileView;
 @end
 

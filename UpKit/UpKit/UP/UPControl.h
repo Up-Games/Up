@@ -8,6 +8,7 @@
 #import <UPKit/UPBand.h>
 
 @class UPBezierPathView;
+@class UPGestureRecognizer;
 
 typedef NS_OPTIONS(NSUInteger, UPControlEvents) {
     UPControlEventTouchDown               = 1 <<  0,      // on all touch downs
@@ -64,10 +65,9 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @property (nonatomic) CGSize chargeSize;
 
 @property (nonatomic) UP::Band band;
+@property (nonatomic) UPGestureRecognizer *gesture;
 
 + (UPControl *)control;
-
-- (void)setAggregateState:(UPControlState)state;
 
 - (void)setHighlighted:(BOOL)highlighted;
 - (void)setDisabled:(BOOL)disabled;
@@ -137,5 +137,6 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (void)setNeedsUpdate;
 
 - (void)cancelAnimations;
+- (void)clearGesture;
 
 @end

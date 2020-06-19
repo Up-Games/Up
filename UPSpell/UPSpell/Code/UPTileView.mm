@@ -12,6 +12,7 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPSpellLayout.h"
+#import "UPTileGestureRecognizer.h"
 #import "UPTileView.h"
 #import "UPTilePaths.h"
 
@@ -24,8 +25,6 @@ using UP::TilePaths;
 @property (nonatomic, readwrite) char32_t glyph;
 @property (nonatomic, readwrite) int score;
 @property (nonatomic, readwrite) int multiplier;
-@property (nonatomic, readwrite) UITapGestureRecognizer *tap;
-@property (nonatomic, readwrite) UIPanGestureRecognizer *pan;
 @end
 
 static uint32_t _InstanceCount;
@@ -43,8 +42,6 @@ static uint32_t _InstanceCount;
     
     _InstanceCount++;
     LOG(Leaks, "alloc:   %@ (%d)", self, _InstanceCount);
-    
-    self.autoHighlights = NO;
     
     self.glyph = glyph;
     self.score = score;
@@ -80,13 +77,8 @@ static uint32_t _InstanceCount;
         }
         [self setContentPath:contentPath];
 
-//        self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
-//        self.tap.delegate = self;
-//        [self addGestureRecognizer:self.tap];
-//        
-//        self.pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan)];
-//        self.pan.delegate = self;
-//        [self addGestureRecognizer:self.pan];
+        self.gesture = [[UPTileGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
+        [self addGestureRecognizer:self.gesture];
     }
     
     return self;
@@ -105,25 +97,59 @@ static uint32_t _InstanceCount;
 
 #pragma mark - Gestures
 
-- (void)clearGestures
+- (UPTileGestureRecognizer *)tileGesture
 {
-    self.tap.delegate = nil;
-    self.pan.delegate = nil;
-    [self removeGestureRecognizer:self.tap];
-    [self removeGestureRecognizer:self.pan];
-    self.tap = nil;
-    self.pan = nil;
-    self.gestureDelegate = nil;
+    return [self.gesture isKindOfClass:[UPTileGestureRecognizer class]] ? (UPTileGestureRecognizer *)self.gesture : nil;
 }
 
-//- (void)handleTap
-//{
-//    [self.gestureDelegate tileViewTapped:self];
-//}
-//
-//- (void)handlePan
-//{
-//    [self.gestureDelegate tileViewPanned:self];
-//}
+- (void)handleGesture:(UPTileGestureRecognizer *)gesture
+{
+    switch (gesture.state) {
+        case UIGestureRecognizerStatePossible: {
+            break;
+        }
+        case UIGestureRecognizerStateBegan: {
+            if (self.autoHighlights) {
+                self.highlighted = gesture.touchInside;
+            }
+            if (self.autoSelects) {
+                self.selected = gesture.touchInside;
+            }
+            [self.tileGestureDelegate preemptActiveTileGestureInFavorOfTileView:self];
+            break;
+        }
+        case UIGestureRecognizerStateChanged: {
+            if (self.autoHighlights) {
+                self.highlighted = gesture.touchInside;
+            }
+            if (self.autoSelects) {
+                self.selected = gesture.touchInside;
+            }
+            break;
+        }
+        case UIGestureRecognizerStateEnded: {
+            if (self.autoHighlights) {
+                self.highlighted = NO;
+            }
+            if (self.autoSelects) {
+                self.selected = gesture.touchInside;
+            }
+            break;
+        }
+        case UIGestureRecognizerStateCancelled:
+        case UIGestureRecognizerStateFailed: {
+            if (self.autoHighlights) {
+                self.highlighted = NO;
+            }
+            if (self.autoSelects) {
+                self.selected = NO;
+            }
+            break;
+        }
+    }
+
+    LOG(General, "call delegate: %@", self);
+    [self.tileGestureDelegate handleTileGesture:self];
+}
 
 @end

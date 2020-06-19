@@ -28,7 +28,8 @@
     self = [super initWithFrame:CGRectZero];
     self.target = target;
     self.action = action;
-    [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
+    self.gesture = [UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)];
+    [self addGestureRecognizer:self.gesture];
     return self;
 }
 

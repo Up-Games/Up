@@ -61,11 +61,12 @@
 
 - (void)handlePreemption
 {
-    if (!self.isEnabled) {
-        return;
+    if (!self.isEnabled || !self.touchInside) {
+        self.state = UIGestureRecognizerStateFailed;
     }
-
-    self.state = self.touchInside ? UIGestureRecognizerStateEnded : UIGestureRecognizerStateFailed;
+    else {
+        self.state = UIGestureRecognizerStateEnded;
+    }
 }
 
 @end

@@ -4,13 +4,13 @@
 //
 
 #import <map>
-#import <vector>
 
 #import "UPAnimator.h"
 #import "UPAssertions.h"
 #import "UPBezierPathView.h"
 #import "UPControl.h"
 #import "UIColor+UP.h"
+#import "UPGestureRecognizer.h"
 #import "UPMacros.h"
 #import "UPMath.h"
 #import "UPNeedsUpdater.h"
@@ -27,24 +27,20 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 {
     std::map<NSUInteger, __strong UIBezierPath *> m_paths;
     std::map<NSUInteger, __strong UIColor *> m_colors;
-    std::map<NSUInteger, __strong NSAttributedString *> m_texts;
     std::map<UPControlStatePair, CFTimeInterval> m_color_animations;
 }
 @property (nonatomic, readwrite) UPControlState state;
-@property (nonatomic, readwrite) BOOL tracking;
-@property (nonatomic, readwrite) BOOL touchInside;
+@property (nonatomic) UPControlState previousState;
 @property (nonatomic, readwrite) UPBezierPathView *fillPathView;
 @property (nonatomic, readwrite) UPBezierPathView *strokePathView;
 @property (nonatomic, readwrite) UPBezierPathView *contentPathView;
 @property (nonatomic, readwrite) UPBezierPathView *auxiliaryPathView;
 @property (nonatomic, readwrite) UPBezierPathView *accentPathView;
-@property (nonatomic) UPControlState previousState;
 @property (nonatomic) uint32_t fillColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t strokeColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t contentPathColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t auxiliaryPathColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t accentPathColorAnimatorSerialNumber;
-@property (nonatomic) BOOL touchesCancelled;
 @end
 
 UP_STATIC_INLINE NSUInteger up_control_key_fill(UPControlState controlState)
@@ -91,6 +87,31 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     return self;
 }
 
+- (void)clearGesture
+{
+    if (self.gesture) {
+        self.gesture.delegate = nil;
+        [self removeGestureRecognizer:self.gesture];
+        self.gesture = nil;
+    }
+}
+
+#pragma mark - User interaction
+
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
+{
+    [super setUserInteractionEnabled:userInteractionEnabled];
+
+    if (!userInteractionEnabled) {
+        [self.gesture preempt];
+    }
+}
+
+- (void)preemptInteraction
+{
+    [self.gesture preempt];
+}
+
 #pragma mark - Canonical Size
 
 - (void)setCanonicalSize:(CGSize)canonicalSize
@@ -104,12 +125,6 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 }
 
 #pragma mark - State
-
-- (void)setAggregateState:(UPControlState)state
-{
-    _state = state;
-    [self setNeedsUpdate];
-}
 
 @dynamic enabled, selected, highlighted, active;
 

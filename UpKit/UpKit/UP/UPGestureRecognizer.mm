@@ -12,7 +12,9 @@
 
 - (void)preempt
 {
-    [self handlePreemption];
+    if (self.state != UIGestureRecognizerStatePossible) {
+        [self handlePreemption];
+    }
     [self reset];
 }
 
