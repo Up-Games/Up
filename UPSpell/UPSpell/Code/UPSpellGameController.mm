@@ -253,7 +253,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
                 }
                 self.activeControl = control;
                 self.activeTouch = touch;
-                [self highlightControl:control];
+                self.activeControl.highlighted = YES;
                 break;
             }
         }
@@ -313,10 +313,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     else if (self.activeControl == self.gameView.roundGameControlPause || self.activeControl == self.gameView.roundGameControlClear) {
         CGPoint point = [self.activeTouch locationInView:self.activeControl];
         if ([self.activeControl pointInside:point withEvent:event]) {
-            [self highlightControl:self.activeControl];
+            self.activeControl.highlighted = YES;
         }
         else {
-            [self unhighlightControl:self.activeControl];
+            self.activeControl.highlighted = NO;
         }
     }
 }
@@ -344,7 +344,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         }
     }
     
-    [self unhighlightControl:self.activeControl];
+    self.activeControl.highlighted = NO;
     self.pickedView = nil;
     self.pickedPosition = TilePosition();
     self.activeControl = nil;
@@ -354,75 +354,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self cancelActiveTouch];
-}
-
-- (void)highlightControl:(UPControl *)control
-{
-    ASSERT(control);
-//    LOG(General, "highlightControl: %@", control);
-    control.highlighted = YES;
-}
-
-- (void)unhighlightControl:(UPControl *)control
-{
-    ASSERT(control);
-//    LOG(General, "unhighlightControl: %@", control);
-    control.highlighted = NO;
-}
-
-- (void)preemptActiveControlWithControl:(UPControl *)control
-{
-    ASSERT(self.activeControl);
-    LOG(General, "preemptControl: %@ <= %@", self.activeControl, control);
-
-    if ([self.activeControl isKindOfClass:[UPTileView class]]) {
-        UPTileView *tileView = (UPTileView *)self.activeControl;
-        [self touchEnded:self.activeTouch tileView:tileView];
-    }
-    else if (self.activeControl == self.gameView.roundGameControlPause || self.activeControl == self.gameView.roundGameControlClear) {
-        if (self.activeControl.highlighted) {
-            [self sendControlAction:self.activeControl];
-        }
-    }
-    [self unhighlightControl:self.activeControl];
-
-    self.pickedView = nil;
-    self.pickedPosition = TilePosition();
-    self.activeControl = nil;
-    self.activeTouch = nil;
-}
-
-- (void)sendControlAction:(UPControl *)control
-{
-    ASSERT(control);
-    LOG(General, "sendControlAction: %@", control);
-    if (control == self.gameView.roundGameControlPause) {
-        [self roundButtonPauseTapped];
-    }
-    else if (control == self.gameView.roundGameControlClear) {
-        [self roundButtonClearTapped];
-    }
-    else if ([control isKindOfClass:[UPTileView class]]) {
-        UPTileView *tileView = (UPTileView *)control;
-        const Tile &tile = self.model->find_tile(tileView);
-        if (self.pickedView) {
-            [self applyActionDrop:tile];
-        }
-        else {
-            [self applyActionAdd:tile];
-        }
-    }
-}
-
-- (void)cancelActiveTouch
-{
-    if (self.activeControl) {
-        [self unhighlightControl:self.activeControl];
-    }
-    self.pickedView = nil;
-    self.pickedPosition = TilePosition();
-    self.activeControl = nil;
-    self.activeTouch = nil;
 }
 
 - (void)touchBegan:(UITouch *)touch tileView:(UPTileView *)tileView
@@ -529,6 +460,49 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)touchCancelled:(UITouch *)touch tileView:(UPTileView *)tileView
 {
     [self touchEnded:touch tileView:tileView];
+}
+
+- (void)preemptActiveControlWithControl:(UPControl *)control
+{
+    ASSERT(self.activeControl);
+    LOG(General, "preemptControl: %@ <= %@", self.activeControl, control);
+    
+    if ([self.activeControl isKindOfClass:[UPTileView class]]) {
+        UPTileView *tileView = (UPTileView *)self.activeControl;
+        [self touchEnded:self.activeTouch tileView:tileView];
+    }
+    else if (self.activeControl == self.gameView.roundGameControlPause || self.activeControl == self.gameView.roundGameControlClear) {
+        if (self.activeControl.highlighted) {
+            [self sendControlAction:self.activeControl];
+        }
+    }
+    self.activeControl.highlighted = NO;
+    self.pickedView = nil;
+    self.pickedPosition = TilePosition();
+    self.activeControl = nil;
+    self.activeTouch = nil;
+}
+
+- (void)sendControlAction:(UPControl *)control
+{
+    ASSERT(control == self.gameView.roundGameControlPause || control == self.gameView.roundGameControlClear);
+    ASSERT(control.highlighted);
+    LOG(General, "sendControlAction: %@", control);
+    if (control == self.gameView.roundGameControlPause) {
+        [self roundButtonPauseTapped];
+    }
+    else if (control == self.gameView.roundGameControlClear) {
+        [self roundButtonClearTapped];
+    }
+}
+
+- (void)cancelActiveTouch
+{
+    self.activeControl.highlighted = NO;
+    self.pickedView = nil;
+    self.pickedPosition = TilePosition();
+    self.activeControl = nil;
+    self.activeTouch = nil;
 }
 
 #pragma mark - Control target/action and gestures
