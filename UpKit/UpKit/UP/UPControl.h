@@ -137,6 +137,5 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (void)setNeedsUpdate;
 
 - (void)cancelAnimations;
-- (void)clearGesture;
 
 @end

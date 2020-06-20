@@ -640,26 +640,18 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, tile.position(), word_pos));
 
     if (wordTrayTilesNeedMoves) {
-//        SpellLayout &layout = SpellLayout::instance();
-//        cancel(BandGameUITile);
-//        NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
-//        cancel(BandGameUITile);
         for (UPTileView *wordTrayTileView in wordTrayTileViews) {
             cancel(@[wordTrayTileView], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
             Tile &tile = self.model->find_tile(wordTrayTileView);
             ASSERT(tile.position().in_word_tray());
             UPViewMove *move = UPViewMoveMake(wordTrayTileView, role_in_word(tile.position().index(), self.model->word_length()));
             start(UP::TimeSpanning::slide(BandGameUI, @[move], DefaultTileSlideDuration, nil));
-//            wordTrayTileView.center = layout.center_for(role_in_word(tile.position().index(), self.model->word_length()));
-//            [moves addObject:UPViewMoveMake(wordTrayTileView, role_in_word(tile.position().index(), self.model->word_length()))];
         }
-//        start(UP::TimeSpanning::slide(BandGameUITile, moves, DefaultTileSlideDuration, nil));
     }
     
     UPTileView *tileView = tile.view();
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
     Location location(role_in_word(word_pos.index(), self.model->word_length()));
-    LOG(General, "add bloop: %@", tileView);
     start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], DefaultBloopDuration, nil));
 
     [self viewUpdateGameControls];
@@ -703,9 +695,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT(self.pickedView == nil);
     ASSERT_NPOS(self.pickedPosition);
 
-//    cancel(BandGameAll);
-//    cancel(@[tile.view()], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
-
     [self viewOrderOutWordScoreLabel];
 
     UPTileView *tileView = tile.view();
@@ -717,14 +706,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::PICK, tile.position()));
 
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
-//    CGPoint location = tileView.tileGesture.touchPoint;
-//    CGPoint center = up_rect_center(tileView.bounds);
-//    CGFloat dx = center.x - location.x;
-//    CGFloat dy = center.y - location.y;
-//    CGPoint pointInSuperview = [tileView convertPoint:location toView:tileView.superview];
-//    self.panStartPoint = CGPointMake(pointInSuperview.x + dx, pointInSuperview.y + dy);
-//    self.panEverMovedUp = NO;
-//    tileView.highlighted = YES;
 }
 
 - (void)applyActionHoverIfNeeded:(const Tile &)tile
@@ -1034,7 +1015,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     for (UPTileView *tileView in wordTrayTileViews) {
         tileView.userInteractionEnabled = NO;
-        [tileView clearGesture];
     }
 
     cancel(BandGameUITile);
@@ -1140,8 +1120,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)viewDumpPlayerTray:(NSArray *)playerTrayTileViews
 {
-    [self viewClearTileGestures];
-
     Random &random = Random::instance();
 
     std::array<size_t, TileCount> idxs;
@@ -1557,16 +1535,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             });
         });
     }));
-}
-
-- (void)viewClearTileGestures
-{
-    for (auto &tile : self.model->tiles()) {
-        if (tile.has_view()) {
-            UPTileView *tileView = tile.view();
-            [tileView clearGesture];
-        }
-    }
 }
 
 #pragma mark - View ops FIXMEs
@@ -2041,7 +2009,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     [self viewLock];
 
-    [self viewClearTileGestures];
     [self viewUnhighlightTileViews];
     [self viewBloopTileViewsToPlayerTrayWithDuration:GameOverRespositionBloopDuration completion:nil];
     

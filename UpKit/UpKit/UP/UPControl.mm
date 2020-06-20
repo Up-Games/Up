@@ -87,15 +87,6 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     return self;
 }
 
-- (void)clearGesture
-{
-    if (self.gesture) {
-        self.gesture.delegate = nil;
-        [self removeGestureRecognizer:self.gesture];
-        self.gesture = nil;
-    }
-}
-
 #pragma mark - User interaction
 
 - (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
@@ -325,6 +316,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = path;
     }
+    [self invalidate];
     [self setNeedsUpdate];
 }
 
@@ -358,6 +350,8 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = path;
     }
+    [self invalidate];
+    [self setNeedsUpdate];
 }
 
 - (UIBezierPath *)strokePathForState:(UPControlState)state
@@ -390,6 +384,8 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = path;
     }
+    [self invalidate];
+    [self setNeedsUpdate];
 }
 
 - (UIBezierPath *)contentPathForState:(UPControlState)state
@@ -422,6 +418,8 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = path;
     }
+    [self invalidate];
+    [self setNeedsUpdate];
 }
 
 - (UIBezierPath *)auxiliaryPathForState:(UPControlState)state
@@ -454,6 +452,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     else {
         it->second = path;
     }
+    [self invalidate];
     [self setNeedsUpdate];
 }
 
@@ -795,6 +794,11 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     self.contentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
     self.auxiliaryPathColorAnimatorSerialNumber = UP::NotASerialNumber;
     self.accentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
+}
+
+- (void)invalidate
+{
+    self.previousState |= UPControlStateInvalid;
 }
 
 - (void)setNeedsUpdate
