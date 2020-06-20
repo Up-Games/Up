@@ -898,27 +898,52 @@ UIBezierPath *ChoiceRightFillPathSelected()
 
 using namespace UP;
 
+@implementation UPControl (UPSpell)
+
++ (UPControl *)roundGameControl
+{
+    UPControl *control = [UPControl control];
+    control.canonicalSize = SpellLayout::CanonicalRoundGameButtonSize;
+    [control setFillPath:RoundGameButtonFillPath() forState:UPControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
+    [control setStrokePath:RoundGameButtonStrokePath() forState:UPControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
+    return control;
+}
+
++ (UPControl *)roundGameControlMinusSign
+{
+    UPControl *control = [UPControl roundGameControl];
+    [control setContentPath:RoundGameButtonMinusSignIconPath() forState:UPControlStateNormal];
+    return control;
+}
+
++ (UPControl *)wordTrayControl
+{
+    UPControl *control = [UPControl control];
+    control.canonicalSize = SpellLayout::CanonicalWordTrayFrame.size;
+    [control setFillPath:WordTrayFillPath() forState:UPControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveFill] forState:UPControlStateNormal];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveFill] forState:UPControlStateActive];
+    [control setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedFill] forState:(UPControlStateHighlighted | UPControlStateActive)];
+    [control setFillColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
+    [control setFillColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateNormal];
+    [control setFillColorAnimationDuration:0.25 fromState:UPControlStateActive toState:UPControlStateNormal];
+    [control setStrokePath:WordTrayStrokePath() forState:UPControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveStroke] forState:UPControlStateNormal];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveStroke] forState:UPControlStateActive];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedStroke] forState:(UPControlStateHighlighted | UPControlStateActive)];
+    [control setStrokeColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
+    [control setStrokeColorAnimationDuration:0.25 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [control setStrokeColorAnimationDuration:0.25 fromState:UPControlStateActive toState:UPControlStateActive];
+    return control;
+}
+
+@end
+
 @implementation UPButton (UPSpell)
-
-+ (UPButton *)roundGameButton
-{
-    UPButton *button = [UPButton button];
-    button.canonicalSize = SpellLayout::CanonicalRoundGameButtonSize;
-    [button setFillPath:RoundGameButtonFillPath() forState:UPControlStateNormal];
-    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateNormal];
-    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
-    [button setStrokePath:RoundGameButtonStrokePath() forState:UPControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
-    return button;
-}
-
-+ (UPButton *)roundGameButtonMinusSign
-{
-    UPButton *button = [UPButton roundGameButton];
-    [button setContentPath:RoundGameButtonMinusSignIconPath() forState:UPControlStateNormal];
-    return button;
-}
 
 + (UPButton *)roundBackButton
 {
@@ -944,27 +969,6 @@ using namespace UP;
 {
     UPButton *button = [UPButton roundBackButton];
     [button setContentPath:RoundBackButtonRightArrowIconPath() forState:UPControlStateNormal];
-    return button;
-}
-
-+ (UPButton *)wordTray
-{
-    UPButton *button = [UPButton textButton];
-    button.canonicalSize = SpellLayout::CanonicalWordTrayFrame.size;
-    [button setFillPath:WordTrayFillPath() forState:UPControlStateNormal];
-    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveFill] forState:UPControlStateNormal];
-    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveFill] forState:UPControlStateActive];
-    [button setFillColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedFill] forState:(UPControlStateHighlighted | UPControlStateActive)];
-    [button setFillColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
-    [button setFillColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateNormal];
-    [button setFillColorAnimationDuration:0.25 fromState:UPControlStateActive toState:UPControlStateNormal];
-    [button setStrokePath:WordTrayStrokePath() forState:UPControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveStroke] forState:UPControlStateNormal];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveStroke] forState:UPControlStateActive];
-    [button setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedStroke] forState:(UPControlStateHighlighted | UPControlStateActive)];
-    [button setStrokeColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
-    [button setStrokeColorAnimationDuration:0.25 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    [button setStrokeColorAnimationDuration:0.25 fromState:UPControlStateActive toState:UPControlStateActive];
     return button;
 }
 

@@ -77,8 +77,8 @@ static uint32_t _InstanceCount;
         }
         [self setContentPath:contentPath];
 
-        self.gesture = [[UPTileGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
-        [self addGestureRecognizer:self.gesture];
+//        self.gesture = [[UPTileGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
+//        [self addGestureRecognizer:self.gesture];
     }
     
     return self;
@@ -115,7 +115,7 @@ static uint32_t _InstanceCount;
             if (self.autoSelects) {
                 self.selected = gesture.touchInside;
             }
-            [self.tileGestureDelegate preemptActiveTileGestureInFavorOfTileView:self];
+//            [self.tileGestureDelegate preemptActiveTileGestureInFavorOfTileView:self];
             break;
         }
         case UIGestureRecognizerStateChanged: {

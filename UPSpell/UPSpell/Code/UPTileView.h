@@ -29,6 +29,5 @@
 
 @protocol UPTileGestureDelegate <NSObject>
 - (void)handleTileGesture:(UPTileView *)tileView;
-- (void)preemptActiveTileGestureInFavorOfTileView:(UPTileView *)tileView;
 @end
 

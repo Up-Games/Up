@@ -46,10 +46,13 @@ using Spot = UP::SpellLayout::Spot;
     SpellLayout &layout = SpellLayout::instance();
     self = [super initWithFrame:layout.screen_bounds()];
 
-    self.wordTrayView = [UPButton wordTray];
-    self.wordTrayView.band = BandGameUI;
-    self.wordTrayView.frame = layout.word_tray_layout_frame();
-    [self addSubview:self.wordTrayView];
+    self.multipleTouchEnabled = YES;
+    
+    self.wordTrayControl = [UPControl wordTrayControl];
+    self.wordTrayControl.band = BandGameUI;
+    self.wordTrayControl.frame = layout.word_tray_layout_frame();
+    [self addSubview:self.wordTrayControl];
+
     self.tileContainerView = [[UPContainerView alloc] initWithFrame:CGRectZero];
     self.tileContainerView.frame = layout.screen_bounds();
     [self addSubview:self.tileContainerView];
@@ -61,18 +64,18 @@ using Spot = UP::SpellLayout::Spot;
     self.tileContainerClipView.fillColor = [UIColor blackColor];
     self.tileContainerView.layer.mask = self.tileContainerClipView.shapeLayer;
 
-    self.roundGameButtonPause = [UPButton roundGameButtonMinusSign];
-    self.roundGameButtonPause.band = BandGameUI;
-    self.roundGameButtonPause.frame = layout.frame_for(Role::ControlButtonLeft);
-    self.roundGameButtonPause.chargeSize = layout.game_controls_button_charge_size();
-    [self addSubview:self.roundGameButtonPause];
+    self.roundGameControlPause = [UPControl roundGameControlMinusSign];
+    self.roundGameControlPause.band = BandGameUI;
+    self.roundGameControlPause.frame = layout.frame_for(Role::ControlButtonLeft);
+    self.roundGameControlPause.chargeSize = layout.game_controls_button_charge_size();
+    [self addSubview:self.roundGameControlPause];
 
-    self.roundGameButtonClear = [UPButton roundGameButton];
-    [self.roundGameButtonClear setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
-    self.roundGameButtonClear.band = BandGameUI;
-    self.roundGameButtonClear.frame = layout.frame_for(Role::ControlButtonRight);
-    self.roundGameButtonClear.chargeSize = layout.game_controls_button_charge_size();
-    [self addSubview:self.roundGameButtonClear];
+    self.roundGameControlClear = [UPControl roundGameControl];
+    [self.roundGameControlClear setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
+    self.roundGameControlClear.band = BandGameUI;
+    self.roundGameControlClear.frame = layout.frame_for(Role::ControlButtonRight);
+    self.roundGameControlClear.chargeSize = layout.game_controls_button_charge_size();
+    [self addSubview:self.roundGameControlClear];
 
     self.timerLabel = [UPGameTimerLabel label];
     self.timerLabel.font = layout.game_information_font();

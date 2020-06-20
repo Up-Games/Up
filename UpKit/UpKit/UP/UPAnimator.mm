@@ -349,7 +349,9 @@ static uint32_t _InstanceCount;
 
 - (void)cancel
 {
-    [self stopAnimation:NO];
+    if (self.running) {
+        [self stopAnimation:NO];
+    }
 }
 
 @end

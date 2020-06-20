@@ -107,7 +107,7 @@ static BOOL tickIntervalChecked = NO;
     if (!self.displayLink || self.tickings.count > 0) {
         tickIntervalChecked = NO;
         self.displayLink = [[UIScreen mainScreen] displayLinkWithTarget:self selector:@selector(_tick:)];
-        [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     }
 }
 

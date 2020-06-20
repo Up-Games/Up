@@ -75,7 +75,7 @@ using Spot = UP::SpellLayout::Spot;
 using Mode = UP::Mode;
 using ModeTransitionTable = UP::ModeTransitionTable;
 
-@interface UPSpellGameController () <UPGameTimerObserver, UPTileGestureDelegate>
+@interface UPSpellGameController () <UPGameTimerObserver>
 {
     ModeTransitionTable m_default_transition_table;
     ModeTransitionTable m_did_become_active_transition_table;
@@ -86,7 +86,6 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 @property (nonatomic) UPSpellGameView *gameView;
 @property (nonatomic) UPGameTimer *gameTimer;
 @property (nonatomic) BOOL showingWordScoreLabel;
-@property (nonatomic) UPTileView *touchedView;
 @property (nonatomic) UPTileView *pickedView;
 @property (nonatomic) TilePosition pickedPosition;
 @property (nonatomic) UPDialogGameOver *dialogGameOver;
@@ -94,6 +93,23 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 @property (nonatomic) UPDialogMenu *dialogMenu;
 @property (nonatomic) NSInteger lockCount;
 @property (nonatomic) SpellModel *model;
+
+@property (nonatomic) UITouch *activeTouch;
+@property (nonatomic) UPControl *activeControl;
+
+@property (nonatomic) CGPoint startTouchPoint;     // in window coordinates
+@property (nonatomic) CGPoint touchPoint;          // in window coordinates
+@property (nonatomic) CGPoint previousTouchPoint;  // in window coordinates
+@property (nonatomic) CGPoint translation;         // as a point representing total distance
+@property (nonatomic) CGPoint velocity;            // as a point representing points/second
+@property (nonatomic) CGPoint startPanPoint;       // in superview coordinates
+@property (nonatomic) CGPoint panPoint;            // in superview coordinates
+@property (nonatomic) CGFloat currentPanDistance;
+@property (nonatomic) CGFloat totalPanDistance;
+@property (nonatomic) CGFloat furthestPanDistance;
+@property (nonatomic) BOOL panEverMovedUp;
+@property (nonatomic) CFTimeInterval previousNow;
+
 @end
 
 static constexpr CFTimeInterval DefaultBloopDuration = 0.3;
@@ -111,9 +127,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     SpellLayout &layout = SpellLayout::instance();
 
     self.gameView = [UPSpellGameView instance];
-    [self.gameView.wordTrayView setTarget:self action:@selector(wordTrayTapGesture:)];
-    [self.gameView.roundGameButtonPause setTarget:self action:@selector(roundButtonPauseTapped)];
-    [self.gameView.roundGameButtonClear setTarget:self action:@selector(roundButtonClearTapped:)];
     [self.view addSubview:self.gameView];
 
     self.gameTimer = [UPGameTimer defaultGameTimer];
@@ -221,6 +234,301 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     return array;
 }
 
+#pragma mark - Touch events
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UPControl *incomingActiveControl = self.activeControl;
+    
+    for (UITouch *touch in touches) {
+        if (touch != self.activeTouch) {
+            CGPoint point = [touch locationInView:self.gameView];
+            UIView *view = [self.gameView hitTest:point withEvent:event];
+            if (view.userInteractionEnabled && [view isKindOfClass:[UPControl class]]) {
+                UPControl *control = (UPControl *)view;
+                if (self.activeControl) {
+                    [self preemptActiveControlWithControl:control];
+                }
+                self.activeControl = control;
+                self.activeTouch = touch;
+                [self highlightControl:control];
+                break;
+            }
+        }
+    }
+
+    if (!self.activeTouch) {
+        ASSERT(self.activeControl == nil);
+        ASSERT(self.pickedView == nil);
+        return;
+    }
+    
+    if (self.activeControl && self.activeControl != incomingActiveControl) {
+        UITouch *touch = self.activeTouch;
+        CGPoint touchPointInView = [touch locationInView:self.activeControl];
+        self.touchPoint = [touch locationInView:self.activeControl.window];
+        self.startTouchPoint = self.touchPoint;
+        self.translation = CGPointZero;
+        
+        self.velocity = CGPointZero;
+        self.previousTouchPoint = self.touchPoint;
+        self.previousNow = CACurrentMediaTime();
+        
+        CGPoint center = up_rect_center(self.activeControl.bounds);
+        CGFloat dx = center.x - touchPointInView.x;
+        CGFloat dy = center.y - touchPointInView.y;
+        CGPoint pointInSuperview = [self.activeControl convertPoint:touchPointInView toView:self.activeControl.superview];
+        self.startPanPoint = CGPointMake(pointInSuperview.x + dx, pointInSuperview.y + dy);
+        self.panPoint = self.startPanPoint;
+        self.totalPanDistance = 0;
+        self.furthestPanDistance = 0;
+        self.panEverMovedUp = NO;
+
+        if ([self.activeControl isKindOfClass:[UPTileView class]]) {
+            UPTileView *tileView = (UPTileView *)self.activeControl;
+            [self touchBegan:self.activeTouch tileView:tileView];
+        }
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    BOOL movedTouchIsActive = NO;
+    for (UITouch *touch in touches) {
+        if (touch == self.activeTouch) {
+            movedTouchIsActive = YES;
+            break;
+        }
+    }
+    if (!movedTouchIsActive) {
+        return;
+    }
+
+    if ([self.activeControl isKindOfClass:[UPTileView class]]) {
+        UPTileView *tileView = (UPTileView *)self.activeControl;
+        [self touchMoved:self.activeTouch tileView:tileView];
+    }
+    else if (self.activeControl == self.gameView.roundGameControlPause || self.activeControl == self.gameView.roundGameControlClear) {
+        CGPoint point = [self.activeTouch locationInView:self.activeControl];
+        if ([self.activeControl pointInside:point withEvent:event]) {
+            [self highlightControl:self.activeControl];
+        }
+        else {
+            [self unhighlightControl:self.activeControl];
+        }
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    BOOL endedTouchIsActive = NO;
+    for (UITouch *touch in touches) {
+        if (touch == self.activeTouch) {
+            endedTouchIsActive = YES;
+            break;
+        }
+    }
+    if (!endedTouchIsActive) {
+        return;
+    }
+        
+    if ([self.activeControl isKindOfClass:[UPTileView class]]) {
+        UPTileView *tileView = (UPTileView *)self.activeControl;
+        [self touchEnded:self.activeTouch tileView:tileView];
+    }
+    else if (self.activeControl == self.gameView.roundGameControlPause || self.activeControl == self.gameView.roundGameControlClear) {
+        if (self.activeControl.highlighted) {
+            [self sendControlAction:self.activeControl];
+        }
+    }
+    
+    [self unhighlightControl:self.activeControl];
+    self.pickedView = nil;
+    self.pickedPosition = TilePosition();
+    self.activeControl = nil;
+    self.activeTouch = nil;
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self cancelActiveTouch];
+}
+
+- (void)highlightControl:(UPControl *)control
+{
+    ASSERT(control);
+//    LOG(General, "highlightControl: %@", control);
+    control.highlighted = YES;
+}
+
+- (void)unhighlightControl:(UPControl *)control
+{
+    ASSERT(control);
+//    LOG(General, "unhighlightControl: %@", control);
+    control.highlighted = NO;
+}
+
+- (void)preemptActiveControlWithControl:(UPControl *)control
+{
+    ASSERT(self.activeControl);
+    LOG(General, "preemptControl: %@ <= %@", self.activeControl, control);
+
+    if ([self.activeControl isKindOfClass:[UPTileView class]]) {
+        UPTileView *tileView = (UPTileView *)self.activeControl;
+        [self touchEnded:self.activeTouch tileView:tileView];
+    }
+    else if (self.activeControl == self.gameView.roundGameControlPause || self.activeControl == self.gameView.roundGameControlClear) {
+        if (self.activeControl.highlighted) {
+            [self sendControlAction:self.activeControl];
+        }
+    }
+    [self unhighlightControl:self.activeControl];
+
+    self.pickedView = nil;
+    self.pickedPosition = TilePosition();
+    self.activeControl = nil;
+    self.activeTouch = nil;
+}
+
+- (void)sendControlAction:(UPControl *)control
+{
+    ASSERT(control);
+    LOG(General, "sendControlAction: %@", control);
+    if (control == self.gameView.roundGameControlPause) {
+        [self roundButtonPauseTapped];
+    }
+    else if (control == self.gameView.roundGameControlClear) {
+        [self roundButtonClearTapped];
+    }
+    else if ([control isKindOfClass:[UPTileView class]]) {
+        UPTileView *tileView = (UPTileView *)control;
+        const Tile &tile = self.model->find_tile(tileView);
+        if (self.pickedView) {
+            [self applyActionDrop:tile];
+        }
+        else {
+            [self applyActionAdd:tile];
+        }
+    }
+}
+
+- (void)cancelActiveTouch
+{
+    if (self.activeControl) {
+        [self unhighlightControl:self.activeControl];
+    }
+    self.pickedView = nil;
+    self.pickedPosition = TilePosition();
+    self.activeControl = nil;
+    self.activeTouch = nil;
+}
+
+- (void)touchBegan:(UITouch *)touch tileView:(UPTileView *)tileView
+{
+    [self applyActionPick:self.model->find_tile(tileView)];
+}
+
+- (void)touchMoved:(UITouch *)touch tileView:(UPTileView *)tileView
+{
+    self.touchPoint = [touch locationInView:self.activeControl.window];
+    CGFloat tx = self.touchPoint.x - self.startTouchPoint.x;
+    CGFloat ty = self.touchPoint.y - self.startTouchPoint.y;
+    self.translation = CGPointMake(tx, ty);
+    
+    CGFloat dx = self.touchPoint.x - self.previousTouchPoint.x;
+    CGFloat dy = self.touchPoint.y - self.previousTouchPoint.y;
+    
+    self.panPoint = CGPointMake(self.startPanPoint.x + tx, self.startPanPoint.y + ty);
+    self.totalPanDistance += up_point_distance(self.touchPoint, self.previousTouchPoint);
+    self.currentPanDistance = up_point_distance(self.touchPoint, self.startTouchPoint);
+    self.furthestPanDistance = UPMaxT(CGFloat, self.furthestPanDistance, self.currentPanDistance);
+    
+    CFTimeInterval now = CACurrentMediaTime();
+    CFTimeInterval elapsed = now - self.previousNow;
+    CGFloat vx = dx / elapsed;
+    CGFloat vy = dy / elapsed;
+    CGFloat avx = (self.velocity.x * 0.6) + (vx * 0.4);
+    CGFloat avy = (self.velocity.y * 0.6) + (vy * 0.4);
+    self.velocity = CGPointMake(avx, avy);
+    self.previousTouchPoint = self.touchPoint;
+    self.previousNow = now;
+    self.panEverMovedUp = self.panEverMovedUp || avy < 0;
+    
+    ASSERT(self.pickedView == tileView);
+    SpellLayout &layout = SpellLayout::instance();
+    tileView.center = up_point_with_exponential_barrier(self.panPoint, layout.tile_drag_barrier_frame());
+    BOOL tileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), self.panPoint);
+    Tile &tile = self.model->find_tile(tileView);
+    if (tileInsideWordTray) {
+        [self applyActionHoverIfNeeded:tile];
+    }
+    else {
+        [self applyActionNoverIfNeeded:tile];
+    }
+}
+
+- (void)touchEnded:(UITouch *)touch tileView:(UPTileView *)tileView
+{
+    ASSERT(self.pickedView == tileView);
+    SpellLayout &layout = SpellLayout::instance();
+    CGPoint v = self.velocity;
+    BOOL pannedFar = self.furthestPanDistance >= 25;
+    BOOL putBack = self.currentPanDistance < 10;
+    BOOL movingUp = v.y < -50;
+    CGFloat movingDownVelocity = UPMaxT(CGFloat, v.y, 0.0);
+    BOOL tileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), tileView.center);
+    CGPoint projectedDownCenter = CGPointMake(tileView.center.x, tileView.center.y + (movingDownVelocity * 0.15));
+    BOOL projectedTileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), projectedDownCenter);
+    LOG(Gestures, "pan ended: f: %.2f ; c: %.2f ; v: %.2f", self.furthestPanDistance, self.currentPanDistance, v.y);
+    LOG(Gestures, "   center:     %@", NSStringFromCGPoint(tileView.center));
+    LOG(Gestures, "   projected:  %@", NSStringFromCGPoint(projectedDownCenter));
+    LOG(Gestures, "   panned far: %s", pannedFar ? "Y" : "N");
+    LOG(Gestures, "   put back:   %s", putBack ? "Y" : "N");
+    LOG(Gestures, "   moving up:  %s", movingUp ? "Y" : "N");
+    LOG(Gestures, "   ever up:    %s", self.panEverMovedUp ? "Y" : "N");
+    LOG(Gestures, "   inside [c]: %s", tileInsideWordTray ? "Y" : "N");
+    LOG(Gestures, "   inside [p]: %s", projectedTileInsideWordTray ? "Y" : "N");
+    LOG(Gestures, "   move:       %s", projectedTileInsideWordTray ? "Y" : "N");
+    LOG(Gestures, "   add:        %s", ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) ? "Y" : "N");
+    Tile &tile = self.model->find_tile(tileView);
+    if (self.pickedPosition.in_player_tray()) {
+        if (projectedTileInsideWordTray) {
+            LOG(General, "add  [1]: %@", tileView);
+            [self applyActionAdd:tile];
+        }
+        else if ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) {
+            LOG(General, "add  [2]: %@", tileView);
+            [self applyActionAdd:tile];
+        }
+        else {
+            LOG(General, "drop [1]: %@", tileView);
+            [self applyActionDrop:tile];
+        }
+    }
+    else {
+        if (projectedTileInsideWordTray) {
+            TilePosition hover_position = [self calculateHoverPosition:tile];
+            if (self.pickedPosition == hover_position) {
+                LOG(General, "drop [2]: %@", tileView);
+                [self applyActionDrop:tile];
+            }
+            else {
+                LOG(General, "move [1]: %@", tileView);
+                [self applyActionMoveTile:tile toPosition:hover_position];
+            }
+        }
+        else {
+            LOG(General, "rem  [1]: %@", tileView);
+            [self applyActionRemove:tile];
+        }
+    }
+}
+
+- (void)touchCancelled:(UITouch *)touch tileView:(UPTileView *)tileView
+{
+    [self touchEnded:touch tileView:tileView];
+}
+
 #pragma mark - Control target/action and gestures
 
 - (void)wordTrayTapGesture:(UITapGestureRecognizer *)gestureRecognizer
@@ -231,7 +539,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.mode == Mode::Play);
     
-    if (self.gameView.wordTrayView.active) {
+    if (self.gameView.wordTrayControl.active) {
         [self applyActionSubmit];
     }
     else if (self.model->word_length() == 0) {
@@ -261,7 +569,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self setMode:Mode::Pause];
 }
 
-- (void)roundButtonClearTapped:(UITapGestureRecognizer *)gestureRecognizer
+- (void)roundButtonClearTapped
 {
     ASSERT(self.mode == Mode::Play);
     if (self.model->word_length()) {
@@ -269,130 +577,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
     else {
         [self applyActionDump];
-    }
-}
-
-- (void)preemptActiveTileGestureInFavorOfTileView:(UPTileView *)tileView
-{
-    if (self.pickedView && self.pickedView != tileView) {
-        [self.pickedView.gesture preempt];
-        [self handleTileGesture:self.pickedView];
-//        self.pickedView = nil;
-//        self.pickedPosition = TilePosition();
-        //ASSERT(self.pickedView == nil);
-    }
-}
-
-- (void)handleTileGesture:(UPTileView *)tileView
-{
-    if (self.pickedView && self.pickedView != tileView) {
-        LOG(General, ">>> skipping");
-        return;
-    }
-    
-    LOG(General, ">>> handling");
-    
-    UPTileGestureRecognizer *gesture = tileView.tileGesture;
-    ASSERT(gesture);
-    
-    switch (gesture.state) {
-        case UIGestureRecognizerStatePossible: {
-            // no-op
-            break;
-        }
-        case UIGestureRecognizerStateBegan: {
-            ASSERT(self.mode == Mode::Play);
-            [self applyActionPick:self.model->find_tile(tileView)];
-            break;
-        }
-        case UIGestureRecognizerStateChanged: {
-            ASSERT(self.mode == Mode::Play);
-            ASSERT(self.pickedView == tileView);
-            SpellLayout &layout = SpellLayout::instance();
-            CGPoint panPoint = gesture.panPoint;
-            tileView.center = up_point_with_exponential_barrier(panPoint, layout.tile_drag_barrier_frame());
-            BOOL tileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), panPoint);
-            Tile &tile = self.model->find_tile(tileView);
-            if (tileInsideWordTray) {
-                [self applyActionHoverIfNeeded:tile];
-            }
-            else {
-                [self applyActionNoverIfNeeded:tile];
-            }
-            break;
-        }
-        case UIGestureRecognizerStateEnded: {
-            ASSERT(self.mode == Mode::Play);
-            ASSERT(self.pickedView == tileView);
-            SpellLayout &layout = SpellLayout::instance();
-            CGPoint v = gesture.velocity;
-            BOOL pannedFar = gesture.furthestPanDistance >= 25;
-            BOOL putBack = gesture.currentPanDistance < 10;
-            BOOL movingUp = v.y < -50;
-            CGFloat movingDownVelocity = UPMaxT(CGFloat, v.y, 0.0);
-            BOOL tileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), tileView.center);
-            CGPoint projectedDownCenter = CGPointMake(tileView.center.x, tileView.center.y + (movingDownVelocity * 0.15));
-            BOOL projectedTileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), projectedDownCenter);
-            LOG(Gestures, "pan ended: f: %.2f ; c: %.2f ; v: %.2f", gesture.furthestPanDistance, gesture.currentPanDistance, v.y);
-            LOG(Gestures, "   center:     %@", NSStringFromCGPoint(tileView.center));
-            LOG(Gestures, "   projected:  %@", NSStringFromCGPoint(projectedDownCenter));
-            LOG(Gestures, "   panned far: %s", pannedFar ? "Y" : "N");
-            LOG(Gestures, "   put back:   %s", putBack ? "Y" : "N");
-            LOG(Gestures, "   moving up:  %s", movingUp ? "Y" : "N");
-            LOG(Gestures, "   ever up:    %s", gesture.panEverMovedUp ? "Y" : "N");
-            LOG(Gestures, "   inside [c]: %s", tileInsideWordTray ? "Y" : "N");
-            LOG(Gestures, "   inside [p]: %s", projectedTileInsideWordTray ? "Y" : "N");
-            LOG(Gestures, "   move:       %s", projectedTileInsideWordTray ? "Y" : "N");
-            LOG(Gestures, "   add:        %s", ((!pannedFar && putBack) || movingUp || !gesture.panEverMovedUp) ? "Y" : "N");
-            Tile &tile = self.model->find_tile(tileView);
-            if (self.pickedPosition.in_player_tray()) {
-                if (projectedTileInsideWordTray) {
-                    [self applyActionAdd:tile];
-                }
-                else if ((!pannedFar && putBack) || movingUp || !gesture.panEverMovedUp) {
-                    [self applyActionAdd:tile];
-                }
-                else {
-                    [self applyActionDrop:tile];
-                }
-            }
-            else {
-                if (projectedTileInsideWordTray) {
-                    TilePosition hover_position = [self calculateHoverPosition:tile];
-                    if (self.pickedPosition == hover_position) {
-                        [self applyActionDrop:tile];
-                    }
-                    else {
-                        [self applyActionMoveTile:tile toPosition:hover_position];
-                    }
-                }
-                else {
-                    [self applyActionRemove:tile];
-                }
-            }
-            self.pickedView = nil;
-            self.pickedPosition = TilePosition();
-            break;
-        }
-        case UIGestureRecognizerStateFailed:
-            ASSERT(!self.pickedView);
-            self.pickedView = nil;
-            self.pickedPosition = TilePosition();
-            break;
-        case UIGestureRecognizerStateCancelled: {
-            if (self.pickedView) {
-                ASSERT(self.pickedView == tileView);
-                if (self.mode == Mode::GameOver) {
-                    [self applyActionDropForGameOver:self.model->find_tile(tileView)];
-                }
-                else {
-                    [self applyActionDrop:self.model->find_tile(tileView)];
-                }
-                self.pickedView = nil;
-                self.pickedPosition = TilePosition();
-            }
-            break;
-        }
     }
 }
 
@@ -407,116 +591,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     else {
         [self applyActionAdd:tile];
     }
-}
-
-- (void)tileViewPanned:(UPTileView *)tileView
-{
-//    UIPanGestureRecognizer *pan = tileView.pan;
-//    switch (pan.state) {
-//        case UIGestureRecognizerStatePossible: {
-//            // no-op
-//            break;
-//        }
-//        case UIGestureRecognizerStateBegan: {
-//            ASSERT(self.mode == Mode::Play);
-//            LOG(General, "began: %@", tileView);
-//            [self applyActionPick:self.model->find_tile(tileView)];
-//            break;
-//        }
-//        case UIGestureRecognizerStateChanged: {
-//            ASSERT(self.mode == Mode::Play);
-//            ASSERT(self.pickedView == tileView);
-//            SpellLayout &layout = SpellLayout::instance();
-//            CGPoint t = [pan translationInView:tileView];
-//            CGPoint newCenter = CGPointMake(self.panStartPoint.x + t.x, self.panStartPoint.y + t.y);
-//            newCenter = up_point_with_exponential_barrier(newCenter, layout.tile_drag_barrier_frame());
-//            self.panFurthestDistance = UPMaxT(CGFloat, self.panFurthestDistance, up_point_distance(CGPointZero, t));
-//            self.panCurrentDistance = up_point_distance(self.panStartPoint, newCenter);
-//            self.panEverMovedUp = self.panEverMovedUp || [pan velocityInView:tileView].y < 0;
-//            tileView.center = newCenter;
-//            BOOL tileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), newCenter);
-//            Tile &tile = self.model->find_tile(tileView);
-//            if (tileInsideWordTray) {
-//                [self applyActionHoverIfNeeded:tile];
-//            }
-//            else {
-//                [self applyActionNoverIfNeeded:tile];
-//            }
-//            break;
-//        }
-//        case UIGestureRecognizerStateEnded: {
-//            ASSERT(self.mode == Mode::Play);
-//            ASSERT(self.pickedView == tileView);
-//            SpellLayout &layout = SpellLayout::instance();
-//            CGPoint v = [pan velocityInView:tileView];
-//            BOOL pannedFar = self.panFurthestDistance >= 25;
-//            BOOL putBack = self.panCurrentDistance < 10;
-//            BOOL movingUp = v.y < -50;
-//            CGFloat movingDownVelocity = UPMaxT(CGFloat, v.y, 0.0);
-//            BOOL tileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), tileView.center);
-//            CGPoint projectedDownCenter = CGPointMake(tileView.center.x, tileView.center.y + (movingDownVelocity * 0.15));
-//            BOOL projectedTileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), projectedDownCenter);
-//            LOG(Gestures, "pan ended: f: %.2f ; c: %.2f ; v: %.2f", self.panFurthestDistance, self.panCurrentDistance, v.y);
-//            LOG(Gestures, "   center:     %@", NSStringFromCGPoint(tileView.center));
-//            LOG(Gestures, "   projected:  %@", NSStringFromCGPoint(projectedDownCenter));
-//            LOG(Gestures, "   panned far: %s", pannedFar ? "Y" : "N");
-//            LOG(Gestures, "   put back:   %s", putBack ? "Y" : "N");
-//            LOG(Gestures, "   moving up:  %s", movingUp ? "Y" : "N");
-//            LOG(Gestures, "   ever up:    %s", self.panEverMovedUp ? "Y" : "N");
-//            LOG(Gestures, "   inside [c]: %s", tileInsideWordTray ? "Y" : "N");
-//            LOG(Gestures, "   inside [p]: %s", projectedTileInsideWordTray ? "Y" : "N");
-//            LOG(Gestures, "   move:       %s", projectedTileInsideWordTray ? "Y" : "N");
-//            LOG(Gestures, "   add:        %s", ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) ? "Y" : "N");
-//            Tile &tile = self.model->find_tile(tileView);
-//            if (self.pickedPosition.in_player_tray()) {
-//                if (projectedTileInsideWordTray) {
-//                    [self applyActionAdd:tile];
-//                }
-//                else if ((!pannedFar && putBack) || movingUp || !self.panEverMovedUp) {
-//                    [self applyActionAdd:tile];
-//                }
-//                else {
-//                    [self applyActionDrop:tile];
-//                }
-//            }
-//            else {
-//                if (projectedTileInsideWordTray) {
-//                    TilePosition hover_position = [self calculateHoverPosition:tile];
-//                    if (self.pickedPosition == hover_position) {
-//                        [self applyActionDrop:tile];
-//                    }
-//                    else {
-//                        [self applyActionMoveTile:tile toPosition:hover_position];
-//                    }
-//                }
-//                else {
-//                    [self applyActionRemove:tile];
-//                }
-//            }
-//            self.pickedView = nil;
-//            self.pickedPosition = TilePosition();
-//            break;
-//        }
-//        case UIGestureRecognizerStateFailed:
-//            ASSERT(!self.pickedView);
-//            self.pickedView = nil;
-//            self.pickedPosition = TilePosition();
-//            break;
-//        case UIGestureRecognizerStateCancelled: {
-//            if (self.pickedView) {
-//                ASSERT(self.pickedView == tileView);
-//                if (self.mode == Mode::GameOver) {
-//                    [self applyActionDropForGameOver:self.model->find_tile(tileView)];
-//                }
-//                else {
-//                    [self applyActionDrop:self.model->find_tile(tileView)];
-//                }
-//                self.pickedView = nil;
-//                self.pickedPosition = TilePosition();
-//            }
-//            break;
-//        }
-//    }
 }
 
 - (TilePosition)calculateHoverPosition:(const Tile &)tile
@@ -585,6 +659,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UPTileView *tileView = tile.view();
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
     Location location(role_in_word(word_pos.index(), self.model->word_length()));
+    LOG(General, "add bloop: %@", tileView);
     start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], DefaultBloopDuration, nil));
 
     [self viewUpdateGameControls];
@@ -628,8 +703,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT(self.pickedView == nil);
     ASSERT_NPOS(self.pickedPosition);
 
-    cancel(BandGameAll);
-    cancel(@[tile.view()], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
+//    cancel(BandGameAll);
+//    cancel(@[tile.view()], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
 
     [self viewOrderOutWordScoreLabel];
 
@@ -779,7 +854,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     // assess time penalty and shake word tray side-to-side
     [self viewPenaltyForReject];
     SpellLayout &layout = SpellLayout::instance();
-    NSMutableArray *views = [NSMutableArray arrayWithObject:self.gameView.wordTrayView];
+    NSMutableArray *views = [NSMutableArray arrayWithObject:self.gameView.wordTrayControl];
     [views addObjectsFromArray:[self wordTrayTileViews]];
     start(shake(BandGameUI, views, 0.9, layout.word_tray_shake_offset(), ^(UIViewAnimatingPosition finishedPosition) {
         if (finishedPosition == UIViewAnimatingPositionEnd) {
@@ -832,17 +907,17 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)viewUpdateGameControls
 {
     // word tray
-    self.gameView.wordTrayView.active = self.model->word_in_lexicon();
-    [self.gameView.wordTrayView setNeedsUpdate];
+    self.gameView.wordTrayControl.active = self.model->word_in_lexicon();
+    [self.gameView.wordTrayControl setNeedsUpdate];
 
     // clear button
     if (self.model->word_length()) {
-        [self.gameView.roundGameButtonClear setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
+        [self.gameView.roundGameControlClear setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
     }
     else {
-        [self.gameView.roundGameButtonClear setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
+        [self.gameView.roundGameControlClear setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
     }
-    [self.gameView.roundGameButtonClear setNeedsUpdate];
+    [self.gameView.roundGameControlClear setNeedsUpdate];
 
     self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", self.model->game_score()];
 }
@@ -1109,7 +1184,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
             tile.set_view(tileView);
             tileView.band = UP::BandGameUIColor;
-            tileView.tileGestureDelegate = self;
             Role role = role_in_player_tray(TilePosition(TileTray::Player, idx));
             tileView.frame = layout.frame_for(Location(role, Spot::OffBottomNear));
             [self.gameView.tileContainerView addSubview:tileView];
@@ -1128,9 +1202,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.lockCount > 0);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
-    self.gameView.roundGameButtonClear.highlightedLocked = YES;
-    self.gameView.roundGameButtonClear.highlighted = YES;
-    self.gameView.wordTrayView.alpha = disabledAlpha;
+    self.gameView.roundGameControlClear.highlightedLocked = YES;
+    self.gameView.roundGameControlClear.highlighted = YES;
+    self.gameView.wordTrayControl.alpha = disabledAlpha;
     self.gameView.tileContainerView.alpha = disabledAlpha;
 }
 
@@ -1138,18 +1212,18 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.lockCount > 0);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
-    self.gameView.wordTrayView.alpha = disabledAlpha;
-    self.gameView.roundGameButtonClear.alpha = disabledAlpha;
+    self.gameView.wordTrayControl.alpha = disabledAlpha;
+    self.gameView.roundGameControlClear.alpha = disabledAlpha;
     self.gameView.tileContainerView.alpha = disabledAlpha;
 }
 
 - (void)viewPenaltyFinished
 {
     ASSERT(self.lockCount > 0);
-    self.gameView.roundGameButtonClear.highlightedLocked = NO;
-    self.gameView.roundGameButtonClear.highlighted = NO;
-    self.gameView.roundGameButtonClear.alpha = 1.0;
-    self.gameView.wordTrayView.alpha = 1.0;
+    self.gameView.roundGameControlClear.highlightedLocked = NO;
+    self.gameView.roundGameControlClear.highlighted = NO;
+    self.gameView.roundGameControlClear.alpha = 1.0;
+    self.gameView.wordTrayControl.alpha = 1.0;
     self.gameView.tileContainerView.alpha = 1.0;
 }
 
@@ -1181,7 +1255,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.dialogMenu.userInteractionEnabled = NO;
     self.dialogPause.userInteractionEnabled = NO;
 
-    UIView *roundButtonPause = self.gameView.roundGameButtonPause;
+    UIView *roundButtonPause = self.gameView.roundGameControlPause;
     for (UIView *view in self.gameView.subviews) {
         if (!includingPause && view == roundButtonPause) {
             continue;
@@ -1830,9 +1904,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
 
     // special modal fixups for pause
-    self.gameView.roundGameButtonPause.highlightedLocked = YES;
-    self.gameView.roundGameButtonPause.highlighted = YES;
-    self.gameView.roundGameButtonPause.alpha = [UIColor themeModalActiveAlpha];
+    self.gameView.roundGameControlPause.highlightedLocked = YES;
+    self.gameView.roundGameControlPause.highlighted = YES;
+    self.gameView.roundGameControlPause.alpha = [UIColor themeModalActiveAlpha];
     
     SpellLayout &layout = SpellLayout::instance();
     self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
@@ -1867,9 +1941,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
     
     // special modal fixups for pause
-    self.gameView.roundGameButtonPause.highlightedLocked = YES;
-    self.gameView.roundGameButtonPause.highlighted = YES;
-    self.gameView.roundGameButtonPause.alpha = [UIColor themeModalActiveAlpha];
+    self.gameView.roundGameControlPause.highlightedLocked = YES;
+    self.gameView.roundGameControlPause.highlighted = YES;
+    self.gameView.roundGameControlPause.alpha = [UIColor themeModalActiveAlpha];
 
     SpellLayout &layout = SpellLayout::instance();
     self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageHigh);
@@ -1902,15 +1976,15 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         [UIView animateWithDuration:0.3 animations:^{
-            self.gameView.roundGameButtonPause.highlightedLocked = NO;
-            self.gameView.roundGameButtonPause.highlighted = NO;
+            self.gameView.roundGameControlPause.highlightedLocked = NO;
+            self.gameView.roundGameControlPause.highlighted = NO;
             [self viewRestoreGameAlpha];
         } completion:^(BOOL finished) {
             [self.gameTimer start];
             start(BandGameDelay);
             start(BandGameUI);
-            self.gameView.roundGameButtonPause.highlightedLocked = NO;
-            self.gameView.roundGameButtonPause.highlighted = NO;
+            self.gameView.roundGameControlPause.highlightedLocked = NO;
+            self.gameView.roundGameControlPause.highlighted = NO;
             [self viewUnlock];
         }];
     }));
@@ -1926,13 +2000,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
     
-    [self.gameView.roundGameButtonPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    [self.gameView.roundGameButtonPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    self.gameView.roundGameButtonPause.highlightedLocked = NO;
-    self.gameView.roundGameButtonPause.highlighted = NO;
-    self.gameView.roundGameButtonPause.alpha = [UIColor themeModalBackgroundAlpha];
-    [self.gameView.roundGameButtonPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    [self.gameView.roundGameButtonPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.gameView.roundGameControlPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.gameView.roundGameControlPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    self.gameView.roundGameControlPause.highlightedLocked = NO;
+    self.gameView.roundGameControlPause.highlighted = NO;
+    self.gameView.roundGameControlPause.alpha = [UIColor themeModalBackgroundAlpha];
+    [self.gameView.roundGameControlPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.gameView.roundGameControlPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
     [UIView animateWithDuration:0.15 delay:0.15 options:0 animations:^{
         self.dialogPause.alpha = 0.0;

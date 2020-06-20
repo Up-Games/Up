@@ -6,16 +6,16 @@
 #import <UIKit/UIKit.h>
 
 @class UPBezierPathView;
-@class UPButton;
+@class UPControl;
 @class UPGameTimer;
 @class UPGameTimerLabel;
 @class UPLabel;
 
 @interface UPSpellGameView : UIView
-@property (nonatomic) UPButton *wordTrayView;
 @property (nonatomic) UIView *tileContainerView;
-@property (nonatomic) UPButton *roundGameButtonPause;
-@property (nonatomic) UPButton *roundGameButtonClear;
+@property (nonatomic) UPControl *wordTrayControl;
+@property (nonatomic) UPControl *roundGameControlPause;
+@property (nonatomic) UPControl *roundGameControlClear;
 @property (nonatomic) UPGameTimerLabel *timerLabel;
 @property (nonatomic) UPLabel *gameScoreLabel;
 @property (nonatomic) UPLabel *wordScoreLabel;

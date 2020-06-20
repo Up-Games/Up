@@ -29,16 +29,19 @@ UIBezierPath *ChoiceRightFillPathSelected();
 
 }  // namespace UP
 
-@interface UPButton (UPSpell)
+@interface UPControl (UPSpell)
 
-+ (UPButton *)roundGameButton;
-+ (UPButton *)roundGameButtonMinusSign;
++ (UPControl *)roundGameControl;
++ (UPControl *)roundGameControlMinusSign;
++ (UPControl *)wordTrayControl;
+
+@end
+
+@interface UPButton (UPSpell)
 
 + (UPButton *)roundBackButton;
 + (UPButton *)roundBackButtonLeftArrow;
 + (UPButton *)roundBackButtonRightArrow;
-
-+ (UPButton *)wordTray;
 
 + (UPButton *)textButtonAbout;
 + (UPButton *)textButtonExtras;
