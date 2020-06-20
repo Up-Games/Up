@@ -1974,8 +1974,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             [self viewRestoreGameAlpha];
         } completion:^(BOOL finished) {
             [self.gameTimer start];
-            start(BandGameDelay);
-            start(BandGameUI);
+            start(BandGameAll);
             self.gameView.roundGameControlPause.highlightedLocked = NO;
             self.gameView.roundGameControlPause.highlighted = NO;
             [self viewUnlock];
@@ -1987,8 +1986,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     [self viewLock];
 
-    cancel(BandGameDelay);
-    cancel(BandGameUI);
+    cancel(BandGameAll);
     [self.gameTimer cancel];
     [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
