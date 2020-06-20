@@ -8,7 +8,6 @@
 @interface UPViewMove ()
 @property (nonatomic, readwrite) UIView *view;
 @property (nonatomic, readwrite) CGPoint beginning;
-@property (nonatomic, readwrite) CGPoint destination;
 @end
 
 @implementation UPViewMove

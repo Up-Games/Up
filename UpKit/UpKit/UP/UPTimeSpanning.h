@@ -44,6 +44,8 @@ UPAnimator *set_color(UP::Band band, NSArray<UPControl *> *controls, CFTimeInter
 
 NSObject<UPTimeSpanning> *delay(UP::Band band, double delay_in_seconds, void (^block)(void));
 
+UPViewMove *find_move(UIView *, uint32_t);
+
 void cancel(NSObject<UPTimeSpanning> *);
 void cancel(uint32_t);
 void cancel(NSArray<UIView *> *);

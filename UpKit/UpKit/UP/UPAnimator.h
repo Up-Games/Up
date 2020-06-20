@@ -50,6 +50,7 @@ typedef NS_OPTIONS(NSInteger, UPAnimatorType) {
 
 @property (nonatomic, readonly) UPAnimatorType type;
 @property (nonatomic, readonly) NSArray<UIView *> *views;
+@property (nonatomic, readonly) NSArray<UPViewMove *> *moves;
 - (instancetype)init NS_UNAVAILABLE;
 
 // UIViewAnimating

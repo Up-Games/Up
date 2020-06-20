@@ -102,6 +102,22 @@ UPAnimator *set_color(UP::Band band, NSArray<UPControl *> *controls, CFTimeInter
     return animator;
 }
 
+UPViewMove *find_move(UIView *view, uint32_t type)
+{
+    for (auto it : *g_map) {
+        NSObject<UPTimeSpanning> *obj = it.second;
+        if ([obj isKindOfClass:[UPAnimator class]]) {
+            UPAnimator *animator = (UPAnimator *)obj;
+            for (UPViewMove *move in animator.moves) {
+                if (view == move.view) {
+                    return move;
+                }
+            }
+        }
+    }
+    return nil;
+}
+
 void cancel(NSObject<UPTimeSpanning> *obj)
 {
     if (obj) {

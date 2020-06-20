@@ -10,7 +10,7 @@
 @interface UPViewMove : NSObject
 @property (nonatomic, readonly) UIView *view;
 @property (nonatomic, readonly) CGPoint beginning;
-@property (nonatomic, readonly) CGPoint destination;
+@property (nonatomic) CGPoint destination;
 
 + (UPViewMove *)view:(UIView *)view beginning:(CGPoint)beginning destination:(CGPoint)destination;
 

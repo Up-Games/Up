@@ -54,6 +54,7 @@ using UP::TimeSpanning::slide;
 using UP::TimeSpanning::cancel_all;
 using UP::TimeSpanning::cancel;
 using UP::TimeSpanning::delay;
+using UP::TimeSpanning::find_move;
 using UP::TimeSpanning::pause_all;
 using UP::TimeSpanning::pause;
 using UP::TimeSpanning::start_all;
@@ -114,7 +115,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 @end
 
 static constexpr CFTimeInterval DefaultBloopDuration = 0.3;
-static constexpr CFTimeInterval DefaultTileSlideDuration = 0.2;
+static constexpr CFTimeInterval DefaultTileSlideDuration = 0.125;
 static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
 static constexpr CFTimeInterval GameOverRespositionBloopDelay = 0.4;
 static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
@@ -642,12 +643,29 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     if (wordTrayTilesNeedMoves) {
         //cancel(BandGameUITile);
-        cancel(BandGameUITileSlide);
+        //cancel(BandGameUITileSlide);
+        SpellLayout &layout = SpellLayout::instance();
         for (UPTileView *wordTrayTileView in wordTrayTileViews) {
             Tile &tile = self.model->find_tile(wordTrayTileView);
             ASSERT(tile.position().in_word_tray());
-            UPViewMove *move = UPViewMoveMake(wordTrayTileView, role_in_word(tile.position().index(), self.model->word_length()));
-            start(UP::TimeSpanning::slide(BandGameUITileSlide, @[move], DefaultTileSlideDuration, nil));
+            Location location = role_in_word(tile.position().index(), self.model->word_length());
+            UPViewMove *bloopMove = find_move(wordTrayTileView, UPAnimatorTypeBloopIn);
+            if (bloopMove) {
+                LOG(General, ">>> resetting bloop destination");
+                bloopMove.destination = layout.center_for(location);
+            }
+            else {
+                UPViewMove *slideMove = find_move(wordTrayTileView, UPAnimatorTypeSlide);
+                if (slideMove) {
+                    LOG(General, ">>> resetting slide destination");
+                    slideMove.destination = layout.center_for(location);
+                }
+                else {
+                    LOG(General, "--- sliding");
+                    UPViewMove *move = UPViewMoveMake(wordTrayTileView, location);
+                    start(UP::TimeSpanning::slide(BandGameUITileSlide, @[move], DefaultTileSlideDuration, nil));
+                }
+            }
         }
     }
     
