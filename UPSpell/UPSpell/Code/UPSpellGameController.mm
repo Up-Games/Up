@@ -94,7 +94,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 @property (nonatomic) UPDialogMenu *dialogMenu;
 @property (nonatomic) NSInteger lockCount;
 
-@property (nonatomic) UITouch *touch;
+@property (nonatomic) UITouch *activeTouch;
 @property (nonatomic) UPControl *touchedControl;
 @property (nonatomic) UPTileView *pickedTileView;
 @property (nonatomic) TilePosition pickedTilePosition;
@@ -240,10 +240,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    UPControl *incomingActiveControl = self.touchedControl;
+    UPControl *incomingTouchedControl = self.touchedControl;
     
     for (UITouch *touch in touches) {
-        if (touch != self.touch) {
+        if (touch != self.activeTouch) {
             CGPoint point = [touch locationInView:self.gameView];
             UIView *view = [self.gameView hitTest:point withEvent:event];
             if (view.userInteractionEnabled && [view isKindOfClass:[UPControl class]]) {
@@ -252,21 +252,21 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
                     [self preemptActiveControlWithControl:control];
                 }
                 self.touchedControl = control;
-                self.touch = touch;
+                self.activeTouch = touch;
                 self.touchedControl.highlighted = YES;
                 break;
             }
         }
     }
 
-    if (!self.touch) {
+    if (!self.activeTouch) {
         ASSERT(self.touchedControl == nil);
         ASSERT(self.pickedTileView == nil);
         return;
     }
     
-    if (self.touchedControl && self.touchedControl != incomingActiveControl) {
-        UITouch *touch = self.touch;
+    if (self.touchedControl && self.touchedControl != incomingTouchedControl) {
+        UITouch *touch = self.activeTouch;
         CGPoint touchPointInView = [touch locationInView:self.touchedControl];
         self.touchPoint = [touch locationInView:self.touchedControl.window];
         self.startTouchPoint = self.touchPoint;
@@ -288,7 +288,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
         if ([self.touchedControl isKindOfClass:[UPTileView class]]) {
             UPTileView *tileView = (UPTileView *)self.touchedControl;
-            [self touchBegan:self.touch tileView:tileView];
+            [self touchBegan:self.activeTouch tileView:tileView];
         }
     }
 }
@@ -297,7 +297,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     BOOL movedTouchIsActive = NO;
     for (UITouch *touch in touches) {
-        if (touch == self.touch) {
+        if (touch == self.activeTouch) {
             movedTouchIsActive = YES;
             break;
         }
@@ -308,10 +308,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     if ([self.touchedControl isKindOfClass:[UPTileView class]]) {
         UPTileView *tileView = (UPTileView *)self.touchedControl;
-        [self touchMoved:self.touch tileView:tileView];
+        [self touchMoved:self.activeTouch tileView:tileView];
     }
     else if (self.touchedControl == self.gameView.roundGameControlPause || self.touchedControl == self.gameView.roundGameControlClear) {
-        CGPoint point = [self.touch locationInView:self.touchedControl];
+        CGPoint point = [self.activeTouch locationInView:self.touchedControl];
         if ([self.touchedControl pointInside:point withEvent:event]) {
             self.touchedControl.highlighted = YES;
         }
@@ -325,7 +325,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     BOOL endedTouchIsActive = NO;
     for (UITouch *touch in touches) {
-        if (touch == self.touch) {
+        if (touch == self.activeTouch) {
             endedTouchIsActive = YES;
             break;
         }
@@ -336,7 +336,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         
     if ([self.touchedControl isKindOfClass:[UPTileView class]]) {
         UPTileView *tileView = (UPTileView *)self.touchedControl;
-        [self touchEnded:self.touch tileView:tileView];
+        [self touchEnded:self.activeTouch tileView:tileView];
     }
     else if (self.touchedControl == self.gameView.roundGameControlPause || self.touchedControl == self.gameView.roundGameControlClear) {
         if (self.touchedControl.highlighted) {
@@ -348,7 +348,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.pickedTileView = nil;
     self.pickedTilePosition = TilePosition();
     self.touchedControl = nil;
-    self.touch = nil;
+    self.activeTouch = nil;
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -469,7 +469,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     if ([self.touchedControl isKindOfClass:[UPTileView class]]) {
         UPTileView *tileView = (UPTileView *)self.touchedControl;
-        [self touchEnded:self.touch tileView:tileView];
+        [self touchEnded:self.activeTouch tileView:tileView];
     }
     else if (self.touchedControl == self.gameView.roundGameControlPause || self.touchedControl == self.gameView.roundGameControlClear) {
         if (self.touchedControl.highlighted) {
@@ -480,7 +480,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.pickedTileView = nil;
     self.pickedTilePosition = TilePosition();
     self.touchedControl = nil;
-    self.touch = nil;
+    self.activeTouch = nil;
 }
 
 - (void)sendControlAction:(UPControl *)control
@@ -502,7 +502,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.pickedTileView = nil;
     self.pickedTilePosition = TilePosition();
     self.touchedControl = nil;
-    self.touch = nil;
+    self.activeTouch = nil;
 }
 
 #pragma mark - Control target/action and gestures
