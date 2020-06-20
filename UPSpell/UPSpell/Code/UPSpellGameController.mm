@@ -63,6 +63,7 @@ using UP::BandGameAll;
 using UP::BandGameDelay;
 using UP::BandGameUI;
 using UP::BandGameUITile;
+using UP::BandGameUITileSlide;
 using UP::BandModeAll;
 using UP::BandModeDelay;
 using UP::BandModeUI;
@@ -640,19 +641,20 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, tile.position(), word_pos));
 
     if (wordTrayTilesNeedMoves) {
+        //cancel(BandGameUITile);
+        cancel(BandGameUITileSlide);
         for (UPTileView *wordTrayTileView in wordTrayTileViews) {
-            cancel(@[wordTrayTileView], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
             Tile &tile = self.model->find_tile(wordTrayTileView);
             ASSERT(tile.position().in_word_tray());
             UPViewMove *move = UPViewMoveMake(wordTrayTileView, role_in_word(tile.position().index(), self.model->word_length()));
-            start(UP::TimeSpanning::slide(BandGameUI, @[move], DefaultTileSlideDuration, nil));
+            start(UP::TimeSpanning::slide(BandGameUITileSlide, @[move], DefaultTileSlideDuration, nil));
         }
     }
     
     UPTileView *tileView = tile.view();
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
     Location location(role_in_word(word_pos.index(), self.model->word_length()));
-    start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], DefaultBloopDuration, nil));
+    start(bloop_in(BandGameUITile, @[UPViewMoveMake(tileView, location)], DefaultBloopDuration, nil));
 
     [self viewUpdateGameControls];
 }
@@ -910,13 +912,14 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         return;
     }
 
-    cancel(BandGameUITile);
+    cancel(BandGameUITileSlide);
+    
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
         Tile &tile = self.model->find_tile(tileView);
         [moves addObject:UPViewMoveMake(tileView, role_in_word(tile.position().index(), self.model->word_length()))];
     }
-    start(UP::TimeSpanning::slide(BandGameUI, moves, DefaultTileSlideDuration, nil));
+    start(UP::TimeSpanning::slide(BandGameUITileSlide, moves, DefaultTileSlideDuration, nil));
 }
 
 - (void)viewHover:(const TilePosition &)hover_pos
@@ -1001,6 +1004,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
     ASSERT(wordTrayTileViews.count > 0);
 
+    cancel(BandGameUITile);
+    cancel(BandGameUITileSlide);
+
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
         TileIndex idx = self.model->player_tray_index(tileView);
@@ -1018,6 +1024,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
 
     cancel(BandGameUITile);
+    cancel(BandGameUITileSlide);
 
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
