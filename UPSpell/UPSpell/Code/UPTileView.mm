@@ -12,7 +12,6 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPSpellLayout.h"
-#import "UPTileGestureRecognizer.h"
 #import "UPTileView.h"
 #import "UPTilePaths.h"
 
@@ -76,9 +75,6 @@ static uint32_t _InstanceCount;
             [contentPath appendPath:tile_paths.tile_path_for_multiplier(self.multiplier)];
         }
         [self setContentPath:contentPath];
-
-//        self.gesture = [[UPTileGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
-//        [self addGestureRecognizer:self.gesture];
     }
     
     return self;
@@ -93,63 +89,6 @@ static uint32_t _InstanceCount;
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"UPTileView : %c : %p", (char)self.glyph, self];
-}
-
-#pragma mark - Gestures
-
-- (UPTileGestureRecognizer *)tileGesture
-{
-    return [self.gesture isKindOfClass:[UPTileGestureRecognizer class]] ? (UPTileGestureRecognizer *)self.gesture : nil;
-}
-
-- (void)handleGesture:(UPTileGestureRecognizer *)gesture
-{
-    switch (gesture.state) {
-        case UIGestureRecognizerStatePossible: {
-            break;
-        }
-        case UIGestureRecognizerStateBegan: {
-            if (self.autoHighlights) {
-                self.highlighted = gesture.touchInside;
-            }
-            if (self.autoSelects) {
-                self.selected = gesture.touchInside;
-            }
-//            [self.tileGestureDelegate preemptActiveTileGestureInFavorOfTileView:self];
-            break;
-        }
-        case UIGestureRecognizerStateChanged: {
-            if (self.autoHighlights) {
-                self.highlighted = gesture.touchInside;
-            }
-            if (self.autoSelects) {
-                self.selected = gesture.touchInside;
-            }
-            break;
-        }
-        case UIGestureRecognizerStateEnded: {
-            if (self.autoHighlights) {
-                self.highlighted = NO;
-            }
-            if (self.autoSelects) {
-                self.selected = gesture.touchInside;
-            }
-            break;
-        }
-        case UIGestureRecognizerStateCancelled:
-        case UIGestureRecognizerStateFailed: {
-            if (self.autoHighlights) {
-                self.highlighted = NO;
-            }
-            if (self.autoSelects) {
-                self.selected = NO;
-            }
-            break;
-        }
-    }
-
-    LOG(General, "call delegate: %@", self);
-    [self.tileGestureDelegate handleTileGesture:self];
 }
 
 @end
