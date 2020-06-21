@@ -904,7 +904,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [views addObjectsFromArray:[self wordTrayTileViews]];
     start(shake(BandGameUI, views, 0.9, layout.word_tray_shake_offset(), ^(UIViewAnimatingPosition finishedPosition) {
         if (finishedPosition == UIViewAnimatingPositionEnd) {
-            delay(BandGameDelay, 0.25, ^{
+            delay(BandGameDelay, 0.15, ^{
                 [self viewPenaltyFinished];
                 delay(BandGameDelay, 0.1, ^{
                     [self applyActionClear];
@@ -1489,7 +1489,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffLeftFar));
     UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffLeftFar));
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffLeftNear));
-    UPViewMove *dialogGameOverMove = UPViewMoveMake(self.dialogGameOver, Location(Role::Screen, Spot::OffRightNear));
+    UPViewMove *dialogGameOverMove = UPViewMoveMake(self.dialogGameOver, Location(Role::Screen, Spot::OffLeftNear));
     
     CFTimeInterval duration = 0.75;
     
@@ -1594,6 +1594,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             }];
             delay(BandModeDelay, 0.45, ^{
                 // bloop in ready message
+                self.dialogMenu.messagePathView.alpha = 0;
+                [UIView animateWithDuration:0.2 animations:^{
+                    self.dialogMenu.messagePathView.alpha = 1;
+                }];
                 UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.messagePathView, Location(Role::DialogMessageHigh));
                 start(bloop_in(BandModeUI, @[readyMove], 0.3,  ^(UIViewAnimatingPosition) {
                     delay(BandModeDelay, 1.5, ^{
@@ -1703,7 +1707,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         { Mode::Pause,    Mode::Quit,     @selector(modeTransitionFromPauseToQuit) },
         { Mode::GameOver, Mode::End,      @selector(modeTransitionFromOverToEnd) },
         { Mode::End,      Mode::About,    @selector(modeTransitionFromEndToAbout) },
-        { Mode::End,      Mode::Extras,   @selector(modeTransitionFromEndToAbout) },
+        { Mode::End,      Mode::Extras,   @selector(modeTransitionFromEndToExtras) },
         { Mode::End,      Mode::Ready,    @selector(modeTransitionFromEndToReady) },
         { Mode::Quit,     Mode::Attract,  @selector(modeTransitionFromQuitToAttract) },
     };
@@ -2098,7 +2102,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::OVER));
 
     [self viewLock];
-
+    [self cancelActiveTouch];
     [self viewUnhighlightTileViews];
     [self viewBloopTileViewsToPlayerTrayWithDuration:GameOverRespositionBloopDuration completion:nil];
     
