@@ -56,7 +56,11 @@ using UP::TimeSpanning::start;
     _Instance = self;
     
     [super viewDidLoad];
-    
+
+    if (@available(iOS 11.0, *)) {
+        [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
+    }
+
     self.navigationBarHidden = YES;
     self.delegate = self;
     
@@ -99,6 +103,11 @@ using UP::TimeSpanning::start;
         self.gameController
     ];
     [self setViewControllers:viewControllers animated:NO];
+}
+
+- (UIRectEdge)preferredScreenEdgesDeferringSystemGestures
+{
+    return UIRectEdgeAll;
 }
 
 #pragma mark - Control target/action and gestures
