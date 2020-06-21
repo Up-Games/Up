@@ -58,12 +58,12 @@ static uint32_t _InstanceCount;
     [self setFillPath:[UIBezierPath bezierPathWithRect:fillRect]];
     [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateNormal];
     [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
-    [self setFillColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self setFillColorAnimationDuration:0.15 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     
     [self setStrokePath:layout.tile_stroke_path()];
     [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
     [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
-    [self setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self setStrokeColorAnimationDuration:0.15 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
     if (glyph != UP::BlankGlyph) {
         UIBezierPath *contentPath = [UIBezierPath bezierPath];
