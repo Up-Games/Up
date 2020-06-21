@@ -166,6 +166,11 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     delete self.model;
 }
 
+- (UIRectEdge)preferredScreenEdgesDeferringSystemGestures
+{
+    return self.mode == Mode::Play ? UIRectEdgeAll : UIRectEdgeNone;
+}
+
 #pragma mark - UPSpellNavigationController
 
 - (UPSpellNavigationController *)spellNavigationController
@@ -1887,6 +1892,11 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)modeTransitionFromReadyToPlay
 {
     ASSERT(self.lockCount == 1);
+
+    if (@available(iOS 11.0, *)) {
+        [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
+    }
+
     self.model->apply(Action(Opcode::PLAY));
     
     // bloop out ready message
@@ -1922,6 +1932,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromPlayToPause
 {
+    if (@available(iOS 11.0, *)) {
+        [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
+    }
+
     [self cancelActiveTouch];
     [self.gameTimer stop];
     pause(BandGameAll);
@@ -1960,6 +1974,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionImmediateFromPlayToPause
 {
+    if (@available(iOS 11.0, *)) {
+        [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
+    }
+
     [self.gameTimer stop];
     pause(BandGameAll);
     [self viewLock];
@@ -1981,6 +1999,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromPauseToPlay
 {
+    if (@available(iOS 11.0, *)) {
+        [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
+    }
+
     [self viewLock];
 
     [UIView animateWithDuration:0.15 delay:0.15 options:0 animations:^{
@@ -2054,6 +2076,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromPlayToGameOver
 {
+    if (@available(iOS 11.0, *)) {
+        [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
+    }
+
     cancel(BandGameAll);
 
     ASSERT(self.lockCount == 0);
