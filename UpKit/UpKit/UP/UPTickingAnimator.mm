@@ -186,6 +186,7 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
         else {
             CGFloat effectiveFraction = compute_effective_fraction(fraction, self.rebounds, self.repeatCount, self.unitFunction);
             _fractionComplete = effectiveFraction;
+            self.animatingPosition = UIViewAnimatingPositionCurrent;
             if (self.applier) {
                 self.applier(self);
             }
