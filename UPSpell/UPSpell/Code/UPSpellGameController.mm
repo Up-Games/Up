@@ -1479,8 +1479,73 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         [tileInMoves addObject:UPViewMoveMake(tileView, Location(role, Spot::Default))];
         idx++;
     }
-    start(bloop_in(BandModeUI, tileInMoves, duration, nil));
+    start(bloop_in(BandModeUI, tileInMoves, duration, ^(UIViewAnimatingPosition) {
+        if (completion) {
+            completion();
+        }
+    }));
 }
+
+- (void)viewBloopInUpSpellTileViewsWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
+{
+    ASSERT(self.model->is_blank_filled());
+    ASSERT(self.model->is_player_tray_filled());
+
+    [self viewFillUpSpellTileViews];
+
+    SpellLayout &layout = SpellLayout::instance();
+    NSMutableArray<UPViewMove *> *tileInMoves = [NSMutableArray array];
+    TileIndex idx = 0;
+    for (auto &tile : self.model->tiles()) {
+        UPTileView *tileView = tile.view();
+        Role role = role_in_player_tray(tile.position());
+        tileView.frame = layout.frame_for(Location(role, Spot::OffBottomNear));
+        [tileInMoves addObject:UPViewMoveMake(tileView, Location(role, Spot::Default))];
+        idx++;
+    }
+
+    start(bloop_in(BandModeUI, tileInMoves, duration, ^(UIViewAnimatingPosition) {
+        if (completion) {
+            completion();
+        }
+    }));
+}
+
+- (void)viewDumpAllTilesFromCurrentPosition
+{
+    Random &random = Random::instance();
+    
+    std::array<size_t, TileCount> idxs;
+    for (TileIndex idx = 0; idx < TileCount; idx++) {
+        idxs[idx] = idx;
+    }
+    std::shuffle(idxs.begin(), idxs.end(), random.generator());
+    
+    const UP::TileArray &tiles = self.model->tiles();
+    CFTimeInterval baseDelay = 0.125;
+    int count = 0;
+    for (const auto idx : idxs) {
+        const Tile &tile = tiles[idx];
+        if (tile.has_view()) {
+            UPTileView *tileView = tile.view();
+            Location location;
+            if (tile.in_word_tray()) {
+                location = Location(role_in_word(tile.position().index(), self.model->word_length()), Spot::OffBottomNear);
+            }
+            else {
+                location = Location(role_in_player_tray(tile.position()), Spot::OffBottomNear);
+            }
+            UPAnimator *animator = slide(BandModeUI, @[UPViewMoveMake(tileView, location)], 0.75, ^(UIViewAnimatingPosition) {
+                [tileView removeFromSuperview];
+            });
+            delay(BandModeDelay, count * baseDelay, ^{
+                start(animator);
+            });
+        }
+        count++;
+    }
+}
+
 
 - (void)viewOrderInAboutWithCompletion:(void (^)(void))completion
 {
@@ -1611,37 +1676,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }));
 }
 
-#pragma mark - View ops FIXMEs
-
-- (void)modeOpDumpAllTilesFromCurrentPosition
-{
-    Random &random = Random::instance();
-    
-    std::array<size_t, TileCount> idxs;
-    for (TileIndex idx = 0; idx < TileCount; idx++) {
-        idxs[idx] = idx;
-    }
-    std::shuffle(idxs.begin(), idxs.end(), random.generator());
-    
-    const UP::TileArray &tiles = self.model->tiles();
-    CFTimeInterval baseDelay = 0.125;
-    int count = 0;
-    for (const auto idx : idxs) {
-        const Tile &tile = tiles[idx];
-        if (tile.has_view()) {
-            UPTileView *tileView = tile.view();
-            Location location(role_in_player_tray(tile.position()), Spot::OffBottomNear);
-            UPAnimator *animator = slide(BandModeUI, @[UPViewMoveMake(tileView, location)], 0.75, ^(UIViewAnimatingPosition) {
-                [tileView removeFromSuperview];
-            });
-            delay(BandModeDelay, count * baseDelay, ^{
-                start(animator);
-            });
-        }
-        count++;
-    }
-}
-
 #pragma mark - Model management
 
 - (void)createNewGameModel
@@ -1709,7 +1743,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         { Mode::End,      Mode::About,    @selector(modeTransitionFromEndToAbout) },
         { Mode::End,      Mode::Extras,   @selector(modeTransitionFromEndToExtras) },
         { Mode::End,      Mode::Ready,    @selector(modeTransitionFromEndToReady) },
-        { Mode::Quit,     Mode::Attract,  @selector(modeTransitionFromQuitToAttract) },
+        { Mode::Quit,     Mode::End,      @selector(modeTransitionFromQuitToEnd) },
     };
 
     m_did_become_active_transition_table = {
@@ -1921,7 +1955,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     } completion:nil];
     // keep the tile views alpha disabled until just before filling them with game tiles
     self.gameView.tileContainerView.alpha = [UIColor themeDisabledAlpha];
-    [UIView animateWithDuration:0.1 delay:0.1 options:0 animations:^{
+    [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
         self.dialogMenu.alpha = 0.0;
     } completion:^(BOOL finished) {
         // animate game view to full alpha and restore alpha of dialog menu
@@ -2051,13 +2085,21 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromPauseToQuit
 {
-    [self viewLock];
+    ASSERT(self.lockCount == 0);
 
+    if (@available(iOS 11.0, *)) {
+        [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
+    }
+
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::QUIT));
+
+    [self viewLock];
     cancel(BandGameAll);
     [self.gameTimer cancel];
-    [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
-    
+    [self cancelActiveTouch];
+    [self viewUnhighlightTileViews];
+
     [self.gameView.pauseControl setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     [self.gameView.pauseControl setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     self.gameView.pauseControl.highlightedLocked = NO;
@@ -2082,7 +2124,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         delay(BandModeDelay, 0.35, ^{
-            [self setMode:Mode::Attract];
+            [self setMode:Mode::End];
         });
     }));
 }
@@ -2141,8 +2183,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         self.gameView.transform = layout.menu_game_view_transform();
         [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
     }];
-    self.gameView.timerLabel.alpha = [UIColor themeModalActiveAlpha];
-    self.gameView.gameScoreLabel.alpha = [UIColor themeModalActiveAlpha];
+    self.gameView.timerLabel.alpha = 1.0;
+    self.gameView.gameScoreLabel.alpha = 1.0;
 
     [self viewBloopOutWordScoreLabelWithDuration:GameOverInOutBloopDuration];
 
@@ -2202,13 +2244,17 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }];
 }
 
-- (void)modeTransitionFromQuitToAttract
+- (void)modeTransitionFromQuitToEnd
 {
-    [self modeOpDumpAllTilesFromCurrentPosition];
+    ASSERT(self.lockCount == 1);
+
+    [self viewDumpAllTilesFromCurrentPosition];
+
+    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::END));
 
     SpellLayout &layout = SpellLayout::instance();
 
-    [UIView animateWithDuration:1.5 animations:^{
+    [UIView animateWithDuration:1.2 animations:^{
         self.gameView.transform = layout.menu_game_view_transform();
         [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
     } completion:^(BOOL finished) {
@@ -2226,7 +2272,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
                 UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight)),
             ];
             start(bloop_in(BandModeUI, menuButtonMoves, 0.25, nil));
-            [self viewFillPlayerTrayWithCompletion:^{
+            [self viewBloopInUpSpellTileViewsWithDuration:0.25 completion:^{
                 [self viewUnlock];
             }];
         });

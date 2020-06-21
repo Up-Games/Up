@@ -762,15 +762,8 @@ void SpellModel::apply_quit(const Action &action)
     ASSERT_NPOS(action.pos2());
     ASSERT(positions_valid());
     
-    clear_and_sentinelize();
-    fill_player_tray();
-    update_word();
     m_game_score = 0;
-    
-    ASSERT(word_length() == 0);
-    ASSERT(!word_in_lexicon());
-    ASSERT(word_score() == 0);
-    ASSERT(positions_valid());
+    m_word_in_lexicon = false;
 }
 
 void SpellModel::apply_end(const Action &action)
@@ -785,8 +778,6 @@ void SpellModel::apply_end(const Action &action)
     m_word_multiplier = 1;
     m_word_string = U"";
     m_word_in_lexicon = false;
-    
-    // otherwise, a no-op
 }
 
 }  // namespace UP
