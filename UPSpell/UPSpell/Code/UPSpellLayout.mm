@@ -634,7 +634,7 @@ void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &def
 void SpellLayout::calculate_game_controls_button_charge_size()
 {
     CGSize size = up_size_scaled(CanonicalRoundGameButtonSize, layout_scale());
-    CGSize charge_size = CGSizeMake(up_size_width(size) * 0.65, up_size_height(size) * 0.15);
+    CGSize charge_size = CGSizeMake(up_size_width(size) * 0.65, up_size_height(size) * 0.65);
     set_game_controls_button_charge_size(up_pixel_size(charge_size, screen_scale()));
     LOG(Layout, "game_controls_button_charge_size: %@", NSStringFromCGSize(game_controls_button_charge_size()));
 }

@@ -116,7 +116,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 @end
 
 static constexpr CFTimeInterval DefaultBloopDuration = 0.2;
-static constexpr CFTimeInterval DefaultTileSlideDuration = 0.125;
+static constexpr CFTimeInterval DefaultTileSlideDuration = 0.1;
 static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
 static constexpr CFTimeInterval GameOverRespositionBloopDelay = 0.4;
 static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;

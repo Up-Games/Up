@@ -48,6 +48,19 @@ using Spot = UP::SpellLayout::Spot;
 
     self.multipleTouchEnabled = YES;
     
+    self.pauseControl = [UPControl roundGameControlMinusSign];
+    self.pauseControl.band = BandGameUI;
+    self.pauseControl.frame = layout.frame_for(Role::ControlButtonLeft);
+    self.pauseControl.chargeSize = layout.game_controls_button_charge_size();
+    [self addSubview:self.pauseControl];
+    
+    self.clearControl = [UPControl roundGameControl];
+    [self.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
+    self.clearControl.band = BandGameUI;
+    self.clearControl.frame = layout.frame_for(Role::ControlButtonRight);
+    self.clearControl.chargeSize = layout.game_controls_button_charge_size();
+    [self addSubview:self.clearControl];
+    
     self.wordTrayControl = [UPControl wordTrayControl];
     self.wordTrayControl.band = BandGameUI;
     self.wordTrayControl.frame = layout.word_tray_layout_frame();
@@ -63,19 +76,6 @@ using Spot = UP::SpellLayout::Spot;
     self.tileContainerClipView.path = [self wordTrayTileMaskPath];
     self.tileContainerClipView.fillColor = [UIColor blackColor];
     self.tileContainerView.layer.mask = self.tileContainerClipView.shapeLayer;
-
-    self.pauseControl = [UPControl roundGameControlMinusSign];
-    self.pauseControl.band = BandGameUI;
-    self.pauseControl.frame = layout.frame_for(Role::ControlButtonLeft);
-    self.pauseControl.chargeSize = layout.game_controls_button_charge_size();
-    [self addSubview:self.pauseControl];
-
-    self.clearControl = [UPControl roundGameControl];
-    [self.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
-    self.clearControl.band = BandGameUI;
-    self.clearControl.frame = layout.frame_for(Role::ControlButtonRight);
-    self.clearControl.chargeSize = layout.game_controls_button_charge_size();
-    [self addSubview:self.clearControl];
 
     self.timerLabel = [UPGameTimerLabel label];
     self.timerLabel.font = layout.game_information_font();
