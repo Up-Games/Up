@@ -902,20 +902,22 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     SpellLayout &layout = SpellLayout::instance();
     NSMutableArray *views = [NSMutableArray arrayWithObject:self.gameView.wordTrayControl];
     [views addObjectsFromArray:[self wordTrayTileViews]];
-    start(shake(BandGameUI, views, 0.9, layout.word_tray_shake_offset(), ^(UIViewAnimatingPosition finishedPosition) {
-        if (finishedPosition == UIViewAnimatingPositionEnd) {
-            delay(BandGameDelay, 0.15, ^{
-                [self viewPenaltyFinished];
-                delay(BandGameDelay, 0.1, ^{
-                    [self applyActionClear];
-                    [self viewUnlock];
+    delay(BandGameDelay, 0.1, ^{
+        start(shake(BandGameUI, views, 0.9, layout.word_tray_shake_offset(), ^(UIViewAnimatingPosition finishedPosition) {
+            if (finishedPosition == UIViewAnimatingPositionEnd) {
+                delay(BandGameDelay, 0.15, ^{
+                    [self viewPenaltyFinished];
+                    delay(BandGameDelay, 0.1, ^{
+                        [self applyActionClear];
+                        [self viewUnlock];
+                    });
                 });
-            });
-        }
-        else {
-            [self viewUnlock];
-        }
-    }));
+            }
+            else {
+                [self viewUnlock];
+            }
+        }));
+    });
 }
 
 - (void)applyActionDump
@@ -1260,6 +1262,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.lockCount > 0);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
+    self.gameView.wordTrayControl.highlightedLocked = YES;
+    self.gameView.wordTrayControl.highlighted = YES;
     self.gameView.wordTrayControl.alpha = disabledAlpha;
     self.gameView.clearControl.alpha = disabledAlpha;
     self.gameView.tileContainerView.alpha = disabledAlpha;
@@ -1268,6 +1272,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)viewPenaltyFinished
 {
     ASSERT(self.lockCount > 0);
+    self.gameView.wordTrayControl.highlightedLocked = NO;
+    self.gameView.wordTrayControl.highlighted = NO;
     self.gameView.clearControl.highlightedLocked = NO;
     self.gameView.clearControl.highlighted = NO;
     self.gameView.clearControl.alpha = 1.0;
