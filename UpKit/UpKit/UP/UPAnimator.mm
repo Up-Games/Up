@@ -130,7 +130,7 @@ static uint32_t _InstanceCount;
     UPAnimator *animator = [[self alloc] _initWithType:UPAnimatorTypeSlide band:band moves:moves];
     animator.type = UPAnimatorTypeSlide;
     UPTickingAnimator *inner = [UPTickingAnimator animatorInBand:band duration:duration
-                                                    unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear]
+                                                    unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutSine]
                                                          applier:^(UPTickingAnimator *animator) {
         for (UPViewMove *move in moves) {
             move.view.center = up_lerp_points(move.beginning, move.destination, animator.fractionComplete);

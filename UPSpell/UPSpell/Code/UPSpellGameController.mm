@@ -115,7 +115,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 @end
 
 static constexpr CFTimeInterval DefaultBloopDuration = 0.3;
-static constexpr CFTimeInterval DefaultTileSlideDuration = 0.125;
+static constexpr CFTimeInterval DefaultTileSlideDuration = 0.15;
 static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
 static constexpr CFTimeInterval GameOverRespositionBloopDelay = 0.4;
 static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
@@ -240,18 +240,25 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    if (self.lockCount > 0) {
+        if (self.touchedControl) {
+            [self preemptTouchedControl];
+        }
+        return;
+    }
+
     UPControl *incomingTouchedControl = self.touchedControl;
     
     for (UITouch *touch in touches) {
         if (touch != self.activeTouch) {
             CGPoint point = [touch locationInView:self.gameView];
-            UIView *view = [self.gameView hitTest:point withEvent:event];
-            if (view.userInteractionEnabled && [view isKindOfClass:[UPControl class]]) {
-                UPControl *control = (UPControl *)view;
-                if (self.touchedControl) {
-                    [self preemptActiveControlWithControl:control];
+            UPControl *hitControl = [self hitTestGameView:point withEvent:event];
+            LOG(General, "hitControl: %@", hitControl);
+            if (hitControl) {
+                if (self.touchedControl && hitControl != self.touchedControl) {
+                    [self preemptTouchedControl];
                 }
-                self.touchedControl = control;
+                self.touchedControl = hitControl;
                 self.activeTouch = touch;
                 self.touchedControl.highlighted = YES;
                 break;
@@ -295,6 +302,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    if (self.lockCount > 0) {
+        if (self.touchedControl) {
+            [self preemptTouchedControl];
+        }
+        return;
+    }
+
     BOOL movedTouchIsActive = NO;
     for (UITouch *touch in touches) {
         if (touch == self.activeTouch) {
@@ -310,7 +324,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         UPTileView *tileView = (UPTileView *)self.touchedControl;
         [self touchMoved:self.activeTouch tileView:tileView];
     }
-    else if (self.touchedControl == self.gameView.roundGameControlPause || self.touchedControl == self.gameView.roundGameControlClear) {
+    else if (self.touchedControl == self.gameView.pauseControl || self.touchedControl == self.gameView.clearControl) {
         CGPoint point = [self.activeTouch locationInView:self.touchedControl];
         if ([self.touchedControl pointInside:point withEvent:event]) {
             self.touchedControl.highlighted = YES;
@@ -323,6 +337,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    if (self.lockCount > 0) {
+        if (self.touchedControl) {
+            [self preemptTouchedControl];
+        }
+        return;
+    }
+
     BOOL endedTouchIsActive = NO;
     for (UITouch *touch in touches) {
         if (touch == self.activeTouch) {
@@ -338,7 +359,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         UPTileView *tileView = (UPTileView *)self.touchedControl;
         [self touchEnded:self.activeTouch tileView:tileView];
     }
-    else if (self.touchedControl == self.gameView.roundGameControlPause || self.touchedControl == self.gameView.roundGameControlClear) {
+    else if (self.touchedControl == self.gameView.pauseControl || self.touchedControl == self.gameView.clearControl) {
         if (self.touchedControl.highlighted) {
             [self sendControlAction:self.touchedControl];
         }
@@ -457,21 +478,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
 }
 
-- (void)touchCancelled:(UITouch *)touch tileView:(UPTileView *)tileView
-{
-    [self touchEnded:touch tileView:tileView];
-}
-
-- (void)preemptActiveControlWithControl:(UPControl *)control
+- (void)preemptTouchedControl
 {
     ASSERT(self.touchedControl);
-    LOG(General, "preemptControl: %@ <= %@", self.touchedControl, control);
+    LOG(General, "preemptControl: %@", self.touchedControl);
     
     if ([self.touchedControl isKindOfClass:[UPTileView class]]) {
         UPTileView *tileView = (UPTileView *)self.touchedControl;
         [self touchEnded:self.activeTouch tileView:tileView];
     }
-    else if (self.touchedControl == self.gameView.roundGameControlPause || self.touchedControl == self.gameView.roundGameControlClear) {
+    else if (self.touchedControl == self.gameView.pauseControl || self.touchedControl == self.gameView.clearControl) {
         if (self.touchedControl.highlighted) {
             [self sendControlAction:self.touchedControl];
         }
@@ -485,24 +501,65 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)sendControlAction:(UPControl *)control
 {
-    ASSERT(control == self.gameView.roundGameControlPause || control == self.gameView.roundGameControlClear);
+    ASSERT(control == self.gameView.pauseControl || control == self.gameView.clearControl);
     ASSERT(control.highlighted);
     LOG(General, "sendControlAction: %@", control);
-    if (control == self.gameView.roundGameControlPause) {
+    if (control == self.gameView.pauseControl) {
         [self roundButtonPauseTapped];
     }
-    else if (control == self.gameView.roundGameControlClear) {
+    else if (control == self.gameView.clearControl) {
         [self roundButtonClearTapped];
     }
 }
 
 - (void)cancelActiveTouch
 {
+    if ([self.touchedControl isKindOfClass:[UPTileView class]]) {
+        UPTileView *tileView = (UPTileView *)self.touchedControl;
+        Tile &tile = self.model->find_tile(tileView);
+        [self applyActionDrop:tile];
+    }
     self.touchedControl.highlighted = NO;
     self.pickedTileView = nil;
     self.pickedTilePosition = TilePosition();
     self.touchedControl = nil;
     self.activeTouch = nil;
+}
+
+- (UPControl *)hitTestGameView:(CGPoint)point withEvent:(UIEvent *)event
+{
+    UPControl *wordTrayControl = self.gameView.wordTrayControl;
+    CGPoint wordTrayControlPoint = [wordTrayControl convertPoint:point fromView:self.gameView.window];
+    if (wordTrayControl.userInteractionEnabled && [wordTrayControl pointInside:wordTrayControlPoint withEvent:event] &&
+        self.model->word_length() > 0) {
+        return wordTrayControl;
+    }
+    
+    UPControl *pauseControl = self.gameView.pauseControl;
+    CGPoint pausePoint = [pauseControl convertPoint:point fromView:self.gameView.window];
+    if (pauseControl.userInteractionEnabled && [pauseControl pointInside:pausePoint withEvent:event]) {
+        return pauseControl;
+    }
+
+    UPControl *clearControl = self.gameView.clearControl;
+    CGPoint clearPoint = [clearControl convertPoint:point fromView:self.gameView.window];
+    if (clearControl.userInteractionEnabled && [clearControl pointInside:clearPoint withEvent:event]) {
+        return clearControl;
+    }
+
+    return [self hitTestTileViews:point withEvent:event];
+}
+
+- (UPTileView *)hitTestTileViews:(CGPoint)point withEvent:(UIEvent *)event
+{
+    for (UPTileView *tileView in self.model->all_tile_views()) {
+        CGPoint tilePoint = [tileView convertPoint:point fromView:self.gameView.window];
+        if (tileView.userInteractionEnabled && [tileView pointInside:tilePoint withEvent:event]) {
+            return tileView;
+        }
+    }
+    
+    return nil;
 }
 
 #pragma mark - Control target/action and gestures
@@ -887,12 +944,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     // clear button
     if (self.model->word_length()) {
-        [self.gameView.roundGameControlClear setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
+        [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
     }
     else {
-        [self.gameView.roundGameControlClear setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
+        [self.gameView.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
     }
-    [self.gameView.roundGameControlClear setNeedsUpdate];
+    [self.gameView.clearControl setNeedsUpdate];
 
     self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", self.model->game_score()];
 }
@@ -1179,8 +1236,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.lockCount > 0);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
-    self.gameView.roundGameControlClear.highlightedLocked = YES;
-    self.gameView.roundGameControlClear.highlighted = YES;
+    self.gameView.clearControl.highlightedLocked = YES;
+    self.gameView.clearControl.highlighted = YES;
     self.gameView.wordTrayControl.alpha = disabledAlpha;
     self.gameView.tileContainerView.alpha = disabledAlpha;
 }
@@ -1190,16 +1247,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT(self.lockCount > 0);
     const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.gameView.wordTrayControl.alpha = disabledAlpha;
-    self.gameView.roundGameControlClear.alpha = disabledAlpha;
+    self.gameView.clearControl.alpha = disabledAlpha;
     self.gameView.tileContainerView.alpha = disabledAlpha;
 }
 
 - (void)viewPenaltyFinished
 {
     ASSERT(self.lockCount > 0);
-    self.gameView.roundGameControlClear.highlightedLocked = NO;
-    self.gameView.roundGameControlClear.highlighted = NO;
-    self.gameView.roundGameControlClear.alpha = 1.0;
+    self.gameView.clearControl.highlightedLocked = NO;
+    self.gameView.clearControl.highlighted = NO;
+    self.gameView.clearControl.alpha = 1.0;
     self.gameView.wordTrayControl.alpha = 1.0;
     self.gameView.tileContainerView.alpha = 1.0;
 }
@@ -1232,7 +1289,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.dialogMenu.userInteractionEnabled = NO;
     self.dialogPause.userInteractionEnabled = NO;
 
-    UIView *roundButtonPause = self.gameView.roundGameControlPause;
+    UIView *roundButtonPause = self.gameView.pauseControl;
     for (UIView *view in self.gameView.subviews) {
         if (!includingPause && view == roundButtonPause) {
             continue;
@@ -1865,15 +1922,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromPlayToPause
 {
+    [self cancelActiveTouch];
     [self.gameTimer stop];
     pause(BandGameAll);
     [self viewLock];
     [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
 
     // special modal fixups for pause
-    self.gameView.roundGameControlPause.highlightedLocked = YES;
-    self.gameView.roundGameControlPause.highlighted = YES;
-    self.gameView.roundGameControlPause.alpha = [UIColor themeModalActiveAlpha];
+    self.gameView.pauseControl.highlightedLocked = YES;
+    self.gameView.pauseControl.highlighted = YES;
+    self.gameView.pauseControl.alpha = [UIColor themeModalActiveAlpha];
     
     SpellLayout &layout = SpellLayout::instance();
     self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
@@ -1908,9 +1966,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
     
     // special modal fixups for pause
-    self.gameView.roundGameControlPause.highlightedLocked = YES;
-    self.gameView.roundGameControlPause.highlighted = YES;
-    self.gameView.roundGameControlPause.alpha = [UIColor themeModalActiveAlpha];
+    self.gameView.pauseControl.highlightedLocked = YES;
+    self.gameView.pauseControl.highlighted = YES;
+    self.gameView.pauseControl.alpha = [UIColor themeModalActiveAlpha];
 
     SpellLayout &layout = SpellLayout::instance();
     self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageHigh);
@@ -1943,14 +2001,14 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         [UIView animateWithDuration:0.3 animations:^{
-            self.gameView.roundGameControlPause.highlightedLocked = NO;
-            self.gameView.roundGameControlPause.highlighted = NO;
+            self.gameView.pauseControl.highlightedLocked = NO;
+            self.gameView.pauseControl.highlighted = NO;
             [self viewRestoreGameAlpha];
         } completion:^(BOOL finished) {
             [self.gameTimer start];
             start(BandGameAll);
-            self.gameView.roundGameControlPause.highlightedLocked = NO;
-            self.gameView.roundGameControlPause.highlighted = NO;
+            self.gameView.pauseControl.highlightedLocked = NO;
+            self.gameView.pauseControl.highlighted = NO;
             [self viewUnlock];
         }];
     }));
@@ -1965,13 +2023,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
     
-    [self.gameView.roundGameControlPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    [self.gameView.roundGameControlPause setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    self.gameView.roundGameControlPause.highlightedLocked = NO;
-    self.gameView.roundGameControlPause.highlighted = NO;
-    self.gameView.roundGameControlPause.alpha = [UIColor themeModalBackgroundAlpha];
-    [self.gameView.roundGameControlPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    [self.gameView.roundGameControlPause setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.gameView.pauseControl setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.gameView.pauseControl setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    self.gameView.pauseControl.highlightedLocked = NO;
+    self.gameView.pauseControl.highlighted = NO;
+    self.gameView.pauseControl.alpha = [UIColor themeModalBackgroundAlpha];
+    [self.gameView.pauseControl setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.gameView.pauseControl setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
     [UIView animateWithDuration:0.15 delay:0.15 options:0 animations:^{
         self.dialogPause.alpha = 0.0;
