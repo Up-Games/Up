@@ -260,7 +260,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         if (touch != self.activeTouch) {
             CGPoint point = [touch locationInView:self.gameView];
             UPControl *hitControl = [self hitTestGameView:point withEvent:event];
-            LOG(General, "hitControl: %@", hitControl);
             if (hitControl) {
                 if (self.touchedControl && hitControl != self.touchedControl && hitControl != self.gameView.wordTrayControl) {
                     [self preemptTouchedControl];
@@ -423,7 +422,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)preemptTouchedControl
 {
     ASSERT(self.touchedControl);
-    LOG(General, "preemptControl: %@", self.touchedControl);
     
     if ([self.touchedControl isKindOfClass:[UPTileView class]]) {
         UPTileView *tileView = (UPTileView *)self.touchedControl;
@@ -448,7 +446,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(control == self.gameView.pauseControl || control == self.gameView.clearControl || control == self.gameView.wordTrayControl);
     ASSERT(control.highlighted);
-    LOG(General, "sendControlAction: %@", control);
     if (control == self.gameView.pauseControl) {
         [self roundButtonPauseTapped];
     }
@@ -508,15 +505,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     Tile &tile = self.model->find_tile(tileView);
     if (self.pickedTilePosition.in_player_tray()) {
         if (projectedTileInsideWordTray) {
-            LOG(General, "add  [1]: %@", tileView);
             [self applyActionAdd:tile];
         }
         else if ((!pannedFar && putBack) || movingUp || !self.activeTouchPanEverMovedUp) {
-            LOG(General, "add  [2]: %@", tileView);
             [self applyActionAdd:tile];
         }
         else {
-            LOG(General, "drop [1]: %@", tileView);
             [self applyActionDrop:tile];
         }
     }
@@ -524,16 +518,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         if (projectedTileInsideWordTray) {
             TilePosition hover_position = [self calculateHoverPosition:tile];
             if (self.pickedTilePosition == hover_position) {
-                LOG(General, "drop [2]: %@", tileView);
                 [self applyActionDrop:tile];
             }
             else {
-                LOG(General, "move [1]: %@", tileView);
                 [self applyActionMoveTile:tile toPosition:hover_position];
             }
         }
         else {
-            LOG(General, "rem  [1]: %@", tileView);
             [self applyActionRemove:tile];
         }
     }
@@ -701,8 +692,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, tile.position(), word_pos));
 
     if (wordTrayTilesNeedMoves) {
-        //cancel(BandGameUITile);
-        //cancel(BandGameUITileSlide);
         SpellLayout &layout = SpellLayout::instance();
         for (UPTileView *wordTrayTileView in wordTrayTileViews) {
             Tile &tile = self.model->find_tile(wordTrayTileView);
@@ -710,17 +699,14 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             Location location = role_in_word(tile.position().index(), self.model->word_length());
             UPViewMove *bloopMove = find_move(wordTrayTileView, UPAnimatorTypeBloopIn);
             if (bloopMove) {
-                LOG(General, ">>> resetting bloop destination");
                 bloopMove.destination = layout.center_for(location);
             }
             else {
                 UPViewMove *slideMove = find_move(wordTrayTileView, UPAnimatorTypeSlide);
                 if (slideMove) {
-                    LOG(General, ">>> resetting slide destination");
                     slideMove.destination = layout.center_for(location);
                 }
                 else {
-                    LOG(General, "--- sliding");
                     UPViewMove *move = UPViewMoveMake(wordTrayTileView, location);
                     start(UP::TimeSpanning::slide(BandGameUITileSlide, @[move], DefaultTileSlideDuration, nil));
                 }
