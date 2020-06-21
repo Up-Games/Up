@@ -931,13 +931,16 @@ using namespace UP;
     [control setFillColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
     [control setFillColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateNormal];
     [control setFillColorAnimationDuration:0.25 fromState:UPControlStateActive toState:UPControlStateNormal];
+    [control setFillColorAnimationDuration:0.25 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     [control setStrokePath:WordTrayStrokePath() forState:UPControlStateNormal];
     [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryInactiveStroke] forState:UPControlStateNormal];
     [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryActiveStroke] forState:UPControlStateActive];
     [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedStroke] forState:(UPControlStateHighlighted | UPControlStateActive)];
+    [control setStrokeColor:[UIColor themeColorWithCategory:UPColorCategorySecondaryHighlightedStroke] forState:UPControlStateHighlighted];
     [control setStrokeColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
+    [control setStrokeColorAnimationDuration:0.25 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateNormal];
+    [control setStrokeColorAnimationDuration:0.25 fromState:UPControlStateActive toState:UPControlStateNormal];
     [control setStrokeColorAnimationDuration:0.25 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    [control setStrokeColorAnimationDuration:0.25 fromState:UPControlStateActive toState:UPControlStateActive];
     return control;
 }
 
