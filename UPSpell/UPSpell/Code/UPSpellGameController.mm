@@ -96,6 +96,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 
 @property (nonatomic) UITouch *activeTouch;
 @property (nonatomic) UPControl *touchedControl;
+@property (nonatomic) UPTileView *touchedTileView;
 @property (nonatomic) UPTileView *pickedTileView;
 @property (nonatomic) TilePosition pickedTilePosition;
 
@@ -152,6 +153,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.dialogPause.hidden = YES;
     self.dialogPause.frame = layout.screen_bounds();
 
+    self.touchedTileView = nil;
     self.pickedTileView = nil;
     self.pickedTilePosition = TilePosition();
 
@@ -260,11 +262,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             UPControl *hitControl = [self hitTestGameView:point withEvent:event];
             LOG(General, "hitControl: %@", hitControl);
             if (hitControl) {
-                if (self.touchedControl && hitControl != self.touchedControl) {
+                if (self.touchedControl && hitControl != self.touchedControl && hitControl != self.gameView.wordTrayControl) {
                     [self preemptTouchedControl];
                 }
                 self.touchedControl = hitControl;
                 self.activeTouch = touch;
+                self.touchedTileView = [self hitTestTileViews:point withEvent:event];
                 self.touchedControl.highlighted = YES;
                 break;
             }
@@ -364,13 +367,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         UPTileView *tileView = (UPTileView *)self.touchedControl;
         [self touchEnded:self.activeTouch tileView:tileView];
     }
-    else if (self.touchedControl == self.gameView.pauseControl || self.touchedControl == self.gameView.clearControl) {
+    else if (self.touchedControl == self.gameView.pauseControl ||
+             self.touchedControl == self.gameView.clearControl ||
+             self.touchedControl == self.gameView.wordTrayControl) {
         if (self.touchedControl.highlighted) {
             [self sendControlAction:self.touchedControl];
         }
     }
     
     self.touchedControl.highlighted = NO;
+    self.touchedTileView = nil;
     self.pickedTileView = nil;
     self.pickedTilePosition = TilePosition();
     self.touchedControl = nil;
@@ -492,12 +498,15 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         UPTileView *tileView = (UPTileView *)self.touchedControl;
         [self touchEnded:self.activeTouch tileView:tileView];
     }
-    else if (self.touchedControl == self.gameView.pauseControl || self.touchedControl == self.gameView.clearControl) {
+    else if (self.touchedControl == self.gameView.pauseControl ||
+             self.touchedControl == self.gameView.clearControl ||
+             self.touchedControl == self.gameView.wordTrayControl) {
         if (self.touchedControl.highlighted) {
             [self sendControlAction:self.touchedControl];
         }
     }
     self.touchedControl.highlighted = NO;
+    self.touchedTileView = nil;
     self.pickedTileView = nil;
     self.pickedTilePosition = TilePosition();
     self.touchedControl = nil;
@@ -506,7 +515,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)sendControlAction:(UPControl *)control
 {
-    ASSERT(control == self.gameView.pauseControl || control == self.gameView.clearControl);
+    ASSERT(control == self.gameView.pauseControl || control == self.gameView.clearControl || control == self.gameView.wordTrayControl);
     ASSERT(control.highlighted);
     LOG(General, "sendControlAction: %@", control);
     if (control == self.gameView.pauseControl) {
@@ -514,6 +523,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
     else if (control == self.gameView.clearControl) {
         [self roundButtonClearTapped];
+    }
+    else if (control == self.gameView.wordTrayControl) {
+        [self wordTrayTapped];
     }
 }
 
@@ -525,6 +537,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         [self applyActionDrop:tile];
     }
     self.touchedControl.highlighted = NO;
+    self.touchedTileView = nil;
     self.pickedTileView = nil;
     self.pickedTilePosition = TilePosition();
     self.touchedControl = nil;
