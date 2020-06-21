@@ -1337,12 +1337,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)viewUnhighlightTileViews
 {
-    for (auto &tile : self.model->tiles()) {
-        if (tile.has_view()) {
-            UPTileView *tileView = tile.view();
-            tileView.highlightedLocked = NO;
-            tileView.highlighted = NO;
-        }
+    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
+        [tileView setFillColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+        [tileView setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+        tileView.highlightedLocked = NO;
+        tileView.highlighted = NO;
+        [tileView update];
     }
 }
 
@@ -1640,9 +1640,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     });
     
     // move extras and about buttons offscreen
-    NSArray<UPViewMove *> *outMoves = @[
+    NSArray<UPViewMove *> *outGameOverMoves = @[
         UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageCenter, Spot::OffBottomNear),
         UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogMessageCenter, Spot::OffBottomFar),
+    ];
+    start(bloop_out(BandModeUI, outGameOverMoves, 0.2, nil));
+    NSArray<UPViewMove *> *outMoves = @[
         UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffTopNear)),
         UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffTopNear)),
     ];
@@ -1955,7 +1958,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     } completion:nil];
     // keep the tile views alpha disabled until just before filling them with game tiles
     self.gameView.tileContainerView.alpha = [UIColor themeDisabledAlpha];
-    [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
+    [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
         self.dialogMenu.alpha = 0.0;
     } completion:^(BOOL finished) {
         // animate game view to full alpha and restore alpha of dialog menu
@@ -1966,12 +1969,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         delay(BandModeDelay, 0.1, ^{
             // create new game model and start game
             [self viewRestoreGameAlpha];
+            [self viewUnlock];
             [self viewFillPlayerTrayWithCompletion:^{
-                delay(BandModeDelay, 0.1, ^{
-                    // start game
-                    [self.gameTimer start];
-                    [self viewUnlock];
-                });
+                [self.gameTimer start];
             }];
         });
     }];
@@ -2131,19 +2131,17 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromPlayToGameOver
 {
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
+
     if (@available(iOS 11.0, *)) {
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
     }
 
     cancel(BandGameAll);
-
-    ASSERT(self.lockCount == 0);
-
     [self viewUpdateGameControls];
-
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::OVER));
 
-    [self viewLock];
     [self cancelActiveTouch];
     [self viewUnhighlightTileViews];
     [self viewBloopTileViewsToPlayerTrayWithDuration:GameOverRespositionBloopDuration completion:nil];
@@ -2265,14 +2263,14 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         self.dialogMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Spot::OffTopNear));
         self.dialogMenu.playButton.highlightedLocked = NO;
         self.dialogMenu.playButton.highlighted = NO;
-        delay(BandModeDelay, 0.4, ^{
+        delay(BandModeDelay, 0.1, ^{
             NSArray<UPViewMove *> *menuButtonMoves = @[
                 UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
                 UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter)),
                 UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight)),
             ];
-            start(bloop_in(BandModeUI, menuButtonMoves, 0.25, nil));
-            [self viewBloopInUpSpellTileViewsWithDuration:0.25 completion:^{
+            start(bloop_in(BandModeUI, menuButtonMoves, 0.3, nil));
+            [self viewBloopInUpSpellTileViewsWithDuration:0.3 completion:^{
                 [self viewUnlock];
             }];
         });

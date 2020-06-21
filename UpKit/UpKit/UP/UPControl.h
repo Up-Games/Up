@@ -135,6 +135,7 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (CFTimeInterval)accentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
 
 - (void)setNeedsUpdate;
+- (void)update;
 
 - (void)cancelAnimations;
 
