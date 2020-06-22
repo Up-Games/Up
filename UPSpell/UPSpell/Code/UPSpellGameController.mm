@@ -12,6 +12,7 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
+#import "UPDialogGameNote.h"
 #import "UPDialogGameOver.h"
 #import "UPDialogMenu.h"
 #import "UPDialogPause.h"
@@ -90,6 +91,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 @property (nonatomic) UPGameTimer *gameTimer;
 @property (nonatomic) BOOL showingWordScoreLabel;
 @property (nonatomic) UPDialogGameOver *dialogGameOver;
+@property (nonatomic) UPDialogGameNote *dialogGameNote;
 @property (nonatomic) UPDialogPause *dialogPause;
 @property (nonatomic) UPDialogMenu *dialogMenu;
 @property (nonatomic) NSInteger lockCount;
@@ -141,6 +143,11 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self.view addSubview:self.dialogGameOver];
     self.dialogGameOver.hidden = YES;
     self.dialogGameOver.frame = layout.screen_bounds();
+
+    self.dialogGameNote = [UPDialogGameNote instance];
+    [self.view addSubview:self.dialogGameNote];
+    self.dialogGameNote.hidden = YES;
+    self.dialogGameNote.frame = layout.screen_bounds();
 
     self.dialogMenu = [UPDialogMenu instance];
     self.dialogMenu.hidden = YES;
@@ -1561,7 +1568,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffLeftFar));
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffLeftNear));
     UPViewMove *dialogGameOverMove = UPViewMoveMake(self.dialogGameOver, Location(Role::Screen, Spot::OffLeftNear));
-    
+    UPViewMove *dialogGameNoteMove = UPViewMoveMake(self.dialogGameNote, Location(Role::Screen, Spot::OffLeftNear));
+
     CFTimeInterval duration = 0.75;
     
     start(bloop_out(BandModeUI, @[extrasButtonMove], duration, nil));
@@ -1569,7 +1577,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         start(bloop_out(BandModeUI, @[playButtonMove], duration - 0.1, nil));
     });
     delay(BandModeDelay, 0.2, ^{
-        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - 0.2, ^(UIViewAnimatingPosition) {
             self.dialogMenu.aboutButton.userInteractionEnabled = NO;
             [self viewUnlock];
             if (completion) {
@@ -1587,7 +1595,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffRightNear));
     UPViewMove *dialogGameOverMove = UPViewMoveMake(self.dialogGameOver, Location(Role::Screen, Spot::OffRightNear));
-    
+    UPViewMove *dialogGameNoteMove = UPViewMoveMake(self.dialogGameNote, Location(Role::Screen, Spot::OffRightNear));
+
     CFTimeInterval duration = 0.75;
     
     start(bloop_out(BandModeUI, @[aboutButtonMove], duration, nil));
@@ -1596,7 +1605,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         }));
     });
     delay(BandModeDelay, 0.2, ^{
-        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - 0.2, ^(UIViewAnimatingPosition) {
             self.dialogMenu.extrasButton.userInteractionEnabled = NO;
             [self viewUnlock];
             if (completion) {
@@ -1619,9 +1628,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     SpellLayout &layout = SpellLayout::instance();
     self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageCenter, Spot::OffBottomNear);
-    self.dialogGameOver.noteLabel.center = layout.center_for(Role::DialogMessageCenter, Spot::OffBottomFar);
     self.dialogGameOver.transform = CGAffineTransformIdentity;
     self.dialogGameOver.hidden = YES;
+    self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogNote, Spot::OffBottomFar);
+    self.dialogGameNote.hidden = YES;
 }
 
 - (void)viewMakeReadyWithCompletion:(void (^)(void))completion
@@ -1648,7 +1658,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     // move extras and about buttons offscreen
     NSArray<UPViewMove *> *outGameOverMoves = @[
         UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageCenter, Spot::OffBottomNear),
-        UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogMessageCenter, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogNote, Spot::OffBottomFar),
     ];
     start(bloop_out(BandModeUI, outGameOverMoves, 0.2, nil));
     NSArray<UPViewMove *> *outMoves = @[
@@ -1957,14 +1967,14 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     // bloop out ready message
     UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.messagePathView, Location(Role::DialogMessageHigh, Spot::OffBottomNear));
-    start(bloop_out(BandModeUI, @[readyMove], 0.3, nil));
+    start(bloop_out(BandModeUI, @[readyMove], 0.25, nil));
     // animate game view to full alpha and fade out dialog menu
     [UIView animateWithDuration:0.1 delay:0.2 options:0 animations:^{
         [self viewRestoreGameAlpha];
     } completion:nil];
     // keep the tile views alpha disabled until just before filling them with game tiles
     self.gameView.tileContainerView.alpha = [UIColor themeDisabledAlpha];
-    [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
+    [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
         self.dialogMenu.alpha = 0.0;
     } completion:^(BOOL finished) {
         // animate game view to full alpha and restore alpha of dialog menu
@@ -1972,6 +1982,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         self.dialogMenu.hidden = YES;
         self.dialogGameOver.alpha = 1.0;
         self.dialogGameOver.hidden = YES;
+        self.dialogGameNote.alpha = 1.0;
+        self.dialogGameNote.hidden = YES;
         delay(BandModeDelay, 0.1, ^{
             // create new game model and start game
             [self viewRestoreGameAlpha];
@@ -2158,11 +2170,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     SpellLayout &layout = SpellLayout::instance();
     self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
-    self.dialogGameOver.noteLabel.center = layout.center_for(Role::DialogNote, Spot::OffBottomNear);
-
     self.dialogGameOver.center = layout.center_for(Location(Role::Screen));
     self.dialogGameOver.hidden = NO;
     self.dialogGameOver.alpha = 0.0;
+    self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogNote, Spot::OffBottomNear);
+    self.dialogGameNote.center = layout.center_for(Location(Role::Screen));
+    self.dialogGameNote.hidden = NO;
     [UIView animateWithDuration:0.15 animations:^{
         self.dialogGameOver.alpha = 1.0;
     }];
@@ -2207,7 +2220,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
             UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter)),
             UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight)),
-            UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogNote),
+            UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogNote),
         ];
         start(bloop_in(BandModeUI, buttonMoves, GameOverInOutBloopDuration, ^(UIViewAnimatingPosition) {
             [self viewUnlock];

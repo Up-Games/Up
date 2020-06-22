@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */; };
 		5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */; };
 		5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogMenu.mm */; };
@@ -60,6 +61,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5D0FC21324A02FB600353563 /* UPDialogGameNote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogGameNote.h; sourceTree = "<group>"; };
+		5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameNote.mm; sourceTree = "<group>"; };
 		5D34613624887918009FB46D /* UPViewMove+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UPViewMove+UPSpell.h"; sourceTree = "<group>"; };
 		5D4AE823248BDED200213904 /* UPSpellExtrasController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasController.h; sourceTree = "<group>"; };
 		5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasController.mm; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 				5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */,
 				5D57D1FA246DB97700705395 /* UPControl+UPSpell.h */,
 				5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */,
+				5D0FC21324A02FB600353563 /* UPDialogGameNote.h */,
+				5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */,
 				5D5EA1462486A1D2006264D2 /* UPDialogGameOver.h */,
 				5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */,
 				5D544C0F248805F5001FA8DF /* UPDialogMenu.h */,
@@ -356,6 +361,7 @@
 				5D4AE82A248ED25500213904 /* UPDialogMenu.mm in Sources */,
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
 				5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */,
+				5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */,
 				5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */,
 				5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */,
 				5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */,

@@ -19,7 +19,6 @@ using UP::SpellLayout;
 
 @interface UPDialogGameOver ()
 @property (nonatomic, readwrite) UPBezierPathView *messagePathView;
-@property (nonatomic, readwrite) UPLabel *noteLabel;
 @end
 
 @implementation UPDialogGameOver
@@ -44,15 +43,6 @@ using UP::SpellLayout;
     self.messagePathView.path = UP::TextPathDialogGameOver();
     self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageCenter);
     [self addSubview:self.messagePathView];
-
-    self.noteLabel = [UPLabel label];
-    self.noteLabel.string = @"‘GRUBMITS’ WAS YOUR HIGHEST SCORING WORD (32)";
-    self.noteLabel.font = layout.game_note_font();
-    self.noteLabel.textColorCategory = UPColorCategoryInformation;
-    self.noteLabel.textAlignment = NSTextAlignmentCenter;
-    self.noteLabel.frame = layout.frame_for(SpellLayout::Role::DialogNote);
-    [self addSubview:self.noteLabel];
-
     [self updateThemeColors];
 
     return self;
