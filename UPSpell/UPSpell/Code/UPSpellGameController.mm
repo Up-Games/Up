@@ -2117,6 +2117,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewUpdateGameControls];
     [self cancelActiveTouch];
     [self viewUnhighlightTileViews];
+    [self viewOrderOutWordScoreLabel];
 
     [self.gameView.pauseControl setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     [self.gameView.pauseControl setStrokeColorAnimationDuration:0.3 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
