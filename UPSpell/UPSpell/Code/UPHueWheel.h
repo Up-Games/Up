@@ -5,10 +5,20 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol UPHueWheelDelegate;
+
 @interface UPHueWheel : UIView
 
 @property (nonatomic) CGFloat hue;
+@property (nonatomic, weak) NSObject<UPHueWheelDelegate> *delegate;
 
 + (UPHueWheel *)hueWheel;
 
+- (void)cancelAnimations;
+
 @end
+
+@protocol UPHueWheelDelegate <NSObject>
+- (void)hueWheelDidUpdate:(UPHueWheel *)hueWheel;
+@end
+

@@ -11,6 +11,8 @@
 		5D0FC21C24A125D000353563 /* UPCheckbox.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21A24A125D000353563 /* UPCheckbox.mm */; };
 		5D0FC21E24A130D700353563 /* MalloryCond-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */; };
 		5D0FC22124A168AC00353563 /* UPHueWheel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22024A168AC00353563 /* UPHueWheel.mm */; };
+		5D0FC22424A2681800353563 /* UPHueStepperIndicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22324A2681700353563 /* UPHueStepperIndicator.mm */; };
+		5D0FC22724A278D300353563 /* UPStepper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22624A278D300353563 /* UPStepper.mm */; };
 		5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */; };
 		5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogMenu.mm */; };
@@ -71,6 +73,10 @@
 		5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Black.otf"; sourceTree = "<group>"; };
 		5D0FC21F24A168AC00353563 /* UPHueWheel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPHueWheel.h; sourceTree = "<group>"; };
 		5D0FC22024A168AC00353563 /* UPHueWheel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPHueWheel.mm; sourceTree = "<group>"; };
+		5D0FC22224A2681700353563 /* UPHueStepperIndicator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPHueStepperIndicator.h; sourceTree = "<group>"; };
+		5D0FC22324A2681700353563 /* UPHueStepperIndicator.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPHueStepperIndicator.mm; sourceTree = "<group>"; };
+		5D0FC22524A278D300353563 /* UPStepper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPStepper.h; sourceTree = "<group>"; };
+		5D0FC22624A278D300353563 /* UPStepper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPStepper.mm; sourceTree = "<group>"; };
 		5D34613624887918009FB46D /* UPViewMove+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UPViewMove+UPSpell.h"; sourceTree = "<group>"; };
 		5D4AE823248BDED200213904 /* UPSpellExtrasController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasController.h; sourceTree = "<group>"; };
 		5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasController.mm; sourceTree = "<group>"; };
@@ -163,6 +169,8 @@
 				5D4AE829248ED25500213904 /* UPDialogMenu.mm */,
 				5D5EA1402485B49E006264D2 /* UPDialogPause.h */,
 				5D5EA1412485B49E006264D2 /* UPDialogPause.mm */,
+				5D0FC22224A2681700353563 /* UPHueStepperIndicator.h */,
+				5D0FC22324A2681700353563 /* UPHueStepperIndicator.mm */,
 				5D0FC21F24A168AC00353563 /* UPHueWheel.h */,
 				5D0FC22024A168AC00353563 /* UPHueWheel.mm */,
 				5DBC20C12497B9AD002A6ADC /* UPMode.h */,
@@ -183,6 +191,8 @@
 				5DA8E078247D723A008D3015 /* UPSpellModel.mm */,
 				5D54078224841631003F193D /* UPSpellNavigationController.h */,
 				5D54078324841631003F193D /* UPSpellNavigationController.mm */,
+				5D0FC22524A278D300353563 /* UPStepper.h */,
+				5D0FC22624A278D300353563 /* UPStepper.mm */,
 				5D5EA1432485B820006264D2 /* UPTextPaths.h */,
 				5D5EA1442485B820006264D2 /* UPTextPaths.mm */,
 				5DA8E0422476128C008D3015 /* UPTileModel.h */,
@@ -376,6 +386,8 @@
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
 				5D0FC22124A168AC00353563 /* UPHueWheel.mm in Sources */,
 				5D0FC21C24A125D000353563 /* UPCheckbox.mm in Sources */,
+				5D0FC22724A278D300353563 /* UPStepper.mm in Sources */,
+				5D0FC22424A2681800353563 /* UPHueStepperIndicator.mm in Sources */,
 				5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */,
 				5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */,
 				5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */,

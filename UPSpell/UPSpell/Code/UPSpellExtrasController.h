@@ -8,7 +8,9 @@
 @class UPButton;
 @class UPCheckbox;
 @class UPChoice;
+@class UPHueStepperIndicator;
 @class UPHueWheel;
+@class UPStepper;
 
 @interface UPSpellExtrasController : UIViewController
 @property (nonatomic, readonly) UPButton *backButton;
@@ -18,4 +20,5 @@
 @property (nonatomic, readonly) UPChoice *choice4;
 @property (nonatomic, readonly) UPCheckbox *darkModeCheckbox;
 @property (nonatomic, readonly) UPHueWheel *hueWheel;
+@property (nonatomic, readonly) UPHueStepperIndicator *hueStepperIndicator;
 @end

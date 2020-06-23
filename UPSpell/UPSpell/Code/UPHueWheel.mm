@@ -77,6 +77,7 @@ static UIBezierPath *HuePointerPath()
     self.unroundedHue = UPClampT(CGFloat, hue, 0, 360);
     _hue = roundf(self.unroundedHue);
     [self updateSpinner];
+    [self.delegate hueWheelDidUpdate:self];
 }
 
 - (void)updateSpinner
@@ -88,23 +89,28 @@ static UIBezierPath *HuePointerPath()
 
 - (void)drawRect:(CGRect)rect
 {
-//    SpellLayout &layout = SpellLayout::instance();
     CGRect bounds = self.bounds;
     CGFloat radius = up_rect_mid_x(bounds);
+    CGFloat innerRadius = radius * 0.9;
     CGPoint center = up_rect_center(bounds);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
-//    UPColorStyle themeStyle = [UIColor themeStyle];
-    
     for (int i = 0; i < 360; i++) {
-        CGFloat angle1 = up_degrees_to_radians(i);
+        CGFloat angle = i - 90.0 + 0.5;
+        while (angle < 0) {
+            angle += 360;
+        }
+        while (angle > 360) {
+            angle -= 360;
+        }
+        CGFloat angle1 = up_degrees_to_radians(angle);
         CGFloat x1 = center.x + radius * cos(angle1);
         CGFloat y1 = center.y + radius * sin(angle1);
         int plus = 2;
         if (i == 359) {
             plus = 1;
         }
-        CGFloat angle2 = up_degrees_to_radians(i + plus);
+        CGFloat angle2 = up_degrees_to_radians(angle + plus);
         CGFloat x2 = center.x + radius * cos(angle2);
         CGFloat y2 = center.y + radius * sin(angle2);
         CGContextSaveGState(ctx);
@@ -118,6 +124,23 @@ static UIBezierPath *HuePointerPath()
         [color getRed:&r green:&g blue:&b alpha:&a];
         CGContextSetRGBFillColor(ctx, r, g, b, a);
         CGContextFillPath(ctx);
+        CGContextSaveGState(ctx);
+    }
+
+    for (int i = 0; i < 360; i += 15) {
+        CGFloat hashAngle = up_degrees_to_radians(i);
+        CGFloat x3 = center.x + radius * cos(hashAngle);
+        CGFloat y3 = center.y + radius * sin(hashAngle);
+        CGFloat x4 = center.x + innerRadius * cos(hashAngle);
+        CGFloat y4 = center.y + innerRadius * sin(hashAngle);
+        CGContextSaveGState(ctx);
+        CGContextBeginPath(ctx);
+        CGContextMoveToPoint(ctx, x3, y3);
+        CGContextAddLineToPoint(ctx, x4, y4);
+        CGContextClosePath(ctx);
+        CGContextSetRGBStrokeColor(ctx, 0, 0, 0, 1);
+        CGContextSetLineWidth(ctx, 1.5);
+        CGContextStrokePath(ctx);
         CGContextSaveGState(ctx);
     }
     
@@ -149,7 +172,6 @@ static UIBezierPath *HuePointerPath()
     while (angle > 360) {
         angle -= 360;
     }
-    LOG(General, "update: %.2f : %.2f", radians, angle);
     self.previousUnroundedHue = self.unroundedHue;
     self.hue = angle;
 }
@@ -157,8 +179,7 @@ static UIBezierPath *HuePointerPath()
 - (void)updateHueWithVelocity:(CGPoint)velocity
 {
     CGFloat length = up_point_distance(CGPointZero, velocity);
-    LOG(General, "update: %.2f : %.2f => %.2f : %.2f", velocity.x, velocity.y, length, self.hueDelta);
-    if (fabs(length) > 1) {
+    if (fabs(length) > 0.5) {
         CGFloat hue = self.unroundedHue + self.hueDelta;
         while (hue < 0) {
             hue += 360;
@@ -168,8 +189,8 @@ static UIBezierPath *HuePointerPath()
         }
         self.hue = hue;
         UP::TimeSpanning::delay(BandSettingsDelay, UPTickerInterval, ^{
-            CGFloat vx = UPClampT(CGFloat, velocity.x * 0.995, -10, 10);
-            CGFloat vy = UPClampT(CGFloat, velocity.y * 0.995, -10, 10);
+            CGFloat vx = UPClampT(CGFloat, velocity.x * 0.995, -5, 5);
+            CGFloat vy = UPClampT(CGFloat, velocity.y * 0.995, -5, 5);
             if (self.hueDelta > 0 && self.hueDelta < 0.01) {
                 self.hueDelta = 0.01;
             }
@@ -207,14 +228,17 @@ static UIBezierPath *HuePointerPath()
         }
         case UIGestureRecognizerStateEnded: {
             CGPoint velocity = [pan velocityInView:self];
-            self.hueDelta = self.unroundedHue - self.previousUnroundedHue;
-            if (self.hueDelta > 0 && self.hueDelta < 1) {
-                self.hueDelta = 1;
+            CGFloat length = up_point_distance(CGPointZero, velocity);
+            if (length > 100) {
+                self.hueDelta = self.unroundedHue - self.previousUnroundedHue;
+                if (self.hueDelta > 0 && self.hueDelta < 1) {
+                    self.hueDelta = 1;
+                }
+                else if (self.hueDelta < 0 && self.hueDelta > -1) {
+                    self.hueDelta = -1;
+                }
+                [self updateHueWithVelocity:velocity];
             }
-            else if (self.hueDelta < 0 && self.hueDelta > -1) {
-                self.hueDelta = -1;
-            }
-            [self updateHueWithVelocity:velocity];
             break;
         }
         case UIGestureRecognizerStateCancelled: {
@@ -223,6 +247,11 @@ static UIBezierPath *HuePointerPath()
         case UIGestureRecognizerStateFailed:
             break;
     }
+}
+
+- (void)cancelAnimations
+{
+    cancel(BandSettingsDelay);
 }
 
 @end

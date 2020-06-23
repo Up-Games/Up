@@ -11,13 +11,15 @@
 
 #import "UPCheckbox.h"
 #import "UPControl+UPSpell.h"
+#import "UPHueStepperIndicator.h"
 #import "UPHueWheel.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellLayout.h"
 #import "UPSpellNavigationController.h"
+#import "UPStepper.h"
 #import "UPTextPaths.h"
 
-@interface UPSpellExtrasController ()
+@interface UPSpellExtrasController () <UPHueWheelDelegate, UPHueStepperIndicatorDelegate>
 @property (nonatomic, readwrite) UPButton *backButton;
 @property (nonatomic, readwrite) UPChoice *choice1;
 @property (nonatomic, readwrite) UPChoice *choice2;
@@ -28,6 +30,7 @@
 @property (nonatomic, readwrite) UPCheckbox *starkModeCheckbox;
 @property (nonatomic, readwrite) UPCheckbox *quarkModeCheckbox;
 @property (nonatomic, readwrite) UPHueWheel *hueWheel;
+@property (nonatomic, readwrite) UPHueStepperIndicator *hueStepperIndicator;
 @end
 
 using UP::SpellLayout;
@@ -95,15 +98,33 @@ using Spot = UP::SpellLayout::Spot;
     [self.view addSubview:self.quarkModeCheckbox];
     
     self.hueWheel = [UPHueWheel hueWheel];
-    self.hueWheel.frame = CGRectMake(400, 130, 170, 170);
+    self.hueWheel.frame = CGRectMake(435, 130, 170, 170);
+    self.hueWheel.delegate = self;
     [self.view addSubview:self.hueWheel];
     
+    self.hueStepperIndicator = [UPHueStepperIndicator hueStepperIndicator];
+    self.hueStepperIndicator.frame = CGRectMake(644, 130, 118, 170);
+    self.hueStepperIndicator.delegate = self;
+    [self.view addSubview:self.hueStepperIndicator];
     return self;
 }
 
 - (id<UIViewControllerTransitioningDelegate>)transitioningDelegate
 {
     return [UPSpellNavigationController instance];
+}
+
+#pragma mark - Hue Controls
+
+- (void)hueWheelDidUpdate:(UPHueWheel *)hueWheel
+{
+    self.hueStepperIndicator.hue = self.hueWheel.hue;
+}
+
+- (void)hueStepperIndicatorDidUpdate:(UPHueStepperIndicator *)hueStepperIndicator
+{
+    [self.hueWheel cancelAnimations];
+    self.hueWheel.hue = self.hueStepperIndicator.hue;
 }
 
 #pragma mark - Target / Action
