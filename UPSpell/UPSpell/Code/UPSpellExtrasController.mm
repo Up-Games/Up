@@ -9,7 +9,9 @@
 #import <UpKit/UPChoice.h>
 #import <UpKit/UPTouchGestureRecognizer.h>
 
+#import "UPCheckbox.h"
 #import "UPControl+UPSpell.h"
+#import "UPHueWheel.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellLayout.h"
 #import "UPSpellNavigationController.h"
@@ -21,6 +23,11 @@
 @property (nonatomic, readwrite) UPChoice *choice2;
 @property (nonatomic, readwrite) UPChoice *choice3;
 @property (nonatomic, readwrite) UPChoice *choice4;
+@property (nonatomic, readwrite) UPLabel *modesLabel;
+@property (nonatomic, readwrite) UPCheckbox *darkModeCheckbox;
+@property (nonatomic, readwrite) UPCheckbox *starkModeCheckbox;
+@property (nonatomic, readwrite) UPCheckbox *quarkModeCheckbox;
+@property (nonatomic, readwrite) UPHueWheel *hueWheel;
 @end
 
 using UP::SpellLayout;
@@ -63,6 +70,33 @@ using Spot = UP::SpellLayout::Spot;
     self.choice4.frame = layout.frame_for(Role::ChoiceItem4Left, Spot::OffLeftNear);
     [self.choice4 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice4];
+    
+    self.modesLabel = [UPLabel label];
+    self.modesLabel.textColorCategory = UPColorCategoryDialogTitle;
+    self.modesLabel.string = @"MODES:";
+    self.modesLabel.font = layout.checkbox_font();
+    [self.modesLabel sizeToFit];
+    self.modesLabel.frame = CGRectMake(350, 71.5, up_rect_width(self.modesLabel.bounds), up_rect_height(self.modesLabel.bounds));
+    [self.view addSubview:self.modesLabel];
+
+    self.darkModeCheckbox = [UPCheckbox checkbox];
+    self.darkModeCheckbox.labelString = @"DARK";
+    self.darkModeCheckbox.frame = CGRectMake(455, 70, up_size_width(self.darkModeCheckbox.canonicalSize), up_size_height(self.darkModeCheckbox.canonicalSize));
+    [self.view addSubview:self.darkModeCheckbox];
+    
+    self.starkModeCheckbox = [UPCheckbox checkbox];
+    self.starkModeCheckbox.labelString = @"STARK";
+    self.starkModeCheckbox.frame = CGRectMake(580, 70, up_size_width(self.starkModeCheckbox.canonicalSize), up_size_height(self.starkModeCheckbox.canonicalSize));
+    [self.view addSubview:self.starkModeCheckbox];
+    
+    self.quarkModeCheckbox = [UPCheckbox checkbox];
+    self.quarkModeCheckbox.labelString = @"QUARK";
+    self.quarkModeCheckbox.frame = CGRectMake(710, 70, up_size_width(self.quarkModeCheckbox.canonicalSize), up_size_height(self.quarkModeCheckbox.canonicalSize));
+    [self.view addSubview:self.quarkModeCheckbox];
+    
+    self.hueWheel = [UPHueWheel hueWheel];
+    self.hueWheel.frame = CGRectMake(400, 130, 170, 170);
+    [self.view addSubview:self.hueWheel];
     
     return self;
 }

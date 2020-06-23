@@ -87,9 +87,11 @@ public:
     static constexpr CGSize CanonicalCanvasSize = { CanonicalCanvasWidth, CanonicalCanvasHeight };
     static constexpr CGFloat CanonicalAspectRatio = CanonicalCanvasWidth / CanonicalCanvasHeight;
 
-    static inline constexpr CGSize CanonicalRoundGameButtonSize = { 84, 84 };
-    static inline constexpr CGSize CanonicalRoundBackButtonSize = { 64, 64 };
-    static inline constexpr CGSize CanonicalTextButtonSize =     { 188, 76 };
+    static inline constexpr CGSize CanonicalRoundGameButtonSize = { 84,  84 };
+    static inline constexpr CGSize CanonicalRoundBackButtonSize = { 64,  64 };
+    static inline constexpr CGSize CanonicalTextButtonSize =     { 188,  76 };
+    static inline constexpr CGSize CanonicalCheckboxSize =       {  39,  35 };
+    static inline constexpr CGSize CanonicalHuePickerSize =      { 220, 220 };
 
     static inline constexpr CGFloat CanonicalGameInformationCapHeight = 57;
     static inline constexpr CGFloat CanonicalGameInformationSuperscriptCapHeight = 39;
@@ -102,6 +104,9 @@ public:
     static inline constexpr CGFloat CanonicalWordScoreCapHeight = 52;
     static inline constexpr CGFloat CanonicalWordScoreBonusCapHeight = 30;
     static inline constexpr CGFloat CanonicalWordScoreBonusBaselineAdjustment = 14;
+    static inline constexpr CGFloat CanonicalCheckboxLabelCapHeight = 25;
+    static inline constexpr CGFloat CanonicalCheckboxLabelBaselineAdjustment = 5;
+    static inline constexpr CGFloat CanonicalCheckboxLabelLeftMargin = 43;
 
     static inline constexpr CGSize CanonicalTileSize = { 100, 120 };
     static inline constexpr CGRect CanonicalTileFrame = { 0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize) };
@@ -193,6 +198,10 @@ public:
     const FontMetrics &word_score_font_metrics() const { return m_word_score_font_metrics; }
     UIFont *word_score_bonus_font() const { return m_word_score_bonus_font; }
     const FontMetrics &word_score_bonus_font_metrics() const { return m_word_score_bonus_font_metrics; }
+    UIFont *checkbox_font() const { return m_checkbox_font; }
+    const FontMetrics &checkbox_font_metrics() const { return m_checkbox_font_metrics; }
+
+    CGFloat checkbox_label_left_margin() const { return m_checkbox_label_left_margin; }
     CGAffineTransform menu_game_view_transform() const { return m_menu_game_view_transform; }
 
 private:
@@ -226,6 +235,9 @@ private:
     void set_word_score_font_metrics(const FontMetrics &metrics) { m_word_score_font_metrics = metrics; }
     void set_word_score_bonus_font(UIFont *font) { m_word_score_bonus_font = font; }
     void set_word_score_bonus_font_metrics(const FontMetrics &metrics) { m_word_score_bonus_font_metrics = metrics; }
+    void set_checkbox_font(UIFont *font) { m_checkbox_font = font; }
+    void set_checkbox_font_metrics(const FontMetrics &metrics) { m_checkbox_font_metrics = metrics; }
+    void set_checkbox_label_left_margin(CGFloat f) { m_checkbox_label_left_margin = f; }
     void set_game_controls_button_charge_size(CGSize size) { m_game_controls_button_charge_size = size; }
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
     void set_game_score_frame(CGRect rect) { m_game_score_frame = rect; }
@@ -243,6 +255,7 @@ private:
     void calculate_game_note_font_metrics();
     void calculate_word_score_font_metrics();
     void calculate_word_score_bonus_font_metrics();
+    void calculate_checkbox_metrics();
     void calculate_locations();
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
@@ -250,7 +263,6 @@ private:
     void calculate_game_locations();
     void calculate_game_controls_button_charge_size();
     void calculate_choice_locations();
-
     void calculate_and_set_locations(const Role role, const CGRect &frame, CGFloat near_factor = CanonicalOffscreenNearFrameFactor);
 
     void calculate_game_timer_frame();
@@ -297,6 +309,9 @@ private:
     FontMetrics m_word_score_font_metrics;
     __strong UIFont *m_word_score_bonus_font;
     FontMetrics m_word_score_bonus_font_metrics;
+    __strong UIFont *m_checkbox_font;
+    FontMetrics m_checkbox_font_metrics;
+    CGFloat m_checkbox_label_left_margin = 0.0;
 
     CGSize m_tile_size = CGSizeZero;
     CGFloat m_tile_stroke_width = 0.0;

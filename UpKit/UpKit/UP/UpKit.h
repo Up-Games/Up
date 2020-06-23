@@ -17,6 +17,7 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPButton.h>
 #import <UpKit/UPChoice.h>
+#import <UpKit/UPColor.h>
 #import <UpKit/UPConstants.h>
 #import <UpKit/UPContainerView.h>
 #import <UpKit/UPControl.h>

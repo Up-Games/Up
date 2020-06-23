@@ -65,7 +65,9 @@
 {
     id string = TextLayer().string;
     if ([string isKindOfClass:[NSString class]]) {
-        return [[NSAttributedString alloc] initWithString:string];
+        return [[NSAttributedString alloc] initWithString:string attributes:@{
+            NSFontAttributeName: self.font
+        }];
     }
     else if ([string isKindOfClass:[NSAttributedString class]]) {
         return (NSAttributedString *)string;
@@ -146,6 +148,13 @@
 - (UIColor *)textColor
 {
     return TextLayer().foregroundColor ? [UIColor colorWithCGColor:TextLayer().foregroundColor] : nil;
+}
+
+#pragma mark - Layout
+
+- (CGSize)sizeThatFits:(CGSize)size
+{
+    return [self.attributedString size];
 }
 
 #pragma mark - Theme colors

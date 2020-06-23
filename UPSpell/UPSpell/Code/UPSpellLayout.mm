@@ -246,6 +246,7 @@ void SpellLayout::calculate()
     calculate_game_note_font_metrics();
     calculate_word_score_font_metrics();
     calculate_word_score_bonus_font_metrics();
+    calculate_checkbox_metrics();
     calculate_game_controls_button_charge_size();
     calculate_locations();
 }
@@ -341,6 +342,16 @@ void SpellLayout::calculate_word_score_bonus_font_metrics()
     set_word_score_bonus_font(font);
     CGFloat baseline_adjustment = CanonicalWordScoreBonusBaselineAdjustment * layout_scale();
     set_word_score_bonus_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
+}
+
+void SpellLayout::calculate_checkbox_metrics()
+{
+    CGFloat cap_height = CanonicalCheckboxLabelCapHeight * layout_scale();
+    UIFont *font = [UIFont settingsControlFontWithCapHeight:cap_height];
+    set_checkbox_font(font);
+    CGFloat baseline_adjustment = CanonicalCheckboxLabelBaselineAdjustment * layout_scale();
+    set_checkbox_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
+    set_checkbox_label_left_margin(CanonicalCheckboxLabelLeftMargin * layout_scale());
 }
 
 void SpellLayout::calculate_word_tray_layout_frame()

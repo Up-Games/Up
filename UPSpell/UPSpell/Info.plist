@@ -24,6 +24,7 @@
 	<array>
 		<string>MalloryNrrw-Bold.otf</string>
 		<string>MalloryCond-BlackItalic.otf</string>
+		<string>MalloryCond-Black.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

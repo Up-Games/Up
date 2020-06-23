@@ -71,6 +71,20 @@ static CGFloat _ThemeHue = 222;
         }
     }
 
+    if (effectiveCategory == UPColorCategoryCanonical) {
+        switch (style) {
+            case UPColorStyleDefault:
+            case UPColorStyleLight:
+            case UPColorStyleDark:
+                effectiveCategory = UPColorCategoryPrimaryFill;
+                break;
+            case UPColorStyleLightStark:
+            case UPColorStyleDarkStark:
+                effectiveCategory = UPColorCategoryPrimaryStroke;
+                break;
+        }
+    }
+    
     switch (effectiveCategory) {
         case UPColorCategoryWhite:
             return [UIColor whiteColor];
@@ -79,6 +93,7 @@ static CGFloat _ThemeHue = 222;
         case UPColorCategoryClear:
             return [UIColor clearColor];
         case UPColorCategoryDialogTitle:
+        case UPColorCategoryCanonical:
             ASSERT_NOT_REACHED();
             return nil;
         case UPColorCategoryDefault:

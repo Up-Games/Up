@@ -138,6 +138,16 @@ CGFloat up_bezier_sextic(CGFloat A, CGFloat B, CGFloat C, CGFloat D, CGFloat E, 
 
 CATransform3D up_transform_for_rect_to_quad(CGRect rect, UPQuadOffsets offsets);
 
+UP_STATIC_INLINE CGFloat up_degrees_to_radians(CGFloat degrees)
+{
+    return degrees * M_PI / 180.0;
+}
+
+UP_STATIC_INLINE CGFloat up_radians_to_degrees(CGFloat radians)
+{
+    return radians * 180.0 / M_PI;
+}
+
 UP_STATIC_INLINE CGFloat up_angular_difference(CGFloat a, CGFloat b) {
     return 360.0 - fabs(360.0 - fabs(a - b));
 }

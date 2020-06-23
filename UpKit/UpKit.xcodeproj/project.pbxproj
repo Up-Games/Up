@@ -75,7 +75,7 @@
 		5DD71DA32458F39200F3F9E2 /* UPAny.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71DA22458F39200F3F9E2 /* UPAny.h */; };
 		5DD9C29724699E340080F768 /* UPGameCodeTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DD9C29624699E340080F768 /* UPGameCodeTests.mm */; };
 		5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0172454CAFC00016047 /* UPMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DEBE01A2454E3AC00016047 /* UPColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0192454E3AC00016047 /* UPColor.h */; };
+		5DEBE01A2454E3AC00016047 /* UPColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0192454E3AC00016047 /* UPColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DEBE0202454F1D200016047 /* UIColor+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE01E2454F1D200016047 /* UIColor+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DEBE01F2454F1D200016047 /* UIColor+UP.mm */; };
 		5DEBE0232454F21800016047 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DEBE0222454F21800016047 /* UIKit.framework */; };

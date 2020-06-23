@@ -113,6 +113,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     self.contentPathView.canonicalSize = canonicalSize;
     self.auxiliaryPathView.canonicalSize = canonicalSize;
     self.accentPathView.canonicalSize = canonicalSize;
+    [self setNeedsLayout];
 }
 
 #pragma mark - State
