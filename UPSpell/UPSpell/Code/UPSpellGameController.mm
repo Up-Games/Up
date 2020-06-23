@@ -185,6 +185,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)updateThemeColors
 {
     [self.gameView updateThemeColors];
+    [self.dialogGameOver updateThemeColors];
+    [self.dialogGameNote updateThemeColors];
+    [self.dialogPause updateThemeColors];
 }
 
 #pragma mark - UPSpellNavigationController

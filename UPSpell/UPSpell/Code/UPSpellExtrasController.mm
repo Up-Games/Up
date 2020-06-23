@@ -78,7 +78,7 @@ using Spot = UP::SpellLayout::Spot;
     [self.view addSubview:self.choice4];
     
     self.modesLabel = [UPLabel label];
-    self.modesLabel.textColorCategory = UPColorCategoryDialogTitle;
+    self.modesLabel.textColorCategory = UPColorCategoryControlText;
     self.modesLabel.string = @"MODES:";
     self.modesLabel.font = layout.checkbox_font();
     [self.modesLabel sizeToFit];
@@ -116,7 +116,7 @@ using Spot = UP::SpellLayout::Spot;
     self.hueDescription = [UPLabel label];
     self.hueDescription.frame = CGRectMake(350, 314, 470, 100);
     self.hueDescription.font = [UIFont settingsDescriptionFontOfSize:22];
-    self.hueDescription.textColorCategory = UPColorCategoryDialogTitle;
+    self.hueDescription.textColorCategory = UPColorCategoryControlText;
     self.hueDescription.backgroundColorCategory = UPColorCategoryClear;
     self.hueDescription.textAlignment = NSTextAlignmentCenter;
     self.hueDescription.string = @"Colors based on hue #10 with more outlined shapes\nthan filled-in shapes on a light background";

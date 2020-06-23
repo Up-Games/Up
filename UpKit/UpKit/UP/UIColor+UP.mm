@@ -57,7 +57,7 @@ static CGFloat _ThemeHue = 222;
 {
     UPColorCategory effectiveCategory = category;
 
-    if (effectiveCategory == UPColorCategoryDialogTitle) {
+    if (effectiveCategory == UPColorCategoryControlText) {
         switch (style) {
             case UPThemeColorStyleDefault:
             case UPThemeColorStyleLight:
@@ -92,7 +92,7 @@ static CGFloat _ThemeHue = 222;
             return [UIColor blackColor];
         case UPColorCategoryClear:
             return [UIColor clearColor];
-        case UPColorCategoryDialogTitle:
+        case UPColorCategoryControlText:
         case UPColorCategoryCanonical:
             ASSERT_NOT_REACHED();
             return nil;

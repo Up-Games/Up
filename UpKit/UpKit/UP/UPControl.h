@@ -6,6 +6,7 @@
 #import <UIKit/UIKit.h>
 
 #import <UPKit/UPBand.h>
+#import <UPKit/UIColor+UP.h>
 
 @class UPBezierPathView;
 @class UPGestureRecognizer;
@@ -92,8 +93,9 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (void)setFillPath:(UIBezierPath *)path;
 - (void)setFillPath:(UIBezierPath *)path forState:(UPControlState)state;
 - (UIBezierPath *)fillPathForState:(UPControlState)state;
-- (void)setFillColor:(UIColor *)color;
-- (void)setFillColor:(UIColor *)color forState:(UPControlState)state;
+- (void)setFillColorCategory:(UPColorCategory)colorCategory;
+- (void)setFillColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state;
+- (UPColorCategory)fillColorCategoryForState:(UPControlState)state;
 - (UIColor *)fillColorForState:(UPControlState)state;
 - (void)setFillColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)fillColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
@@ -101,8 +103,9 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (void)setStrokePath:(UIBezierPath *)path;
 - (void)setStrokePath:(UIBezierPath *)path forState:(UPControlState)state;
 - (UIBezierPath *)strokePathForState:(UPControlState)state;
-- (void)setStrokeColor:(UIColor *)color;
-- (void)setStrokeColor:(UIColor *)color forState:(UPControlState)state;
+- (void)setStrokeColorCategory:(UPColorCategory)colorCategory;
+- (void)setStrokeColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state;
+- (UPColorCategory)strokeColorCategoryForState:(UPControlState)state;
 - (UIColor *)strokeColorForState:(UPControlState)state;
 - (void)setStrokeColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)strokeColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
@@ -110,8 +113,9 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (void)setContentPath:(UIBezierPath *)path;
 - (void)setContentPath:(UIBezierPath *)path forState:(UPControlState)state;
 - (UIBezierPath *)contentPathForState:(UPControlState)state;
-- (void)setContentColor:(UIColor *)color;
-- (void)setContentColor:(UIColor *)color forState:(UPControlState)state;
+- (void)setContentColorCategory:(UPColorCategory)colorCategory;
+- (void)setContentColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state;
+- (UPColorCategory)contentColorCategoryForState:(UPControlState)state;
 - (UIColor *)contentColorForState:(UPControlState)state;
 - (void)setContentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)contentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
@@ -119,8 +123,9 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (void)setAuxiliaryPath:(UIBezierPath *)path;
 - (void)setAuxiliaryPath:(UIBezierPath *)path forState:(UPControlState)state;
 - (UIBezierPath *)auxiliaryPathForState:(UPControlState)state;
-- (void)setAuxiliaryColor:(UIColor *)color;
-- (void)setAuxiliaryColor:(UIColor *)color forState:(UPControlState)state;
+- (void)setAuxiliaryColorCategory:(UPColorCategory)colorCategory;
+- (void)setAuxiliaryColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state;
+- (UPColorCategory)auxiliaryColorCategoryForState:(UPControlState)state;
 - (UIColor *)auxiliaryColorForState:(UPControlState)state;
 - (void)setAuxiliaryColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)auxiliaryColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
@@ -128,8 +133,9 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (void)setAccentPath:(UIBezierPath *)path;
 - (void)setAccentPath:(UIBezierPath *)path forState:(UPControlState)state;
 - (UIBezierPath *)accentPathForState:(UPControlState)state;
-- (void)setAccentColor:(UIColor *)color;
-- (void)setAccentColor:(UIColor *)color forState:(UPControlState)state;
+- (void)setAccentColorCategory:(UPColorCategory)colorCategory;
+- (void)setAccentColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state;
+- (UPColorCategory)accentColorCategoryForState:(UPControlState)state;
 - (UIColor *)accentColorForState:(UPControlState)state;
 - (void)setAccentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)accentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;

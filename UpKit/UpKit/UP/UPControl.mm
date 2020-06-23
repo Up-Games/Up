@@ -26,7 +26,7 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 @interface UPControl () <UPNeedsUpdatable>
 {
     std::map<NSUInteger, __strong UIBezierPath *> m_paths;
-    std::map<NSUInteger, __strong UIColor *> m_colors;
+    std::map<NSUInteger, UPColorCategory> m_color_categories;
     std::map<UPControlStatePair, CFTimeInterval> m_color_animations;
 }
 @property (nonatomic, readwrite) UPControlState state;
@@ -473,36 +473,41 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 
 # pragma mark - Colors
 
-- (void)setFillColor:(UIColor *)color
+- (void)setFillColorCategory:(UPColorCategory)colorCategory
 {
-    [self setFillColor:color forState:UPControlStateNormal];
+    [self setFillColorCategory:colorCategory forState:UPControlStateNormal];
 }
 
-- (void)setFillColor:(UIColor *)color forState:(UPControlState)state
+- (void)setFillColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state
 {
     NSUInteger k = up_control_key_fill(state);
-    auto it = m_colors.find(k);
-    if (it == m_colors.end()) {
-        m_colors.emplace(k, color);
+    auto it = m_color_categories.find(k);
+    if (it == m_color_categories.end()) {
+        m_color_categories.emplace(k, colorCategory);
     }
     else {
-        it->second = color;
+        it->second = colorCategory;
     }
     [self setNeedsUpdate];
 }
 
-- (UIColor *)fillColorForState:(UPControlState)state
+- (UPColorCategory)fillColorCategoryForState:(UPControlState)state
 {
-    const auto &end = m_colors.end();
-    const auto &sval = m_colors.find(up_control_key_fill(state));
+    const auto &end = m_color_categories.end();
+    const auto &sval = m_color_categories.find(up_control_key_fill(state));
     if (sval != end) {
         return sval->second;
     }
-    const auto &nval = m_colors.find(up_control_key_fill(UPControlStateNormal));
+    const auto &nval = m_color_categories.find(up_control_key_fill(UPControlStateNormal));
     if (nval != end) {
         return nval->second;
     }
-    return [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
+    return UPColorCategoryPrimaryFill;
+}
+
+- (UIColor *)fillColorForState:(UPControlState)state
+{
+    return [UIColor themeColorWithCategory:[self fillColorCategoryForState:state]];
 }
 
 - (void)setFillColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState
@@ -527,36 +532,41 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     return it != m_color_animations.end() ? it->second : 0.0;
 }
 
-- (void)setStrokeColor:(UIColor *)color
+- (void)setStrokeColorCategory:(UPColorCategory)colorCategory
 {
-    [self setStrokeColor:color forState:UPControlStateNormal];
+    [self setStrokeColorCategory:colorCategory forState:UPControlStateNormal];
 }
 
-- (void)setStrokeColor:(UIColor *)color forState:(UPControlState)state
+- (void)setStrokeColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state
 {
     NSUInteger k = up_control_key_stroke(state);
-    auto it = m_colors.find(k);
-    if (it == m_colors.end()) {
-        m_colors.emplace(k, color);
+    auto it = m_color_categories.find(k);
+    if (it == m_color_categories.end()) {
+        m_color_categories.emplace(k, colorCategory);
     }
     else {
-        it->second = color;
+        it->second = colorCategory;
     }
     [self setNeedsUpdate];
 }
 
-- (UIColor *)strokeColorForState:(UPControlState)state
+- (UPColorCategory)strokeColorCategoryForState:(UPControlState)state
 {
-    const auto &end = m_colors.end();
-    const auto &sval = m_colors.find(up_control_key_stroke(state));
+    const auto &end = m_color_categories.end();
+    const auto &sval = m_color_categories.find(up_control_key_stroke(state));
     if (sval != end) {
         return sval->second;
     }
-    const auto &nval = m_colors.find(up_control_key_stroke(UPControlStateNormal));
+    const auto &nval = m_color_categories.find(up_control_key_stroke(UPControlStateNormal));
     if (nval != end) {
         return nval->second;
     }
-    return [UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke];
+    return UPColorCategoryPrimaryStroke;
+}
+
+- (UIColor *)strokeColorForState:(UPControlState)state
+{
+    return [UIColor themeColorWithCategory:[self strokeColorCategoryForState:state]];
 }
 
 - (void)setStrokeColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState
@@ -581,36 +591,41 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     return it != m_color_animations.end() ? it->second : 0.0;
 }
 
-- (void)setContentColor:(UIColor *)color
+- (void)setContentColorCategory:(UPColorCategory)colorCategory
 {
-    [self setContentColor:color forState:UPControlStateNormal];
+    [self setContentColorCategory:colorCategory forState:UPControlStateNormal];
 }
 
-- (void)setContentColor:(UIColor *)color forState:(UPControlState)state
+- (void)setContentColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state
 {
     NSUInteger k = up_control_key_content(state);
-    auto it = m_colors.find(k);
-    if (it == m_colors.end()) {
-        m_colors.emplace(k, color);
+    auto it = m_color_categories.find(k);
+    if (it == m_color_categories.end()) {
+        m_color_categories.emplace(k, colorCategory);
     }
     else {
-        it->second = color;
+        it->second = colorCategory;
     }
     [self setNeedsUpdate];
 }
 
-- (UIColor *)contentColorForState:(UPControlState)state
+- (UPColorCategory)contentColorCategoryForState:(UPControlState)state
 {
-    const auto &end = m_colors.end();
-    const auto &sval = m_colors.find(up_control_key_content(state));
+    const auto &end = m_color_categories.end();
+    const auto &sval = m_color_categories.find(up_control_key_content(state));
     if (sval != end) {
         return sval->second;
     }
-    const auto &nval = m_colors.find(up_control_key_content(UPControlStateNormal));
+    const auto &nval = m_color_categories.find(up_control_key_content(UPControlStateNormal));
     if (nval != end) {
         return nval->second;
     }
-    return [UIColor themeColorWithCategory:UPColorCategoryContent];
+    return UPColorCategoryContent;
+}
+
+- (UIColor *)contentColorForState:(UPControlState)state
+{
+    return [UIColor themeColorWithCategory:[self contentColorCategoryForState:state]];
 }
 
 - (void)setContentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState
@@ -635,36 +650,41 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     return it != m_color_animations.end() ? it->second : 0.0;
 }
 
-- (void)setAuxiliaryColor:(UIColor *)color
+- (void)setAuxiliaryColorCategory:(UPColorCategory)colorCategory
 {
-    [self setAuxiliaryColor:color forState:UPControlStateNormal];
+    [self setAuxiliaryColorCategory:colorCategory forState:UPControlStateNormal];
 }
 
-- (void)setAuxiliaryColor:(UIColor *)color forState:(UPControlState)state
+- (void)setAuxiliaryColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state;
 {
     NSUInteger k = up_control_key_auxiliary(state);
-    auto it = m_colors.find(k);
-    if (it == m_colors.end()) {
-        m_colors.emplace(k, color);
+    auto it = m_color_categories.find(k);
+    if (it == m_color_categories.end()) {
+        m_color_categories.emplace(k, colorCategory);
     }
     else {
-        it->second = color;
+        it->second = colorCategory;
     }
     [self setNeedsUpdate];
 }
 
-- (UIColor *)auxiliaryColorForState:(UPControlState)state
+- (UPColorCategory)auxiliaryColorCategoryForState:(UPControlState)state
 {
-    const auto &end = m_colors.end();
-    const auto &sval = m_colors.find(up_control_key_auxiliary(state));
+    const auto &end = m_color_categories.end();
+    const auto &sval = m_color_categories.find(up_control_key_auxiliary(state));
     if (sval != end) {
         return sval->second;
     }
-    const auto &nval = m_colors.find(up_control_key_auxiliary(UPControlStateNormal));
+    const auto &nval = m_color_categories.find(up_control_key_auxiliary(UPControlStateNormal));
     if (nval != end) {
         return nval->second;
     }
-    return [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
+    return UPColorCategoryPrimaryFill;
+}
+
+- (UIColor *)auxiliaryColorForState:(UPControlState)state
+{
+    return [UIColor themeColorWithCategory:[self auxiliaryColorCategoryForState:state]];
 }
 
 - (void)setAuxiliaryColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState
@@ -689,36 +709,41 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     return it != m_color_animations.end() ? it->second : 0.0;
 }
 
-- (void)setAccentColor:(UIColor *)color
+- (void)setAccentColorCategory:(UPColorCategory)colorCategory;
 {
-    [self setAccentColor:color forState:UPControlStateNormal];
+    [self setAccentColorCategory:colorCategory forState:UPControlStateNormal];
 }
 
-- (void)setAccentColor:(UIColor *)color forState:(UPControlState)state
+- (void)setAccentColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state;
 {
     NSUInteger k = up_control_key_accent(state);
-    auto it = m_colors.find(k);
-    if (it == m_colors.end()) {
-        m_colors.emplace(k, color);
+    auto it = m_color_categories.find(k);
+    if (it == m_color_categories.end()) {
+        m_color_categories.emplace(k, colorCategory);
     }
     else {
-        it->second = color;
+        it->second = colorCategory;
     }
     [self setNeedsUpdate];
 }
 
-- (UIColor *)accentColorForState:(UPControlState)state
+- (UPColorCategory)accentColorCategoryForState:(UPControlState)state;
 {
-    const auto &end = m_colors.end();
-    const auto &sval = m_colors.find(up_control_key_accent(state));
+    const auto &end = m_color_categories.end();
+    const auto &sval = m_color_categories.find(up_control_key_accent(state));
     if (sval != end) {
         return sval->second;
     }
-    const auto &nval = m_colors.find(up_control_key_accent(UPControlStateNormal));
+    const auto &nval = m_color_categories.find(up_control_key_accent(UPControlStateNormal));
     if (nval != end) {
         return nval->second;
     }
-    return [UIColor themeColorWithCategory:UPColorCategoryPrimaryFill];
+    return UPColorCategoryPrimaryFill;
+}
+
+- (UIColor *)accentColorForState:(UPControlState)state
+{
+    return [UIColor themeColorWithCategory:[self accentColorCategoryForState:state]];
 }
 
 - (void)setAccentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState

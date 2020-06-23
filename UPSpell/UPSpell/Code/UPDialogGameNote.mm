@@ -48,4 +48,11 @@ using UP::SpellLayout;
     return self;
 }
 
+#pragma mark - Theme colors
+
+- (void)updateThemeColors
+{
+    [self.noteLabel updateThemeColors];
+}
+
 @end

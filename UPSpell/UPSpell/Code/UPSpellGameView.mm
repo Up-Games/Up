@@ -125,6 +125,7 @@ using Spot = UP::SpellLayout::Spot;
     [self.timerLabel updateThemeColors];
     [self.gameScoreLabel updateThemeColors];
     [self.wordScoreLabel updateThemeColors];
+    [self.tileContainerView.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
 }
 
 - (UIBezierPath *)wordTrayTileMaskPath

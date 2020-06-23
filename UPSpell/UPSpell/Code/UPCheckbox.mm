@@ -148,7 +148,7 @@ static UIBezierPath *CheckboxCheckPath()
     self.action = action;
     self.label = [UPLabel label];
     self.label.font = SpellLayout::instance().checkbox_font();
-    self.label.textColorCategory = UPColorCategoryDialogTitle;
+    self.label.textColorCategory = UPColorCategoryControlText;
     self.label.backgroundColorCategory = UPColorCategoryClear;
     [self addSubview:self.label];
     self.gesture = [UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)];

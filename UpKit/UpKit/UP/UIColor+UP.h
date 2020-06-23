@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
     UPColorCategoryInfinity,
 
     UPColorCategoryCanonical,
-    UPColorCategoryDialogTitle,
+    UPColorCategoryControlText,
 
     UPColorCategoryWhite,
     UPColorCategoryBlack,

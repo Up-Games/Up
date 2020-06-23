@@ -65,7 +65,7 @@ UIBezierPath *HueChipPath()
     self.label = [UPLabel label];
     self.label.font = SpellLayout::instance().checkbox_font();
     self.label.textAlignment = NSTextAlignmentCenter;
-    self.label.textColorCategory = UPColorCategoryDialogTitle;
+    self.label.textColorCategory = UPColorCategoryControlText;
     self.label.backgroundColorCategory = UPColorCategoryClear;
     [self addSubview:self.label];
 
@@ -137,7 +137,8 @@ UIBezierPath *HueChipPath()
 {
     NSString *string = [NSString stringWithFormat:@"HUE #%03d", (int)self.hue];
     self.label.string = string;
-    self.hueChipView.fillColor = [UIColor colorizedGray:0.7 hue:self.hue saturation:0.9];
+//    self.hueChipView.fillColor = [UIColor colorizedGray:0.6 hue:self.hue saturation:0.7];
+    self.hueChipView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryControlText];
     [self setNeedsLayout];
 }
 

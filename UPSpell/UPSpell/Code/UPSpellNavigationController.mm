@@ -106,6 +106,7 @@ using UP::TimeSpanning::start;
         [self.gameController updateThemeColors];
         [self.extrasController updateThemeColors];
         [self.aboutController updateThemeColors];
+        [self.dialogMenu updateThemeColors];
     }];
 }
 

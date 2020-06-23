@@ -95,6 +95,7 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)updateThemeColors
 {
+    [self.view.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
 }
 
 @end

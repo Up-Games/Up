@@ -294,9 +294,9 @@ static UIBezierPath *StepperPathRight()
     
     self.canonicalSize = CGSizeMake(30, 30);
     [self setFillPath:ButtonFillPath() forState:UPControlStateNormal];
-    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
+    [self setFillColorCategory:UPColorCategoryHighlightedFill forState:UPControlStateHighlighted];
     [self setStrokePath:ButtonStrokePath() forState:UPControlStateNormal];
-    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
+    [self setStrokeColorCategory:UPColorCategoryHighlightedStroke forState:UPControlStateHighlighted];
 
     UIBezierPath *path = nil;
     switch (self.direction) {

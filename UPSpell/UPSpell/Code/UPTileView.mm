@@ -56,13 +56,13 @@ static uint32_t _InstanceCount;
 
     CGRect fillRect = CGRectMake(0, 0, up_size_width(SpellLayout::CanonicalTileSize), up_size_height(SpellLayout::CanonicalTileSize));
     [self setFillPath:[UIBezierPath bezierPathWithRect:fillRect]];
-    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryFill] forState:UPControlStateNormal];
-    [self setFillColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] forState:UPControlStateHighlighted];
+    [self setFillColorCategory:UPColorCategoryPrimaryFill forState:UPControlStateNormal];
+    [self setFillColorCategory:UPColorCategoryHighlightedFill forState:UPControlStateHighlighted];
     [self setFillColorAnimationDuration:0.15 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     
     [self setStrokePath:layout.tile_stroke_path()];
-    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryPrimaryStroke] forState:UPControlStateNormal];
-    [self setStrokeColor:[UIColor themeColorWithCategory:UPColorCategoryHighlightedStroke] forState:UPControlStateHighlighted];
+    [self setStrokeColorCategory:UPColorCategoryPrimaryStroke forState:UPControlStateNormal];
+    [self setStrokeColorCategory:UPColorCategoryHighlightedStroke forState:UPControlStateHighlighted];
     [self setStrokeColorAnimationDuration:0.15 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
     if (glyph != UP::BlankGlyph) {
