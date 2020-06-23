@@ -782,9 +782,21 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 
 #pragma mark - Updating
 
+- (void)updateThemeColors
+{
+    [self cancelColorAnimations];
+    [self invalidate];
+    [self setNeedsUpdate];
+}
+
 - (void)cancelAnimations
 {
     cancel(@[self]);
+    [self cancelColorAnimations];
+}
+
+- (void)cancelColorAnimations
+{
     cancel(self.fillColorAnimatorSerialNumber);
     cancel(self.strokeColorAnimatorSerialNumber);
     cancel(self.contentPathColorAnimatorSerialNumber);

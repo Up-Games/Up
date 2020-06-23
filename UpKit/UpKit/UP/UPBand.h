@@ -21,7 +21,8 @@ static constexpr Band BandModeAll = "mode.*";
 static constexpr Band BandModeDelay = "mode.delay";
 static constexpr Band BandModeUI = "mode.ui";
 static constexpr Band BandSettingsUI = "settings.ui";
-static constexpr Band BandSettingsDelay = "settings.delay";
+static constexpr Band BandSettingsAnimationDelay = "settings.animation.delay";
+static constexpr Band BandSettingsUpdateDelay = "settings.update.delay";
 static constexpr Band BandTest = "test";
 
 template <bool B = true> bool band_match(Band pattern, Band band)

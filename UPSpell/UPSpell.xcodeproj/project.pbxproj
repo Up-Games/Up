@@ -13,6 +13,8 @@
 		5D0FC22124A168AC00353563 /* UPHueWheel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22024A168AC00353563 /* UPHueWheel.mm */; };
 		5D0FC22424A2681800353563 /* UPHueStepperIndicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22324A2681700353563 /* UPHueStepperIndicator.mm */; };
 		5D0FC22724A278D300353563 /* UPStepper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22624A278D300353563 /* UPStepper.mm */; };
+		5D0FC22924A2A4C400353563 /* MalloryCond-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D0FC22824A2A4C400353563 /* MalloryCond-BoldItalic.otf */; };
+		5D0FC22C24A2A5C300353563 /* UPSpellSettings.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22B24A2A5C300353563 /* UPSpellSettings.mm */; };
 		5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */; };
 		5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogMenu.mm */; };
@@ -77,6 +79,9 @@
 		5D0FC22324A2681700353563 /* UPHueStepperIndicator.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPHueStepperIndicator.mm; sourceTree = "<group>"; };
 		5D0FC22524A278D300353563 /* UPStepper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPStepper.h; sourceTree = "<group>"; };
 		5D0FC22624A278D300353563 /* UPStepper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPStepper.mm; sourceTree = "<group>"; };
+		5D0FC22824A2A4C400353563 /* MalloryCond-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-BoldItalic.otf"; sourceTree = "<group>"; };
+		5D0FC22A24A2A5C300353563 /* UPSpellSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellSettings.h; sourceTree = "<group>"; };
+		5D0FC22B24A2A5C300353563 /* UPSpellSettings.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellSettings.mm; sourceTree = "<group>"; };
 		5D34613624887918009FB46D /* UPViewMove+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UPViewMove+UPSpell.h"; sourceTree = "<group>"; };
 		5D4AE823248BDED200213904 /* UPSpellExtrasController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasController.h; sourceTree = "<group>"; };
 		5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasController.mm; sourceTree = "<group>"; };
@@ -191,6 +196,8 @@
 				5DA8E078247D723A008D3015 /* UPSpellModel.mm */,
 				5D54078224841631003F193D /* UPSpellNavigationController.h */,
 				5D54078324841631003F193D /* UPSpellNavigationController.mm */,
+				5D0FC22A24A2A5C300353563 /* UPSpellSettings.h */,
+				5D0FC22B24A2A5C300353563 /* UPSpellSettings.mm */,
 				5D0FC22524A278D300353563 /* UPStepper.h */,
 				5D0FC22624A278D300353563 /* UPStepper.mm */,
 				5D5EA1432485B820006264D2 /* UPTextPaths.h */,
@@ -213,6 +220,7 @@
 				5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */,
 				5D5EA14A24870128006264D2 /* MalloryCond-BlackItalic.otf */,
 				5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */,
+				5D0FC22824A2A4C400353563 /* MalloryCond-BoldItalic.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -351,6 +359,7 @@
 				5D0FC21E24A130D700353563 /* MalloryCond-Black.otf in Resources */,
 				5DF9DF6A2466165800B2199D /* LaunchScreen.storyboard in Resources */,
 				5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */,
+				5D0FC22924A2A4C400353563 /* MalloryCond-BoldItalic.otf in Resources */,
 				5DF9DF672466165800B2199D /* Assets.xcassets in Resources */,
 				5D5EA14C248702BF006264D2 /* MalloryCond-BlackItalic.otf in Resources */,
 				5DF9DF652466165700B2199D /* Main.storyboard in Resources */,
@@ -373,6 +382,7 @@
 			files = (
 				5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */,
 				5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */,
+				5D0FC22C24A2A5C300353563 /* UPSpellSettings.mm in Sources */,
 				5DF9DF622466165700B2199D /* UPSpellGameController.mm in Sources */,
 				5DF9DF5C2466165700B2199D /* UPAppDelegate.mm in Sources */,
 				5D54078424841631003F193D /* UPSpellNavigationController.mm in Sources */,

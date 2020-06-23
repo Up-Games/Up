@@ -91,4 +91,10 @@ using Spot = UP::SpellLayout::Spot;
     }
 }
 
+#pragma mark - Update theme colors
+
+- (void)updateThemeColors
+{
+}
+
 @end

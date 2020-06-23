@@ -180,6 +180,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     return self.mode == Mode::Play ? UIRectEdgeAll : UIRectEdgeNone;
 }
 
+#pragma mark - Update theme colors
+
+- (void)updateThemeColors
+{
+    [self.gameView updateThemeColors];
+}
+
 #pragma mark - UPSpellNavigationController
 
 - (UPSpellNavigationController *)spellNavigationController
@@ -1706,7 +1713,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.model = new SpellModel(game_code);
 }
 
-#pragma mark - Lifecycle Notifications
+#pragma mark - Lifecycle notifications
 
 - (void)configureLifecycleNotifications
 {
@@ -1714,24 +1721,20 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     [nc addObserverForName:UIApplicationDidBecomeActiveNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
-        LOG(General, "UIApplicationDidBecomeActiveNotification");
     }];
     
     [nc addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
-        LOG(General, "UIApplicationWillEnterForegroundNotification");
     }];
     
     [nc addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
-        LOG(General, "UIApplicationWillResignActiveNotification");
         if (self.mode == Mode::Play) {
             [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioWillResignActive];
         }
     }];
     [nc addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
-        LOG(General, "UIApplicationDidEnterBackgroundNotification");
         if (self.mode == Mode::Play) {
             [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioDidEnterBackground];
         }

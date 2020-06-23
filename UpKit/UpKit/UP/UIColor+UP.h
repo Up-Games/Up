@@ -5,12 +5,12 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, UPColorStyle) {
-    UPColorStyleDefault,
-    UPColorStyleLight,
-    UPColorStyleDark,
-    UPColorStyleLightStark,
-    UPColorStyleDarkStark,
+typedef NS_ENUM(NSInteger, UPThemeColorStyle) {
+    UPThemeColorStyleDefault,
+    UPThemeColorStyleLight,
+    UPThemeColorStyleDark,
+    UPThemeColorStyleLightStark,
+    UPThemeColorStyleDarkStark,
 };
 
 typedef NS_ENUM(NSInteger, UPColorCategory) {
@@ -48,25 +48,25 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 
 @interface UIColor (UP)
 
-+ (void)setThemeStyle:(UPColorStyle)style;
-+ (UPColorStyle)themeStyle;
++ (void)setThemeColorStyle:(UPThemeColorStyle)style;
++ (UPThemeColorStyle)themeColorStyle;
 
-+ (void)setThemeHue:(CGFloat)hue;
-+ (CGFloat)themeHue;
++ (void)setThemeColorHue:(CGFloat)hue;
++ (CGFloat)themeColorHue;
 
 + (UIColor *)themeColorWithCategory:(UPColorCategory)category;
-+ (UIColor *)themeColorWithStyle:(UPColorStyle)style hue:(CGFloat)hue category:(UPColorCategory)category;
++ (UIColor *)themeColorWithStyle:(UPThemeColorStyle)style hue:(CGFloat)hue category:(UPColorCategory)category;
 
-+ (CGFloat)themeDisabledAlphaForStyle:(UPColorStyle)style;
++ (CGFloat)themeDisabledAlphaForStyle:(UPThemeColorStyle)style;
 + (CGFloat)themeDisabledAlpha;
 
-+ (CGFloat)themeModalBackgroundAlphaForStyle:(UPColorStyle)style;
++ (CGFloat)themeModalBackgroundAlphaForStyle:(UPThemeColorStyle)style;
 + (CGFloat)themeModalBackgroundAlpha;
 
-+ (CGFloat)themeModalActiveAlphaForStyle:(UPColorStyle)style;
++ (CGFloat)themeModalActiveAlphaForStyle:(UPThemeColorStyle)style;
 + (CGFloat)themeModalActiveAlpha;
 
-+ (CGFloat)themeModalGameOverAlphaForStyle:(UPColorStyle)style;
++ (CGFloat)themeModalGameOverAlphaForStyle:(UPThemeColorStyle)style;
 + (CGFloat)themeModalGameOverAlpha;
 
 + (UIColor *)colorizedGray:(CGFloat)gray hue:(CGFloat)hue saturation:(CGFloat)saturation;

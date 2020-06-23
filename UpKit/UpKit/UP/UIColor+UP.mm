@@ -19,31 +19,31 @@ using UP::to_hsvf;
 using UP::mix_channel;
 using UP::mix_lightness;
 
-static UPColorStyle _ThemeStyle = UPColorStyleDefault;
+static UPThemeColorStyle _ThemeStyle = UPThemeColorStyleDefault;
 static CGFloat _ThemeHue = 222;
 
 #include "UPThemeColors.c"
 
 @implementation UIColor (UP)
 
-+ (void)setThemeStyle:(UPColorStyle)style
++ (void)setThemeColorStyle:(UPThemeColorStyle)style
 {
     _ThemeStyle = style;
     [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
-+ (UPColorStyle)themeStyle
++ (UPThemeColorStyle)themeColorStyle
 {
     return _ThemeStyle;
 }
 
-+ (void)setThemeHue:(CGFloat)hue;
++ (void)setThemeColorHue:(CGFloat)hue;
 {
     _ThemeHue = UPClampT(CGFloat, hue, 0, 360);
     [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
-+ (CGFloat)themeHue
++ (CGFloat)themeColorHue
 {
     return _ThemeHue;
 }
@@ -53,19 +53,19 @@ static CGFloat _ThemeHue = 222;
     return [self themeColorWithStyle:_ThemeStyle hue:_ThemeHue category:category];
 }
 
-+ (UIColor *)themeColorWithStyle:(UPColorStyle)style hue:(CGFloat)hue category:(UPColorCategory)category
++ (UIColor *)themeColorWithStyle:(UPThemeColorStyle)style hue:(CGFloat)hue category:(UPColorCategory)category
 {
     UPColorCategory effectiveCategory = category;
 
     if (effectiveCategory == UPColorCategoryDialogTitle) {
         switch (style) {
-            case UPColorStyleDefault:
-            case UPColorStyleLight:
-            case UPColorStyleDark:
+            case UPThemeColorStyleDefault:
+            case UPThemeColorStyleLight:
+            case UPThemeColorStyleDark:
                 effectiveCategory = UPColorCategoryPrimaryFill;
                 break;
-            case UPColorStyleLightStark:
-            case UPColorStyleDarkStark:
+            case UPThemeColorStyleLightStark:
+            case UPThemeColorStyleDarkStark:
                 effectiveCategory = UPColorCategoryPrimaryStroke;
                 break;
         }
@@ -73,13 +73,13 @@ static CGFloat _ThemeHue = 222;
 
     if (effectiveCategory == UPColorCategoryCanonical) {
         switch (style) {
-            case UPColorStyleDefault:
-            case UPColorStyleLight:
-            case UPColorStyleDark:
+            case UPThemeColorStyleDefault:
+            case UPThemeColorStyleLight:
+            case UPThemeColorStyleDark:
                 effectiveCategory = UPColorCategoryPrimaryFill;
                 break;
-            case UPColorStyleLightStark:
-            case UPColorStyleDarkStark:
+            case UPThemeColorStyleLightStark:
+            case UPThemeColorStyleDarkStark:
                 effectiveCategory = UPColorCategoryPrimaryStroke;
                 break;
         }
@@ -121,7 +121,7 @@ static CGFloat _ThemeHue = 222;
         case UPColorCategoryInfinity: {
             static const size_t ColorsPerHue = 22;
             static const size_t HueCount = 360;
-            size_t themeOffset = (style == UPColorStyleDefault ? 0 : (size_t)style - 1) * HueCount;
+            size_t themeOffset = (style == UPThemeColorStyleDefault ? 0 : (size_t)style - 1) * HueCount;
             CGFloat effectiveHue = UPClampT(CGFloat, hue, 0, 360);
             size_t hueOffset = (effectiveHue * ColorsPerHue);
             size_t categoryOffset = (effectiveCategory == UPColorCategoryDefault ? 0 : (size_t)effectiveCategory - 1);
@@ -132,15 +132,15 @@ static CGFloat _ThemeHue = 222;
     }
 }
 
-+ (CGFloat)themeDisabledAlphaForStyle:(UPColorStyle)style
++ (CGFloat)themeDisabledAlphaForStyle:(UPThemeColorStyle)style
 {
     switch (_ThemeStyle) {
-        case UPColorStyleDefault:
-        case UPColorStyleLight:
-        case UPColorStyleLightStark:
+        case UPThemeColorStyleDefault:
+        case UPThemeColorStyleLight:
+        case UPThemeColorStyleLightStark:
             return 0.5;
-        case UPColorStyleDark:
-        case UPColorStyleDarkStark:
+        case UPThemeColorStyleDark:
+        case UPThemeColorStyleDarkStark:
             return 0.62;
     }
 }
@@ -150,15 +150,15 @@ static CGFloat _ThemeHue = 222;
     return [UIColor themeDisabledAlphaForStyle:_ThemeStyle];
 }
 
-+ (CGFloat)themeModalBackgroundAlphaForStyle:(UPColorStyle)style
++ (CGFloat)themeModalBackgroundAlphaForStyle:(UPThemeColorStyle)style
 {
     switch (_ThemeStyle) {
-        case UPColorStyleDefault:
-        case UPColorStyleLight:
-        case UPColorStyleLightStark:
+        case UPThemeColorStyleDefault:
+        case UPThemeColorStyleLight:
+        case UPThemeColorStyleLightStark:
             return 0.03;
-        case UPColorStyleDark:
-        case UPColorStyleDarkStark:
+        case UPThemeColorStyleDark:
+        case UPThemeColorStyleDarkStark:
             return 0.03;
     }
 }
@@ -168,14 +168,14 @@ static CGFloat _ThemeHue = 222;
     return [UIColor themeModalBackgroundAlphaForStyle:_ThemeStyle];
 }
 
-+ (CGFloat)themeModalActiveAlphaForStyle:(UPColorStyle)style
++ (CGFloat)themeModalActiveAlphaForStyle:(UPThemeColorStyle)style
 {
     switch (_ThemeStyle) {
-        case UPColorStyleDefault:
-        case UPColorStyleLight:
-        case UPColorStyleLightStark:
-        case UPColorStyleDark:
-        case UPColorStyleDarkStark:
+        case UPThemeColorStyleDefault:
+        case UPThemeColorStyleLight:
+        case UPThemeColorStyleLightStark:
+        case UPThemeColorStyleDark:
+        case UPThemeColorStyleDarkStark:
             return 0.25;
     }
 }
@@ -185,14 +185,14 @@ static CGFloat _ThemeHue = 222;
     return [UIColor themeModalActiveAlphaForStyle:_ThemeStyle];
 }
 
-+ (CGFloat)themeModalGameOverAlphaForStyle:(UPColorStyle)style
++ (CGFloat)themeModalGameOverAlphaForStyle:(UPThemeColorStyle)style
 {
     switch (_ThemeStyle) {
-        case UPColorStyleDefault:
-        case UPColorStyleLight:
-        case UPColorStyleLightStark:
-        case UPColorStyleDark:
-        case UPColorStyleDarkStark:
+        case UPThemeColorStyleDefault:
+        case UPThemeColorStyleLight:
+        case UPThemeColorStyleLightStark:
+        case UPThemeColorStyleDark:
+        case UPThemeColorStyleDarkStark:
             return 0.1;
     }
 }

@@ -82,7 +82,6 @@ using Spot = UP::SpellLayout::Spot;
     self.timerLabel.superscriptFont = layout.game_information_superscript_font();
     self.timerLabel.superscriptBaselineAdjustment = layout.game_information_superscript_font_metrics().baseline_adjustment();
     self.timerLabel.superscriptKerning = layout.game_information_superscript_font_metrics().kerning();
-    
     self.timerLabel.textColorCategory = UPColorCategoryInformation;
     self.timerLabel.textAlignment = NSTextAlignmentRight;
     self.timerLabel.frame = layout.frame_for(Role::GameTimer);
@@ -116,6 +115,16 @@ using Spot = UP::SpellLayout::Spot;
     self.wordScoreLabel.hidden = YES;
     
     return self;
+}
+
+- (void)updateThemeColors
+{
+    [self.wordTrayControl updateThemeColors];
+    [self.pauseControl updateThemeColors];
+    [self.clearControl updateThemeColors];
+    [self.timerLabel updateThemeColors];
+    [self.gameScoreLabel updateThemeColors];
+    [self.wordScoreLabel updateThemeColors];
 }
 
 - (UIBezierPath *)wordTrayTileMaskPath

@@ -166,4 +166,11 @@ UIBezierPath *HueChipPath()
 
 }
 
+- (void)updateThemeColors
+{
+    [self.label updateThemeColors];
+    [self.hueStepMore updateThemeColors];
+    [self.hueStepLess updateThemeColors];
+}
+
 @end

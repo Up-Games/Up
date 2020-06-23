@@ -11,6 +11,7 @@ NSString * const UPGameInformationFontName = @"MalloryNarrow-Bold";
 NSString * const UPGameNoteFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPWordScoreBonusFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPSettingsControlFontName = @"MalloryCondensed-Black";
+NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
 
 //
 //  Below, the UIFontFeatureTypeIdentifierKey and UIFontFeatureSelectorIdentifierKey are set from
@@ -117,6 +118,19 @@ NSString * const UPSettingsControlFontName = @"MalloryCondensed-Black";
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
     return [UIFont settingsControlFontOfSize:pointSize];
+}
+
++ (UIFont *)settingsDescriptionFontOfSize:(CGFloat)fontSize
+{
+    return [UIFont fontWithName:UPSettingsDescriptionFontName size:fontSize];
+}
+
++ (UIFont *)settingsDescriptionFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPSettingsDescriptionFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont settingsDescriptionFontOfSize:pointSize];
 }
 
 @end

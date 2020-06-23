@@ -233,4 +233,12 @@ static UIBezierPath *CheckboxCheckPath()
     self.label.frame = labelFrame;
 }
 
+#pragma mark - Update theme colors
+
+- (void)updateThemeColors
+{
+    [super updateThemeColors];
+    [self.label updateThemeColors];
+}
+
 @end

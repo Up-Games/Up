@@ -84,7 +84,7 @@ public:
     enum class Type { Getter, Setter };
     
     SettingsProperty() {}
-    SettingsProperty(NSString *defaults_key_prefix, const ObjCProperty &property, Type type);
+    SettingsProperty(NSString *defaults_key_prefix, const std::string &property_name, const ObjCProperty &property, Type type);
 
     const ObjCProperty &property() const { return m_property; }
     Type type() const { return m_type; }
@@ -99,8 +99,9 @@ private:
     SEL m_defaults_selector = nullptr;
 };
 
-SettingsProperty::SettingsProperty(NSString *defaults_key_prefix, const ObjCProperty &property, Type type) :
-    m_property(property), m_type(type)
+SettingsProperty::SettingsProperty(NSString *defaults_key_prefix, const std::string &property_name,
+                                   const ObjCProperty &property, Type type) :
+    m_property_name(property_name), m_property(property), m_type(type)
 {
     NSMutableString *key = [NSMutableString stringWithString:defaults_key_prefix];
     [key appendString:ns_str(m_property_name)];
@@ -290,8 +291,10 @@ static SettingsMap m_map;
         std::string getter_name = property_name;
         std::string setter_name = up_property_setter_name(property_name);
         ObjCProperty up_objc_property(property);
-        property_map.emplace(getter_name, SettingsProperty(defaults_key_prefix, up_objc_property, SettingsProperty::Type::Getter));
-        property_map.emplace(setter_name, SettingsProperty(defaults_key_prefix, up_objc_property, SettingsProperty::Type::Setter));
+        property_map.emplace(getter_name, SettingsProperty(defaults_key_prefix, property_name, up_objc_property,
+                                                           SettingsProperty::Type::Getter));
+        property_map.emplace(setter_name, SettingsProperty(defaults_key_prefix, property_name, up_objc_property,
+                                                           SettingsProperty::Type::Setter));
     }
     
     m_map.emplace(self.class, property_map);
@@ -346,6 +349,7 @@ static SettingsMap m_map;
             const SettingsProperty &settings_property = it->second;
             invocation.selector = settings_property.defaults_selector();
             NSString *key = settings_property.defaults_key();
+            LOG(Settings, "   key: %@", key);
             switch (settings_property.type()) {
                 case SettingsProperty::Type::Getter:
                     [invocation setArgument:&key atIndex:2];

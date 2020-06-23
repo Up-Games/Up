@@ -52,7 +52,8 @@ using UP::TimeSpanning::start;
     //LOG_CHANNEL_ON(Layout);
     //LOG_CHANNEL_ON(Leaks);
     //LOG_CHANNEL_ON(Mode);
-    
+    //LOG_CHANNEL_ON(Settings);
+
     _Instance = self;
     
     [super viewDidLoad];
@@ -60,8 +61,8 @@ using UP::TimeSpanning::start;
     self.navigationBarHidden = YES;
     self.delegate = self;
     
-    [UIColor setThemeStyle:UPColorStyleLight];
-    [UIColor setThemeHue:222];
+    [UIColor setThemeColorStyle:UPThemeColorStyleLight];
+    [UIColor setThemeColorHue:222];
 
     UP::TimeSpanning::init();
     UP::Lexicon::set_language(UPLexiconLanguageEnglish);
@@ -99,6 +100,13 @@ using UP::TimeSpanning::start;
         self.gameController
     ];
     [self setViewControllers:viewControllers animated:NO];
+
+    [[NSNotificationCenter defaultCenter] addObserverForName:UPThemeColorsChangedNotification object:nil
+                                                       queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) {
+        [self.gameController updateThemeColors];
+        [self.extrasController updateThemeColors];
+        [self.aboutController updateThemeColors];
+    }];
 }
 
 #pragma mark - Control target/action and gestures

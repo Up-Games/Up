@@ -24,4 +24,7 @@ extern NSString * const UPGameInformationFontName;
 + (UIFont *)settingsControlFontOfSize:(CGFloat)fontSize;
 + (UIFont *)settingsControlFontWithCapHeight:(CGFloat)capHeight;
 
++ (UIFont *)settingsDescriptionFontOfSize:(CGFloat)fontSize;
++ (UIFont *)settingsDescriptionFontWithCapHeight:(CGFloat)capHeight;
+
 @end

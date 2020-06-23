@@ -16,7 +16,7 @@
 #import "UPHueWheel.h"
 #import "UPSpellLayout.h"
 
-using UP::BandSettingsDelay;
+using UP::BandSettingsAnimationDelay;
 using UP::SpellLayout;
 using UP::TimeSpanning::cancel;
 
@@ -77,6 +77,11 @@ static UIBezierPath *HuePointerPath()
     self.unroundedHue = UPClampT(CGFloat, hue, 0, 360);
     _hue = roundf(self.unroundedHue);
     [self updateSpinner];
+}
+
+- (void)_setHue:(CGFloat)hue
+{
+    self.hue = hue;
     [self.delegate hueWheelDidUpdate:self];
 }
 
@@ -173,7 +178,7 @@ static UIBezierPath *HuePointerPath()
         angle -= 360;
     }
     self.previousUnroundedHue = self.unroundedHue;
-    self.hue = angle;
+    [self _setHue:angle];
 }
 
 - (void)updateHueWithVelocity:(CGPoint)velocity
@@ -187,8 +192,8 @@ static UIBezierPath *HuePointerPath()
         while (hue > 360) {
             hue -= 360;
         }
-        self.hue = hue;
-        UP::TimeSpanning::delay(BandSettingsDelay, UPTickerInterval, ^{
+        [self _setHue:hue];
+        UP::TimeSpanning::delay(BandSettingsAnimationDelay, UPTickerInterval, ^{
             CGFloat vx = UPClampT(CGFloat, velocity.x * 0.995, -5, 5);
             CGFloat vy = UPClampT(CGFloat, velocity.y * 0.995, -5, 5);
             if (self.hueDelta > 0 && self.hueDelta < 0.01) {
@@ -207,7 +212,7 @@ static UIBezierPath *HuePointerPath()
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    cancel(BandSettingsDelay);
+    cancel(BandSettingsAnimationDelay);
     
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
@@ -251,7 +256,12 @@ static UIBezierPath *HuePointerPath()
 
 - (void)cancelAnimations
 {
-    cancel(BandSettingsDelay);
+    cancel(BandSettingsAnimationDelay);
+}
+
+- (void)updateThemeColors
+{
+    // no-op
 }
 
 @end
