@@ -21,4 +21,7 @@
 @property (nonatomic, readonly) UPCheckbox *darkModeCheckbox;
 @property (nonatomic, readonly) UPHueWheel *hueWheel;
 @property (nonatomic, readonly) UPHueStepperIndicator *hueStepperIndicator;
+
+- (void)cancelAnimations;
+
 @end

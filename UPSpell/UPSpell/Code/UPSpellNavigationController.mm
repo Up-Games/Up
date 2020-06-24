@@ -144,6 +144,7 @@ using UP::TimeSpanning::start;
 
 - (void)dismissPresentedController
 {
+    [self.extrasController cancelAnimations];
     [self dismissViewControllerAnimated:YES completion:^{
         self.dialogMenu.extrasButton.selected = NO;
         self.dialogMenu.aboutButton.selected = NO;

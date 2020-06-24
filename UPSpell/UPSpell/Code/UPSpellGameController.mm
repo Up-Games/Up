@@ -1599,6 +1599,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)viewOrderInExtrasWithCompletion:(void (^)(void))completion
 {
+    cancel_all();
+    
     [self viewLock];
     
     UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffRightFar));

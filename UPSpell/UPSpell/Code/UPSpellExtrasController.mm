@@ -161,15 +161,17 @@ using Spot = UP::SpellLayout::Spot;
     return [UPSpellNavigationController instance];
 }
 
+- (void)cancelAnimations
+{
+    [self.hueWheel cancelAnimations];
+}
+
 #pragma mark - Hue Controls
 
 - (void)hueWheelDidUpdate:(UPHueWheel *)hueWheel
 {
     CGFloat hue = self.hueWheel.hue;
     self.hueStepperIndicator.hue = hue;
-    if (hue == [UIColor themeColorHue]) {
-        return;
-    }
     [UIColor setThemeColorHue:hue];
     [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
@@ -185,9 +187,6 @@ using Spot = UP::SpellLayout::Spot;
 {
     [self.hueWheel cancelAnimations];
     CGFloat hue = self.hueStepperIndicator.hue;
-    if (hue == [UIColor themeColorHue]) {
-        return;
-    }
     self.hueWheel.hue = hue;
     [UIColor setThemeColorHue:hue];
     [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];

@@ -10,6 +10,7 @@
 #import <UPKit/UPColor.h>
 #import <UPKit/UPGeometry.h>
 #import <UPKit/UPMath.h>
+#import <UPKit/UPSerialNumber.h>
 #import <UPKit/UPTicker.h>
 #import <UPKit/UPTimeSpanning.h>
 
@@ -37,11 +38,13 @@ static UIBezierPath *HuePointerPath()
     return path;
 }
 
-@interface UPHueWheel ()
+@interface UPHueWheel () <UPTicking>
 @property (nonatomic) UPBezierPathView *spinnerView;
 @property (nonatomic) CGFloat hueDelta;
 @property (nonatomic) CGFloat unroundedHue;
 @property (nonatomic) CGFloat previousUnroundedHue;
+@property (nonatomic) CGPoint animationVelocity;
+@property (nonatomic) uint32_t serialNumber;
 @end
 
 @implementation UPHueWheel
@@ -54,6 +57,7 @@ static UIBezierPath *HuePointerPath()
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+    self.serialNumber = UP::next_serial_number();
     self.multipleTouchEnabled = NO;
     self.backgroundColor = [UIColor clearColor];
     self.spinnerView = [UPBezierPathView bezierPathView];
@@ -164,6 +168,23 @@ static UIBezierPath *HuePointerPath()
     self.spinnerView.bounds = bounds;
 }
 
+- (void)tick:(CFTimeInterval)now
+{
+    CGFloat vx = UPClampT(CGFloat, self.animationVelocity.x * 0.995, -5, 5);
+    CGFloat vy = UPClampT(CGFloat, self.animationVelocity.y * 0.995, -5, 5);
+    if (self.hueDelta > 0 && self.hueDelta < 0.01) {
+        self.hueDelta = 0.01;
+    }
+    else if (self.hueDelta < 0 && self.hueDelta > -0.01) {
+        self.hueDelta = -0.01;
+    }
+    else {
+        self.hueDelta = UPClampT(CGFloat, self.hueDelta * 0.99, -10, 10);
+    }
+    self.animationVelocity = CGPointMake(vx, vy);
+    [self updateHueWithVelocity:self.animationVelocity];
+}
+
 - (void)updateHueWithPoint:(CGPoint)point
 {
     CGRect bounds = self.bounds;
@@ -185,7 +206,9 @@ static UIBezierPath *HuePointerPath()
 {
     CGFloat length = up_point_distance(CGPointZero, velocity);
     if (fabs(length) < 0.5) {
+        [[UPTicker instance] removeTicking:self];
         [self.delegate hueWheelFinishedUpdating:self];
+        
     }
     else {
         CGFloat hue = self.unroundedHue + self.hueDelta;
@@ -196,20 +219,6 @@ static UIBezierPath *HuePointerPath()
             hue -= 360;
         }
         [self _setHue:hue];
-        UP::TimeSpanning::delay(BandSettingsAnimationDelay, UPTickerInterval, ^{
-            CGFloat vx = UPClampT(CGFloat, velocity.x * 0.995, -5, 5);
-            CGFloat vy = UPClampT(CGFloat, velocity.y * 0.995, -5, 5);
-            if (self.hueDelta > 0 && self.hueDelta < 0.01) {
-                self.hueDelta = 0.01;
-            }
-            else if (self.hueDelta < 0 && self.hueDelta > -0.01) {
-                self.hueDelta = -0.01;
-            }
-            else {
-                self.hueDelta = UPClampT(CGFloat, self.hueDelta * 0.99, -10, 10);
-            }
-            [self updateHueWithVelocity:CGPointMake(vx, vy)];
-        });
     }
 }
 
@@ -254,7 +263,8 @@ static UIBezierPath *HuePointerPath()
                 else if (self.hueDelta < 0 && self.hueDelta > -1) {
                     self.hueDelta = -1;
                 }
-                [self updateHueWithVelocity:velocity];
+                self.animationVelocity = velocity;
+                [[UPTicker instance] addTicking:self];
             }
             break;
         }
@@ -269,7 +279,7 @@ static UIBezierPath *HuePointerPath()
 
 - (void)cancelAnimations
 {
-    cancel(BandSettingsAnimationDelay);
+    [[UPTicker instance] removeTicking:self];
 }
 
 - (void)updateThemeColors
