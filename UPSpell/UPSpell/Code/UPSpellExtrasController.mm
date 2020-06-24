@@ -93,25 +93,25 @@ using Spot = UP::SpellLayout::Spot;
     self.modesLabel.string = @"MODES:";
     self.modesLabel.font = layout.checkbox_font();
     [self.modesLabel sizeToFit];
-    self.modesLabel.frame = CGRectMake(350, 71.5, up_rect_width(self.modesLabel.bounds), up_rect_height(self.modesLabel.bounds));
+    self.modesLabel.frame = CGRectMake(350, 25.5, up_rect_width(self.modesLabel.bounds), up_rect_height(self.modesLabel.bounds));
     [self.view addSubview:self.modesLabel];
 
     self.darkModeCheckbox = [UPCheckbox checkbox];
     self.darkModeCheckbox.labelString = @"DARK";
     [self.darkModeCheckbox setTarget:self action:@selector(darkModeCheckboxTapped)];
-    self.darkModeCheckbox.frame = CGRectMake(455, 70, up_size_width(self.darkModeCheckbox.canonicalSize), up_size_height(self.darkModeCheckbox.canonicalSize));
+    self.darkModeCheckbox.frame = CGRectMake(455, 24, up_size_width(self.darkModeCheckbox.canonicalSize), up_size_height(self.darkModeCheckbox.canonicalSize));
     [self.view addSubview:self.darkModeCheckbox];
     
     self.starkModeCheckbox = [UPCheckbox checkbox];
     self.starkModeCheckbox.labelString = @"STARK";
     [self.starkModeCheckbox setTarget:self action:@selector(starkModeCheckboxTapped)];
-    self.starkModeCheckbox.frame = CGRectMake(580, 70, up_size_width(self.starkModeCheckbox.canonicalSize), up_size_height(self.starkModeCheckbox.canonicalSize));
+    self.starkModeCheckbox.frame = CGRectMake(580, 24, up_size_width(self.starkModeCheckbox.canonicalSize), up_size_height(self.starkModeCheckbox.canonicalSize));
     [self.view addSubview:self.starkModeCheckbox];
     
     self.quarkModeCheckbox = [UPCheckbox checkbox];
     self.quarkModeCheckbox.labelString = @"QUARK";
     [self.quarkModeCheckbox setTarget:self action:@selector(quarkModeCheckboxTapped)];
-    self.quarkModeCheckbox.frame = CGRectMake(710, 70, up_size_width(self.quarkModeCheckbox.canonicalSize), up_size_height(self.quarkModeCheckbox.canonicalSize));
+    self.quarkModeCheckbox.frame = CGRectMake(710, 24, up_size_width(self.quarkModeCheckbox.canonicalSize), up_size_height(self.quarkModeCheckbox.canonicalSize));
     [self.view addSubview:self.quarkModeCheckbox];
     
     self.hueWheel = [UPHueWheel hueWheel];
