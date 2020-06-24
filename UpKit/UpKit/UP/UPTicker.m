@@ -96,7 +96,7 @@ static BOOL tickIntervalChecked = NO;
                 return NSOrderedSame;
         }];
     }
-     
+  
     for (NSObject<UPTicking> *ticking in self.iterationTickings) {
         [ticking tick:now];
     }
@@ -104,7 +104,10 @@ static BOOL tickIntervalChecked = NO;
 
 - (void)_startDisplayLinkIfNeeded
 {
-    if (!self.displayLink || self.tickings.count > 0) {
+    if (self.tickings.count == 0) {
+        return;
+    }
+    if (!self.displayLink) {
         tickIntervalChecked = NO;
         self.displayLink = [[UIScreen mainScreen] displayLinkWithTarget:self selector:@selector(_tick:)];
         [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
