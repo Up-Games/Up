@@ -14,9 +14,10 @@
 #import "UPSpellLayout.h"
 #import "UPSpellSettings.h"
 #import "UPTilePaths.h"
+#import "UPTilePaths.h"
 #import "UPViewMove+UPSpell.h"
 
-@interface UPSpellNavigationController () <UINavigationControllerDelegate>
+@interface UPSpellNavigationController () <UINavigationControllerDelegate, UPNeedsUpdatable>
 @property (nonatomic) UPDialogMenu *dialogMenu;
 @property (nonatomic) UPSpellGameController *gameController;
 @property (nonatomic) UPSpellExtrasController *extrasController;
@@ -105,12 +106,19 @@ using UP::TimeSpanning::start;
 
     [[NSNotificationCenter defaultCenter] addObserverForName:UPThemeColorsChangedNotification object:nil
                                                        queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) {
-        [self.gameController updateThemeColors];
-        [self.extrasController updateThemeColors];
-        [self.aboutController updateThemeColors];
-        [self.dialogMenu updateThemeColors];
-        self.view.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
+        [[UPNeedsUpdater instance] setNeedsUpdate:self];
     }];
+}
+
+#pragma mark - UPNeedsUpdater
+
+- (void)update
+{
+    [self.gameController updateThemeColors];
+    [self.extrasController updateThemeColors];
+    [self.aboutController updateThemeColors];
+    [self.dialogMenu updateThemeColors];
+    self.view.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
 }
 
 #pragma mark - Control target/action and gestures

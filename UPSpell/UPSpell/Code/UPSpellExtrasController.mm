@@ -13,7 +13,6 @@
 #import "UIFont+UPSpell.h"
 #import "UPCheckbox.h"
 #import "UPControl+UPSpell.h"
-#import "UPHueStepperIndicator.h"
 #import "UPHueWheel.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellLayout.h"
@@ -255,6 +254,9 @@ static const int MilepostHue = 15;
 - (void)hueWheelDidUpdate:(UPHueWheel *)hueWheel
 {
     CGFloat hue = self.hueWheel.hue;
+    if (up_is_fuzzy_equal(hue, [UIColor themeColorHue])) {
+        return;
+    }
     [UIColor setThemeColorHue:hue];
     [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }

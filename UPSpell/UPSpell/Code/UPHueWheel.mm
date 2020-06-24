@@ -80,7 +80,7 @@ static UIBezierPath *HuePointerPath()
     if (self.previousUnroundedHue != self.unroundedHue) {
         self.previousUnroundedHue = self.unroundedHue;
     }
-    self.unroundedHue = UPClampT(CGFloat, hue, 0, 360);
+    self.unroundedHue = UPClampT(CGFloat, hue, 0, 359);
     _hue = roundf(self.unroundedHue);
     [self updateSpinner];
 }

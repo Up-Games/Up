@@ -36,9 +36,9 @@ static CGFloat _ThemeHue = 222;
     return _ThemeStyle;
 }
 
-+ (void)setThemeColorHue:(CGFloat)hue;
++ (void)setThemeColorHue:(CGFloat)hue
 {
-    _ThemeHue = UPClampT(CGFloat, hue, 0, 360);
+    _ThemeHue = UPClampT(CGFloat, hue, 0, 359);
 }
 
 + (CGFloat)themeColorHue
@@ -120,11 +120,19 @@ static CGFloat _ThemeHue = 222;
             static const size_t ColorsPerHue = 22;
             static const size_t HueCount = 360;
             size_t themeOffset = (style == UPThemeColorStyleDefault ? 0 : (size_t)style - 1) * HueCount;
-            CGFloat effectiveHue = UPClampT(CGFloat, hue, 0, 360);
+            CGFloat effectiveHue = UPClampT(CGFloat, hue, 0, 359);
             size_t hueOffset = (effectiveHue * ColorsPerHue);
             size_t categoryOffset = (effectiveCategory == UPColorCategoryDefault ? 0 : (size_t)effectiveCategory - 1);
             size_t idx = (themeOffset * ColorsPerHue) + hueOffset + categoryOffset;
             _UPRGBColorComponents c = _UPThemeColorComponents[idx];
+            ASSERT(c.r >= 0);
+            ASSERT(c.r <= 1);
+            ASSERT(c.g >= 0);
+            ASSERT(c.g <= 1);
+            ASSERT(c.b >= 0);
+            ASSERT(c.b <= 1);
+            ASSERT(c.a >= 0);
+            ASSERT(c.a <= 1);
             return [UIColor colorWithRed:c.r green:c.g blue:c.b alpha:c.a];
         }
     }
