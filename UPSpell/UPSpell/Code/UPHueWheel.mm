@@ -184,7 +184,10 @@ static UIBezierPath *HuePointerPath()
 - (void)updateHueWithVelocity:(CGPoint)velocity
 {
     CGFloat length = up_point_distance(CGPointZero, velocity);
-    if (fabs(length) > 0.5) {
+    if (fabs(length) < 0.5) {
+        [self.delegate hueWheelFinishedUpdating:self];
+    }
+    else {
         CGFloat hue = self.unroundedHue + self.hueDelta;
         while (hue < 0) {
             hue += 360;
@@ -219,6 +222,12 @@ static UIBezierPath *HuePointerPath()
     [self updateHueWithPoint:point];
 }
 
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    cancel(BandSettingsAnimationDelay);
+    [self.delegate hueWheelFinishedUpdating:self];
+}
+
 - (void)handlePan:(UIPanGestureRecognizer *)pan
 {
     switch (pan.state) {
@@ -234,7 +243,10 @@ static UIBezierPath *HuePointerPath()
         case UIGestureRecognizerStateEnded: {
             CGPoint velocity = [pan velocityInView:self];
             CGFloat length = up_point_distance(CGPointZero, velocity);
-            if (length > 100) {
+            if (length < 100) {
+                [self.delegate hueWheelFinishedUpdating:self];
+            }
+            else {
                 self.hueDelta = self.unroundedHue - self.previousUnroundedHue;
                 if (self.hueDelta > 0 && self.hueDelta < 1) {
                     self.hueDelta = 1;
@@ -247,6 +259,7 @@ static UIBezierPath *HuePointerPath()
             break;
         }
         case UIGestureRecognizerStateCancelled: {
+            [self.delegate hueWheelFinishedUpdating:self];
             break;
         }
         case UIGestureRecognizerStateFailed:

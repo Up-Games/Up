@@ -20,5 +20,6 @@
 
 @protocol UPHueWheelDelegate <NSObject>
 - (void)hueWheelDidUpdate:(UPHueWheel *)hueWheel;
+- (void)hueWheelFinishedUpdating:(UPHueWheel *)hueWheel;
 @end
 

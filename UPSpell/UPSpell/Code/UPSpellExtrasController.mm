@@ -7,6 +7,7 @@
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPButton.h>
 #import <UpKit/UPChoice.h>
+#import <UpKit/UPDelayedAction.h>
 #import <UpKit/UPTouchGestureRecognizer.h>
 
 #import "UIFont+UPSpell.h"
@@ -34,9 +35,13 @@
 @property (nonatomic, readwrite) UPHueWheel *hueWheel;
 @property (nonatomic, readwrite) UPHueStepperIndicator *hueStepperIndicator;
 @property (nonatomic, readwrite) UPLabel *hueDescription;
+@property (nonatomic) UPDelayedAction *settingsDelayedAction;
 @end
 
+using UP::BandSettingsUpdateDelay;
 using UP::SpellLayout;
+using UP::TimeSpanning::cancel;
+using UP::TimeSpanning::delay;
 using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Spot;
 
@@ -162,21 +167,33 @@ using Spot = UP::SpellLayout::Spot;
 {
     CGFloat hue = self.hueWheel.hue;
     self.hueStepperIndicator.hue = hue;
+    if (hue == [UIColor themeColorHue]) {
+        return;
+    }
     [UIColor setThemeColorHue:hue];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
+}
+
+- (void)hueWheelFinishedUpdating:(UPHueWheel *)hueWheel
+{
+    CGFloat hue = self.hueWheel.hue;
     UPSpellSettings *settings = [UPSpellSettings instance];
     settings.themeColorHue = hue;
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
 - (void)hueStepperIndicatorDidUpdate:(UPHueStepperIndicator *)hueStepperIndicator
 {
     [self.hueWheel cancelAnimations];
-    CGFloat hue = self.hueWheel.hue;
-    self.hueWheel.hue = self.hueStepperIndicator.hue;
+    CGFloat hue = self.hueStepperIndicator.hue;
+    if (hue == [UIColor themeColorHue]) {
+        return;
+    }
+    self.hueWheel.hue = hue;
     [UIColor setThemeColorHue:hue];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
+
     UPSpellSettings *settings = [UPSpellSettings instance];
     settings.themeColorHue = hue;
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
 - (void)updateHueDescription
@@ -219,10 +236,11 @@ using Spot = UP::SpellLayout::Spot;
                 break;
         }
     }
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.themeColorStyle = themeColorStyle;
     [UIColor setThemeColorStyle:themeColorStyle];
     [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
+
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.themeColorStyle = themeColorStyle;
 }
 
 - (void)starkModeCheckboxTapped
