@@ -2156,20 +2156,25 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromPlayToGameOver
 {
-    ASSERT(self.lockCount == 0);
+    cancel(BandGameAll);
+    while (self.lockCount > 0) {
+        [self viewUnlock];
+    }
     [self viewLock];
 
     if (@available(iOS 11.0, *)) {
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
     }
 
-    cancel(BandGameAll);
     [self viewUpdateGameControls];
     self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::OVER));
 
     [self cancelActiveTouch];
     [self viewUnhighlightTileViews];
     [self viewBloopTileViewsToPlayerTrayWithDuration:GameOverRespositionBloopDuration completion:nil];
+    [UIView animateWithDuration:0.2 animations:^{
+        self.gameView.wordTrayControl.transform = CGAffineTransformIdentity;
+    }];
     
     [self viewSetGameAlpha:[UIColor themeModalGameOverAlpha]];
     self.gameView.timerLabel.alpha = [UIColor themeModalActiveAlpha];

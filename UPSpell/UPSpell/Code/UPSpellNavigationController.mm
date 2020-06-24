@@ -12,6 +12,7 @@
 #import "UPSpellExtrasController.h"
 #import "UPSpellGameController.h"
 #import "UPSpellLayout.h"
+#import "UPSpellSettings.h"
 #import "UPTilePaths.h"
 #import "UPViewMove+UPSpell.h"
 
@@ -60,9 +61,10 @@ using UP::TimeSpanning::start;
 
     self.navigationBarHidden = YES;
     self.delegate = self;
-    
-    [UIColor setThemeColorStyle:UPThemeColorStyleLight];
-    [UIColor setThemeColorHue:222];
+
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    [UIColor setThemeColorStyle:settings.themeColorStyle];
+    [UIColor setThemeColorHue:settings.themeColorHue];
 
     UP::TimeSpanning::init();
     UP::Lexicon::set_language(UPLexiconLanguageEnglish);
@@ -107,6 +109,7 @@ using UP::TimeSpanning::start;
         [self.extrasController updateThemeColors];
         [self.aboutController updateThemeColors];
         [self.dialogMenu updateThemeColors];
+        self.view.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
     }];
 }
 

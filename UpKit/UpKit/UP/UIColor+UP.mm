@@ -29,7 +29,6 @@ static CGFloat _ThemeHue = 222;
 + (void)setThemeColorStyle:(UPThemeColorStyle)style
 {
     _ThemeStyle = style;
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
 + (UPThemeColorStyle)themeColorStyle
@@ -40,7 +39,6 @@ static CGFloat _ThemeHue = 222;
 + (void)setThemeColorHue:(CGFloat)hue;
 {
     _ThemeHue = UPClampT(CGFloat, hue, 0, 360);
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
 + (CGFloat)themeColorHue

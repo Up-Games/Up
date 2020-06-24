@@ -1067,10 +1067,11 @@ using namespace UP;
 {
     UPChoice *choice = [UPChoice choice];
     choice.canonicalSize = SpellLayout::CanonicalChoiceSize;
+    [choice setFillColorCategory:UPColorCategoryControlText];
     [choice setAccentColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
     [choice setAccentColorCategory:UPColorCategoryActiveFill forState:UPControlStateSelected];
     [choice setAccentPath:[UIBezierPath bezierPathWithRect:up_rect_make(choice.canonicalSize)] forState:UPControlStateSelected];
-    [choice setAuxiliaryColorCategory:UPColorCategoryPrimaryFill forState:UPControlStateSelected];
+    [choice setAuxiliaryColorCategory:UPColorCategoryControlText forState:UPControlStateSelected];
     choice.autoSelects = YES;
     choice.autoHighlights = NO;
     return choice;

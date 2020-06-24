@@ -157,6 +157,9 @@ static UIBezierPath *CheckboxCheckPath()
     self.canonicalSize = SpellLayout::CanonicalCheckboxSize;
     [self setFillPath:CheckboxPath() forState:UPControlStateNormal];
     [self setStrokePath:CheckboxPath() forState:UPControlStateNormal];
+    [self setAccentColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
+    [self setAccentColorCategory:UPColorCategoryControlText forState:UPControlStateSelected];
+    [self setAccentColorCategory:UPColorCategoryControlText forState:(UPControlStateHighlighted | UPControlStateSelected)];
     [self setAccentPath:CheckboxCheckPath() forState:UPControlStateSelected];
     [self setAccentPath:CheckboxCheckPath() forState:(UPControlStateHighlighted | UPControlStateSelected)];
 

@@ -148,8 +148,6 @@ using Spot = UP::SpellLayout::Spot;
     self.hueWheel.hue = themeColorHue;
     self.hueStepperIndicator.hue = themeColorHue;
 
-    
-    
     return self;
 }
 
@@ -165,6 +163,9 @@ using Spot = UP::SpellLayout::Spot;
     CGFloat hue = self.hueWheel.hue;
     self.hueStepperIndicator.hue = hue;
     [UIColor setThemeColorHue:hue];
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.themeColorHue = hue;
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
 - (void)hueStepperIndicatorDidUpdate:(UPHueStepperIndicator *)hueStepperIndicator
@@ -173,6 +174,9 @@ using Spot = UP::SpellLayout::Spot;
     CGFloat hue = self.hueWheel.hue;
     self.hueWheel.hue = self.hueStepperIndicator.hue;
     [UIColor setThemeColorHue:hue];
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.themeColorHue = hue;
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
 - (void)updateHueDescription
@@ -184,10 +188,80 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)darkModeCheckboxTapped
 {
+    UPThemeColorStyle themeColorStyle = [UIColor themeColorStyle];
+    if (self.darkModeCheckbox.selected) {
+        switch (themeColorStyle) {
+            case UPThemeColorStyleDefault:
+            case UPThemeColorStyleLight:
+                themeColorStyle = UPThemeColorStyleDark;
+                break;
+            case UPThemeColorStyleLightStark:
+                themeColorStyle = UPThemeColorStyleDarkStark;
+                break;
+            case UPThemeColorStyleDark:
+            case UPThemeColorStyleDarkStark:
+                // no-op
+                break;
+        }
+    }
+    else {
+        switch (themeColorStyle) {
+            case UPThemeColorStyleDefault:
+            case UPThemeColorStyleLight:
+            case UPThemeColorStyleLightStark:
+                // no-op
+                break;
+            case UPThemeColorStyleDark:
+                themeColorStyle = UPThemeColorStyleLight;
+                break;
+            case UPThemeColorStyleDarkStark:
+                themeColorStyle = UPThemeColorStyleLightStark;
+                break;
+        }
+    }
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.themeColorStyle = themeColorStyle;
+    [UIColor setThemeColorStyle:themeColorStyle];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
 - (void)starkModeCheckboxTapped
 {
+    UPThemeColorStyle themeColorStyle = [UIColor themeColorStyle];
+    if (self.starkModeCheckbox.selected) {
+        switch (themeColorStyle) {
+            case UPThemeColorStyleDefault:
+            case UPThemeColorStyleLight:
+                themeColorStyle = UPThemeColorStyleLightStark;
+                break;
+            case UPThemeColorStyleDark:
+                themeColorStyle = UPThemeColorStyleDarkStark;
+                break;
+            case UPThemeColorStyleLightStark:
+            case UPThemeColorStyleDarkStark:
+                // no-op
+                break;
+        }
+    }
+    else {
+        switch (themeColorStyle) {
+            case UPThemeColorStyleDefault:
+            case UPThemeColorStyleLight:
+            case UPThemeColorStyleDark:
+                // no-op
+                break;
+            case UPThemeColorStyleLightStark:
+                themeColorStyle = UPThemeColorStyleLight;
+                break;
+            case UPThemeColorStyleDarkStark:
+                themeColorStyle = UPThemeColorStyleDark;
+                break;
+        }
+    }
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.themeColorStyle = themeColorStyle;
+    [UIColor setThemeColorStyle:themeColorStyle];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
 - (void)quarkModeCheckboxTapped
