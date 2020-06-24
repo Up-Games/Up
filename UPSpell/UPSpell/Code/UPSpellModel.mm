@@ -1,5 +1,5 @@
 //
-//  UP::SpellModel.mm
+//  UPSpellModel.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 

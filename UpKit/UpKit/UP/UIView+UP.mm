@@ -55,4 +55,10 @@
     return value ? [value CGPointValue] : self.center;
 }
 
+#pragma mark - Update theme colors
+
+- (void)updateThemeColors
+{
+}
+
 @end

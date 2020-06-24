@@ -7,6 +7,7 @@
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPButton.h>
 #import <UpKit/UPChoice.h>
+#import <UpKit/UPTapGestureRecognizer.h>
 #import <UpKit/UPTouchGestureRecognizer.h>
 
 #import "UIFont+UPSpell.h"
@@ -16,12 +17,14 @@
 #import "UPHueWheel.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellLayout.h"
+#import "UPSpellModel.h"
 #import "UPSpellNavigationController.h"
 #import "UPSpellSettings.h"
 #import "UPStepper.h"
 #import "UPTextPaths.h"
+#import "UPTileView.h"
 
-@interface UPSpellExtrasController () <UPHueWheelDelegate, UPHueStepperIndicatorDelegate>
+@interface UPSpellExtrasController () <UPHueWheelDelegate>
 @property (nonatomic, readwrite) UPButton *backButton;
 @property (nonatomic, readwrite) UPChoice *choice1;
 @property (nonatomic, readwrite) UPChoice *choice2;
@@ -29,22 +32,32 @@
 @property (nonatomic, readwrite) UPChoice *choice4;
 @property (nonatomic, readwrite) UPDivider *divider;
 
+@property (nonatomic, readwrite) CGFloat hue;
 @property (nonatomic, readwrite) UPLabel *modesLabel;
 @property (nonatomic, readwrite) UPCheckbox *darkModeCheckbox;
 @property (nonatomic, readwrite) UPCheckbox *starkModeCheckbox;
 @property (nonatomic, readwrite) UPCheckbox *quarkModeCheckbox;
 @property (nonatomic, readwrite) UPHueWheel *hueWheel;
-@property (nonatomic, readwrite) UPHueStepperIndicator *hueStepperIndicator;
+@property (nonatomic, readwrite) UPStepper *hueStepLess;
+@property (nonatomic, readwrite) UPStepper *hueStepMore;
 @property (nonatomic) UPLabel *hueDescription;
+@property (nonatomic) UIView *exampleTilesContainer;
 
 @end
 
+using UP::BandSettingsUI;
 using UP::BandSettingsUpdateDelay;
 using UP::SpellLayout;
-using UP::TimeSpanning::cancel;
-using UP::TimeSpanning::delay;
+using UP::TileArray;
+using UP::TileCount;
+using UP::TileIndex;
+using UP::TileModel;
+
 using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Spot;
+
+static const int HueCount = 360;
+static const int MilepostHue = 15;
 
 @implementation UPSpellExtrasController
 
@@ -88,51 +101,87 @@ using Spot = UP::SpellLayout::Spot;
     self.divider.colorCategory = UPColorCategoryActiveFill;
     [self.view addSubview:self.divider];
 
-    self.modesLabel = [UPLabel label];
-    self.modesLabel.textColorCategory = UPColorCategoryControlText;
-    self.modesLabel.string = @"MODES:";
-    self.modesLabel.font = layout.checkbox_font();
-    [self.modesLabel sizeToFit];
-    self.modesLabel.frame = CGRectMake(350, 25.5, up_rect_width(self.modesLabel.bounds), up_rect_height(self.modesLabel.bounds));
-    [self.view addSubview:self.modesLabel];
-
     self.darkModeCheckbox = [UPCheckbox checkbox];
     self.darkModeCheckbox.labelString = @"DARK";
     [self.darkModeCheckbox setTarget:self action:@selector(darkModeCheckboxTapped)];
-    self.darkModeCheckbox.frame = CGRectMake(455, 24, up_size_width(self.darkModeCheckbox.canonicalSize), up_size_height(self.darkModeCheckbox.canonicalSize));
+    self.darkModeCheckbox.frame = CGRectMake(670, 34, up_size_width(self.darkModeCheckbox.canonicalSize), up_size_height(self.darkModeCheckbox.canonicalSize));
     [self.view addSubview:self.darkModeCheckbox];
     
     self.starkModeCheckbox = [UPCheckbox checkbox];
     self.starkModeCheckbox.labelString = @"STARK";
     [self.starkModeCheckbox setTarget:self action:@selector(starkModeCheckboxTapped)];
-    self.starkModeCheckbox.frame = CGRectMake(580, 24, up_size_width(self.starkModeCheckbox.canonicalSize), up_size_height(self.starkModeCheckbox.canonicalSize));
+    self.starkModeCheckbox.frame = CGRectMake(670, 94, up_size_width(self.starkModeCheckbox.canonicalSize), up_size_height(self.starkModeCheckbox.canonicalSize));
     [self.view addSubview:self.starkModeCheckbox];
     
     self.quarkModeCheckbox = [UPCheckbox checkbox];
     self.quarkModeCheckbox.labelString = @"QUARK";
     [self.quarkModeCheckbox setTarget:self action:@selector(quarkModeCheckboxTapped)];
-    self.quarkModeCheckbox.frame = CGRectMake(710, 24, up_size_width(self.quarkModeCheckbox.canonicalSize), up_size_height(self.quarkModeCheckbox.canonicalSize));
+    self.quarkModeCheckbox.frame = CGRectMake(670, 154, up_size_width(self.quarkModeCheckbox.canonicalSize), up_size_height(self.quarkModeCheckbox.canonicalSize));
     [self.view addSubview:self.quarkModeCheckbox];
     
     self.hueWheel = [UPHueWheel hueWheel];
-    self.hueWheel.frame = CGRectMake(435, 130, 170, 170);
+    self.hueWheel.frame = CGRectMake(380, 26, 170, 170);
     self.hueWheel.delegate = self;
     [self.view addSubview:self.hueWheel];
     
-    self.hueStepperIndicator = [UPHueStepperIndicator hueStepperIndicator];
-    self.hueStepperIndicator.frame = CGRectMake(644, 130, 118, 170);
-    self.hueStepperIndicator.delegate = self;
-    [self.view addSubview:self.hueStepperIndicator];
+    self.hueStepMore = [UPStepper stepperWithDirection:UPStepperDirectionUp];
+    [self.hueStepMore setTarget:self action:@selector(handleHueStepMore)];
+    self.hueStepMore.frame = CGRectMake(580, 71, 36, 36);
+    [self.view addSubview:self.hueStepMore];
+
+    self.hueStepLess = [UPStepper stepperWithDirection:UPStepperDirectionDown];
+    [self.hueStepLess setTarget:self action:@selector(handleHueStepLess)];
+    self.hueStepLess.frame = CGRectMake(580, 121, 36, 36);
+    [self.view addSubview:self.hueStepLess];
 
     self.hueDescription = [UPLabel label];
-    self.hueDescription.frame = CGRectMake(350, 314, 470, 100);
-    self.hueDescription.font = [UIFont settingsDescriptionFontOfSize:22];
+    self.hueDescription.frame = CGRectMake(350, 214, 470, 60);
+    self.hueDescription.font = [UIFont settingsDescriptionFontOfSize:23];
     self.hueDescription.textColorCategory = UPColorCategoryControlText;
     self.hueDescription.backgroundColorCategory = UPColorCategoryClear;
     self.hueDescription.textAlignment = NSTextAlignmentCenter;
-    self.hueDescription.string = @"Colors based on hue #10 with more outlined shapes\nthan filled-in shapes on a light background";
     [self.view addSubview:self.hueDescription];
+    
+    CGRect examplesFrame = CGRectMake(0, 0, SpellLayout::CanonicalTilesLayoutWidth, up_size_height(SpellLayout::CanonicalTileSize));
+    self.exampleTilesContainer = [[UPContainerView alloc] initWithFrame:examplesFrame];
+    [self.view addSubview:self.exampleTilesContainer];
 
+    CGFloat tileX = 0;
+    for (TileIndex idx = 0; idx < TileCount; idx++) {
+        TileModel model;
+        switch (idx) {
+            case 0:
+                model = TileModel(U'E');
+                break;
+            case 1:
+                model = TileModel(U'X');
+                break;
+            case 2:
+                model = TileModel(U'A');
+                break;
+            case 3:
+                model = TileModel(U'M');
+                break;
+            case 4:
+                model = TileModel(U'P');
+                break;
+            case 5:
+                model = TileModel(U'L');
+                break;
+            case 6:
+                model = TileModel(U'E');
+                break;
+        }
+        UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
+        tileView.band = BandSettingsUI;
+        tileView.frame = CGRectMake(tileX, 0, up_size_width(SpellLayout::CanonicalTileSize), up_size_height(SpellLayout::CanonicalTileSize));
+        [self.exampleTilesContainer addSubview:tileView];
+        [tileView addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTappedTile:)]];
+        tileX += up_size_width(SpellLayout::CanonicalTileSize) + SpellLayout::CanonicalTileGap;
+    }
+    self.exampleTilesContainer.transform = CGAffineTransformMakeScale(0.55, 0.55);
+    self.exampleTilesContainer.center = CGPointMake(590, 330);
+    
     UPSpellSettings *settings = [UPSpellSettings instance];
     UPThemeColorStyle themeColorStyle = settings.themeColorStyle;
     switch (themeColorStyle) {
@@ -157,7 +206,8 @@ using Spot = UP::SpellLayout::Spot;
     
     CGFloat themeColorHue = settings.themeColorHue;
     self.hueWheel.hue = themeColorHue;
-    self.hueStepperIndicator.hue = themeColorHue;
+
+    [self updateHueDescription];
 
     return self;
 }
@@ -172,12 +222,39 @@ using Spot = UP::SpellLayout::Spot;
     [self.hueWheel cancelAnimations];
 }
 
+- (void)handleTappedTile:(UPTapGestureRecognizer *)gesture
+{
+    UIView *view = gesture.view;
+    UPTileView *tileView = nil;
+    if ([view isKindOfClass:[UPTileView class]]) {
+        tileView = (UPTileView *)view;
+    }
+    switch (gesture.state) {
+        case UIGestureRecognizerStatePossible: {
+            break;
+        }
+        case UIGestureRecognizerStateBegan: {
+            tileView.highlighted = gesture.touchInside;
+            break;
+        }
+        case UIGestureRecognizerStateChanged: {
+            tileView.highlighted = gesture.touchInside;
+            break;
+        }
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled:
+        case UIGestureRecognizerStateFailed: {
+            tileView.highlighted = NO;
+            break;
+        }
+    }
+}
+
 #pragma mark - Hue Controls
 
 - (void)hueWheelDidUpdate:(UPHueWheel *)hueWheel
 {
     CGFloat hue = self.hueWheel.hue;
-    self.hueStepperIndicator.hue = hue;
     [UIColor setThemeColorHue:hue];
     [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
@@ -189,21 +266,74 @@ using Spot = UP::SpellLayout::Spot;
     settings.themeColorHue = hue;
 }
 
-- (void)hueStepperIndicatorDidUpdate:(UPHueStepperIndicator *)hueStepperIndicator
+- (int)prevHueForHue:(int)hue
 {
-    [self.hueWheel cancelAnimations];
-    CGFloat hue = self.hueStepperIndicator.hue;
+    int dv = hue % MilepostHue;
+    if (dv == 0) {
+        dv = MilepostHue;
+    }
+    hue -= dv;
+    if (hue < 0) {
+        hue = HueCount - MilepostHue;
+    }
+    return hue;
+}
+
+- (int)nextHueForHue:(int)hue
+{
+    int dv = hue % MilepostHue;
+    if (dv == 0) {
+        hue += MilepostHue;
+    }
+    else {
+        hue += (MilepostHue - dv);
+    }
+    if (hue >= HueCount) {
+        hue = 0;
+    }
+    return hue;
+}
+
+- (void)handleHueStepLess
+{
+    CGFloat hue = [UIColor themeColorHue];
+    hue = [self prevHueForHue:hue];
     self.hueWheel.hue = hue;
     [UIColor setThemeColorHue:hue];
     [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
+}
 
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.themeColorHue = hue;
+- (void)handleHueStepMore
+{
+    CGFloat hue = [UIColor themeColorHue];
+    hue = [self nextHueForHue:hue];
+    self.hueWheel.hue = hue;
+    [UIColor setThemeColorHue:hue];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
 
 - (void)updateHueDescription
 {
-    
+    NSMutableString *string = [NSMutableString string];
+    if (self.quarkModeCheckbox.selected) {
+        [string appendString:@"Randomly-changing colors "];
+    }
+    else {
+        [string appendFormat:@"Colors based on HUE #%03d ", (int)[UIColor themeColorHue]];
+    }
+    if (self.starkModeCheckbox.selected) {
+        [string appendString:@"with more outlined shapes\nthan filled-in shapes "];
+    }
+    else {
+        [string appendString:@"with more filled-in shapes\nthan outlined shapes "];
+    }
+    if (self.darkModeCheckbox.selected) {
+        [string appendString:@"on a dark background"];
+    }
+    else {
+        [string appendString:@"on a light background"];
+    }
+    self.hueDescription.string = string;
 }
 
 #pragma mark - Target / Action
@@ -289,6 +419,9 @@ using Spot = UP::SpellLayout::Spot;
 
 - (void)quarkModeCheckboxTapped
 {
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.quarkMode = self.quarkModeCheckbox.selected;
+    [self updateHueDescription];
 }
 
 - (void)choiceSelected:(UPChoice *)sender
@@ -312,6 +445,8 @@ using Spot = UP::SpellLayout::Spot;
 - (void)updateThemeColors
 {
     [self.view.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
+    [self.exampleTilesContainer.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
+    [self updateHueDescription];
 }
 
 @end

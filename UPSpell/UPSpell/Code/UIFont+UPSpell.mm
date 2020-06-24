@@ -122,7 +122,18 @@ NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
 
 + (UIFont *)settingsDescriptionFontOfSize:(CGFloat)fontSize
 {
-    return [UIFont fontWithName:UPSettingsDescriptionFontName size:fontSize];
+    UIFont *font = [UIFont fontWithName:UPSettingsDescriptionFontName size:fontSize];
+    UIFontDescriptor *descriptor = [font fontDescriptor];
+    NSDictionary *attributes = @{
+        UIFontDescriptorFeatureSettingsAttribute: @[
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+                }
+        ]
+    };
+    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
 }
 
 + (UIFont *)settingsDescriptionFontWithCapHeight:(CGFloat)capHeight

@@ -7,8 +7,6 @@
 
 @implementation UPDivider
 
-#pragma mark - Update theme colors
-
 + (UPDivider *)divider
 {
     return [[UPDivider alloc] _init];
@@ -26,6 +24,8 @@
     _colorCategory = colorCategory;
     [self updateThemeColors];
 }
+
+#pragma mark - Update theme colors
 
 - (void)updateThemeColors
 {
