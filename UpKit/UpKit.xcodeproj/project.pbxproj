@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0FC22F24A3A1CC00353563 /* UPDivider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0FC22D24A3A1CC00353563 /* UPDivider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D0FC23024A3A1CC00353563 /* UPDivider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22E24A3A1CC00353563 /* UPDivider.mm */; };
 		5D269CB1245CDB31000B6A1D /* UIImage+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D269CAF245CDB31000B6A1D /* UIImage+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D269CB2245CDB31000B6A1D /* UIImage+UP.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D269CB0245CDB31000B6A1D /* UIImage+UP.m */; };
 		5D2CAC84245B538B00B81332 /* NSValue+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D2CAC83245B538B00B81332 /* NSValue+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -125,6 +127,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5D0FC22D24A3A1CC00353563 /* UPDivider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDivider.h; sourceTree = "<group>"; };
+		5D0FC22E24A3A1CC00353563 /* UPDivider.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDivider.mm; sourceTree = "<group>"; };
 		5D269CAF245CDB31000B6A1D /* UIImage+UP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UP.h"; sourceTree = "<group>"; };
 		5D269CB0245CDB31000B6A1D /* UIImage+UP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UP.m"; sourceTree = "<group>"; };
 		5D2CAC83245B538B00B81332 /* NSValue+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSValue+UP.h"; sourceTree = "<group>"; };
@@ -370,6 +374,8 @@
 				5D5216F1246D87DF005A2E9F /* UPControl.mm */,
 				5DA8E065247C2B04008D3015 /* UPDelayedAction.h */,
 				5DA8E066247C2B04008D3015 /* UPDelayedAction.mm */,
+				5D0FC22D24A3A1CC00353563 /* UPDivider.h */,
+				5D0FC22E24A3A1CC00353563 /* UPDivider.mm */,
 				5DC618BD24703A1500090E7A /* UPFontMetrics.h */,
 				5DBADB7124678F4000D9D1FF /* UPGameKey.h */,
 				5DBADB7224678F4000D9D1FF /* UPGameKey.mm */,
@@ -446,6 +452,7 @@
 				5D4AE832248FC9A900213904 /* UPObjCProperty.h in Headers */,
 				5D54078624845488003F193D /* UPBand.h in Headers */,
 				5DBC20C5249ACD91002A6ADC /* UPGestureRecognizer.h in Headers */,
+				5D0FC22F24A3A1CC00353563 /* UPDivider.h in Headers */,
 				5DFE62282453D11100D9CA0B /* UPMath.h in Headers */,
 				5DA8E067247C2B04008D3015 /* UPDelayedAction.h in Headers */,
 				5DF8A8E02454835F00751E2E /* UPTypes.h in Headers */,
@@ -653,6 +660,7 @@
 				5DD71DA12458DA3A00F3F9E2 /* UIView+UP.mm in Sources */,
 				5DC618B5246EF6CC00090E7A /* UPLabel.m in Sources */,
 				5DA8E068247C2B04008D3015 /* UPDelayedAction.mm in Sources */,
+				5D0FC23024A3A1CC00353563 /* UPDivider.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

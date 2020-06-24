@@ -7,7 +7,6 @@
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPButton.h>
 #import <UpKit/UPChoice.h>
-#import <UpKit/UPDelayedAction.h>
 #import <UpKit/UPTouchGestureRecognizer.h>
 
 #import "UIFont+UPSpell.h"
@@ -28,14 +27,16 @@
 @property (nonatomic, readwrite) UPChoice *choice2;
 @property (nonatomic, readwrite) UPChoice *choice3;
 @property (nonatomic, readwrite) UPChoice *choice4;
+@property (nonatomic, readwrite) UPDivider *divider;
+
 @property (nonatomic, readwrite) UPLabel *modesLabel;
 @property (nonatomic, readwrite) UPCheckbox *darkModeCheckbox;
 @property (nonatomic, readwrite) UPCheckbox *starkModeCheckbox;
 @property (nonatomic, readwrite) UPCheckbox *quarkModeCheckbox;
 @property (nonatomic, readwrite) UPHueWheel *hueWheel;
 @property (nonatomic, readwrite) UPHueStepperIndicator *hueStepperIndicator;
-@property (nonatomic, readwrite) UPLabel *hueDescription;
-@property (nonatomic) UPDelayedAction *settingsDelayedAction;
+@property (nonatomic) UPLabel *hueDescription;
+
 @end
 
 using UP::BandSettingsUpdateDelay;
@@ -82,6 +83,11 @@ using Spot = UP::SpellLayout::Spot;
     [self.choice4 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice4];
     
+    self.divider = [UPDivider divider];
+    self.divider.frame = CGRectMake(314.5, 0, 1, up_rect_height(layout.screen_bounds()));
+    self.divider.colorCategory = UPColorCategoryActiveFill;
+    [self.view addSubview:self.divider];
+
     self.modesLabel = [UPLabel label];
     self.modesLabel.textColorCategory = UPColorCategoryControlText;
     self.modesLabel.string = @"MODES:";

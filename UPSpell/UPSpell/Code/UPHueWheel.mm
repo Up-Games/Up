@@ -207,7 +207,7 @@ static UIBezierPath *HuePointerPath()
 - (void)updateHueWithVelocity:(CGPoint)velocity
 {
     CGFloat length = up_point_distance(CGPointZero, velocity);
-    if (fabs(length) < 0.0001) {
+    if (fabs(length) < 0.001) {
         [[UPTicker instance] removeTicking:self];
         [self.delegate hueWheelFinishedUpdating:self];
         
