@@ -10,6 +10,7 @@
 #import <UPKit/UPColor.h>
 #import <UPKit/UPGeometry.h>
 #import <UPKit/UPMath.h>
+#import <UPKit/UPRandom.h>
 #import <UPKit/UPSerialNumber.h>
 #import <UPKit/UPTicker.h>
 #import <UPKit/UPTimeSpanning.h>
@@ -43,6 +44,7 @@ static UIBezierPath *HuePointerPath()
 @property (nonatomic) CGFloat hueDelta;
 @property (nonatomic) CGFloat unroundedHue;
 @property (nonatomic) CGFloat previousUnroundedHue;
+@property (nonatomic) CGFloat animationFactor;
 @property (nonatomic) CGPoint animationVelocity;
 @property (nonatomic) uint32_t serialNumber;
 @end
@@ -170,13 +172,13 @@ static UIBezierPath *HuePointerPath()
 
 - (void)tick:(CFTimeInterval)now
 {
-    CGFloat vx = UPClampT(CGFloat, self.animationVelocity.x * 0.995, -5, 5);
-    CGFloat vy = UPClampT(CGFloat, self.animationVelocity.y * 0.995, -5, 5);
-    if (self.hueDelta > 0 && self.hueDelta < 0.01) {
-        self.hueDelta = 0.01;
+    CGFloat vx = self.animationVelocity.x * self.animationFactor;
+    CGFloat vy = self.animationVelocity.y * self.animationFactor;
+    if (self.hueDelta > 0 && self.hueDelta < 0.1) {
+        self.hueDelta = 0.1;
     }
-    else if (self.hueDelta < 0 && self.hueDelta > -0.01) {
-        self.hueDelta = -0.01;
+    else if (self.hueDelta < 0 && self.hueDelta > -0.1) {
+        self.hueDelta = -0.1;
     }
     else {
         self.hueDelta = UPClampT(CGFloat, self.hueDelta * 0.99, -10, 10);
@@ -205,7 +207,7 @@ static UIBezierPath *HuePointerPath()
 - (void)updateHueWithVelocity:(CGPoint)velocity
 {
     CGFloat length = up_point_distance(CGPointZero, velocity);
-    if (fabs(length) < 0.5) {
+    if (fabs(length) < 0.0001) {
         [[UPTicker instance] removeTicking:self];
         [self.delegate hueWheelFinishedUpdating:self];
         
@@ -224,8 +226,8 @@ static UIBezierPath *HuePointerPath()
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    cancel(BandSettingsAnimationDelay);
-    
+    [[UPTicker instance] removeTicking:self];
+
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
     [self updateHueWithPoint:point];
@@ -233,7 +235,7 @@ static UIBezierPath *HuePointerPath()
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    cancel(BandSettingsAnimationDelay);
+    [[UPTicker instance] removeTicking:self];
     [self.delegate hueWheelFinishedUpdating:self];
 }
 
@@ -263,6 +265,7 @@ static UIBezierPath *HuePointerPath()
                 else if (self.hueDelta < 0 && self.hueDelta > -1) {
                     self.hueDelta = -1;
                 }
+                self.animationFactor = 0.93 + (UP::Random::instance().unit() * 0.03);
                 self.animationVelocity = velocity;
                 [[UPTicker instance] addTicking:self];
             }
