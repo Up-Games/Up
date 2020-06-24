@@ -4,6 +4,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <UpKit/UpKit.h>
 
 #import "AppDelegate.h"
 
@@ -17,6 +18,6 @@ typedef NS_ENUM(NSInteger, GameState) {
 
 @interface GameMockupView : UIView
 @property (nonatomic, copy) NSDictionary *colors;
-@property (nonatomic) ColorTheme colorTheme;
+@property (nonatomic) UPThemeColorStyle colorTheme;
 @property (nonatomic) GameState gameState;
 @end

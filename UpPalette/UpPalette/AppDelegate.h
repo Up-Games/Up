@@ -33,13 +33,6 @@ extern NSString *const ColorThemeDarkKey;
 extern NSString *const ColorThemeLightStarkKey;
 extern NSString *const ColorThemeDarkStarkKey;
 
-typedef NS_ENUM(NSInteger, ColorTheme) {
-    ColorThemeLight,
-    ColorThemeDark,
-    ColorThemeLightStark,
-    ColorThemeDarkStark,
-};
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 @end
 

@@ -21,7 +21,7 @@ static const int MilepostHue = 15;
 
 @property (nonatomic) NSArray *colorKeys;
 
-@property (nonatomic) ColorTheme colorTheme;
+@property (nonatomic) UPThemeColorStyle colorTheme;
 @property (nonatomic) NSMutableDictionary *colorMap;
 @property (nonatomic) NSDictionary *defaultColorMap;
 
@@ -252,16 +252,17 @@ static ViewController *_Instance;
     }
 }
 
-- (NSString *)stringForColorTheme:(ColorTheme)colorTheme
+- (NSString *)stringForColorTheme:(UPThemeColorStyle)colorTheme
 {
     switch (colorTheme) {
-        case ColorThemeLight:
+        case UPThemeColorStyleDefault:
+        case UPThemeColorStyleLight:
             return ColorThemeLightKey;
-        case ColorThemeDark:
+        case UPThemeColorStyleDark:
             return ColorThemeDarkKey;
-        case ColorThemeLightStark:
+        case UPThemeColorStyleLightStark:
             return ColorThemeLightStarkKey;
-        case ColorThemeDarkStark:
+        case UPThemeColorStyleDarkStark:
             return ColorThemeDarkStarkKey;
     }
     return ColorThemeLightKey;
@@ -301,10 +302,11 @@ static ViewController *_Instance;
     self.defaultColorMap = [self defaultColorMapForTheme:self.colorTheme];
 }
 
-- (NSDictionary *)defaultColorMapForTheme:(ColorTheme)colorTheme
+- (NSDictionary *)defaultColorMapForTheme:(UPThemeColorStyle)colorTheme
 {
     switch (colorTheme) {
-        case ColorThemeLight:
+        case UPThemeColorStyleDefault:
+        case UPThemeColorStyleLight:
             return @{
                 PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.33 saturation:0.7 targetLightness:29],
                 InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.91 saturation:0.6 targetLightness:91],
@@ -329,7 +331,7 @@ static ViewController *_Instance;
                 InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.30 saturation:0.50 targetLightness:28],
                 InfinityKey : [ColorChip chipWithName:InfinityKey hue:0 gray:0.99 saturation:0.35 targetLightness:99],
             };
-        case ColorThemeDark:
+        case UPThemeColorStyleDark:
             return @{
                 PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.8 saturation:0.9 targetLightness:77],
                 InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.40 saturation:0.15 targetLightness:40],
@@ -354,7 +356,7 @@ static ViewController *_Instance;
                 InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.85 saturation:0.9 targetLightness:80],
                 InfinityKey : [ColorChip chipWithName:InfinityKey hue:0 gray:0.12 saturation:0.7 targetLightness:9],
             };
-        case ColorThemeLightStark:
+        case UPThemeColorStyleLightStark:
             return @{
                 PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.98 saturation:0.68 targetLightness:99],
                 InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.97 saturation:0.6 targetLightness:96.5],
@@ -379,7 +381,7 @@ static ViewController *_Instance;
                 InformationKey : [ColorChip chipWithName:InformationKey hue:0 gray:0.2 saturation:0.75 targetLightness:18],
                 InfinityKey : [ColorChip chipWithName:InfinityKey hue:0 gray:0.98 saturation:0.50 targetLightness:99],
             };
-        case ColorThemeDarkStark:
+        case UPThemeColorStyleDarkStark:
             return @{
                 PrimaryFillKey: [ColorChip chipWithName:PrimaryFillKey hue:0 gray:0.12 saturation:0.68 targetLightness:8],
                 InactiveFillKey : [ColorChip chipWithName:InactiveFillKey hue:0 gray:0.10 saturation:0.25 targetLightness:8],
@@ -687,7 +689,7 @@ static ViewController *_Instance;
 {
     [self saveColorMap];
     [self.colorMap removeAllObjects];
-    self.colorTheme = sender.selectedSegmentIndex;
+    self.colorTheme = (UPThemeColorStyle)(sender.selectedSegmentIndex + 1);
     self.gameMockupView.colorTheme = self.colorTheme;
     [self loadColorMap];
     [self updateHue:self.hue];
@@ -696,7 +698,7 @@ static ViewController *_Instance;
 
 - (IBAction)gameStateChanged:(UISegmentedControl *)sender
 {
-    self.gameMockupView.gameState = sender.selectedSegmentIndex;
+    self.gameMockupView.gameState = (GameState)sender.selectedSegmentIndex;
 }
 
 - (IBAction)exportColors:(id)sender
@@ -721,10 +723,10 @@ static ViewController *_Instance;
     [sourceCode appendString:@"//\n"];
     [sourceCode appendString:@"\n"];
     [sourceCode appendString:@"static _UPRGBColorComponents _UPThemeColorComponents[] = {\n"];
-    [sourceCode appendString:[self generateSourceCodeForColorTheme:ColorThemeLight]];
-    [sourceCode appendString:[self generateSourceCodeForColorTheme:ColorThemeDark]];
-    [sourceCode appendString:[self generateSourceCodeForColorTheme:ColorThemeLightStark]];
-    [sourceCode appendString:[self generateSourceCodeForColorTheme:ColorThemeDarkStark]];
+    [sourceCode appendString:[self generateSourceCodeForColorTheme:UPThemeColorStyleLight]];
+    [sourceCode appendString:[self generateSourceCodeForColorTheme:UPThemeColorStyleDark]];
+    [sourceCode appendString:[self generateSourceCodeForColorTheme:UPThemeColorStyleLightStark]];
+    [sourceCode appendString:[self generateSourceCodeForColorTheme:UPThemeColorStyleDarkStark]];
     [sourceCode appendString:@"};\n"];
     [sourceCode appendString:@"\n"];
     NSError *error;
@@ -734,7 +736,7 @@ static ViewController *_Instance;
     }
 }
 
-- (NSString *)generateSourceCodeForColorTheme:(ColorTheme)colorTheme
+- (NSString *)generateSourceCodeForColorTheme:(UPThemeColorStyle)colorTheme
 {
     NSMutableString *sourceCode = [NSMutableString string];
     [sourceCode appendString:@"//\n"];

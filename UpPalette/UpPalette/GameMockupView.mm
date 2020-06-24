@@ -14,7 +14,7 @@
     [self setNeedsDisplay];
 }
 
-- (void)setColorTheme:(ColorTheme)colorTheme
+- (void)setColorTheme:(UPThemeColorStyle)colorTheme
 {
     _colorTheme = colorTheme;
     [self setNeedsDisplay];
@@ -55,7 +55,7 @@
     UIColor *informationColor = self.colors[InformationKey];
     UIColor *infinityColor = self.colors[InfinityKey];
 
-    BOOL tappablesStroke = self.colorTheme == ColorThemeLightStark || self.colorTheme == ColorThemeDarkStark;
+    BOOL tappablesStroke = self.colorTheme == UPThemeColorStyleLightStark || self.colorTheme == UPThemeColorStyleDarkStark;
 
     UIColor *wordTileFillColor = [UIColor clearColor];
     UIColor *wordTileStrokeColor = [UIColor clearColor];
