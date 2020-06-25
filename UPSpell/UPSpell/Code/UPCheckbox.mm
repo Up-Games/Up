@@ -232,7 +232,10 @@ static UIBezierPath *CheckboxCheckPath()
     self.target = target;
     self.action = action;
 
+    SpellLayout &layout = SpellLayout::instance();
+    
     self.canonicalSize = SpellLayout::CanonicalCheckboxSize;
+    self.chargeSize = layout.checkbox_control_charge_size();
     [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
 
     self.label = [UPLabel label];
@@ -331,7 +334,7 @@ static UIBezierPath *CheckboxCheckPath()
     
     CGRect labelFrame = self.label.frame;
     CGFloat labelOriginY = up_rect_height(bounds) - up_rect_height(labelFrame) + layout.checkbox_control_font_metrics().baseline_adjustment();
-    labelFrame.origin = CGPointMake(layout.checkbox_label_left_margin(), labelOriginY);
+    labelFrame.origin = CGPointMake(layout.checkbox_control_label_left_margin(), labelOriginY);
     self.label.frame = labelFrame;
 }
 

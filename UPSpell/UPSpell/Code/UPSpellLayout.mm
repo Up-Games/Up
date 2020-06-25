@@ -353,6 +353,7 @@ void SpellLayout::calculate_checkbox_control_metrics()
     CGFloat baseline_adjustment = CanonicalCheckboxLabelBaselineAdjustment * layout_scale();
     set_checkbox_control_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
     set_checkbox_control_label_left_margin(CanonicalCheckboxLabelLeftMargin * layout_scale());
+    set_checkbox_control_charge_size(CGSizeMake(up_size_width(CanonicalCheckboxSize) * 0.5, up_size_height(CanonicalCheckboxSize) * 0.5));
 }
 
 void SpellLayout::calculate_choice_control_metrics()
