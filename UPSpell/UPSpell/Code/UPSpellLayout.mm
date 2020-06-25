@@ -246,7 +246,8 @@ void SpellLayout::calculate()
     calculate_game_note_font_metrics();
     calculate_word_score_font_metrics();
     calculate_word_score_bonus_font_metrics();
-    calculate_checkbox_metrics();
+    calculate_checkbox_control_metrics();
+    calculate_choice_control_metrics();
     calculate_game_controls_button_charge_size();
     calculate_locations();
 }
@@ -344,14 +345,25 @@ void SpellLayout::calculate_word_score_bonus_font_metrics()
     set_word_score_bonus_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
 }
 
-void SpellLayout::calculate_checkbox_metrics()
+void SpellLayout::calculate_checkbox_control_metrics()
 {
     CGFloat cap_height = CanonicalCheckboxLabelCapHeight * layout_scale();
-    UIFont *font = [UIFont settingsControlFontWithCapHeight:cap_height];
-    set_checkbox_font(font);
+    UIFont *font = [UIFont checkboxControlFontWithCapHeight:cap_height];
+    set_checkbox_control_font(font);
     CGFloat baseline_adjustment = CanonicalCheckboxLabelBaselineAdjustment * layout_scale();
-    set_checkbox_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
-    set_checkbox_label_left_margin(CanonicalCheckboxLabelLeftMargin * layout_scale());
+    set_checkbox_control_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
+    set_checkbox_control_label_left_margin(CanonicalCheckboxLabelLeftMargin * layout_scale());
+}
+
+void SpellLayout::calculate_choice_control_metrics()
+{
+    CGFloat cap_height = CanonicalChoiceLabelCapHeight * layout_scale();
+    UIFont *font = [UIFont choiceControlFontWithCapHeight:cap_height];
+    set_choice_control_font(font);
+    CGFloat baseline_adjustment = CanonicalChoiceLabelBaselineAdjustment * layout_scale();
+    set_choice_control_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
+    set_choice_control_label_left_margin(CanonicalChoiceLabelLeftMargin * layout_scale());
+    set_choice_control_label_right_margin(CanonicalChoiceLabelRightMargin * layout_scale());
 }
 
 void SpellLayout::calculate_word_tray_layout_frame()

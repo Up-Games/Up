@@ -21,8 +21,11 @@ extern NSString * const UPGameInformationFontName;
 + (UIFont *)wordScoreBonusFontOfSize:(CGFloat)fontSize;
 + (UIFont *)wordScoreBonusFontWithCapHeight:(CGFloat)capHeight;
 
-+ (UIFont *)settingsControlFontOfSize:(CGFloat)fontSize;
-+ (UIFont *)settingsControlFontWithCapHeight:(CGFloat)capHeight;
++ (UIFont *)checkboxControlFontOfSize:(CGFloat)fontSize;
++ (UIFont *)checkboxControlFontWithCapHeight:(CGFloat)capHeight;
+
++ (UIFont *)choiceControlFontOfSize:(CGFloat)fontSize;
++ (UIFont *)choiceControlFontWithCapHeight:(CGFloat)capHeight;
 
 + (UIFont *)settingsDescriptionFontOfSize:(CGFloat)fontSize;
 + (UIFont *)settingsDescriptionFontWithCapHeight:(CGFloat)capHeight;

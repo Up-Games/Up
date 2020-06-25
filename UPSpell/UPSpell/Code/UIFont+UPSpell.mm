@@ -10,7 +10,8 @@
 NSString * const UPGameInformationFontName = @"MalloryNarrow-Bold";
 NSString * const UPGameNoteFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPWordScoreBonusFontName = @"MalloryCondensed-BlackItalic";
-NSString * const UPSettingsControlFontName = @"MalloryCondensed-Black";
+NSString * const UPCheckboxControlFontName = @"MalloryCondensed-Black";
+NSString * const UPChoiceControlFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
 
 //
@@ -96,9 +97,9 @@ NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
     return [UIFont wordScoreBonusFontOfSize:pointSize];
 }
 
-+ (UIFont *)settingsControlFontOfSize:(CGFloat)fontSize
++ (UIFont *)checkboxControlFontOfSize:(CGFloat)fontSize
 {
-    UIFont *font = [UIFont fontWithName:UPSettingsControlFontName size:fontSize];
+    UIFont *font = [UIFont fontWithName:UPCheckboxControlFontName size:fontSize];
     UIFontDescriptor *descriptor = [font fontDescriptor];
     NSDictionary *attributes = @{
         UIFontDescriptorFeatureSettingsAttribute: @[
@@ -112,12 +113,36 @@ NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
     return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
 }
 
-+ (UIFont *)settingsControlFontWithCapHeight:(CGFloat)capHeight
++ (UIFont *)checkboxControlFontWithCapHeight:(CGFloat)capHeight
 {
-    UIFont *canonicalFont = [UIFont fontWithName:UPSettingsControlFontName size:1];
+    UIFont *canonicalFont = [UIFont fontWithName:UPCheckboxControlFontName size:1];
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
-    return [UIFont settingsControlFontOfSize:pointSize];
+    return [UIFont checkboxControlFontOfSize:pointSize];
+}
+
++ (UIFont *)choiceControlFontOfSize:(CGFloat)fontSize
+{
+    UIFont *font = [UIFont fontWithName:UPChoiceControlFontName size:fontSize];
+    UIFontDescriptor *descriptor = [font fontDescriptor];
+    NSDictionary *attributes = @{
+        UIFontDescriptorFeatureSettingsAttribute: @[
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+                }
+        ]
+    };
+    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
+}
+
++ (UIFont *)choiceControlFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPChoiceControlFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont choiceControlFontOfSize:pointSize];
 }
 
 + (UIFont *)settingsDescriptionFontOfSize:(CGFloat)fontSize

@@ -231,15 +231,16 @@ static UIBezierPath *CheckboxCheckPath()
     self = [super initWithFrame:CGRectZero];
     self.target = target;
     self.action = action;
+
+    self.canonicalSize = SpellLayout::CanonicalCheckboxSize;
+    [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
+
     self.label = [UPLabel label];
-    self.label.font = SpellLayout::instance().checkbox_font();
+    self.label.font = SpellLayout::instance().checkbox_control_font();
     self.label.textColorCategory = UPColorCategoryControlText;
     self.label.backgroundColorCategory = UPColorCategoryClear;
     [self addSubview:self.label];
-    [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
     [self.label addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
-
-    self.canonicalSize = SpellLayout::CanonicalCheckboxSize;
 
     [self setFillPath:CheckboxFillPath()];
     [self setFillColorCategory:UPColorCategoryControlShapeFill];
@@ -304,7 +305,7 @@ static UIBezierPath *CheckboxCheckPath()
                     [self.target performSelector:self.action];
                 }
             }
-            else {
+            else if (self.target || self.action) {
                 LOG(General, "Target does not respond to selector: %@ : %@", self.target, NSStringFromSelector(self.action));
             }
 #pragma clang diagnostic pop
@@ -329,8 +330,8 @@ static UIBezierPath *CheckboxCheckPath()
     [self.label sizeToFit];
     
     CGRect labelFrame = self.label.frame;
-    CGFloat labelOriginY = up_rect_height(bounds) - up_rect_height(labelFrame) + layout.checkbox_font_metrics().baseline_adjustment();
-    labelFrame.origin = CGPointMake(layout.checkbox_label_left_margin(), labelOriginY);;
+    CGFloat labelOriginY = up_rect_height(bounds) - up_rect_height(labelFrame) + layout.checkbox_control_font_metrics().baseline_adjustment();
+    labelFrame.origin = CGPointMake(layout.checkbox_label_left_margin(), labelOriginY);
     self.label.frame = labelFrame;
 }
 

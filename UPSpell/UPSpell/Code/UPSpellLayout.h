@@ -108,6 +108,11 @@ public:
     static inline constexpr CGFloat CanonicalCheckboxLabelBaselineAdjustment = 5;
     static inline constexpr CGFloat CanonicalCheckboxLabelLeftMargin = 43;
 
+    static inline constexpr CGFloat CanonicalChoiceLabelCapHeight = 30;
+    static inline constexpr CGFloat CanonicalChoiceLabelBaselineAdjustment = -12;
+    static inline constexpr CGFloat CanonicalChoiceLabelLeftMargin = 82;
+    static inline constexpr CGFloat CanonicalChoiceLabelRightMargin = 87;
+
     static inline constexpr CGSize CanonicalTileSize = { 100, 120 };
     static inline constexpr CGRect CanonicalTileFrame = { 0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize) };
     static inline constexpr CGFloat CanonicalTileStrokeWidth = 3;
@@ -198,10 +203,14 @@ public:
     const FontMetrics &word_score_font_metrics() const { return m_word_score_font_metrics; }
     UIFont *word_score_bonus_font() const { return m_word_score_bonus_font; }
     const FontMetrics &word_score_bonus_font_metrics() const { return m_word_score_bonus_font_metrics; }
-    UIFont *checkbox_font() const { return m_checkbox_font; }
-    const FontMetrics &checkbox_font_metrics() const { return m_checkbox_font_metrics; }
+    UIFont *checkbox_control_font() const { return m_checkbox_control_font; }
+    const FontMetrics &checkbox_control_font_metrics() const { return m_checkbox_control_font_metrics; }
+    CGFloat checkbox_label_left_margin() const { return m_checkbox_control_label_left_margin; }
+    UIFont *choice_control_font() const { return m_choice_control_font; }
+    const FontMetrics &choice_control_font_metrics() const { return m_choice_control_font_metrics; }
+    CGFloat choice_control_label_left_margin() const { return m_choice_control_label_left_margin; }
+    CGFloat choice_control_label_right_margin() const { return m_choice_control_label_right_margin; }
 
-    CGFloat checkbox_label_left_margin() const { return m_checkbox_label_left_margin; }
     CGAffineTransform menu_game_view_transform() const { return m_menu_game_view_transform; }
 
 private:
@@ -235,9 +244,13 @@ private:
     void set_word_score_font_metrics(const FontMetrics &metrics) { m_word_score_font_metrics = metrics; }
     void set_word_score_bonus_font(UIFont *font) { m_word_score_bonus_font = font; }
     void set_word_score_bonus_font_metrics(const FontMetrics &metrics) { m_word_score_bonus_font_metrics = metrics; }
-    void set_checkbox_font(UIFont *font) { m_checkbox_font = font; }
-    void set_checkbox_font_metrics(const FontMetrics &metrics) { m_checkbox_font_metrics = metrics; }
-    void set_checkbox_label_left_margin(CGFloat f) { m_checkbox_label_left_margin = f; }
+    void set_checkbox_control_font(UIFont *font) { m_checkbox_control_font = font; }
+    void set_checkbox_control_font_metrics(const FontMetrics &metrics) { m_checkbox_control_font_metrics = metrics; }
+    void set_checkbox_control_label_left_margin(CGFloat f) { m_checkbox_control_label_left_margin = f; }
+    void set_choice_control_font(UIFont *font) { m_choice_control_font = font; }
+    void set_choice_control_font_metrics(const FontMetrics &metrics) { m_choice_control_font_metrics = metrics; }
+    void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
+    void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
     void set_game_controls_button_charge_size(CGSize size) { m_game_controls_button_charge_size = size; }
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
     void set_game_score_frame(CGRect rect) { m_game_score_frame = rect; }
@@ -255,7 +268,8 @@ private:
     void calculate_game_note_font_metrics();
     void calculate_word_score_font_metrics();
     void calculate_word_score_bonus_font_metrics();
-    void calculate_checkbox_metrics();
+    void calculate_checkbox_control_metrics();
+    void calculate_choice_control_metrics();
     void calculate_locations();
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
@@ -309,9 +323,13 @@ private:
     FontMetrics m_word_score_font_metrics;
     __strong UIFont *m_word_score_bonus_font;
     FontMetrics m_word_score_bonus_font_metrics;
-    __strong UIFont *m_checkbox_font;
-    FontMetrics m_checkbox_font_metrics;
-    CGFloat m_checkbox_label_left_margin = 0.0;
+    __strong UIFont *m_checkbox_control_font;
+    FontMetrics m_checkbox_control_font_metrics;
+    CGFloat m_checkbox_control_label_left_margin = 0.0;
+    __strong UIFont *m_choice_control_font;
+    FontMetrics m_choice_control_font_metrics;
+    CGFloat m_choice_control_label_left_margin = 0.0;
+    CGFloat m_choice_control_label_right_margin = 0.0;
 
     CGSize m_tile_size = CGSizeZero;
     CGFloat m_tile_stroke_width = 0.0;

@@ -5,6 +5,7 @@
 
 #import <UpKit/UpKit.h>
 
+#import "UPChoice.h"
 #import "UPDialogMenu.h"
 #import "UPSceneDelegate.h"
 #import "UPSpellNavigationController.h"
@@ -17,7 +18,7 @@
 #import "UPTilePaths.h"
 #import "UPViewMove+UPSpell.h"
 
-@interface UPSpellNavigationController () <UINavigationControllerDelegate, UPNeedsUpdatable>
+@interface UPSpellNavigationController () <UINavigationControllerDelegate>
 @property (nonatomic) UPDialogMenu *dialogMenu;
 @property (nonatomic) UPSpellGameController *gameController;
 @property (nonatomic) UPSpellExtrasController *extrasController;

@@ -54,8 +54,6 @@
 		5DBC20D8249AEFF2002A6ADC /* UPButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBC20D6249AEFF2002A6ADC /* UPButton.mm */; };
 		5DBC20DB249BC33C002A6ADC /* UPNeedsUpdater.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBC20D9249BC33C002A6ADC /* UPNeedsUpdater.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBC20DC249BC33C002A6ADC /* UPNeedsUpdater.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBC20DA249BC33C002A6ADC /* UPNeedsUpdater.mm */; };
-		5DBC20DF249BD5C8002A6ADC /* UPChoice.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBC20DD249BD5C8002A6ADC /* UPChoice.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DBC20E0249BD5C8002A6ADC /* UPChoice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBC20DE249BD5C8002A6ADC /* UPChoice.mm */; };
 		5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B2246EF6CC00090E7A /* UPLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC618B5246EF6CC00090E7A /* UPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC618B3246EF6CC00090E7A /* UPLabel.m */; };
 		5DC618BB246F045700090E7A /* UIFont+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC618B9246F045700090E7A /* UIFont+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -174,8 +172,6 @@
 		5DBC20D6249AEFF2002A6ADC /* UPButton.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPButton.mm; sourceTree = "<group>"; };
 		5DBC20D9249BC33C002A6ADC /* UPNeedsUpdater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPNeedsUpdater.h; sourceTree = "<group>"; };
 		5DBC20DA249BC33C002A6ADC /* UPNeedsUpdater.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPNeedsUpdater.mm; sourceTree = "<group>"; };
-		5DBC20DD249BD5C8002A6ADC /* UPChoice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPChoice.h; sourceTree = "<group>"; };
-		5DBC20DE249BD5C8002A6ADC /* UPChoice.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPChoice.mm; sourceTree = "<group>"; };
 		5DC618B2246EF6CC00090E7A /* UPLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLabel.h; sourceTree = "<group>"; };
 		5DC618B3246EF6CC00090E7A /* UPLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLabel.m; sourceTree = "<group>"; };
 		5DC618B9246F045700090E7A /* UIFont+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UP.h"; sourceTree = "<group>"; };
@@ -364,8 +360,6 @@
 				5DD71D9B2457AFB200F3F9E2 /* UPBezierPathView.m */,
 				5DBC20D5249AEFF2002A6ADC /* UPButton.h */,
 				5DBC20D6249AEFF2002A6ADC /* UPButton.mm */,
-				5DBC20DD249BD5C8002A6ADC /* UPChoice.h */,
-				5DBC20DE249BD5C8002A6ADC /* UPChoice.mm */,
 				5DEBE0192454E3AC00016047 /* UPColor.h */,
 				5DFE62252453CFCD00D9CA0B /* UPConstants.h */,
 				5DA8E05D247B361F008D3015 /* UPContainerView.h */,
@@ -473,7 +467,6 @@
 				5DBC20CC249AD86C002A6ADC /* UPTapGestureRecognizer.h in Headers */,
 				5DF9DF992466412B00B2199D /* UPRandom.h in Headers */,
 				5DFE62262453CFCD00D9CA0B /* UPConstants.h in Headers */,
-				5DBC20DF249BD5C8002A6ADC /* UPChoice.h in Headers */,
 				5DC618BB246F045700090E7A /* UIFont+UP.h in Headers */,
 				5DD71D4B2457824A00F3F9E2 /* UPGeometry.h in Headers */,
 				5DC618BE24703A1500090E7A /* UPFontMetrics.h in Headers */,
@@ -645,7 +638,6 @@
 				5DC618BC246F045700090E7A /* UIFont+UP.mm in Sources */,
 				5DA8E054247AC79F008D3015 /* UPAnimator.mm in Sources */,
 				5DBC20DC249BC33C002A6ADC /* UPNeedsUpdater.mm in Sources */,
-				5DBC20E0249BD5C8002A6ADC /* UPChoice.mm in Sources */,
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5D4AE82E248F1FE600213904 /* UPSettings.mm in Sources */,
 				5DA8E064247C063B008D3015 /* UPTicker.m in Sources */,

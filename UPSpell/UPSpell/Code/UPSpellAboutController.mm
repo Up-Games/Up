@@ -7,9 +7,9 @@
 #import <UpKit/UIColor+UP.h>
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPButton.h>
-#import <UpKit/UPChoice.h>
 #import <UpKit/UPTouchGestureRecognizer.h>
 
+#import "UPChoice.h"
 #import "UPControl+UPSpell.h"
 #import "UPSpellAboutController.h"
 #import "UPSpellLayout.h"

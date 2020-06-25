@@ -6,8 +6,9 @@
 #import <UIKit/UIKit.h>
 
 #import <UpKit/UPButton.h>
-#import <UpKit/UPChoice.h>
 #import <UpKit/UPControl.h>
+
+#import "UPChoice.h"
 
 namespace UP {
 

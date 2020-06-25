@@ -6,12 +6,12 @@
 #import <UpKit/UIColor+UP.h>
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPButton.h>
-#import <UpKit/UPChoice.h>
 #import <UpKit/UPTapGestureRecognizer.h>
 #import <UpKit/UPTouchGestureRecognizer.h>
 
 #import "UIFont+UPSpell.h"
 #import "UPCheckbox.h"
+#import "UPChoice.h"
 #import "UPControl+UPSpell.h"
 #import "UPHueWheel.h"
 #import "UPSpellExtrasController.h"

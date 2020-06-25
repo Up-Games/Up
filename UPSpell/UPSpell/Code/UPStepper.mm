@@ -349,7 +349,7 @@ static UIBezierPath *StepperPathRight()
                     [self.target performSelector:self.action];
                 }
             }
-            else {
+            else if (self.target || self.action) {
                 LOG(General, "Target does not respond to selector: %@ : %@", self.target, NSStringFromSelector(self.action));
             }
 #pragma clang diagnostic pop
