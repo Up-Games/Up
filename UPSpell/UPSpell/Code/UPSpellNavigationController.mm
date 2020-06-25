@@ -103,16 +103,11 @@ using UP::TimeSpanning::start;
         self.gameController
     ];
     [self setViewControllers:viewControllers animated:NO];
-
-    [[NSNotificationCenter defaultCenter] addObserverForName:UPThemeColorsChangedNotification object:nil
-                                                       queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) {
-        [[UPNeedsUpdater instance] setNeedsUpdate:self];
-    }];
 }
 
-#pragma mark - UPNeedsUpdater
+#pragma mark - Update theme colors
 
-- (void)update
+- (void)updateThemeColors
 {
     [self.gameController updateThemeColors];
     [self.extrasController updateThemeColors];

@@ -17,31 +17,6 @@ using UP::SpellLayout;
 static UIBezierPath *CheckboxFillPath()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint: CGPointMake(28, 12.32)];
-    [path addCurveToPoint: CGPointMake(27.73, 9.13) controlPoint1: CGPointMake(27.98, 11.23) controlPoint2: CGPointMake(27.99, 10.04)];
-    [path addCurveToPoint: CGPointMake(24.63, 6.86) controlPoint1: CGPointMake(27.17, 7.25) controlPoint2: CGPointMake(25.49, 7.05)];
-    [path addCurveToPoint: CGPointMake(17.1, 6.52) controlPoint1: CGPointMake(22.12, 6.45) controlPoint2: CGPointMake(19.61, 6.56)];
-    [path addCurveToPoint: CGPointMake(10.9, 6.52) controlPoint1: CGPointMake(15.03, 6.53) controlPoint2: CGPointMake(12.97, 6.53)];
-    [path addCurveToPoint: CGPointMake(3.37, 6.86) controlPoint1: CGPointMake(8.39, 6.56) controlPoint2: CGPointMake(5.87, 6.45)];
-    [path addCurveToPoint: CGPointMake(0.27, 9.13) controlPoint1: CGPointMake(2.5, 7.06) controlPoint2: CGPointMake(0.83, 7.26)];
-    [path addCurveToPoint: CGPointMake(0, 12.32) controlPoint1: CGPointMake(0.01, 10.04) controlPoint2: CGPointMake(0.02, 11.23)];
-    [path addCurveToPoint: CGPointMake(0, 28.73) controlPoint1: CGPointMake(-0, 18.34) controlPoint2: CGPointMake(-0, 22.71)];
-    [path addCurveToPoint: CGPointMake(0.27, 31.92) controlPoint1: CGPointMake(0.02, 29.82) controlPoint2: CGPointMake(0.01, 31.01)];
-    [path addCurveToPoint: CGPointMake(3.37, 34.19) controlPoint1: CGPointMake(0.83, 33.79) controlPoint2: CGPointMake(2.51, 33.99)];
-    [path addCurveToPoint: CGPointMake(10.28, 34.52) controlPoint1: CGPointMake(5.67, 34.57) controlPoint2: CGPointMake(7.98, 34.5)];
-    [path addCurveToPoint: CGPointMake(17.72, 34.52) controlPoint1: CGPointMake(12.76, 34.52) controlPoint2: CGPointMake(15.24, 34.52)];
-    [path addCurveToPoint: CGPointMake(22.89, 34.4) controlPoint1: CGPointMake(19.44, 34.52) controlPoint2: CGPointMake(21.17, 34.52)];
-    [path addCurveToPoint: CGPointMake(26.28, 33.68) controlPoint1: CGPointMake(24.02, 34.3) controlPoint2: CGPointMake(25.16, 34.23)];
-    [path addCurveToPoint: CGPointMake(27.73, 31.92) controlPoint1: CGPointMake(26.8, 33.39) controlPoint2: CGPointMake(27.37, 33.06)];
-    [path addCurveToPoint: CGPointMake(28, 28.73) controlPoint1: CGPointMake(27.99, 31.01) controlPoint2: CGPointMake(27.98, 29.82)];
-    [path addCurveToPoint: CGPointMake(28, 12.32) controlPoint1: CGPointMake(28, 22.71) controlPoint2: CGPointMake(28, 18.34)];
-    [path closePath];
-    return path;
-}
-
-static UIBezierPath *CheckboxStrokePath()
-{
-    UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(17.59, 7)];
     [path addCurveToPoint: CGPointMake(14.48, 7) controlPoint1: CGPointMake(16.56, 7) controlPoint2: CGPointMake(15.52, 7)];
     [path addCurveToPoint: CGPointMake(11.38, 7) controlPoint1: CGPointMake(13.45, 7) controlPoint2: CGPointMake(12.42, 7)];
@@ -90,6 +65,91 @@ static UIBezierPath *CheckboxStrokePath()
     [path addCurveToPoint: CGPointMake(11.41, 11) controlPoint1: CGPointMake(10.29, 11.01) controlPoint2: CGPointMake(10.85, 11.01)];
     [path addLineToPoint: CGPointMake(14.48, 11)];
     [path addLineToPoint: CGPointMake(17.57, 11)];
+    [path closePath];
+    return path;
+}
+
+static UIBezierPath *CheckboxStrokePath()
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint: CGPointMake(17.1, 6.52)];
+    [path addCurveToPoint: CGPointMake(14, 6.53) controlPoint1: CGPointMake(16.07, 6.52) controlPoint2: CGPointMake(15.04, 6.53)];
+    [path addCurveToPoint: CGPointMake(10.9, 6.52) controlPoint1: CGPointMake(12.97, 6.53) controlPoint2: CGPointMake(11.93, 6.52)];
+    [path addCurveToPoint: CGPointMake(3.37, 6.86) controlPoint1: CGPointMake(8.39, 6.56) controlPoint2: CGPointMake(5.88, 6.45)];
+    [path addCurveToPoint: CGPointMake(0.28, 9.13) controlPoint1: CGPointMake(2.5, 7.06) controlPoint2: CGPointMake(0.83, 7.25)];
+    [path addCurveToPoint: CGPointMake(0, 12.32) controlPoint1: CGPointMake(0.01, 10.04) controlPoint2: CGPointMake(0.02, 11.23)];
+    [path addCurveToPoint: CGPointMake(0, 28.73) controlPoint1: CGPointMake(-0, 18.34) controlPoint2: CGPointMake(-0, 22.71)];
+    [path addCurveToPoint: CGPointMake(0.28, 31.92) controlPoint1: CGPointMake(0.02, 29.82) controlPoint2: CGPointMake(0.01, 31.01)];
+    [path addCurveToPoint: CGPointMake(3.37, 34.19) controlPoint1: CGPointMake(0.83, 33.79) controlPoint2: CGPointMake(2.51, 33.99)];
+    [path addCurveToPoint: CGPointMake(10.28, 34.52) controlPoint1: CGPointMake(5.67, 34.57) controlPoint2: CGPointMake(7.98, 34.5)];
+    [path addCurveToPoint: CGPointMake(14, 34.52) controlPoint1: CGPointMake(11.52, 34.52) controlPoint2: CGPointMake(12.76, 34.52)];
+    [path addCurveToPoint: CGPointMake(17.72, 34.52) controlPoint1: CGPointMake(15.24, 34.52) controlPoint2: CGPointMake(16.48, 34.52)];
+    [path addCurveToPoint: CGPointMake(22.89, 34.4) controlPoint1: CGPointMake(19.44, 34.52) controlPoint2: CGPointMake(21.17, 34.52)];
+    [path addCurveToPoint: CGPointMake(26.28, 33.68) controlPoint1: CGPointMake(24.02, 34.3) controlPoint2: CGPointMake(25.16, 34.23)];
+    [path addCurveToPoint: CGPointMake(27.73, 31.92) controlPoint1: CGPointMake(26.8, 33.39) controlPoint2: CGPointMake(27.38, 33.06)];
+    [path addCurveToPoint: CGPointMake(28, 28.73) controlPoint1: CGPointMake(27.99, 31.01) controlPoint2: CGPointMake(27.98, 29.82)];
+    [path addCurveToPoint: CGPointMake(28, 12.32) controlPoint1: CGPointMake(28, 22.71) controlPoint2: CGPointMake(28, 18.34)];
+    [path addCurveToPoint: CGPointMake(27.73, 9.13) controlPoint1: CGPointMake(27.98, 11.23) controlPoint2: CGPointMake(27.99, 10.04)];
+    [path addCurveToPoint: CGPointMake(24.63, 6.86) controlPoint1: CGPointMake(27.17, 7.25) controlPoint2: CGPointMake(25.49, 7.05)];
+    [path addCurveToPoint: CGPointMake(17.1, 6.52) controlPoint1: CGPointMake(22.13, 6.45) controlPoint2: CGPointMake(19.61, 6.56)];
+    [path closePath];
+    [path moveToPoint: CGPointMake(10.89, 9.02)];
+    [path addLineToPoint: CGPointMake(14, 9.03)];
+    [path addLineToPoint: CGPointMake(17.09, 9.02)];
+    [path addCurveToPoint: CGPointMake(18.77, 9.03) controlPoint1: CGPointMake(17.65, 9.03) controlPoint2: CGPointMake(18.21, 9.03)];
+    [path addCurveToPoint: CGPointMake(24.17, 9.31) controlPoint1: CGPointMake(20.65, 9.03) controlPoint2: CGPointMake(22.43, 9.04)];
+    [path addLineToPoint: CGPointMake(24.34, 9.35)];
+    [path addCurveToPoint: CGPointMake(25.32, 9.83) controlPoint1: CGPointMake(25.24, 9.54) controlPoint2: CGPointMake(25.26, 9.63)];
+    [path addCurveToPoint: CGPointMake(25.49, 12.06) controlPoint1: CGPointMake(25.47, 10.33) controlPoint2: CGPointMake(25.48, 11.25)];
+    [path addLineToPoint: CGPointMake(25.5, 12.32)];
+    [path addCurveToPoint: CGPointMake(25.5, 28.68) controlPoint1: CGPointMake(25.5, 18.34) controlPoint2: CGPointMake(25.5, 22.71)];
+    [path addLineToPoint: CGPointMake(25.49, 29)];
+    [path addCurveToPoint: CGPointMake(25.33, 31.18) controlPoint1: CGPointMake(25.48, 29.8) controlPoint2: CGPointMake(25.47, 30.72)];
+    [path addCurveToPoint: CGPointMake(25.26, 31.38) controlPoint1: CGPointMake(25.3, 31.28) controlPoint2: CGPointMake(25.28, 31.34)];
+    [path addCurveToPoint: CGPointMake(25.12, 31.46) controlPoint1: CGPointMake(25.23, 31.4) controlPoint2: CGPointMake(25.17, 31.43)];
+    [path addCurveToPoint: CGPointMake(22.92, 31.89) controlPoint1: CGPointMake(24.52, 31.74) controlPoint2: CGPointMake(23.78, 31.81)];
+    [path addLineToPoint: CGPointMake(22.7, 31.91)];
+    [path addCurveToPoint: CGPointMake(17.72, 32.02) controlPoint1: CGPointMake(21.04, 32.02) controlPoint2: CGPointMake(19.35, 32.02)];
+    [path addCurveToPoint: CGPointMake(14, 32.02) controlPoint1: CGPointMake(16.48, 32.02) controlPoint2: CGPointMake(15.24, 32.02)];
+    [path addCurveToPoint: CGPointMake(10.31, 32.02) controlPoint1: CGPointMake(12.76, 32.02) controlPoint2: CGPointMake(11.52, 32.02)];
+    [path addCurveToPoint: CGPointMake(9.02, 32.01) controlPoint1: CGPointMake(9.88, 32.02) controlPoint2: CGPointMake(9.45, 32.02)];
+    [path addCurveToPoint: CGPointMake(3.84, 31.74) controlPoint1: CGPointMake(7.21, 32.01) controlPoint2: CGPointMake(5.5, 32)];
+    [path addLineToPoint: CGPointMake(3.66, 31.7)];
+    [path addCurveToPoint: CGPointMake(2.68, 31.22) controlPoint1: CGPointMake(2.76, 31.5) controlPoint2: CGPointMake(2.74, 31.42)];
+    [path addCurveToPoint: CGPointMake(2.51, 28.98) controlPoint1: CGPointMake(2.53, 30.71) controlPoint2: CGPointMake(2.52, 29.79)];
+    [path addLineToPoint: CGPointMake(2.5, 28.73)];
+    [path addCurveToPoint: CGPointMake(2.5, 12.36) controlPoint1: CGPointMake(2.5, 22.71) controlPoint2: CGPointMake(2.5, 18.34)];
+    [path addLineToPoint: CGPointMake(2.51, 12.04)];
+    [path addCurveToPoint: CGPointMake(2.67, 9.84) controlPoint1: CGPointMake(2.52, 11.24) controlPoint2: CGPointMake(2.53, 10.33)];
+    [path addCurveToPoint: CGPointMake(3.66, 9.35) controlPoint1: CGPointMake(2.74, 9.62) controlPoint2: CGPointMake(2.76, 9.54)];
+    [path addLineToPoint: CGPointMake(3.84, 9.31)];
+    [path addCurveToPoint: CGPointMake(9.24, 9.03) controlPoint1: CGPointMake(5.57, 9.04) controlPoint2: CGPointMake(7.35, 9.03)];
+    [path addCurveToPoint: CGPointMake(10.89, 9.02) controlPoint1: CGPointMake(9.8, 9.03) controlPoint2: CGPointMake(10.37, 9.03)];
+    [path closePath];
+    return path;
+}
+
+static UIBezierPath *CheckboxHighlightedPath()
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint: CGPointMake(27.25, 12.76)];
+    [path addCurveToPoint: CGPointMake(26.99, 9.74) controlPoint1: CGPointMake(27.23, 11.73) controlPoint2: CGPointMake(27.24, 10.6)];
+    [path addCurveToPoint: CGPointMake(24.06, 7.59) controlPoint1: CGPointMake(26.47, 7.97) controlPoint2: CGPointMake(24.88, 7.78)];
+    [path addCurveToPoint: CGPointMake(16.94, 7.27) controlPoint1: CGPointMake(21.69, 7.2) controlPoint2: CGPointMake(19.31, 7.31)];
+    [path addCurveToPoint: CGPointMake(11.06, 7.27) controlPoint1: CGPointMake(14.98, 7.28) controlPoint2: CGPointMake(13.02, 7.28)];
+    [path addCurveToPoint: CGPointMake(3.94, 7.59) controlPoint1: CGPointMake(8.69, 7.31) controlPoint2: CGPointMake(6.31, 7.2)];
+    [path addCurveToPoint: CGPointMake(1.01, 9.74) controlPoint1: CGPointMake(3.11, 7.78) controlPoint2: CGPointMake(1.54, 7.97)];
+    [path addCurveToPoint: CGPointMake(0.75, 12.76) controlPoint1: CGPointMake(0.76, 10.6) controlPoint2: CGPointMake(0.77, 11.73)];
+    [path addCurveToPoint: CGPointMake(0.75, 28.29) controlPoint1: CGPointMake(0.75, 18.46) controlPoint2: CGPointMake(0.75, 22.59)];
+    [path addCurveToPoint: CGPointMake(1.01, 31.3) controlPoint1: CGPointMake(0.77, 29.32) controlPoint2: CGPointMake(0.76, 30.44)];
+    [path addCurveToPoint: CGPointMake(3.94, 33.46) controlPoint1: CGPointMake(1.53, 33.08) controlPoint2: CGPointMake(3.12, 33.27)];
+    [path addCurveToPoint: CGPointMake(10.48, 33.77) controlPoint1: CGPointMake(6.12, 33.82) controlPoint2: CGPointMake(8.3, 33.75)];
+    [path addCurveToPoint: CGPointMake(17.52, 33.77) controlPoint1: CGPointMake(12.83, 33.77) controlPoint2: CGPointMake(15.17, 33.77)];
+    [path addCurveToPoint: CGPointMake(22.42, 33.66) controlPoint1: CGPointMake(19.15, 33.77) controlPoint2: CGPointMake(20.78, 33.77)];
+    [path addCurveToPoint: CGPointMake(25.62, 32.97) controlPoint1: CGPointMake(23.49, 33.56) controlPoint2: CGPointMake(24.56, 33.49)];
+    [path addCurveToPoint: CGPointMake(26.99, 31.31) controlPoint1: CGPointMake(26.11, 32.7) controlPoint2: CGPointMake(26.66, 32.39)];
+    [path addCurveToPoint: CGPointMake(27.25, 28.29) controlPoint1: CGPointMake(27.24, 30.45) controlPoint2: CGPointMake(27.23, 29.32)];
+    [path addCurveToPoint: CGPointMake(27.25, 12.76) controlPoint1: CGPointMake(27.25, 22.59) controlPoint2: CGPointMake(27.25, 18.46)];
     [path closePath];
     return path;
 }
@@ -180,20 +240,27 @@ static UIBezierPath *CheckboxCheckPath()
     [self.label addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
 
     self.canonicalSize = SpellLayout::CanonicalCheckboxSize;
-    [self setFillPath:CheckboxFillPath() forState:UPControlStateNormal];
-    [self setFillColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
-    [self setFillColorCategory:UPColorCategoryActiveFill forState:UPControlStateHighlighted];
-    [self setFillColorCategory:UPColorCategoryActiveFill forState:(UPControlStateHighlighted | UPControlStateSelected)];
+
+    [self setFillPath:CheckboxFillPath()];
+    [self setFillColorCategory:UPColorCategoryControlShapeFill];
 
     [self setStrokePath:CheckboxStrokePath()];
-    [self setStrokeColorCategory:UPColorCategoryControlText];
+    [self setStrokeColorCategory:UPColorCategoryControlShapeStroke];
 
+    [self setAuxiliaryPath:CheckboxHighlightedPath() forState:UPControlStateNormal];
+    [self setAuxiliaryColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
+    [self setAuxiliaryColorCategory:UPColorCategoryHighlightedFill forState:UPControlStateHighlighted];
+    [self setAuxiliaryColorCategory:UPColorCategoryHighlightedFill forState:(UPControlStateHighlighted | UPControlStateSelected)];
+    [self sendPathViewToBack:self.auxiliaryPathView];
+    
     [self setAccentColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
-    [self setAccentColorCategory:UPColorCategoryContent forState:UPControlStateSelected];
-    [self setAccentColorCategory:UPColorCategoryContent forState:(UPControlStateHighlighted | UPControlStateSelected)];
+    [self setAccentColorCategory:UPColorCategoryControlIndicator forState:UPControlStateSelected];
+    [self setAccentColorCategory:UPColorCategoryControlIndicator forState:(UPControlStateHighlighted | UPControlStateSelected)];
     [self setAccentPath:CheckboxCheckPath() forState:UPControlStateSelected];
     [self setAccentPath:CheckboxCheckPath() forState:(UPControlStateHighlighted | UPControlStateSelected)];
-
+    
+    [self updateThemeColors];
+    
     return self;
 }
 

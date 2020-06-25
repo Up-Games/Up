@@ -228,7 +228,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     [self bringSubviewToFront:view];
 }
 
-- (void)sendPathViewToFront:(UPBezierPathView *)view
+- (void)sendPathViewToBack:(UPBezierPathView *)view
 {
     [self sendSubviewToBack:view];
 }
@@ -795,7 +795,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 {
     [self cancelColorAnimations];
     [self invalidate];
-    [self setNeedsUpdate];
+    [self update];
 }
 
 - (void)cancelAnimations

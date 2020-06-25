@@ -87,7 +87,7 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @property (nonatomic, readonly) UPBezierPathView *accentPathView;
 
 - (void)bringPathViewToFront:(UPBezierPathView *)view;
-- (void)sendPathViewToFront:(UPBezierPathView *)view;
+- (void)sendPathViewToBack:(UPBezierPathView *)view;
 
 - (void)setFillPath:(UIBezierPath *)path;
 - (void)setFillPath:(UIBezierPath *)path forState:(UPControlState)state;

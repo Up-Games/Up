@@ -8,8 +8,6 @@
 #import "UPColor.h"
 #import "UPMath.h"
 
-NSString * const UPThemeColorsChangedNotification = @"UPThemeColorsChangedNotification";
-
 using UP::RGBF;
 using UP::HSVF;
 using UP::LABF;
@@ -53,60 +51,22 @@ static CGFloat _ThemeHue = 222;
 
 + (UIColor *)themeColorWithStyle:(UPThemeColorStyle)style hue:(CGFloat)hue category:(UPColorCategory)category
 {
-    UPColorCategory effectiveCategory = category;
-
-    if (effectiveCategory == UPColorCategoryControlText) {
-        switch (style) {
-            case UPThemeColorStyleDefault:
-            case UPThemeColorStyleLight:
-            case UPThemeColorStyleDark:
-                effectiveCategory = UPColorCategoryPrimaryFill;
-                break;
-            case UPThemeColorStyleLightStark:
-            case UPThemeColorStyleDarkStark:
-                effectiveCategory = UPColorCategoryPrimaryStroke;
-                break;
-        }
-    }
-
-    if (effectiveCategory == UPColorCategoryCanonical) {
-        switch (style) {
-            case UPThemeColorStyleDefault:
-            case UPThemeColorStyleLight:
-            case UPThemeColorStyleDark:
-                effectiveCategory = UPColorCategoryPrimaryFill;
-                break;
-            case UPThemeColorStyleLightStark:
-            case UPThemeColorStyleDarkStark:
-                effectiveCategory = UPColorCategoryPrimaryStroke;
-                break;
-        }
-    }
-    
+    UPColorCategory effectiveCategory = [self themeEffectiveColorCategoryWithStyle:style category:category];
     switch (effectiveCategory) {
+        case UPColorCategoryOneBit:
+        case UPColorCategoryCanonical:
+        case UPColorCategoryControlShapeFill:
+        case UPColorCategoryControlShapeStroke:
+        case UPColorCategoryControlText:
+        case UPColorCategoryControlIndicator:
+            ASSERT_NOT_REACHED();
+            return nil;
         case UPColorCategoryWhite:
             return [UIColor whiteColor];
         case UPColorCategoryBlack:
             return [UIColor blackColor];
         case UPColorCategoryClear:
             return [UIColor clearColor];
-        case UPColorCategoryControlText:
-        case UPColorCategoryOneBit: {
-            switch (style) {
-                case UPThemeColorStyleDefault:
-                case UPThemeColorStyleLight:
-                case UPThemeColorStyleLightStark:
-                    return [UIColor blackColor];
-                    break;
-                case UPThemeColorStyleDark:
-                case UPThemeColorStyleDarkStark:
-                    return [UIColor whiteColor];
-                    break;
-            }
-        }
-        case UPColorCategoryCanonical:
-            ASSERT_NOT_REACHED();
-            return nil;
         case UPColorCategoryDefault:
         case UPColorCategoryPrimaryFill:
         case UPColorCategoryInactiveFill:
@@ -147,6 +107,96 @@ static CGFloat _ThemeHue = 222;
             ASSERT(c.a >= 0);
             ASSERT(c.a <= 1);
             return [UIColor colorWithRed:c.r green:c.g blue:c.b alpha:c.a];
+        }
+    }
+}
+
++ (UPColorCategory)themeEffectiveColorCategoryWithStyle:(UPThemeColorStyle)style category:(UPColorCategory)category
+{
+    switch (category) {
+        case UPColorCategoryDefault:
+            return UPColorCategoryPrimaryFill;
+        case UPColorCategoryPrimaryFill:
+        case UPColorCategoryInactiveFill:
+        case UPColorCategoryActiveFill:
+        case UPColorCategoryHighlightedFill:
+        case UPColorCategorySecondaryFill:
+        case UPColorCategorySecondaryInactiveFill:
+        case UPColorCategorySecondaryActiveFill:
+        case UPColorCategorySecondaryHighlightedFill:
+        case UPColorCategoryPrimaryStroke:
+        case UPColorCategoryInactiveStroke:
+        case UPColorCategoryActiveStroke:
+        case UPColorCategoryHighlightedStroke:
+        case UPColorCategorySecondaryStroke:
+        case UPColorCategorySecondaryInactiveStroke:
+        case UPColorCategorySecondaryActiveStroke:
+        case UPColorCategorySecondaryHighlightedStroke:
+        case UPColorCategoryContent:
+        case UPColorCategoryInactiveContent:
+        case UPColorCategoryActiveContent:
+        case UPColorCategoryHighlightedContent:
+        case UPColorCategoryInformation:
+        case UPColorCategoryInfinity:
+        case UPColorCategoryWhite:
+        case UPColorCategoryBlack:
+        case UPColorCategoryClear:
+            return category;
+        case UPColorCategoryCanonical: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryPrimaryFill;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryPrimaryStroke;
+            }
+        }
+        case UPColorCategoryControlShapeFill: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryPrimaryFill;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryClear;
+            }
+        }
+        case UPColorCategoryControlShapeStroke: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryClear;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryPrimaryStroke;
+            }
+        }
+        case UPColorCategoryControlText:
+        case UPColorCategoryControlIndicator: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryPrimaryFill;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryContent;
+            }
+        }
+        case UPColorCategoryOneBit: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleLightStark:
+                    return UPColorCategoryBlack;
+                case UPThemeColorStyleDark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryWhite;
+            }
         }
     }
 }

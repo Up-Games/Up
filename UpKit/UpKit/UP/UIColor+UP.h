@@ -39,7 +39,11 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
     UPColorCategoryInfinity,
 
     UPColorCategoryCanonical,
+
+    UPColorCategoryControlShapeFill,
+    UPColorCategoryControlShapeStroke,
     UPColorCategoryControlText,
+    UPColorCategoryControlIndicator,
 
     UPColorCategoryOneBit,
     UPColorCategoryWhite,
@@ -82,8 +86,6 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 + (UIColor *)testColor4;
 
 @end
-
-extern NSString * const UPThemeColorsChangedNotification;
 
 @interface NSObject (UPThemeColors)
 - (void)updateThemeColors;

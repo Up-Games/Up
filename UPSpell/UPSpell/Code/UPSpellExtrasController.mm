@@ -258,7 +258,7 @@ static const int MilepostHue = 15;
         return;
     }
     [UIColor setThemeColorHue:hue];
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
+    [[UPSpellNavigationController instance] updateThemeColors];
 }
 
 - (void)hueWheelFinishedUpdating:(UPHueWheel *)hueWheel
@@ -303,7 +303,7 @@ static const int MilepostHue = 15;
     self.hueWheel.hue = hue;
     [self.hueWheel cancelAnimations];
     [UIColor setThemeColorHue:hue];
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
+    [[UPSpellNavigationController instance] updateThemeColors];
 }
 
 - (void)handleHueStepMore
@@ -313,7 +313,7 @@ static const int MilepostHue = 15;
     self.hueWheel.hue = hue;
     [self.hueWheel cancelAnimations];
     [UIColor setThemeColorHue:hue];
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
+    [[UPSpellNavigationController instance] updateThemeColors];
 }
 
 - (void)updateHueDescription
@@ -376,7 +376,7 @@ static const int MilepostHue = 15;
         }
     }
     [UIColor setThemeColorStyle:themeColorStyle];
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
+    [[UPSpellNavigationController instance] updateThemeColors];
 
     UPSpellSettings *settings = [UPSpellSettings instance];
     settings.themeColorStyle = themeColorStyle;
@@ -418,7 +418,7 @@ static const int MilepostHue = 15;
     UPSpellSettings *settings = [UPSpellSettings instance];
     settings.themeColorStyle = themeColorStyle;
     [UIColor setThemeColorStyle:themeColorStyle];
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
+    [[UPSpellNavigationController instance] updateThemeColors];
 }
 
 - (void)quarkModeCheckboxTapped
