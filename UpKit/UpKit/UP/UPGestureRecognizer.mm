@@ -9,18 +9,4 @@
 @end
 
 @implementation UPGestureRecognizer
-
-- (void)preempt
-{
-    if (self.state != UIGestureRecognizerStatePossible) {
-        [self handlePreemption];
-    }
-    [self reset];
-}
-
-- (void)handlePreemption
-{
-    // for subclasses
-}
-
 @end

@@ -14,7 +14,32 @@
 
 using UP::SpellLayout;
 
-static UIBezierPath *CheckboxPath()
+static UIBezierPath *CheckboxFillPath()
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint: CGPointMake(28, 12.32)];
+    [path addCurveToPoint: CGPointMake(27.73, 9.13) controlPoint1: CGPointMake(27.98, 11.23) controlPoint2: CGPointMake(27.99, 10.04)];
+    [path addCurveToPoint: CGPointMake(24.63, 6.86) controlPoint1: CGPointMake(27.17, 7.25) controlPoint2: CGPointMake(25.49, 7.05)];
+    [path addCurveToPoint: CGPointMake(17.1, 6.52) controlPoint1: CGPointMake(22.12, 6.45) controlPoint2: CGPointMake(19.61, 6.56)];
+    [path addCurveToPoint: CGPointMake(10.9, 6.52) controlPoint1: CGPointMake(15.03, 6.53) controlPoint2: CGPointMake(12.97, 6.53)];
+    [path addCurveToPoint: CGPointMake(3.37, 6.86) controlPoint1: CGPointMake(8.39, 6.56) controlPoint2: CGPointMake(5.87, 6.45)];
+    [path addCurveToPoint: CGPointMake(0.27, 9.13) controlPoint1: CGPointMake(2.5, 7.06) controlPoint2: CGPointMake(0.83, 7.26)];
+    [path addCurveToPoint: CGPointMake(0, 12.32) controlPoint1: CGPointMake(0.01, 10.04) controlPoint2: CGPointMake(0.02, 11.23)];
+    [path addCurveToPoint: CGPointMake(0, 28.73) controlPoint1: CGPointMake(-0, 18.34) controlPoint2: CGPointMake(-0, 22.71)];
+    [path addCurveToPoint: CGPointMake(0.27, 31.92) controlPoint1: CGPointMake(0.02, 29.82) controlPoint2: CGPointMake(0.01, 31.01)];
+    [path addCurveToPoint: CGPointMake(3.37, 34.19) controlPoint1: CGPointMake(0.83, 33.79) controlPoint2: CGPointMake(2.51, 33.99)];
+    [path addCurveToPoint: CGPointMake(10.28, 34.52) controlPoint1: CGPointMake(5.67, 34.57) controlPoint2: CGPointMake(7.98, 34.5)];
+    [path addCurveToPoint: CGPointMake(17.72, 34.52) controlPoint1: CGPointMake(12.76, 34.52) controlPoint2: CGPointMake(15.24, 34.52)];
+    [path addCurveToPoint: CGPointMake(22.89, 34.4) controlPoint1: CGPointMake(19.44, 34.52) controlPoint2: CGPointMake(21.17, 34.52)];
+    [path addCurveToPoint: CGPointMake(26.28, 33.68) controlPoint1: CGPointMake(24.02, 34.3) controlPoint2: CGPointMake(25.16, 34.23)];
+    [path addCurveToPoint: CGPointMake(27.73, 31.92) controlPoint1: CGPointMake(26.8, 33.39) controlPoint2: CGPointMake(27.37, 33.06)];
+    [path addCurveToPoint: CGPointMake(28, 28.73) controlPoint1: CGPointMake(27.99, 31.01) controlPoint2: CGPointMake(27.98, 29.82)];
+    [path addCurveToPoint: CGPointMake(28, 12.32) controlPoint1: CGPointMake(28, 22.71) controlPoint2: CGPointMake(28, 18.34)];
+    [path closePath];
+    return path;
+}
+
+static UIBezierPath *CheckboxStrokePath()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(17.59, 7)];
@@ -151,15 +176,21 @@ static UIBezierPath *CheckboxCheckPath()
     self.label.textColorCategory = UPColorCategoryControlText;
     self.label.backgroundColorCategory = UPColorCategoryClear;
     [self addSubview:self.label];
-    self.gesture = [UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)];
-    [self addGestureRecognizer:self.gesture];
-    
+    [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
+    [self.label addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
+
     self.canonicalSize = SpellLayout::CanonicalCheckboxSize;
-    [self setFillPath:CheckboxPath() forState:UPControlStateNormal];
-    [self setStrokePath:CheckboxPath() forState:UPControlStateNormal];
+    [self setFillPath:CheckboxFillPath() forState:UPControlStateNormal];
+    [self setFillColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
+    [self setFillColorCategory:UPColorCategoryActiveFill forState:UPControlStateHighlighted];
+    [self setFillColorCategory:UPColorCategoryActiveFill forState:(UPControlStateHighlighted | UPControlStateSelected)];
+
+    [self setStrokePath:CheckboxStrokePath()];
+    [self setStrokeColorCategory:UPColorCategoryControlText];
+
     [self setAccentColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
-    [self setAccentColorCategory:UPColorCategoryControlText forState:UPControlStateSelected];
-    [self setAccentColorCategory:UPColorCategoryControlText forState:(UPControlStateHighlighted | UPControlStateSelected)];
+    [self setAccentColorCategory:UPColorCategoryContent forState:UPControlStateSelected];
+    [self setAccentColorCategory:UPColorCategoryContent forState:(UPControlStateHighlighted | UPControlStateSelected)];
     [self setAccentPath:CheckboxCheckPath() forState:UPControlStateSelected];
     [self setAccentPath:CheckboxCheckPath() forState:(UPControlStateHighlighted | UPControlStateSelected)];
 
@@ -234,6 +265,15 @@ static UIBezierPath *CheckboxCheckPath()
     CGFloat labelOriginY = up_rect_height(bounds) - up_rect_height(labelFrame) + layout.checkbox_font_metrics().baseline_adjustment();
     labelFrame.origin = CGPointMake(layout.checkbox_label_left_margin(), labelOriginY);;
     self.label.frame = labelFrame;
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if ([super pointInside:point withEvent:event]) {
+        return YES;
+    }
+    CGPoint labelPoint = [self.label convertPoint:point fromView:self];
+    return [self.label pointInside:labelPoint withEvent:event];
 }
 
 #pragma mark - Update theme colors

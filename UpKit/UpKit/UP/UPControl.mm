@@ -87,22 +87,6 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     return self;
 }
 
-#pragma mark - User interaction
-
-- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
-{
-    [super setUserInteractionEnabled:userInteractionEnabled];
-
-    if (!userInteractionEnabled) {
-        [self.gesture preempt];
-    }
-}
-
-- (void)preemptInteraction
-{
-    [self.gesture preempt];
-}
-
 #pragma mark - Canonical Size
 
 - (void)setCanonicalSize:(CGSize)canonicalSize

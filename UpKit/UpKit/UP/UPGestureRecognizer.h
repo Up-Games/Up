@@ -6,8 +6,4 @@
 #import <UIKit/UIKit.h>
 
 @interface UPGestureRecognizer : UIGestureRecognizer
-
-- (void)preempt;
-- (void)handlePreemption; // for subclasses
-
 @end

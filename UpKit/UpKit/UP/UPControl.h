@@ -66,7 +66,6 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @property (nonatomic) CGSize chargeSize;
 
 @property (nonatomic) UP::Band band;
-@property (nonatomic) UPGestureRecognizer *gesture;
 
 + (UPControl *)control;
 

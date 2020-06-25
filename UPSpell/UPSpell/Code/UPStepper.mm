@@ -288,9 +288,7 @@ static UIBezierPath *StepperPathRight()
     self.direction = direction;
     self.target = target;
     self.action = action;
-
-    self.gesture = [UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)];
-    [self addGestureRecognizer:self.gesture];
+    [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
     
     self.canonicalSize = CGSizeMake(30, 30);
     [self setFillPath:ButtonFillPath() forState:UPControlStateNormal];
