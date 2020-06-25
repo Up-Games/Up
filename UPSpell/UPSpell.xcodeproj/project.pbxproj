@@ -155,6 +155,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D0FC23B24A53C3E00353563 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5DF9DF662466165800B2199D /* Assets.xcassets */,
+				5DF9DF6B2466165800B2199D /* Info.plist */,
+				5DF9DF682466165800B2199D /* LaunchScreen.storyboard */,
+				5DF9DF6C2466165800B2199D /* main.m */,
+				5DF9DF632466165700B2199D /* Main.storyboard */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		5D723117246B3678006027A3 /* Code */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,10 +240,10 @@
 		5DF9DF4E2466165700B2199D = {
 			isa = PBXGroup;
 			children = (
+				5DF9DF8A2466168500B2199D /* Frameworks */,
+				5DF9DF582466165700B2199D /* Products */,
 				5DF9DF592466165700B2199D /* UPSpell */,
 				5DF9DF752466165800B2199D /* UPSpellTests */,
-				5DF9DF582466165700B2199D /* Products */,
-				5DF9DF8A2466168500B2199D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -249,11 +261,7 @@
 			children = (
 				5D723117246B3678006027A3 /* Code */,
 				5D723118246B3694006027A3 /* Fonts */,
-				5DF9DF662466165800B2199D /* Assets.xcassets */,
-				5DF9DF6B2466165800B2199D /* Info.plist */,
-				5DF9DF682466165800B2199D /* LaunchScreen.storyboard */,
-				5DF9DF6C2466165800B2199D /* main.m */,
-				5DF9DF632466165700B2199D /* Main.storyboard */,
+				5D0FC23B24A53C3E00353563 /* Resources */,
 			);
 			path = UPSpell;
 			sourceTree = "<group>";
