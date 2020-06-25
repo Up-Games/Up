@@ -40,7 +40,6 @@ static UIBezierPath *HuePointerPath()
 }
 
 @interface UPHueWheel () <UPTicking>
-@property (nonatomic) UPBezierPathView *spinnerView;
 @property (nonatomic) CGFloat hueDelta;
 @property (nonatomic) CGFloat unroundedHue;
 @property (nonatomic) CGFloat previousUnroundedHue;
@@ -53,24 +52,27 @@ static UIBezierPath *HuePointerPath()
 
 + (UPHueWheel *)hueWheel
 {
-    return [[UPHueWheel alloc] initWithFrame:CGRectZero];
+    return [[UPHueWheel alloc] _init];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)_init
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:CGRectZero];
     self.serialNumber = UP::next_serial_number();
-    self.multipleTouchEnabled = NO;
     self.backgroundColor = [UIColor clearColor];
-    self.spinnerView = [UPBezierPathView bezierPathView];
-    self.spinnerView.path = HuePointerPath();
-    self.spinnerView.fillColor = [UIColor blackColor];
-    self.spinnerView.canonicalSize = SpellLayout::CanonicalHuePickerSize;
-    self.spinnerView.layer.anchorPoint = CGPointMake(0.5, 0.5);
-    [self addSubview:self.spinnerView];
 
+    self.canonicalSize = SpellLayout::CanonicalHuePickerSize;
+    
+    [self setAuxiliaryPath:HuePointerPath()];
+    self.auxiliaryPathView.layer.anchorPoint = CGPointMake(0.5, 0.5);
+    [self setAuxiliaryColorCategory:UPColorCategoryBlack];
+
+    [self bringSubviewToFront:self.fillPathView];
+    
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [self addGestureRecognizer:pan];
+
+    [self updateThemeColors];
     
     return self;
 }
@@ -95,7 +97,7 @@ static UIBezierPath *HuePointerPath()
 {
     CGFloat angle = up_degrees_to_radians(self.hue);
     CGAffineTransform transform = CGAffineTransformMakeRotation(angle);
-    self.spinnerView.transform = transform;
+    self.auxiliaryPathView.transform = transform;
 }
 
 - (void)drawRect:(CGRect)rect
@@ -154,20 +156,15 @@ static UIBezierPath *HuePointerPath()
         CGContextStrokePath(ctx);
         CGContextSaveGState(ctx);
     }
-    
-    CGContextSaveGState(ctx);
-    CGContextSetRGBStrokeColor(ctx, 0, 0, 0, 1);
-    CGContextAddEllipseInRect(ctx, CGRectInset(bounds, 2.5, 2.5));
-    CGContextSetLineWidth(ctx, 5);
-    CGContextStrokePath(ctx);
-    CGContextSaveGState(ctx);
 }
 
 - (void)layoutSubviews
 {
+    [super layoutSubviews];
+    
     CGRect bounds = self.bounds;
-    self.spinnerView.center = up_rect_center(bounds);
-    self.spinnerView.bounds = bounds;
+    self.auxiliaryPathView.center = up_rect_center(bounds);
+    self.auxiliaryPathView.bounds = bounds;
 }
 
 - (void)tick:(CFTimeInterval)now
@@ -283,11 +280,6 @@ static UIBezierPath *HuePointerPath()
 - (void)cancelAnimations
 {
     [[UPTicker instance] removeTicking:self];
-}
-
-- (void)updateThemeColors
-{
-    // no-op
 }
 
 @end

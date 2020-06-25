@@ -301,6 +301,7 @@ static const int MilepostHue = 15;
     CGFloat hue = [UIColor themeColorHue];
     hue = [self prevHueForHue:hue];
     self.hueWheel.hue = hue;
+    [self.hueWheel cancelAnimations];
     [UIColor setThemeColorHue:hue];
     [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }
@@ -310,6 +311,7 @@ static const int MilepostHue = 15;
     CGFloat hue = [UIColor themeColorHue];
     hue = [self nextHueForHue:hue];
     self.hueWheel.hue = hue;
+    [self.hueWheel cancelAnimations];
     [UIColor setThemeColorHue:hue];
     [[NSNotificationCenter defaultCenter] postNotificationName:UPThemeColorsChangedNotification object:nil];
 }

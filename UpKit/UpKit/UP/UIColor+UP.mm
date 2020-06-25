@@ -91,6 +91,19 @@ static CGFloat _ThemeHue = 222;
         case UPColorCategoryClear:
             return [UIColor clearColor];
         case UPColorCategoryControlText:
+        case UPColorCategoryOneBit: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleLightStark:
+                    return [UIColor blackColor];
+                    break;
+                case UPThemeColorStyleDark:
+                case UPThemeColorStyleDarkStark:
+                    return [UIColor whiteColor];
+                    break;
+            }
+        }
         case UPColorCategoryCanonical:
             ASSERT_NOT_REACHED();
             return nil;

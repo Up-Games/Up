@@ -4,15 +4,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <UpKit/UPControl.h>
 
 @protocol UPHueWheelDelegate;
 
-@interface UPHueWheel : UIView
+@interface UPHueWheel : UPControl
 
 @property (nonatomic) CGFloat hue;
 @property (nonatomic, weak) NSObject<UPHueWheelDelegate> *delegate;
 
 + (UPHueWheel *)hueWheel;
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
 - (void)cancelAnimations;
 
