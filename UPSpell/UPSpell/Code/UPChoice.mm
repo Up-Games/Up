@@ -10,6 +10,29 @@
 
 using UP::SpellLayout;
 
+UIBezierPath *ChoiceFillPath()
+{
+    return [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, 300, 76)];
+}
+
+UIBezierPath *ChoiceStrokePath()
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint: CGPointMake(0, 76)];
+    [path addLineToPoint: CGPointMake(300, 76)];
+    [path addLineToPoint: CGPointMake(300, 0)];
+    [path addLineToPoint: CGPointMake(0, 0)];
+    [path addLineToPoint: CGPointMake(0, 76)];
+    [path closePath];
+    [path moveToPoint: CGPointMake(3, 3)];
+    [path addLineToPoint: CGPointMake(297, 3)];
+    [path addLineToPoint: CGPointMake(297, 73)];
+    [path addLineToPoint: CGPointMake(3, 73)];
+    [path addLineToPoint: CGPointMake(3, 3)];
+    [path closePath];
+    return path;
+}
+
 UIBezierPath *ChoiceLeftFillPathSelected()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -146,10 +169,14 @@ UIBezierPath *ChoiceRightFillPathSelected()
     self.canonicalSize = SpellLayout::CanonicalChoiceSize;
     [self addGestureRecognizer:[UPTouchGestureRecognizer gestureWithTarget:self action:@selector(handleTouch:)]];
 
-    [self setFillColorCategory:UPColorCategoryControlText];
-    [self setAccentColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
-    [self setAccentColorCategory:UPColorCategoryActiveFill forState:UPControlStateSelected];
-    [self setAccentPath:[UIBezierPath bezierPathWithRect:up_rect_make(self.canonicalSize)] forState:UPControlStateSelected];
+    [self setFillPath:ChoiceFillPath() forState:UPControlStateSelected];
+    [self setFillColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
+    [self setFillColorCategory:UPColorCategoryControlShapeActiveFill forState:UPControlStateSelected];
+
+    [self setStrokePath:ChoiceStrokePath() forState:UPControlStateSelected];
+    [self setStrokeColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
+    [self setStrokeColorCategory:UPColorCategoryPrimaryStroke forState:UPControlStateSelected];
+
     [self setAuxiliaryColorCategory:UPColorCategoryControlText forState:UPControlStateSelected];
 
     switch (self.side) {

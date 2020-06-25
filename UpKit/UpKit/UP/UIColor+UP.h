@@ -41,6 +41,7 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
     UPColorCategoryCanonical,
 
     UPColorCategoryControlShapeFill,
+    UPColorCategoryControlShapeActiveFill,
     UPColorCategoryControlShapeStroke,
     UPColorCategoryControlText,
     UPColorCategoryControlIndicator,

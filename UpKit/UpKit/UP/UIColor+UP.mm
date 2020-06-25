@@ -56,6 +56,7 @@ static CGFloat _ThemeHue = 222;
         case UPColorCategoryOneBit:
         case UPColorCategoryCanonical:
         case UPColorCategoryControlShapeFill:
+        case UPColorCategoryControlShapeActiveFill:
         case UPColorCategoryControlShapeStroke:
         case UPColorCategoryControlText:
         case UPColorCategoryControlIndicator:
@@ -159,6 +160,17 @@ static CGFloat _ThemeHue = 222;
                 case UPThemeColorStyleLight:
                 case UPThemeColorStyleDark:
                     return UPColorCategoryPrimaryFill;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryClear;
+            }
+        }
+        case UPColorCategoryControlShapeActiveFill: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryActiveFill;
                 case UPThemeColorStyleLightStark:
                 case UPThemeColorStyleDarkStark:
                     return UPColorCategoryClear;

@@ -95,10 +95,10 @@ static const int MilepostHue = 15;
     [self.choice4 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice4];
     
-    self.divider = [UPDivider divider];
-    self.divider.frame = CGRectMake(314.5, 0, 1, up_rect_height(layout.screen_bounds()));
-    self.divider.colorCategory = UPColorCategoryActiveFill;
-    [self.view addSubview:self.divider];
+//    self.divider = [UPDivider divider];
+//    self.divider.frame = CGRectMake(312, 0, 3 * layout.layout_scale(), up_rect_height(layout.screen_bounds()));
+//    self.divider.colorCategory = UPColorCategoryPrimaryStroke;
+//    [self.view addSubview:self.divider];
 
     self.darkModeCheckbox = [UPCheckbox checkbox];
     self.darkModeCheckbox.labelString = @"DARK";
