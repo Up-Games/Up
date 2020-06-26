@@ -135,6 +135,8 @@
 		5D0FC32A24A57DC500353563 /* up-games-icon-135-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D0FC2B224A57DC500353563 /* up-games-icon-135-76.png */; };
 		5D0FC32B24A57DC500353563 /* up-games-icon-090-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D0FC2B324A57DC500353563 /* up-games-icon-090-60@2x.png */; };
 		5D0FC32C24A57DC500353563 /* up-games-icon-135-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D0FC2B424A57DC500353563 /* up-games-icon-135-60@3x.png */; };
+		5D0FC33324A65A6C00353563 /* UPAccessoryPane.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC33224A65A6C00353563 /* UPAccessoryPane.mm */; };
+		5D0FC33624A65C0B00353563 /* UPSpellExtrasColorsPane.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC33524A65C0B00353563 /* UPSpellExtrasColorsPane.mm */; };
 		5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */; };
 		5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogMenu.mm */; };
@@ -322,6 +324,10 @@
 		5D0FC2B224A57DC500353563 /* up-games-icon-135-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-games-icon-135-76.png"; sourceTree = "<group>"; };
 		5D0FC2B324A57DC500353563 /* up-games-icon-090-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-games-icon-090-60@2x.png"; sourceTree = "<group>"; };
 		5D0FC2B424A57DC500353563 /* up-games-icon-135-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-games-icon-135-60@3x.png"; sourceTree = "<group>"; };
+		5D0FC33124A65A6C00353563 /* UPAccessoryPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAccessoryPane.h; sourceTree = "<group>"; };
+		5D0FC33224A65A6C00353563 /* UPAccessoryPane.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAccessoryPane.mm; sourceTree = "<group>"; };
+		5D0FC33424A65C0B00353563 /* UPSpellExtrasColorsPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasColorsPane.h; sourceTree = "<group>"; };
+		5D0FC33524A65C0B00353563 /* UPSpellExtrasColorsPane.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasColorsPane.mm; sourceTree = "<group>"; };
 		5D34613624887918009FB46D /* UPViewMove+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UPViewMove+UPSpell.h"; sourceTree = "<group>"; };
 		5D4AE823248BDED200213904 /* UPSpellExtrasController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasController.h; sourceTree = "<group>"; };
 		5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasController.mm; sourceTree = "<group>"; };
@@ -539,6 +545,8 @@
 			children = (
 				5D72311F246B3917006027A3 /* UIFont+UPSpell.h */,
 				5D723120246B3996006027A3 /* UIFont+UPSpell.mm */,
+				5D0FC33124A65A6C00353563 /* UPAccessoryPane.h */,
+				5D0FC33224A65A6C00353563 /* UPAccessoryPane.mm */,
 				5DF9DF5A2466165700B2199D /* UPAppDelegate.h */,
 				5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */,
 				5D0FC21B24A125D000353563 /* UPCheckbox.h */,
@@ -562,6 +570,8 @@
 				5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */,
 				5D4AE826248BDF2300213904 /* UPSpellAboutController.h */,
 				5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */,
+				5D0FC33424A65C0B00353563 /* UPSpellExtrasColorsPane.h */,
+				5D0FC33524A65C0B00353563 /* UPSpellExtrasColorsPane.mm */,
 				5D4AE823248BDED200213904 /* UPSpellExtrasController.h */,
 				5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */,
 				5DF9DF602466165700B2199D /* UPSpellGameController.h */,
@@ -881,6 +891,7 @@
 				5D0FC22C24A2A5C300353563 /* UPSpellSettings.mm in Sources */,
 				5DF9DF622466165700B2199D /* UPSpellGameController.mm in Sources */,
 				5DF9DF5C2466165700B2199D /* UPAppDelegate.mm in Sources */,
+				5D0FC33324A65A6C00353563 /* UPAccessoryPane.mm in Sources */,
 				5D54078424841631003F193D /* UPSpellNavigationController.mm in Sources */,
 				5DB9B1AC248705FA00A4AAA8 /* UPSpellGameView.mm in Sources */,
 				5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */,
@@ -891,6 +902,7 @@
 				5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */,
 				5D4AE82A248ED25500213904 /* UPDialogMenu.mm in Sources */,
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
+				5D0FC33624A65C0B00353563 /* UPSpellExtrasColorsPane.mm in Sources */,
 				5D0FC22124A168AC00353563 /* UPHueWheel.mm in Sources */,
 				5D0FC21C24A125D000353563 /* UPCheckbox.mm in Sources */,
 				5D0FC22724A278D300353563 /* UPStepper.mm in Sources */,

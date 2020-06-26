@@ -8,7 +8,6 @@
 @class UPButton;
 @class UPCheckbox;
 @class UPChoice;
-@class UPDivider;
 @class UPHueStepperIndicator;
 @class UPHueWheel;
 @class UPStepper;
@@ -19,7 +18,6 @@
 @property (nonatomic, readonly) UPChoice *choice2;
 @property (nonatomic, readonly) UPChoice *choice3;
 @property (nonatomic, readonly) UPChoice *choice4;
-@property (nonatomic, readonly) UPDivider *divider;
 
 - (void)cancelAnimations;
 

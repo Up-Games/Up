@@ -218,7 +218,9 @@ UIBezierPath *ChoiceRightFillPathSelected()
     }
     
     [self setSelected];
-    
+    [self invalidate];
+    [self update];
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     if ([self.target respondsToSelector:self.action]) {

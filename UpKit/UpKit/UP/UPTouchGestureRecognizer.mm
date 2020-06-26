@@ -9,7 +9,9 @@
 
 + (UPTouchGestureRecognizer *)gestureWithTarget:(id)target action:(SEL)action
 {
-    return [[UPTouchGestureRecognizer alloc] initWithTarget:target action:action];
+    UPTouchGestureRecognizer *gesture = [[UPTouchGestureRecognizer alloc] initWithTarget:target action:action];
+    gesture.delaysTouchesEnded = NO;
+    return gesture;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
