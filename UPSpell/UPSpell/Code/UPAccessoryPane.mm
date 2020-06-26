@@ -4,7 +4,15 @@
 //
 
 #import "UPAccessoryPane.h"
+#import "UPSpellLayout.h"
+
+using UP::SpellLayout;
 
 @implementation UPAccessoryPane
+
++ (UPAccessoryPane *)pane
+{
+    return [[self alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
+}
 
 @end

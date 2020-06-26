@@ -8,4 +8,6 @@
 
 @interface UPAccessoryPane : UPContainerView
 
++ (UPAccessoryPane *)pane;
+
 @end

@@ -7,6 +7,8 @@
 
 @interface UPSpellExtrasColorsPane : UPAccessoryPane
 
++ (UPSpellExtrasColorsPane *)pane;
+
 - (void)cancelAnimations;
 
 @end

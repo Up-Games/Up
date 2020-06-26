@@ -9,6 +9,7 @@
 @property (nonatomic) UPThemeColorStyle themeColorStyle;
 @property (nonatomic) CGFloat themeColorHue;
 @property (nonatomic) BOOL quarkMode;
+@property (nonatomic) NSUInteger extrasSelectedIndex;
 
 + (UPSpellSettings *)instance;
 - (instancetype)init NS_UNAVAILABLE;

@@ -5,6 +5,7 @@
 
 #import <UpKit/UpKit.h>
 
+#import "UPAccessoryPane.h"
 #import "UPChoice.h"
 #import "UPDialogMenu.h"
 #import "UPSceneDelegate.h"
@@ -218,6 +219,7 @@ using UP::TimeSpanning::start;
         start(bloop_in(BandModeUI, itemMoves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
             [transitionContext completeTransition:YES];
         }));
+        [extrasController setSelectedPaneFromSettingsWithDuration:[self transitionDuration:transitionContext]];
     });
 }
 
@@ -257,6 +259,7 @@ using UP::TimeSpanning::start;
         UPViewMoveMake(extrasController.choice2, Role::ChoiceItem2Left, Spot::OffLeftNear),
         UPViewMoveMake(extrasController.choice3, Role::ChoiceItem3Left, Spot::OffLeftNear),
         UPViewMoveMake(extrasController.choice4, Role::ChoiceItem4Left, Spot::OffLeftNear),
+        UPViewMoveMake(extrasController.selectedPane, Role::Screen, Spot::OffBottomFar),
     ];
     start(bloop_out(BandModeUI, moves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
         [transitionContext completeTransition:YES];

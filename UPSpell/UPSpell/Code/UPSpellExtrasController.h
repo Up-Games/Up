@@ -5,6 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class UPAccessoryPane;
 @class UPButton;
 @class UPCheckbox;
 @class UPChoice;
@@ -18,7 +19,9 @@
 @property (nonatomic, readonly) UPChoice *choice2;
 @property (nonatomic, readonly) UPChoice *choice3;
 @property (nonatomic, readonly) UPChoice *choice4;
+@property (nonatomic, readonly) UPAccessoryPane *selectedPane;
 
+- (void)setSelectedPaneFromSettingsWithDuration:(CFTimeInterval)duration;
 - (void)cancelAnimations;
 
 @end

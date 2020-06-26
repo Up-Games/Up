@@ -50,6 +50,11 @@ static const int MilepostHue = 15;
 
 @implementation UPSpellExtrasColorsPane
 
++ (UPSpellExtrasColorsPane *)pane
+{
+    return [[self alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
