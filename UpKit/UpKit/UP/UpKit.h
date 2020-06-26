@@ -51,6 +51,7 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 
 #import <UpKit/NSValue+UP.h>
 #import <UpKit/UIColor+UP.h>
+#import <UpKit/UIDevice+UP.h>
 #import <UpKit/UIFont+UP.h>
 #import <UpKit/UIImage+UP.h>
 #import <UpKit/UIView+UP.h>

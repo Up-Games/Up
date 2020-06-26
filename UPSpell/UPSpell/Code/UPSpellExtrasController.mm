@@ -4,6 +4,7 @@
 //
 
 #import <UpKit/UIColor+UP.h>
+#import <UpKit/UIDevice+UP.h>
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPButton.h>
 #import <UpKit/UPTapGestureRecognizer.h>
@@ -114,7 +115,7 @@ static const int MilepostHue = 15;
     
     self.quarkModeCheckbox = [UPCheckbox checkbox];
     self.quarkModeCheckbox.labelString = @"QUARK";
-    [self.quarkModeCheckbox setTarget:self action:@selector(quarkModeCheckboxTapped)];
+    [self.quarkModeCheckbox setTarget:self action:@selector(setAppIconButtonTapped)];
     self.quarkModeCheckbox.frame = CGRectMake(670, 154, up_size_width(self.quarkModeCheckbox.canonicalSize), up_size_height(self.quarkModeCheckbox.canonicalSize));
     [self.view addSubview:self.quarkModeCheckbox];
     
@@ -207,7 +208,7 @@ static const int MilepostHue = 15;
     self.hueWheel.hue = themeColorHue;
 
     [self updateHueDescription];
-
+    
     return self;
 }
 
@@ -426,6 +427,46 @@ static const int MilepostHue = 15;
     UPSpellSettings *settings = [UPSpellSettings instance];
     settings.quarkMode = self.quarkModeCheckbox.selected;
     [self updateHueDescription];
+}
+
+- (void)setAppIconButtonTapped
+{
+    CGFloat hue = [UIColor themeColorHue];
+    if (fmod(hue, MilepostHue) > 1) {
+        CGFloat hueMore = [self nextHueForHue:hue];
+        CGFloat hueLess = [self prevHueForHue:hue];
+        CGFloat diffMore = up_angular_difference(hue, hueMore);
+        CGFloat diffLess = up_angular_difference(hue, hueLess);
+        if (diffMore < diffLess) {
+            hue = hueMore;
+        }
+        else {
+            hue = hueLess;
+        }
+        if (up_is_fuzzy_equal(hue, 360)) {
+            hue = 0;
+        }
+    }
+    UIApplication *app = [UIApplication sharedApplication];
+    UIDevice *device = [UIDevice currentDevice];
+    NSString *iconName = nil;
+    if ([device.model isEqualToString:@"iPhone"]) {
+        iconName = [NSString stringWithFormat:@"up-games-icon-%03d-60", (int)hue];
+    }
+    else if ([device.model isEqualToString:@"iPad"]) {
+        if ([device isiPadPro]) {
+            iconName = [NSString stringWithFormat:@"up-games-icon-%03d-83", (int)hue];
+        }
+        else {
+            iconName = [NSString stringWithFormat:@"up-games-icon-%03d-76", (int)hue];
+        }
+    }
+    LOG(General, "iconName: %@ : %@ : %@", iconName, device.model, [device fullModel]);
+    [app setAlternateIconName:iconName completionHandler:^(NSError *error) {
+        if (error) {
+            LOG(General, "setAlternateIconName error: %@", error);
+        }
+    }];
 }
 
 - (void)choiceSelected:(UPChoice *)sender
