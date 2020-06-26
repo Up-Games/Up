@@ -208,7 +208,7 @@ using UP::TimeSpanning::start;
     [transitionContext.containerView addSubview:extrasController.view];
     transitionContext.containerView.frame = layout.frame_for(Role::Screen);
     
-    delay(BandModeDelay, 0.7, ^{
+    delay(BandModeDelay, 0.55, ^{
         NSArray <UPViewMove *> *itemMoves = @[
             UPViewMoveMake(extrasController.backButton, Role::ChoiceBackLeft),
             UPViewMoveMake(extrasController.choice1, Role::ChoiceItem1Left),
@@ -225,7 +225,7 @@ using UP::TimeSpanning::start;
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    return 0.65;
+    return 0.5;
 }
 
 @end
@@ -296,7 +296,7 @@ using UP::TimeSpanning::start;
     [transitionContext.containerView addSubview:aboutController.view];
     transitionContext.containerView.frame = layout.frame_for(Role::Screen);
     
-    delay(BandModeDelay, 0.7, ^{
+    delay(BandModeDelay, 0.55, ^{
         NSArray <UPViewMove *> *itemMoves = @[
             UPViewMoveMake(aboutController.backButton, Role::ChoiceBackRight),
             UPViewMoveMake(aboutController.choice1, Role::ChoiceItem1Right),
@@ -312,7 +312,7 @@ using UP::TimeSpanning::start;
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    return 0.65;
+    return 0.5;
 }
 
 @end

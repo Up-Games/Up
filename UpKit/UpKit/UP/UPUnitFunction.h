@@ -94,7 +94,7 @@ public:
     static constexpr UPFloat c4 = c2 + UPUnitOne;
     static constexpr UPFloat c5 = (UPUnitTwo * M_PI) / 3;
     static constexpr UPFloat c6 = (UPUnitTwo * M_PI) / 4.5;
-    static constexpr UPFloat cb1 = 0.8;
+    static constexpr UPFloat cb1 = 0.75;
     static constexpr UPFloat cb3 = cb1 + UPUnitOne;
     static constexpr UPFloat cb2 = cb1 * 1.525;
     static constexpr UPFloat cb4 = cb2 + UPUnitOne;
