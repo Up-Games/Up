@@ -27,6 +27,11 @@ CGSize up_size_scaled(CGSize size, CGFloat scale)
     return CGSizeMake(size.width * scale, size.height * scale);
 }
 
+UPOutsets up_outsets_scaled(UPOutsets outsets, CGFloat scale)
+{
+    return UPOutsetsMake(outsets.top * scale, outsets.left * scale, outsets.bottom * scale, outsets.right * scale);
+}
+
 CGRect up_rect_centered_in_rect(CGRect rectToCenter, CGRect referenceRect)
 {
     CGFloat x = CGRectGetMidX(referenceRect) - (CGRectGetWidth(rectToCenter) * 0.5);
@@ -298,6 +303,11 @@ NSString *NSStringFromUPQuadOffsets(UPQuadOffsets q)
 {
     return [NSString stringWithFormat:@"UPQuadOffsets: {tl: %.1f,%.1f; tr: %.1f,%.1f; bl: %.1f,%.1f; br: %.1f,%.1f}",
         q.tl.dx, q.tl.dy, q.tr.dx, q.tr.dy, q.bl.dx, q.bl.dy, q.br.dx, q.br.dy];
+}
+
+NSString *NSStringFromUPOutsets(UPOutsets outsets)
+{
+    return [NSString stringWithFormat:@"UPOutsets: {%.1f %.1f %.1f %.1f}", outsets.top, outsets.left, outsets.bottom, outsets.right];
 }
 
 #endif  // __OBJC__

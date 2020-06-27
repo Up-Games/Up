@@ -72,6 +72,7 @@ using Location = UP::SpellLayout::Location;
     self.backButton = [UPButton roundBackButtonLeftArrow];
     self.backButton.canonicalSize = SpellLayout::CanonicalRoundBackButtonSize;
     self.backButton.frame = layout.frame_for(Role::ChoiceBackLeft, Spot::OffLeftNear);
+    self.backButton.chargeOutsets = UPOutsetsMake(0, 0, 0, 200 * layout.layout_scale());
     [self.view addSubview:self.backButton];
 
     self.choice1 = [UPChoice choiceLeftColors];

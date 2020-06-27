@@ -5,8 +5,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import <UPKit/UPBand.h>
 #import <UPKit/UIColor+UP.h>
+#import <UPKit/UPBand.h>
+#import <UPKit/UPGeometry.h>
 
 @class UPBezierPathView;
 @class UPGestureRecognizer;
@@ -63,8 +64,7 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @property (nonatomic) BOOL highlightedLocked;
 
 @property (nonatomic) CGSize canonicalSize;
-@property (nonatomic) CGSize chargeSize;
-
+@property (nonatomic) UPOutsets chargeOutsets;
 @property (nonatomic) UP::Band band;
 
 + (UPControl *)control;

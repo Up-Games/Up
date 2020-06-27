@@ -83,6 +83,28 @@ NSString *NSStringFromUPOffset(UPOffset);
 NSString *NSStringFromUPQuadOffsets(UPQuadOffsets);
 #endif  // __OBJC__
 
+typedef struct __attribute__((objc_boxable)) UPOutsets {
+    CGFloat top, left, bottom, right;
+} UPOutsets;
+
+UP_STATIC_CONST UPOutsets UPOutsetsZero = (UPOutsets){0, 0, 0, 0};
+
+UP_STATIC_INLINE UPOutsets UPOutsetsMake(CGFloat top, CGFloat left, CGFloat bottom, CGFloat right) {
+    UPOutsets outsets = {top, left, bottom, right};
+    return outsets;
+}
+
+UP_STATIC_INLINE CGRect UPOutsetRect(CGRect rect, UPOutsets outsets) {
+    rect.origin.x -= outsets.left;
+    rect.origin.y -= outsets.top;
+    rect.size.width += (outsets.left + outsets.right);
+    rect.size.height += (outsets.top  + outsets.bottom);
+    return rect;
+}
+
+#ifdef __OBJC__
+NSString *NSStringFromUPOutsets(UPOutsets);
+#endif  // __OBJC__
 
 UP_STATIC_INLINE CGFloat up_point_distance(CGPoint p1, CGPoint p2) {
     simd_double2 s1 = simd_make_double2(p1.x, p1.y);
@@ -108,6 +130,7 @@ UP_STATIC_INLINE_CONST CGRect up_rect_make(CGSize size) { return (CGRect){ 0, 0,
 CGFloat up_float_scaled(CGFloat fnum, CGFloat scale);
 CGPoint up_point_scaled(CGPoint point, CGFloat scale);
 CGSize up_size_scaled(CGSize size, CGFloat scale);
+UPOutsets up_outsets_scaled(UPOutsets outsets, CGFloat scale);
 
 CGRect up_rect_centered_in_rect(CGRect rectToCenter, CGRect referenceRect);
 CGRect up_rect_centered_x_in_rect(CGRect rectToCenter, CGRect referenceRect);

@@ -1618,7 +1618,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     });
     delay(BandModeDelay, 0.2, ^{
         start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - 0.2, ^(UIViewAnimatingPosition) {
-            self.dialogMenu.extrasButton.userInteractionEnabled = NO;
             [self viewUnlock];
             if (completion) {
                 completion();

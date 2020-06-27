@@ -353,7 +353,10 @@ void SpellLayout::calculate_checkbox_control_metrics()
     CGFloat baseline_adjustment = CanonicalCheckboxLabelBaselineAdjustment * layout_scale();
     set_checkbox_control_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
     set_checkbox_control_label_left_margin(CanonicalCheckboxLabelLeftMargin * layout_scale());
-    set_checkbox_control_charge_size(CGSizeMake(up_size_width(CanonicalCheckboxSize) * 0.5, up_size_height(CanonicalCheckboxSize) * 0.5));
+    
+    CGFloat width_offset = up_size_width(CanonicalCheckboxSize)  * layout_scale() * 0.5;
+    CGFloat height_offset = up_size_height(CanonicalCheckboxSize) * layout_scale() * 0.5;
+    set_checkbox_control_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
 }
 
 void SpellLayout::calculate_choice_control_metrics()
@@ -658,9 +661,9 @@ void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &def
 void SpellLayout::calculate_game_controls_button_charge_size()
 {
     CGSize size = up_size_scaled(CanonicalRoundGameButtonSize, layout_scale());
-    CGSize charge_size = CGSizeMake(up_size_width(size) * 0.65, up_size_height(size) * 0.65);
-    set_game_controls_button_charge_size(up_pixel_size(charge_size, screen_scale()));
-    LOG(Layout, "game_controls_button_charge_size: %@", NSStringFromCGSize(game_controls_button_charge_size()));
+    CGFloat width_offset = up_size_width(size) * layout_scale() * 0.5;
+    CGFloat height_offset = up_size_height(size) * layout_scale() * 0.5;
+    set_checkbox_control_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
 }
 
 void SpellLayout::calculate_game_timer_frame()

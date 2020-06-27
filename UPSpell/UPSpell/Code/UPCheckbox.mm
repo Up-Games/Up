@@ -235,7 +235,7 @@ static UIBezierPath *CheckboxCheckPath()
     SpellLayout &layout = SpellLayout::instance();
     
     self.canonicalSize = SpellLayout::CanonicalCheckboxSize;
-    self.chargeSize = layout.checkbox_control_charge_size();
+    self.chargeOutsets = layout.checkbox_control_charge_outsets();
     [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
 
     self.label = [UPLabel label];

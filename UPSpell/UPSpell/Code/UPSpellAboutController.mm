@@ -39,6 +39,7 @@ using Spot = UP::SpellLayout::Spot;
     self.backButton = [UPButton roundBackButtonRightArrow];
     self.backButton.canonicalSize = SpellLayout::CanonicalRoundBackButtonSize;
     self.backButton.frame = layout.frame_for(Role::ChoiceBackRight, Spot::OffRightNear);
+    self.backButton.chargeOutsets = UPOutsetsMake(0, 200 * layout.layout_scale(), 0, 0);
     [self.view addSubview:self.backButton];
     
     self.choice1 = [UPChoice choiceRightUpSpell];

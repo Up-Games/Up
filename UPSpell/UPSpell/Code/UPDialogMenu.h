@@ -4,11 +4,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <UpKit/UpKit.h>
 
 @class UPBezierPathView;
 @class UPButton;
 
-@interface UPDialogMenu : UIView
+@interface UPDialogMenu : UPContainerView
 
 @property (nonatomic, readonly) UPBezierPathView *messagePathView;
 @property (nonatomic, readonly) UPButton *extrasButton;

@@ -146,6 +146,8 @@ public:
     static inline constexpr CGRect CanonicalChoice4LayoutFrame =             {  30, 372, 940, 76 };
     static inline constexpr CGSize CanonicalChoiceSize =                              {  300, 76 };
 
+//    static inline constexpr UIEdge CanonicalExtrasBackChargeSize =                              {  300, 76 };
+
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
         return *g_instance;
@@ -191,8 +193,8 @@ public:
 
     UIOffset word_tray_shake_offset() const { return m_word_tray_shake_offset; }
     
-    CGSize game_controls_button_charge_size() const { return m_game_controls_button_charge_size; }
-    CGSize checkbox_control_charge_size() const { return m_checkbox_control_charge_size; }
+    UPOutsets game_controls_button_charge_outsets() const { return m_game_controls_button_charge_outsets; }
+    UPOutsets checkbox_control_charge_outsets() const { return m_checkbox_control_charge_outsets; }
 
     UIFont *game_information_font() const { return m_game_information_font; }
     const FontMetrics &game_information_font_metrics() const { return m_game_information_font_metrics; }
@@ -248,12 +250,12 @@ private:
     void set_checkbox_control_font(UIFont *font) { m_checkbox_control_font = font; }
     void set_checkbox_control_font_metrics(const FontMetrics &metrics) { m_checkbox_control_font_metrics = metrics; }
     void set_checkbox_control_label_left_margin(CGFloat f) { m_checkbox_control_label_left_margin = f; }
-    void set_checkbox_control_charge_size(CGSize size) { m_checkbox_control_charge_size = size; }
+    void set_checkbox_control_charge_outsets(UPOutsets outsets) { m_checkbox_control_charge_outsets = outsets; }
     void set_choice_control_font(UIFont *font) { m_choice_control_font = font; }
     void set_choice_control_font_metrics(const FontMetrics &metrics) { m_choice_control_font_metrics = metrics; }
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
-    void set_game_controls_button_charge_size(CGSize size) { m_game_controls_button_charge_size = size; }
+    void set_game_controls_button_charge_outsets(UPOutsets outsets) { m_game_controls_button_charge_outsets = outsets; }
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
     void set_game_score_frame(CGRect rect) { m_game_score_frame = rect; }
 
@@ -346,8 +348,8 @@ private:
     std::array<TileRectArray, TileCount> m_word_tray_tile_frames;
     std::array<TilePointArray, TileCount> m_word_tray_tile_centers;
 
-    CGSize m_game_controls_button_charge_size = CGSizeZero;
-    CGSize m_checkbox_control_charge_size = CGSizeZero;
+    UPOutsets m_game_controls_button_charge_outsets = UPOutsetsZero;
+    UPOutsets m_checkbox_control_charge_outsets = UPOutsetsZero;
 
     CGRect m_game_timer_frame = CGRectZero;
     CGRect m_game_score_frame = CGRectZero;

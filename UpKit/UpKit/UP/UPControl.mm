@@ -84,6 +84,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     self.autoHighlights = YES;
     self.previousState = UPControlStateInvalid;
     self.state = UPControlStateNormal;
+    self.chargeOutsets = UPOutsetsZero;
     return self;
 }
 
@@ -756,16 +757,8 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    if ([super pointInside:point withEvent:event]) {
-        return YES;
-    }
-    
-    if (!CGSizeEqualToSize(self.chargeSize, CGSizeZero)) {
-        CGRect chargeRect = CGRectInset(self.bounds, -self.chargeSize.width, -self.chargeSize.height);
-        return CGRectContainsPoint(chargeRect, point);
-    }
-    
-    return NO;
+    CGRect chargeRect = UPOutsetRect(self.bounds, self.chargeOutsets);
+    return CGRectContainsPoint(chargeRect, point);
 }
 
 #pragma mark - Lifecycle

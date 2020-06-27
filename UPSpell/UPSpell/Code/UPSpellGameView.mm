@@ -51,14 +51,14 @@ using Spot = UP::SpellLayout::Spot;
     self.pauseControl = [UPControl roundGameControlMinusSign];
     self.pauseControl.band = BandGameUI;
     self.pauseControl.frame = layout.frame_for(Role::ControlButtonLeft);
-    self.pauseControl.chargeSize = layout.game_controls_button_charge_size();
+    self.pauseControl.chargeOutsets = layout.game_controls_button_charge_outsets();
     [self addSubview:self.pauseControl];
     
     self.clearControl = [UPControl roundGameControl];
     [self.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
     self.clearControl.band = BandGameUI;
     self.clearControl.frame = layout.frame_for(Role::ControlButtonRight);
-    self.clearControl.chargeSize = layout.game_controls_button_charge_size();
+    self.clearControl.chargeOutsets = layout.game_controls_button_charge_outsets();
     [self addSubview:self.clearControl];
     
     self.wordTrayControl = [UPControl wordTrayControl];
