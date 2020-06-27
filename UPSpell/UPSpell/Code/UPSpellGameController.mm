@@ -1581,13 +1581,15 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UPViewMove *dialogGameNoteMove = UPViewMoveMake(self.dialogGameNote, Location(Role::Screen, Spot::OffLeftNear));
 
     CFTimeInterval duration = 0.75;
-    
+    CFTimeInterval stagger = 0.075;
+
     start(bloop_out(BandModeUI, @[extrasButtonMove], duration, nil));
-    delay(BandModeDelay, 0.1, ^{
-        start(bloop_out(BandModeUI, @[playButtonMove], duration - 0.1, nil));
+    delay(BandModeDelay, stagger, ^{
+        start(bloop_out(BandModeUI, @[playButtonMove], duration - stagger, nil));
     });
-    delay(BandModeDelay, 0.2, ^{
-        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+    delay(BandModeDelay, (2 * stagger), ^{
+        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - (2 * stagger),
+                        ^(UIViewAnimatingPosition) {
             self.dialogMenu.aboutButton.userInteractionEnabled = NO;
             [self viewUnlock];
             if (completion) {
@@ -1610,14 +1612,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UPViewMove *dialogGameNoteMove = UPViewMoveMake(self.dialogGameNote, Location(Role::Screen, Spot::OffRightNear));
 
     CFTimeInterval duration = 0.75;
-    
+    CFTimeInterval stagger = 0.075;
+
     start(bloop_out(BandModeUI, @[aboutButtonMove], duration, nil));
-    delay(BandModeDelay, 0.1, ^{
-        start(bloop_out(BandModeUI, @[playButtonMove], duration - 0.1, ^(UIViewAnimatingPosition) {
+    delay(BandModeDelay, stagger, ^{
+        start(bloop_out(BandModeUI, @[playButtonMove], duration - stagger, ^(UIViewAnimatingPosition) {
         }));
     });
-    delay(BandModeDelay, 0.2, ^{
-        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+    delay(BandModeDelay, (2 * stagger), ^{
+        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - (2 * stagger),
+                        ^(UIViewAnimatingPosition) {
             [self viewUnlock];
             if (completion) {
                 completion();
@@ -1890,14 +1894,15 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Role::Screen);
     
     CFTimeInterval duration = 0.5;
-    
+    CFTimeInterval stagger = 0.075;
+
     start(bloop_in(BandModeUI, @[gameViewMove], duration, nil));
-    delay(BandModeDelay, 0.1, ^{
-        start(bloop_in(BandModeUI, @[playButtonMove], duration - 0.1, ^(UIViewAnimatingPosition) {
+    delay(BandModeDelay, stagger, ^{
+        start(bloop_in(BandModeUI, @[playButtonMove], duration - stagger, ^(UIViewAnimatingPosition) {
         }));
     });
-    delay(BandModeDelay, 0.2, ^{
-        start(bloop_in(BandModeUI, @[extrasButtonMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+    delay(BandModeDelay, (2 * stagger), ^{
+        start(bloop_in(BandModeUI, @[extrasButtonMove], duration - (2 * stagger), ^(UIViewAnimatingPosition) {
             self.dialogMenu.aboutButton.userInteractionEnabled = YES;
             [self viewUnlock];
         }));
@@ -1914,14 +1919,15 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Role::Screen);
     
     CFTimeInterval duration = 0.5;
+    CFTimeInterval stagger = 0.075;
     
     start(bloop_in(BandModeUI, @[gameViewMove], duration, nil));
-    delay(BandModeDelay, 0.1, ^{
-        start(bloop_in(BandModeUI, @[playButtonMove], duration - 0.1, ^(UIViewAnimatingPosition) {
+    delay(BandModeDelay, stagger, ^{
+        start(bloop_in(BandModeUI, @[playButtonMove], duration - stagger, ^(UIViewAnimatingPosition) {
         }));
     });
-    delay(BandModeDelay, 0.2, ^{
-        start(bloop_in(BandModeUI, @[aboutButtonMove], duration - 0.2, ^(UIViewAnimatingPosition) {
+    delay(BandModeDelay, 2 * stagger, ^{
+        start(bloop_in(BandModeUI, @[aboutButtonMove], duration - (2 * stagger), ^(UIViewAnimatingPosition) {
             self.dialogMenu.extrasButton.userInteractionEnabled = YES;
             [self viewUnlock];
         }));
