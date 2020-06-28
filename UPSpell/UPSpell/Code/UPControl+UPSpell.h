@@ -49,7 +49,6 @@ UIBezierPath *ChoiceRightFillPathSelected();
 + (UPButton *)textButtonPlay;
 + (UPButton *)textButtonQuit;
 + (UPButton *)textButtonResume;
-+ (UPButton *)textButtonStats;
 
 @end
 

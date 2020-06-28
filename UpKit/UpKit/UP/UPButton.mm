@@ -7,8 +7,8 @@
 #import "UPTapGestureRecognizer.h"
 
 @interface UPButton ()
-@property (nonatomic, weak) id target;
-@property (nonatomic) SEL action;
+@property (nonatomic, weak, readwrite) id target;
+@property (nonatomic, readwrite) SEL action;
 @end
 
 @implementation UPButton

@@ -7,6 +7,7 @@
 
 #import "UIFont+UPSpell.h"
 
+NSString * const UPTextButtonFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPGameInformationFontName = @"MalloryNarrow-Bold";
 NSString * const UPGameNoteFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPWordScoreBonusFontName = @"MalloryCondensed-BlackItalic";
@@ -21,6 +22,34 @@ NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
 //    NSLog(@"features: %@", features);
 
 @implementation UIFont (UPSpell)
+
++ (UIFont *)textButtonFontOfSize:(CGFloat)fontSize
+{
+    UIFont *font = [UIFont fontWithName:UPTextButtonFontName size:fontSize];
+    UIFontDescriptor *descriptor = [font fontDescriptor];
+    NSDictionary *attributes = @{
+        UIFontDescriptorFeatureSettingsAttribute: @[
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+                },
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(35),     // Alternative Stylistic Sets
+                    UIFontFeatureSelectorIdentifierKey: @(22)  // Raised Colon (Lining Figures Only)
+                },
+        ]
+    };
+    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
+}
+
++ (UIFont *)textButtonFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPTextButtonFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont textButtonFontOfSize:pointSize];
+}
 
 + (UIFont *)gameInformationFontOfSize:(CGFloat)fontSize
 {

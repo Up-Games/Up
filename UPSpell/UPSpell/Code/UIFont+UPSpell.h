@@ -9,6 +9,9 @@ extern NSString * const UPGameInformationFontName;
 
 @interface UIFont (UPSpell)
 
++ (UIFont *)textButtonFontOfSize:(CGFloat)fontSize;
++ (UIFont *)textButtonFontWithCapHeight:(CGFloat)capHeight;
+
 + (UIFont *)gameInformationFontOfSize:(CGFloat)fontSize;
 + (UIFont *)gameInformationFontWithCapHeight:(CGFloat)capHeight;
 

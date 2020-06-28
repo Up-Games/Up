@@ -9,12 +9,6 @@
 
 namespace UP {
 
-UIBezierPath *TextPathContentAbout();
-UIBezierPath *TextPathContentExtras();
-UIBezierPath *TextPathContentPlay();
-UIBezierPath *TextPathContentQuit();
-UIBezierPath *TextPathContentResume();
-UIBezierPath *TextPathContentStats();
 UIBezierPath *TextPathDialogGameOver();
 UIBezierPath *TextPathDialogPaused();
 UIBezierPath *TextPathDialogReady();

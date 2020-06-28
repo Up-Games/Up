@@ -263,6 +263,7 @@ void SpellLayout::calculate()
     calculate_tile_drag_barrier_frame();
     calculate_player_tray_tile_frames();
     calculate_word_tray_tile_frames();
+    calculate_text_button_font_metrics();
     calculate_game_information_font_metrics();
     calculate_game_information_superscript_font_metrics();
     calculate_game_note_font_metrics();
@@ -331,6 +332,15 @@ void SpellLayout::calculate_tile_stroke_width()
     m_tile_stroke_path = path;
     
     LOG(Layout, "tile_stroke_width: %.2f", tile_stroke_width());
+}
+
+void SpellLayout::calculate_text_button_font_metrics()
+{
+    CGFloat cap_height = CanonicalTextButtonCapHeight * layout_scale();
+    UIFont *font = [UIFont textButtonFontWithCapHeight:cap_height];
+    set_text_button_font(font);
+    CGFloat baseline_adjustment = CanonicalTextButtonBaselineAdjustment * layout_scale();
+    set_text_button_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
 }
 
 void SpellLayout::calculate_game_information_font_metrics()

@@ -96,6 +96,8 @@ public:
     static inline constexpr CGSize CanonicalHueWheelSize =       { 220, 220 };
     static inline constexpr CGSize CanonicalStepperSize =        {  36,  36 };
 
+    static inline constexpr CGFloat CanonicalTextButtonCapHeight = 29;
+    static inline constexpr CGFloat CanonicalTextButtonBaselineAdjustment = -3.5;
     static inline constexpr CGFloat CanonicalGameInformationCapHeight = 57;
     static inline constexpr CGFloat CanonicalGameInformationSuperscriptCapHeight = 39;
     static inline constexpr CGFloat CanonicalGameInformationSuperscriptBaselineAdjustment = 27;
@@ -209,6 +211,8 @@ public:
     UPOutsets checkbox_control_charge_outsets() const { return m_checkbox_control_charge_outsets; }
     UPOutsets stepper_control_charge_outsets() const { return m_stepper_control_charge_outsets; }
 
+    UIFont *text_button_font() const { return m_text_button_font; }
+    const FontMetrics &text_button_font_metrics() const { return m_text_button_font_metrics; }
     UIFont *game_information_font() const { return m_game_information_font; }
     const FontMetrics &game_information_font_metrics() const { return m_game_information_font_metrics; }
     UIFont *game_information_superscript_font() const { return m_game_information_superscript_font; }
@@ -255,6 +259,8 @@ private:
     void set_word_tray_shake_offset(UIOffset offset) { m_word_tray_shake_offset = offset; }
     void set_menu_game_view_transform(CGAffineTransform t) { m_menu_game_view_transform = t; }
     void set_extras_example_transform(CGAffineTransform t) { m_extras_example_transform = t; }
+    void set_text_button_font(UIFont *font) { m_text_button_font = font; }
+    void set_text_button_font_metrics(const FontMetrics &metrics) { m_text_button_font_metrics = metrics; }
     void set_game_information_font(UIFont *font) { m_game_information_font = font; }
     void set_game_information_font_metrics(const FontMetrics &metrics) { m_game_information_font_metrics = metrics; }
     void set_game_information_superscript_font(UIFont *font) { m_game_information_superscript_font = font; }
@@ -289,6 +295,7 @@ private:
     void calculate_tile_drag_barrier_frame();
     void calculate_word_tray_tile_frames();
     void calculate_player_tray_tile_frames();
+    void calculate_text_button_font_metrics();
     void calculate_game_information_font_metrics();
     void calculate_game_information_superscript_font_metrics();
     void calculate_game_note_font_metrics();
@@ -343,6 +350,8 @@ private:
     CGAffineTransform m_menu_game_view_transform;
     CGAffineTransform m_extras_example_transform;
 
+    __strong UIFont *m_text_button_font;
+    FontMetrics m_text_button_font_metrics;
     __strong UIFont *m_game_information_font;
     FontMetrics m_game_information_font_metrics;
     __strong UIFont *m_game_information_superscript_font;

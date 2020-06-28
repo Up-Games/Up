@@ -841,8 +841,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
             UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementFill, self.previousState, state,
                                              ^(UIViewAnimatingPosition) {
                 self.fillColorAnimatorSerialNumber = UP::NotASerialNumber;
-            }
-                                             );
+            });
             [animator start];
             self.fillColorAnimatorSerialNumber = animator.serialNumber;
         }
@@ -863,8 +862,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
             UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementStroke, self.previousState, state,
                                              ^(UIViewAnimatingPosition) {
                 self.strokeColorAnimatorSerialNumber = UP::NotASerialNumber;
-            }
-                                             );
+            });
             [animator start];
             self.strokeColorAnimatorSerialNumber = animator.serialNumber;
         }
@@ -885,8 +883,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
             UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementContent, self.previousState, state,
                                              ^(UIViewAnimatingPosition) {
                 self.contentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
-            }
-                                             );
+            });
             [animator start];
             self.contentPathColorAnimatorSerialNumber = animator.serialNumber;
         }
@@ -907,8 +904,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
             UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementAuxiliary, self.previousState, state,
                                              ^(UIViewAnimatingPosition) {
                 self.auxiliaryPathColorAnimatorSerialNumber = UP::NotASerialNumber;
-            }
-                                             );
+            });
             [animator start];
             self.auxiliaryPathColorAnimatorSerialNumber = animator.serialNumber;
         }
@@ -929,8 +925,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
             UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementAccent, self.previousState, state,
                                              ^(UIViewAnimatingPosition) {
                 self.accentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
-            }
-                                             );
+            });
             [animator start];
             self.accentPathColorAnimatorSerialNumber = animator.serialNumber;
         }
