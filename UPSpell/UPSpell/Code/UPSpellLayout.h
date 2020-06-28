@@ -94,7 +94,7 @@ public:
     static inline constexpr CGSize CanonicalTextButtonSize =     { 188,  76 };
     static inline constexpr CGSize CanonicalCheckboxSize =       {  39,  35 };
     static inline constexpr CGSize CanonicalHueWheelSize =       { 220, 220 };
-    static inline constexpr CGSize CanonicalStepperSize =        {   36, 36 };
+    static inline constexpr CGSize CanonicalStepperSize =        {  36,  36 };
 
     static inline constexpr CGFloat CanonicalGameInformationCapHeight = 57;
     static inline constexpr CGFloat CanonicalGameInformationSuperscriptCapHeight = 39;
@@ -152,8 +152,8 @@ public:
     static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 20;
 
     static inline constexpr CGRect CanonicalExtrasColorsHueWheelFrame =    { 430,  36, up_size_width(CanonicalHueWheelSize), up_size_height(CanonicalHueWheelSize) };
-    static inline constexpr CGRect CanonicalExtrasColorsHueStepMoreFrame = { 692,  96, up_size_width(CanonicalStepperSize), up_size_height(CanonicalStepperSize) };
-    static inline constexpr CGRect CanonicalExtrasColorsHueStepLessFrame = { 692, 156, up_size_width(CanonicalStepperSize), up_size_height(CanonicalStepperSize) };
+    static inline constexpr CGRect CanonicalExtrasColorsHueStepMoreFrame = { 692,  98, 44, 44 };
+    static inline constexpr CGRect CanonicalExtrasColorsHueStepLessFrame = { 692, 158, 44, 44 };
     static inline constexpr CGRect CanonicalExtrasColorsDarkModeFrame =    { 780,  64, up_size_width(CanonicalCheckboxSize), up_size_height(CanonicalCheckboxSize) };
     static inline constexpr CGRect CanonicalExtrasColorsStarkModeFrame =   { 780, 124, up_size_width(CanonicalCheckboxSize), up_size_height(CanonicalCheckboxSize) };
     static inline constexpr CGRect CanonicalExtrasColorsQuarkModeFrame =   { 780, 184, up_size_width(CanonicalCheckboxSize), up_size_height(CanonicalCheckboxSize) };
@@ -207,6 +207,7 @@ public:
     
     UPOutsets game_controls_button_charge_outsets() const { return m_game_controls_button_charge_outsets; }
     UPOutsets checkbox_control_charge_outsets() const { return m_checkbox_control_charge_outsets; }
+    UPOutsets stepper_control_charge_outsets() const { return m_stepper_control_charge_outsets; }
 
     UIFont *game_information_font() const { return m_game_information_font; }
     const FontMetrics &game_information_font_metrics() const { return m_game_information_font_metrics; }
@@ -268,6 +269,7 @@ private:
     void set_checkbox_control_font_metrics(const FontMetrics &metrics) { m_checkbox_control_font_metrics = metrics; }
     void set_checkbox_control_label_left_margin(CGFloat f) { m_checkbox_control_label_left_margin = f; }
     void set_checkbox_control_charge_outsets(UPOutsets outsets) { m_checkbox_control_charge_outsets = outsets; }
+    void set_stepper_control_charge_outsets(UPOutsets outsets) { m_stepper_control_charge_outsets = outsets; }
     void set_choice_control_font(UIFont *font) { m_choice_control_font = font; }
     void set_choice_control_font_metrics(const FontMetrics &metrics) { m_choice_control_font_metrics = metrics; }
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
@@ -293,6 +295,7 @@ private:
     void calculate_word_score_font_metrics();
     void calculate_word_score_bonus_font_metrics();
     void calculate_checkbox_control_metrics();
+    void calculate_stepper_control_metrics();
     void calculate_choice_control_metrics();
     void calculate_settings_description_font_metrics();
     void calculate_locations();
@@ -375,6 +378,7 @@ private:
 
     UPOutsets m_game_controls_button_charge_outsets = UPOutsetsZero;
     UPOutsets m_checkbox_control_charge_outsets = UPOutsetsZero;
+    UPOutsets m_stepper_control_charge_outsets = UPOutsetsZero;
 
     CGRect m_game_timer_frame = CGRectZero;
     CGRect m_game_score_frame = CGRectZero;

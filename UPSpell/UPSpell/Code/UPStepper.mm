@@ -288,9 +288,13 @@ static UIBezierPath *StepperPathRight()
     self.direction = direction;
     self.target = target;
     self.action = action;
-    [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
+
+    SpellLayout &layout = SpellLayout::instance();
     
-    self.canonicalSize = CGSizeMake(30, 30);
+    self.canonicalSize = SpellLayout::CanonicalStepperSize;
+    self.chargeOutsets = layout.stepper_control_charge_outsets();
+    [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
+
     [self setFillPath:ButtonFillPath() forState:UPControlStateNormal];
     [self setFillColorCategory:UPColorCategoryHighlightedFill forState:UPControlStateHighlighted];
     [self setStrokePath:ButtonStrokePath() forState:UPControlStateNormal];

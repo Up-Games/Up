@@ -269,6 +269,7 @@ void SpellLayout::calculate()
     calculate_word_score_font_metrics();
     calculate_word_score_bonus_font_metrics();
     calculate_checkbox_control_metrics();
+    calculate_stepper_control_metrics();
     calculate_choice_control_metrics();
     calculate_settings_description_font_metrics();
     calculate_game_controls_button_charge_size();
@@ -384,9 +385,16 @@ void SpellLayout::calculate_checkbox_control_metrics()
     set_checkbox_control_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
     set_checkbox_control_label_left_margin(CanonicalCheckboxLabelLeftMargin * layout_scale());
     
-    CGFloat width_offset = up_size_width(CanonicalCheckboxSize)  * layout_scale() * 0.5;
-    CGFloat height_offset = up_size_height(CanonicalCheckboxSize) * layout_scale() * 0.5;
+    CGFloat width_offset = up_size_width(CanonicalCheckboxSize)  * layout_scale() * 0.4;
+    CGFloat height_offset = up_size_height(CanonicalCheckboxSize) * layout_scale() * 0.4;
     set_checkbox_control_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
+}
+
+void SpellLayout::calculate_stepper_control_metrics()
+{
+    CGFloat width_offset = up_size_width(CanonicalStepperSize)  * layout_scale() * 0.4;
+    CGFloat height_offset = up_size_height(CanonicalStepperSize) * layout_scale() * 0.4;
+    set_stepper_control_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
 }
 
 void SpellLayout::calculate_choice_control_metrics()
@@ -714,7 +722,7 @@ void SpellLayout::calculate_game_controls_button_charge_size()
     CGSize size = up_size_scaled(CanonicalRoundGameButtonSize, layout_scale());
     CGFloat width_offset = up_size_width(size) * layout_scale() * 0.5;
     CGFloat height_offset = up_size_height(size) * layout_scale() * 0.5;
-    set_checkbox_control_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
+    set_game_controls_button_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
 }
 
 void SpellLayout::calculate_game_timer_frame()
