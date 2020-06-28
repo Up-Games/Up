@@ -161,7 +161,7 @@ SpellLayout::Role role_for_score(int score)
     return SpellLayout::Role::GameScoreGameOver1;
 }
 
-CGRect SpellLayout::layout_aspect_rect(CGRect rect) const
+CGRect SpellLayout::layout_centered_x_aspect_rect(CGRect rect) const
 {
     switch (aspect_mode()) {
         case AspectMode::Canonical: {
@@ -173,6 +173,27 @@ CGRect SpellLayout::layout_aspect_rect(CGRect rect) const
         }
         case AspectMode::TallerThanCanonical: {
             CGRect r = up_rect_scaled_centered_x_in_rect(rect, layout_scale(), layout_frame());
+            // Frame is moved up in the UI by 20% of the letterbox inset
+            // That's what looks good.
+            r.origin.y -= letterbox_insets().top * 0.2;
+            return up_pixel_rect(r, screen_scale());
+        }
+    }
+    ASSERT_NOT_REACHED();
+}
+
+CGRect SpellLayout::layout_relative_aspect_rect(CGRect rect) const
+{
+    switch (aspect_mode()) {
+        case AspectMode::Canonical: {
+            return rect;
+        }
+        case AspectMode::WiderThanCanonical: {
+            CGRect r = up_rect_scaled_in_rect(rect, layout_scale(), layout_frame());
+            return up_pixel_rect(r, screen_scale());
+        }
+        case AspectMode::TallerThanCanonical: {
+            CGRect r = up_rect_scaled_in_rect(rect, layout_scale(), layout_frame());
             // Frame is moved up in the UI by 20% of the letterbox inset
             // That's what looks good.
             r.origin.y -= letterbox_insets().top * 0.2;
@@ -234,6 +255,7 @@ void SpellLayout::calculate()
     }
 
     calculate_menu_game_view_transform();
+    calculate_extras_example_transform();
     calculate_tile_size();
     calculate_tile_stroke_width();
     calculate_word_tray_layout_frame();
@@ -248,6 +270,7 @@ void SpellLayout::calculate()
     calculate_word_score_bonus_font_metrics();
     calculate_checkbox_control_metrics();
     calculate_choice_control_metrics();
+    calculate_settings_description_font_metrics();
     calculate_game_controls_button_charge_size();
     calculate_locations();
 }
@@ -270,6 +293,13 @@ void SpellLayout::calculate_menu_game_view_transform()
     t = CGAffineTransformTranslate(t, 0, dy);
     set_menu_game_view_transform(t);
     LOG(Layout, "menu_game_view_transform: %@", NSStringFromCGAffineTransform(menu_game_view_transform()));
+}
+
+void SpellLayout::calculate_extras_example_transform()
+{
+    CGFloat scale = up_float_scaled(up_rect_width(CanonicalExtrasColorsExampleFrame) / CanonicalTilesLayoutWidth, layout_scale());
+    CGAffineTransform t = CGAffineTransformMakeScale(scale, scale);
+    set_extras_example_transform(t);
 }
 
 void SpellLayout::calculate_tile_size()
@@ -370,9 +400,17 @@ void SpellLayout::calculate_choice_control_metrics()
     set_choice_control_label_right_margin(CanonicalChoiceLabelRightMargin * layout_scale());
 }
 
+void SpellLayout::calculate_settings_description_font_metrics()
+{
+    CGFloat cap_height = CanonicalSettingsDescriptionFontCapHeight * layout_scale();
+    UIFont *font = [UIFont settingsDescriptionFontWithCapHeight:cap_height];
+    set_settings_description_font(font);
+    set_settings_description_font_metrics(FontMetrics(font.fontName, font.pointSize));
+}
+
 void SpellLayout::calculate_word_tray_layout_frame()
 {
-    set_word_tray_layout_frame(layout_aspect_rect(CanonicalWordTrayFrame));
+    set_word_tray_layout_frame(layout_centered_x_aspect_rect(CanonicalWordTrayFrame));
     LOG(Layout, "word_tray_layout_frame: %@", NSStringFromCGRect(word_tray_layout_frame()));
 }
 
@@ -384,7 +422,7 @@ void SpellLayout::calculate_word_tray_shake_offset()
 
 void SpellLayout::calculate_tile_drag_barrier_frame()
 {
-    CGRect frame = CGRectIntersection(layout_aspect_rect(CanonicalWordTrayTileMaskFrame), canvas_frame());
+    CGRect frame = CGRectIntersection(layout_centered_x_aspect_rect(CanonicalWordTrayTileMaskFrame), canvas_frame());
     frame = CGRectIntersection(frame, CGRectInset(screen_bounds(), 20, 20));
     frame = CGRectInset(frame, up_size_width(tile_size()) * 0.85, up_size_height(tile_size()) * 0.65);
     frame = CGRectOffset(frame, 0, up_size_height(tile_size()) * 0.11);
@@ -394,7 +432,7 @@ void SpellLayout::calculate_tile_drag_barrier_frame()
 
 void SpellLayout::calculate_player_tray_tile_frames()
 {
-    CGRect player_tray_layout_frame = layout_aspect_rect(CanonicalTilesLayoutFrame);
+    CGRect player_tray_layout_frame = layout_centered_x_aspect_rect(CanonicalTilesLayoutFrame);
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
     CGFloat gap = CanonicalTileGap * layout_scale();
@@ -416,8 +454,8 @@ void SpellLayout::calculate_player_tray_tile_frames()
 
 void SpellLayout::calculate_word_tray_tile_frames()
 {
-    CGRect player_tray_layout_frame = layout_aspect_rect(CanonicalTilesLayoutFrame);
-    CGRect word_tray_layout_frame = layout_aspect_rect(CanonicalWordTrayFrame);
+    CGRect player_tray_layout_frame = layout_centered_x_aspect_rect(CanonicalTilesLayoutFrame);
+    CGRect word_tray_layout_frame = layout_centered_x_aspect_rect(CanonicalWordTrayFrame);
     CGSize canonicalSize = CanonicalTileSize;
     CGSize size = up_size_scaled(canonicalSize, layout_scale());
     CGFloat gap = CanonicalTileGap * layout_scale();
@@ -514,6 +552,7 @@ void SpellLayout::calculate_locations()
     calculate_dialog_locations();
     calculate_game_locations();
     calculate_choice_locations();
+    calculate_extras_locations();
 }
 
 void SpellLayout::calculate_player_tile_locations()
@@ -544,19 +583,19 @@ void SpellLayout::calculate_word_tile_locations()
 void SpellLayout::calculate_dialog_locations()
 {
     calculate_and_set_locations(Role::DialogMessageHigh, word_tray_layout_frame());
-    calculate_and_set_locations(Role::DialogNote, layout_aspect_rect(CanonicalDialogNoteLayoutFrame));
+    calculate_and_set_locations(Role::DialogNote, layout_centered_x_aspect_rect(CanonicalDialogNoteLayoutFrame));
 
     CGRect centered_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
     centered_message_frame.origin.y = up_rect_min_y(centered_message_frame) - (up_rect_height(centered_message_frame) * 0.12);
     calculate_and_set_locations(Role::DialogMessageCenter, centered_message_frame);
 
     CGSize button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
-    CGRect top_buttons_layout_frame = layout_aspect_rect(CanonicalDialogTopButtonsLayoutFrame);
+    CGRect top_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogTopButtonsLayoutFrame);
     calculate_and_set_locations(Role::DialogButtonTopLeft, up_left_aligned_rect(button_size, top_buttons_layout_frame));
     calculate_and_set_locations(Role::DialogButtonTopCenter, up_center_aligned_rect(button_size, top_buttons_layout_frame));
     calculate_and_set_locations(Role::DialogButtonTopRight, up_right_aligned_rect(button_size, top_buttons_layout_frame));
 
-    CGRect response_buttons_layout_frame = layout_aspect_rect(CanonicalDialogResponseButtonsLayoutFrame);
+    CGRect response_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogResponseButtonsLayoutFrame);
     calculate_and_set_locations(Role::DialogButtonDefaultResponse, up_right_aligned_rect(button_size, response_buttons_layout_frame));
     calculate_and_set_locations(Role::DialogButtonAlternativeResponse, up_left_aligned_rect(button_size, response_buttons_layout_frame));
 }
@@ -564,7 +603,7 @@ void SpellLayout::calculate_dialog_locations()
 void SpellLayout::calculate_game_locations()
 {
     CGSize button_size = up_size_scaled(CanonicalRoundGameButtonSize, layout_scale());
-    CGRect controls_layout_frame = layout_aspect_rect(CanonicalControlsLayoutFrame);
+    CGRect controls_layout_frame = layout_centered_x_aspect_rect(CanonicalControlsLayoutFrame);
     calculate_and_set_locations(Role::ControlButtonLeft, up_left_aligned_rect(button_size, controls_layout_frame));
     calculate_and_set_locations(Role::ControlButtonRight, up_right_aligned_rect(button_size, controls_layout_frame));
 
@@ -591,33 +630,45 @@ void SpellLayout::calculate_game_locations()
     calculate_and_set_locations(Role::WordScoreBonus, word_score_bonus_frame);
 }
 
+void SpellLayout::calculate_extras_locations()
+{
+    calculate_and_set_locations(Role::ExtrasColorsHueWheel, layout_relative_aspect_rect(CanonicalExtrasColorsHueWheelFrame));
+    calculate_and_set_locations(Role::ExtrasColorsDarkMode, layout_relative_aspect_rect(CanonicalExtrasColorsDarkModeFrame));
+    calculate_and_set_locations(Role::ExtrasColorsStarkMode, layout_relative_aspect_rect(CanonicalExtrasColorsStarkModeFrame));
+    calculate_and_set_locations(Role::ExtrasColorsQuarkMode, layout_relative_aspect_rect(CanonicalExtrasColorsQuarkModeFrame));
+    calculate_and_set_locations(Role::ExtrasColorsHueStepMore, layout_relative_aspect_rect(CanonicalExtrasColorsHueStepMoreFrame));
+    calculate_and_set_locations(Role::ExtrasColorsHueStepLess, layout_relative_aspect_rect(CanonicalExtrasColorsHueStepLessFrame));
+    calculate_and_set_locations(Role::ExtrasColorsDescription, layout_relative_aspect_rect(CanonicalExtrasColorsDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasColorsExample, layout_relative_aspect_rect(CanonicalExtrasColorsExampleFrame));
+}
+
 void SpellLayout::calculate_choice_locations()
 {
     CGSize back_button_size = up_size_scaled(CanonicalRoundBackButtonSize, layout_scale());
     CGSize choice_item_row_size = up_size_scaled(CanonicalChoiceSize, layout_scale());
     CGSize text_button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
 
-    CGRect back_layout_frame = layout_aspect_rect(CanonicalChoiceBackButtonRowLayoutFrame);
+    CGRect back_layout_frame = layout_centered_x_aspect_rect(CanonicalChoiceBackButtonRowLayoutFrame);
     calculate_and_set_locations(Role::ChoiceBackLeft, up_left_aligned_rect(back_button_size, back_layout_frame));
     calculate_and_set_locations(Role::ChoiceBackRight, up_right_aligned_rect(back_button_size, back_layout_frame));
 
-    CGRect title_layout_frame = layout_aspect_rect(CanonicalChoiceTitleLayoutFrame);
+    CGRect title_layout_frame = layout_centered_x_aspect_rect(CanonicalChoiceTitleLayoutFrame);
     calculate_and_set_locations(Role::ChoiceTitleLeft, up_left_aligned_rect(text_button_size, title_layout_frame));
     calculate_and_set_locations(Role::ChoiceTitleRight, up_right_aligned_rect(text_button_size, title_layout_frame));
 
-    CGRect item_row1_layout_frame = layout_aspect_rect(CanonicalChoice1LayoutFrame);
+    CGRect item_row1_layout_frame = layout_centered_x_aspect_rect(CanonicalChoice1LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem1Left, up_left_aligned_rect(choice_item_row_size, item_row1_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem1Right, up_right_aligned_rect(choice_item_row_size, item_row1_layout_frame));
 
-    CGRect item_row2_layout_frame = layout_aspect_rect(CanonicalChoice2LayoutFrame);
+    CGRect item_row2_layout_frame = layout_centered_x_aspect_rect(CanonicalChoice2LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem2Left, up_left_aligned_rect(choice_item_row_size, item_row2_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem2Right, up_right_aligned_rect(choice_item_row_size, item_row2_layout_frame));
 
-    CGRect item_row3_layout_frame = layout_aspect_rect(CanonicalChoice3LayoutFrame);
+    CGRect item_row3_layout_frame = layout_centered_x_aspect_rect(CanonicalChoice3LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem3Left, up_left_aligned_rect(choice_item_row_size, item_row3_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem3Right, up_right_aligned_rect(choice_item_row_size, item_row3_layout_frame));
 
-    CGRect item_row4_layout_frame = layout_aspect_rect(CanonicalChoice4LayoutFrame);
+    CGRect item_row4_layout_frame = layout_centered_x_aspect_rect(CanonicalChoice4LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem4Left, up_left_aligned_rect(choice_item_row_size, item_row4_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem4Right, up_right_aligned_rect(choice_item_row_size, item_row4_layout_frame));
 }
@@ -668,7 +719,7 @@ void SpellLayout::calculate_game_controls_button_charge_size()
 
 void SpellLayout::calculate_game_timer_frame()
 {
-    CGRect controls_layout_frame = layout_aspect_rect(CanonicalControlsLayoutFrame);
+    CGRect controls_layout_frame = layout_centered_x_aspect_rect(CanonicalControlsLayoutFrame);
     const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
     CGPoint baseline_point = up_point_scaled(CanonicalGameTimeLabelRightAlignedBaselinePointRelativeToTDC, layout_scale());
@@ -683,7 +734,7 @@ void SpellLayout::calculate_game_timer_frame()
 
 void SpellLayout::calculate_game_score_frame()
 {
-    CGRect controls_layout_frame = layout_aspect_rect(CanonicalControlsLayoutFrame);
+    CGRect controls_layout_frame = layout_centered_x_aspect_rect(CanonicalControlsLayoutFrame);
     const FontMetrics &font_metrics = game_information_font_metrics();
     CGFloat cap_height = font_metrics.cap_height();
     CGPoint baseline_point = up_point_scaled(CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTDC, layout_scale());

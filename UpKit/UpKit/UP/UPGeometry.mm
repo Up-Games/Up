@@ -60,6 +60,15 @@ CGRect up_rect_scaled(CGRect rect, CGFloat scale)
     return CGRectMake(x, y, w, h);
 }
 
+CGRect up_rect_scaled_in_rect(CGRect rect, CGFloat scale, CGRect referenceRect)
+{
+    CGFloat x = CGRectGetMinX(referenceRect) + CGRectGetMinX(rect) * scale;
+    CGFloat y = CGRectGetMinY(referenceRect) + CGRectGetMinY(rect) * scale;
+    CGFloat w = CGRectGetWidth(rect) * scale;
+    CGFloat h = CGRectGetHeight(rect) * scale;
+    return CGRectMake(x, y, w, h);
+}
+
 CGRect up_rect_centered_in_rect_scaled(CGRect rectToCenter, CGFloat scale, CGRect referenceRect)
 {
     CGFloat w = CGRectGetWidth(rectToCenter) * scale;

@@ -136,6 +136,7 @@ CGRect up_rect_centered_in_rect(CGRect rectToCenter, CGRect referenceRect);
 CGRect up_rect_centered_x_in_rect(CGRect rectToCenter, CGRect referenceRect);
 CGRect up_rect_centered_y_in_rect(CGRect rectToCenter, CGRect referenceRect);
 CGRect up_rect_scaled(CGRect rect, CGFloat scale);
+CGRect up_rect_scaled_in_rect(CGRect rect, CGFloat scale, CGRect referenceRect);
 CGRect up_rect_scaled_centered_in_rect(CGRect rectToCenter, CGFloat scale, CGRect referenceRect);
 CGRect up_rect_scaled_centered_x_in_rect(CGRect rectToCenter, CGFloat scale, CGRect referenceRect);
 CGRect up_rect_scaled_centered_y_in_rect(CGRect rectToCenter, CGFloat scale, CGRect referenceRect);

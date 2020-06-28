@@ -54,6 +54,8 @@ public:
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
         ChoiceBackRight, ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
+        ExtrasColorsDarkMode, ExtrasColorsStarkMode, ExtrasColorsQuarkMode, ExtrasColorsHueWheel,
+        ExtrasColorsHueStepMore, ExtrasColorsHueStepLess, ExtrasColorsDescription, ExtrasColorsExample,
     };
 
     enum class Spot {
@@ -91,7 +93,8 @@ public:
     static inline constexpr CGSize CanonicalRoundBackButtonSize = { 64,  64 };
     static inline constexpr CGSize CanonicalTextButtonSize =     { 188,  76 };
     static inline constexpr CGSize CanonicalCheckboxSize =       {  39,  35 };
-    static inline constexpr CGSize CanonicalHuePickerSize =      { 220, 220 };
+    static inline constexpr CGSize CanonicalHueWheelSize =       { 220, 220 };
+    static inline constexpr CGSize CanonicalStepperSize =        {   36, 36 };
 
     static inline constexpr CGFloat CanonicalGameInformationCapHeight = 57;
     static inline constexpr CGFloat CanonicalGameInformationSuperscriptCapHeight = 39;
@@ -105,7 +108,7 @@ public:
     static inline constexpr CGFloat CanonicalWordScoreBonusCapHeight = 30;
     static inline constexpr CGFloat CanonicalWordScoreBonusBaselineAdjustment = 14;
     static inline constexpr CGFloat CanonicalCheckboxLabelCapHeight = 25;
-    static inline constexpr CGFloat CanonicalCheckboxLabelBaselineAdjustment = 5;
+    static inline constexpr CGFloat CanonicalCheckboxLabelBaselineAdjustment = 7;
     static inline constexpr CGFloat CanonicalCheckboxLabelLeftMargin = 43;
 
     static inline constexpr CGFloat CanonicalChoiceLabelCapHeight = 30;
@@ -146,7 +149,16 @@ public:
     static inline constexpr CGRect CanonicalChoice4LayoutFrame =             {  30, 372, 940, 76 };
     static inline constexpr CGSize CanonicalChoiceSize =                              {  300, 76 };
 
-//    static inline constexpr UIEdge CanonicalExtrasBackChargeSize =                              {  300, 76 };
+    static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 20;
+
+    static inline constexpr CGRect CanonicalExtrasColorsHueWheelFrame =    { 430,  36, up_size_width(CanonicalHueWheelSize), up_size_height(CanonicalHueWheelSize) };
+    static inline constexpr CGRect CanonicalExtrasColorsHueStepMoreFrame = { 692,  96, up_size_width(CanonicalStepperSize), up_size_height(CanonicalStepperSize) };
+    static inline constexpr CGRect CanonicalExtrasColorsHueStepLessFrame = { 692, 156, up_size_width(CanonicalStepperSize), up_size_height(CanonicalStepperSize) };
+    static inline constexpr CGRect CanonicalExtrasColorsDarkModeFrame =    { 780,  64, up_size_width(CanonicalCheckboxSize), up_size_height(CanonicalCheckboxSize) };
+    static inline constexpr CGRect CanonicalExtrasColorsStarkModeFrame =   { 780, 124, up_size_width(CanonicalCheckboxSize), up_size_height(CanonicalCheckboxSize) };
+    static inline constexpr CGRect CanonicalExtrasColorsQuarkModeFrame =   { 780, 184, up_size_width(CanonicalCheckboxSize), up_size_height(CanonicalCheckboxSize) };
+    static inline constexpr CGRect CanonicalExtrasColorsDescriptionFrame = { 384, 278, 572, 76 };
+    static inline constexpr CGRect CanonicalExtrasColorsExampleFrame =     { 400, 386, 540, 66 };
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
@@ -184,7 +196,7 @@ public:
 
     CGRect word_tray_layout_frame() const { return m_word_tray_layout_frame; }
 
-    CGRect word_tray_mask_frame() const { return layout_aspect_rect(CanonicalWordTrayTileMaskFrame); }
+    CGRect word_tray_mask_frame() const { return layout_centered_x_aspect_rect(CanonicalWordTrayTileMaskFrame); }
 
     CGSize tile_size() const { return m_tile_size; }
     CGFloat tile_stroke_width() const { return m_tile_stroke_width; }
@@ -213,8 +225,11 @@ public:
     const FontMetrics &choice_control_font_metrics() const { return m_choice_control_font_metrics; }
     CGFloat choice_control_label_left_margin() const { return m_choice_control_label_left_margin; }
     CGFloat choice_control_label_right_margin() const { return m_choice_control_label_right_margin; }
+    UIFont *settings_description_font() const { return m_settings_description_font; }
+    const FontMetrics &settings_description_font_metrics() const { return m_settings_description_font_metrics; }
 
     CGAffineTransform menu_game_view_transform() const { return m_menu_game_view_transform; }
+    CGAffineTransform extras_example_transform() const { return m_extras_example_transform; }
 
 private:
     
@@ -222,7 +237,8 @@ private:
 
     UP_STATIC_INLINE SpellLayout *g_instance;
     
-    CGRect layout_aspect_rect(CGRect) const;
+    CGRect layout_centered_x_aspect_rect(CGRect) const;
+    CGRect layout_relative_aspect_rect(CGRect) const;
     CGRect layout_game_over_score_frame(NSString *) const;
 
     void set_aspect_mode(AspectMode aspect_mode) { m_aspect_mode = aspect_mode; }
@@ -237,6 +253,7 @@ private:
     void set_tile_drag_barrier_frame(CGRect rect) { m_tile_drag_barrier_frame = rect; }
     void set_word_tray_shake_offset(UIOffset offset) { m_word_tray_shake_offset = offset; }
     void set_menu_game_view_transform(CGAffineTransform t) { m_menu_game_view_transform = t; }
+    void set_extras_example_transform(CGAffineTransform t) { m_extras_example_transform = t; }
     void set_game_information_font(UIFont *font) { m_game_information_font = font; }
     void set_game_information_font_metrics(const FontMetrics &metrics) { m_game_information_font_metrics = metrics; }
     void set_game_information_superscript_font(UIFont *font) { m_game_information_superscript_font = font; }
@@ -255,11 +272,14 @@ private:
     void set_choice_control_font_metrics(const FontMetrics &metrics) { m_choice_control_font_metrics = metrics; }
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
+    void set_settings_description_font(UIFont *font) { m_settings_description_font = font; }
+    void set_settings_description_font_metrics(const FontMetrics &metrics) { m_settings_description_font_metrics = metrics; }
     void set_game_controls_button_charge_outsets(UPOutsets outsets) { m_game_controls_button_charge_outsets = outsets; }
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
     void set_game_score_frame(CGRect rect) { m_game_score_frame = rect; }
 
     void calculate_menu_game_view_transform();
+    void calculate_extras_example_transform();
     void calculate_tile_size();
     void calculate_tile_stroke_width();
     void calculate_word_tray_layout_frame();
@@ -274,13 +294,15 @@ private:
     void calculate_word_score_bonus_font_metrics();
     void calculate_checkbox_control_metrics();
     void calculate_choice_control_metrics();
+    void calculate_settings_description_font_metrics();
     void calculate_locations();
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
     void calculate_dialog_locations();
     void calculate_game_locations();
-    void calculate_game_controls_button_charge_size();
     void calculate_choice_locations();
+    void calculate_extras_locations();
+    void calculate_game_controls_button_charge_size();
     void calculate_and_set_locations(const Role role, const CGRect &frame, CGFloat near_factor = CanonicalOffscreenNearFrameFactor);
 
     void calculate_game_timer_frame();
@@ -316,6 +338,7 @@ private:
     CGFloat m_layout_scale = 1.0;
     UIEdgeInsets m_letterbox_insets = UIEdgeInsetsZero;
     CGAffineTransform m_menu_game_view_transform;
+    CGAffineTransform m_extras_example_transform;
 
     __strong UIFont *m_game_information_font;
     FontMetrics m_game_information_font_metrics;
@@ -334,6 +357,8 @@ private:
     FontMetrics m_choice_control_font_metrics;
     CGFloat m_choice_control_label_left_margin = 0.0;
     CGFloat m_choice_control_label_right_margin = 0.0;
+    __strong UIFont *m_settings_description_font;
+    FontMetrics m_settings_description_font_metrics;
 
     CGSize m_tile_size = CGSizeZero;
     CGFloat m_tile_stroke_width = 0.0;

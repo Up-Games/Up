@@ -59,42 +59,44 @@ static const int MilepostHue = 15;
 {
     self = [super initWithFrame:frame];
 
+    SpellLayout &layout = SpellLayout::instance();
+    
     self.darkModeCheckbox = [UPCheckbox checkbox];
     self.darkModeCheckbox.labelString = @"DARK";
     [self.darkModeCheckbox setTarget:self action:@selector(darkModeCheckboxTapped)];
-    self.darkModeCheckbox.frame = CGRectMake(670, 34, up_size_width(self.darkModeCheckbox.canonicalSize), up_size_height(self.darkModeCheckbox.canonicalSize));
+    self.darkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
     [self addSubview:self.darkModeCheckbox];
     
     self.starkModeCheckbox = [UPCheckbox checkbox];
     self.starkModeCheckbox.labelString = @"STARK";
     [self.starkModeCheckbox setTarget:self action:@selector(starkModeCheckboxTapped)];
-    self.starkModeCheckbox.frame = CGRectMake(670, 94, up_size_width(self.starkModeCheckbox.canonicalSize), up_size_height(self.starkModeCheckbox.canonicalSize));
+    self.starkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsStarkMode);
     [self addSubview:self.starkModeCheckbox];
     
     self.quarkModeCheckbox = [UPCheckbox checkbox];
     self.quarkModeCheckbox.labelString = @"QUARK";
     [self.quarkModeCheckbox setTarget:self action:@selector(setAppIconButtonTapped)];
-    self.quarkModeCheckbox.frame = CGRectMake(670, 154, up_size_width(self.quarkModeCheckbox.canonicalSize), up_size_height(self.quarkModeCheckbox.canonicalSize));
+    self.quarkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsQuarkMode);
     [self addSubview:self.quarkModeCheckbox];
 
     self.hueWheel = [UPHueWheel hueWheel];
-    self.hueWheel.frame = CGRectMake(380, 26, 170, 170);
+    self.hueWheel.frame = layout.frame_for(Role::ExtrasColorsHueWheel);
     self.hueWheel.delegate = self;
     [self addSubview:self.hueWheel];
     
     self.hueStepMore = [UPStepper stepperWithDirection:UPStepperDirectionUp];
     [self.hueStepMore setTarget:self action:@selector(handleHueStepMore)];
-    self.hueStepMore.frame = CGRectMake(580, 71, 36, 36);
+    self.hueStepMore.frame = layout.frame_for(Role::ExtrasColorsHueStepMore);
     [self addSubview:self.hueStepMore];
     
     self.hueStepLess = [UPStepper stepperWithDirection:UPStepperDirectionDown];
     [self.hueStepLess setTarget:self action:@selector(handleHueStepLess)];
-    self.hueStepLess.frame = CGRectMake(580, 121, 36, 36);
+    self.hueStepLess.frame = layout.frame_for(Role::ExtrasColorsHueStepLess);
     [self addSubview:self.hueStepLess];
     
     self.hueDescription = [UPLabel label];
-    self.hueDescription.frame = CGRectMake(350, 214, 470, 60);
-    self.hueDescription.font = [UIFont settingsDescriptionFontOfSize:23];
+    self.hueDescription.frame = layout.frame_for(Role::ExtrasColorsDescription);
+    self.hueDescription.font = layout.settings_description_font();
     self.hueDescription.textColorCategory = UPColorCategoryControlText;
     self.hueDescription.backgroundColorCategory = UPColorCategoryClear;
     self.hueDescription.textAlignment = NSTextAlignmentCenter;
@@ -137,8 +139,8 @@ static const int MilepostHue = 15;
         [tileView addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTappedTile:)]];
         tileX += up_size_width(SpellLayout::CanonicalTileSize) + SpellLayout::CanonicalTileGap;
     }
-    self.exampleTilesContainer.transform = CGAffineTransformMakeScale(0.55, 0.55);
-    self.exampleTilesContainer.center = CGPointMake(590, 330);
+    self.exampleTilesContainer.transform = layout.extras_example_transform();
+    self.exampleTilesContainer.center = layout.center_for(Role::ExtrasColorsExample);
     
     UPSpellSettings *settings = [UPSpellSettings instance];
     UPThemeColorStyle themeColorStyle = settings.themeColorStyle;

@@ -61,7 +61,7 @@ static UIBezierPath *HuePointerPath()
     self.serialNumber = UP::next_serial_number();
     self.backgroundColor = [UIColor clearColor];
 
-    self.canonicalSize = SpellLayout::CanonicalHuePickerSize;
+    self.canonicalSize = SpellLayout::CanonicalHueWheelSize;
     
     [self setAuxiliaryPath:HuePointerPath()];
     self.auxiliaryPathView.layer.anchorPoint = CGPointMake(0.5, 0.5);
