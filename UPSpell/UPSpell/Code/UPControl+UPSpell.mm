@@ -766,68 +766,42 @@ using namespace UP;
 
 @implementation UPTextButton (UPSpell)
 
-+ (UPButton *)textButtonAbout
-{
-    UPTextButton *button = [UPTextButton textButton];
-    button.labelString = @"ABOUT";
-    [button setFillColorCategory:UPColorCategoryHighlightedFill forState:(UPControlStateSelected | UPControlStateHighlighted)];
-    [button setFillColorCategory:UPColorCategoryClear forState:UPControlStateSelected];
-    [button setFillColorAnimationDuration:0.5 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [button setFillColorAnimationDuration:0.2 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    [button setStrokeColorCategory:UPColorCategoryPrimaryStroke forState:(UPControlStateSelected | UPControlStateHighlighted)];
-    [button setStrokeColorCategory:UPColorCategoryClear forState:UPControlStateSelected];
-    [button setStrokeColorAnimationDuration:0.5 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [button setStrokeColorAnimationDuration:0.2 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    [button setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
-    [button setLabelColorCategory:UPColorCategoryControlText forState:UPControlStateSelected];
-    [button setLabelColorAnimationDuration:0.5 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [button setLabelColorAnimationDuration:0.2 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    button.autoHighlights = YES;
-    button.autoSelects = YES;
-    button.band = UP::BandModeUI;
-    return button;
-}
-
-+ (UPButton *)textButtonExtras
-{
-    UPTextButton *button = [UPTextButton textButton];
-    [button setLabelString:@"EXTRAS"];
-    [button setFillColorCategory:UPColorCategoryHighlightedFill forState:(UPControlStateSelected | UPControlStateHighlighted)];
-    [button setFillColorCategory:UPColorCategoryClear forState:UPControlStateSelected];
-    [button setFillColorAnimationDuration:0.5 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [button setFillColorAnimationDuration:0.2 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    [button setStrokeColorCategory:UPColorCategoryPrimaryStroke forState:(UPControlStateSelected | UPControlStateHighlighted)];
-    [button setStrokeColorCategory:UPColorCategoryClear forState:UPControlStateSelected];
-    [button setStrokeColorAnimationDuration:0.5 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [button setStrokeColorAnimationDuration:0.2 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    [button setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
-    [button setLabelColorCategory:UPColorCategoryControlText forState:UPControlStateSelected];
-    [button setLabelColorAnimationDuration:0.5 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [button setLabelColorAnimationDuration:0.2 fromState:UPControlStateSelected toState:UPControlStateNormal];
-    button.autoHighlights = YES;
-    button.autoSelects = YES;
-    button.band = UP::BandModeUI;
-    return button;
-}
-
-+ (UPButton *)textButtonPlay
++ (UPTextButton *)textButtonPlay
 {
     UPTextButton *button = [UPTextButton textButtonWithLabelString:@"PLAY"];
     [button setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     return button;
 }
 
-+ (UPButton *)textButtonQuit
++ (UPTextButton *)textButtonQuit
 {
     UPTextButton *button = [UPTextButton textButtonWithLabelString:@"QUIT"];
     [button setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     return button;
 }
 
-+ (UPButton *)textButtonResume
++ (UPTextButton *)textButtonResume
 {
     UPTextButton *button = [UPTextButton textButtonWithLabelString:@"RESUME"];
     [button setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
+    return button;
+}
+
+@end
+
+@implementation UPTextSettingsButton (UPSpell)
+
++ (UPTextSettingsButton *)textButtonAbout
+{
+    UPTextSettingsButton *button = [UPTextSettingsButton textSettingsButton];
+    button.labelString = @"ABOUT";
+    return button;
+}
+
++ (UPTextSettingsButton *)textButtonExtras
+{
+    UPTextSettingsButton *button = [UPTextSettingsButton textSettingsButton];
+    [button setLabelString:@"EXTRAS"];
     return button;
 }
 

@@ -138,6 +138,7 @@
 		5D0FC33324A65A6C00353563 /* UPAccessoryPane.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC33224A65A6C00353563 /* UPAccessoryPane.mm */; };
 		5D0FC33624A65C0B00353563 /* UPSpellExtrasColorsPane.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC33524A65C0B00353563 /* UPSpellExtrasColorsPane.mm */; };
 		5D0FC33924A9410900353563 /* UPTextButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC33824A9410900353563 /* UPTextButton.mm */; };
+		5D0FC33C24A972AD00353563 /* UPTextSettingsButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC33B24A972AD00353563 /* UPTextSettingsButton.mm */; };
 		5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */; };
 		5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogMenu.mm */; };
@@ -331,6 +332,8 @@
 		5D0FC33524A65C0B00353563 /* UPSpellExtrasColorsPane.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasColorsPane.mm; sourceTree = "<group>"; };
 		5D0FC33724A9410900353563 /* UPTextButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTextButton.h; sourceTree = "<group>"; };
 		5D0FC33824A9410900353563 /* UPTextButton.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTextButton.mm; sourceTree = "<group>"; };
+		5D0FC33A24A972AD00353563 /* UPTextSettingsButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTextSettingsButton.h; sourceTree = "<group>"; };
+		5D0FC33B24A972AD00353563 /* UPTextSettingsButton.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTextSettingsButton.mm; sourceTree = "<group>"; };
 		5D34613624887918009FB46D /* UPViewMove+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UPViewMove+UPSpell.h"; sourceTree = "<group>"; };
 		5D4AE823248BDED200213904 /* UPSpellExtrasController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasController.h; sourceTree = "<group>"; };
 		5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasController.mm; sourceTree = "<group>"; };
@@ -596,6 +599,8 @@
 				5D0FC33824A9410900353563 /* UPTextButton.mm */,
 				5D5EA1432485B820006264D2 /* UPTextPaths.h */,
 				5D5EA1442485B820006264D2 /* UPTextPaths.mm */,
+				5D0FC33A24A972AD00353563 /* UPTextSettingsButton.h */,
+				5D0FC33B24A972AD00353563 /* UPTextSettingsButton.mm */,
 				5DA8E0422476128C008D3015 /* UPTileModel.h */,
 				5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */,
 				5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */,
@@ -903,6 +908,7 @@
 				5DF9DF6D2466165800B2199D /* main.m in Sources */,
 				5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */,
 				5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */,
+				5D0FC33C24A972AD00353563 /* UPTextSettingsButton.mm in Sources */,
 				5D0FC23324A50E3B00353563 /* UPChoice.mm in Sources */,
 				5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */,
 				5D4AE82A248ED25500213904 /* UPDialogMenu.mm in Sources */,

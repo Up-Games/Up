@@ -116,9 +116,9 @@ UIBezierPath *TextButtonStrokePath()
 
 + (UPTextButton *)textButtonWithLabelString:(NSString *)labelString
 {
-    UPTextButton *textButton = [[UPTextButton alloc] initWithTarget:nil action:nullptr];
-    [textButton setLabelString:labelString];
-    return textButton;
+    UPTextButton *button = [[UPTextButton alloc] initWithTarget:nil action:nullptr];
+    [button setLabelString:labelString];
+    return button;
 }
 
 + (UPTextButton *)textButtonWithTarget:(id)target action:(SEL)action
