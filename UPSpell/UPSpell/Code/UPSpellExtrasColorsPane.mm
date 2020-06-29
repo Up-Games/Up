@@ -5,7 +5,9 @@
 
 #import <UpKit/UIColor+UP.h>
 #import <UpKit/UIDevice+UP.h>
+#import <UpKit/UPBand.h>
 #import <UpKit/UPTapGestureRecognizer.h>
+#import <UpKit/UPTimeSpanning.h>
 
 #import "UIFont+UPSpell.h"
 #import "UPCheckbox.h"
@@ -19,7 +21,9 @@
 #import "UPSpellNavigationController.h"
 #import "UPSpellSettings.h"
 #import "UPStepper.h"
+#import "UPTextButton.h"
 #import "UPTileView.h"
+#import "UPViewMove+UPSpell.h"
 
 @interface UPSpellExtrasColorsPane ()  <UPHueWheelDelegate>
 @property (nonatomic, readwrite) CGFloat hue;
@@ -32,15 +36,27 @@
 @property (nonatomic, readwrite) UPStepper *hueStepMore;
 @property (nonatomic) UPLabel *hueDescription;
 @property (nonatomic) UIView *exampleTilesContainer;
+@property (nonatomic) UPLabel *iconPrompt;
+@property (nonatomic) UPTextButton *iconButtonNope;
+@property (nonatomic) UPTextButton *iconButtonYep;
+@property (nonatomic) BOOL showingIconEasterEgg;
 @end
 
 using UP::BandSettingsUI;
+using UP::BandSettingsAnimationDelay;
 using UP::BandSettingsUpdateDelay;
 using UP::SpellLayout;
 using UP::TileArray;
 using UP::TileCount;
 using UP::TileIndex;
 using UP::TileModel;
+
+using UP::TimeSpanning::bloop_in;
+using UP::TimeSpanning::bloop_out;
+
+using UP::TimeSpanning::cancel;
+using UP::TimeSpanning::delay;
+using UP::TimeSpanning::start;
 
 using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Spot;
@@ -141,7 +157,28 @@ static const int MilepostHue = 15;
     }
     self.exampleTilesContainer.transform = layout.extras_example_transform();
     self.exampleTilesContainer.center = layout.center_for(Role::ExtrasColorsExample);
-    
+
+    self.iconPrompt = [UPLabel label];
+    self.iconPrompt.string = @"Change the UP Spell app icon on your homescreen\nto match the hue on the wheel?";
+    self.iconPrompt.frame = layout.frame_for(Role::ExtrasColorsIconPrompt);
+    self.iconPrompt.font = layout.settings_description_font();
+    self.iconPrompt.textColorCategory = UPColorCategoryControlText;
+    self.iconPrompt.backgroundColorCategory = UPColorCategoryClear;
+    self.iconPrompt.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:self.iconPrompt];
+
+    self.iconButtonNope = [UPTextButton textButtonWithLabelString:@"NOPE"];
+    [self.iconButtonNope setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
+    [self.iconButtonNope setTarget:self action:@selector(hideIconEasterEgg)];
+    [self addSubview:self.iconButtonNope];
+    self.iconButtonNope.frame = layout.frame_for(Role::ExtrasColorsIconButtonNope);
+
+    self.iconButtonYep = [UPTextButton textButtonWithLabelString:@"YEP!"];
+    [self.iconButtonYep setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
+    [self.iconButtonYep setTarget:self action:@selector(iconButtonYepTapped)];
+    [self addSubview:self.iconButtonYep];
+    self.iconButtonYep.frame = layout.frame_for(Role::ExtrasColorsIconButtonYep);
+
     UPSpellSettings *settings = [UPSpellSettings instance];
     UPThemeColorStyle themeColorStyle = settings.themeColorStyle;
     switch (themeColorStyle) {
@@ -170,6 +207,79 @@ static const int MilepostHue = 15;
     [self updateHueDescription];
     
     return self;
+}
+
+- (void)prepare
+{
+    self.showingIconEasterEgg = NO;
+    self.userInteractionEnabled = YES;
+    
+    SpellLayout &layout = SpellLayout::instance();
+    self.hueDescription.frame = layout.frame_for(Role::ExtrasColorsDescription);
+    self.exampleTilesContainer.center = layout.center_for(Role::ExtrasColorsExample);
+    self.iconPrompt.frame = layout.frame_for(Role::ExtrasColorsIconPrompt, Spot::OffBottomFar);
+    self.iconButtonNope.frame = layout.frame_for(Role::ExtrasColorsIconButtonNope, Spot::OffBottomFar);
+    self.iconButtonYep.frame = layout.frame_for(Role::ExtrasColorsIconButtonYep, Spot::OffBottomFar);
+    
+    delay(BandSettingsAnimationDelay, 2, ^{
+        [self showIconEasterEgg];
+    });
+}
+
+- (void)showIconEasterEgg
+{
+    if (self.showingIconEasterEgg) {
+        return;
+    }
+    self.userInteractionEnabled = NO;
+    self.showingIconEasterEgg = YES;
+    
+    NSArray <UPViewMove *> *outMoves = @[
+        UPViewMoveMake(self.hueDescription, Role::ExtrasColorsDescription, Spot::OffBottomFar),
+        UPViewMoveMake(self.exampleTilesContainer, Role::ExtrasColorsExample, Spot::OffBottomFar),
+    ];
+
+    NSArray <UPViewMove *> *inMoves = @[
+        UPViewMoveMake(self.iconPrompt, Role::ExtrasColorsIconPrompt),
+        UPViewMoveMake(self.iconButtonNope, Role::ExtrasColorsIconButtonNope),
+        UPViewMoveMake(self.iconButtonYep, Role::ExtrasColorsIconButtonYep),
+    ];
+
+    CFTimeInterval duration = 0.3;
+    
+    start(bloop_out(BandSettingsUI, outMoves, duration, ^(UIViewAnimatingPosition) {
+        start(bloop_in(BandSettingsUI, inMoves, duration, ^(UIViewAnimatingPosition) {
+            self.userInteractionEnabled = YES;
+        }));
+    }));
+}
+
+- (void)hideIconEasterEgg
+{
+    if (!self.showingIconEasterEgg) {
+        return;
+    }
+    self.userInteractionEnabled = NO;
+    self.showingIconEasterEgg = NO;
+    
+    NSArray <UPViewMove *> *outMoves = @[
+        UPViewMoveMake(self.iconPrompt, Role::ExtrasColorsIconPrompt, Spot::OffBottomFar),
+        UPViewMoveMake(self.iconButtonNope, Role::ExtrasColorsIconButtonNope, Spot::OffBottomFar),
+        UPViewMoveMake(self.iconButtonYep, Role::ExtrasColorsIconButtonYep, Spot::OffBottomFar),
+    ];
+    
+    NSArray <UPViewMove *> *inMoves = @[
+        UPViewMoveMake(self.hueDescription, Role::ExtrasColorsDescription),
+        UPViewMoveMake(self.exampleTilesContainer, Role::ExtrasColorsExample),
+    ];
+    
+    CFTimeInterval duration = 0.3;
+    
+    start(bloop_out(BandSettingsUI, outMoves, duration, ^(UIViewAnimatingPosition) {
+        start(bloop_in(BandSettingsUI, inMoves, duration, ^(UIViewAnimatingPosition) {
+            self.userInteractionEnabled = YES;
+        }));
+    }));
 }
 
 - (void)hueWheelDidUpdate:(UPHueWheel *)hueWheel
@@ -285,7 +395,15 @@ static const int MilepostHue = 15;
             tileView.highlighted = gesture.touchInside;
             break;
         }
-        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateEnded: {
+            tileView.highlighted = NO;
+            if (tileView.glyph == U'X') {
+                delay(BandSettingsAnimationDelay, 0.1, ^{
+                    [self showIconEasterEgg];
+                });
+            }
+            break;
+        }
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateFailed: {
             tileView.highlighted = NO;
@@ -382,7 +500,7 @@ static const int MilepostHue = 15;
     [self updateHueDescription];
 }
 
-- (void)setAppIconButtonTapped
+- (void)iconButtonYepTapped
 {
     CGFloat hue = [UIColor themeColorHue];
     if (fmod(hue, MilepostHue) > 1) {
@@ -416,6 +534,7 @@ static const int MilepostHue = 15;
     }
     LOG(General, "iconName: %@ : %@ : %@", iconName, device.model, [device fullModel]);
     [app setAlternateIconName:iconName completionHandler:^(NSError *error) {
+        [self hideIconEasterEgg];
         if (error) {
             LOG(General, "setAlternateIconName error: %@", error);
         }

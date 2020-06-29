@@ -15,4 +15,8 @@ using UP::SpellLayout;
     return [[self alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
 }
 
+- (void)prepare
+{
+}
+
 @end

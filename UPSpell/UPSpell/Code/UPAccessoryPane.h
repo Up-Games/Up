@@ -10,4 +10,6 @@
 
 + (UPAccessoryPane *)pane;
 
+- (void)prepare;
+
 @end

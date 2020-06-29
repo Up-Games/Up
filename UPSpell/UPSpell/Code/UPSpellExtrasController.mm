@@ -105,7 +105,6 @@ using Location = UP::SpellLayout::Location;
 
     self.colorsPane = [[UPSpellExtrasColorsPane alloc] initWithFrame:layout.screen_bounds()];
     self.colorsPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
-    //self.colorsPane.backgroundColor = [UIColor testColor1];
     [self.view addSubview:self.colorsPane];
 
     self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
@@ -164,6 +163,7 @@ using Location = UP::SpellLayout::Location;
     UPAccessoryPane *previousSelectedPane = _selectedPane;
     _selectedPane = selectedPane;
     [self.view bringSubviewToFront:selectedPane];
+    [selectedPane prepare];
     
     if (up_is_fuzzy_zero(duration)) {
         previousSelectedPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);

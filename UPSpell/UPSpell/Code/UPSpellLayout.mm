@@ -658,6 +658,12 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasColorsHueStepLess, layout_relative_aspect_rect(CanonicalExtrasColorsHueStepLessFrame));
     calculate_and_set_locations(Role::ExtrasColorsDescription, layout_relative_aspect_rect(CanonicalExtrasColorsDescriptionFrame));
     calculate_and_set_locations(Role::ExtrasColorsExample, layout_relative_aspect_rect(CanonicalExtrasColorsExampleFrame));
+
+    calculate_and_set_locations(Role::ExtrasColorsIconPrompt, layout_relative_aspect_rect(CanonicalExtrasColorsIconPromptFrame));
+    CGSize text_button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
+    CGRect icon_button_layout_frame = layout_relative_aspect_rect(CanonicalExtrasColorsIconLayoutFrame);
+    calculate_and_set_locations(Role::ExtrasColorsIconButtonNope, up_left_aligned_rect(text_button_size, icon_button_layout_frame));
+    calculate_and_set_locations(Role::ExtrasColorsIconButtonYep, up_right_aligned_rect(text_button_size, icon_button_layout_frame));
 }
 
 void SpellLayout::calculate_choice_locations()
