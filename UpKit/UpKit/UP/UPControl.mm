@@ -11,6 +11,7 @@
 #import "UPControl.h"
 #import "UIColor+UP.h"
 #import "UPGestureRecognizer.h"
+#import "UPLabel.h"
 #import "UPMacros.h"
 #import "UPMath.h"
 #import "UPNeedsUpdater.h"
@@ -26,6 +27,7 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 @interface UPControl () <UPNeedsUpdatable>
 {
     std::map<NSUInteger, __strong UIBezierPath *> m_paths;
+    std::map<NSUInteger, __strong NSString *> m_label_strings;
     std::map<NSUInteger, UPColorCategory> m_color_categories;
     std::map<UPControlStatePair, CFTimeInterval> m_color_animations;
 }
@@ -36,11 +38,13 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 @property (nonatomic, readwrite) UPBezierPathView *contentPathView;
 @property (nonatomic, readwrite) UPBezierPathView *auxiliaryPathView;
 @property (nonatomic, readwrite) UPBezierPathView *accentPathView;
+@property (nonatomic, readwrite) UPLabel *label;
 @property (nonatomic) uint32_t fillColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t strokeColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t contentPathColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t auxiliaryPathColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t accentPathColorAnimatorSerialNumber;
+@property (nonatomic) uint32_t labelColorAnimatorSerialNumber;
 @end
 
 UP_STATIC_INLINE NSUInteger up_control_key_fill(UPControlState controlState)
@@ -66,6 +70,11 @@ UP_STATIC_INLINE NSUInteger up_control_key_auxiliary(UPControlState controlState
 UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
 {
     return UPControlElementAccent | controlState;
+}
+
+UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
+{
+    return UPControlElementLabel | controlState;
 }
 
 @implementation UPControl
@@ -234,57 +243,107 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     [self sendSubviewToBack:view];
 }
 
-#pragma mark - Paths
+#pragma mark - Subview creation
 
 - (void)_createFillPathViewIfNeeded
 {
-    if (!self.fillPathView) {
-        self.fillPathView = [UPBezierPathView bezierPathView];
-        self.fillPathView.userInteractionEnabled = NO;
-        self.fillPathView.canonicalSize = self.canonicalSize;
-        [self addSubview:self.fillPathView];
+    if (!_fillPathView) {
+        _fillPathView = [UPBezierPathView bezierPathView];
+        _fillPathView.userInteractionEnabled = NO;
+        _fillPathView.canonicalSize = self.canonicalSize;
+        [self addSubview:_fillPathView];
     }
 }
 
 - (void)_createStrokePathViewIfNeeded
 {
-    if (!self.strokePathView) {
-        self.strokePathView = [UPBezierPathView bezierPathView];
-        self.strokePathView.userInteractionEnabled = NO;
-        self.strokePathView.canonicalSize = self.canonicalSize;
-        [self addSubview:self.strokePathView];
+    if (!_strokePathView) {
+        _strokePathView = [UPBezierPathView bezierPathView];
+        _strokePathView.userInteractionEnabled = NO;
+        _strokePathView.canonicalSize = self.canonicalSize;
+        [self addSubview:_strokePathView];
     }
 }
 
 - (void)_createContentPathViewIfNeeded
 {
-    if (!self.contentPathView) {
-        self.contentPathView = [UPBezierPathView bezierPathView];
-        self.contentPathView.userInteractionEnabled = NO;
-        self.contentPathView.canonicalSize = self.canonicalSize;
-        [self addSubview:self.contentPathView];
+    if (!_contentPathView) {
+        _contentPathView = [UPBezierPathView bezierPathView];
+        _contentPathView.userInteractionEnabled = NO;
+        _contentPathView.canonicalSize = self.canonicalSize;
+        [self addSubview:_contentPathView];
     }
 }
 
 - (void)_createAuxiliaryPathViewIfNeeded
 {
-    if (!self.auxiliaryPathView) {
-        self.auxiliaryPathView = [UPBezierPathView bezierPathView];
-        self.auxiliaryPathView.userInteractionEnabled = NO;
-        self.auxiliaryPathView.canonicalSize = self.canonicalSize;
-        [self addSubview:self.auxiliaryPathView];
+    if (!_auxiliaryPathView) {
+        _auxiliaryPathView = [UPBezierPathView bezierPathView];
+        _auxiliaryPathView.userInteractionEnabled = NO;
+        _auxiliaryPathView.canonicalSize = self.canonicalSize;
+        [self addSubview:_auxiliaryPathView];
     }
 }
 
 - (void)_createAccentPathViewIfNeeded
 {
-    if (!self.accentPathView) {
-        self.accentPathView = [UPBezierPathView bezierPathView];
-        self.accentPathView.userInteractionEnabled = NO;
-        self.accentPathView.canonicalSize = self.canonicalSize;
-        [self addSubview:self.accentPathView];
+    if (!_accentPathView) {
+        _accentPathView = [UPBezierPathView bezierPathView];
+        _accentPathView.userInteractionEnabled = NO;
+        _accentPathView.canonicalSize = self.canonicalSize;
+        [self addSubview:_accentPathView];
     }
 }
+
+- (void)_createLabelIfNeeded
+{
+    if (!_label) {
+        _label = [UPLabel label];
+        _label.userInteractionEnabled = NO;
+        _label.backgroundColorCategory = UPColorCategoryClear;
+        [self addSubview:_label];
+    }
+}
+
+#pragma mark - Subview accessors
+
+- (UPBezierPathView *)fillPathView
+{
+    [self _createFillPathViewIfNeeded];
+    return _fillPathView;
+}
+
+- (UPBezierPathView *)strokePathView
+{
+    [self _createStrokePathViewIfNeeded];
+    return _strokePathView;
+}
+
+- (UPBezierPathView *)contentPathView
+{
+    [self _createContentPathViewIfNeeded];
+    return _contentPathView;
+}
+
+- (UPBezierPathView *)auxiliaryPathView
+{
+    [self _createAuxiliaryPathViewIfNeeded];
+    return _auxiliaryPathView;
+}
+
+- (UPBezierPathView *)accentPathView
+{
+    [self _createAccentPathViewIfNeeded];
+    return _accentPathView;
+}
+
+- (UPLabel *)label
+{
+    [self _createLabelIfNeeded];
+    return _label;
+}
+
+#pragma mark - Paths
 
 - (void)setFillPath:(UIBezierPath *)path
 {
@@ -450,6 +509,40 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
         return sval->second;
     }
     const auto &nval = m_paths.find(up_control_key_accent(UPControlStateNormal));
+    if (nval != end) {
+        return nval->second;
+    }
+    return nil;
+}
+
+- (void)setLabelString:(NSString *)string
+{
+    [self setLabelString:string forState:UPControlStateNormal];
+}
+
+- (void)setLabelString:(NSString *)string forState:(UPControlState)state
+{
+    [self _createLabelIfNeeded];
+    NSUInteger k = up_control_key_label(state);
+    auto it = m_label_strings.find(k);
+    if (it == m_label_strings.end()) {
+        m_label_strings.emplace(k, string);
+    }
+    else {
+        it->second = string;
+    }
+    [self invalidate];
+    [self setNeedsUpdate];
+}
+
+- (NSString *)labelStringForState:(UPControlState)state
+{
+    const auto &end = m_label_strings.end();
+    const auto &sval = m_label_strings.find(up_control_key_label(state));
+    if (sval != end) {
+        return sval->second;
+    }
+    const auto &nval = m_label_strings.find(up_control_key_label(UPControlStateNormal));
     if (nval != end) {
         return nval->second;
     }
@@ -753,6 +846,65 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     return it != m_color_animations.end() ? it->second : 0.0;
 }
 
+- (void)setLabelColorCategory:(UPColorCategory)colorCategory
+{
+    [self setLabelColorCategory:colorCategory forState:UPControlStateNormal];
+}
+
+- (void)setLabelColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state
+{
+    NSUInteger k = up_control_key_label(state);
+    auto it = m_color_categories.find(k);
+    if (it == m_color_categories.end()) {
+        m_color_categories.emplace(k, colorCategory);
+    }
+    else {
+        it->second = colorCategory;
+    }
+    [self setNeedsUpdate];
+}
+
+- (UPColorCategory)labelColorCategoryForState:(UPControlState)state
+{
+    const auto &end = m_color_categories.end();
+    const auto &sval = m_color_categories.find(up_control_key_label(state));
+    if (sval != end) {
+        return sval->second;
+    }
+    const auto &nval = m_color_categories.find(up_control_key_label(UPControlStateNormal));
+    if (nval != end) {
+        return nval->second;
+    }
+    return UPColorCategoryControlText;
+}
+
+- (UIColor *)labelColorForState:(UPControlState)state
+{
+    return [UIColor themeColorWithCategory:[self labelColorCategoryForState:state]];
+}
+
+- (void)setLabelColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState
+{
+    UPControlStatePair k = { up_control_key_label(fromState), up_control_key_label(toState) };
+    auto it = m_color_animations.find(k);
+    if (it == m_color_animations.end()) {
+        if (duration >= UPTickerInterval) {
+            m_color_animations.emplace(k, duration);
+        }
+    }
+    else if (up_is_fuzzy_zero(duration)) {
+        m_color_animations.erase(it);
+    }
+    [self setNeedsUpdate];
+}
+
+- (CFTimeInterval)labelColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState
+{
+    UPControlStatePair k = { up_control_key_label(fromState), up_control_key_label(toState) };
+    const auto it = m_color_animations.find(k);
+    return it != m_color_animations.end() ? it->second : 0.0;
+}
+
 #pragma mark - Hit testing
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
@@ -779,6 +931,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     self.contentPathView.frame = bounds;
     self.auxiliaryPathView.frame = bounds;
     self.accentPathView.frame = bounds;
+    self.label.frame = bounds;
     [self setNeedsUpdate];
 }
 
@@ -804,11 +957,13 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
     cancel(self.contentPathColorAnimatorSerialNumber);
     cancel(self.auxiliaryPathColorAnimatorSerialNumber);
     cancel(self.accentPathColorAnimatorSerialNumber);
+    cancel(self.labelColorAnimatorSerialNumber);
     self.fillColorAnimatorSerialNumber = UP::NotASerialNumber;
     self.strokeColorAnimatorSerialNumber = UP::NotASerialNumber;
     self.contentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
     self.auxiliaryPathColorAnimatorSerialNumber = UP::NotASerialNumber;
     self.accentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
+    self.labelColorAnimatorSerialNumber = UP::NotASerialNumber;
 }
 
 - (void)invalidate
@@ -931,6 +1086,27 @@ UP_STATIC_INLINE NSUInteger up_control_key_accent(UPControlState controlState)
         }
         else {
             self.accentPathView.fillColor = colorForState;
+        }
+    }
+    if (self.label) {
+        self.label.string = [self labelStringForState:state];
+        
+        cancel(self.labelColorAnimatorSerialNumber);
+        self.labelColorAnimatorSerialNumber = UP::NotASerialNumber;
+        
+        UPColorCategory colorCategoryForState = [self labelColorCategoryForState:state];
+        CFTimeInterval duration = [self labelColorAnimationDuration:self.previousState toState:state];
+        BOOL colorsDiffer = colorCategoryForState != self.label.textColorCategory;
+        if (duration > UPTickerInterval && colorsDiffer) {
+            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementLabel, self.previousState, state,
+                                             ^(UIViewAnimatingPosition) {
+                self.accentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
+            });
+            [animator start];
+            self.accentPathColorAnimatorSerialNumber = animator.serialNumber;
+        }
+        else {
+            self.label.textColorCategory = colorCategoryForState;
         }
     }
 

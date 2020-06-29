@@ -209,7 +209,6 @@ static UIBezierPath *CheckboxCheckPath()
 }
 
 @interface UPCheckbox ()
-@property (nonatomic) UPLabel *label;
 @property (nonatomic, weak) id target;
 @property (nonatomic) SEL action;
 @end
@@ -238,13 +237,6 @@ static UIBezierPath *CheckboxCheckPath()
     self.chargeOutsets = layout.checkbox_control_charge_outsets();
     [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
 
-    self.label = [UPLabel label];
-    self.label.font = SpellLayout::instance().checkbox_control_font();
-    self.label.textColorCategory = UPColorCategoryControlText;
-    self.label.backgroundColorCategory = UPColorCategoryClear;
-    [self addSubview:self.label];
-    [self.label addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
-
     [self setFillPath:CheckboxFillPath()];
     [self setFillColorCategory:UPColorCategoryControlShapeFill];
 
@@ -263,6 +255,11 @@ static UIBezierPath *CheckboxCheckPath()
     [self setAccentPath:CheckboxCheckPath() forState:UPControlStateSelected];
     [self setAccentPath:CheckboxCheckPath() forState:(UPControlStateHighlighted | UPControlStateSelected)];
     
+    self.label.font = SpellLayout::instance().checkbox_control_font();
+    self.label.textColorCategory = UPColorCategoryControlText;
+    self.label.backgroundColorCategory = UPColorCategoryClear;
+    [self.label addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
+
     [self updateThemeColors];
     
     return self;
@@ -272,13 +269,6 @@ static UIBezierPath *CheckboxCheckPath()
 {
     self.target = target;
     self.action = action;
-}
-
-- (void)setLabelString:(NSString *)labelString
-{
-    _labelString = labelString;
-    self.label.string = labelString;
-    [self setNeedsLayout];
 }
 
 - (void)handleTap:(UPTapGestureRecognizer *)gesture

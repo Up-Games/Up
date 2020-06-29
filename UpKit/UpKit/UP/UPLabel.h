@@ -14,6 +14,7 @@
 @property (nonatomic) NSTextAlignment textAlignment;
 @property (nonatomic) UPColorCategory backgroundColorCategory;
 @property (nonatomic) UPColorCategory textColorCategory;
+@property (nonatomic) UIColor *textColor;
 
 + (UPLabel *)label;
 

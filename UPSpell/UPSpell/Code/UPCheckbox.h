@@ -7,8 +7,6 @@
 
 @interface UPCheckbox : UPControl
 
-@property (nonatomic) NSString *labelString;
-
 + (UPCheckbox *)checkbox;
 + (UPCheckbox *)checkboxWithTarget:(id)target action:(SEL)action;
 

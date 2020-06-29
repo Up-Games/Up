@@ -3,13 +3,14 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import "UPBand.h"
 #import "UIColor+UP.h"
 #import "UIView+UP.h"
 #import "UPAssertions.h"
 #import "UPAnimator.h"
 #import "UPBezierPathView.h"
 #import "UPGeometry.h"
-#import "UPBand.h"
+#import "UPLabel.h"
 #import "UPTickingAnimator.h"
 #import "UPUnitFunction.h"
 
@@ -177,20 +178,27 @@ static uint32_t _InstanceCount;
                     control.contentPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
                 }
             }
-        if (element & UPControlElementAuxiliary) {
-            for (UPControl *control in controls) {
-                UIColor *c1 = [control contentColorForState:fromControlState];
-                UIColor *c2 = [control contentColorForState:toControlState];
-                control.auxiliaryPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+            if (element & UPControlElementAuxiliary) {
+                for (UPControl *control in controls) {
+                    UIColor *c1 = [control contentColorForState:fromControlState];
+                    UIColor *c2 = [control contentColorForState:toControlState];
+                    control.auxiliaryPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+                }
             }
-        }
-        if (element & UPControlElementAccent) {
-            for (UPControl *control in controls) {
-                UIColor *c1 = [control contentColorForState:fromControlState];
-                UIColor *c2 = [control contentColorForState:toControlState];
-                control.accentPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+            if (element & UPControlElementAccent) {
+                for (UPControl *control in controls) {
+                    UIColor *c1 = [control contentColorForState:fromControlState];
+                    UIColor *c2 = [control contentColorForState:toControlState];
+                    control.accentPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+                }
             }
-        }
+            if (element & UPControlElementLabel) {
+                for (UPControl *control in controls) {
+                    UIColor *c1 = [control labelColorForState:fromControlState];
+                    UIColor *c2 = [control labelColorForState:toControlState];
+                    control.label.textColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+                }
+            }
         }
         completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
             if (completion) {

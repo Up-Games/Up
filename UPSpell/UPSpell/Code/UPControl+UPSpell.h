@@ -9,6 +9,7 @@
 #import <UpKit/UPControl.h>
 
 #import "UPChoice.h"
+#import "UPTextButton.h"
 
 namespace UP {
 
@@ -44,11 +45,15 @@ UIBezierPath *ChoiceRightFillPathSelected();
 + (UPButton *)roundBackButtonLeftArrow;
 + (UPButton *)roundBackButtonRightArrow;
 
-+ (UPButton *)textButtonAbout;
-+ (UPButton *)textButtonExtras;
-+ (UPButton *)textButtonPlay;
-+ (UPButton *)textButtonQuit;
-+ (UPButton *)textButtonResume;
+@end
+
+@interface UPTextButton (UPSpell)
+
++ (UPTextButton *)textButtonAbout;
++ (UPTextButton *)textButtonExtras;
++ (UPTextButton *)textButtonPlay;
++ (UPTextButton *)textButtonQuit;
++ (UPTextButton *)textButtonResume;
 
 @end
 

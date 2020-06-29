@@ -107,15 +107,18 @@ UIBezierPath *TextButtonStrokePath()
     return path;
 }
 
-@interface UPTextButton ()
-@property (nonatomic) UPLabel *label;
-@end
-
 @implementation UPTextButton
 
 + (UPTextButton *)textButton
 {
     return [[UPTextButton alloc] initWithTarget:nil action:nullptr];
+}
+
++ (UPTextButton *)textButtonWithLabelString:(NSString *)labelString
+{
+    UPTextButton *textButton = [[UPTextButton alloc] initWithTarget:nil action:nullptr];
+    [textButton setLabelString:labelString];
+    return textButton;
 }
 
 + (UPTextButton *)textButtonWithTarget:(id)target action:(SEL)action
@@ -137,21 +140,12 @@ UIBezierPath *TextButtonStrokePath()
 
     SpellLayout &layout = SpellLayout::instance();
 
-    self.label = [UPLabel label];
     self.label.font = layout.text_button_font();
     self.label.textColorCategory = UPColorCategoryContent;
     self.label.backgroundColorCategory = UPColorCategoryClear;
     self.label.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:self.label];
 
     return self;
-}
-
-- (void)setLabelString:(NSString *)labelString
-{
-    _labelString = labelString;
-    self.label.string = labelString;
-    [self setNeedsLayout];
 }
 
 - (void)layoutSubviews

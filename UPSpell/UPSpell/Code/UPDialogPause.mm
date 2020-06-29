@@ -12,6 +12,7 @@
 #import "UPControl+UPSpell.h"
 #import "UPDialogPause.h"
 #import "UPSpellLayout.h"
+#import "UPTextButton.h"
 #import "UPTextPaths.h"
 
 using UP::SpellLayout;
@@ -45,11 +46,11 @@ using UP::SpellLayout;
     self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageHigh);
     [self addSubview:self.messagePathView];
 
-    self.quitButton = [UPButton textButtonQuit];
+    self.quitButton = [UPTextButton textButtonQuit];
     self.quitButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonAlternativeResponse);
     [self addSubview:self.quitButton];
 
-    self.resumeButton = [UPButton textButtonResume];
+    self.resumeButton = [UPTextButton textButtonResume];
     self.resumeButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonDefaultResponse);
     [self addSubview:self.resumeButton];
 

@@ -13,7 +13,6 @@ typedef NS_ENUM(NSInteger, UPChoiceSide) {
 
 @interface UPChoice : UPControl
 
-@property (nonatomic) NSString *labelString;
 @property (nonatomic) UPChoiceSide side;
 
 + (UPChoice *)choiceWithSide:(UPChoiceSide)side;

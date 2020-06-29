@@ -142,7 +142,6 @@ UIBezierPath *ChoiceRightFillPathSelected()
 }
 
 @interface UPChoice ()
-@property (nonatomic) UPLabel *label;
 @property (nonatomic, weak) id target;
 @property (nonatomic) SEL action;
 @end
@@ -189,20 +188,11 @@ UIBezierPath *ChoiceRightFillPathSelected()
             break;
     }
 
-    self.label = [UPLabel label];
     self.label.font = SpellLayout::instance().choice_control_font();
     self.label.textColorCategory = UPColorCategoryControlText;
     self.label.backgroundColorCategory = UPColorCategoryClear;
-    [self addSubview:self.label];
 
     return self;
-}
-
-- (void)setLabelString:(NSString *)labelString
-{
-    _labelString = labelString;
-    self.label.string = labelString;
-    [self setNeedsLayout];
 }
 
 - (void)setTarget:(id)target action:(SEL)action

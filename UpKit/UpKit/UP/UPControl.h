@@ -11,26 +11,7 @@
 
 @class UPBezierPathView;
 @class UPGestureRecognizer;
-
-typedef NS_OPTIONS(NSUInteger, UPControlEvents) {
-    UPControlEventTouchDown               = 1 <<  0,      // on all touch downs
-    UPControlEventTouchDownRepeat         = 1 <<  1,      // on multiple touchdowns (tap count > 1)
-    UPControlEventTouchDragInside         = 1 <<  2,
-    UPControlEventTouchDragOutside        = 1 <<  3,
-    UPControlEventTouchDragEnter          = 1 <<  4,
-    UPControlEventTouchDragExit           = 1 <<  5,
-    UPControlEventTouchUpInside           = 1 <<  6,
-    UPControlEventTouchUpOutside          = 1 <<  7,
-    UPControlEventTouchCancel             = 1 <<  8,
-
-    UPControlEventValueChanged            = 1 << 12,     // sliders, etc.
-    UPControlEventPrimaryActionTriggered  = 1 << 13,     // semantic action: for buttons, etc.
-
-    UPControlEventAllTouchEvents                                    = 0x00000FFF,  // for touch events
-    UPControlEventApplicationReserved     = 0x0F000000,  // range available for application use
-    UPControlEventSystemReserved          = 0xF0000000,  // range reserved for internal framework use
-    UPControlEventAllEvents               = 0xFFFFFFFF
-};
+@class UPLabel;
 
 typedef NS_OPTIONS(NSUInteger, UPControlState) {
     UPControlStateNormal =      0x00000000,
@@ -50,6 +31,7 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
     UPControlElementContent =   0x00400000,
     UPControlElementAuxiliary = 0x00800000,
     UPControlElementAccent =    0x01000000,
+    UPControlElementLabel =     0x02000000,
 };
 
 @interface UPControl : UIView
@@ -85,6 +67,7 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 @property (nonatomic, readonly) UPBezierPathView *contentPathView;
 @property (nonatomic, readonly) UPBezierPathView *auxiliaryPathView;
 @property (nonatomic, readonly) UPBezierPathView *accentPathView;
+@property (nonatomic, readonly) UPLabel *label;
 
 - (void)bringPathViewToFront:(UPBezierPathView *)view;
 - (void)sendPathViewToBack:(UPBezierPathView *)view;
@@ -138,6 +121,16 @@ typedef NS_OPTIONS(NSUInteger, UPControlElement) {
 - (UIColor *)accentColorForState:(UPControlState)state;
 - (void)setAccentColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
 - (CFTimeInterval)accentColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
+
+- (void)setLabelString:(NSString *)string;
+- (void)setLabelString:(NSString *)string forState:(UPControlState)state;
+- (NSString *)labelStringForState:(UPControlState)state;
+- (void)setLabelColorCategory:(UPColorCategory)colorCategory;
+- (void)setLabelColorCategory:(UPColorCategory)colorCategory forState:(UPControlState)state;
+- (UPColorCategory)labelColorCategoryForState:(UPControlState)state;
+- (UIColor *)labelColorForState:(UPControlState)state;
+- (void)setLabelColorAnimationDuration:(CFTimeInterval)duration fromState:(UPControlState)fromState toState:(UPControlState)toState;
+- (CFTimeInterval)labelColorAnimationDuration:(UPControlState)fromState toState:(UPControlState)toState;
 
 - (void)setNeedsUpdate;
 - (void)update;

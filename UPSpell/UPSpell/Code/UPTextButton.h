@@ -7,9 +7,8 @@
 
 @interface UPTextButton : UPButton
 
-@property (nonatomic) NSString *labelString;
-
 + (UPTextButton *)textButton;
++ (UPTextButton *)textButtonWithLabelString:(NSString *)labelString;
 + (UPTextButton *)textButtonWithTarget:(id)target action:(SEL)action;
 
 @end

@@ -12,6 +12,7 @@
 #import "UPControl+UPSpell.h"
 #import "UPDialogMenu.h"
 #import "UPSpellLayout.h"
+#import "UPTextButton.h"
 #import "UPTextPaths.h"
 
 using UP::SpellLayout;
@@ -46,15 +47,15 @@ using UP::SpellLayout;
     self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageCenter);
     [self addSubview:self.messagePathView];
 
-    self.extrasButton = [UPButton textButtonExtras];
+    self.extrasButton = [UPTextButton textButtonExtras];
     self.extrasButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopLeft);
     [self addSubview:self.extrasButton];
 
-    self.playButton = [UPButton textButtonPlay];
+    self.playButton = [UPTextButton textButtonPlay];
     self.playButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopCenter);
     [self addSubview:self.playButton];
 
-    self.aboutButton = [UPButton textButtonAbout];
+    self.aboutButton = [UPTextButton textButtonAbout];
     self.aboutButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopRight);
     [self addSubview:self.aboutButton];
 

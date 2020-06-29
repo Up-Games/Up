@@ -13,7 +13,6 @@
 
 @interface UPLabel ()
 @property (nonatomic) UIColor *backgroundColor;
-@property (nonatomic) UIColor *textColor;
 @property (nonatomic) Class stringClass;
 @end
 
