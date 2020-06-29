@@ -498,6 +498,38 @@ UP_STATIC_INLINE RGB8 to_rgb8(const LCHF &c)
     return to_rgb8(to_rgbf(c));
 }
 
+//
+// The blend functions offer a crossfade/linear interpolation that animates smoothly from one color to another.
+//
+UP_STATIC_INLINE UPFloat blend(UPFloat dst, UPFloat dst_alpha, UPFloat dst_fraction, UPFloat src, UPFloat src_fraction)
+{
+    return ((dst * dst_alpha * dst_fraction) + (src * src_fraction));
+}
+
+UP_STATIC_INLINE RGBF blend(const RGBF &dst, const RGBF &src, UPFloat src_fraction)
+{
+    RGBF result;
+    
+    if (up_is_fuzzy_zero(src_fraction)) {
+        result = dst;
+    }
+    else if (up_is_fuzzy_one(src_fraction)) {
+        result = src;
+    }
+    else {
+        UPFloat dst_fraction = (UPUnitOne - src_fraction);
+        UPFloat ra = (dst.alpha() * dst_fraction) + (src.alpha() * src_fraction);
+        if (!up_is_fuzzy_zero(ra)) {
+            UPFloat rr = blend(dst.red(), dst.alpha(), dst_fraction, src.red(), src_fraction);
+            UPFloat rg = blend(dst.green(), dst.alpha(), dst_fraction, src.green(), src_fraction);
+            UPFloat rb = blend(dst.blue(), dst.alpha(), dst_fraction, src.blue(), src_fraction);
+            result = RGBF(rr, rg, rb, ra);
+        }
+    }
+    
+    return result;
+}
+
 UP_STATIC_INLINE UPFloat mix_channel(UPFloat a, UPFloat b, UPFloat fraction)
 {
     return a + (fraction * (b - a));

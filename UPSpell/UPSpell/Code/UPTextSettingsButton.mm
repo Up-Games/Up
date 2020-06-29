@@ -35,11 +35,10 @@
     [self setStrokeColorCategory:UPColorCategoryClear forState:UPControlStateSelected];
     [self setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     [self setLabelColorCategory:UPColorCategoryControlText forState:UPControlStateSelected];
-    [self setLabelColorAnimationDuration:0.5 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-    [self setLabelColorAnimationDuration:0.5 fromState:UPControlStateSelected toState:UPControlStateNormal];
     self.autoHighlights = YES;
     self.autoSelects = YES;
     self.band = UP::BandModeUI;
+    [self updateThemeColors];
     return self;
 }
 
@@ -54,7 +53,7 @@
         case UPThemeColorStyleLight:
         case UPThemeColorStyleDark:
             [self setFillColorAnimationDuration:0.5 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-            [self setFillColorAnimationDuration:0.3 fromState:UPControlStateSelected toState:UPControlStateNormal];
+            [self setFillColorAnimationDuration:0.45 fromState:UPControlStateSelected toState:UPControlStateNormal];
             [self setStrokeColorAnimationDuration:0 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
             [self setStrokeColorAnimationDuration:0 fromState:UPControlStateSelected toState:UPControlStateNormal];
             break;

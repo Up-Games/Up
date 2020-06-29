@@ -983,17 +983,21 @@ UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
         return;
     }
     
+    UPControlState effectivePreviousState = (self.previousState & ~UPControlStateInvalid);
+    UPControlState effectiveState = (self.state & ~UPControlStateInvalid);
+
     if (self.fillPathView) {
         self.fillPathView.path = [self fillPathForState:state];
         
         cancel(self.fillColorAnimatorSerialNumber);
         self.fillColorAnimatorSerialNumber = UP::NotASerialNumber;
         
-        UIColor *colorForState = [self fillColorForState:state];
-        CFTimeInterval duration = [self fillColorAnimationDuration:self.previousState toState:state];
-        BOOL colorsDiffer = ![self.fillPathView.fillColor isEqual:colorForState];
+        CFTimeInterval duration = [self fillColorAnimationDuration:effectivePreviousState toState:effectiveState];
+        UIColor *colorForPreviousState = [self fillColorForState:effectivePreviousState];
+        UIColor *colorForState = [self fillColorForState:effectiveState];
+        BOOL colorsDiffer = ![colorForPreviousState isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementFill, self.previousState, state,
+            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementFill, effectivePreviousState, effectiveState,
                                              ^(UIViewAnimatingPosition) {
                 self.fillColorAnimatorSerialNumber = UP::NotASerialNumber;
             });
@@ -1010,11 +1014,12 @@ UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
         cancel(self.strokeColorAnimatorSerialNumber);
         self.strokeColorAnimatorSerialNumber = UP::NotASerialNumber;
         
-        UIColor *colorForState = [self strokeColorForState:state];
-        CFTimeInterval duration = [self strokeColorAnimationDuration:self.previousState toState:state];
-        BOOL colorsDiffer = ![self.strokePathView.fillColor isEqual:colorForState];
+        CFTimeInterval duration = [self strokeColorAnimationDuration:effectivePreviousState toState:effectiveState];
+        UIColor *colorForPreviousState = [self strokeColorForState:effectivePreviousState];
+        UIColor *colorForState = [self strokeColorForState:effectiveState];
+        BOOL colorsDiffer = ![colorForPreviousState isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementStroke, self.previousState, state,
+            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementStroke, effectivePreviousState, effectiveState,
                                              ^(UIViewAnimatingPosition) {
                 self.strokeColorAnimatorSerialNumber = UP::NotASerialNumber;
             });
@@ -1031,11 +1036,12 @@ UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
         cancel(self.contentPathColorAnimatorSerialNumber);
         self.contentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
         
-        UIColor *colorForState = [self contentColorForState:state];
-        CFTimeInterval duration = [self contentColorAnimationDuration:self.previousState toState:state];
-        BOOL colorsDiffer = ![self.contentPathView.fillColor isEqual:colorForState];
+        CFTimeInterval duration = [self contentColorAnimationDuration:effectivePreviousState toState:effectiveState];
+        UIColor *colorForPreviousState = [self contentColorForState:effectivePreviousState];
+        UIColor *colorForState = [self contentColorForState:effectiveState];
+        BOOL colorsDiffer = ![colorForPreviousState isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementContent, self.previousState, state,
+            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementContent, effectivePreviousState, effectiveState,
                                              ^(UIViewAnimatingPosition) {
                 self.contentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
             });
@@ -1052,11 +1058,12 @@ UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
         cancel(self.auxiliaryPathColorAnimatorSerialNumber);
         self.auxiliaryPathColorAnimatorSerialNumber = UP::NotASerialNumber;
         
-        UIColor *colorForState = [self auxiliaryColorForState:state];
-        CFTimeInterval duration = [self auxiliaryColorAnimationDuration:self.previousState toState:state];
-        BOOL colorsDiffer = ![self.auxiliaryPathView.fillColor isEqual:colorForState];
+        CFTimeInterval duration = [self auxiliaryColorAnimationDuration:effectivePreviousState toState:effectiveState];
+        UIColor *colorForPreviousState = [self auxiliaryColorForState:effectivePreviousState];
+        UIColor *colorForState = [self auxiliaryColorForState:effectiveState];
+        BOOL colorsDiffer = ![colorForPreviousState isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementAuxiliary, self.previousState, state,
+            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementAuxiliary, effectivePreviousState, effectiveState,
                                              ^(UIViewAnimatingPosition) {
                 self.auxiliaryPathColorAnimatorSerialNumber = UP::NotASerialNumber;
             });
@@ -1073,11 +1080,12 @@ UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
         cancel(self.accentPathColorAnimatorSerialNumber);
         self.accentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
         
-        UIColor *colorForState = [self accentColorForState:state];
-        CFTimeInterval duration = [self accentColorAnimationDuration:self.previousState toState:state];
-        BOOL colorsDiffer = ![self.accentPathView.fillColor isEqual:colorForState];
+        CFTimeInterval duration = [self accentColorAnimationDuration:effectivePreviousState toState:effectiveState];
+        UIColor *colorForPreviousState = [self accentColorForState:effectivePreviousState];
+        UIColor *colorForState = [self accentColorForState:effectiveState];
+        BOOL colorsDiffer = ![colorForPreviousState isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementAccent, self.previousState, state,
+            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementAccent, effectivePreviousState, effectiveState,
                                              ^(UIViewAnimatingPosition) {
                 self.accentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
             });
@@ -1094,11 +1102,13 @@ UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
         cancel(self.labelColorAnimatorSerialNumber);
         self.labelColorAnimatorSerialNumber = UP::NotASerialNumber;
         
-        UPColorCategory colorCategoryForState = [self labelColorCategoryForState:state];
-        CFTimeInterval duration = [self labelColorAnimationDuration:self.previousState toState:state];
-        BOOL colorsDiffer = colorCategoryForState != self.label.textColorCategory;
+        CFTimeInterval duration = [self labelColorAnimationDuration:effectivePreviousState toState:effectiveState];
+        UIColor *colorForPreviousState = [self labelColorForState:effectivePreviousState];
+        UIColor *colorForState = [self labelColorForState:effectiveState];
+        BOOL colorsDiffer = ![colorForPreviousState isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementLabel, self.previousState, state,
+            self.label.textColorCategory = [self labelColorCategoryForState:effectivePreviousState];
+            UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementLabel, effectivePreviousState, effectiveState,
                                              ^(UIViewAnimatingPosition) {
                 self.accentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
             });
@@ -1106,7 +1116,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
             self.accentPathColorAnimatorSerialNumber = animator.serialNumber;
         }
         else {
-            self.label.textColorCategory = colorCategoryForState;
+            self.label.textColorCategory = [self labelColorCategoryForState:effectiveState];
         }
     }
 

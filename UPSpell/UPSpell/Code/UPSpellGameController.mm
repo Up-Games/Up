@@ -1587,8 +1587,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     delay(BandModeDelay, stagger, ^{
         start(bloop_out(BandModeUI, @[playButtonMove], duration - stagger, nil));
     });
-    delay(BandModeDelay, (2 * stagger), ^{
-        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - (2 * stagger),
+    delay(BandModeDelay, (1.5 * stagger), ^{
+        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - (1.5 * stagger),
                         ^(UIViewAnimatingPosition) {
             self.dialogMenu.aboutButton.userInteractionEnabled = NO;
             [self viewUnlock];
@@ -1619,8 +1619,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         start(bloop_out(BandModeUI, @[playButtonMove], duration - stagger, ^(UIViewAnimatingPosition) {
         }));
     });
-    delay(BandModeDelay, (2 * stagger), ^{
-        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - (2 * stagger),
+    delay(BandModeDelay, (1.5 * stagger), ^{
+        start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - (1.5 * stagger),
                         ^(UIViewAnimatingPosition) {
             [self viewUnlock];
             if (completion) {
@@ -1901,8 +1901,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         start(bloop_in(BandModeUI, @[playButtonMove], duration - stagger, ^(UIViewAnimatingPosition) {
         }));
     });
-    delay(BandModeDelay, (2 * stagger), ^{
-        start(bloop_in(BandModeUI, @[extrasButtonMove], duration - (2 * stagger), ^(UIViewAnimatingPosition) {
+    delay(BandModeDelay, (1.5 * stagger), ^{
+        start(bloop_in(BandModeUI, @[extrasButtonMove], duration - (1.5 * stagger), ^(UIViewAnimatingPosition) {
             self.dialogMenu.aboutButton.userInteractionEnabled = YES;
             [self viewUnlock];
         }));
@@ -1926,8 +1926,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         start(bloop_in(BandModeUI, @[playButtonMove], duration - stagger, ^(UIViewAnimatingPosition) {
         }));
     });
-    delay(BandModeDelay, 2 * stagger, ^{
-        start(bloop_in(BandModeUI, @[aboutButtonMove], duration - (2 * stagger), ^(UIViewAnimatingPosition) {
+    delay(BandModeDelay, 1.5 * stagger, ^{
+        start(bloop_in(BandModeUI, @[aboutButtonMove], duration - (1.5 * stagger), ^(UIViewAnimatingPosition) {
             self.dialogMenu.extrasButton.userInteractionEnabled = YES;
             [self viewUnlock];
         }));

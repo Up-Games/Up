@@ -155,7 +155,7 @@ static uint32_t _InstanceCount;
     UPAnimator *animator = [[self alloc] _initWithType:UPAnimatorTypeSetColor band:band views:controls];
     animator.type = UPAnimatorTypeSetColor;
     UPTickingAnimator *inner = [UPTickingAnimator animatorInBand:band duration:duration
-        unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInEaseOutExpo]
+                                                    unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutSine]
         applier:^(UPTickingAnimator *animator) {
             if (element & UPControlElementFill) {
                 for (UPControl *control in controls) {
@@ -196,7 +196,8 @@ static uint32_t _InstanceCount;
                 for (UPControl *control in controls) {
                     UIColor *c1 = [control labelColorForState:fromControlState];
                     UIColor *c2 = [control labelColorForState:toControlState];
-                    control.label.textColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+                    UIColor *color = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+                    control.label.textColor = color;
                 }
             }
         }

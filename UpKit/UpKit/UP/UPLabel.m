@@ -5,6 +5,7 @@
 
 #import <CoreText/CoreText.h>
 
+#import <UPKit/UPAssertions.h>
 #import <UPKit/UPGeometry.h>
 
 #import "UPLabel.h"
