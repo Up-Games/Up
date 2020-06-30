@@ -75,7 +75,7 @@
 		5DD71DA02458DA3A00F3F9E2 /* UIView+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D9E2458DA3A00F3F9E2 /* UIView+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71DA12458DA3A00F3F9E2 /* UIView+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D9F2458DA3A00F3F9E2 /* UIView+UP.mm */; };
 		5DD71DA32458F39200F3F9E2 /* UPAny.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71DA22458F39200F3F9E2 /* UPAny.h */; };
-		5DD9C29724699E340080F768 /* UPGameCodeTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DD9C29624699E340080F768 /* UPGameCodeTests.mm */; };
+		5DD9C29724699E340080F768 /* UPGameKeyTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DD9C29624699E340080F768 /* UPGameKeyTests.mm */; };
 		5DEBE0182454CCAF00016047 /* UPMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0172454CAFC00016047 /* UPMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DEBE01A2454E3AC00016047 /* UPColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE0192454E3AC00016047 /* UPColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DEBE0202454F1D200016047 /* UIColor+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEBE01E2454F1D200016047 /* UIColor+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -86,7 +86,7 @@
 		5DF8A8E02454835F00751E2E /* UPTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DFE6222245376D100D9CA0B /* UPTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF8A8E72454892C00751E2E /* UPUnitFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF8A8E52454892B00751E2E /* UPUnitFunction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8A8E62454892C00751E2E /* UPUnitFunction.mm */; };
-		5DF8A8EC24548D9700751E2E /* UPUnitFunctionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.m */; };
+		5DF8A8EC24548D9700751E2E /* UPUnitFunctionTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.mm */; };
 		5DF9DF3F2465B0BE00B2199D /* en-lexicon.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5DF9DF3D2465B0BE00B2199D /* en-lexicon.txt */; };
 		5DF9DF422465B35700B2199D /* UPLexicon.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9DF402465B35700B2199D /* UPLexicon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF9DF432465B35700B2199D /* UPLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF412465B35700B2199D /* UPLexicon.mm */; };
@@ -198,7 +198,7 @@
 		5DD71DA22458F39200F3F9E2 /* UPAny.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPAny.h; sourceTree = "<group>"; };
 		5DD71E882459C4CA00F3F9E2 /* libpop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libpop.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DD71E8A2459C5A800F3F9E2 /* pop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = pop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DD9C29624699E340080F768 /* UPGameCodeTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameCodeTests.mm; sourceTree = "<group>"; };
+		5DD9C29624699E340080F768 /* UPGameKeyTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameKeyTests.mm; sourceTree = "<group>"; };
 		5DEBE0152454C77700016047 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5DEBE0172454CAFC00016047 /* UPMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPMacros.h; sourceTree = "<group>"; };
 		5DEBE0192454E3AC00016047 /* UPColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPColor.h; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 		5DEBE02C245716F900016047 /* UPStringTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPStringTools.h; sourceTree = "<group>"; };
 		5DF8A8E52454892B00751E2E /* UPUnitFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPUnitFunction.h; sourceTree = "<group>"; };
 		5DF8A8E62454892C00751E2E /* UPUnitFunction.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPUnitFunction.mm; sourceTree = "<group>"; };
-		5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPUnitFunctionTests.m; sourceTree = "<group>"; };
+		5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPUnitFunctionTests.mm; sourceTree = "<group>"; };
 		5DF9DF3D2465B0BE00B2199D /* en-lexicon.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "en-lexicon.txt"; sourceTree = "<group>"; };
 		5DF9DF402465B35700B2199D /* UPLexicon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLexicon.h; sourceTree = "<group>"; };
 		5DF9DF412465B35700B2199D /* UPLexicon.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPLexicon.mm; sourceTree = "<group>"; };
@@ -269,10 +269,10 @@
 		5DF8A8ED24548DD600751E2E /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				5DD9C29624699E340080F768 /* UPGameCodeTests.mm */,
+				5DD9C29624699E340080F768 /* UPGameKeyTests.mm */,
 				5DD71D462457748000F3F9E2 /* UPLayoutTests.m */,
 				5DF9DF442465BA5200B2199D /* UPLexiconTests.mm */,
-				5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.m */,
+				5DF8A8EB24548D9700751E2E /* UPUnitFunctionTests.mm */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -669,9 +669,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DF9DF452465BA5200B2199D /* UPLexiconTests.mm in Sources */,
-				5DD9C29724699E340080F768 /* UPGameCodeTests.mm in Sources */,
+				5DD9C29724699E340080F768 /* UPGameKeyTests.mm in Sources */,
 				5DD71D472457748000F3F9E2 /* UPLayoutTests.m in Sources */,
-				5DF8A8EC24548D9700751E2E /* UPUnitFunctionTests.m in Sources */,
+				5DF8A8EC24548D9700751E2E /* UPUnitFunctionTests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

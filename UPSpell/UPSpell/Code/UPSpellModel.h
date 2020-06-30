@@ -184,7 +184,7 @@ public:
     };
 
     SpellModel() { apply_start(Action(Opcode::START)); }
-    SpellModel(const GameKey &game_code) : m_game_code(game_code), m_tile_sequence(game_code) { apply_start(Action(Opcode::START)); }
+    SpellModel(const GameKey &game_key) : m_game_key(game_key), m_tile_sequence(game_key) { apply_start(Action(Opcode::START)); }
 
     const TileArray &tiles() const { return m_tiles; }
     TileArray &tiles() { return m_tiles; }
@@ -261,7 +261,7 @@ private:
     void apply_quit(const Action &action);
     void apply_end(const Action &action);
 
-    GameKey m_game_code;
+    GameKey m_game_key;
     TileSequence m_tile_sequence;
     TileArray m_tiles;
     std::vector<State> m_states;

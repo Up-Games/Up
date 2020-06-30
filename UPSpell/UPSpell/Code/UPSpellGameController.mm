@@ -1720,8 +1720,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     if (self.model) {
         delete self.model;
     }
-    GameKey game_code = GameKey::random();
-    self.model = new SpellModel(game_code);
+    GameKey game_key = GameKey::random();
+    self.model = new SpellModel(game_key);
 }
 
 #pragma mark - Lifecycle notifications

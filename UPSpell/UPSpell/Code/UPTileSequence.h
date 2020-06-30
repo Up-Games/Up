@@ -22,7 +22,7 @@ public:
     TileSequence() : m_game_key(GameKey()) { m_random.seed_value(m_game_key.value()); }
     TileSequence(const GameKey &game_key) : m_game_key(game_key) { m_random.seed_value(m_game_key.value()); }
 
-    GameKey game_code() const { return m_game_key; }
+    GameKey game_key() const { return m_game_key; }
     
     TileModel next() {
         if (m_letters.size() == 0) {
