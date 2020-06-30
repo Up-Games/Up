@@ -58,7 +58,7 @@ using UP::TimeSpanning::find_move;
 using UP::TimeSpanning::start;
 
 using Role = UP::SpellLayout::Role;
-using Spot = UP::SpellLayout::Spot;
+using Spot = UP::SpellLayout::Place;
 using Location = UP::SpellLayout::Location;
 
 @implementation UPSpellExtrasController

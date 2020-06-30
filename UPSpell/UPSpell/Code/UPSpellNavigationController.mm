@@ -31,7 +31,7 @@ static UPSpellNavigationController *_Instance;
 using UP::SpellLayout;
 using Location = UP::SpellLayout::Location;
 using Role = UP::SpellLayout::Role;
-using Spot = UP::SpellLayout::Spot;
+using Spot = UP::SpellLayout::Place;
 
 using UP::BandModeDelay;
 using UP::BandModeUI;

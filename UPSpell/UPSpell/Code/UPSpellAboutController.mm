@@ -26,7 +26,7 @@
 
 using UP::SpellLayout;
 using Role = UP::SpellLayout::Role;
-using Spot = UP::SpellLayout::Spot;
+using Spot = UP::SpellLayout::Place;
 
 @implementation UPSpellAboutController
 

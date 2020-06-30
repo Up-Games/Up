@@ -74,7 +74,7 @@ using UP::role_in_player_tray;
 using UP::role_in_word;
 using Location = UP::SpellLayout::Location;
 using Role = UP::SpellLayout::Role;
-using Spot = UP::SpellLayout::Spot;
+using Spot = UP::SpellLayout::Place;
 using Mode = UP::Mode;
 using ModeTransitionTable = UP::ModeTransitionTable;
 

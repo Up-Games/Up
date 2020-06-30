@@ -59,7 +59,7 @@ public:
         ExtrasColorsIconPrompt, ExtrasColorsIconButtonNope, ExtrasColorsIconButtonYep,
     };
 
-    enum class Spot {
+    enum class Place {
         Default,
         OffTopNear,
         OffBottomNear,
@@ -74,14 +74,14 @@ public:
     class Location {
     public:
         constexpr Location() {}
-        constexpr Location(Role role, Spot spot = Spot::Default) : m_role(role), m_spot(spot) {}
+        constexpr Location(Role role, Place spot = Place::Default) : m_role(role), m_spot(spot) {}
         
         Role role() const { return m_role; }
-        Spot spot() const { return m_spot; }
+        Place spot() const { return m_spot; }
 
     private:
         Role m_role = Role::None;
-        Spot m_spot = Spot::Default;
+        Place m_spot = Place::Default;
     };
     
     static constexpr CGFloat CanonicalCanvasWidth = 1000;

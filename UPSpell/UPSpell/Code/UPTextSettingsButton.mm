@@ -53,7 +53,7 @@
         case UPThemeColorStyleLight:
         case UPThemeColorStyleDark:
             [self setFillColorAnimationDuration:0.5 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
-            [self setFillColorAnimationDuration:0.45 fromState:UPControlStateSelected toState:UPControlStateNormal];
+            [self setFillColorAnimationDuration:0.5 fromState:UPControlStateSelected toState:UPControlStateNormal];
             [self setStrokeColorAnimationDuration:0 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
             [self setStrokeColorAnimationDuration:0 fromState:UPControlStateSelected toState:UPControlStateNormal];
             break;

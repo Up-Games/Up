@@ -710,7 +710,7 @@ void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &def
     const CGFloat df_w = up_rect_width(default_frame);
     const CGFloat df_h = up_rect_height(default_frame);
 
-    m_location_frames.emplace(Location(role, Spot::Default), up_pixel_rect(default_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Place::Default), up_pixel_rect(default_frame, screen_scale()));
 
     const CGFloat df_off_near_x = df_w * near_factor;
     const CGFloat df_off_near_y = df_h * near_factor;
@@ -718,19 +718,19 @@ void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &def
     CGRect off_bottom_near_frame = CGRectMake(df_min_x, screen_max_y + df_off_near_y, df_w, df_h);
     CGRect off_left_near_frame = CGRectMake(screen_min_x - df_off_near_x, df_min_y, df_w, df_h);
     CGRect off_right_near_frame = CGRectMake(screen_max_x + df_off_near_x, df_min_y, df_w, df_h);
-    m_location_frames.emplace(Location(role, Spot::OffTopNear), up_pixel_rect(off_top_near_frame, screen_scale()));
-    m_location_frames.emplace(Location(role, Spot::OffBottomNear), up_pixel_rect(off_bottom_near_frame, screen_scale()));
-    m_location_frames.emplace(Location(role, Spot::OffLeftNear), up_pixel_rect(off_left_near_frame, screen_scale()));
-    m_location_frames.emplace(Location(role, Spot::OffRightNear), up_pixel_rect(off_right_near_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Place::OffTopNear), up_pixel_rect(off_top_near_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Place::OffBottomNear), up_pixel_rect(off_bottom_near_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Place::OffLeftNear), up_pixel_rect(off_left_near_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Place::OffRightNear), up_pixel_rect(off_right_near_frame, screen_scale()));
 
     CGRect off_top_far_frame = CGRectMake(df_min_x, screen_min_y - screen_h, df_w, df_h);
     CGRect off_bottom_far_frame = CGRectMake(df_min_x, screen_max_y + screen_h, df_w, df_h);
     CGRect off_left_far_frame = CGRectMake(screen_min_x - screen_w, df_min_y, df_w, df_h);
     CGRect off_right_far_frame = CGRectMake(screen_max_x + screen_w, df_min_y, df_w, df_h);
-    m_location_frames.emplace(Location(role, Spot::OffTopFar), up_pixel_rect(off_top_far_frame, screen_scale()));
-    m_location_frames.emplace(Location(role, Spot::OffBottomFar), up_pixel_rect(off_bottom_far_frame, screen_scale()));
-    m_location_frames.emplace(Location(role, Spot::OffLeftFar), up_pixel_rect(off_left_far_frame, screen_scale()));
-    m_location_frames.emplace(Location(role, Spot::OffRightFar), up_pixel_rect(off_right_far_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Place::OffTopFar), up_pixel_rect(off_top_far_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Place::OffBottomFar), up_pixel_rect(off_bottom_far_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Place::OffLeftFar), up_pixel_rect(off_left_far_frame, screen_scale()));
+    m_location_frames.emplace(Location(role, Place::OffRightFar), up_pixel_rect(off_right_far_frame, screen_scale()));
 }
 
 void SpellLayout::calculate_game_controls_button_charge_size()
