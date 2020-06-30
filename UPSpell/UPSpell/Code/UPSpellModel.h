@@ -142,9 +142,9 @@ public:
         END,    // the end state after game over or quit
     };
 
-    static constexpr int SevenLetterWordBonus = 25;
-    static constexpr int SixLetterWordBonus = 10;
-    static constexpr int FiveLetterWordBonus = 5;
+    static constexpr int SevenLetterWordBonus = 12;
+    static constexpr int SixLetterWordBonus = 6;
+    static constexpr int FiveLetterWordBonus = 3;
 
     class Action {
     public:
@@ -176,7 +176,7 @@ public:
         const TileArray &tiles() const { return m_tiles; }
         TileArray &tiles() { return m_tiles; }
         int score() const { return m_score; }
-
+        
     private:
         Action m_action;
         TileArray m_tiles;
@@ -226,7 +226,10 @@ public:
     bool not_word_tray_positioned_after(TileIndex) const;
     bool is_player_tray_filled() const;
     bool positions_valid() const;
-    
+
+    std::string cpp_str(Opcode) const;
+    std::string cpp_str(const State &) const;
+
 private:
     std::string tiles_description() const;
     void fill_player_tray();

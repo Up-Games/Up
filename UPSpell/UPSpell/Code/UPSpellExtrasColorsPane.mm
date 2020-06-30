@@ -91,7 +91,6 @@ static const int MilepostHue = 15;
     
     self.quarkModeCheckbox = [UPCheckbox checkbox];
     self.quarkModeCheckbox.labelString = @"QUARK";
-    [self.quarkModeCheckbox setTarget:self action:@selector(setAppIconButtonTapped)];
     self.quarkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsQuarkMode);
     [self addSubview:self.quarkModeCheckbox];
 
@@ -220,10 +219,6 @@ static const int MilepostHue = 15;
     self.iconPrompt.frame = layout.frame_for(Role::ExtrasColorsIconPrompt, Spot::OffBottomFar);
     self.iconButtonNope.frame = layout.frame_for(Role::ExtrasColorsIconButtonNope, Spot::OffBottomFar);
     self.iconButtonYep.frame = layout.frame_for(Role::ExtrasColorsIconButtonYep, Spot::OffBottomFar);
-    
-    delay(BandSettingsAnimationDelay, 2, ^{
-        [self showIconEasterEgg];
-    });
 }
 
 - (void)showIconEasterEgg

@@ -706,7 +706,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         wordTrayTilesNeedMoves = NO;
     }
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::ADD, tile.position(), word_pos));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::ADD, tile.position(), word_pos));
 
     if (wordTrayTilesNeedMoves) {
         SpellLayout &layout = SpellLayout::instance();
@@ -747,7 +747,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     cancel(BandGameDelay);
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::REMOVE, tile.position()));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::REMOVE, tile.position()));
 
     [self viewSlideWordTrayViewsIntoPosition];
 
@@ -765,7 +765,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     cancel(BandGameAll);
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::MOVE, tile.position(), position));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::MOVE, tile.position(), position));
 
     [self viewSlideWordTrayViewsIntoPosition];
     [self viewUpdateGameControls];
@@ -785,7 +785,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.pickedTileView = tileView;
     self.pickedTilePosition = tile.position();
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::PICK, tile.position()));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::PICK, tile.position()));
 
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
 }
@@ -802,7 +802,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     TilePosition hover_pos = [self calculateHoverPosition:tile];
     ASSERT_POS(hover_pos);
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::HOVER, hover_pos));
+    const State &state = self.model->back_state();
+    if (state.action().opcode() != SpellModel::Opcode::HOVER || state.action().pos1() != hover_pos) {
+        self.model->apply(Action(self.gameTimer.remainingTime, Opcode::HOVER, hover_pos));
+    }
 
     [self viewHover:hover_pos];
 }
@@ -821,7 +824,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         return;
     }
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::NOVER));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::NOVER));
 
     [self viewNover];
     [self viewUpdateGameControls];
@@ -837,7 +840,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     UPTileView *tileView = tile.view();
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DROP, self.pickedTilePosition));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::DROP, self.pickedTilePosition));
 
     CFTimeInterval duration = DefaultBloopDuration;
     
@@ -863,7 +866,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     UPTileView *tileView = tile.view();
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DROP, self.pickedTilePosition));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::DROP, self.pickedTilePosition));
     
     CFTimeInterval duration = GameOverRespositionBloopDuration;
     
@@ -885,7 +888,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     cancel(BandGameUI);
 
     [self viewClearWordTray];
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::CLEAR));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::CLEAR));
     [self viewUpdateGameControls];
 }
 
@@ -899,7 +902,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     cancel(BandGameDelay);
 
     [self viewSubmitWord];
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::SUBMIT));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::SUBMIT));
     delay(BandGameDelay, 0.25, ^{
         [self viewFillPlayerTray];
         [self viewUpdateGameControls];
@@ -912,7 +915,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     [self viewLockIncludingPause:NO];
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::REJECT));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::REJECT));
 
     // assess time penalty and shake word tray side-to-side
     [self viewPenaltyForReject];
@@ -949,7 +952,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     NSArray *playerTrayTileViews = self.model->player_tray_tile_views();
     ASSERT(playerTrayTileViews.count == TileCount);
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::DUMP));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::DUMP));
 
     [self viewPenaltyForDump];
     [self viewDumpPlayerTray:playerTrayTileViews];
@@ -963,7 +966,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)applyActionQuit
 {
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::QUIT));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::QUIT));
     [self setMode:Mode::Quit];
 }
 
@@ -1976,7 +1979,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
     }
 
-    self.model->apply(Action(Opcode::PLAY));
+    [self.gameTimer reset];
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::PLAY));
     
     // bloop out ready message
     UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.messagePathView, Location(Role::DialogMessageHigh, Spot::OffBottomNear));
@@ -2122,7 +2126,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
     }
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::QUIT));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::QUIT));
 
     [self viewLock];
     cancel(BandGameAll);
@@ -2174,7 +2178,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
 
     [self viewUpdateGameControls];
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::OVER));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::OVER));
 
     [self cancelActiveTouch];
     [self viewUnhighlightTileViews];
@@ -2225,7 +2229,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewBloopOutWordScoreLabelWithDuration:GameOverInOutBloopDuration];
 
     [self viewBloopOutExistingTileViewsWithDuration:GameOverInOutBloopDuration completion:^{
-        self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::END));
+        self.model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
         [self viewBloopInBlankTileViewsWithDuration:GameOverInOutBloopDuration completion:nil];
 
         self.dialogMenu.hidden = NO;
@@ -2286,7 +2290,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     [self viewDumpAllTilesFromCurrentPosition];
 
-    self.model->apply(Action(self.gameTimer.elapsedTime, Opcode::END));
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
 
     SpellLayout &layout = SpellLayout::instance();
 

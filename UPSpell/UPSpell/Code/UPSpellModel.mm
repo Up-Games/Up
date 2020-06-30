@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <iomanip>
 #import <string>
 #import <sstream>
 
@@ -428,6 +429,72 @@ bool SpellModel::positions_valid() const
     return true;
 }
 
+std::string SpellModel::cpp_str(Opcode opcode) const
+{
+    switch (opcode) {
+        case Opcode::NOP:
+            return "NOP";
+        case Opcode::START:
+            return "START";
+        case Opcode::PLAY:
+            return "PLAY";
+        case Opcode::ADD:
+            return "ADD";
+        case Opcode::REMOVE:
+            return "REMOVE";
+        case Opcode::MOVE:
+            return "MOVE";
+        case Opcode::PICK:
+            return "PICK";
+        case Opcode::HOVER:
+            return "HOVER";
+        case Opcode::NOVER:
+            return "NOVER";
+        case Opcode::DROP:
+            return "DROP";
+        case Opcode::SUBMIT:
+            return "SUBMIT";
+        case Opcode::REJECT:
+            return "REJECT";
+        case Opcode::CLEAR:
+            return "CLEAR";
+        case Opcode::DUMP:
+            return "DUMP";
+        case Opcode::OVER:
+            return "OVER";
+        case Opcode::QUIT:
+            return "QUIT";
+        case Opcode::END:
+            return "END";
+    }
+    ASSERT_NOT_REACHED();
+}
+
+std::string SpellModel::cpp_str(const State &state) const
+{
+    std::ostringstream sstr;
+
+    sstr << std::fixed << std::setw(7) << std::setprecision(3) << std::setfill('0') << state.action().timestamp();
+    sstr << ' ';
+    sstr << cpp_str(state.action().opcode());
+    const TilePosition &pos1 = state.action().pos1();
+    if (pos1 != TilePosition()) {
+        sstr << ' ';
+        sstr << cstr_for(pos1.tray());
+        sstr << '-';
+        sstr << pos1.index();
+    }
+    const TilePosition &pos2 = state.action().pos2();
+    if (pos2 != TilePosition()) {
+        sstr << ' ';
+        sstr << cstr_for(pos2.tray());
+        sstr << '-';
+        sstr << pos2.index();
+    }
+
+    return sstr.str();
+}
+
 const SpellModel::State &SpellModel::apply(const Action &action)
 {
     switch (action.opcode()) {
@@ -484,7 +551,13 @@ const SpellModel::State &SpellModel::apply(const Action &action)
             break;
     }
 
+#if LOG_DISABLED
     return m_states.emplace_back(action, tiles(), game_score());
+#else
+    const State &state = m_states.emplace_back(action, tiles(), game_score());
+    LOG(State, "=== state: %s", cpp_str(state).c_str());
+    return state;
+#endif
 }
 
 void SpellModel::apply_start(const Action &action)

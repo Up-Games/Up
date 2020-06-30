@@ -3,12 +3,11 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#if __cplusplus
-
 #import <algorithm>
 #import <iostream>
 #import <vector>
 
+#import <UpKit/UPAssertions.h>
 #import <UpKit/UPGameKey.h>
 #import <UpKit/UPLexicon.h>
 #import <UpKit/UPRandom.h>
@@ -29,7 +28,7 @@ public:
         if (m_letters.size() == 0) {
             auto &lexicon = Lexicon::instance();
             std::u32string key = lexicon.random_key(m_random);
-            std::cout << "w: " << cpp_str(key) << std::endl;
+            LOG(Lexicon, "w: %s", cpp_str(key).c_str());
             std::shuffle(key.begin(), key.end(), m_random.generator());
             std::copy(key.begin(), key.end(), std::back_inserter(m_letters));
         }
@@ -53,5 +52,3 @@ private:
 };
     
 }  // namespace UP
-
-#endif  // __cplusplus
