@@ -139,18 +139,24 @@ class Word {
 public:
     Word() {}
     explicit Word(const TileArray &tiles);
+    Word(const TileArray &tiles, const std::u32string &string, int score, int total_multiplier, int total_score, bool in_lexicon) :
+        m_tiles(tiles), m_string(string), m_score(score), m_total_multiplier(total_multiplier),
+        m_total_score(total_score), m_in_lexicon(in_lexicon) {}
 
+    const TileArray &tiles() const { return m_tiles; }
+    TileArray &tiles() { return m_tiles; }
     const std::u32string &string() const { return m_string; }
     size_t length() const { return m_string.length(); }
     int score() const { return m_score; }
-    int multiplier() const { return m_multiplier; }
+    int total_multiplier() const { return m_total_multiplier; }
     int total_score() const { return m_total_score; }
     bool in_lexicon() const { return m_in_lexicon; }
     
 private:
+    TileArray m_tiles;
     std::u32string m_string;
     int m_score = 0;
-    int m_multiplier = 1;
+    int m_total_multiplier = 1;
     int m_total_score = 0;
     bool m_in_lexicon = false;
 };
@@ -271,8 +277,8 @@ public:
     std::string cpp_str(Opcode) const;
     std::string cpp_str(const State &) const;
     
-    Word highest_scoring_word() const;
-    Word highest_scoring_word_with_length(size_t length) const;
+    std::vector<Word> highest_scoring_word() const;  // returns vector to account for ties
+    std::vector<Word> highest_scoring_word_with_length(size_t length) const;  // returns vector to account for ties
     size_t words_submitted_count() const;
     size_t words_submitted_count_rank() const;
     size_t tiles_used_count() const;
@@ -286,10 +292,12 @@ public:
     static double all_time_average_game_score();
     static double all_time_average_game_score_for_recent_games(size_t count);
     static std::vector<SpellModel> all_time_high_scores(size_t count);
-    static std::pair<std::u32string, int> all_time_highest_scoring_word();
-    static std::pair<std::u32string, int> all_time_highest_scoring_word_with_length(size_t length);
-    static size_t all_time_words_submitted_count();
-    static size_t all_time_tiles_used_count();
+    static std::vector<Word> all_time_highest_scoring_word();
+    static std::vector<Word> all_time_highest_scoring_word_with_length(size_t length);
+    static size_t all_time_highest_words_submitted_count();
+    static size_t all_time_highest_tiles_used_count();
+    static double all_time_average_words_submitted_count();
+    static double all_time_average_tiles_used_count();
 
 private:
     std::string tiles_description() const;

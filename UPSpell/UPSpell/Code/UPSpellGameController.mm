@@ -45,6 +45,9 @@ using UP::TileCount;
 using UP::TilePaths;
 using UP::TileSequence;
 using UP::valid;
+using UP::Word;
+
+using UP::ns_str;
 
 using UP::TimeSpanning::bloop_in;
 using UP::TimeSpanning::bloop_out;
@@ -1128,7 +1131,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     [self viewUpdateWordScoreLabel];
 
-    Role role = (self.model->word().length() >= 5 || self.model->word().multiplier() > 1) ? Role::WordScoreBonus : Role::WordScore;
+    Role role = (self.model->word().length() >= 5 || self.model->word().total_multiplier() > 1) ? Role::WordScoreBonus : Role::WordScore;
 
     SpellLayout &layout = SpellLayout::instance();
     self.gameView.wordScoreLabel.frame = layout.frame_for(role, Spot::OffBottomFar);
@@ -1160,7 +1163,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     Role role = Role::WordScore;
     
     const size_t word_length = self.model->word().length();
-    const int word_multiplier = self.model->word().multiplier();
+    const int word_multiplier = self.model->word().total_multiplier();
     BOOL has_length_bonus = word_length >= 5;
     BOOL has_multiplier_bonus = word_multiplier > 1;
     if (has_length_bonus || has_multiplier_bonus) {
@@ -1718,10 +1721,19 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }));
 }
 
-- (void)viewChooseNoteLabelString
+- (void)viewSetNoteLabelString
 {
     ASSERT(self.mode == Mode::End);
     
+    NSString *labelString = nil;
+    
+    std::vector<Word> words = self.model->highest_scoring_word();
+    if (words.size()) {
+        const Word &word = words[0];
+        labelString = [NSString stringWithFormat:@"HIGHEST SCORING WORD: %@ (+%d)", ns_str(word.string()), word.total_score()];
+    }
+    
+    self.dialogGameNote.noteLabel.string = labelString;
 }
 
 #pragma mark - Model management
@@ -2241,7 +2253,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     [self viewBloopOutExistingTileViewsWithDuration:GameOverInOutBloopDuration completion:^{
         self.model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
-        [self viewChooseNoteLabelString];
+        [self viewSetNoteLabelString];
         
         [self viewBloopInBlankTileViewsWithDuration:GameOverInOutBloopDuration completion:nil];
 

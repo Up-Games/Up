@@ -22,20 +22,20 @@ namespace UP {
 // =========================================================================================================================================
 # pragma mark - Word
 
-Word::Word(const TileArray &tiles)
+Word::Word(const TileArray &tiles) : m_tiles(tiles)
 {
     char32_t chars[TileCount];
     bzero(chars, sizeof(chars));
     size_t count = 0;
-    for (auto &tile : tiles) {
+    for (auto &tile : m_tiles) {
         if (tile.in_word_tray()) {
             chars[tile.position().index()] = tile.model().glyph();
             m_score += tile.model().score();
-            m_multiplier *= tile.model().multiplier();
+            m_total_multiplier *= tile.model().multiplier();
             count++;
         }
     }
-    m_total_score = m_score * m_multiplier;
+    m_total_score = m_score * m_total_multiplier;
 #if !ASSERT_DISABLED
     for (size_t idx = 0; idx < TileCount; idx++) {
         if (idx < count) {
@@ -547,7 +547,7 @@ std::string SpellModel::cpp_str(const State &state) const
         sstr << ' ';
         sstr << UP::cpp_str(state.incoming_word().string());
         sstr << " (+";
-        sstr << (state.incoming_word().score() * state.incoming_word().multiplier());
+        sstr << (state.incoming_word().score() * state.incoming_word().total_multiplier());
         sstr << ")";
     }
     
@@ -915,12 +915,50 @@ void SpellModel::apply_end(const Action &action)
 // =========================================================================================================================================
 # pragma mark - Stats
 
-//const Word &SpellModel::highest_scoring_word() const
-//{
-//    for (const auto &state : states()) {
-//        
-//    }
-//}
+std::vector<Word> SpellModel::highest_scoring_word() const
+{
+    std::vector<Word> result;
+    int highest_score = 0;
+    for (const auto &state : states()) {
+        if (state.action().opcode() != Opcode::SUBMIT) {
+            continue;
+        }
+        const Word &state_word = state.incoming_word();
+        if (state_word.total_score() > highest_score) {
+            highest_score = state_word.total_score();
+            result.clear();
+            result.push_back(state_word);
+        }
+        else if (state_word.total_score() == highest_score) {
+            result.push_back(state_word);
+        }
+    }
+    return result;
+}
+
+std::vector<Word> SpellModel::highest_scoring_word_with_length(size_t length) const
+{
+    std::vector<Word> result;
+    int highest_score = 0;
+    for (const auto &state : states()) {
+        if (state.action().opcode() != Opcode::SUBMIT) {
+            continue;
+        }
+        const Word &state_word = state.incoming_word();
+        if (state_word.length() != length) {
+            continue;
+        }
+        if (state_word.total_score() > highest_score) {
+            highest_score = state_word.total_score();
+            result.clear();
+            result.push_back(state_word);
+        }
+        else if (state_word.total_score() == highest_score) {
+            result.push_back(state_word);
+        }
+    }
+    return result;
+}
 
 // =========================================================================================================================================
 # pragma mark - High-level Database
@@ -1038,7 +1076,7 @@ void SpellModel::db_store()
         db_exec(db, sqlite3_bind_text(state_stmt, 3, UP::cpp_str(incoming_word.string()).c_str(), -1, nullptr));
         db_exec(db, sqlite3_bind_int64(state_stmt, 4, incoming_word.string().length()));
         db_exec(db, sqlite3_bind_int(state_stmt, 5, incoming_word.score()));
-        db_exec(db, sqlite3_bind_int(state_stmt, 6, incoming_word.multiplier()));
+        db_exec(db, sqlite3_bind_int(state_stmt, 6, incoming_word.total_multiplier()));
         db_exec(db, sqlite3_bind_int(state_stmt, 7, incoming_word.total_score()));
         db_exec(db, sqlite3_bind_int(state_stmt, 8, incoming_word.in_lexicon() ? 1 : 0));
         db_exec(db, sqlite3_bind_int(state_stmt, 9, state.outgoing_game_score()));
@@ -1053,7 +1091,7 @@ void SpellModel::db_store()
             db_exec(db, sqlite3_bind_text(word_stmt, 1, UP::cpp_str(incoming_word.string()).c_str(), -1, nullptr));
             db_exec(db, sqlite3_bind_int64(word_stmt, 2, incoming_word.string().length()));
             db_exec(db, sqlite3_bind_int(word_stmt, 3, incoming_word.score()));
-            db_exec(db, sqlite3_bind_int(word_stmt, 4, incoming_word.multiplier()));
+            db_exec(db, sqlite3_bind_int(word_stmt, 4, incoming_word.total_multiplier()));
             db_exec(db, sqlite3_bind_int(word_stmt, 5, incoming_word.total_score()));
             db_exec(db, sqlite3_bind_int64(word_stmt, 6, db_game_id()));
             db_exec(db, sqlite3_bind_int64(word_stmt, 7, state_id));
