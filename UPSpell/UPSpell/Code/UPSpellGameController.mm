@@ -1713,6 +1713,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }));
 }
 
+- (void)viewChooseNoteLabelString
+{
+    ASSERT(self.mode == Mode::End);
+    
+}
+
 #pragma mark - Model management
 
 - (void)createNewGameModel
@@ -1842,7 +1848,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     self.dialogMenu.transform = CGAffineTransformIdentity;
     self.dialogMenu.hidden = NO;
-    self.dialogMenu.alpha = 1.0;
+    self.dialogMenu.alpha = 1;
     self.dialogMenu.messagePathView.frame = layout.frame_for(Role::DialogMessageCenter, Spot::OffBottomNear);
 
     self.gameView.transform = layout.menu_game_view_transform();
@@ -1992,10 +1998,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     // keep the tile views alpha disabled until just before filling them with game tiles
     self.gameView.tileContainerView.alpha = [UIColor themeDisabledAlpha];
     [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
-        self.dialogMenu.alpha = 0.0;
+        self.dialogMenu.alpha = 0;
     } completion:^(BOOL finished) {
         // animate game view to full alpha and restore alpha of dialog menu
-        self.dialogMenu.alpha = 1.0;
+        self.dialogMenu.alpha = 1;
         self.dialogMenu.hidden = YES;
         self.dialogGameOver.alpha = 1.0;
         self.dialogGameOver.hidden = YES;
@@ -2230,6 +2236,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     [self viewBloopOutExistingTileViewsWithDuration:GameOverInOutBloopDuration completion:^{
         self.model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
+        [self viewChooseNoteLabelString];
+        
         [self viewBloopInBlankTileViewsWithDuration:GameOverInOutBloopDuration completion:nil];
 
         self.dialogMenu.hidden = NO;

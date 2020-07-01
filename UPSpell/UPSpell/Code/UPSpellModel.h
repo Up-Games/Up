@@ -268,6 +268,26 @@ public:
 
     std::string cpp_str(Opcode) const;
     std::string cpp_str(const State &) const;
+    
+    std::pair<std::u32string, int> highest_scoring_word_with_length(size_t length) const;
+    std::pair<std::u32string, int> highest_scoring_word() const;
+    size_t words_submitted_count() const;
+    size_t words_submitted_count_rank() const;
+    size_t tiles_used_count() const;
+    size_t tiles_used_count_rank() const;
+    double average_word_length() const;
+    size_t average_word_length_rank() const;
+    double average_word_score() const;
+    size_t average_word_score_rank() const;
+    size_t game_score_rank() const;
+
+    static double all_time_average_game_score();
+    static double all_time_average_game_score_for_recent_games(size_t count);
+    static std::vector<SpellModel> all_time_high_scores(size_t count);
+    static std::pair<std::u32string, int> all_time_highest_scoring_word_with_length(size_t length);
+    static std::pair<std::u32string, int> all_time_highest_scoring_word();
+    static size_t all_time_words_submitted_count();
+    static size_t all_time_tiles_used_count();
 
 private:
     std::string tiles_description() const;
