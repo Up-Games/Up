@@ -135,6 +135,30 @@ using TileArray = std::array<Tile, TileCount>;
 
 // =========================================================================================================================================
 
+class Word {
+public:
+    Word() {}
+    explicit Word(const TileArray &tiles);
+    explicit Word(const std::u32string &string, int score, int multiplier, int total_score, bool in_lexicon) :
+        m_string(string), m_score(score), m_multiplier(multiplier), m_total_score(total_score), m_in_lexicon(in_lexicon) {}
+
+    const std::u32string &string() const { return m_string; }
+    size_t length() const { return m_string.length(); }
+    int score() const { return m_score; }
+    int multiplier() const { return m_multiplier; }
+    int total_score() const { return m_total_score; }
+    bool in_lexicon() const { return m_in_lexicon; }
+    
+private:
+    std::u32string m_string;
+    int m_score = 0;
+    int m_multiplier = 1;
+    int m_total_score = 0;
+    bool m_in_lexicon = false;
+};
+
+// =========================================================================================================================================
+
 class SpellModel {
 public:
     enum class Opcode: uint8_t {
@@ -184,37 +208,21 @@ public:
     class State {
     public:
         State() {}
-        State(const Action &action,
-              const std::u32string &incoming_word_string,
-              int incoming_word_score, int incoming_word_multiplier,
-              int incoming_word_total_score, bool incoming_word_in_lexicon,
-              const TileArray &outgoing_tiles, int outgoing_game_score) :
+        State(const Action &action, const Word &incoming_word, const TileArray &outgoing_tiles, int outgoing_game_score) :
             m_action(action),
-            m_incoming_word_string(incoming_word_string),
-            m_incoming_word_score(incoming_word_score),
-            m_incoming_word_multiplier(incoming_word_multiplier),
-            m_incoming_word_total_score(incoming_word_total_score),
-            m_incoming_word_in_lexicon(incoming_word_in_lexicon),
+            m_incoming_word(incoming_word),
             m_outgoing_tiles(outgoing_tiles),
             m_outgoing_game_score(outgoing_game_score) {}
 
         Action action() const { return m_action; }
-        const std::u32string &incoming_word_string() const { return m_incoming_word_string; }
-        int incoming_word_score() const { return m_incoming_word_score; }
-        int incoming_word_multiplier() const { return m_incoming_word_multiplier; }
-        int incoming_word_total_score() const { return m_incoming_word_total_score; }
-        bool incoming_word_in_lexicon() const { return m_incoming_word_in_lexicon; }
+        const Word &incoming_word() const { return m_incoming_word; }
         const TileArray &outgoing_tiles() const { return m_outgoing_tiles; }
         TileArray &outgoing_tiles() { return m_outgoing_tiles; }
         int outgoing_game_score() const { return m_outgoing_game_score; }
         
     private:
         Action m_action;
-        std::u32string m_incoming_word_string;
-        int m_incoming_word_score = 0;
-        int m_incoming_word_multiplier = 0;
-        int m_incoming_word_total_score = 0;
-        bool m_incoming_word_in_lexicon = false;
+        Word m_incoming_word;
         TileArray m_outgoing_tiles;
         int m_outgoing_game_score = 0;
     };
@@ -245,12 +253,7 @@ public:
     const std::vector<State> &states() const { return m_states; }
     const State &back_state() const;
 
-    const std::u32string &word_string() const { return m_word_string; }
-    size_t word_length() const { return m_word_string.length(); }
-    int word_score() const { return m_word_score; }
-    int word_multiplier() const { return m_word_multiplier; }
-    int word_total_score() const { return m_word_total_score; }
-    bool word_in_lexicon() const { return m_word_in_lexicon; }
+    const Word &word() const { return m_word; }
 
     int game_score() const { return m_game_score; }
     void reset_game_score() { m_game_score = 0; }
@@ -335,15 +338,8 @@ private:
     TileSequence m_tile_sequence;
     TileArray m_tiles;
     std::vector<State> m_states;
-
-    std::u32string m_word_string;
-    int m_word_score = 0;
-    int m_word_multiplier = 0;
-    int m_word_total_score = 0;
-    bool m_word_in_lexicon = false;
-    
+    Word m_word;
     int m_game_score = 0;
-
     uint64_t m_db_game_id = 0;
 };
 

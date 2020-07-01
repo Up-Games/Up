@@ -363,7 +363,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
     
     if (self.touchedControl == self.gameView.wordTrayControl && self.touchedTileView && self.activeTouchCurrentPanDistance > 25) {
-        ASSERT(self.model->word_length() > 0);
+        ASSERT(self.model->word().length() > 0);
         ASSERT(self.pickedTileView == nil);
         self.gameView.wordTrayControl.highlighted = NO;
         self.touchedTileView.highlighted = YES;
@@ -567,7 +567,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UPControl *wordTrayControl = self.gameView.wordTrayControl;
     CGPoint wordTrayControlPoint = [wordTrayControl convertPoint:point fromView:self.gameView.window];
     if (wordTrayControl.userInteractionEnabled && [wordTrayControl pointInside:wordTrayControlPoint withEvent:event] &&
-        self.model->word_length() > 0) {
+        self.model->word().length() > 0) {
         return wordTrayControl;
     }
     
@@ -611,7 +611,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     if (self.gameView.wordTrayControl.active) {
         [self applyActionSubmit];
     }
-    else if (self.model->word_length() == 0) {
+    else if (self.model->word().length() == 0) {
         // Don't penalize. In the case it's a stray tap, let the player off the hook.
         // FIXME: beep
     }
@@ -641,7 +641,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)roundButtonClearTapped
 {
     ASSERT(self.mode == Mode::Play);
-    if (self.model->word_length()) {
+    if (self.model->word().length()) {
         [self applyActionClear];
     }
     else {
@@ -670,7 +670,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT_POS(self.pickedTilePosition);
 
     // find the word position closest to the tile
-    size_t word_length = self.pickedTilePosition.in_word_tray() ? self.model->word_length() : self.model->word_length() + 1;
+    size_t word_length = self.pickedTilePosition.in_word_tray() ? self.model->word().length() : self.model->word().length() + 1;
     SpellLayout &layout = SpellLayout::instance();
     CGPoint center = tileView.center;
     CGFloat min_d = std::numeric_limits<CGFloat>::max();
@@ -699,7 +699,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
 
     BOOL wordTrayTilesNeedMoves = wordTrayTileViews.count > 0;
-    TilePosition word_pos = TilePosition(TileTray::Word, self.model->word_length());
+    TilePosition word_pos = TilePosition(TileTray::Word, self.model->word().length());
     const State &state = self.model->back_state();
     if (state.action().opcode() == SpellModel::Opcode::HOVER) {
         word_pos = state.action().pos1();
@@ -713,7 +713,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         for (UPTileView *wordTrayTileView in wordTrayTileViews) {
             Tile &tile = self.model->find_tile(wordTrayTileView);
             ASSERT(tile.position().in_word_tray());
-            Location location = role_in_word(tile.position().index(), self.model->word_length());
+            Location location = role_in_word(tile.position().index(), self.model->word().length());
             UPViewMove *bloopMove = find_move(wordTrayTileView, UPAnimatorTypeBloopIn);
             if (bloopMove) {
                 bloopMove.destination = layout.center_for(location);
@@ -733,7 +733,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     UPTileView *tileView = tile.view();
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
-    Location location(role_in_word(word_pos.index(), self.model->word_length()));
+    Location location(role_in_word(word_pos.index(), self.model->word().length()));
     start(bloop_in(BandGameUITile, @[UPViewMoveMake(tileView, location)], DefaultBloopDuration, nil));
 
     [self viewUpdateGameControls];
@@ -845,7 +845,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     CFTimeInterval duration = DefaultBloopDuration;
     
     if (self.pickedTilePosition.in_word_tray()) {
-        Location location(role_in_word(self.pickedTilePosition.index(), self.model->word_length()));
+        Location location(role_in_word(self.pickedTilePosition.index(), self.model->word().length()));
         start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], duration, nil));
     }
     else {
@@ -872,7 +872,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     delay(BandModeDelay, GameOverRespositionBloopDelay, ^{
         if (self.pickedTilePosition.in_word_tray()) {
-            Location location(role_in_word(self.pickedTilePosition.index(), self.model->word_length()));
+            Location location(role_in_word(self.pickedTilePosition.index(), self.model->word().length()));
             start(bloop_in(BandModeUI, @[UPViewMoveMake(tileView, location)], duration, nil));
         }
         else {
@@ -975,11 +975,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)viewUpdateGameControls
 {
     // word tray
-    self.gameView.wordTrayControl.active = self.model->word_in_lexicon();
+    if (self.mode == Mode::Attract || self.mode == Mode::Play) {
+        self.gameView.wordTrayControl.active = self.model->word().in_lexicon();
+    }
+    else {
+        self.gameView.wordTrayControl.active = NO;
+    }
     [self.gameView.wordTrayControl setNeedsUpdate];
 
     // clear button
-    if (self.model->word_length()) {
+    if (self.model->word().length()) {
         [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
     }
     else {
@@ -1002,7 +1007,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
         Tile &tile = self.model->find_tile(tileView);
-        [moves addObject:UPViewMoveMake(tileView, role_in_word(tile.position().index(), self.model->word_length()))];
+        [moves addObject:UPViewMoveMake(tileView, role_in_word(tile.position().index(), self.model->word().length()))];
     }
     start(UP::TimeSpanning::slide(BandGameUITileSlide, moves, DefaultTileSlideDuration, nil));
 }
@@ -1014,7 +1019,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         return;
     }
 
-    size_t word_length = self.pickedTilePosition.in_word_tray() ? self.model->word_length() : self.model->word_length() + 1;
+    size_t word_length = self.pickedTilePosition.in_word_tray() ? self.model->word().length() : self.model->word().length() + 1;
 
     if (self.pickedTilePosition.in_player_tray()) {
         NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
@@ -1055,7 +1060,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         return;
     }
 
-    size_t word_length = self.pickedTilePosition.in_word_tray() ? self.model->word_length() - 1 : self.model->word_length();
+    size_t word_length = self.pickedTilePosition.in_word_tray() ? self.model->word().length() - 1 : self.model->word().length();
 
     if (self.pickedTilePosition.in_player_tray()) {
         NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
@@ -1115,7 +1120,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     for (UPTileView *tileView in wordTrayTileViews) {
         Tile &tile = self.model->find_tile(tileView);
         ASSERT(tile.position().in_word_tray());
-        Location location(role_in_word(tile.position().index(), self.model->word_length()), Spot::OffTopNear);
+        Location location(role_in_word(tile.position().index(), self.model->word().length()), Spot::OffTopNear);
         tileView.submitLocation = location;
         [moves addObject:UPViewMoveMake(tileView, location)];
     }
@@ -1123,7 +1128,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     [self viewUpdateWordScoreLabel];
 
-    Role role = (self.model->word_length() >= 5 || self.model->word_multiplier() > 1) ? Role::WordScoreBonus : Role::WordScore;
+    Role role = (self.model->word().length() >= 5 || self.model->word().multiplier() > 1) ? Role::WordScoreBonus : Role::WordScore;
 
     SpellLayout &layout = SpellLayout::instance();
     self.gameView.wordScoreLabel.frame = layout.frame_for(role, Spot::OffBottomFar);
@@ -1146,7 +1151,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UIColor *wordScoreColor = [UIColor themeColorWithCategory:self.gameView.wordScoreLabel.textColorCategory];
     
     SpellLayout &layout = SpellLayout::instance();
-    NSString *string = [NSString stringWithFormat:@"+%d \n", self.model->word_total_score()];
+    NSString *string = [NSString stringWithFormat:@"+%d \n", self.model->word().total_score()];
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
     NSRange range = NSMakeRange(0, string.length);
     [attrString addAttribute:NSFontAttributeName value:layout.word_score_font() range:range];
@@ -1154,8 +1159,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     Role role = Role::WordScore;
     
-    const size_t word_length = self.model->word_length();
-    const int word_multiplier = self.model->word_multiplier();
+    const size_t word_length = self.model->word().length();
+    const int word_multiplier = self.model->word().multiplier();
     BOOL has_length_bonus = word_length >= 5;
     BOOL has_multiplier_bonus = word_multiplier > 1;
     if (has_length_bonus || has_multiplier_bonus) {
@@ -1460,7 +1465,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         if (tile.has_view()) {
             UPTileView *tileView = tile.view();
             if (tile.in_word_tray()) {
-                Role role = role_in_word(tile.position().index(), self.model->word_length());
+                Role role = role_in_word(tile.position().index(), self.model->word().length());
                 [moves addObject:UPViewMoveMake(tileView, role, Spot::OffBottomNear)];
             }
             else {
@@ -1556,7 +1561,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             UPTileView *tileView = tile.view();
             Location location;
             if (tile.in_word_tray()) {
-                location = Location(role_in_word(tile.position().index(), self.model->word_length()), Spot::OffBottomNear);
+                location = Location(role_in_word(tile.position().index(), self.model->word().length()), Spot::OffBottomNear);
             }
             else {
                 location = Location(role_in_player_tray(tile.position()), Spot::OffBottomNear);

@@ -18,6 +18,53 @@
 
 namespace UP {
 
+// =========================================================================================================================================
+
+Word::Word(const TileArray &tiles)
+{
+    char32_t chars[TileCount];
+    bzero(chars, sizeof(chars));
+    size_t count = 0;
+    for (auto &tile : tiles) {
+        if (tile.in_word_tray()) {
+            chars[tile.position().index()] = tile.model().glyph();
+            m_score += tile.model().score();
+            m_multiplier *= tile.model().multiplier();
+            count++;
+        }
+    }
+    m_total_score = m_score * m_multiplier;
+#if !ASSERT_DISABLED
+    for (size_t idx = 0; idx < TileCount; idx++) {
+        if (idx < count) {
+            ASSERT(chars[idx] != SentinelGlyph);
+        }
+        else {
+            ASSERT(chars[idx] == SentinelGlyph);
+        }
+    }
+#endif
+    m_string = std::u32string(chars, count);
+    switch (count) {
+        default:
+            // no bonus
+            break;
+        case 5:
+            m_total_score += SpellModel::FiveLetterWordBonus;
+            break;
+        case 6:
+            m_total_score += SpellModel::SixLetterWordBonus;
+            break;
+        case 7:
+            m_total_score += SpellModel::SevenLetterWordBonus;
+            break;
+    }
+    Lexicon &lexicon = Lexicon::instance();
+    m_in_lexicon = count > 0 ? lexicon.contains(m_string) : false;
+}
+
+// =========================================================================================================================================
+
 const Tile &SpellModel::find_tile(const UPTileView *view) const
 {
     for (const auto &tile : m_tiles) {
@@ -248,54 +295,13 @@ void SpellModel::clear_and_blank()
 
 void SpellModel::update_word()
 {
-    char32_t chars[TileCount];
-    bzero(chars, sizeof(chars));
-    size_t count = 0;
-    m_word_score = 0;
-    m_word_multiplier = 1;
-    m_word_total_score = 0;
-    for (auto &tile : m_tiles) {
-        if (tile.in_word_tray()) {
-            chars[tile.position().index()] = tile.model().glyph();
-            m_word_score += tile.model().score();
-            m_word_multiplier *= tile.model().multiplier();
-            count++;
-        }
-    }
-    m_word_total_score = m_word_score * m_word_multiplier;
-#if !ASSERT_DISABLED
-    for (size_t idx = 0; idx < TileCount; idx++) {
-        if (idx < count) {
-            ASSERT(chars[idx] != SentinelGlyph);
-        }
-        else {
-            ASSERT(chars[idx] == SentinelGlyph);
-        }
-    }
-#endif
-    m_word_string = std::u32string(chars, count);
-    switch (count) {
-        default:
-            // no bonus
-            break;
-        case 5:
-            m_word_total_score += FiveLetterWordBonus;
-            break;
-        case 6:
-            m_word_total_score += SixLetterWordBonus;
-            break;
-        case 7:
-            m_word_total_score += SevenLetterWordBonus;
-            break;
-    }
-    Lexicon &lexicon = Lexicon::instance();
-    m_word_in_lexicon = count > 0 ? lexicon.contains(m_word_string) : false;
+    m_word = Word(tiles());
 }
 
 void SpellModel::append_to_word(const TilePosition &player_pos)
 {
     ASSERT(player_pos.in_player_tray());
-    TilePosition word_pos(TileTray::Word, word_length());
+    TilePosition word_pos(TileTray::Word, word().length());
     Tile &tile = m_tiles[player_pos.index()];
     tile.set_position(word_pos);
 }
@@ -318,7 +324,7 @@ void SpellModel::add_to_word(const TilePosition &player_pos, const TilePosition 
 {
     ASSERT(player_pos.in_player_tray());
     ASSERT(word_pos.in_word_tray());
-    if (word_pos.index() == word_length()) {
+    if (word_pos.index() == word().length()) {
         append_to_word(player_pos);
     }
     else {
@@ -420,7 +426,7 @@ bool SpellModel::positions_valid() const
         }
         marks[tile.position().index()] = true;
     }
-    if (word_count != word_length()) {
+    if (word_count != word().length()) {
         ASSERT(false);
         return false;
     }
@@ -497,9 +503,9 @@ std::string SpellModel::cpp_str(const State &state) const
     }
     if (state.action().opcode() == Opcode::SUBMIT) {
         sstr << ' ';
-        sstr << UP::cpp_str(state.incoming_word_string());
+        sstr << UP::cpp_str(state.incoming_word().string());
         sstr << " (+";
-        sstr << (state.incoming_word_score() * state.incoming_word_multiplier());
+        sstr << (state.incoming_word().score() * state.incoming_word().multiplier());
         sstr << ")";
     }
     
@@ -508,13 +514,7 @@ std::string SpellModel::cpp_str(const State &state) const
 
 const SpellModel::State &SpellModel::apply(const Action &action)
 {
-    SpellModel::db_handle();
-
-    std::u32string incoming_word_string = word_string();
-    int incoming_word_score = word_score();
-    int incoming_word_multiplier = word_multiplier();
-    int incoming_word_total_score = word_total_score();
-    bool incoming_word_in_lexicon = word_in_lexicon();
+    Word incoming_word = word();
     
     switch (action.opcode()) {
         case Opcode::NOP:
@@ -570,9 +570,7 @@ const SpellModel::State &SpellModel::apply(const Action &action)
             break;
     }
 
-    const State &state = m_states.emplace_back(action, incoming_word_string, incoming_word_score, incoming_word_multiplier,
-                                               incoming_word_total_score, incoming_word_in_lexicon,
-                                               tiles(), game_score());
+    const State &state = m_states.emplace_back(action, incoming_word, tiles(), game_score());
     LOG(State, "%s", cpp_str(state).c_str());
 
     if (action.opcode() == Opcode::END) {
@@ -624,7 +622,7 @@ void SpellModel::apply_add(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::ADD);
     ASSERT(is_sentinel_filled<false>());
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
     ASSERT_POS(action.pos1());
     ASSERT(m_tiles[action.pos1().index()].in_player_tray());
     ASSERT_POS(action.pos2());
@@ -632,7 +630,7 @@ void SpellModel::apply_add(const Action &action)
     ASSERT(positions_valid());
 
 #if !ASSERT_DISABLED
-    size_t in_word_length = word_length();
+    size_t in_word_length = word().length();
 #endif
 
     const TilePosition &player_pos = action.pos1();
@@ -642,51 +640,51 @@ void SpellModel::apply_add(const Action &action)
     update_word();
 
 #if !ASSERT_DISABLED
-    size_t out_word_length = word_length();
+    size_t out_word_length = word().length();
 #endif
 
     ASSERT(positions_valid());
     ASSERT(in_word_length + 1 == out_word_length);
     ASSERT(is_sentinel_filled<false>());
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
 }
 
 void SpellModel::apply_remove(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::REMOVE);
     ASSERT(is_sentinel_filled<false>());
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
-    ASSERT(not_word_tray_positioned_after(word_length()));
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
+    ASSERT(not_word_tray_positioned_after(word().length()));
     ASSERT_POS(action.pos1());
     ASSERT(action.pos1().in_word_tray());
     ASSERT_NPOS(action.pos2());
     ASSERT(positions_valid());
     ASSERT(is_sentinel_filled<false>());
-    ASSERT(word_length() > 0);
-    ASSERT(word_score() > 0);
+    ASSERT(word().length() > 0);
+    ASSERT(word().score() > 0);
 
 #if !ASSERT_DISABLED
-    size_t in_word_length = word_length();
+    size_t in_word_length = word().length();
 #endif
 
     remove_from_word(action.pos1());
     update_word();
 
 #if !ASSERT_DISABLED
-    size_t out_word_length = word_length();
+    size_t out_word_length = word().length();
 #endif
 
     ASSERT(positions_valid());
     ASSERT(in_word_length - 1 == out_word_length);
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
 }
 
 void SpellModel::apply_move(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::MOVE);
     ASSERT(is_sentinel_filled<false>());
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
-    ASSERT(not_word_tray_positioned_after(word_length()));
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
+    ASSERT(not_word_tray_positioned_after(word().length()));
     ASSERT_POS(action.pos1());
     ASSERT_POS(action.pos2());
     ASSERT(action.pos1().in_word_tray());
@@ -694,11 +692,11 @@ void SpellModel::apply_move(const Action &action)
     ASSERT(action.pos1() != action.pos2());
     ASSERT(positions_valid());
     ASSERT(is_sentinel_filled<false>());
-    ASSERT(word_length() > 0);
-    ASSERT(word_score() > 0);
+    ASSERT(word().length() > 0);
+    ASSERT(word().score() > 0);
 
 #if !ASSERT_DISABLED
-    size_t in_word_length = word_length();
+    size_t in_word_length = word().length();
 #endif
 
     TilePosition player_pos(TileTray::Player, player_tray_index(action.pos1()));
@@ -709,19 +707,19 @@ void SpellModel::apply_move(const Action &action)
     update_word();
 
 #if !ASSERT_DISABLED
-    size_t out_word_length = word_length();
+    size_t out_word_length = word().length();
 #endif
 
     ASSERT(positions_valid());
     ASSERT(in_word_length == out_word_length);
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
 }
  
 void SpellModel::apply_pick(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::PICK);
     ASSERT(is_sentinel_filled<false>());
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
     ASSERT_POS(action.pos1());
     ASSERT_NPOS(action.pos2());
     ASSERT(positions_valid());
@@ -733,7 +731,7 @@ void SpellModel::apply_hover(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::HOVER);
     ASSERT(is_sentinel_filled<false>());
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
     ASSERT_POS(action.pos1());
     ASSERT_NPOS(action.pos2());
     ASSERT(positions_valid());
@@ -745,7 +743,7 @@ void SpellModel::apply_nover(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::NOVER);
     ASSERT(is_sentinel_filled<false>());
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
     ASSERT_NPOS(action.pos1());
     ASSERT_NPOS(action.pos2());
     ASSERT(positions_valid());
@@ -762,22 +760,22 @@ void SpellModel::apply_submit(const Action &action)
     ASSERT(action.opcode() == Opcode::SUBMIT);
     ASSERT_NPOS(action.pos1());
     ASSERT_NPOS(action.pos2());
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
-    ASSERT(word_length() > 0);
-    ASSERT(word_in_lexicon());
-    ASSERT(word_score() > 0);
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
+    ASSERT(word().length() > 0);
+    ASSERT(word().in_lexicon());
+    ASSERT(word().score() > 0);
     ASSERT(positions_valid());
 
-    m_game_score += word_total_score();
+    m_game_score += word().total_score();
     clear_and_sentinelize_word_tray();
     fill_player_tray();
     update_word();
 
     ASSERT(positions_valid());
-    ASSERT(word_length() == 0);
-    ASSERT(!word_in_lexicon());
-    ASSERT(word_score() == 0);
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(word().length() == 0);
+    ASSERT(!word().in_lexicon());
+    ASSERT(word().score() == 0);
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
 }
 
 void SpellModel::apply_reject(const Action &action)
@@ -785,10 +783,10 @@ void SpellModel::apply_reject(const Action &action)
     ASSERT(action.opcode() == Opcode::REJECT);
     ASSERT_NPOS(action.pos1());
     ASSERT_NPOS(action.pos2());
-    ASSERT(word_length() > 0);
-    ASSERT(word_score() > 0);
-    ASSERT(!word_in_lexicon());
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(word().length() > 0);
+    ASSERT(word().score() > 0);
+    ASSERT(!word().in_lexicon());
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
     ASSERT(positions_valid());
     
     // otherwise, a no-op
@@ -799,18 +797,18 @@ void SpellModel::apply_clear(const Action &action)
     ASSERT(action.opcode() == Opcode::CLEAR);
     ASSERT_NPOS(action.pos1());
     ASSERT_NPOS(action.pos2());
-    ASSERT(word_length() > 0);
-    ASSERT(word_score() > 0);
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(word().length() > 0);
+    ASSERT(word().score() > 0);
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
     ASSERT(positions_valid());
 
     clear_word_tray();
     update_word();
 
-    ASSERT(word_length() == 0);
-    ASSERT(!word_in_lexicon());
-    ASSERT(word_score() == 0);
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(word().length() == 0);
+    ASSERT(!word().in_lexicon());
+    ASSERT(word().score() == 0);
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
     ASSERT(positions_valid());
 }
 
@@ -819,17 +817,17 @@ void SpellModel::apply_dump(const Action &action)
     ASSERT(action.opcode() == Opcode::DUMP);
     ASSERT_NPOS(action.pos1());
     ASSERT_NPOS(action.pos2());
-    ASSERT(word_length() == 0);
-    ASSERT(!word_in_lexicon());
-    ASSERT(word_score() == 0);
+    ASSERT(word().length() == 0);
+    ASSERT(!word().in_lexicon());
+    ASSERT(word().score() == 0);
     ASSERT(positions_valid());
 
     clear_and_sentinelize();
     fill_player_tray();
 
-    ASSERT(word_length() == 0);
-    ASSERT(!word_in_lexicon());
-    ASSERT(word_score() == 0);
+    ASSERT(word().length() == 0);
+    ASSERT(!word().in_lexicon());
+    ASSERT(word().score() == 0);
     ASSERT(positions_valid());
 }
 
@@ -843,10 +841,10 @@ void SpellModel::apply_over(const Action &action)
     clear_word_tray();
     update_word();
 
-    ASSERT(word_length() == 0);
-    ASSERT(!word_in_lexicon());
-    ASSERT(word_score() == 0);
-    ASSERT(is_word_tray_positioned_up_to(word_length()));
+    ASSERT(word().length() == 0);
+    ASSERT(!word().in_lexicon());
+    ASSERT(word().score() == 0);
+    ASSERT(is_word_tray_positioned_up_to(word().length()));
     ASSERT(positions_valid());
 }
 
@@ -856,8 +854,6 @@ void SpellModel::apply_quit(const Action &action)
     ASSERT_NPOS(action.pos1());
     ASSERT_NPOS(action.pos2());
     ASSERT(positions_valid());
-    
-    m_word_in_lexicon = false;
 }
 
 void SpellModel::apply_end(const Action &action)
@@ -868,11 +864,7 @@ void SpellModel::apply_end(const Action &action)
     ASSERT(positions_valid());
 
     clear_and_blank();
-    m_word_score = 0;
-    m_word_multiplier = 1;
-    m_word_total_score = 0;
-    m_word_string = U"";
-    m_word_in_lexicon = false;
+    m_word = Word();
 }
 
 // =========================================================================================================================================
@@ -1025,17 +1017,18 @@ void SpellModel::db_store()
     LOG(DB, "*** game id: %ld", db_game_id());
 
     for (const auto &state : states()) {
+        const Word &incoming_word = state.incoming_word();
         const TileArray &outgoing_tiles = state.outgoing_tiles();
         db_exec(sqlite3_reset(state_stmt));
         db_exec(sqlite3_bind_int64(state_stmt, 1, db_game_id()));
         db_exec(sqlite3_bind_int(state_stmt, 2, (int)state.action().opcode()));
         db_exec(sqlite3_bind_double(state_stmt, 3, state.action().timestamp()));
-        db_exec(sqlite3_bind_text(state_stmt, 4, UP::cpp_str(state.incoming_word_string()).c_str(), -1, nullptr));
-        db_exec(sqlite3_bind_int64(state_stmt, 5, state.incoming_word_string().length()));
-        db_exec(sqlite3_bind_int(state_stmt, 6, state.incoming_word_score()));
-        db_exec(sqlite3_bind_int(state_stmt, 7, state.incoming_word_multiplier()));
-        db_exec(sqlite3_bind_int(state_stmt, 8, state.incoming_word_total_score()));
-        db_exec(sqlite3_bind_int(state_stmt, 9, state.incoming_word_in_lexicon() ? 1 : 0));
+        db_exec(sqlite3_bind_text(state_stmt, 4, UP::cpp_str(incoming_word.string()).c_str(), -1, nullptr));
+        db_exec(sqlite3_bind_int64(state_stmt, 5, incoming_word.string().length()));
+        db_exec(sqlite3_bind_int(state_stmt, 6, incoming_word.score()));
+        db_exec(sqlite3_bind_int(state_stmt, 7, incoming_word.multiplier()));
+        db_exec(sqlite3_bind_int(state_stmt, 8, incoming_word.total_score()));
+        db_exec(sqlite3_bind_int(state_stmt, 9, incoming_word.in_lexicon() ? 1 : 0));
         db_exec(sqlite3_bind_int(state_stmt, 10, state.outgoing_game_score()));
         int bind_index = 11;
         for (const Tile &tile : outgoing_tiles) {
