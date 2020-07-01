@@ -10,6 +10,7 @@
 @property (nonatomic) CGFloat themeColorHue;
 @property (nonatomic) BOOL quarkMode;
 @property (nonatomic) NSUInteger extrasSelectedIndex;
+@property (nonatomic) NSUInteger databaseSchemaVersion;
 
 + (UPSpellSettings *)instance;
 - (instancetype)init NS_UNAVAILABLE;

@@ -31,6 +31,7 @@
     self.themeColorStyle = UPThemeColorStyleLight;
     self.themeColorHue = 225;
     self.extrasSelectedIndex = 0;
+    self.databaseSchemaVersion = 0;
 }
 
 @end
