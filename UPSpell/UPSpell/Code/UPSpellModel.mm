@@ -227,6 +227,42 @@ const SpellModel::State &SpellModel::back_state() const
     return state;
 }
 
+bool SpellModel::game_completed() const
+{
+    if (back_state().action().opcode() != Opcode::END) {
+        return false;
+    }
+    
+    for (auto it = states().rbegin(); it != states().rend(); ++it) {
+        const State &state = *it;
+        switch (state.action().opcode()) {
+            case Opcode::START:
+            case Opcode::PLAY:
+            case Opcode::ADD:
+            case Opcode::REMOVE:
+            case Opcode::MOVE:
+            case Opcode::PICK:
+            case Opcode::HOVER:
+            case Opcode::NOVER:
+            case Opcode::DROP:
+            case Opcode::SUBMIT:
+            case Opcode::REJECT:
+            case Opcode::CLEAR:
+            case Opcode::DUMP:
+            case Opcode::QUIT:
+                return false;
+            case Opcode::OVER:
+                return true;
+            case Opcode::NOP:
+            case Opcode::END:
+                // keep looking
+                break;
+        }
+    }
+    
+    return false;
+}
+
 std::string SpellModel::tiles_description() const
 {
     std::stringstream stream;
@@ -889,7 +925,7 @@ void SpellModel::db_store()
     sqlite3 *db = db_handle();
     
     static const char *game_sql =
-    "INSERT INTO game (game_key) VALUES (?);";
+    "INSERT INTO game (game_key, game_completed) VALUES (?, ?);";
     static const char *state_sql =
     "INSERT INTO state(state_game_id, state_opcode, state_timestamp, "
     "state_incoming_word, state_incoming_word_length, state_incoming_word_score, "
@@ -922,9 +958,10 @@ void SpellModel::db_store()
     
     db_exec(db, sqlite3_reset(game_stmt));
     db_exec(db, sqlite3_bind_int(game_stmt, 1, game_key().value()));
+    db_exec(db, sqlite3_bind_int(game_stmt, 2, game_completed() ? 1 : 0));
     db_step(db, sqlite3_step(game_stmt));
     set_db_game_id(sqlite3_last_insert_rowid(db));
-    LOG(DB, "*** game id: %ld", db_game_id());
+    LOG(DB, "*** game id: %ld : %s", db_game_id(), game_completed() ? "Y" : "N");
     
     for (const auto &state : states()) {
         const Word &incoming_word = state.incoming_word();
@@ -987,7 +1024,8 @@ void SpellModel::db_create_if_needed(sqlite3 *db)
     static const char *sql =
         "CREATE TABLE IF NOT EXISTS game (\n"
         "    game_id INTEGER PRIMARY KEY ASC,\n"
-        "    game_key INTEGER\n"
+        "    game_key INTEGER,\n"
+        "    game_completed INTEGER\n"
         ");\n"
         "CREATE TABLE IF NOT EXISTS state (\n"
         "    state_id INTEGER PRIMARY KEY ASC,\n"

@@ -252,6 +252,7 @@ public:
 
     const std::vector<State> &states() const { return m_states; }
     const State &back_state() const;
+    bool game_completed() const;
 
     const Word &word() const { return m_word; }
 
