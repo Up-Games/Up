@@ -1099,6 +1099,7 @@ void SpellModel::db_create_if_needed(sqlite3 *db)
     }
     
     static const char *sql =
+        "PRAGMA foreign_keys = ON;"
         "CREATE TABLE IF NOT EXISTS game (\n"
         "    game_id INTEGER PRIMARY KEY ASC,\n"
         "    game_key INTEGER,\n"
