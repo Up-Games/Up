@@ -10,6 +10,7 @@
 #import <sqlite3.h>
 
 #import <UpKit/UPLexicon.h>
+#import <UpKit/UPSqlite.h>
 #import <UpKit/UPStringTools.h>
 #import <UpKit/UPUtility.h>
 
@@ -19,6 +20,7 @@
 namespace UP {
 
 // =========================================================================================================================================
+# pragma mark - Word
 
 Word::Word(const TileArray &tiles)
 {
@@ -64,6 +66,7 @@ Word::Word(const TileArray &tiles)
 }
 
 // =========================================================================================================================================
+# pragma mark - Model functions
 
 const Tile &SpellModel::find_tile(const UPTileView *view) const
 {
@@ -439,6 +442,9 @@ bool SpellModel::positions_valid() const
     return true;
 }
 
+// =========================================================================================================================================
+# pragma mark - Stringifiers
+
 std::string SpellModel::cpp_str(Opcode opcode) const
 {
     switch (opcode) {
@@ -511,6 +517,9 @@ std::string SpellModel::cpp_str(const State &state) const
     
     return sstr.str();
 }
+
+// =========================================================================================================================================
+# pragma mark - Apply
 
 const SpellModel::State &SpellModel::apply(const Action &action)
 {
@@ -868,26 +877,84 @@ void SpellModel::apply_end(const Action &action)
 }
 
 // =========================================================================================================================================
+# pragma mark - Stats
 
-#define db_exec(S) ({ \
-    int rc = S; \
-    if (rc != SQLITE_OK) { \
-        LOG(DB, "*** database error: %d: %s:%d", rc, __FILE__, __LINE__); \
-        db_close(db_handle()); \
-        return; \
-    } \
-})
+//const Word &highest_scoring_word() const;
 
-#define db_step(S) ({ \
-    int rc = S; \
-    if (rc != SQLITE_DONE) { \
-        LOG(DB, "*** database error: %d: %s:%d", rc, __FILE__, __LINE__); \
-        db_rollback_transaction(db_handle()); \
-        db_close(db_handle()); \
-        return; \
-    } \
-})
+// =========================================================================================================================================
+# pragma mark - High-level Database
 
+void SpellModel::db_store()
+{
+    sqlite3 *db = db_handle();
+    
+    static const char *game_sql =
+    "INSERT INTO game (game_key) VALUES (?);";
+    static const char *state_sql =
+    "INSERT INTO state(state_game_id, state_opcode, state_timestamp, "
+    "state_incoming_word, state_incoming_word_length, state_incoming_word_score, "
+    "state_incoming_word_multiplier, state_incoming_word_total_score, state_incoming_word_in_lexicon, "
+    "state_outgoing_game_score, "
+    "state_outgoing_tile_0_glyph, state_outgoing_tile_0_word_pos, "
+    "state_outgoing_tile_1_glyph, state_outgoing_tile_1_word_pos, "
+    "state_outgoing_tile_2_glyph, state_outgoing_tile_2_word_pos, "
+    "state_outgoing_tile_3_glyph, state_outgoing_tile_3_word_pos, "
+    "state_outgoing_tile_4_glyph, state_outgoing_tile_4_word_pos, "
+    "state_outgoing_tile_5_glyph, state_outgoing_tile_5_word_pos, "
+    "state_outgoing_tile_6_glyph, state_outgoing_tile_6_word_pos)\n"
+    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    static sqlite3_stmt *game_stmt;
+    static sqlite3_stmt *state_stmt;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (db == nullptr) {
+            return;
+        }
+        db_exec(db, sqlite3_prepare_v2(db, game_sql, (int)strlen(game_sql), &game_stmt, nullptr));
+        db_exec(db, sqlite3_prepare_v2(db, state_sql, (int)strlen(state_sql), &state_stmt, nullptr));
+    });
+    
+    if (db == nullptr) {
+        return;
+    }
+    
+    db_begin_transaction(db);
+    
+    db_exec(db, sqlite3_reset(game_stmt));
+    db_exec(db, sqlite3_bind_int(game_stmt, 1, game_key().value()));
+    db_step(db, sqlite3_step(game_stmt));
+    set_db_game_id(sqlite3_last_insert_rowid(db));
+    LOG(DB, "*** game id: %ld", db_game_id());
+    
+    for (const auto &state : states()) {
+        const Word &incoming_word = state.incoming_word();
+        const TileArray &outgoing_tiles = state.outgoing_tiles();
+        db_exec(db, sqlite3_reset(state_stmt));
+        db_exec(db, sqlite3_bind_int64(state_stmt, 1, db_game_id()));
+        db_exec(db, sqlite3_bind_int(state_stmt, 2, (int)state.action().opcode()));
+        db_exec(db, sqlite3_bind_double(state_stmt, 3, state.action().timestamp()));
+        db_exec(db, sqlite3_bind_text(state_stmt, 4, UP::cpp_str(incoming_word.string()).c_str(), -1, nullptr));
+        db_exec(db, sqlite3_bind_int64(state_stmt, 5, incoming_word.string().length()));
+        db_exec(db, sqlite3_bind_int(state_stmt, 6, incoming_word.score()));
+        db_exec(db, sqlite3_bind_int(state_stmt, 7, incoming_word.multiplier()));
+        db_exec(db, sqlite3_bind_int(state_stmt, 8, incoming_word.total_score()));
+        db_exec(db, sqlite3_bind_int(state_stmt, 9, incoming_word.in_lexicon() ? 1 : 0));
+        db_exec(db, sqlite3_bind_int(state_stmt, 10, state.outgoing_game_score()));
+        int bind_index = 11;
+        for (const Tile &tile : outgoing_tiles) {
+            db_exec(db, sqlite3_bind_int(state_stmt, bind_index, tile.model().glyph()));
+            bind_index++;
+            db_exec(db, sqlite3_bind_int(state_stmt, bind_index, tile.in_word_tray() ? (int)tile.position().index() : -1));
+            bind_index++;
+        }
+        db_step(db, sqlite3_step(state_stmt));
+    }
+    
+    db_commit_transaction(db);
+}
+
+// =========================================================================================================================================
+# pragma mark - Low-level Database
 
 sqlite3 *SpellModel::db_handle()
 {
@@ -959,146 +1026,5 @@ void SpellModel::db_create_if_needed(sqlite3 *db)
         LOG(DB, "*** error creating database: %s", errmsg);
     }
 }
-
-void SpellModel::db_close(sqlite3 *db)
-{
-    if (db == nullptr) {
-        return;
-    }
-
-    int rc = sqlite3_close(db);
-    if (rc != SQLITE_OK) {
-        LOG(DB, "*** error closing database: %d", rc);
-    }
-    
-    db = nullptr;
-}
-
-void SpellModel::db_store()
-{
-    sqlite3 *db = db_handle();
-
-    static const char *game_sql =
-        "INSERT INTO game (game_key) VALUES (?);";
-    static const char *state_sql =
-        "INSERT INTO state(state_game_id, state_opcode, state_timestamp, "
-        "state_incoming_word, state_incoming_word_length, state_incoming_word_score, "
-        "state_incoming_word_multiplier, state_incoming_word_total_score, state_incoming_word_in_lexicon, "
-        "state_outgoing_game_score, "
-        "state_outgoing_tile_0_glyph, state_outgoing_tile_0_word_pos, "
-        "state_outgoing_tile_1_glyph, state_outgoing_tile_1_word_pos, "
-        "state_outgoing_tile_2_glyph, state_outgoing_tile_2_word_pos, "
-        "state_outgoing_tile_3_glyph, state_outgoing_tile_3_word_pos, "
-        "state_outgoing_tile_4_glyph, state_outgoing_tile_4_word_pos, "
-        "state_outgoing_tile_5_glyph, state_outgoing_tile_5_word_pos, "
-        "state_outgoing_tile_6_glyph, state_outgoing_tile_6_word_pos)\n"
-        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-    static sqlite3_stmt *game_stmt;
-    static sqlite3_stmt *state_stmt;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if (db == nullptr) {
-            return;
-        }
-        db_exec(sqlite3_prepare_v2(db, game_sql, (int)strlen(game_sql), &game_stmt, nullptr));
-        db_exec(sqlite3_prepare_v2(db, state_sql, (int)strlen(state_sql), &state_stmt, nullptr));
-    });
-
-    if (db == nullptr) {
-        return;
-    }
-
-    db_begin_transaction(db);
-    
-    db_exec(sqlite3_reset(game_stmt));
-    db_exec(sqlite3_bind_int(game_stmt, 1, game_key().value()));
-    db_step(sqlite3_step(game_stmt));
-    set_db_game_id(sqlite3_last_insert_rowid(db));
-    LOG(DB, "*** game id: %ld", db_game_id());
-
-    for (const auto &state : states()) {
-        const Word &incoming_word = state.incoming_word();
-        const TileArray &outgoing_tiles = state.outgoing_tiles();
-        db_exec(sqlite3_reset(state_stmt));
-        db_exec(sqlite3_bind_int64(state_stmt, 1, db_game_id()));
-        db_exec(sqlite3_bind_int(state_stmt, 2, (int)state.action().opcode()));
-        db_exec(sqlite3_bind_double(state_stmt, 3, state.action().timestamp()));
-        db_exec(sqlite3_bind_text(state_stmt, 4, UP::cpp_str(incoming_word.string()).c_str(), -1, nullptr));
-        db_exec(sqlite3_bind_int64(state_stmt, 5, incoming_word.string().length()));
-        db_exec(sqlite3_bind_int(state_stmt, 6, incoming_word.score()));
-        db_exec(sqlite3_bind_int(state_stmt, 7, incoming_word.multiplier()));
-        db_exec(sqlite3_bind_int(state_stmt, 8, incoming_word.total_score()));
-        db_exec(sqlite3_bind_int(state_stmt, 9, incoming_word.in_lexicon() ? 1 : 0));
-        db_exec(sqlite3_bind_int(state_stmt, 10, state.outgoing_game_score()));
-        int bind_index = 11;
-        for (const Tile &tile : outgoing_tiles) {
-            db_exec(sqlite3_bind_int(state_stmt, bind_index, tile.model().glyph()));
-            bind_index++;
-            db_exec(sqlite3_bind_int(state_stmt, bind_index, tile.in_word_tray() ? (int)tile.position().index() : -1));
-            bind_index++;
-        }
-        db_step(sqlite3_step(state_stmt));
-    }
-    
-    db_commit_transaction(db);
-}
-
-void SpellModel::db_begin_transaction(sqlite3 *db)
-{
-    static const char *sql = "BEGIN TRANSACTION;";
-    static sqlite3_stmt *stmt;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if (db == nullptr) {
-            return;
-        }
-        db_exec(sqlite3_prepare_v2(db, sql, (int)strlen(sql), &stmt, nullptr));
-    });
-
-    if (db == nullptr) {
-        return;
-    }
-    db_exec(sqlite3_reset(stmt));
-    db_step(sqlite3_step(stmt));
-}
-
-void SpellModel::db_commit_transaction(sqlite3 *db)
-{
-    static const char *sql = "COMMIT TRANSACTION;";
-    static sqlite3_stmt *stmt;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if (db == nullptr) {
-            return;
-        }
-        db_exec(sqlite3_prepare_v2(db, sql, (int)strlen(sql), &stmt, nullptr));
-    });
-    
-    if (db == nullptr) {
-        return;
-    }
-    db_exec(sqlite3_reset(stmt));
-    db_step(sqlite3_step(stmt));
-}
-
-void SpellModel::db_rollback_transaction(sqlite3 *db)
-{
-    static const char *sql = "ROLLBACK TRANSACTION;";
-    static sqlite3_stmt *stmt;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if (db == nullptr) {
-            return;
-        }
-        db_exec(sqlite3_prepare_v2(db, sql, (int)strlen(sql), &stmt, nullptr));
-    });
-    
-    if (db == nullptr) {
-        return;
-    }
-    db_exec(sqlite3_reset(stmt));
-    db_step(sqlite3_step(stmt));
-}
-
 
 }  // namespace UP

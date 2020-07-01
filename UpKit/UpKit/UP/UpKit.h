@@ -38,6 +38,7 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPBand.h>
 #import <UpKit/UPSerialNumber.h>
 #import <UpKit/UPSettings.h>
+#import <UpKit/UPSqlite.h>
 #import <UpKit/UPStringTools.h>
 #import <UpKit/UPTapGestureRecognizer.h>
 #import <UpKit/UPTickingAnimator.h>

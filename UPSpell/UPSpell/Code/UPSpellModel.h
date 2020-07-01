@@ -272,8 +272,8 @@ public:
     std::string cpp_str(Opcode) const;
     std::string cpp_str(const State &) const;
     
-    std::pair<std::u32string, int> highest_scoring_word_with_length(size_t length) const;
-    std::pair<std::u32string, int> highest_scoring_word() const;
+    const Word &highest_scoring_word() const;
+    const Word &highest_scoring_word_with_length(size_t length) const;
     size_t words_submitted_count() const;
     size_t words_submitted_count_rank() const;
     size_t tiles_used_count() const;
@@ -287,8 +287,8 @@ public:
     static double all_time_average_game_score();
     static double all_time_average_game_score_for_recent_games(size_t count);
     static std::vector<SpellModel> all_time_high_scores(size_t count);
-    static std::pair<std::u32string, int> all_time_highest_scoring_word_with_length(size_t length);
     static std::pair<std::u32string, int> all_time_highest_scoring_word();
+    static std::pair<std::u32string, int> all_time_highest_scoring_word_with_length(size_t length);
     static size_t all_time_words_submitted_count();
     static size_t all_time_tiles_used_count();
 
@@ -325,12 +325,8 @@ private:
 
     static sqlite3 *db_handle();
     static void db_create_if_needed(sqlite3 *);
-    static void db_close(sqlite3 *db_handle);
 
     void db_store();
-    void db_begin_transaction(sqlite3 *);
-    void db_commit_transaction(sqlite3 *);
-    void db_rollback_transaction(sqlite3 *);
     void set_db_game_id(uint64_t db_game_id) { m_db_game_id = db_game_id; }
     uint64_t db_game_id() const { return m_db_game_id; }
 
