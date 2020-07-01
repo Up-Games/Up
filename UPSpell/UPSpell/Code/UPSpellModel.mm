@@ -931,20 +931,54 @@ void SpellModel::db_store()
     
     static const char *game_sql =
         "INSERT INTO game (game_key, game_completed) VALUES (?, ?);";
+    static const char *tiles_initial_sql =
+        "INSERT INTO tiles(tiles_id, \n"
+        "tiles_glyph_0, tiles_multiplier_0, tiles_word_pos_0,\n"
+        "tiles_glyph_1, tiles_multiplier_1, tiles_word_pos_1,\n"
+        "tiles_glyph_2, tiles_multiplier_2, tiles_word_pos_2,\n"
+        "tiles_glyph_3, tiles_multiplier_3, tiles_word_pos_3,\n"
+        "tiles_glyph_4, tiles_multiplier_4, tiles_word_pos_4,\n"
+        "tiles_glyph_5, tiles_multiplier_5, tiles_word_pos_5,\n"
+        "tiles_glyph_6, tiles_multiplier_6, tiles_word_pos_6,\n"
+        "tiles_game_id) \n"
+        "VALUES(0,\n"
+            "0, 1, -1, \n"
+            "0, 1, -1, \n"
+            "0, 1, -1, \n"
+            "0, 1, -1, \n"
+            "0, 1, -1, \n"
+            "0, 1, -1, \n"
+            "0, 1, -1, \n"
+            "?);";
+    static const char *tiles_state_sql =
+        "INSERT INTO tiles(\n"
+        "tiles_glyph_0, tiles_multiplier_0, tiles_word_pos_0,\n"
+        "tiles_glyph_1, tiles_multiplier_1, tiles_word_pos_1,\n"
+        "tiles_glyph_2, tiles_multiplier_2, tiles_word_pos_2,\n"
+        "tiles_glyph_3, tiles_multiplier_3, tiles_word_pos_3,\n"
+        "tiles_glyph_4, tiles_multiplier_4, tiles_word_pos_4,\n"
+        "tiles_glyph_5, tiles_multiplier_5, tiles_word_pos_5,\n"
+        "tiles_glyph_6, tiles_multiplier_6, tiles_word_pos_6,\n"
+        "tiles_game_id) \n"
+        "VALUES(\n"
+            "?, ?, ?, \n"
+            "?, ?, ?, \n"
+            "?, ?, ?, \n"
+            "?, ?, ?, \n"
+            "?, ?, ?, \n"
+            "?, ?, ?, \n"
+            "?, ?, ?, \n"
+            "?);";
     static const char *state_sql =
-        "INSERT INTO state(state_game_id, state_opcode, state_timestamp, "
-        "state_incoming_word, state_incoming_word_length, state_incoming_word_score, "
-        "state_incoming_word_multiplier, state_incoming_word_total_score, state_incoming_word_in_lexicon, "
-        "state_outgoing_game_score, "
-        "state_outgoing_tile_0_glyph, state_outgoing_tile_0_word_pos, "
-        "state_outgoing_tile_1_glyph, state_outgoing_tile_1_word_pos, "
-        "state_outgoing_tile_2_glyph, state_outgoing_tile_2_word_pos, "
-        "state_outgoing_tile_3_glyph, state_outgoing_tile_3_word_pos, "
-        "state_outgoing_tile_4_glyph, state_outgoing_tile_4_word_pos, "
-        "state_outgoing_tile_5_glyph, state_outgoing_tile_5_word_pos, "
-        "state_outgoing_tile_6_glyph, state_outgoing_tile_6_word_pos)\n"
-        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        "INSERT INTO state(state_opcode, state_timestamp,\n"
+        "state_incoming_word, state_incoming_word_length, state_incoming_word_score,\n"
+        "state_incoming_word_multiplier, state_incoming_word_total_score, state_incoming_word_in_lexicon,\n"
+        "state_outgoing_game_score,\n"
+        "state_game_id, state_incoming_tiles_id, state_outgoing_tiles_id) \n"
+        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     static sqlite3_stmt *game_stmt;
+    static sqlite3_stmt *tiles_initial_stmt;
+    static sqlite3_stmt *tiles_state_stmt;
     static sqlite3_stmt *state_stmt;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -952,13 +986,15 @@ void SpellModel::db_store()
             return;
         }
         db_exec(db, sqlite3_prepare_v2(db, game_sql, (int)strlen(game_sql), &game_stmt, nullptr));
+        db_exec(db, sqlite3_prepare_v2(db, tiles_initial_sql, (int)strlen(tiles_initial_sql), &tiles_initial_stmt, nullptr));
+        db_exec(db, sqlite3_prepare_v2(db, tiles_state_sql, (int)strlen(tiles_state_sql), &tiles_state_stmt, nullptr));
         db_exec(db, sqlite3_prepare_v2(db, state_sql, (int)strlen(state_sql), &state_stmt, nullptr));
     });
     
     if (db == nullptr) {
         return;
     }
-    
+
     db_begin_transaction(db);
     
     db_exec(db, sqlite3_reset(game_stmt));
@@ -968,28 +1004,43 @@ void SpellModel::db_store()
     set_db_game_id(sqlite3_last_insert_rowid(db));
     LOG(DB, "*** game id: %ld : %s", db_game_id(), game_completed() ? "Y" : "N");
     
+    db_exec(db, sqlite3_reset(tiles_initial_stmt));
+    db_exec(db, sqlite3_bind_int64(tiles_initial_stmt, 1, db_game_id()));
+    db_step(db, sqlite3_step(tiles_initial_stmt));
+    uint64_t incoming_tiles_id = sqlite3_last_insert_rowid(db);
+
     for (const auto &state : states()) {
-        const Word &incoming_word = state.incoming_word();
-        const TileArray &outgoing_tiles = state.outgoing_tiles();
-        db_exec(db, sqlite3_reset(state_stmt));
-        db_exec(db, sqlite3_bind_int64(state_stmt, 1, db_game_id()));
-        db_exec(db, sqlite3_bind_int(state_stmt, 2, (int)state.action().opcode()));
-        db_exec(db, sqlite3_bind_double(state_stmt, 3, state.action().timestamp()));
-        db_exec(db, sqlite3_bind_text(state_stmt, 4, UP::cpp_str(incoming_word.string()).c_str(), -1, nullptr));
-        db_exec(db, sqlite3_bind_int64(state_stmt, 5, incoming_word.string().length()));
-        db_exec(db, sqlite3_bind_int(state_stmt, 6, incoming_word.score()));
-        db_exec(db, sqlite3_bind_int(state_stmt, 7, incoming_word.multiplier()));
-        db_exec(db, sqlite3_bind_int(state_stmt, 8, incoming_word.total_score()));
-        db_exec(db, sqlite3_bind_int(state_stmt, 9, incoming_word.in_lexicon() ? 1 : 0));
-        db_exec(db, sqlite3_bind_int(state_stmt, 10, state.outgoing_game_score()));
-        int bind_index = 11;
-        for (const Tile &tile : outgoing_tiles) {
-            db_exec(db, sqlite3_bind_int(state_stmt, bind_index, tile.model().glyph()));
-            bind_index++;
-            db_exec(db, sqlite3_bind_int(state_stmt, bind_index, tile.in_word_tray() ? (int)tile.position().index() : -1));
-            bind_index++;
+        db_exec(db, sqlite3_reset(tiles_state_stmt));
+        int tiles_bind_idx = 1;
+        for (const auto &tile : state.outgoing_tiles()) {
+            db_exec(db, sqlite3_bind_int(tiles_state_stmt, tiles_bind_idx, tile.model().glyph()));
+            tiles_bind_idx++;
+            db_exec(db, sqlite3_bind_int(tiles_state_stmt, tiles_bind_idx, tile.model().multiplier()));
+            tiles_bind_idx++;
+            db_exec(db, sqlite3_bind_int(tiles_state_stmt, tiles_bind_idx, tile.in_word_tray() ? (int)tile.position().index() : -1));
+            tiles_bind_idx++;
         }
+        db_exec(db, sqlite3_bind_int64(tiles_state_stmt, 15, db_game_id()));
+        db_step(db, sqlite3_step(tiles_state_stmt));
+        uint64_t outgoing_tiles_id = sqlite3_last_insert_rowid(db);
+
+        const Word &incoming_word = state.incoming_word();
+        db_exec(db, sqlite3_reset(state_stmt));
+        db_exec(db, sqlite3_bind_int(state_stmt, 1, (int)state.action().opcode()));
+        db_exec(db, sqlite3_bind_double(state_stmt, 2, state.action().timestamp()));
+        db_exec(db, sqlite3_bind_text(state_stmt, 3, UP::cpp_str(incoming_word.string()).c_str(), -1, nullptr));
+        db_exec(db, sqlite3_bind_int64(state_stmt, 4, incoming_word.string().length()));
+        db_exec(db, sqlite3_bind_int(state_stmt, 5, incoming_word.score()));
+        db_exec(db, sqlite3_bind_int(state_stmt, 6, incoming_word.multiplier()));
+        db_exec(db, sqlite3_bind_int(state_stmt, 7, incoming_word.total_score()));
+        db_exec(db, sqlite3_bind_int(state_stmt, 8, incoming_word.in_lexicon() ? 1 : 0));
+        db_exec(db, sqlite3_bind_int(state_stmt, 9, state.outgoing_game_score()));
+        db_exec(db, sqlite3_bind_int64(state_stmt, 10, db_game_id()));
+        db_exec(db, sqlite3_bind_int64(state_stmt, 11, incoming_tiles_id));
+        db_exec(db, sqlite3_bind_int64(state_stmt, 12, outgoing_tiles_id));
         db_step(db, sqlite3_step(state_stmt));
+        
+        incoming_tiles_id = outgoing_tiles_id;
     }
     
     db_commit_transaction(db);
@@ -1032,9 +1083,35 @@ void SpellModel::db_create_if_needed(sqlite3 *db)
         "    game_key INTEGER,\n"
         "    game_completed INTEGER\n"
         ");\n"
+        "CREATE TABLE IF NOT EXISTS tiles (\n"
+        "    tiles_id INTEGER PRIMARY KEY ASC,\n"
+        "    tiles_glyph_0 INTEGER NOT NULL,\n"
+        "    tiles_multiplier_0 INTEGER NOT NULL,\n"
+        "    tiles_word_pos_0 INTEGER NOT NULL,\n"
+        "    tiles_glyph_1 INTEGER NOT NULL,\n"
+        "    tiles_multiplier_1 INTEGER NOT NULL,\n"
+        "    tiles_word_pos_1 INTEGER NOT NULL,\n"
+        "    tiles_glyph_2 INTEGER NOT NULL,\n"
+        "    tiles_multiplier_2 INTEGER NOT NULL,\n"
+        "    tiles_word_pos_2 INTEGER NOT NULL,\n"
+        "    tiles_glyph_3 INTEGER NOT NULL,\n"
+        "    tiles_multiplier_3 INTEGER NOT NULL,\n"
+        "    tiles_word_pos_3 INTEGER NOT NULL,\n"
+        "    tiles_glyph_4 INTEGER NOT NULL,\n"
+        "    tiles_multiplier_4 INTEGER NOT NULL,\n"
+        "    tiles_word_pos_4 INTEGER NOT NULL,\n"
+        "    tiles_glyph_5 INTEGER NOT NULL,\n"
+        "    tiles_multiplier_5 INTEGER NOT NULL,\n"
+        "    tiles_word_pos_5 INTEGER NOT NULL,\n"
+        "    tiles_glyph_6 INTEGER NOT NULL,\n"
+        "    tiles_multiplier_6 INTEGER NOT NULL,\n"
+        "    tiles_word_pos_6 INTEGER NOT NULL,\n"
+        "    tiles_game_id INTEGER,\n"
+        "    FOREIGN KEY(tiles_game_id) REFERENCES game(game_id) ON DELETE CASCADE,\n"
+        "    UNIQUE(tiles_game_id, tiles_id)\n"
+        ");\n"
         "CREATE TABLE IF NOT EXISTS state (\n"
         "    state_id INTEGER PRIMARY KEY ASC,\n"
-        "    state_game_id INTEGER,\n"
         "    state_opcode INTEGER NOT NULL,\n"
         "    state_timestamp REAL NOT NULL,\n"
         "    state_incoming_word TEXT NOT NULL,\n"
@@ -1044,25 +1121,17 @@ void SpellModel::db_create_if_needed(sqlite3 *db)
         "    state_incoming_word_total_score INTEGER NOT NULL,\n"
         "    state_incoming_word_in_lexicon INTEGER NOT NULL,\n"
         "    state_outgoing_game_score INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_0_glyph INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_0_word_pos INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_1_glyph INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_1_word_pos INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_2_glyph INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_2_word_pos INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_3_glyph INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_3_word_pos INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_4_glyph INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_4_word_pos INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_5_glyph INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_5_word_pos INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_6_glyph INTEGER NOT NULL,\n"
-        "    state_outgoing_tile_6_word_pos INTEGER NOT NULL,\n"
-        "    FOREIGN KEY(state_game_id) REFERENCES game(game_id) ON DELETE CASCADE\n"
+        "    state_game_id INTEGER,\n"
+        "    state_incoming_tiles_id INTEGER,\n"
+        "    state_outgoing_tiles_id INTEGER,\n"
+        "    FOREIGN KEY(state_game_id) REFERENCES game(game_id) ON DELETE CASCADE,\n"
+        "    FOREIGN KEY(state_incoming_tiles_id) REFERENCES tiles(tiles_id) ON DELETE CASCADE,\n"
+        "    FOREIGN KEY(state_outgoing_tiles_id) REFERENCES tiles(tiles_id) ON DELETE CASCADE,\n"
+        "    UNIQUE(state_game_id, state_id),\n"
+        "    UNIQUE(state_game_id, state_incoming_tiles_id, state_outgoing_tiles_id)\n"
         ");\n"
-        "CREATE INDEX IF NOT EXISTS submit ON state (state_opcode) WHERE state.state_opcode = 10;\n"
-        "CREATE INDEX IF NOT EXISTS end ON state (state_opcode) WHERE state.state_opcode = 16;\n";
-
+        "CREATE INDEX IF NOT EXISTS submit_idx ON state (state_opcode) WHERE state.state_opcode = 10;\n"
+        "CREATE INDEX IF NOT EXISTS end_idx ON state (state_opcode) WHERE state.state_opcode = 16;\n";
     char *errmsg;
     int rc = sqlite3_exec(db, sql, nullptr, nullptr, &errmsg);
     if (rc != SQLITE_OK) {
