@@ -976,10 +976,16 @@ void SpellModel::db_store()
             "state_outgoing_game_score,\n"
             "state_game_id, state_incoming_tile_id, state_outgoing_tile_id) \n"
         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    static const char *word_sql =
+        "INSERT INTO word(word_string, word_length, word_score, word_total_multiplier, word_total_score,\n"
+            "word_game_id, word_state_id, word_tile_id) \n"
+        "VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+
     static sqlite3_stmt *game_stmt;
     static sqlite3_stmt *tile_initial_stmt;
     static sqlite3_stmt *tile_state_stmt;
     static sqlite3_stmt *state_stmt;
+    static sqlite3_stmt *word_stmt;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (db == nullptr) {
@@ -989,6 +995,7 @@ void SpellModel::db_store()
         db_exec(db, sqlite3_prepare_v2(db, tile_initial_sql, (int)strlen(tile_initial_sql), &tile_initial_stmt, nullptr));
         db_exec(db, sqlite3_prepare_v2(db, tile_state_sql, (int)strlen(tile_state_sql), &tile_state_stmt, nullptr));
         db_exec(db, sqlite3_prepare_v2(db, state_sql, (int)strlen(state_sql), &state_stmt, nullptr));
+        db_exec(db, sqlite3_prepare_v2(db, word_sql, (int)strlen(word_sql), &word_stmt, nullptr));
     });
     
     if (db == nullptr) {
@@ -1020,7 +1027,7 @@ void SpellModel::db_store()
             db_exec(db, sqlite3_bind_int(tile_state_stmt, tiles_bind_idx, tile.in_word_tray() ? (int)tile.position().index() : -1));
             tiles_bind_idx++;
         }
-        db_exec(db, sqlite3_bind_int64(tile_state_stmt, 15, db_game_id()));
+        db_exec(db, sqlite3_bind_int64(tile_state_stmt, tiles_bind_idx, db_game_id()));
         db_step(db, sqlite3_step(tile_state_stmt));
         uint64_t outgoing_tiles_id = sqlite3_last_insert_rowid(db);
 
@@ -1039,7 +1046,21 @@ void SpellModel::db_store()
         db_exec(db, sqlite3_bind_int64(state_stmt, 11, incoming_tiles_id));
         db_exec(db, sqlite3_bind_int64(state_stmt, 12, outgoing_tiles_id));
         db_step(db, sqlite3_step(state_stmt));
-        
+        uint64_t state_id = sqlite3_last_insert_rowid(db);
+
+        if (state.action().opcode() == Opcode::SUBMIT) {
+            db_exec(db, sqlite3_reset(word_stmt));
+            db_exec(db, sqlite3_bind_text(word_stmt, 1, UP::cpp_str(incoming_word.string()).c_str(), -1, nullptr));
+            db_exec(db, sqlite3_bind_int64(word_stmt, 2, incoming_word.string().length()));
+            db_exec(db, sqlite3_bind_int(word_stmt, 3, incoming_word.score()));
+            db_exec(db, sqlite3_bind_int(word_stmt, 4, incoming_word.multiplier()));
+            db_exec(db, sqlite3_bind_int(word_stmt, 5, incoming_word.total_score()));
+            db_exec(db, sqlite3_bind_int64(word_stmt, 6, db_game_id()));
+            db_exec(db, sqlite3_bind_int64(word_stmt, 7, state_id));
+            db_exec(db, sqlite3_bind_int64(word_stmt, 8, incoming_tiles_id));
+            db_step(db, sqlite3_step(word_stmt));
+        }
+
         incoming_tiles_id = outgoing_tiles_id;
     }
     
@@ -1130,8 +1151,32 @@ void SpellModel::db_create_if_needed(sqlite3 *db)
         "    UNIQUE(state_game_id, state_id),\n"
         "    UNIQUE(state_game_id, state_incoming_tile_id, state_outgoing_tile_id)\n"
         ");\n"
-        "CREATE INDEX IF NOT EXISTS submit_idx ON state (state_opcode) WHERE state.state_opcode = 10;\n"
-        "CREATE INDEX IF NOT EXISTS end_idx ON state (state_opcode) WHERE state.state_opcode = 16;\n";
+        "CREATE INDEX IF NOT EXISTS submit_idx ON state(state_opcode) WHERE state.state_opcode = 10;\n"
+        "CREATE INDEX IF NOT EXISTS end_idx ON state(state_opcode) WHERE state.state_opcode = 16;\n"
+        "CREATE TABLE IF NOT EXISTS word (\n"
+        "    word_id INTEGER PRIMARY KEY ASC,\n"
+        "    word_string TEXT NOT NULL,\n"
+        "    word_length INTEGER NOT NULL,\n"
+        "    word_score INTEGER NOT NULL,\n"
+        "    word_total_multiplier INTEGER NOT NULL,\n"
+        "    word_total_score INTEGER NOT NULL,\n"
+        "    word_game_id INTEGER,\n"
+        "    word_state_id INTEGER,\n"
+        "    word_tile_id INTEGER,\n"
+        "    FOREIGN KEY(word_game_id) REFERENCES game(game_id) ON DELETE CASCADE,\n"
+        "    FOREIGN KEY(word_state_id) REFERENCES state(state_id) ON DELETE CASCADE,\n"
+        "    FOREIGN KEY(word_tile_id) REFERENCES tile(tile_id) ON DELETE CASCADE,\n"
+        "    UNIQUE(word_game_id, word_state_id, word_tile_id)\n"
+        ");\n"
+        "CREATE INDEX IF NOT EXISTS word_string_idx ON word(word_string);\n"
+        "CREATE INDEX IF NOT EXISTS word_length_idx ON word(word_length);\n"
+        "CREATE INDEX IF NOT EXISTS word_score_idx ON word(word_score);\n"
+        "CREATE INDEX IF NOT EXISTS word_total_multiplier_idx ON word(word_total_multiplier);\n"
+        "CREATE INDEX IF NOT EXISTS word_total_score_idx ON word(word_total_score);\n"
+        "CREATE INDEX IF NOT EXISTS word_string_length_idx ON word(word_string, word_length);\n"
+        "CREATE INDEX IF NOT EXISTS word_string_score_idx ON word(word_string, word_score);\n"
+        "CREATE INDEX IF NOT EXISTS word_string_total_multiplier_idx ON word(word_string, word_total_multiplier);\n"
+        "CREATE INDEX IF NOT EXISTS word_string_total_score_idx ON word(word_string, word_total_score);\n";
     char *errmsg;
     int rc = sqlite3_exec(db, sql, nullptr, nullptr, &errmsg);
     if (rc != SQLITE_OK) {
