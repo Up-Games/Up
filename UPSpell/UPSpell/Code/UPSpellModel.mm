@@ -915,7 +915,12 @@ void SpellModel::apply_end(const Action &action)
 // =========================================================================================================================================
 # pragma mark - Stats
 
-//const Word &highest_scoring_word() const;
+//const Word &SpellModel::highest_scoring_word() const
+//{
+//    for (const auto &state : states()) {
+//        
+//    }
+//}
 
 // =========================================================================================================================================
 # pragma mark - High-level Database
@@ -925,20 +930,20 @@ void SpellModel::db_store()
     sqlite3 *db = db_handle();
     
     static const char *game_sql =
-    "INSERT INTO game (game_key, game_completed) VALUES (?, ?);";
+        "INSERT INTO game (game_key, game_completed) VALUES (?, ?);";
     static const char *state_sql =
-    "INSERT INTO state(state_game_id, state_opcode, state_timestamp, "
-    "state_incoming_word, state_incoming_word_length, state_incoming_word_score, "
-    "state_incoming_word_multiplier, state_incoming_word_total_score, state_incoming_word_in_lexicon, "
-    "state_outgoing_game_score, "
-    "state_outgoing_tile_0_glyph, state_outgoing_tile_0_word_pos, "
-    "state_outgoing_tile_1_glyph, state_outgoing_tile_1_word_pos, "
-    "state_outgoing_tile_2_glyph, state_outgoing_tile_2_word_pos, "
-    "state_outgoing_tile_3_glyph, state_outgoing_tile_3_word_pos, "
-    "state_outgoing_tile_4_glyph, state_outgoing_tile_4_word_pos, "
-    "state_outgoing_tile_5_glyph, state_outgoing_tile_5_word_pos, "
-    "state_outgoing_tile_6_glyph, state_outgoing_tile_6_word_pos)\n"
-    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        "INSERT INTO state(state_game_id, state_opcode, state_timestamp, "
+        "state_incoming_word, state_incoming_word_length, state_incoming_word_score, "
+        "state_incoming_word_multiplier, state_incoming_word_total_score, state_incoming_word_in_lexicon, "
+        "state_outgoing_game_score, "
+        "state_outgoing_tile_0_glyph, state_outgoing_tile_0_word_pos, "
+        "state_outgoing_tile_1_glyph, state_outgoing_tile_1_word_pos, "
+        "state_outgoing_tile_2_glyph, state_outgoing_tile_2_word_pos, "
+        "state_outgoing_tile_3_glyph, state_outgoing_tile_3_word_pos, "
+        "state_outgoing_tile_4_glyph, state_outgoing_tile_4_word_pos, "
+        "state_outgoing_tile_5_glyph, state_outgoing_tile_5_word_pos, "
+        "state_outgoing_tile_6_glyph, state_outgoing_tile_6_word_pos)\n"
+        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     static sqlite3_stmt *game_stmt;
     static sqlite3_stmt *state_stmt;
     static dispatch_once_t onceToken;

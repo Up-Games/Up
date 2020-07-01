@@ -139,8 +139,6 @@ class Word {
 public:
     Word() {}
     explicit Word(const TileArray &tiles);
-    explicit Word(const std::u32string &string, int score, int multiplier, int total_score, bool in_lexicon) :
-        m_string(string), m_score(score), m_multiplier(multiplier), m_total_score(total_score), m_in_lexicon(in_lexicon) {}
 
     const std::u32string &string() const { return m_string; }
     size_t length() const { return m_string.length(); }
@@ -273,8 +271,8 @@ public:
     std::string cpp_str(Opcode) const;
     std::string cpp_str(const State &) const;
     
-    const Word &highest_scoring_word() const;
-    const Word &highest_scoring_word_with_length(size_t length) const;
+    Word highest_scoring_word() const;
+    Word highest_scoring_word_with_length(size_t length) const;
     size_t words_submitted_count() const;
     size_t words_submitted_count_rank() const;
     size_t tiles_used_count() const;
