@@ -55,7 +55,6 @@ UP_STATIC_INLINE std::string_view cpp_str_view(NSString *str) {
     const char *s = [str UTF8String];
     return std::string_view(s, strlen(s));
 }
-
 #endif  // __OBJC__
 
 // https://stackoverflow.com/a/1493195

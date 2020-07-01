@@ -155,6 +155,7 @@
 		5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */; };
 		5DB9B1AC248705FA00A4AAA8 /* UPSpellGameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AB248705FA00A4AAA8 /* UPSpellGameView.mm */; };
 		5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */; };
+		5DCFD09624ABB5C800CA5C24 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCFD09524ABB5C800CA5C24 /* libsqlite3.tbd */; };
 		5DF9DF5C2466165700B2199D /* UPAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */; };
 		5DF9DF5F2466165700B2199D /* UPSceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */; };
 		5DF9DF622466165700B2199D /* UPSpellGameController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF612466165700B2199D /* UPSpellGameController.mm */; };
@@ -370,6 +371,7 @@
 		5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTilePaths.h; sourceTree = "<group>"; };
 		5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPTilePaths-private.mm"; sourceTree = "<group>"; };
 		5DC67DF424730207009BCDBB /* UPSpellMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellMacros.h; sourceTree = "<group>"; };
+		5DCFD09524ABB5C800CA5C24 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		5DF9DF572466165700B2199D /* UP Spell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UP Spell.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF9DF5A2466165700B2199D /* UPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAppDelegate.h; sourceTree = "<group>"; };
 		5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAppDelegate.mm; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DCFD09624ABB5C800CA5C24 /* libsqlite3.tbd in Frameworks */,
 				5DF9DF8C2466168500B2199D /* UpKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -666,6 +669,7 @@
 		5DF9DF8A2466168500B2199D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5DCFD09524ABB5C800CA5C24 /* libsqlite3.tbd */,
 				5DF9DF8B2466168500B2199D /* UpKit.framework */,
 			);
 			name = Frameworks;

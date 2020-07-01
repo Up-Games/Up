@@ -157,6 +157,7 @@ NO_RETURN_DUE_TO_CRASH void UPCrash(void);
 #if LOG_DISABLED
 #else
 #define UP_LOG_CHANNELS(M) \
+M(DB) \
 M(General) \
 M(Gestures) \
 M(Layout) \

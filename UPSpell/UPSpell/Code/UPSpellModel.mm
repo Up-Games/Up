@@ -7,7 +7,10 @@
 #import <string>
 #import <sstream>
 
+#import <sqlite3.h>
+
 #import <UpKit/UPLexicon.h>
+#import <UpKit/UPStringTools.h>
 #import <UpKit/UPUtility.h>
 
 #include "UPSpellModel.h"
@@ -250,6 +253,7 @@ void SpellModel::update_word()
     size_t count = 0;
     m_word_score = 0;
     m_word_multiplier = 1;
+    m_word_total_score = 0;
     for (auto &tile : m_tiles) {
         if (tile.in_word_tray()) {
             chars[tile.position().index()] = tile.model().glyph();
@@ -258,7 +262,7 @@ void SpellModel::update_word()
             count++;
         }
     }
-    m_word_score *= m_word_multiplier;
+    m_word_total_score = m_word_score * m_word_multiplier;
 #if !ASSERT_DISABLED
     for (size_t idx = 0; idx < TileCount; idx++) {
         if (idx < count) {
@@ -275,13 +279,13 @@ void SpellModel::update_word()
             // no bonus
             break;
         case 5:
-            m_word_score += FiveLetterWordBonus;
+            m_word_total_score += FiveLetterWordBonus;
             break;
         case 6:
-            m_word_score += SixLetterWordBonus;
+            m_word_total_score += SixLetterWordBonus;
             break;
         case 7:
-            m_word_score += SevenLetterWordBonus;
+            m_word_total_score += SevenLetterWordBonus;
             break;
     }
     Lexicon &lexicon = Lexicon::instance();
@@ -480,23 +484,38 @@ std::string SpellModel::cpp_str(const State &state) const
     const TilePosition &pos1 = state.action().pos1();
     if (pos1 != TilePosition()) {
         sstr << ' ';
-        sstr << cstr_for(pos1.tray());
+        sstr << char_for(pos1.tray());
         sstr << '-';
         sstr << pos1.index();
     }
     const TilePosition &pos2 = state.action().pos2();
     if (pos2 != TilePosition()) {
         sstr << ' ';
-        sstr << cstr_for(pos2.tray());
+        sstr << char_for(pos2.tray());
         sstr << '-';
         sstr << pos2.index();
     }
-
+    if (state.action().opcode() == Opcode::SUBMIT) {
+        sstr << ' ';
+        sstr << UP::cpp_str(state.incoming_word_string());
+        sstr << " (+";
+        sstr << (state.incoming_word_score() * state.incoming_word_multiplier());
+        sstr << ")";
+    }
+    
     return sstr.str();
 }
 
 const SpellModel::State &SpellModel::apply(const Action &action)
 {
+    SpellModel::db_handle();
+
+    std::u32string incoming_word_string = word_string();
+    int incoming_word_score = word_score();
+    int incoming_word_multiplier = word_multiplier();
+    int incoming_word_total_score = word_total_score();
+    bool incoming_word_in_lexicon = word_in_lexicon();
+    
     switch (action.opcode()) {
         case Opcode::NOP:
             // move along
@@ -551,13 +570,16 @@ const SpellModel::State &SpellModel::apply(const Action &action)
             break;
     }
 
-#if LOG_DISABLED
-    return m_states.emplace_back(action, tiles(), game_score());
-#else
-    const State &state = m_states.emplace_back(action, tiles(), game_score());
-    LOG(State, "=== state: %s", cpp_str(state).c_str());
+    const State &state = m_states.emplace_back(action, incoming_word_string, incoming_word_score, incoming_word_multiplier,
+                                               incoming_word_total_score, incoming_word_in_lexicon,
+                                               tiles(), game_score());
+    LOG(State, "%s", cpp_str(state).c_str());
+
+    if (action.opcode() == Opcode::END) {
+        db_store();
+    }
+    
     return state;
-#endif
 }
 
 void SpellModel::apply_start(const Action &action)
@@ -746,7 +768,7 @@ void SpellModel::apply_submit(const Action &action)
     ASSERT(word_score() > 0);
     ASSERT(positions_valid());
 
-    m_game_score += word_score();
+    m_game_score += word_total_score();
     clear_and_sentinelize_word_tray();
     fill_player_tray();
     update_word();
@@ -835,7 +857,6 @@ void SpellModel::apply_quit(const Action &action)
     ASSERT_NPOS(action.pos2());
     ASSERT(positions_valid());
     
-    m_game_score = 0;
     m_word_in_lexicon = false;
 }
 
@@ -849,8 +870,242 @@ void SpellModel::apply_end(const Action &action)
     clear_and_blank();
     m_word_score = 0;
     m_word_multiplier = 1;
+    m_word_total_score = 0;
     m_word_string = U"";
     m_word_in_lexicon = false;
 }
+
+// =========================================================================================================================================
+
+#define db_exec(S) ({ \
+    int rc = S; \
+    if (rc != SQLITE_OK) { \
+        LOG(DB, "*** database error: %d: %s:%d", rc, __FILE__, __LINE__); \
+        db_close(db_handle()); \
+        return; \
+    } \
+})
+
+#define db_step(S) ({ \
+    int rc = S; \
+    if (rc != SQLITE_DONE) { \
+        LOG(DB, "*** database error: %d: %s:%d", rc, __FILE__, __LINE__); \
+        db_rollback_transaction(db_handle()); \
+        db_close(db_handle()); \
+        return; \
+    } \
+})
+
+
+sqlite3 *SpellModel::db_handle()
+{
+    static sqlite3 *db = nullptr;
+    if (db == nullptr) {
+        NSArray *possibleURLs = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+        if (possibleURLs.count > 0) {
+            NSURL *documentDirectoryURL = [possibleURLs objectAtIndex:0];
+            NSURL *dbFileURL = [documentDirectoryURL URLByAppendingPathComponent:@"up-spell.sql"];
+            const char *db_filename = [[dbFileURL path] fileSystemRepresentation];
+            LOG(DB, "db_filename: %s", db_filename);
+            int rc = sqlite3_open(db_filename, &db);
+            if (rc == SQLITE_OK) {
+                db_create_if_needed(db);
+            }
+            else {
+                LOG(DB, "*** failed to open database: %d", rc);
+            }
+        }
+    }
+    return db;
+}
+
+void SpellModel::db_create_if_needed(sqlite3 *db)
+{
+    if (db == nullptr) {
+        return;
+    }
+    
+    static const char *sql =
+        "CREATE TABLE IF NOT EXISTS game (\n"
+        "    game_id INTEGER PRIMARY KEY ASC,\n"
+        "    game_key INTEGER\n"
+        ");\n"
+        "CREATE TABLE IF NOT EXISTS state (\n"
+        "    state_id INTEGER PRIMARY KEY ASC,\n"
+        "    state_game_id INTEGER,\n"
+        "    state_opcode INTEGER NOT NULL,\n"
+        "    state_timestamp REAL NOT NULL,\n"
+        "    state_incoming_word TEXT NOT NULL,\n"
+        "    state_incoming_word_length INTEGER NOT NULL,\n"
+        "    state_incoming_word_score INTEGER NOT NULL,\n"
+        "    state_incoming_word_multiplier INTEGER NOT NULL,\n"
+        "    state_incoming_word_total_score INTEGER NOT NULL,\n"
+        "    state_incoming_word_in_lexicon INTEGER NOT NULL,\n"
+        "    state_outgoing_game_score INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_0_glyph INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_0_word_pos INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_1_glyph INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_1_word_pos INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_2_glyph INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_2_word_pos INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_3_glyph INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_3_word_pos INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_4_glyph INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_4_word_pos INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_5_glyph INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_5_word_pos INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_6_glyph INTEGER NOT NULL,\n"
+        "    state_outgoing_tile_6_word_pos INTEGER NOT NULL,\n"
+        "    FOREIGN KEY(state_game_id) REFERENCES game(game_id) ON DELETE CASCADE\n"
+        ");\n"
+        "CREATE INDEX IF NOT EXISTS submit ON state (state_opcode) WHERE state.state_opcode = 10;\n"
+        "CREATE INDEX IF NOT EXISTS end ON state (state_opcode) WHERE state.state_opcode = 16;\n";
+
+    char *errmsg;
+    int rc = sqlite3_exec(db, sql, nullptr, nullptr, &errmsg);
+    if (rc != SQLITE_OK) {
+        LOG(DB, "*** error creating database: %s", errmsg);
+    }
+}
+
+void SpellModel::db_close(sqlite3 *db)
+{
+    if (db == nullptr) {
+        return;
+    }
+
+    int rc = sqlite3_close(db);
+    if (rc != SQLITE_OK) {
+        LOG(DB, "*** error closing database: %d", rc);
+    }
+    
+    db = nullptr;
+}
+
+void SpellModel::db_store()
+{
+    sqlite3 *db = db_handle();
+
+    static const char *game_sql =
+        "INSERT INTO game (game_key) VALUES (?);";
+    static const char *state_sql =
+        "INSERT INTO state(state_game_id, state_opcode, state_timestamp, "
+        "state_incoming_word, state_incoming_word_length, state_incoming_word_score, "
+        "state_incoming_word_multiplier, state_incoming_word_total_score, state_incoming_word_in_lexicon, "
+        "state_outgoing_game_score, "
+        "state_outgoing_tile_0_glyph, state_outgoing_tile_0_word_pos, "
+        "state_outgoing_tile_1_glyph, state_outgoing_tile_1_word_pos, "
+        "state_outgoing_tile_2_glyph, state_outgoing_tile_2_word_pos, "
+        "state_outgoing_tile_3_glyph, state_outgoing_tile_3_word_pos, "
+        "state_outgoing_tile_4_glyph, state_outgoing_tile_4_word_pos, "
+        "state_outgoing_tile_5_glyph, state_outgoing_tile_5_word_pos, "
+        "state_outgoing_tile_6_glyph, state_outgoing_tile_6_word_pos)\n"
+        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    static sqlite3_stmt *game_stmt;
+    static sqlite3_stmt *state_stmt;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (db == nullptr) {
+            return;
+        }
+        db_exec(sqlite3_prepare_v2(db, game_sql, (int)strlen(game_sql), &game_stmt, nullptr));
+        db_exec(sqlite3_prepare_v2(db, state_sql, (int)strlen(state_sql), &state_stmt, nullptr));
+    });
+
+    if (db == nullptr) {
+        return;
+    }
+
+    db_begin_transaction(db);
+    
+    db_exec(sqlite3_reset(game_stmt));
+    db_exec(sqlite3_bind_int(game_stmt, 1, game_key().value()));
+    db_step(sqlite3_step(game_stmt));
+    set_db_game_id(sqlite3_last_insert_rowid(db));
+    LOG(DB, "*** game id: %ld", db_game_id());
+
+    for (const auto &state : states()) {
+        const TileArray &outgoing_tiles = state.outgoing_tiles();
+        db_exec(sqlite3_reset(state_stmt));
+        db_exec(sqlite3_bind_int64(state_stmt, 1, db_game_id()));
+        db_exec(sqlite3_bind_int(state_stmt, 2, (int)state.action().opcode()));
+        db_exec(sqlite3_bind_double(state_stmt, 3, state.action().timestamp()));
+        db_exec(sqlite3_bind_text(state_stmt, 4, UP::cpp_str(state.incoming_word_string()).c_str(), -1, nullptr));
+        db_exec(sqlite3_bind_int64(state_stmt, 5, state.incoming_word_string().length()));
+        db_exec(sqlite3_bind_int(state_stmt, 6, state.incoming_word_score()));
+        db_exec(sqlite3_bind_int(state_stmt, 7, state.incoming_word_multiplier()));
+        db_exec(sqlite3_bind_int(state_stmt, 8, state.incoming_word_total_score()));
+        db_exec(sqlite3_bind_int(state_stmt, 9, state.incoming_word_in_lexicon() ? 1 : 0));
+        db_exec(sqlite3_bind_int(state_stmt, 10, state.outgoing_game_score()));
+        int bind_index = 11;
+        for (const Tile &tile : outgoing_tiles) {
+            db_exec(sqlite3_bind_int(state_stmt, bind_index, tile.model().glyph()));
+            bind_index++;
+            db_exec(sqlite3_bind_int(state_stmt, bind_index, tile.in_word_tray() ? (int)tile.position().index() : -1));
+            bind_index++;
+        }
+        db_step(sqlite3_step(state_stmt));
+    }
+    
+    db_commit_transaction(db);
+}
+
+void SpellModel::db_begin_transaction(sqlite3 *db)
+{
+    static const char *sql = "BEGIN TRANSACTION;";
+    static sqlite3_stmt *stmt;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (db == nullptr) {
+            return;
+        }
+        db_exec(sqlite3_prepare_v2(db, sql, (int)strlen(sql), &stmt, nullptr));
+    });
+
+    if (db == nullptr) {
+        return;
+    }
+    db_exec(sqlite3_reset(stmt));
+    db_step(sqlite3_step(stmt));
+}
+
+void SpellModel::db_commit_transaction(sqlite3 *db)
+{
+    static const char *sql = "COMMIT TRANSACTION;";
+    static sqlite3_stmt *stmt;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (db == nullptr) {
+            return;
+        }
+        db_exec(sqlite3_prepare_v2(db, sql, (int)strlen(sql), &stmt, nullptr));
+    });
+    
+    if (db == nullptr) {
+        return;
+    }
+    db_exec(sqlite3_reset(stmt));
+    db_step(sqlite3_step(stmt));
+}
+
+void SpellModel::db_rollback_transaction(sqlite3 *db)
+{
+    static const char *sql = "ROLLBACK TRANSACTION;";
+    static sqlite3_stmt *stmt;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (db == nullptr) {
+            return;
+        }
+        db_exec(sqlite3_prepare_v2(db, sql, (int)strlen(sql), &stmt, nullptr));
+    });
+    
+    if (db == nullptr) {
+        return;
+    }
+    db_exec(sqlite3_reset(stmt));
+    db_step(sqlite3_step(stmt));
+}
+
 
 }  // namespace UP

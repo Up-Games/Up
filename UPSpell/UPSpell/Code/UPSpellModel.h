@@ -11,6 +11,7 @@
 #import "UPTileModel.h"
 
 @class UPTileView;
+struct sqlite3;
 
 #if __cplusplus
 
@@ -75,6 +76,20 @@ UP_STATIC_INLINE const char *cstr_for(TileTray tray)
     return "?";
 }
 
+UP_STATIC_INLINE char char_for(TileTray tray)
+{
+    switch (tray) {
+        case TileTray::None:
+            return '?';
+        case TileTray::Player:
+            return 'P';
+        case TileTray::Word:
+            return 'W';
+    }
+    ASSERT_NOT_REACHED();
+    return '?';
+}
+
 UP_STATIC_INLINE bool operator==(const TilePosition &a, const TilePosition &b)
 {
     return a.tray() == b.tray() && a.index() == b.index();
@@ -123,23 +138,23 @@ using TileArray = std::array<Tile, TileCount>;
 class SpellModel {
 public:
     enum class Opcode: uint8_t {
-        NOP,    // no-op
-        START,  // the start state for every game
-        PLAY,   // start playing a game
-        ADD,    // move a player tray to the word tray
-        REMOVE, // remove a tile from the word tray, tightening up the remaining tiles (if any)
-        MOVE,   // move a word tray tile to a new word tray position
-        PICK,   // drag a tile to pick it up
-        HOVER,  // float above a position where a tile could be moved
-        NOVER,  // cancel a previous hover, tightening up the remaining tiles (if any)
-        DROP,   // drop a picked-up tile, leaving it where it was
-        SUBMIT, // accept submission of tiles in the word tray to score points
-        REJECT, // reject submission of tiles in the word tray to score points
-        CLEAR,  // return the tiles in the word to their positions in the player tray
-        DUMP,   // dump player tray tiles and replace them with a new set of tiles
-        OVER,   // game over
-        QUIT,   // quit the game early
-        END,    // the end state after game over or quit
+        NOP    =  0, // no-op
+        START  =  1, // the start state for every game
+        PLAY   =  2, // start playing a game
+        ADD    =  3, // move a player tray to the word tray
+        REMOVE =  4, // remove a tile from the word tray, tightening up the remaining tiles (if any)
+        MOVE   =  5, // move a word tray tile to a new word tray position
+        PICK   =  6, // drag a tile to pick it up
+        HOVER  =  7, // float above a position where a tile could be moved
+        NOVER  =  8, // cancel a previous hover, tightening up the remaining tiles (if any)
+        DROP   =  9, // drop a picked-up tile, leaving it where it was
+        SUBMIT = 10, // accept submission of tiles in the word tray to score points
+        REJECT = 11, // reject submission of tiles in the word tray to score points
+        CLEAR  = 12, // return the tiles in the word to their positions in the player tray
+        DUMP   = 13, // dump player tray tiles and replace them with a new set of tiles
+        OVER   = 14, // game over
+        QUIT   = 15, // quit the game early
+        END    = 16, // the end state after game over or quit
     };
 
     static constexpr int SevenLetterWordBonus = 12;
@@ -169,23 +184,46 @@ public:
     class State {
     public:
         State() {}
-        State(const Action &action, const TileArray &tiles, int game_score) :
-            m_action(action), m_tiles(tiles), m_score(game_score) {}
+        State(const Action &action,
+              const std::u32string &incoming_word_string,
+              int incoming_word_score, int incoming_word_multiplier,
+              int incoming_word_total_score, bool incoming_word_in_lexicon,
+              const TileArray &outgoing_tiles, int outgoing_game_score) :
+            m_action(action),
+            m_incoming_word_string(incoming_word_string),
+            m_incoming_word_score(incoming_word_score),
+            m_incoming_word_multiplier(incoming_word_multiplier),
+            m_incoming_word_total_score(incoming_word_total_score),
+            m_incoming_word_in_lexicon(incoming_word_in_lexicon),
+            m_outgoing_tiles(outgoing_tiles),
+            m_outgoing_game_score(outgoing_game_score) {}
 
         Action action() const { return m_action; }
-        const TileArray &tiles() const { return m_tiles; }
-        TileArray &tiles() { return m_tiles; }
-        int score() const { return m_score; }
+        const std::u32string &incoming_word_string() const { return m_incoming_word_string; }
+        int incoming_word_score() const { return m_incoming_word_score; }
+        int incoming_word_multiplier() const { return m_incoming_word_multiplier; }
+        int incoming_word_total_score() const { return m_incoming_word_total_score; }
+        bool incoming_word_in_lexicon() const { return m_incoming_word_in_lexicon; }
+        const TileArray &outgoing_tiles() const { return m_outgoing_tiles; }
+        TileArray &outgoing_tiles() { return m_outgoing_tiles; }
+        int outgoing_game_score() const { return m_outgoing_game_score; }
         
     private:
         Action m_action;
-        TileArray m_tiles;
-        int m_score = 0;
+        std::u32string m_incoming_word_string;
+        int m_incoming_word_score = 0;
+        int m_incoming_word_multiplier = 0;
+        int m_incoming_word_total_score = 0;
+        bool m_incoming_word_in_lexicon = false;
+        TileArray m_outgoing_tiles;
+        int m_outgoing_game_score = 0;
     };
 
     SpellModel() { apply_start(Action(Opcode::START)); }
-    SpellModel(const GameKey &game_key) : m_game_key(game_key), m_tile_sequence(game_key) { apply_start(Action(Opcode::START)); }
+    SpellModel(const GameKey &game_key) : m_game_key(game_key), m_tile_sequence(game_key) { apply(Action(Opcode::START)); }
 
+    GameKey game_key() const { return m_game_key; }
+    
     const TileArray &tiles() const { return m_tiles; }
     TileArray &tiles() { return m_tiles; }
 
@@ -211,6 +249,7 @@ public:
     size_t word_length() const { return m_word_string.length(); }
     int word_score() const { return m_word_score; }
     int word_multiplier() const { return m_word_multiplier; }
+    int word_total_score() const { return m_word_total_score; }
     bool word_in_lexicon() const { return m_word_in_lexicon; }
 
     int game_score() const { return m_game_score; }
@@ -261,6 +300,17 @@ private:
     void apply_quit(const Action &action);
     void apply_end(const Action &action);
 
+    static sqlite3 *db_handle();
+    static void db_create_if_needed(sqlite3 *);
+    static void db_close(sqlite3 *db_handle);
+
+    void db_store();
+    void db_begin_transaction(sqlite3 *);
+    void db_commit_transaction(sqlite3 *);
+    void db_rollback_transaction(sqlite3 *);
+    void set_db_game_id(uint64_t db_game_id) { m_db_game_id = db_game_id; }
+    uint64_t db_game_id() const { return m_db_game_id; }
+
     GameKey m_game_key;
     TileSequence m_tile_sequence;
     TileArray m_tiles;
@@ -269,9 +319,12 @@ private:
     std::u32string m_word_string;
     int m_word_score = 0;
     int m_word_multiplier = 0;
+    int m_word_total_score = 0;
     bool m_word_in_lexicon = false;
     
     int m_game_score = 0;
+
+    uint64_t m_db_game_id = 0;
 };
 
 // =========================================================================================================================================

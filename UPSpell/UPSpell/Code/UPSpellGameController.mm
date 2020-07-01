@@ -1146,7 +1146,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UIColor *wordScoreColor = [UIColor themeColorWithCategory:self.gameView.wordScoreLabel.textColorCategory];
     
     SpellLayout &layout = SpellLayout::instance();
-    NSString *string = [NSString stringWithFormat:@"+%d \n", self.model->word_score()];
+    NSString *string = [NSString stringWithFormat:@"+%d \n", self.model->word_total_score()];
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
     NSRange range = NSMakeRange(0, string.length);
     [attrString addAttribute:NSFontAttributeName value:layout.word_score_font() range:range];
