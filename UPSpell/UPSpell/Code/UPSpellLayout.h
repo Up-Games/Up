@@ -137,7 +137,7 @@ public:
 
     static inline constexpr CGRect CanonicalDialogTopButtonsLayoutFrame =      {  83,  26,  834,  76 };
     static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  76 };
-    static inline constexpr CGRect CanonicalDialogNoteLayoutFrame =            {   0, 385, 1000,  40 };
+    static inline constexpr CGRect CanonicalDialogNoteLayoutFrame =            {   0, 385, 1000,  50 };
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
     static inline constexpr CGFloat CanonicalDialogOverNoteFontCapHeight = 26;
 

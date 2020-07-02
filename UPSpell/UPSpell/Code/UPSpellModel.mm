@@ -620,6 +620,7 @@ const SpellModel::State &SpellModel::apply(const Action &action)
 
     if (action.opcode() == Opcode::END) {
         db_store();
+        all_time_high_scores();
     }
     
     return state;
@@ -970,7 +971,7 @@ void SpellModel::db_store()
     static const char *game_sql =
         "INSERT INTO game (game_key, game_completed) VALUES (?, ?);";
     static const char *tile_initial_sql =
-        "INSERT INTO tile(tile_id, \n"
+        "INSERT INTO tile(\n"
             "tile_glyph_0, tile_multiplier_0, tile_word_pos_0,\n"
             "tile_glyph_1, tile_multiplier_1, tile_word_pos_1,\n"
             "tile_glyph_2, tile_multiplier_2, tile_word_pos_2,\n"
@@ -979,7 +980,7 @@ void SpellModel::db_store()
             "tile_glyph_5, tile_multiplier_5, tile_word_pos_5,\n"
             "tile_glyph_6, tile_multiplier_6, tile_word_pos_6,\n"
             "tile_game_id) \n"
-        "VALUES(0,\n"
+        "VALUES(\n"
             "0, 1, -1, \n"
             "0, 1, -1, \n"
             "0, 1, -1, \n"
@@ -1019,24 +1020,13 @@ void SpellModel::db_store()
             "word_game_id, word_state_id, word_tile_id) \n"
         "VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
 
-    static sqlite3_stmt *game_stmt;
-    static sqlite3_stmt *tile_initial_stmt;
-    static sqlite3_stmt *tile_state_stmt;
-    static sqlite3_stmt *state_stmt;
-    static sqlite3_stmt *word_stmt;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if (db == nullptr) {
-            return;
-        }
-        db_exec(db, sqlite3_prepare_v2(db, game_sql, (int)strlen(game_sql), &game_stmt, nullptr));
-        db_exec(db, sqlite3_prepare_v2(db, tile_initial_sql, (int)strlen(tile_initial_sql), &tile_initial_stmt, nullptr));
-        db_exec(db, sqlite3_prepare_v2(db, tile_state_sql, (int)strlen(tile_state_sql), &tile_state_stmt, nullptr));
-        db_exec(db, sqlite3_prepare_v2(db, state_sql, (int)strlen(state_sql), &state_stmt, nullptr));
-        db_exec(db, sqlite3_prepare_v2(db, word_sql, (int)strlen(word_sql), &word_stmt, nullptr));
-    });
-    
-    if (db == nullptr) {
+    sqlite3_stmt *game_stmt = db_statement(db, game_sql);
+    sqlite3_stmt *tile_initial_stmt = db_statement(db, tile_initial_sql);;
+    sqlite3_stmt *tile_state_stmt = db_statement(db, tile_state_sql);
+    sqlite3_stmt *state_stmt = db_statement(db, state_sql);
+    sqlite3_stmt *word_stmt = db_statement(db, word_sql);
+    if (!game_stmt || !tile_initial_stmt || !tile_state_stmt || !state_stmt || !word_stmt) {
+        db_close(db);
         return;
     }
 
@@ -1103,40 +1093,70 @@ void SpellModel::db_store()
     }
     
     db_commit_transaction(db);
+    
+    db_close(db);
+}
+
+std::vector<int> SpellModel::all_time_high_scores(size_t count)
+{
+    std::vector<int> result;
+
+    sqlite3 *db = db_handle();
+    if (db == nullptr) {
+        return result;
+    }
+
+    static const char *sql = "SELECT state_outgoing_game_score from state where state_opcode = 16 ORDER BY state_outgoing_game_score DESC;";
+    sqlite3_stmt *stmt = db_statement(db, sql);
+    if (!stmt) {
+        db_close(db);
+        return result;
+    }
+        
+    db_exec_r(db, sqlite3_reset(stmt), result);
+    
+    int row_count = 0;
+    while (row_count < count) {
+        if (sqlite3_step(stmt) != SQLITE_ROW) {
+            return result;
+        }
+        int val = sqlite3_column_int(stmt, 0);
+        result.push_back(val);
+        row_count++;
+    }
+    
+    db_close(db);
+    
+    return result;
 }
 
 // =========================================================================================================================================
 # pragma mark - Low-level Database
 
-sqlite3 *SpellModel::db_handle()
+static const char *db_path()
 {
-    static sqlite3 *db = nullptr;
-    if (db == nullptr) {
-        NSArray *possibleURLs = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+    static const char *path = nullptr;
+    if (!path) {
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSArray *possibleURLs = [fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
         if (possibleURLs.count > 0) {
             NSURL *documentDirectoryURL = [possibleURLs objectAtIndex:0];
             NSURL *dbFileURL = [documentDirectoryURL URLByAppendingPathComponent:@"up-spell.sql"];
-            const char *db_filename = [[dbFileURL path] fileSystemRepresentation];
-            LOG(DB, "db_filename: %s", db_filename);
-            int rc = sqlite3_open(db_filename, &db);
-            if (rc == SQLITE_OK) {
-                db_create_if_needed(db);
-            }
-            else {
-                LOG(DB, "*** failed to open database: %d", rc);
-            }
+            path = strdup([[dbFileURL path] fileSystemRepresentation]);
+            LOG(DB, "db_path: %s", path);
         }
     }
-    return db;
+    return path;
 }
 
-void SpellModel::db_create_if_needed(sqlite3 *db)
+sqlite3 *SpellModel::db_handle()
 {
-    if (db == nullptr) {
-        return;
-    }
-    
-    static const char *sql =
+    static int (^db_create)(sqlite3 *db) = ^int (sqlite3 *db) {
+        if (db == nullptr) {
+            return SQLITE_ERROR;
+        }
+        
+        static const char *sql =
         "PRAGMA foreign_keys = ON;"
         "CREATE TABLE IF NOT EXISTS game (\n"
         "    game_id INTEGER PRIMARY KEY ASC,\n"
@@ -1216,11 +1236,10 @@ void SpellModel::db_create_if_needed(sqlite3 *db)
         "CREATE INDEX IF NOT EXISTS word_string_score_idx ON word(word_string, word_score);\n"
         "CREATE INDEX IF NOT EXISTS word_string_total_multiplier_idx ON word(word_string, word_total_multiplier);\n"
         "CREATE INDEX IF NOT EXISTS word_string_total_score_idx ON word(word_string, word_total_score);\n";
-    char *errmsg;
-    int rc = sqlite3_exec(db, sql, nullptr, nullptr, &errmsg);
-    if (rc != SQLITE_OK) {
-        LOG(DB, "*** error creating database: %s", errmsg);
-    }
+        return sqlite3_exec(db, sql, nullptr, nullptr, nullptr);
+    };
+    
+    return db_handle_acquire(db_path(), db_create);
 }
 
 }  // namespace UP

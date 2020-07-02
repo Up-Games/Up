@@ -279,23 +279,23 @@ public:
     
     std::vector<Word> highest_scoring_word() const;  // returns vector to account for ties
     std::vector<Word> highest_scoring_word_with_length(size_t length) const;  // returns vector to account for ties
-    size_t words_submitted_count() const;
-    size_t words_submitted_count_rank() const;
-    size_t tiles_used_count() const;
-    size_t tiles_used_count_rank() const;
+    int words_submitted_count() const;
+    int words_submitted_count_rank() const;
+    int tiles_used_count() const;
+    int tiles_used_count_rank() const;
     double average_word_length() const;
     size_t average_word_length_rank() const;
     double average_word_score() const;
-    size_t average_word_score_rank() const;
-    size_t game_score_rank() const;
+    int average_word_score_rank() const;
+    int game_score_rank() const;
 
     static double all_time_average_game_score();
     static double all_time_average_game_score_for_recent_games(size_t count);
-    static std::vector<SpellModel> all_time_high_scores(size_t count);
+    static std::vector<int> all_time_high_scores(size_t count = 5);
     static std::vector<Word> all_time_highest_scoring_word();
     static std::vector<Word> all_time_highest_scoring_word_with_length(size_t length);
-    static size_t all_time_highest_words_submitted_count();
-    static size_t all_time_highest_tiles_used_count();
+    static int all_time_highest_words_submitted_count();
+    static int all_time_highest_tiles_used_count();
     static double all_time_average_words_submitted_count();
     static double all_time_average_tiles_used_count();
 
@@ -331,7 +331,6 @@ private:
     void apply_end(const Action &action);
 
     static sqlite3 *db_handle();
-    static void db_create_if_needed(sqlite3 *);
 
     void db_store();
     void set_db_game_id(uint64_t db_game_id) { m_db_game_id = db_game_id; }

@@ -1736,6 +1736,23 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.dialogGameNote.noteLabel.string = labelString;
 }
 
+#pragma mark - Stats note strings
+
+- (NSString *)statsHighestScoringWordInGame
+{
+    ASSERT(self.mode == Mode::End);
+    
+    NSString *labelString = nil;
+    
+    std::vector<Word> words = self.model->highest_scoring_word();
+    if (words.size() == 1) {
+        const Word &word = words[0];
+        labelString = [NSString stringWithFormat:@"HIGHEST SCORING WORD: %@ (+%d)", ns_str(word.string()), word.total_score()];
+    }
+    
+    return labelString;
+}
+
 #pragma mark - Model management
 
 - (void)createNewGameModel
