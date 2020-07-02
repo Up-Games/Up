@@ -29,6 +29,7 @@
 using Action = UP::SpellModel::Action;
 using Opcode = UP::SpellModel::Opcode;
 using State = UP::SpellModel::State;
+using StatsRank = UP::SpellModel::StatsRank;
 using TileIndex = UP::TileIndex;
 using TilePosition = UP::TilePosition;
 using TileTray = UP::TileTray;
@@ -1727,10 +1728,29 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     NSString *labelString = nil;
     
-    std::vector<Word> words = self.model->highest_scoring_word();
-    if (words.size()) {
-        const Word &word = words[0];
-        labelString = [NSString stringWithFormat:@"HIGHEST SCORING WORD: %@ (+%d)", ns_str(word.string()), word.total_score()];
+    if (!labelString) {
+        NSString *noteString = [self statsNoteGameHighScore];
+        if (noteString) {
+            labelString = noteString;
+        }
+    }
+    if (!labelString) {
+        NSString *noteString = [self statsNoteWordHighScore];
+        if (noteString) {
+            labelString = noteString;
+        }
+    }
+    if (!labelString) {
+        NSString *noteString = [self statsNoteWordsSubmittedRank];
+        if (noteString) {
+            labelString = noteString;
+        }
+    }
+    if (!labelString) {
+        NSString *noteString = [self statsNoteHighestScoringWordInGame];
+        if (noteString) {
+            labelString = noteString;
+        }
     }
     
     self.dialogGameNote.noteLabel.string = labelString;
@@ -1738,7 +1758,109 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 #pragma mark - Stats note strings
 
-- (NSString *)statsHighestScoringWordInGame
+- (NSString *)statsNoteGameHighScore
+{
+    ASSERT(self.mode == Mode::End);
+    
+    NSString *labelString = nil;
+    
+    int score = self.model->game_score();
+    std::pair<int, StatsRank> rank = self.model->game_score_rank(score);
+    if (rank.second == StatsRank::Alone) {
+        switch (rank.first) {
+            case 1:
+                labelString = [NSString stringWithFormat:@"GREAT! NEW HIGH SCORE: %d", score];
+                break;
+            case 2:
+                labelString = [NSString stringWithFormat:@"GREAT! SECOND-HIGHEST SCORE: %d", score];
+                break;
+        }
+    }
+    else if (rank.second == StatsRank::Tied) {
+        switch (rank.first) {
+            case 1:
+                labelString = [NSString stringWithFormat:@"GREAT! TIED FOR HIGH SCORE: %d", score];
+                break;
+            case 2:
+                labelString = [NSString stringWithFormat:@"GREAT! TIED FOR SECOND-HIGHEST SCORE: %d", score];
+                break;
+        }
+    }
+    
+    return labelString;
+}
+
+- (NSString *)statsNoteWordHighScore
+{
+    ASSERT(self.mode == Mode::End);
+    
+    NSString *labelString = nil;
+    
+    std::vector<Word> words = self.model->highest_scoring_word();
+    if (words.size() != 1) {
+        return labelString;
+    }
+    
+    const Word &word = words[0];
+    int score = word.total_score();
+    std::pair<int, StatsRank> rank = self.model->word_score_rank(score);
+    if (rank.second == StatsRank::Alone) {
+        switch (rank.first) {
+            case 1:
+                labelString = [NSString stringWithFormat:@"NEW RECORD! HIGHEST-SCORING WORD: %@ (+%d)", ns_str(word.string()), score];
+                break;
+            case 2:
+                labelString = [NSString stringWithFormat:@"GREAT! SECOND-HIGHEST-SCORING WORD: %@ (+%d)", ns_str(word.string()), score];
+                break;
+            case 3:
+                labelString = [NSString stringWithFormat:@"GREAT! THIRD-HIGHEST-SCORING WORD: %@ (+%d)", ns_str(word.string()), score];
+                break;
+        }
+    }
+    else if (rank.second == StatsRank::Tied) {
+        switch (rank.first) {
+            case 1:
+                labelString = [NSString stringWithFormat:@"GREAT! TIED FOR HIGHEST-SCORING WORD: %@ (+%d)", ns_str(word.string()), score];
+                break;
+            case 2:
+                labelString = [NSString stringWithFormat:@"GREAT! TIED FOR SECOND-HIGHEST-SCORING WORD: %@ (+%d)", ns_str(word.string()), score];
+                break;
+        }
+    }
+    
+    return labelString;
+}
+
+- (NSString *)statsNoteWordsSubmittedRank
+{
+    ASSERT(self.mode == Mode::End);
+    
+    NSString *labelString = nil;
+    
+    int count = self.model->words_submitted_count();
+    std::pair<int, StatsRank> rank = self.model->words_submitted_count_rank(count);
+    if (rank.second == StatsRank::Alone) {
+        switch (rank.first) {
+            case 1:
+                labelString = [NSString stringWithFormat:@"NEW RECORD! MOST WORDS SPELLED IN A GAME: %d", count];
+                break;
+            case 2:
+                labelString = [NSString stringWithFormat:@"GREAT! SECOND-MOST WORDS SPELLED IN A GAME: %d", count];
+                break;
+        }
+    }
+    else if (rank.second == StatsRank::Tied) {
+        switch (rank.first) {
+            case 1:
+                labelString = [NSString stringWithFormat:@"GREAT! TIED FOR MOST WORDS SPELLED IN A GAME: %d", count];
+                break;
+        }
+    }
+    
+    return labelString;
+}
+
+- (NSString *)statsNoteHighestScoringWordInGame
 {
     ASSERT(self.mode == Mode::End);
     
@@ -1747,7 +1869,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     std::vector<Word> words = self.model->highest_scoring_word();
     if (words.size() == 1) {
         const Word &word = words[0];
-        labelString = [NSString stringWithFormat:@"HIGHEST SCORING WORD: %@ (+%d)", ns_str(word.string()), word.total_score()];
+        labelString = [NSString stringWithFormat:@"HIGHEST SCORING WORD IN THIS GAME: %@ (+%d)", ns_str(word.string()), word.total_score()];
     }
     
     return labelString;

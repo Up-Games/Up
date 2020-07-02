@@ -277,10 +277,11 @@ public:
     std::string cpp_str(Opcode) const;
     std::string cpp_str(const State &) const;
     
+    enum class StatsRank { Unknown, Alone, Tied };
+    
     std::vector<Word> highest_scoring_word() const;  // returns vector to account for ties
     std::vector<Word> highest_scoring_word_with_length(size_t length) const;  // returns vector to account for ties
     int words_submitted_count() const;
-    int words_submitted_count_rank() const;
     int tiles_used_count() const;
     int tiles_used_count_rank() const;
     double average_word_length() const;
@@ -289,13 +290,17 @@ public:
     int average_word_score_rank() const;
     int game_score_rank() const;
 
-    static double all_time_average_game_score();
-    static double all_time_average_game_score_for_recent_games(size_t count);
-    static std::vector<int> all_time_high_scores(size_t count = 5);
-    static std::vector<Word> all_time_highest_scoring_word();
-    static std::vector<Word> all_time_highest_scoring_word_with_length(size_t length);
-    static int all_time_highest_words_submitted_count();
+    static std::pair<int, StatsRank> game_score_rank(int score);
+    static std::pair<int, StatsRank> word_score_rank(int score);
+    static std::pair<int, StatsRank> words_submitted_count_rank(int count);
+
+    static std::vector<int> all_time_high_game_scores(size_t limit = 20);
+    static std::vector<int> all_time_high_word_scores(size_t limit = 20);
+    static std::vector<int> all_time_high_word_scores_with_length(size_t length);
+    static std::vector<int> all_time_highest_words_submitted_counts(size_t limit = 20);
     static int all_time_highest_tiles_used_count();
+    static double all_time_average_game_score();
+    static double all_time_average_game_score_for_recent_games(size_t limit = 20);
     static double all_time_average_words_submitted_count();
     static double all_time_average_tiles_used_count();
 

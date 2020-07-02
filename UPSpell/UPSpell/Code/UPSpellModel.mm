@@ -620,7 +620,6 @@ const SpellModel::State &SpellModel::apply(const Action &action)
 
     if (action.opcode() == Opcode::END) {
         db_store();
-        all_time_high_scores();
     }
     
     return state;
@@ -961,6 +960,86 @@ std::vector<Word> SpellModel::highest_scoring_word_with_length(size_t length) co
     return result;
 }
 
+int SpellModel::words_submitted_count() const
+{
+    int result = 0;
+    for (const auto &state : states()) {
+        if (state.action().opcode() == Opcode::SUBMIT) {
+            result++;
+        }
+    }
+    return result;
+}
+
+std::pair<int, SpellModel::StatsRank> SpellModel::game_score_rank(int score)
+{
+    std::pair<int, StatsRank> result = { 0, StatsRank::Unknown };
+    
+    int i = 0;
+    std::vector<int> ranked = all_time_high_game_scores();
+    for (auto rank : ranked) {
+        i++;
+        if (score > rank) {
+            result.first = i;
+            result.second = StatsRank::Alone;
+            break;
+        }
+        else if (score == rank) {
+            result.first = i;
+            result.second = StatsRank::Tied;
+            break;
+        }
+    }
+    
+    return result;
+}
+
+std::pair<int, SpellModel::StatsRank> SpellModel::word_score_rank(int score)
+{
+    std::pair<int, StatsRank> result = { 0, StatsRank::Unknown };
+    
+    int i = 0;
+    std::vector<int> ranked = all_time_high_word_scores();
+    for (auto rank : ranked) {
+        i++;
+        if (score > rank) {
+            result.first = i;
+            result.second = StatsRank::Alone;
+            break;
+        }
+        else if (score == rank) {
+            result.first = i;
+            result.second = StatsRank::Tied;
+            break;
+        }
+    }
+    
+    return result;
+}
+
+std::pair<int, SpellModel::StatsRank> SpellModel::words_submitted_count_rank(int count)
+{
+    std::pair<int, StatsRank> result = { 0, StatsRank::Unknown };
+
+    int i = 0;
+    std::vector<int> ranked = all_time_highest_words_submitted_counts();
+    for (auto rank : ranked) {
+        i++;
+        if (count > rank) {
+            result.first = i;
+            result.second = StatsRank::Alone;
+            break;
+        }
+        else if (count == rank) {
+            result.first = i;
+            result.second = StatsRank::Tied;
+            break;
+        }
+    }
+    
+    return result;
+}
+
 // =========================================================================================================================================
 # pragma mark - High-level Database
 
@@ -1097,26 +1176,94 @@ void SpellModel::db_store()
     db_close(db);
 }
 
-std::vector<int> SpellModel::all_time_high_scores(size_t count)
+std::vector<int> SpellModel::all_time_high_game_scores(size_t limit)
 {
     std::vector<int> result;
-
+    
     sqlite3 *db = db_handle();
     if (db == nullptr) {
         return result;
     }
-
-    static const char *sql = "SELECT state_outgoing_game_score from state where state_opcode = 16 ORDER BY state_outgoing_game_score DESC;";
+    
+    static const char *sql = "SELECT state_outgoing_game_score FROM state WHERE state_opcode = 16 ORDER BY state_outgoing_game_score DESC;";
     sqlite3_stmt *stmt = db_statement(db, sql);
     if (!stmt) {
         db_close(db);
         return result;
     }
-        
+    
     db_exec_r(db, sqlite3_reset(stmt), result);
     
     int row_count = 0;
-    while (row_count < count) {
+    while (row_count < limit) {
+        if (sqlite3_step(stmt) != SQLITE_ROW) {
+            return result;
+        }
+        int val = sqlite3_column_int(stmt, 0);
+        result.push_back(val);
+        row_count++;
+    }
+    
+    db_close(db);
+    
+    return result;
+}
+
+std::vector<int> SpellModel::all_time_high_word_scores(size_t limit)
+{
+    std::vector<int> result;
+    
+    sqlite3 *db = db_handle();
+    if (db == nullptr) {
+        return result;
+    }
+    
+    static const char *sql =
+        "SELECT state_incoming_word_total_score FROM state WHERE state_opcode = 10\n"
+        "ORDER BY state_incoming_word_total_score DESC;";
+    sqlite3_stmt *stmt = db_statement(db, sql);
+    if (!stmt) {
+        db_close(db);
+        return result;
+    }
+    
+    db_exec_r(db, sqlite3_reset(stmt), result);
+    
+    int row_count = 0;
+    while (row_count < limit) {
+        if (sqlite3_step(stmt) != SQLITE_ROW) {
+            return result;
+        }
+        int val = sqlite3_column_int(stmt, 0);
+        result.push_back(val);
+        row_count++;
+    }
+    
+    db_close(db);
+    
+    return result;
+}
+
+std::vector<int> SpellModel::all_time_highest_words_submitted_counts(size_t limit)
+{
+    std::vector<int> result;
+    
+    sqlite3 *db = db_handle();
+    if (db == nullptr) {
+        return result;
+    }
+    
+    static const char *sql = "SELECT COUNT(word_id) FROM word GROUP BY word_game_id ORDER BY count(word_id) DESC;";
+    sqlite3_stmt *stmt = db_statement(db, sql);
+    if (!stmt) {
+        db_close(db);
+        return result;
+    }
+    
+    db_exec_r(db, sqlite3_reset(stmt), result);
+    
+    int row_count = 0;
+    while (row_count < limit) {
         if (sqlite3_step(stmt) != SQLITE_ROW) {
             return result;
         }
