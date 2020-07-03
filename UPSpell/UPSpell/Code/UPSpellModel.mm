@@ -1003,20 +1003,22 @@ std::pair<int, SpellModel::StatsRank> SpellModel::word_score_rank(int score)
     
     int i = 0;
     std::vector<int> ranked = all_time_high_word_scores();
-    for (auto rank : ranked) {
-        i++;
-        if (score > rank) {
-            result.first = i;
-            result.second = StatsRank::Alone;
-            break;
-        }
-        else if (score == rank) {
-            result.first = i;
-            result.second = StatsRank::Tied;
-            break;
+    if (ranked.size() == 0) {
+        result = { 1, StatsRank::Alone };
+    }
+    else {
+        for (auto rank : ranked) {
+            i++;
+            if (score > rank) {
+                result = { i, StatsRank::Alone };
+                break;
+            }
+            else if (score == rank) {
+                result = { i, StatsRank::Tied };
+                break;
+            }
         }
     }
-    
     return result;
 }
 
@@ -1026,17 +1028,20 @@ std::pair<int, SpellModel::StatsRank> SpellModel::word_with_length_score_rank(si
     
     int i = 0;
     std::vector<int> ranked = all_time_high_word_scores_with_length(length);
-    for (auto rank : ranked) {
-        i++;
-        if (score > rank) {
-            result.first = i;
-            result.second = StatsRank::Alone;
-            break;
-        }
-        else if (score == rank) {
-            result.first = i;
-            result.second = StatsRank::Tied;
-            break;
+    if (ranked.size() == 0) {
+        result = { 1, StatsRank::Alone };
+    }
+    else {
+        for (auto rank : ranked) {
+            i++;
+            if (score > rank) {
+                result = { i, StatsRank::Alone };
+                break;
+            }
+            else if (score == rank) {
+                result = { i, StatsRank::Tied };
+                break;
+            }
         }
     }
 
@@ -1049,20 +1054,22 @@ std::pair<int, SpellModel::StatsRank> SpellModel::words_submitted_count_rank(int
 
     int i = 0;
     std::vector<int> ranked = all_time_highest_words_submitted_counts();
-    for (auto rank : ranked) {
-        i++;
-        if (count > rank) {
-            result.first = i;
-            result.second = StatsRank::Alone;
-            break;
-        }
-        else if (count == rank) {
-            result.first = i;
-            result.second = StatsRank::Tied;
-            break;
+    if (ranked.size() == 0) {
+        result = { 1, StatsRank::Alone };
+    }
+    else {
+        for (auto rank : ranked) {
+            i++;
+            if (count > rank) {
+                result = { i, StatsRank::Alone };
+                break;
+            }
+            else if (count == rank) {
+                result = { i, StatsRank::Tied };
+                break;
+            }
         }
     }
-    
     return result;
 }
 

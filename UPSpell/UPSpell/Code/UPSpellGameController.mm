@@ -1171,25 +1171,23 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     if (has_length_bonus || has_multiplier_bonus) {
         role = Role::WordScoreBonus;
         NSMutableString *bonusString = [NSMutableString string];
+        if (has_multiplier_bonus) {
+            [bonusString appendFormat:@"%d× ", word_multiplier];
+        }
         if (has_length_bonus) {
             switch (word_length) {
                 case 5:
-                    [bonusString appendFormat:@"+%d FIVE TILES", SpellModel::FiveLetterWordBonus];
+                    [bonusString appendFormat:@"+%d ", SpellModel::FiveLetterWordBonus];
                     break;
                 case 6:
-                    [bonusString appendFormat:@"+%d SIX TILES", SpellModel::SixLetterWordBonus];
+                    [bonusString appendFormat:@"+%d ", SpellModel::SixLetterWordBonus];
                     break;
                 case 7:
-                    [bonusString appendFormat:@"+%d SEVEN TILES", SpellModel::SevenLetterWordBonus];
+                    [bonusString appendFormat:@"+%d ", SpellModel::SevenLetterWordBonus];
                     break;
             }
         }
-        if (has_multiplier_bonus) {
-            if (has_length_bonus) {
-                [bonusString appendString:@"  &  "];
-            }
-            [bonusString appendFormat:@"%d× WORD SCORE", word_multiplier];
-        }
+        [bonusString appendString:@"BONUS"];
         
         NSMutableAttributedString *bonusAttrString = [[NSMutableAttributedString alloc] initWithString:bonusString];
         NSRange bonusRange = NSMakeRange(0, bonusString.length);
@@ -1736,12 +1734,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     id labelString = nil;
     
-    if (!labelString) {
-        id noteString = [self statsNoteGameHighScore];
-        if (noteString) {
-            labelString = noteString;
-        }
-    }
+//    if (!labelString) {
+//        id noteString = [self statsNoteGameHighScore];
+//        if (noteString) {
+//            labelString = noteString;
+//        }
+//    }
     if (!labelString) {
         id noteString = [self statsNoteWordHighScore];
         if (noteString) {
@@ -1778,37 +1776,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 #pragma mark - Stats note strings
 
-- (NSAttributedString *)statsNoteLeadingStarString:(int)count
+- (NSAttributedString *)statsNoteWithFormat:(NSString *)format, ...
 {
+    va_list args;
+    va_start(args, format);
+    NSString *string = [NSString stringWithFormat:format, args];
+    va_end(args);
     SpellLayout &layout = SpellLayout::instance();
-    NSMutableString *starString = [NSMutableString string];
-    for (int i = 0; i < count; i++) {
-        [starString appendString:@"★"];
-    }
-    [starString appendString:@"  "];
-    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:starString];
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
     NSRange range = NSMakeRange(0, attrString.length);
-    [attrString addAttribute:NSFontAttributeName value:layout.word_score_bonus_font() range:range];
-    CGFloat baseline_adjustment = layout.game_note_dingbats_font_metrics().baseline_adjustment();
-    [attrString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baseline_adjustment) range:range];
-    return attrString;
-}
-
-- (NSAttributedString *)statsNoteTrailingStarString:(int)count
-{
-    SpellLayout &layout = SpellLayout::instance();
-    NSMutableString *starString = [NSMutableString string];
-    [starString appendString:@"  "];
-    for (int i = 0; i < count; i++) {
-        [starString appendString:@"★"];
-    }
-    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:starString];
-    NSRange range = NSMakeRange(0, attrString.length);
-    [attrString addAttribute:NSFontAttributeName value:layout.word_score_bonus_font() range:range];
-    CGFloat baseline_adjustment = layout.game_note_dingbats_font_metrics().baseline_adjustment();
-    [attrString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baseline_adjustment) range:range];
-    CGFloat kerning = layout.game_note_dingbats_font_metrics().kerning();
-    [attrString addAttribute:(NSString *)kCTKernAttributeName value:@(kerning) range:NSMakeRange(0, 1)];
+    [attrString addAttribute:NSFontAttributeName value:layout.game_note_font() range:range];
     return attrString;
 }
 
@@ -1832,21 +1809,18 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     return attrString;
 }
 
-- (NSAttributedString *)statsNoteGameHighScore
+- (NSString *)statsNoteGameHighScore
 {
     ASSERT(self.mode == Mode::End);
 
-    NSMutableAttributedString *result = nil;
+    NSString *result = nil;
     
     int score = self.model->game_score();
     std::pair<int, StatsRank> rank = self.model->game_score_rank(score);
     if (rank.second == StatsRank::Alone) {
         switch (rank.first) {
             case 1: {
-                result = [[NSMutableAttributedString alloc] init];
-                [result appendAttributedString:[self statsNoteLeadingStarString:4]];
-                [result appendAttributedString:[self statsNoteAttentionString:@"NEW HIGH SCORE"]];
-                [result appendAttributedString:[self statsNoteTrailingStarString:4]];
+                result = @"HIGH SCORE";
                 break;
             }
         }
@@ -1854,24 +1828,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     else if (rank.second == StatsRank::Tied) {
         switch (rank.first) {
             case 1: {
-                result = [[NSMutableAttributedString alloc] init];
-                [result appendAttributedString:[self statsNoteLeadingStarString:3]];
-                [result appendAttributedString:[self statsNoteAttentionString:@"TIED HIGH SCORE"]];
-                [result appendAttributedString:[self statsNoteTrailingStarString:3]];
+                result = @"TIED HIGH SCORE";
                 break;
             }
         }
     }
 
-    if (result) {
-        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
-        [result addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, result.length)];
-    }
-    
     return result;
 }
 
-- (NSAttributedString *)statsNoteWordHighScore
+- (NSString *)statsNoteWordHighScore
 {
     ASSERT(self.mode == Mode::End);
 
@@ -1879,47 +1845,24 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     if (words.size() != 1) {
         return nil;
     }
-
-    NSMutableAttributedString *result = nil;
     
     const Word &word = words[0];
     NSString *wordString = ns_str(word.string());
-    int score = word.total_score();
-    std::pair<int, StatsRank> rank = self.model->word_score_rank(score);
+    std::pair<int, StatsRank> rank = self.model->word_score_rank(word.total_score());
+    if (rank.first != 1) {
+        return nil;
+    }
+    NSString *result = nil;
     if (rank.second == StatsRank::Alone) {
-        switch (rank.first) {
-            case 1: {
-                result = [[NSMutableAttributedString alloc] init];
-                [result appendAttributedString:[self statsNoteLeadingStarString:3]];
-                [result appendAttributedString:[self statsNoteAttentionString:@"NEW HIGHEST-SCORING WORD"]];
-                [result appendAttributedString:[self statsNoteTrailingStarString:3]];
-                [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@ (+%d)", wordString, score]]];
-                break;
-            }
-        }
+        result = [NSString stringWithFormat:@"ALL-TIME BEST WORD: %@ +%d", wordString, word.total_score()];
     }
     else if (rank.second == StatsRank::Tied) {
-        switch (rank.first) {
-            case 1: {
-                result = [[NSMutableAttributedString alloc] init];
-                [result appendAttributedString:[self statsNoteLeadingStarString:2]];
-                [result appendAttributedString:[self statsNoteAttentionString:@"TIED HIGHEST-SCORING WORD"]];
-                [result appendAttributedString:[self statsNoteTrailingStarString:2]];
-                [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@ (+%d)", wordString, score]]];
-                break;
-            }
-        }
+        result = [NSString stringWithFormat:@"TIED ALL-TIME BEST WORD: %@ +%d", wordString, word.total_score()];
     }
-    
-    if (result) {
-        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
-        [result addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, result.length)];
-    }
-    
     return result;
 }
 
-- (NSAttributedString *)statsNoteWordHighScoreWithLength:(size_t)wordLength
+- (NSString *)statsNoteWordHighScoreWithLength:(size_t)wordLength
 {
     ASSERT(self.mode == Mode::End);
     
@@ -1928,44 +1871,42 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         return nil;
     }
     
-    NSMutableAttributedString *result = nil;
+    NSString *result = nil;
 
     const Word &word = words[0];
     NSString *wordString = ns_str(word.string());
+
+    NSString *lengthString = nil;
+    switch (word.length()) {
+        case 2:
+            lengthString = @"TWO";
+            break;
+        case 3:
+            lengthString = @"THREE";
+            break;
+        case 4:
+            lengthString = @"FOUR";
+            break;
+        case 5:
+            lengthString = @"FIVE";
+            break;
+        case 6:
+            lengthString = @"SIX";
+            break;
+        case 7:
+            lengthString = @"SEVEN";
+            break;
+    }
+    if (lengthString == nil) {
+        return nil;
+    }
+
     int score = word.total_score();
     std::pair<int, StatsRank> rank = self.model->word_score_rank(score);
     if (rank.second == StatsRank::Alone) {
         switch (rank.first) {
             case 1: {
-                NSString *lengthString = nil;
-                switch (wordLength) {
-                    case 2:
-                        lengthString = @"NEW HIGHEST-SCORING TWO-LETTER WORD";
-                        break;
-                    case 3:
-                        lengthString = @"NEW HIGHEST-SCORING THREE-LETTER WORD";
-                        break;
-                    case 4:
-                        lengthString = @"NEW HIGHEST-SCORING FOUR-LETTER WORD";
-                        break;
-                    case 5:
-                        lengthString = @"NEW HIGHEST-SCORING FIVE-LETTER WORD";
-                        break;
-                    case 6:
-                        lengthString = @"NEW HIGHEST-SCORING SIX-LETTER WORD";
-                        break;
-                    case 7:
-                        lengthString = @"NEW HIGHEST-SCORING SEVEN-LETTER WORD";
-                        break;
-                }
-                if (lengthString == nil) {
-                    return nil;
-                }
-                result = [[NSMutableAttributedString alloc] init];
-                [result appendAttributedString:[self statsNoteLeadingStarString:2]];
-                [result appendAttributedString:[self statsNoteAttentionString:lengthString]];
-                [result appendAttributedString:[self statsNoteTrailingStarString:2]];
-                [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@ (+%d)", wordString, score]]];
+                result = [NSString stringWithFormat:@"ALL-TIME BEST %ld-TILE WORD: %@ (+%d)", word.length(), wordString, score];
                 break;
             }
         }
@@ -1973,43 +1914,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     else if (rank.second == StatsRank::Tied) {
         switch (rank.first) {
             case 1: {
-                NSString *lengthString = nil;
-                switch (wordLength) {
-                    case 2:
-                        lengthString = @"TIED HIGHEST-SCORING TWO-LETTER WORD";
-                        break;
-                    case 3:
-                        lengthString = @"TIED HIGHEST-SCORING THREE-LETTER WORD";
-                        break;
-                    case 4:
-                        lengthString = @"TIED HIGHEST-SCORING FOUR-LETTER WORD";
-                        break;
-                    case 5:
-                        lengthString = @"TIED HIGHEST-SCORING FIVE-LETTER WORD";
-                        break;
-                    case 6:
-                        lengthString = @"TIED HIGHEST-SCORING SIX-LETTER WORD";
-                        break;
-                    case 7:
-                        lengthString = @"TIED HIGHEST-SCORING SEVEN-LETTER WORD";
-                        break;
-                }
-                if (lengthString == nil) {
-                    return nil;
-                }
-                result = [[NSMutableAttributedString alloc] init];
-                [result appendAttributedString:[self statsNoteLeadingStarString:2]];
-                [result appendAttributedString:[self statsNoteAttentionString:lengthString]];
-                [result appendAttributedString:[self statsNoteTrailingStarString:2]];
-                [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@ (+%d)", wordString, score]]];
+                result = [NSString stringWithFormat:@"TIED ALL-TIME BEST %ld-TILE WORD: %@ (+%d)", word.length(), wordString, score];
                 break;
             }
         }
-    }
-    
-    if (result) {
-        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
-        [result addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, result.length)];
     }
     
     return result;
@@ -2027,9 +1935,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         switch (rank.first) {
             case 1:
                 result = [[NSMutableAttributedString alloc] init];
-                [result appendAttributedString:[self statsNoteLeadingStarString:3]];
                 [result appendAttributedString:[self statsNoteAttentionString:@"MOST WORDS SPELLED IN A GAME"]];
-                [result appendAttributedString:[self statsNoteTrailingStarString:3]];
                 [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%d WORDS", count]]];
                 break;
         }
@@ -2038,9 +1944,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         switch (rank.first) {
             case 1:
                 result = [[NSMutableAttributedString alloc] init];
-                [result appendAttributedString:[self statsNoteLeadingStarString:2]];
                 [result appendAttributedString:[self statsNoteAttentionString:@"TIED MOST WORDS SPELLED IN A GAME"]];
-                [result appendAttributedString:[self statsNoteTrailingStarString:2]];
                 [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%d WORDS", count]]];
                 break;
         }
@@ -2066,9 +1970,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         NSString *wordString = ns_str(word.string());
         int score = word.total_score();
         result = [[NSMutableAttributedString alloc] init];
-        [result appendAttributedString:[self statsNoteLeadingStarString:1]];
         [result appendAttributedString:[self statsNoteAttentionString:@"HIGHEST-SCORING WORD IN THIS GAME"]];
-        [result appendAttributedString:[self statsNoteTrailingStarString:1]];
         [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@ (+%d)", wordString, score]]];
     }
     
@@ -2088,9 +1990,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     std::u32string random_string = lexicon.random_key(Random::instance());
     UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
-    [result appendAttributedString:[self statsNoteLeadingStarString:1]];
     [result appendAttributedString:[self statsNoteAttentionString:@"RANDOM WORD FROM THE LEXICON"]];
-    [result appendAttributedString:[self statsNoteTrailingStarString:1]];
     [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@", ns_str(random_string)]]];
     [result addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, result.length)];
     return result;
