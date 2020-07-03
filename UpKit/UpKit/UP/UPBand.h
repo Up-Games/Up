@@ -17,6 +17,7 @@ static constexpr Band BandGameUI = "game.ui";
 static constexpr Band BandGameUITile = "game.ui.tile";
 static constexpr Band BandGameUITileSlide = "game.ui.tile.slide";
 static constexpr Band BandGameUIColor = "game.ui.color";
+static constexpr Band BandWordScore = "wordscore";
 static constexpr Band BandModeAll = "mode.*";
 static constexpr Band BandModeDelay = "mode.delay";
 static constexpr Band BandModeUI = "mode.ui";

@@ -547,7 +547,7 @@ std::string SpellModel::cpp_str(const State &state) const
         sstr << ' ';
         sstr << UP::cpp_str(state.incoming_word().string());
         sstr << " (+";
-        sstr << (state.incoming_word().score() * state.incoming_word().total_multiplier());
+        sstr << (state.incoming_word().total_score());
         sstr << ")";
     }
     

@@ -74,6 +74,7 @@ using UP::BandGameUITileSlide;
 using UP::BandModeAll;
 using UP::BandModeDelay;
 using UP::BandModeUI;
+using UP::BandWordScore;
 
 using UP::role_in_player_tray;
 using UP::role_in_word;
@@ -1143,7 +1144,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     delay(BandGameDelay, 0.25, ^{
         self.showingWordScoreLabel = YES;
-        start(bloop_in(BandGameUI, @[wordScoreInMove], 0.3, ^(UIViewAnimatingPosition) {
+        start(bloop_in(BandWordScore, @[wordScoreInMove], 0.3, ^(UIViewAnimatingPosition) {
             delay(BandGameDelay, 1.5, ^{
                 [self viewBloopOutWordScoreLabelWithDuration:DefaultBloopDuration];
             });
