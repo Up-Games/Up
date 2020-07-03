@@ -18,6 +18,9 @@ extern NSString * const UPGameInformationFontName;
 + (UIFont *)gameNoteFontOfSize:(CGFloat)fontSize;
 + (UIFont *)gameNoteFontWithCapHeight:(CGFloat)capHeight;
 
++ (UIFont *)gameNoteWordFontOfSize:(CGFloat)fontSize;
++ (UIFont *)gameNoteWordFontWithCapHeight:(CGFloat)capHeight;
+
 + (UIFont *)wordScoreFontOfSize:(CGFloat)fontSize;
 + (UIFont *)wordScoreFontWithCapHeight:(CGFloat)capHeight;
 

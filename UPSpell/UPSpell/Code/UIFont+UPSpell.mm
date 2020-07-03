@@ -10,6 +10,7 @@
 NSString * const UPTextButtonFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPGameInformationFontName = @"MalloryNarrow-Bold";
 NSString * const UPGameNoteFontName = @"MalloryCondensed-BlackItalic";
+NSString * const UPGameNoteWordFontName = @"MalloryCondensed-Black";
 NSString * const UPWordScoreBonusFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPCheckboxControlFontName = @"MalloryCondensed-Black";
 NSString * const UPChoiceControlFontName = @"MalloryCondensed-BlackItalic";
@@ -82,7 +83,22 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
 
 + (UIFont *)gameNoteFontOfSize:(CGFloat)fontSize
 {
-    return [UIFont fontWithName:UPGameNoteFontName size:fontSize];
+    UIFont *font = [UIFont fontWithName:UPGameNoteFontName size:fontSize];
+    UIFontDescriptor *descriptor = [font fontDescriptor];
+    NSDictionary *attributes = @{
+        UIFontDescriptorFeatureSettingsAttribute: @[
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+                },
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(35),     // Alternative Stylistic Sets
+                    UIFontFeatureSelectorIdentifierKey: @(22)  // Raised Colon (Lining Figures Only)
+                },
+        ]
+    };
+    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
 }
 
 + (UIFont *)gameNoteFontWithCapHeight:(CGFloat)capHeight
@@ -91,6 +107,34 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
     return [UIFont gameNoteFontOfSize:pointSize];
+}
+
++ (UIFont *)gameNoteWordFontOfSize:(CGFloat)fontSize
+{
+    UIFont *font = [UIFont fontWithName:UPGameNoteWordFontName size:fontSize];
+    UIFontDescriptor *descriptor = [font fontDescriptor];
+    NSDictionary *attributes = @{
+        UIFontDescriptorFeatureSettingsAttribute: @[
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+                },
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(35),     // Alternative Stylistic Sets
+                    UIFontFeatureSelectorIdentifierKey: @(22)  // Raised Colon (Lining Figures Only)
+                },
+        ]
+    };
+    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
+}
+
++ (UIFont *)gameNoteWordFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPGameNoteWordFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont gameNoteWordFontOfSize:pointSize];
 }
 
 + (UIFont *)wordScoreFontOfSize:(CGFloat)fontSize

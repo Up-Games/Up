@@ -267,6 +267,7 @@ void SpellLayout::calculate()
     calculate_game_information_font_metrics();
     calculate_game_information_superscript_font_metrics();
     calculate_game_note_font_metrics();
+    calculate_game_note_word_font_metrics();
     calculate_word_score_font_metrics();
     calculate_word_score_bonus_font_metrics();
     calculate_checkbox_control_metrics();
@@ -367,6 +368,15 @@ void SpellLayout::calculate_game_note_font_metrics()
     UIFont *font = [UIFont gameNoteFontWithCapHeight:cap_height];
     set_game_note_font(font);
     set_game_note_font_metrics(FontMetrics(font.fontName, font.pointSize));
+}
+
+void SpellLayout::calculate_game_note_word_font_metrics()
+{
+    CGFloat cap_height = CanonicalGameNoteWordFontCapHeight * layout_scale();
+    UIFont *font = [UIFont gameNoteWordFontWithCapHeight:cap_height];
+    set_game_note_word_font(font);
+    CGFloat baseline_adjustment = CanonicalGameNoteWordFontBaselineAdjustment * layout_scale();
+    set_game_note_word_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
 }
 
 void SpellLayout::calculate_word_score_font_metrics()

@@ -139,8 +139,10 @@ public:
     static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  76 };
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
 
-    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 382, 1000, 52 };
-    static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 28;
+    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 370, 1000, 100 };
+    static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 27;
+    static inline constexpr CGFloat CanonicalGameNoteWordFontCapHeight = 27;
+    static inline constexpr CGFloat CanonicalGameNoteWordFontBaselineAdjustment = 6;
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
     static inline constexpr CGFloat CanonicalOffscreenNearFrameFactor = 1.2;
@@ -223,6 +225,8 @@ public:
     const FontMetrics &game_information_superscript_font_metrics() const { return m_game_information_superscript_font_metrics; }
     UIFont *game_note_font() const { return m_game_note_font; }
     const FontMetrics &game_note_font_metrics() const { return m_game_note_font_metrics; }
+    UIFont *game_note_word_font() const { return m_game_note_word_font; }
+    const FontMetrics &game_note_word_font_metrics() const { return m_game_note_word_font_metrics; }
     UIFont *word_score_font() const { return m_word_score_font; }
     const FontMetrics &word_score_font_metrics() const { return m_word_score_font_metrics; }
     UIFont *word_score_bonus_font() const { return m_word_score_bonus_font; }
@@ -271,6 +275,8 @@ private:
     void set_game_information_superscript_font_metrics(const FontMetrics &metrics) { m_game_information_superscript_font_metrics = metrics; }
     void set_game_note_font(UIFont *font) { m_game_note_font = font; }
     void set_game_note_font_metrics(const FontMetrics &metrics) { m_game_note_font_metrics = metrics; }
+    void set_game_note_word_font(UIFont *font) { m_game_note_word_font = font; }
+    void set_game_note_word_font_metrics(const FontMetrics &metrics) { m_game_note_word_font_metrics = metrics; }
     void set_word_score_font(UIFont *font) { m_word_score_font = font; }
     void set_word_score_font_metrics(const FontMetrics &metrics) { m_word_score_font_metrics = metrics; }
     void set_word_score_bonus_font(UIFont *font) { m_word_score_bonus_font = font; }
@@ -303,6 +309,7 @@ private:
     void calculate_game_information_font_metrics();
     void calculate_game_information_superscript_font_metrics();
     void calculate_game_note_font_metrics();
+    void calculate_game_note_word_font_metrics();
     void calculate_word_score_font_metrics();
     void calculate_word_score_bonus_font_metrics();
     void calculate_checkbox_control_metrics();
@@ -362,6 +369,8 @@ private:
     FontMetrics m_game_information_superscript_font_metrics;
     __strong UIFont *m_game_note_font;
     FontMetrics m_game_note_font_metrics;
+    __strong UIFont *m_game_note_word_font;
+    FontMetrics m_game_note_word_font_metrics;
     __strong UIFont *m_word_score_font;
     FontMetrics m_word_score_font_metrics;
     __strong UIFont *m_word_score_bonus_font;
