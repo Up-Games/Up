@@ -1166,28 +1166,33 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     const size_t word_length = self.model->word().length();
     const int word_multiplier = self.model->word().total_multiplier();
-    BOOL has_length_bonus = word_length >= 5;
+    NSString *lengthBonusString = nil;
+    switch (word_length) {
+        case 5:
+            lengthBonusString = [NSString stringWithFormat:@"+%d FOR 5 TILES", SpellModel::FiveLetterWordBonus];
+            break;
+        case 6:
+            lengthBonusString = [NSString stringWithFormat:@"+%d FOR 6 TILES", SpellModel::SixLetterWordBonus];
+            break;
+        case 7:
+            lengthBonusString = [NSString stringWithFormat:@"+%d FOR 7 TILES", SpellModel::SevenLetterWordBonus];
+            break;
+    }
+    BOOL has_length_bonus = lengthBonusString != nil;
     BOOL has_multiplier_bonus = word_multiplier > 1;
     if (has_length_bonus || has_multiplier_bonus) {
         role = Role::WordScoreBonus;
         NSMutableString *bonusString = [NSMutableString string];
-        if (has_multiplier_bonus) {
-            [bonusString appendFormat:@"%d× ", word_multiplier];
+        if (has_multiplier_bonus && has_length_bonus) {
+            [bonusString appendFormat:@"%d× WORD BONUS & ", word_multiplier];
+            [bonusString appendString:lengthBonusString];
         }
-        if (has_length_bonus) {
-            switch (word_length) {
-                case 5:
-                    [bonusString appendFormat:@"+%d ", SpellModel::FiveLetterWordBonus];
-                    break;
-                case 6:
-                    [bonusString appendFormat:@"+%d ", SpellModel::SixLetterWordBonus];
-                    break;
-                case 7:
-                    [bonusString appendFormat:@"+%d ", SpellModel::SevenLetterWordBonus];
-                    break;
-            }
+        else if (has_multiplier_bonus) {
+            [bonusString appendFormat:@"%d× WORD BONUS", word_multiplier];
         }
-        [bonusString appendString:@"BONUS"];
+        else {
+            [bonusString appendString:lengthBonusString];
+        }
         
         NSMutableAttributedString *bonusAttrString = [[NSMutableAttributedString alloc] initWithString:bonusString];
         NSRange bonusRange = NSMakeRange(0, bonusString.length);
@@ -1660,10 +1665,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
     
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageCenter, Spot::OffBottomNear);
+    self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
     self.dialogGameOver.transform = CGAffineTransformIdentity;
     self.dialogGameOver.hidden = YES;
-    self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogNote, Spot::OffBottomFar);
+    self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogGameNote, Spot::OffBottomFar);
     self.dialogGameNote.hidden = YES;
 }
 
@@ -1690,8 +1695,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     // move extras and about buttons offscreen
     NSArray<UPViewMove *> *outGameOverMoves = @[
-        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageCenter, Spot::OffBottomNear),
-        UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogNote, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Spot::OffBottomNear),
+        UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Spot::OffBottomFar),
     ];
     start(bloop_out(BandModeUI, outGameOverMoves, 0.2, nil));
     NSArray<UPViewMove *> *outMoves = @[
@@ -1715,7 +1720,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
                 [UIView animateWithDuration:0.2 animations:^{
                     self.dialogMenu.messagePathView.alpha = 1;
                 }];
-                UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.messagePathView, Location(Role::DialogMessageHigh));
+                UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray));
                 start(bloop_in(BandModeUI, @[readyMove], 0.3,  ^(UIViewAnimatingPosition) {
                     delay(BandModeDelay, 1.5, ^{
                         if (completion) {
@@ -1728,7 +1733,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }));
 }
 
-- (size_t)viewSetNoteLabelString
+- (void)viewSetNoteLabelString
 {
     ASSERT(self.mode == Mode::End);
     
@@ -1740,12 +1745,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 //            labelString = noteString;
 //        }
 //    }
-//    if (!labelString) {
-//        id noteString = [self statsNoteWordHighScore];
-//        if (noteString) {
-//            labelString = noteString;
-//        }
-//    }
+    if (!labelString) {
+        id noteString = [self statsNoteAllTimeBestWord];
+        if (noteString) {
+            labelString = noteString;
+        }
+    }
     if (!labelString) {
         id noteString = [self statsNoteWordsSubmittedRank];
         if (noteString) {
@@ -1764,53 +1769,32 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     self.dialogGameNote.noteLabel.attributedString = labelString;
 
-//    NSArray *components = [labelString componentsSeparatedByString:@"\n"];
-//    if (components.count == 1) {
-//        self.dialogGameNote.noteLabel.string = labelString;
-//    }
-//    else if (components.count == 2) {
-//        SpellLayout &layout = SpellLayout::instance();
-//        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:components[0]];
-//        [attrString addAttribute:NSFontAttributeName value:layout.game_note_font() range:NSMakeRange(0, attrString.length)];
-//
-//        NSMutableAttributedString *bottomString = [[NSMutableAttributedString alloc] initWithString:components[1]];
-//        NSRange bottomRange = NSMakeRange(0, bottomString.length);
-//        [bottomString addAttribute:NSFontAttributeName value:layout.game_note_word_font() range:bottomRange];
-//        CGFloat baseline_adjustment = layout.game_note_word_font_metrics().baseline_adjustment();
-//        [bottomString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baseline_adjustment) range:bottomRange];
-//
-//        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
-//        [attrString appendAttributedString:bottomString];
-//        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
-//        [attrString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, attrString.length)];
-//
-//        self.dialogGameNote.noteLabel.attributedString = attrString;
-//    }
-        
-    return 1;
+    NSArray *components = [labelString componentsSeparatedByString:@"\n"];
+    if (components.count == 1) {
+        self.dialogGameNote.noteLabel.string = labelString;
+    }
+    else if (components.count == 2) {
+        SpellLayout &layout = SpellLayout::instance();
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:components[0]];
+        [attrString addAttribute:NSFontAttributeName value:layout.game_note_font() range:NSMakeRange(0, attrString.length)];
+
+        NSMutableAttributedString *bottomString = [[NSMutableAttributedString alloc] initWithString:components[1]];
+        NSRange bottomRange = NSMakeRange(0, bottomString.length);
+        [bottomString addAttribute:NSFontAttributeName value:layout.game_note_word_font() range:bottomRange];
+        CGFloat baseline_adjustment = layout.game_note_word_font_metrics().baseline_adjustment();
+        [bottomString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baseline_adjustment) range:bottomRange];
+
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+        [attrString appendAttributedString:bottomString];
+        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
+        [attrString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, attrString.length)];
+
+        self.dialogGameNote.noteLabel.attributedString = attrString;
+    }
+
 }
 
 #pragma mark - Stats note strings
-
-- (NSAttributedString *)statsNoteAttentionString:(NSString *)string
-{
-    SpellLayout &layout = SpellLayout::instance();
-    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
-    NSRange range = NSMakeRange(0, attrString.length);
-    [attrString addAttribute:NSFontAttributeName value:layout.game_note_font() range:range];
-    return attrString;
-}
-
-- (NSAttributedString *)statsNoteContentString:(NSString *)string
-{
-    SpellLayout &layout = SpellLayout::instance();
-    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
-    NSRange range = NSMakeRange(0, attrString.length);
-    [attrString addAttribute:NSFontAttributeName value:layout.game_note_font() range:range];
-    CGFloat baseline_adjustment = layout.game_note_font_metrics().baseline_adjustment();
-    [attrString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baseline_adjustment) range:range];
-    return attrString;
-}
 
 - (NSString *)statsNoteGameHighScore
 {
@@ -1840,7 +1824,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     return result;
 }
 
-- (NSString *)statsNoteWordHighScore
+- (NSString *)statsNoteAllTimeBestWord
 {
     ASSERT(self.mode == Mode::End);
 
@@ -1857,10 +1841,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
     NSString *result = nil;
     if (rank.second == StatsRank::Alone) {
-        result = [NSString stringWithFormat:@"ALL-TIME BEST WORD!\n%@ (+%d)", wordString, word.total_score()];
+        result = [NSString stringWithFormat:@"ALL-TIME BEST WORD!\n%@ +%d", wordString, word.total_score()];
     }
     else if (rank.second == StatsRank::Tied) {
-        result = [NSString stringWithFormat:@"TIED ALL-TIME BEST WORD!\n%@ (+%d)", wordString, word.total_score()];
+        result = [NSString stringWithFormat:@"TIED FOR ALL-TIME BEST WORD!\n%@ +%d", wordString, word.total_score()];
     }
     return result;
 }
@@ -1876,14 +1860,14 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     if (rank.second == StatsRank::Alone) {
         switch (rank.first) {
             case 1:
-                result = [NSString stringWithFormat:@"NEW RECORD!\nMOST WORDS SPELLED IN A GAME (%d)", count];
+                result = [NSString stringWithFormat:@"NEW RECORD!\nMOST WORDS SPELLED IN A GAME: %d", count];
                 break;
         }
     }
     else if (rank.second == StatsRank::Tied) {
         switch (rank.first) {
             case 1:
-                result = [NSString stringWithFormat:@"TIED RECORD!\nMOST WORDS SPELLED IN A GAME (%d)", count];
+                result = [NSString stringWithFormat:@"TIED RECORD!\nMOST WORDS SPELLED IN A GAME: %d", count];
                 break;
         }
     }
@@ -1891,7 +1875,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     return result;
 }
 
-- (NSAttributedString *)statsNoteBestWordInGame
+- (NSString *)statsNoteBestWordInGame
 {
     ASSERT(self.mode == Mode::End);
     
@@ -1900,28 +1884,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         return nil;
     }
 
-    SpellLayout &layout = SpellLayout::instance();
-
-    NSMutableAttributedString *attentionAttrString = [[NSMutableAttributedString alloc] initWithString:@"BEST WORD: "];
-    NSRange attentionRange = NSMakeRange(0, attentionAttrString.length);
-    [attentionAttrString addAttribute:NSFontAttributeName value:layout.game_note_font() range:attentionRange];
-
     const Word &word = words[0];
     NSString *wordString = ns_str(word.string());
-    NSString *contentString = [NSString stringWithFormat:@"%@ +%d", wordString, word.total_score()];
-    NSMutableAttributedString *contentAttrString = [[NSMutableAttributedString alloc] initWithString:contentString];
-    NSRange contentRange = NSMakeRange(0, contentString.length);
-    [contentAttrString addAttribute:NSFontAttributeName value:layout.game_note_word_font() range:contentRange];
-
-    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
-
-    [result appendAttributedString:attentionAttrString];
-    [result appendAttributedString:contentAttrString];
-
-    UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
-    [result addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, result.length)];
-
-    return result;
+    return [NSString stringWithFormat:@"BEST WORD IN GAME\n%@ +%d", wordString, word.total_score()];
 }
 
 - (NSString *)statsNoteRandomWord
@@ -1930,7 +1895,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     Lexicon &lexicon = Lexicon::instance();
     std::u32string random_string = lexicon.random_key(Random::instance());
-    return [NSString stringWithFormat:@"RANDOM WORD FROM THE LEXICON: %@", ns_str(random_string)];
+    return [NSString stringWithFormat:@"RANDOM WORD FROM THE LEXICON:\n%@", ns_str(random_string)];
 }
 
 #pragma mark - Model management
@@ -2063,7 +2028,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.dialogMenu.transform = CGAffineTransformIdentity;
     self.dialogMenu.hidden = NO;
     self.dialogMenu.alpha = 1;
-    self.dialogMenu.messagePathView.frame = layout.frame_for(Role::DialogMessageCenter, Spot::OffBottomNear);
+    self.dialogMenu.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
 
     self.gameView.transform = layout.menu_game_view_transform();
     [self viewUpdateGameControls];
@@ -2203,7 +2168,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.model->apply(Action(self.gameTimer.remainingTime, Opcode::PLAY));
     
     // bloop out ready message
-    UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.messagePathView, Location(Role::DialogMessageHigh, Spot::OffBottomNear));
+    UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear));
     start(bloop_out(BandModeUI, @[readyMove], 0.25, nil));
     // animate game view to full alpha and fade out dialog menu
     [UIView animateWithDuration:0.1 delay:0.2 options:0 animations:^{
@@ -2250,7 +2215,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.gameView.pauseControl.alpha = [UIColor themeModalActiveAlpha];
     
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
+    self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
     self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar);
     self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse, Spot::OffBottomFar);
     
@@ -2263,7 +2228,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }));
     
     NSArray<UPViewMove *> *nearMoves = @[
-        UPViewMoveMake(self.dialogPause.messagePathView, Role::DialogMessageHigh),
+        UPViewMoveMake(self.dialogPause.messagePathView, Role::DialogMessageCenteredInWordTray),
     ];
     start(bloop_in(BandModeUI, nearMoves, 0.25, nil));
     
@@ -2291,7 +2256,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.gameView.pauseControl.alpha = [UIColor themeModalActiveAlpha];
 
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageHigh);
+    self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray);
     self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse);
     self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse);
     self.dialogPause.hidden = NO;
@@ -2312,7 +2277,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     } completion:nil];
 
     NSArray<UPViewMove *> *nearMoves = @[
-        UPViewMoveMake(self.dialogPause.messagePathView, Location(Role::DialogMessageHigh, Spot::OffBottomNear)),
+        UPViewMoveMake(self.dialogPause.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear)),
     ];
     NSArray<UPViewMove *> *farMoves = @[
         UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
@@ -2369,7 +2334,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     } completion:nil];
     
     NSArray<UPViewMove *> *nearMoves = @[
-        UPViewMoveMake(self.dialogPause.messagePathView, Location(Role::DialogMessageHigh, Spot::OffBottomNear)),
+        UPViewMoveMake(self.dialogPause.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear)),
     ];
     NSArray<UPViewMove *> *farMoves = @[
         UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
@@ -2410,11 +2375,11 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.gameView.gameScoreLabel.alpha = [UIColor themeModalActiveAlpha];
 
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageHigh, Spot::OffBottomNear);
+    self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
     self.dialogGameOver.center = layout.center_for(Location(Role::Screen));
     self.dialogGameOver.hidden = NO;
     self.dialogGameOver.alpha = 0.0;
-    self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogNote, Spot::OffBottomNear);
+    self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogGameNote, Spot::OffBottomNear);
     self.dialogGameNote.center = layout.center_for(Location(Role::Screen));
     self.dialogGameNote.hidden = NO;
     [UIView animateWithDuration:0.15 animations:^{
@@ -2422,7 +2387,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }];
 
     NSArray<UPViewMove *> *moves = @[
-        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageHigh),
+        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageCenteredInWordTray),
     ];
     start(bloop_in(BandModeUI, moves, 0.3, ^(UIViewAnimatingPosition) {
         delay(BandModeDelay, 0.75, ^{
@@ -2456,7 +2421,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         [self viewBloopOutExistingTileViewsWithDuration:GameOverInOutBloopDuration tiles:incoming_tiles wordLength:incoming_word_length
                                              completion:^{
             [self viewBloopInBlankTileViewsWithDuration:GameOverInOutBloopDuration completion:nil];
-
             self.dialogMenu.hidden = NO;
             self.dialogMenu.alpha = 1;
             self.dialogMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft, Spot::OffTopNear));
@@ -2468,7 +2432,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
                 UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
                 UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter)),
                 UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight)),
-                UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogNote),
+                UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote),
             ];
             start(bloop_in(BandModeUI, buttonMoves, GameOverInOutBloopDuration, ^(UIViewAnimatingPosition) {
                 [self viewUnlock];
@@ -2535,11 +2499,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             self.dialogMenu.playButton.highlighted = NO;
             delay(BandModeDelay, 0.1, ^{
                 NSArray<UPViewMove *> *menuButtonMoves = @[
-                    UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
-                    UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter)),
-                    UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight)),
+                    UPViewMoveMake(self.dialogMenu.extrasButton, Role::DialogButtonTopLeft),
+                    UPViewMoveMake(self.dialogMenu.playButton, Role::DialogButtonTopCenter),
+                    UPViewMoveMake(self.dialogMenu.aboutButton, Role::DialogButtonTopRight),
                 ];
                 start(bloop_in(BandModeUI, menuButtonMoves, 0.3, nil));
+
                 [self viewBloopInUpSpellTileViewsWithDuration:0.3 completion:^{
                     [self viewUnlock];
                 }];

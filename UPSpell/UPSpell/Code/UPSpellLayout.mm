@@ -17,148 +17,150 @@
 #include "UPSpellModel.h"
 #include "UPSpellLayout.h"
 
+using Role = UP::SpellLayout::Role;
+
 namespace UP {
 
-SpellLayout::Role role_in_player_tray(TilePosition pos)
+Role role_in_player_tray(TilePosition pos)
 {
     ASSERT(pos.in_player_tray());
     switch (pos.index()) {
         case 0:
-            return SpellLayout::Role::PlayerTile1;
+            return Role::PlayerTile1;
         case 1:
-            return SpellLayout::Role::PlayerTile2;
+            return Role::PlayerTile2;
         case 2:
-            return SpellLayout::Role::PlayerTile3;
+            return Role::PlayerTile3;
         case 3:
-            return SpellLayout::Role::PlayerTile4;
+            return Role::PlayerTile4;
         case 4:
-            return SpellLayout::Role::PlayerTile5;
+            return Role::PlayerTile5;
         case 5:
-            return SpellLayout::Role::PlayerTile6;
+            return Role::PlayerTile6;
         case 6:
-            return SpellLayout::Role::PlayerTile7;
+            return Role::PlayerTile7;
     }
     ASSERT_NOT_REACHED();
-    return SpellLayout::Role::None;
+    return Role::None;
 }
 
-SpellLayout::Role role_in_word(TileIndex idx, size_t word_length)
+Role role_in_word(TileIndex idx, size_t word_length)
 {
     ASSERT_IDX(idx);
     switch (word_length) {
         case 0: {
-            return SpellLayout::Role::None;
+            return Role::None;
         }
         case 1: {
-            return SpellLayout::Role::WordTile1of1;
+            return Role::WordTile1of1;
         }
         case 2: {
             switch (idx) {
                 case 0:
-                    return SpellLayout::Role::WordTile1of2;
+                    return Role::WordTile1of2;
                 case 1:
-                    return SpellLayout::Role::WordTile2of2;
+                    return Role::WordTile2of2;
                 default:
-                    return SpellLayout::Role::None;
+                    return Role::None;
             }
         }
         case 3: {
             switch (idx) {
                 case 0:
-                    return SpellLayout::Role::WordTile1of3;
+                    return Role::WordTile1of3;
                 case 1:
-                    return SpellLayout::Role::WordTile2of3;
+                    return Role::WordTile2of3;
                 case 2:
-                    return SpellLayout::Role::WordTile3of3;
+                    return Role::WordTile3of3;
                 default:
-                    return SpellLayout::Role::None;
+                    return Role::None;
             }
         }
         case 4: {
             switch (idx) {
                 case 0:
-                    return SpellLayout::Role::WordTile1of4;
+                    return Role::WordTile1of4;
                 case 1:
-                    return SpellLayout::Role::WordTile2of4;
+                    return Role::WordTile2of4;
                 case 2:
-                    return SpellLayout::Role::WordTile3of4;
+                    return Role::WordTile3of4;
                 case 3:
-                    return SpellLayout::Role::WordTile4of4;
+                    return Role::WordTile4of4;
                 default:
-                    return SpellLayout::Role::None;
+                    return Role::None;
             }
         }
         case 5: {
             switch (idx) {
                 case 0:
-                    return SpellLayout::Role::WordTile1of5;
+                    return Role::WordTile1of5;
                 case 1:
-                    return SpellLayout::Role::WordTile2of5;
+                    return Role::WordTile2of5;
                 case 2:
-                    return SpellLayout::Role::WordTile3of5;
+                    return Role::WordTile3of5;
                 case 3:
-                    return SpellLayout::Role::WordTile4of5;
+                    return Role::WordTile4of5;
                 case 4:
-                    return SpellLayout::Role::WordTile5of5;
+                    return Role::WordTile5of5;
                 default:
-                    return SpellLayout::Role::None;
+                    return Role::None;
             }
         }
         case 6: {
             switch (idx) {
                 case 0:
-                    return SpellLayout::Role::WordTile1of6;
+                    return Role::WordTile1of6;
                 case 1:
-                    return SpellLayout::Role::WordTile2of6;
+                    return Role::WordTile2of6;
                 case 2:
-                    return SpellLayout::Role::WordTile3of6;
+                    return Role::WordTile3of6;
                 case 3:
-                    return SpellLayout::Role::WordTile4of6;
+                    return Role::WordTile4of6;
                 case 4:
-                    return SpellLayout::Role::WordTile5of6;
+                    return Role::WordTile5of6;
                 case 5:
-                    return SpellLayout::Role::WordTile6of6;
+                    return Role::WordTile6of6;
                 default:
-                    return SpellLayout::Role::None;
+                    return Role::None;
             }
         }
         case 7: {
             switch (idx) {
                 case 0:
-                    return SpellLayout::Role::WordTile1of7;
+                    return Role::WordTile1of7;
                 case 1:
-                    return SpellLayout::Role::WordTile2of7;
+                    return Role::WordTile2of7;
                 case 2:
-                    return SpellLayout::Role::WordTile3of7;
+                    return Role::WordTile3of7;
                 case 3:
-                    return SpellLayout::Role::WordTile4of7;
+                    return Role::WordTile4of7;
                 case 4:
-                    return SpellLayout::Role::WordTile5of7;
+                    return Role::WordTile5of7;
                 case 5:
-                    return SpellLayout::Role::WordTile6of7;
+                    return Role::WordTile6of7;
                 case 6:
-                    return SpellLayout::Role::WordTile7of7;
+                    return Role::WordTile7of7;
                 default:
-                    return SpellLayout::Role::None;
+                    return Role::None;
             }
         }
     }
     ASSERT_NOT_REACHED();
-    return SpellLayout::Role::None;
+    return Role::None;
 }
 
-SpellLayout::Role role_for_score(int score)
+Role role_for_score(int score)
 {
     if (score >= 1000) {
-        return SpellLayout::Role::GameScoreGameOver4;
+        return Role::GameScoreGameOver4;
     }
     if (score >= 100) {
-        return SpellLayout::Role::GameScoreGameOver3;
+        return Role::GameScoreGameOver3;
     }
     if (score >= 10) {
-        return SpellLayout::Role::GameScoreGameOver2;
+        return Role::GameScoreGameOver2;
     }
-    return SpellLayout::Role::GameScoreGameOver1;
+    return Role::GameScoreGameOver1;
 }
 
 CGRect SpellLayout::layout_centered_x_aspect_rect(CGRect rect) const
@@ -610,13 +612,17 @@ void SpellLayout::calculate_word_tile_locations()
 
 void SpellLayout::calculate_dialog_locations()
 {
-    calculate_and_set_locations(Role::DialogMessageHigh, word_tray_layout_frame());
-    calculate_and_set_locations(Role::DialogNote, layout_centered_x_aspect_rect(CanonicalGameNoteLayoutFrame));
+    calculate_and_set_locations(Role::DialogMessageCenteredInWordTray, word_tray_layout_frame());
+    calculate_and_set_locations(Role::DialogGameNote, layout_centered_x_aspect_rect(CanonicalGameNoteLayoutFrame));
 
-    CGRect centered_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
-    centered_message_frame.origin.y = up_rect_min_y(centered_message_frame) - (up_rect_height(centered_message_frame) * 0.12);
-    calculate_and_set_locations(Role::DialogMessageCenter, centered_message_frame);
+    CGRect v_centered_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
+    v_centered_message_frame.origin.y = up_rect_min_y(v_centered_message_frame) - (up_rect_height(v_centered_message_frame) * 0.12);
+    calculate_and_set_locations(Role::DialogMessageVerticallyCentered, v_centered_message_frame);
 
+    CGRect with_game_note_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
+    with_game_note_message_frame.origin.y = up_rect_min_y(with_game_note_message_frame) - (up_rect_height(with_game_note_message_frame) * 0.4);
+    calculate_and_set_locations(Role::DialogMessageWithGameNote, with_game_note_message_frame);
+    
     CGSize button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
     CGRect top_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogTopButtonsLayoutFrame);
     calculate_and_set_locations(Role::DialogButtonTopLeft, up_left_aligned_rect(button_size, top_buttons_layout_frame));

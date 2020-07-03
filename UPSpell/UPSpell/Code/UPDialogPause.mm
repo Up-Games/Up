@@ -43,7 +43,7 @@ using UP::SpellLayout;
     self.messagePathView = [UPBezierPathView bezierPathView];
     self.messagePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
     self.messagePathView.path = UP::TextPathDialogPaused();
-    self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageHigh);
+    self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageCenteredInWordTray);
     [self addSubview:self.messagePathView];
 
     self.quitButton = [UPTextButton textButtonQuit];

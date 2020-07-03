@@ -49,7 +49,7 @@ public:
         GameTimer, GameScore,
         GameScoreGameOver1, GameScoreGameOver2, GameScoreGameOver3, GameScoreGameOver4,
         WordScore, WordScoreBonus,
-        DialogMessageHigh, DialogMessageCenter, DialogNote,
+        DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessageWithGameNote, DialogGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
@@ -139,7 +139,7 @@ public:
     static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  76 };
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
 
-    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 370, 1000, 100 };
+    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 369, 1000, 100 };
     static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 27;
     static inline constexpr CGFloat CanonicalGameNoteWordFontCapHeight = 27;
     static inline constexpr CGFloat CanonicalGameNoteWordFontBaselineAdjustment = 6;

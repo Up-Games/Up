@@ -10,7 +10,7 @@
 NSString * const UPTextButtonFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPGameInformationFontName = @"MalloryNarrow-Bold";
 NSString * const UPGameNoteFontName = @"MalloryCondensed-BlackItalic";
-NSString * const UPGameNoteWordFontName = @"MalloryCondensed-Black";
+NSString * const UPGameNoteWordFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPWordScoreBonusFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPCheckboxControlFontName = @"MalloryCondensed-Black";
 NSString * const UPChoiceControlFontName = @"MalloryCondensed-BlackItalic";

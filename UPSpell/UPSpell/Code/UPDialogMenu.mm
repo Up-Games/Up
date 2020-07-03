@@ -45,7 +45,7 @@ using UP::SpellLayout;
     self.messagePathView = [UPBezierPathView bezierPathView];
     self.messagePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
     self.messagePathView.path = UP::TextPathDialogReady();
-    self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageCenter);
+    self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageVerticallyCentered);
     [self addSubview:self.messagePathView];
 
     self.extrasButton = [UPTextSettingsButton textButtonExtras];

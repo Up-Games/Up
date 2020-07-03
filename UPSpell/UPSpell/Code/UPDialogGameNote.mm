@@ -42,7 +42,7 @@ using UP::SpellLayout;
     self.noteLabel.font = layout.game_note_font();
     self.noteLabel.textColorCategory = UPColorCategoryInformation;
     self.noteLabel.textAlignment = NSTextAlignmentCenter;
-    self.noteLabel.frame = layout.frame_for(SpellLayout::Role::DialogNote);
+    self.noteLabel.frame = layout.frame_for(SpellLayout::Role::DialogGameNote);
     [self addSubview:self.noteLabel];
     
     return self;
