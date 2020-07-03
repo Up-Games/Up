@@ -14,6 +14,7 @@ NSString * const UPWordScoreBonusFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPCheckboxControlFontName = @"MalloryCondensed-Black";
 NSString * const UPChoiceControlFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
+NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
 
 //
 //  Below, the UIFontFeatureTypeIdentifierKey and UIFontFeatureSelectorIdentifierKey are set from
@@ -196,6 +197,19 @@ NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
     return [UIFont settingsDescriptionFontOfSize:pointSize];
+}
+
++ (UIFont *)dingbatsFontOfSize:(CGFloat)fontSize
+{
+    return [UIFont fontWithName:UPDingbatsFontName size:fontSize];
+}
+
++ (UIFont *)dingbatsFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPDingbatsFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont dingbatsFontOfSize:pointSize];
 }
 
 @end

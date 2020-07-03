@@ -52,7 +52,7 @@ using UP::SpellLayout;
 
 - (void)updateThemeColors
 {
-    self.messagePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryControlText];
+    self.messagePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
 }
 
 @end

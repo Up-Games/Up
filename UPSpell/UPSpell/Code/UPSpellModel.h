@@ -292,15 +292,16 @@ public:
 
     static std::pair<int, StatsRank> game_score_rank(int score);
     static std::pair<int, StatsRank> word_score_rank(int score);
+    static std::pair<int, StatsRank> word_with_length_score_rank(size_t length, int score);
     static std::pair<int, StatsRank> words_submitted_count_rank(int count);
 
-    static std::vector<int> all_time_high_game_scores(size_t limit = 20);
-    static std::vector<int> all_time_high_word_scores(size_t limit = 20);
-    static std::vector<int> all_time_high_word_scores_with_length(size_t length);
-    static std::vector<int> all_time_highest_words_submitted_counts(size_t limit = 20);
+    static std::vector<int> all_time_high_game_scores(size_t limit = 5);
+    static std::vector<int> all_time_high_word_scores(size_t limit = 5);
+    static std::vector<int> all_time_high_word_scores_with_length(size_t length, size_t limit = 5);
+    static std::vector<int> all_time_highest_words_submitted_counts(size_t limit = 5);
     static int all_time_highest_tiles_used_count();
     static double all_time_average_game_score();
-    static double all_time_average_game_score_for_recent_games(size_t limit = 20);
+    static double all_time_average_game_score_for_recent_games(size_t limit = 5);
     static double all_time_average_words_submitted_count();
     static double all_time_average_tiles_used_count();
 

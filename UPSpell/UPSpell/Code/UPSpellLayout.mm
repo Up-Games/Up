@@ -267,6 +267,7 @@ void SpellLayout::calculate()
     calculate_game_information_font_metrics();
     calculate_game_information_superscript_font_metrics();
     calculate_game_note_font_metrics();
+    calculate_game_note_dingbats_font_metrics();
     calculate_word_score_font_metrics();
     calculate_word_score_bonus_font_metrics();
     calculate_checkbox_control_metrics();
@@ -363,10 +364,21 @@ void SpellLayout::calculate_game_information_superscript_font_metrics()
 
 void SpellLayout::calculate_game_note_font_metrics()
 {
-    CGFloat cap_height = CanonicalDialogOverNoteFontCapHeight * layout_scale();
+    CGFloat cap_height = CanonicalDialogGameNoteFontCapHeight * layout_scale();
     UIFont *font = [UIFont gameNoteFontWithCapHeight:cap_height];
     set_game_note_font(font);
-    set_game_note_font_metrics(FontMetrics(font.fontName, font.pointSize));
+    CGFloat baseline_adjustment = CanonicalDialogGameNoteFontContentBaselineAdjustment * layout_scale();
+    set_game_note_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
+}
+
+void SpellLayout::calculate_game_note_dingbats_font_metrics()
+{
+    CGFloat cap_height = CanonicalDialogGameNoteFontCapHeight * layout_scale();
+    UIFont *font = [UIFont dingbatsFontWithCapHeight:cap_height];
+    set_game_note_dingbats_font(font);
+    CGFloat baseline_adjustment = CanonicalDialogGameNoteDingbatsBaselineAdjustment * layout_scale();
+    CGFloat kerning_adjustment = CanonicalDialogGameNoteDingbatsKerningAdjustment * layout_scale();
+    set_game_note_dingbats_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment, kerning_adjustment));
 }
 
 void SpellLayout::calculate_word_score_font_metrics()

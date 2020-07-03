@@ -69,7 +69,7 @@ using UP::SpellLayout;
 
 - (void)updateThemeColors
 {
-    self.messagePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryControlText];
+    self.messagePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
     [self.extrasButton updateThemeColors];
     [self.playButton updateThemeColors];
     [self.aboutButton updateThemeColors];

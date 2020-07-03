@@ -1734,28 +1734,37 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.mode == Mode::End);
     
-    NSString *labelString = nil;
+    id labelString = nil;
     
     if (!labelString) {
-        NSString *noteString = [self statsNoteGameHighScore];
+        id noteString = [self statsNoteGameHighScore];
         if (noteString) {
             labelString = noteString;
         }
     }
     if (!labelString) {
-        NSString *noteString = [self statsNoteWordHighScore];
+        id noteString = [self statsNoteWordHighScore];
+        if (noteString) {
+            labelString = noteString;
+        }
+    }
+    for (size_t i = 2; i <= 7; i++) {
+        if (!labelString) {
+            id noteString = [self statsNoteWordHighScoreWithLength:i];
+            if (noteString) {
+                labelString = noteString;
+                break;
+            }
+        }
+    }
+    if (!labelString) {
+        id noteString = [self statsNoteWordsSubmittedRank];
         if (noteString) {
             labelString = noteString;
         }
     }
     if (!labelString) {
-        NSString *noteString = [self statsNoteWordsSubmittedRank];
-        if (noteString) {
-            labelString = noteString;
-        }
-    }
-    if (!labelString) {
-        NSString *noteString = [self statsNoteHighestScoringWordInGame];
+        id noteString = [self statsNoteHighestScoringWordInGame];
         if (noteString) {
             labelString = noteString;
         }
@@ -1769,130 +1778,322 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 #pragma mark - Stats note strings
 
-- (NSString *)statsNoteGameHighScore
+- (NSAttributedString *)statsNoteLeadingStarString:(int)count
+{
+    SpellLayout &layout = SpellLayout::instance();
+    NSMutableString *starString = [NSMutableString string];
+    for (int i = 0; i < count; i++) {
+        [starString appendString:@"★"];
+    }
+    [starString appendString:@"  "];
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:starString];
+    NSRange range = NSMakeRange(0, attrString.length);
+    [attrString addAttribute:NSFontAttributeName value:layout.word_score_bonus_font() range:range];
+    CGFloat baseline_adjustment = layout.game_note_dingbats_font_metrics().baseline_adjustment();
+    [attrString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baseline_adjustment) range:range];
+    return attrString;
+}
+
+- (NSAttributedString *)statsNoteTrailingStarString:(int)count
+{
+    SpellLayout &layout = SpellLayout::instance();
+    NSMutableString *starString = [NSMutableString string];
+    [starString appendString:@"  "];
+    for (int i = 0; i < count; i++) {
+        [starString appendString:@"★"];
+    }
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:starString];
+    NSRange range = NSMakeRange(0, attrString.length);
+    [attrString addAttribute:NSFontAttributeName value:layout.word_score_bonus_font() range:range];
+    CGFloat baseline_adjustment = layout.game_note_dingbats_font_metrics().baseline_adjustment();
+    [attrString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baseline_adjustment) range:range];
+    CGFloat kerning = layout.game_note_dingbats_font_metrics().kerning();
+    [attrString addAttribute:(NSString *)kCTKernAttributeName value:@(kerning) range:NSMakeRange(0, 1)];
+    return attrString;
+}
+
+- (NSAttributedString *)statsNoteAttentionString:(NSString *)string
+{
+    SpellLayout &layout = SpellLayout::instance();
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
+    NSRange range = NSMakeRange(0, attrString.length);
+    [attrString addAttribute:NSFontAttributeName value:layout.game_note_font() range:range];
+    return attrString;
+}
+
+- (NSAttributedString *)statsNoteContentString:(NSString *)string
+{
+    SpellLayout &layout = SpellLayout::instance();
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
+    NSRange range = NSMakeRange(0, attrString.length);
+    [attrString addAttribute:NSFontAttributeName value:layout.game_note_font() range:range];
+    CGFloat baseline_adjustment = layout.game_note_font_metrics().baseline_adjustment();
+    [attrString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baseline_adjustment) range:range];
+    return attrString;
+}
+
+- (NSAttributedString *)statsNoteGameHighScore
 {
     ASSERT(self.mode == Mode::End);
-    
-    NSString *labelString = nil;
+
+    NSMutableAttributedString *result = nil;
     
     int score = self.model->game_score();
     std::pair<int, StatsRank> rank = self.model->game_score_rank(score);
     if (rank.second == StatsRank::Alone) {
         switch (rank.first) {
-            case 1:
-                labelString = [NSString stringWithFormat:@"GREAT! NEW HIGH SCORE: %d", score];
+            case 1: {
+                result = [[NSMutableAttributedString alloc] init];
+                [result appendAttributedString:[self statsNoteLeadingStarString:4]];
+                [result appendAttributedString:[self statsNoteAttentionString:@"NEW HIGH SCORE"]];
+                [result appendAttributedString:[self statsNoteTrailingStarString:4]];
                 break;
-            case 2:
-                labelString = [NSString stringWithFormat:@"GREAT! SECOND-HIGHEST SCORE: %d", score];
-                break;
+            }
         }
     }
     else if (rank.second == StatsRank::Tied) {
         switch (rank.first) {
-            case 1:
-                labelString = [NSString stringWithFormat:@"GREAT! TIED FOR HIGH SCORE: %d", score];
+            case 1: {
+                result = [[NSMutableAttributedString alloc] init];
+                [result appendAttributedString:[self statsNoteLeadingStarString:3]];
+                [result appendAttributedString:[self statsNoteAttentionString:@"TIED HIGH SCORE"]];
+                [result appendAttributedString:[self statsNoteTrailingStarString:3]];
                 break;
-            case 2:
-                labelString = [NSString stringWithFormat:@"GREAT! TIED FOR SECOND-HIGHEST SCORE: %d", score];
-                break;
+            }
         }
     }
-    
-    return labelString;
-}
 
-- (NSString *)statsNoteWordHighScore
-{
-    ASSERT(self.mode == Mode::End);
-    
-    NSString *labelString = nil;
-    
-    std::vector<Word> words = self.model->highest_scoring_word();
-    if (words.size() != 1) {
-        return labelString;
+    if (result) {
+        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
+        [result addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, result.length)];
     }
     
+    return result;
+}
+
+- (NSAttributedString *)statsNoteWordHighScore
+{
+    ASSERT(self.mode == Mode::End);
+
+    std::vector<Word> words = self.model->highest_scoring_word();
+    if (words.size() != 1) {
+        return nil;
+    }
+
+    NSMutableAttributedString *result = nil;
+    
     const Word &word = words[0];
+    NSString *wordString = ns_str(word.string());
     int score = word.total_score();
     std::pair<int, StatsRank> rank = self.model->word_score_rank(score);
     if (rank.second == StatsRank::Alone) {
         switch (rank.first) {
-            case 1:
-                labelString = [NSString stringWithFormat:@"NEW RECORD! HIGHEST-SCORING WORD: %@ (+%d)", ns_str(word.string()), score];
+            case 1: {
+                result = [[NSMutableAttributedString alloc] init];
+                [result appendAttributedString:[self statsNoteLeadingStarString:3]];
+                [result appendAttributedString:[self statsNoteAttentionString:@"NEW HIGHEST-SCORING WORD"]];
+                [result appendAttributedString:[self statsNoteTrailingStarString:3]];
+                [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@ (+%d)", wordString, score]]];
                 break;
-            case 2:
-                labelString = [NSString stringWithFormat:@"GREAT! SECOND-HIGHEST-SCORING WORD: %@ (+%d)", ns_str(word.string()), score];
-                break;
-            case 3:
-                labelString = [NSString stringWithFormat:@"GREAT! THIRD-HIGHEST-SCORING WORD: %@ (+%d)", ns_str(word.string()), score];
-                break;
+            }
         }
     }
     else if (rank.second == StatsRank::Tied) {
         switch (rank.first) {
-            case 1:
-                labelString = [NSString stringWithFormat:@"GREAT! TIED FOR HIGHEST-SCORING WORD: %@ (+%d)", ns_str(word.string()), score];
+            case 1: {
+                result = [[NSMutableAttributedString alloc] init];
+                [result appendAttributedString:[self statsNoteLeadingStarString:2]];
+                [result appendAttributedString:[self statsNoteAttentionString:@"TIED HIGHEST-SCORING WORD"]];
+                [result appendAttributedString:[self statsNoteTrailingStarString:2]];
+                [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@ (+%d)", wordString, score]]];
                 break;
-            case 2:
-                labelString = [NSString stringWithFormat:@"GREAT! TIED FOR SECOND-HIGHEST-SCORING WORD: %@ (+%d)", ns_str(word.string()), score];
-                break;
+            }
         }
     }
     
-    return labelString;
+    if (result) {
+        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
+        [result addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, result.length)];
+    }
+    
+    return result;
 }
 
-- (NSString *)statsNoteWordsSubmittedRank
+- (NSAttributedString *)statsNoteWordHighScoreWithLength:(size_t)wordLength
 {
     ASSERT(self.mode == Mode::End);
     
-    NSString *labelString = nil;
+    std::vector<Word> words = self.model->highest_scoring_word_with_length(wordLength);
+    if (words.size() != 1) {
+        return nil;
+    }
     
+    NSMutableAttributedString *result = nil;
+
+    const Word &word = words[0];
+    NSString *wordString = ns_str(word.string());
+    int score = word.total_score();
+    std::pair<int, StatsRank> rank = self.model->word_score_rank(score);
+    if (rank.second == StatsRank::Alone) {
+        switch (rank.first) {
+            case 1: {
+                NSString *lengthString = nil;
+                switch (wordLength) {
+                    case 2:
+                        lengthString = @"NEW HIGHEST-SCORING TWO-LETTER WORD";
+                        break;
+                    case 3:
+                        lengthString = @"NEW HIGHEST-SCORING THREE-LETTER WORD";
+                        break;
+                    case 4:
+                        lengthString = @"NEW HIGHEST-SCORING FOUR-LETTER WORD";
+                        break;
+                    case 5:
+                        lengthString = @"NEW HIGHEST-SCORING FIVE-LETTER WORD";
+                        break;
+                    case 6:
+                        lengthString = @"NEW HIGHEST-SCORING SIX-LETTER WORD";
+                        break;
+                    case 7:
+                        lengthString = @"NEW HIGHEST-SCORING SEVEN-LETTER WORD";
+                        break;
+                }
+                if (lengthString == nil) {
+                    return nil;
+                }
+                result = [[NSMutableAttributedString alloc] init];
+                [result appendAttributedString:[self statsNoteLeadingStarString:2]];
+                [result appendAttributedString:[self statsNoteAttentionString:lengthString]];
+                [result appendAttributedString:[self statsNoteTrailingStarString:2]];
+                [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@ (+%d)", wordString, score]]];
+                break;
+            }
+        }
+    }
+    else if (rank.second == StatsRank::Tied) {
+        switch (rank.first) {
+            case 1: {
+                NSString *lengthString = nil;
+                switch (wordLength) {
+                    case 2:
+                        lengthString = @"TIED HIGHEST-SCORING TWO-LETTER WORD";
+                        break;
+                    case 3:
+                        lengthString = @"TIED HIGHEST-SCORING THREE-LETTER WORD";
+                        break;
+                    case 4:
+                        lengthString = @"TIED HIGHEST-SCORING FOUR-LETTER WORD";
+                        break;
+                    case 5:
+                        lengthString = @"TIED HIGHEST-SCORING FIVE-LETTER WORD";
+                        break;
+                    case 6:
+                        lengthString = @"TIED HIGHEST-SCORING SIX-LETTER WORD";
+                        break;
+                    case 7:
+                        lengthString = @"TIED HIGHEST-SCORING SEVEN-LETTER WORD";
+                        break;
+                }
+                if (lengthString == nil) {
+                    return nil;
+                }
+                result = [[NSMutableAttributedString alloc] init];
+                [result appendAttributedString:[self statsNoteLeadingStarString:2]];
+                [result appendAttributedString:[self statsNoteAttentionString:lengthString]];
+                [result appendAttributedString:[self statsNoteTrailingStarString:2]];
+                [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@ (+%d)", wordString, score]]];
+                break;
+            }
+        }
+    }
+    
+    if (result) {
+        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
+        [result addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, result.length)];
+    }
+    
+    return result;
+}
+
+- (NSAttributedString *)statsNoteWordsSubmittedRank
+{
+    ASSERT(self.mode == Mode::End);
+    
+    NSMutableAttributedString *result = nil;
+
     int count = self.model->words_submitted_count();
     std::pair<int, StatsRank> rank = self.model->words_submitted_count_rank(count);
     if (rank.second == StatsRank::Alone) {
         switch (rank.first) {
             case 1:
-                labelString = [NSString stringWithFormat:@"NEW RECORD! MOST WORDS SPELLED IN A GAME: %d", count];
-                break;
-            case 2:
-                labelString = [NSString stringWithFormat:@"GREAT! SECOND-MOST WORDS SPELLED IN A GAME: %d", count];
+                result = [[NSMutableAttributedString alloc] init];
+                [result appendAttributedString:[self statsNoteLeadingStarString:3]];
+                [result appendAttributedString:[self statsNoteAttentionString:@"MOST WORDS SPELLED IN A GAME"]];
+                [result appendAttributedString:[self statsNoteTrailingStarString:3]];
+                [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%d WORDS", count]]];
                 break;
         }
     }
     else if (rank.second == StatsRank::Tied) {
         switch (rank.first) {
             case 1:
-                labelString = [NSString stringWithFormat:@"GREAT! TIED FOR MOST WORDS SPELLED IN A GAME: %d", count];
+                result = [[NSMutableAttributedString alloc] init];
+                [result appendAttributedString:[self statsNoteLeadingStarString:2]];
+                [result appendAttributedString:[self statsNoteAttentionString:@"TIED MOST WORDS SPELLED IN A GAME"]];
+                [result appendAttributedString:[self statsNoteTrailingStarString:2]];
+                [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%d WORDS", count]]];
                 break;
         }
     }
     
-    return labelString;
+    if (result) {
+        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
+        [result addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, result.length)];
+    }
+    
+    return result;
 }
 
-- (NSString *)statsNoteHighestScoringWordInGame
+- (NSAttributedString *)statsNoteHighestScoringWordInGame
 {
     ASSERT(self.mode == Mode::End);
     
-    NSString *labelString = nil;
-    
+    NSMutableAttributedString *result = nil;
+
     std::vector<Word> words = self.model->highest_scoring_word();
     if (words.size() == 1) {
         const Word &word = words[0];
-        labelString = [NSString stringWithFormat:@"HIGHEST-SCORING WORD IN THIS GAME: %@ (+%d)", ns_str(word.string()), word.total_score()];
+        NSString *wordString = ns_str(word.string());
+        int score = word.total_score();
+        result = [[NSMutableAttributedString alloc] init];
+        [result appendAttributedString:[self statsNoteLeadingStarString:1]];
+        [result appendAttributedString:[self statsNoteAttentionString:@"HIGHEST-SCORING WORD IN THIS GAME"]];
+        [result appendAttributedString:[self statsNoteTrailingStarString:1]];
+        [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@ (+%d)", wordString, score]]];
     }
     
-    return labelString;
+    if (result) {
+        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
+        [result addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, result.length)];
+    }
+    
+    return result;
 }
 
-- (NSString *)statsNoteRandomWord
+- (NSAttributedString *)statsNoteRandomWord
 {
     ASSERT(self.mode == Mode::End);
     
     Lexicon &lexicon = Lexicon::instance();
     std::u32string random_string = lexicon.random_key(Random::instance());
-    return [NSString stringWithFormat:@"RANDOM WORD FROM THE LEXICON: %@", ns_str(random_string)];
+    UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
+    [result appendAttributedString:[self statsNoteLeadingStarString:1]];
+    [result appendAttributedString:[self statsNoteAttentionString:@"RANDOM WORD FROM THE LEXICON"]];
+    [result appendAttributedString:[self statsNoteTrailingStarString:1]];
+    [result appendAttributedString:[self statsNoteContentString:[NSString stringWithFormat:@"\n%@", ns_str(random_string)]]];
+    [result addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, result.length)];
+    return result;
 }
 
 #pragma mark - Model management
@@ -2400,8 +2601,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     TileArray incoming_tiles = self.model->tiles();
     size_t incoming_word_length = self.model->word().length();
     
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     [self viewSetNoteLabelString];
+    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
 
     delay(BandModeDelay, 1.0, ^{
         SpellLayout &layout = SpellLayout::instance();
