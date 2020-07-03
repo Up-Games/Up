@@ -45,6 +45,7 @@ using UPControlStatePair = std::pair<UPControlState, UPControlState>;
 @property (nonatomic) uint32_t auxiliaryPathColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t accentPathColorAnimatorSerialNumber;
 @property (nonatomic) uint32_t labelColorAnimatorSerialNumber;
+@property (nonatomic) BOOL frozen;
 @end
 
 UP_STATIC_INLINE NSUInteger up_control_key_fill(UPControlState controlState)
@@ -971,13 +972,25 @@ UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
     self.previousState |= UPControlStateInvalid;
 }
 
+- (void)freeze
+{
+    self.frozen = YES;
+}
+
 - (void)setNeedsUpdate
 {
+    if (self.frozen) {
+        return;
+    }
     [[UPNeedsUpdater instance] setNeedsUpdate:self order:UPNeedsUpdaterOrderFirst];
 }
 
 - (void)update
 {
+    if (self.frozen) {
+        return;
+    }
+    
     UPControlState state = self.state;
     if (state == self.previousState) {
         return;

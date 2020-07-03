@@ -1382,7 +1382,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         [tileView setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
         tileView.highlightedLocked = NO;
         tileView.highlighted = NO;
+        [tileView invalidate];
         [tileView update];
+        [tileView freeze];
     }
 }
 
