@@ -36,10 +36,7 @@ public:
         m_letters.pop_back();
         int r = m_random.uint32_less_than(100);
         int m = 1;
-        if (r >= 98) {
-            m = 3;
-        }
-        else if (r >= 94) {
+        if (r >= 96) {
             m = 2;
         }
         return TileModel(c, m);

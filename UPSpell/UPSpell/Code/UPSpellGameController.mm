@@ -1898,7 +1898,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     Lexicon &lexicon = Lexicon::instance();
     std::u32string random_string = lexicon.random_key(Random::instance());
-    return [NSString stringWithFormat:@"RANDOM WORD FROM THE LEXICON:\n%@", ns_str(random_string)];
+    return [NSString stringWithFormat:@"RANDOM WORD FROM THE LEXICON\n%@", ns_str(random_string)];
 }
 
 #pragma mark - Model management
