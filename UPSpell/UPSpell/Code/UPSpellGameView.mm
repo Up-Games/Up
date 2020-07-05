@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <UpKit/UIFont+UP.h>
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPContainerView.h>
 #import <UpKit/UPControl.h>
@@ -80,8 +81,8 @@ using Spot = UP::SpellLayout::Place;
     self.timerLabel = [UPGameTimerLabel label];
     self.timerLabel.font = layout.game_information_font();
     self.timerLabel.superscriptFont = layout.game_information_superscript_font();
-    self.timerLabel.superscriptBaselineAdjustment = layout.game_information_superscript_font_metrics().baseline_adjustment();
-    self.timerLabel.superscriptKerning = layout.game_information_superscript_font_metrics().kerning();
+    self.timerLabel.superscriptBaselineAdjustment = layout.game_information_superscript_font().baselineAdjustment;
+    self.timerLabel.superscriptKerning = layout.game_information_superscript_font().kerning;
     self.timerLabel.textColorCategory = UPColorCategoryInformation;
     self.timerLabel.textAlignment = NSTextAlignmentRight;
     self.timerLabel.frame = layout.frame_for(Role::GameTimer);

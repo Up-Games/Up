@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <UpKit/UIFont+UP.h>
 #import <UPKit/UPGeometry.h>
 #import <UPKit/UPLabel.h>
 
@@ -158,7 +159,7 @@ UIBezierPath *TextButtonStrokePath()
     [self.label sizeToFit];
     
     CGRect labelFrame = up_rect_centered_in_rect(self.label.frame, bounds);
-    CGFloat labelOriginY = up_rect_min_y(labelFrame) + layout.text_button_font_metrics().baseline_adjustment();
+    CGFloat labelOriginY = up_rect_min_y(labelFrame) + layout.text_button_font().baselineAdjustment;
     labelFrame.origin = CGPointMake(0, labelOriginY);
     labelFrame.size.width = up_rect_width(bounds);
     self.label.frame = labelFrame;

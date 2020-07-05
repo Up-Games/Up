@@ -5,6 +5,7 @@
 
 #import <UpKit/UPAssertions.h>
 #import <UpKit/UIColor+UP.h>
+#import <UpKit/UIFont+UP.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPLabel.h>
 #import <UpKit/UPTapGestureRecognizer.h>
@@ -323,7 +324,7 @@ static UIBezierPath *CheckboxCheckPath()
     [self.label sizeToFit];
     
     CGRect labelFrame = self.label.frame;
-    CGFloat labelOriginY = up_rect_height(bounds) - up_rect_height(labelFrame) + layout.checkbox_control_font_metrics().baseline_adjustment();
+    CGFloat labelOriginY = up_rect_height(bounds) - up_rect_height(labelFrame) + layout.checkbox_control_font().baselineAdjustment;
     labelFrame.origin = CGPointMake(layout.checkbox_control_label_left_margin(), labelOriginY);
     self.label.frame = labelFrame;
 }

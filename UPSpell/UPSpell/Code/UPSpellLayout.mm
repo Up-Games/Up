@@ -8,7 +8,6 @@
 
 #import <UpKit/UPAssertions.h>
 #import <UpKit/UIFont+UP.h>
-#import <UpKit/UPFontMetrics.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPMath.h>
 #import <UpKit/UPUtility.h>
@@ -341,9 +340,8 @@ void SpellLayout::calculate_text_button_font_metrics()
 {
     CGFloat cap_height = CanonicalTextButtonCapHeight * layout_scale();
     UIFont *font = [UIFont textButtonFontWithCapHeight:cap_height];
+    font.baselineAdjustment = CanonicalTextButtonBaselineAdjustment * layout_scale();
     set_text_button_font(font);
-    CGFloat baseline_adjustment = CanonicalTextButtonBaselineAdjustment * layout_scale();
-    set_text_button_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
 }
 
 void SpellLayout::calculate_game_information_font_metrics()
@@ -351,17 +349,15 @@ void SpellLayout::calculate_game_information_font_metrics()
     CGFloat cap_height = CanonicalGameInformationCapHeight * layout_scale();
     UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
     set_game_information_font(font);
-    set_game_information_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
 void SpellLayout::calculate_game_information_superscript_font_metrics()
 {
     CGFloat cap_height = CanonicalGameInformationSuperscriptCapHeight * layout_scale();
     UIFont *font = [UIFont gameInformationFontWithCapHeight:cap_height];
+    font.baselineAdjustment = CanonicalGameInformationSuperscriptBaselineAdjustment * layout_scale();
+    font.kerning = CanonicalGameInformationSuperscriptKerning * layout_scale();
     set_game_information_superscript_font(font);
-    CGFloat baseline_adjustment = CanonicalGameInformationSuperscriptBaselineAdjustment * layout_scale();
-    CGFloat kerning = CanonicalGameInformationSuperscriptKerning * layout_scale();
-    set_game_information_superscript_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment, kerning));
 }
 
 void SpellLayout::calculate_game_note_font_metrics()
@@ -369,16 +365,14 @@ void SpellLayout::calculate_game_note_font_metrics()
     CGFloat cap_height = CanonicalGameNoteFontCapHeight * layout_scale();
     UIFont *font = [UIFont gameNoteFontWithCapHeight:cap_height];
     set_game_note_font(font);
-    set_game_note_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
 void SpellLayout::calculate_game_note_word_font_metrics()
 {
     CGFloat cap_height = CanonicalGameNoteWordFontCapHeight * layout_scale();
     UIFont *font = [UIFont gameNoteWordFontWithCapHeight:cap_height];
+    font.baselineAdjustment = CanonicalGameNoteWordFontBaselineAdjustment * layout_scale();
     set_game_note_word_font(font);
-    CGFloat baseline_adjustment = CanonicalGameNoteWordFontBaselineAdjustment * layout_scale();
-    set_game_note_word_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
 }
 
 void SpellLayout::calculate_word_score_font_metrics()
@@ -386,25 +380,23 @@ void SpellLayout::calculate_word_score_font_metrics()
     CGFloat cap_height = CanonicalWordScoreCapHeight * layout_scale();
     UIFont *font = [UIFont wordScoreFontWithCapHeight:cap_height];
     set_word_score_font(font);
-    set_word_score_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
 void SpellLayout::calculate_word_score_bonus_font_metrics()
 {
     CGFloat cap_height = CanonicalWordScoreBonusCapHeight * layout_scale();
     UIFont *font = [UIFont wordScoreBonusFontOfSize:cap_height];
+    font.baselineAdjustment = CanonicalWordScoreBonusBaselineAdjustment * layout_scale();
     set_word_score_bonus_font(font);
-    CGFloat baseline_adjustment = CanonicalWordScoreBonusBaselineAdjustment * layout_scale();
-    set_word_score_bonus_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
 }
 
 void SpellLayout::calculate_checkbox_control_metrics()
 {
     CGFloat cap_height = CanonicalCheckboxLabelCapHeight * layout_scale();
     UIFont *font = [UIFont checkboxControlFontWithCapHeight:cap_height];
+    font.baselineAdjustment = CanonicalCheckboxLabelBaselineAdjustment * layout_scale();
     set_checkbox_control_font(font);
-    CGFloat baseline_adjustment = CanonicalCheckboxLabelBaselineAdjustment * layout_scale();
-    set_checkbox_control_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
+
     set_checkbox_control_label_left_margin(CanonicalCheckboxLabelLeftMargin * layout_scale());
     
     CGFloat width_offset = up_size_width(CanonicalCheckboxSize)  * layout_scale() * 0.4;
@@ -423,9 +415,9 @@ void SpellLayout::calculate_choice_control_metrics()
 {
     CGFloat cap_height = CanonicalChoiceLabelCapHeight * layout_scale();
     UIFont *font = [UIFont choiceControlFontWithCapHeight:cap_height];
+    font.baselineAdjustment = CanonicalChoiceLabelBaselineAdjustment * layout_scale();
     set_choice_control_font(font);
-    CGFloat baseline_adjustment = CanonicalChoiceLabelBaselineAdjustment * layout_scale();
-    set_choice_control_font_metrics(FontMetrics(font.fontName, font.pointSize, baseline_adjustment));
+
     set_choice_control_label_left_margin(CanonicalChoiceLabelLeftMargin * layout_scale());
     set_choice_control_label_right_margin(CanonicalChoiceLabelRightMargin * layout_scale());
 }
@@ -435,7 +427,6 @@ void SpellLayout::calculate_settings_description_font_metrics()
     CGFloat cap_height = CanonicalSettingsDescriptionFontCapHeight * layout_scale();
     UIFont *font = [UIFont settingsDescriptionFontWithCapHeight:cap_height];
     set_settings_description_font(font);
-    set_settings_description_font_metrics(FontMetrics(font.fontName, font.pointSize));
 }
 
 void SpellLayout::calculate_word_tray_layout_frame()
@@ -652,13 +643,13 @@ void SpellLayout::calculate_game_locations()
     calculate_and_set_locations(Role::GameScoreGameOver4, layout_game_over_score_frame(@"1000"));
 
     CGRect word_score_frame = up_rect_scaled(CanonicalWordScoreLayoutFrame, layout_scale());
-    word_score_frame.size.height = word_score_font_metrics().line_height();
+    word_score_frame.size.height = word_score_font().lineHeight;
     word_score_frame = up_rect_centered_in_rect(word_score_frame, word_tray_layout_frame());
     word_score_frame.origin.y -= (word_score_frame.size.height) * 0.05;
     calculate_and_set_locations(Role::WordScore, word_score_frame);
 
     CGRect word_score_bonus_frame = up_rect_scaled(CanonicalWordScoreLayoutFrame, layout_scale());
-    word_score_bonus_frame.size.height = word_score_font_metrics().line_height() + word_score_bonus_font_metrics().line_height();
+    word_score_bonus_frame.size.height = word_score_font().lineHeight + word_score_bonus_font().lineHeight;
     word_score_bonus_frame = up_rect_centered_in_rect(word_score_bonus_frame, word_tray_layout_frame());
     word_score_bonus_frame.origin.y -= (word_score_bonus_frame.size.height) * 0.04;
     calculate_and_set_locations(Role::WordScoreBonus, word_score_bonus_frame);
@@ -760,13 +751,12 @@ void SpellLayout::calculate_game_controls_button_charge_size()
 void SpellLayout::calculate_game_timer_frame()
 {
     CGRect controls_layout_frame = layout_centered_x_aspect_rect(CanonicalControlsLayoutFrame);
-    const FontMetrics &font_metrics = game_information_font_metrics();
-    CGFloat cap_height = font_metrics.cap_height();
+    UIFont *font = game_information_font();
     CGPoint baseline_point = up_point_scaled(CanonicalGameTimeLabelRightAlignedBaselinePointRelativeToTDC, layout_scale());
     CGFloat w = CanonicalGameTimeLabelWidth * layout_scale();
     CGFloat x = up_rect_mid_x(controls_layout_frame) + baseline_point.x - w;
-    CGFloat y = up_rect_mid_y(controls_layout_frame) - cap_height;
-    CGFloat h = font_metrics.line_height();
+    CGFloat y = up_rect_mid_y(controls_layout_frame) - font.capHeight;
+    CGFloat h = font.lineHeight;
     CGRect frame = CGRectMake(x, y, w, h);
     set_game_timer_frame(up_pixel_rect(frame, screen_scale()));
     LOG(Layout, "game_timer_frame: %@", NSStringFromCGRect(game_timer_frame()));
@@ -775,13 +765,12 @@ void SpellLayout::calculate_game_timer_frame()
 void SpellLayout::calculate_game_score_frame()
 {
     CGRect controls_layout_frame = layout_centered_x_aspect_rect(CanonicalControlsLayoutFrame);
-    const FontMetrics &font_metrics = game_information_font_metrics();
-    CGFloat cap_height = font_metrics.cap_height();
+    UIFont *font = game_information_font();
     CGPoint baseline_point = up_point_scaled(CanonicalGameScoreLabelRightAlignedBaselinePointRelativeToTDC, layout_scale());
     CGFloat w = CanonicalGameScoreLabelWidth * layout_scale();
     CGFloat x = up_rect_mid_x(controls_layout_frame) + baseline_point.x;
-    CGFloat y = up_rect_mid_y(controls_layout_frame) - cap_height;
-    CGFloat h = font_metrics.line_height();
+    CGFloat y = up_rect_mid_y(controls_layout_frame) - font.capHeight;
+    CGFloat h = font.lineHeight;
     CGRect frame = CGRectMake(x, y, w, h);
     set_game_score_frame(up_pixel_rect(frame, screen_scale()));
     LOG(Layout, "game_score_frame: %@", NSStringFromCGRect(game_score_frame()));

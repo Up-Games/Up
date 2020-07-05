@@ -22,7 +22,6 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPControl.h>
 #import <UpKit/UPDelayedAction.h>
 #import <UpKit/UPDivider.h>
-#import <UpKit/UPFontMetrics.h>
 #import <UpKit/UPGameKey.h>
 #import <UpKit/UPGameTimer.h>
 #import <UpKit/UPGameTimerLabel.h>

@@ -8,7 +8,6 @@
 #import <UIKit/UIKit.h>
 
 #import <UpKit/UPAssertions.h>
-#import <UpKit/UPFontMetrics.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPMacros.h>
 
@@ -218,28 +217,19 @@ public:
     UPOutsets stepper_control_charge_outsets() const { return m_stepper_control_charge_outsets; }
 
     UIFont *text_button_font() const { return m_text_button_font; }
-    const FontMetrics &text_button_font_metrics() const { return m_text_button_font_metrics; }
     UIFont *game_information_font() const { return m_game_information_font; }
-    const FontMetrics &game_information_font_metrics() const { return m_game_information_font_metrics; }
     UIFont *game_information_superscript_font() const { return m_game_information_superscript_font; }
-    const FontMetrics &game_information_superscript_font_metrics() const { return m_game_information_superscript_font_metrics; }
     UIFont *game_note_font() const { return m_game_note_font; }
-    const FontMetrics &game_note_font_metrics() const { return m_game_note_font_metrics; }
     UIFont *game_note_word_font() const { return m_game_note_word_font; }
-    const FontMetrics &game_note_word_font_metrics() const { return m_game_note_word_font_metrics; }
     UIFont *word_score_font() const { return m_word_score_font; }
-    const FontMetrics &word_score_font_metrics() const { return m_word_score_font_metrics; }
     UIFont *word_score_bonus_font() const { return m_word_score_bonus_font; }
-    const FontMetrics &word_score_bonus_font_metrics() const { return m_word_score_bonus_font_metrics; }
     UIFont *checkbox_control_font() const { return m_checkbox_control_font; }
-    const FontMetrics &checkbox_control_font_metrics() const { return m_checkbox_control_font_metrics; }
-    CGFloat checkbox_control_label_left_margin() const { return m_checkbox_control_label_left_margin; }
     UIFont *choice_control_font() const { return m_choice_control_font; }
-    const FontMetrics &choice_control_font_metrics() const { return m_choice_control_font_metrics; }
+    UIFont *settings_description_font() const { return m_settings_description_font; }
+
+    CGFloat checkbox_control_label_left_margin() const { return m_checkbox_control_label_left_margin; }
     CGFloat choice_control_label_left_margin() const { return m_choice_control_label_left_margin; }
     CGFloat choice_control_label_right_margin() const { return m_choice_control_label_right_margin; }
-    UIFont *settings_description_font() const { return m_settings_description_font; }
-    const FontMetrics &settings_description_font_metrics() const { return m_settings_description_font_metrics; }
 
     CGAffineTransform menu_game_view_transform() const { return m_menu_game_view_transform; }
     CGAffineTransform extras_example_transform() const { return m_extras_example_transform; }
@@ -268,30 +258,20 @@ private:
     void set_menu_game_view_transform(CGAffineTransform t) { m_menu_game_view_transform = t; }
     void set_extras_example_transform(CGAffineTransform t) { m_extras_example_transform = t; }
     void set_text_button_font(UIFont *font) { m_text_button_font = font; }
-    void set_text_button_font_metrics(const FontMetrics &metrics) { m_text_button_font_metrics = metrics; }
     void set_game_information_font(UIFont *font) { m_game_information_font = font; }
-    void set_game_information_font_metrics(const FontMetrics &metrics) { m_game_information_font_metrics = metrics; }
     void set_game_information_superscript_font(UIFont *font) { m_game_information_superscript_font = font; }
-    void set_game_information_superscript_font_metrics(const FontMetrics &metrics) { m_game_information_superscript_font_metrics = metrics; }
     void set_game_note_font(UIFont *font) { m_game_note_font = font; }
-    void set_game_note_font_metrics(const FontMetrics &metrics) { m_game_note_font_metrics = metrics; }
     void set_game_note_word_font(UIFont *font) { m_game_note_word_font = font; }
-    void set_game_note_word_font_metrics(const FontMetrics &metrics) { m_game_note_word_font_metrics = metrics; }
     void set_word_score_font(UIFont *font) { m_word_score_font = font; }
-    void set_word_score_font_metrics(const FontMetrics &metrics) { m_word_score_font_metrics = metrics; }
     void set_word_score_bonus_font(UIFont *font) { m_word_score_bonus_font = font; }
-    void set_word_score_bonus_font_metrics(const FontMetrics &metrics) { m_word_score_bonus_font_metrics = metrics; }
     void set_checkbox_control_font(UIFont *font) { m_checkbox_control_font = font; }
-    void set_checkbox_control_font_metrics(const FontMetrics &metrics) { m_checkbox_control_font_metrics = metrics; }
     void set_checkbox_control_label_left_margin(CGFloat f) { m_checkbox_control_label_left_margin = f; }
     void set_checkbox_control_charge_outsets(UPOutsets outsets) { m_checkbox_control_charge_outsets = outsets; }
     void set_stepper_control_charge_outsets(UPOutsets outsets) { m_stepper_control_charge_outsets = outsets; }
     void set_choice_control_font(UIFont *font) { m_choice_control_font = font; }
-    void set_choice_control_font_metrics(const FontMetrics &metrics) { m_choice_control_font_metrics = metrics; }
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
     void set_settings_description_font(UIFont *font) { m_settings_description_font = font; }
-    void set_settings_description_font_metrics(const FontMetrics &metrics) { m_settings_description_font_metrics = metrics; }
     void set_game_controls_button_charge_outsets(UPOutsets outsets) { m_game_controls_button_charge_outsets = outsets; }
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
     void set_game_score_frame(CGRect rect) { m_game_score_frame = rect; }
@@ -362,28 +342,19 @@ private:
     CGAffineTransform m_extras_example_transform;
 
     __strong UIFont *m_text_button_font;
-    FontMetrics m_text_button_font_metrics;
     __strong UIFont *m_game_information_font;
-    FontMetrics m_game_information_font_metrics;
     __strong UIFont *m_game_information_superscript_font;
-    FontMetrics m_game_information_superscript_font_metrics;
     __strong UIFont *m_game_note_font;
-    FontMetrics m_game_note_font_metrics;
     __strong UIFont *m_game_note_word_font;
-    FontMetrics m_game_note_word_font_metrics;
     __strong UIFont *m_word_score_font;
-    FontMetrics m_word_score_font_metrics;
     __strong UIFont *m_word_score_bonus_font;
-    FontMetrics m_word_score_bonus_font_metrics;
     __strong UIFont *m_checkbox_control_font;
-    FontMetrics m_checkbox_control_font_metrics;
-    CGFloat m_checkbox_control_label_left_margin = 0.0;
     __strong UIFont *m_choice_control_font;
-    FontMetrics m_choice_control_font_metrics;
+    __strong UIFont *m_settings_description_font;
+
+    CGFloat m_checkbox_control_label_left_margin = 0.0;
     CGFloat m_choice_control_label_left_margin = 0.0;
     CGFloat m_choice_control_label_right_margin = 0.0;
-    __strong UIFont *m_settings_description_font;
-    FontMetrics m_settings_description_font_metrics;
 
     CGSize m_tile_size = CGSizeZero;
     CGFloat m_tile_stroke_width = 0.0;

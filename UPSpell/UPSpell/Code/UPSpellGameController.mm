@@ -1199,8 +1199,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         NSRange bonusRange = NSMakeRange(0, bonusString.length);
         [bonusAttrString addAttribute:NSFontAttributeName value:layout.word_score_bonus_font() range:bonusRange];
         [bonusAttrString addAttribute:NSForegroundColorAttributeName value:wordScoreColor range:bonusRange];
-        CGFloat baseline_adjustment = layout.word_score_bonus_font_metrics().baseline_adjustment();
-        [bonusAttrString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baseline_adjustment) range:bonusRange];
+        CGFloat baselineAdjustment = layout.word_score_bonus_font().baselineAdjustment;
+        [bonusAttrString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baselineAdjustment) range:bonusRange];
         [attrString appendAttributedString:bonusAttrString];
     }
     
@@ -1784,8 +1784,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         NSMutableAttributedString *bottomString = [[NSMutableAttributedString alloc] initWithString:components[1]];
         NSRange bottomRange = NSMakeRange(0, bottomString.length);
         [bottomString addAttribute:NSFontAttributeName value:layout.game_note_word_font() range:bottomRange];
-        CGFloat baseline_adjustment = layout.game_note_word_font_metrics().baseline_adjustment();
-        [bottomString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baseline_adjustment) range:bottomRange];
+        CGFloat baselineAdjustment = layout.game_note_word_font().baselineAdjustment;
+        [bottomString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baselineAdjustment) range:bottomRange];
 
         [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
         [attrString appendAttributedString:bottomString];

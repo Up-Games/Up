@@ -238,7 +238,7 @@ UIBezierPath *ChoiceRightFillPathSelected()
     [self.label sizeToFit];
     
     CGRect labelFrame = self.label.frame;
-    CGFloat labelOriginY = up_rect_height(bounds) - up_rect_height(labelFrame) + layout.choice_control_font_metrics().baseline_adjustment();
+    CGFloat labelOriginY = up_rect_height(bounds) - up_rect_height(labelFrame) + layout.choice_control_font().baselineAdjustment;
 
     switch (self.side) {
         case UPChoiceSideDefault:
