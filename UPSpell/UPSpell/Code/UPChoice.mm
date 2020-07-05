@@ -207,7 +207,10 @@ UIBezierPath *ChoiceRightFillPathSelected()
     if (gesture.state != UIGestureRecognizerStateRecognized) {
         return;
     }
-    
+    if (self.selected) {
+        return;
+    }
+
     [self setSelected];
     [self invalidate];
     [self update];

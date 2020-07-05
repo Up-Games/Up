@@ -111,7 +111,7 @@ public:
     static inline constexpr CGFloat CanonicalWordScoreBonusBaselineAdjustment = 14;
     static inline constexpr CGFloat CanonicalCheckboxLabelCapHeight = 25;
     static inline constexpr CGFloat CanonicalCheckboxLabelBaselineAdjustment = 6.5;
-    static inline constexpr CGFloat CanonicalCheckboxLabelLeftMargin = 43;
+    static inline constexpr CGFloat CanonicalCheckboxLabelLeftMargin = 41;
 
     static inline constexpr CGFloat CanonicalChoiceLabelCapHeight = 30;
     static inline constexpr CGFloat CanonicalChoiceLabelBaselineAdjustment = -12;

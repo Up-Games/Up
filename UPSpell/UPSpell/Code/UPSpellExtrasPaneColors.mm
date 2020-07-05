@@ -212,7 +212,7 @@ static const int MilepostHue = 15;
 {
     self.showingIconEasterEgg = NO;
     self.userInteractionEnabled = YES;
-    
+
     SpellLayout &layout = SpellLayout::instance();
     self.hueDescription.frame = layout.frame_for(Role::ExtrasColorsDescription);
     self.exampleTilesContainer.center = layout.center_for(Role::ExtrasColorsExample);

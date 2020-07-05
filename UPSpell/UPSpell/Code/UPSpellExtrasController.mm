@@ -142,7 +142,7 @@ using Location = UP::SpellLayout::Location;
     }
     
     NSUInteger extrasSelectedIndex = sender.tag;
-    [self setSelectedPane:self.panes[extrasSelectedIndex] duration:0.65];
+    [self setSelectedPane:self.panes[extrasSelectedIndex] duration:0.5];
     
     UPSpellSettings *settings = [UPSpellSettings instance];
     settings.extrasSelectedIndex = extrasSelectedIndex;
@@ -169,19 +169,31 @@ using Location = UP::SpellLayout::Location;
 
     UPAccessoryPane *previousSelectedPane = _selectedPane;
     _selectedPane = selectedPane;
-    [self.view bringSubviewToFront:selectedPane];
-    [selectedPane prepare];
+    
+    if (selectedPane) {
+        [self.view bringSubviewToFront:selectedPane];
+        [selectedPane prepare];
+    }
     
     if (up_is_fuzzy_zero(duration)) {
-        previousSelectedPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
-        selectedPane.center = layout.center_for(Role::Screen);
+        if (previousSelectedPane) {
+            previousSelectedPane.center = layout.center_for(Role::Screen, Spot::OffTopFar);
+        }
+        if (selectedPane) {
+            selectedPane.center = layout.center_for(Role::Screen);
+        }
     }
     else {
-        if (previousSelectedPane) {
-            start(bloop_out(BandSettingsUI, @[UPViewMoveMake(previousSelectedPane, Role::Screen, Spot::OffBottomFar)], duration, nil));
-        }
         selectedPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
-        start(bloop_in(BandSettingsUI, @[UPViewMoveMake(selectedPane, Role::Screen)], duration, nil));
+        if (previousSelectedPane && previousSelectedPane != selectedPane) {
+            start(bloop_out(BandSettingsUI, @[UPViewMoveMake(previousSelectedPane, Role::Screen, Spot::OffTopFar)], duration,
+                            ^(UIViewAnimatingPosition) {
+                start(bloop_in(BandSettingsUI, @[UPViewMoveMake(selectedPane, Role::Screen)], duration, nil));
+            }));
+        }
+        else {
+            start(bloop_in(BandSettingsUI, @[UPViewMoveMake(selectedPane, Role::Screen)], duration, nil));
+        }
     }
 }
 

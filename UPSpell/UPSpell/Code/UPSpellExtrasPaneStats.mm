@@ -107,7 +107,7 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     self.averagesTabRadioButton.tag = 0;
     [self.averagesTabRadioButton setTarget:self action:@selector(radioButtonTapped:)];
 //    self.averagesTabRadioButton.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
-    self.averagesTabRadioButton.frame = CGRectMake(380, 330, 40 * 0.785, 36 * 0.785);
+    self.averagesTabRadioButton.frame = CGRectMake(380, 334, 40 * 0.785, 36 * 0.785);
     [self addSubview:self.averagesTabRadioButton];
 
     self.bestGamesTabRadioButton = [UPBallot ballotWithType:UPBallotTypeRadio];
@@ -115,7 +115,7 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     self.bestGamesTabRadioButton.tag = 1;
     [self.bestGamesTabRadioButton setTarget:self action:@selector(radioButtonTapped:)];
     //    self.bestGamesTabRadioButton.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
-    self.bestGamesTabRadioButton.frame = CGRectMake(558, 330, 40 * 0.785, 36 * 0.785);
+    self.bestGamesTabRadioButton.frame = CGRectMake(558, 334, 40 * 0.785, 36 * 0.785);
     [self addSubview:self.bestGamesTabRadioButton];
     
     self.bestWordsTabRadioButton = [UPBallot ballotWithType:UPBallotTypeRadio];
@@ -123,7 +123,7 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     self.bestWordsTabRadioButton.tag = 2;
     [self.bestWordsTabRadioButton setTarget:self action:@selector(radioButtonTapped:)];
     //    self.bestWordsTabRadioButton.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
-    self.bestWordsTabRadioButton.frame = CGRectMake(700, 330, 40 * 0.785, 36 * 0.785);
+    self.bestWordsTabRadioButton.frame = CGRectMake(700, 334, 40 * 0.785, 36 * 0.785);
     [self addSubview:self.bestWordsTabRadioButton];
     
     self.radioButtons = @[ self.averagesTabRadioButton, self.bestGamesTabRadioButton, self.bestWordsTabRadioButton ];

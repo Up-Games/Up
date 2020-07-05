@@ -269,20 +269,24 @@ static UIBezierPath *CheckboxRoundCheckPath()
 
     switch (self.type) {
         case UPBallotTypeDefault:
-        case UPBallotTypeCheck:
+        case UPBallotTypeCheck: {
             [self setFillPath:CheckboxSquareFillPath()];
             [self setStrokePath:CheckboxSquareStrokePath()];
             [self setAuxiliaryPath:CheckboxSquareHighlightedPath() forState:UPControlStateNormal];
-            [self setAccentPath:CheckboxSquareCheckPath() forState:UPControlStateSelected];
-            [self setAccentPath:CheckboxSquareCheckPath() forState:(UPControlStateHighlighted | UPControlStateSelected)];
+            UIBezierPath *check = CheckboxSquareCheckPath();
+            [self setAccentPath:check forState:UPControlStateSelected];
+            [self setAccentPath:check forState:(UPControlStateHighlighted | UPControlStateSelected)];
             break;
-        case UPBallotTypeRadio:
+        }
+        case UPBallotTypeRadio: {
             [self setFillPath:CheckboxRoundFillPath()];
             [self setStrokePath:CheckboxRoundStrokePath()];
             [self setAuxiliaryPath:CheckboxRoundHighlightedPath() forState:UPControlStateNormal];
-            [self setAccentPath:CheckboxRoundCheckPath() forState:UPControlStateSelected];
-            [self setAccentPath:CheckboxRoundCheckPath() forState:(UPControlStateHighlighted | UPControlStateSelected)];
+            UIBezierPath *check = CheckboxRoundCheckPath();
+            [self setAccentPath:check forState:UPControlStateSelected];
+            [self setAccentPath:check forState:(UPControlStateHighlighted | UPControlStateSelected)];
             break;
+        }
     }
 
     [self setFillColorCategory:UPColorCategoryControlShapeFill];
@@ -329,6 +333,7 @@ static UIBezierPath *CheckboxRoundCheckPath()
         case UIGestureRecognizerStateEnded: {
             self.highlighted = NO;
             [self setSelected:!self.selected];
+            [self update];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
             if ([self.target respondsToSelector:self.action]) {
