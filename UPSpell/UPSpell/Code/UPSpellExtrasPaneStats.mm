@@ -29,8 +29,9 @@
 using UP::BandSettingsUI;
 using UP::BandSettingsAnimationDelay;
 using UP::BandSettingsUpdateDelay;
-using UP::SpellLayout;
 using UP::SpellGameSummary;
+using UP::SpellLayout;
+using UP::SpellModel;
 using UP::TileArray;
 using UP::TileCount;
 using UP::TileIndex;
@@ -96,6 +97,19 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     
     NSString *rankString = [NSString stringWithFormat:@"#%d", self.rank];
     [rankString drawInRect:rankRect withAttributes:rankAttributes];
+    
+    x += rankWidth;
+
+    //NSParagraphStyleAttributeName
+    NSDictionary *gameScoreAttributes = @{
+        NSForegroundColorAttributeName: [UIColor themeColorWithCategory:UPColorCategoryInformation],
+        NSFontAttributeName: font
+    };
+    CGFloat gameScoreWidth = SpellLayout::CanonicalExtrasGamesGameScoreColumnWidth * layout.layout_scale();
+    CGRect gameScoreRect = CGRectMake(x, 0, gameScoreWidth, 28);
+    
+    NSString *gameScoreString = [NSString stringWithFormat:@"%d", m_spell_game_summary.game_score()];
+    [gameScoreString drawInRect:gameScoreRect withAttributes:gameScoreAttributes];
 }
 
 @end
@@ -183,6 +197,10 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
 
     SpellLayout &layout = SpellLayout::instance();
     self.gamesTable.frame = layout.frame_for(Role::ExtrasStatsTable);
+
+    m_best_games = SpellModel::best_games(SpellGameSummary::Metric::GameScore, 20);
+    LOG(General, "m_best_games: %ld", m_best_games.size());
+    [self.gamesTable reloadData];
 }
 
 - (void)cancelAnimations
@@ -194,7 +212,7 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.gamesTable) {
-        return 12; //m_best_games.size();
+        return m_best_games.size();
     }
     return 0;
 }
@@ -206,6 +224,7 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     if (tableView == self.gamesTable) {
         UPGameSummaryTableViewCell *gamesCell = [tableView dequeueReusableCellWithIdentifier:@"UPGameSummaryTableViewCell"];
         gamesCell.rank = (int)indexPath.row + 1;
+        [gamesCell setGameSummary:m_best_games[indexPath.row]];
         cell = gamesCell;
     }
 

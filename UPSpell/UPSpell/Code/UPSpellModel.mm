@@ -1145,7 +1145,7 @@ std::vector<SpellGameSummary> SpellModel::best_games(SpellGameSummary::Metric me
     }
 
     static const char *sql =
-        "SELECT (game_id, game_key, game_score, game_words_submitted_count, game_word_score_average, game_word_length_average) "
+        "SELECT game_id, game_score, game_words_submitted_count, game_word_score_average, game_word_length_average, game_key "
         "FROM game ORDER BY %s DESC;";
 
     NSString *sqlFormat = [NSString stringWithUTF8String:sql];
