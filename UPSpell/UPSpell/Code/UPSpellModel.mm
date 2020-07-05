@@ -915,7 +915,7 @@ void SpellModel::apply_end(const Action &action)
 // =========================================================================================================================================
 # pragma mark - Stats
 
-std::vector<Word> SpellModel::best_word() const
+std::vector<Word> SpellModel::game_best_word() const
 {
     std::vector<Word> result;
     int highest_score = 0;
@@ -936,12 +936,23 @@ std::vector<Word> SpellModel::best_word() const
     return result;
 }
 
-int SpellModel::words_submitted_count() const
+int SpellModel::game_words_submitted_count() const
 {
     int result = 0;
     for (const auto &state : states()) {
         if (state.action().opcode() == Opcode::SUBMIT) {
             result++;
+        }
+    }
+    return result;
+}
+
+int SpellModel::game_tiles_submitted_count() const
+{
+    int result = 0;
+    for (const auto &state : states()) {
+        if (state.action().opcode() == Opcode::SUBMIT) {
+            result += state.incoming_word().length();
         }
     }
     return result;
@@ -998,12 +1009,12 @@ std::pair<int, SpellModel::StatsRank> SpellModel::word_score_rank(int score)
     return result;
 }
 
-std::pair<int, SpellModel::StatsRank> SpellModel::words_submitted_count_rank(int count)
+std::pair<int, SpellModel::StatsRank> SpellModel::words_spelled_count_rank(int count)
 {
     std::pair<int, StatsRank> result = { 0, StatsRank::Unknown };
 
     int i = 0;
-    std::vector<int> ranked = all_time_words_submitted_counts();
+    std::vector<int> ranked = all_time_words_spelled_counts();
     if (ranked.size() == 0) {
         result = { 1, StatsRank::Alone };
     }
@@ -1091,7 +1102,7 @@ std::vector<int> SpellModel::all_time_word_scores(size_t limit)
     return result;
 }
 
-std::vector<int> SpellModel::all_time_words_submitted_counts(size_t limit)
+std::vector<int> SpellModel::all_time_words_spelled_counts(size_t limit)
 {
     std::vector<int> result;
     
@@ -1124,6 +1135,68 @@ std::vector<int> SpellModel::all_time_words_submitted_counts(size_t limit)
     return result;
 }
 
+std::vector<SpellGameSummary> SpellModel::best_games(SpellGameSummary::Metric metric, size_t limit)
+{
+    std::vector<SpellGameSummary> result;
+
+    sqlite3 *db = db_handle();
+    if (db == nullptr) {
+        return result;
+    }
+
+    static const char *sql =
+        "SELECT (game_id, game_key, game_score, game_words_submitted_count, game_word_score_average, game_word_length_average) "
+        "FROM game ORDER BY %s DESC;";
+
+    NSString *sqlFormat = [NSString stringWithUTF8String:sql];
+    NSString *effectiveSQL = nil;
+    switch (metric) {
+        case SpellGameSummary::Metric::GameScore:
+            effectiveSQL = [NSString stringWithFormat:sqlFormat, "game_score"];
+            break;
+        case SpellGameSummary::Metric::WordsSpelled:
+            effectiveSQL = [NSString stringWithFormat:sqlFormat, "game_words_submitted_count"];
+            break;
+        case SpellGameSummary::Metric::AverageWordScore:
+            effectiveSQL = [NSString stringWithFormat:sqlFormat, "game_word_score_average"];
+            break;
+        case SpellGameSummary::Metric::AverageWordLength:
+            effectiveSQL = [NSString stringWithFormat:sqlFormat, "game_word_length_average"];
+            break;
+        case SpellGameSummary::Metric::GameKey:
+            effectiveSQL = [NSString stringWithFormat:sqlFormat, "game_key"];
+            break;
+    }
+
+    sqlite3_stmt *stmt = db_statement(db, [effectiveSQL UTF8String]);
+    if (!stmt) {
+        db_close(db);
+        return result;
+    }
+
+    db_exec_r(db, sqlite3_reset(stmt), result);
+
+    int row_count = 0;
+    while (row_count < limit) {
+        if (sqlite3_step(stmt) != SQLITE_ROW) {
+            return result;
+        }
+        
+        uint64_t game_id = sqlite3_column_int64(stmt, 0);
+        int game_score = sqlite3_column_int(stmt, 1);
+        int words_submitted_count = sqlite3_column_int(stmt, 2);
+        double word_score_average = sqlite3_column_double(stmt, 3);
+        double word_length_average = sqlite3_column_double(stmt, 4);
+        GameKey game_key = GameKey(sqlite3_column_int(stmt, 5));
+        result.emplace_back(game_id, game_score, words_submitted_count, word_score_average, word_length_average, game_key);
+        row_count++;
+    }
+    
+    db_close(db);
+    
+    return result;
+}
+
 // =========================================================================================================================================
 # pragma mark - High-level Database
 
@@ -1132,7 +1205,10 @@ void SpellModel::db_store()
     sqlite3 *db = db_handle();
     
     static const char *game_sql =
-        "INSERT INTO game (game_key, game_completed) VALUES (?, ?);";
+        "INSERT INTO game (\n"
+            "game_key, game_score, game_words_submitted_count, game_tiles_submitted_count,\n"
+            "game_word_score_average, game_word_length_average, game_completed)\n"
+        "VALUES (?, ?, ?, ?, ?, ?, ?);";
     static const char *tile_initial_sql =
         "INSERT INTO tile(\n"
             "tile_glyph_0, tile_multiplier_0, tile_word_pos_0,\n"
@@ -1195,9 +1271,19 @@ void SpellModel::db_store()
 
     db_begin_transaction(db);
     
+    int words_submitted_count = game_words_submitted_count();
+    int tiles_submitted_count = game_tiles_submitted_count();
+    double word_score_average = (double)game_score() / words_submitted_count;
+    double word_length_average = (double)tiles_submitted_count / words_submitted_count;
+
     db_exec(db, sqlite3_reset(game_stmt));
     db_exec(db, sqlite3_bind_int(game_stmt, 1, game_key().value()));
-    db_exec(db, sqlite3_bind_int(game_stmt, 2, game_completed() ? 1 : 0));
+    db_exec(db, sqlite3_bind_int(game_stmt, 2, game_score()));
+    db_exec(db, sqlite3_bind_int(game_stmt, 3, words_submitted_count));
+    db_exec(db, sqlite3_bind_int(game_stmt, 4, tiles_submitted_count));
+    db_exec(db, sqlite3_bind_int(game_stmt, 5, word_score_average));
+    db_exec(db, sqlite3_bind_int(game_stmt, 6, word_length_average));
+    db_exec(db, sqlite3_bind_int(game_stmt, 7, game_completed() ? 1 : 0));  // FIXME: add another state for suspended games
     db_step(db, sqlite3_step(game_stmt));
     set_db_game_id(sqlite3_last_insert_rowid(db));
     LOG(DB, "*** game id: %ld : %s", db_game_id(), game_completed() ? "Y" : "N");
@@ -1290,9 +1376,20 @@ sqlite3 *SpellModel::db_handle()
         "PRAGMA foreign_keys = ON;"
         "CREATE TABLE IF NOT EXISTS game (\n"
         "    game_id INTEGER PRIMARY KEY ASC,\n"
-        "    game_key INTEGER,\n"
-        "    game_completed INTEGER\n"
+        "    game_key INTEGER NOT NULL,\n"
+        "    game_score INTEGER NOT NULL,\n"
+        "    game_words_submitted_count INTEGER NOT NULL,\n"
+        "    game_tiles_submitted_count INTEGER NOT NULL,\n"
+        "    game_word_score_average REAL NOT NULL,\n"
+        "    game_word_length_average REAL NOT NULL,\n"
+        "    game_completed INTEGER NOT NULL\n"
         ");\n"
+        "CREATE INDEX IF NOT EXISTS game_key_idx ON game(game_key);\n"
+        "CREATE INDEX IF NOT EXISTS game_words_submitted_count_idx ON game(game_words_submitted_count);\n"
+        "CREATE INDEX IF NOT EXISTS game_tiles_submitted_count_idx ON game(game_tiles_submitted_count);\n"
+        "CREATE INDEX IF NOT EXISTS game_word_score_average_idx ON game(game_word_score_average);\n"
+        "CREATE INDEX IF NOT EXISTS game_word_length_average_idx ON game(game_word_length_average);\n"
+        "CREATE INDEX IF NOT EXISTS game_completed_idx ON game(game_completed);\n"
         "CREATE TABLE IF NOT EXISTS tile (\n"
         "    tile_id INTEGER PRIMARY KEY ASC,\n"
         "    tile_glyph_0 INTEGER NOT NULL,\n"

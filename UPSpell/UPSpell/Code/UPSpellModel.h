@@ -7,6 +7,7 @@
 #import <UpKit/UPGameKey.h>
 #import <UpKit/UPMacros.h>
 
+#import "UPSpellGameSummary.h"
 #import "UPTileSequence.h"
 #import "UPTileModel.h"
 
@@ -16,6 +17,7 @@ struct sqlite3;
 #if __cplusplus
 
 #import <array>
+#import <limits>
 #import <string>
 #import <vector>
 
@@ -278,22 +280,26 @@ public:
     std::string cpp_str(const State &) const;
     
     enum class StatsRank { Unknown, Alone, Tied };
-
-    std::vector<Word> best_word() const;
-    int words_submitted_count() const;
-
+    static constexpr size_t NotALimit = std::numeric_limits<size_t>::max();
+    
+    std::vector<Word> game_best_word() const;
+    int game_words_submitted_count() const;
+    int game_tiles_submitted_count() const;
+    
     static std::pair<int, StatsRank> game_score_rank(int score);
     static std::pair<int, StatsRank> word_score_rank(int score);
-    static std::pair<int, StatsRank> words_submitted_count_rank(int count);
+    static std::pair<int, StatsRank> words_spelled_count_rank(int count);
 
     static std::vector<int> all_time_game_scores(size_t limit = 5);
     static std::vector<int> all_time_word_scores(size_t limit = 5);
-    static std::vector<int> all_time_words_submitted_counts(size_t limit = 5);
+    static std::vector<int> all_time_words_spelled_counts(size_t limit = 5);
+
+    static std::vector<SpellGameSummary> best_games(SpellGameSummary::Metric, size_t limit = 8);
 
     static double all_time_average_game_score();
-    static double all_time_average_word_score();
-    static double all_time_average_word_length();
-    static double all_time_average_words_submitted_count();
+    static double all_time_word_score_average();
+    static double all_time_word_length_average();
+    static double all_time_average_words_spelled_count();
     static int all_time_total_tiles_used_count();
 
 private:

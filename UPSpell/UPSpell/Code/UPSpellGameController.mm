@@ -1831,7 +1831,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.mode == Mode::End);
 
-    std::vector<Word> words = self.model->best_word();
+    std::vector<Word> words = self.model->game_best_word();
     if (words.size() != 1) {
         return nil;
     }
@@ -1858,8 +1858,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     NSString *result = nil;
 
-    int count = self.model->words_submitted_count();
-    std::pair<int, StatsRank> rank = self.model->words_submitted_count_rank(count);
+    int count = self.model->game_words_submitted_count();
+    std::pair<int, StatsRank> rank = self.model->words_spelled_count_rank(count);
     if (rank.second == StatsRank::Alone) {
         switch (rank.first) {
             case 1:
@@ -1882,7 +1882,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.mode == Mode::End);
     
-    std::vector<Word> words = self.model->best_word();
+    std::vector<Word> words = self.model->game_best_word();
     if (words.size() != 1) {
         return nil;
     }

@@ -19,7 +19,7 @@
 #import "UPControl+UPSpell.h"
 #import "UPHueWheel.h"
 #import "UPSpellExtrasController.h"
-#import "UPSpellExtrasColorsPane.h"
+#import "UPSpellExtrasPaneColors.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
 #import "UPSpellNavigationController.h"
@@ -37,7 +37,7 @@
 @property (nonatomic, readwrite) UPChoice *choice4;
 @property (nonatomic, readwrite) UPAccessoryPane *selectedPane;
 
-@property (nonatomic) UPSpellExtrasColorsPane *colorsPane;
+@property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
 
 @property (nonatomic) NSArray<UPChoice *> *choices;
 @property (nonatomic) NSArray<UPAccessoryPane *> *panes;
@@ -103,7 +103,7 @@ using Location = UP::SpellLayout::Location;
     [self.choice4 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice4];
 
-    self.colorsPane = [[UPSpellExtrasColorsPane alloc] initWithFrame:layout.screen_bounds()];
+    self.colorsPane = [[UPSpellExtrasPaneColors alloc] initWithFrame:layout.screen_bounds()];
     self.colorsPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.colorsPane];
 

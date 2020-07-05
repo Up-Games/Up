@@ -1,5 +1,5 @@
 //
-//  UPSpellExtrasColorsPane.mm
+//  UPSpellExtrasPaneColors.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -14,7 +14,7 @@
 #import "UPChoice.h"
 #import "UPControl+UPSpell.h"
 #import "UPHueWheel.h"
-#import "UPSpellExtrasColorsPane.h"
+#import "UPSpellExtrasPaneColors.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
@@ -25,7 +25,7 @@
 #import "UPTileView.h"
 #import "UPViewMove+UPSpell.h"
 
-@interface UPSpellExtrasColorsPane ()  <UPHueWheelDelegate>
+@interface UPSpellExtrasPaneColors ()  <UPHueWheelDelegate>
 @property (nonatomic, readwrite) CGFloat hue;
 @property (nonatomic, readwrite) UPLabel *modesLabel;
 @property (nonatomic, readwrite) UPCheckbox *darkModeCheckbox;
@@ -64,9 +64,9 @@ using Spot = UP::SpellLayout::Place;
 static const int HueCount = 360;
 static const int MilepostHue = 15;
 
-@implementation UPSpellExtrasColorsPane
+@implementation UPSpellExtrasPaneColors
 
-+ (UPSpellExtrasColorsPane *)pane
++ (UPSpellExtrasPaneColors *)pane
 {
     return [[self alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
 }
