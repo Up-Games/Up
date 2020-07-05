@@ -7,7 +7,7 @@
 
 @class UPAccessoryPane;
 @class UPButton;
-@class UPCheckbox;
+@class UPBallot;
 @class UPChoice;
 @class UPHueStepperIndicator;
 @class UPHueWheel;

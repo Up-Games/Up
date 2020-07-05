@@ -11,8 +11,7 @@
 #import <UpKit/UPTimeSpanning.h>
 
 #import "UIFont+UPSpell.h"
-#import "UPCheckbox.h"
-#import "UPChoice.h"
+#import "UPBallot.h"
 #import "UPControl+UPSpell.h"
 #import "UPHueWheel.h"
 #import "UPSpellGameSummary.h"
@@ -49,7 +48,7 @@ using Spot = UP::SpellLayout::Place;
 
 typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     UPSpellExtrasPaneStatsCategoryDefault,
-    UPSpellExtrasPaneStatsCategoryGeneral,
+    UPSpellExtrasPaneStatsCategoryAverages,
     UPSpellExtrasPaneStatsCategoryBestGames,
     UPSpellExtrasPaneStatsCategoryBestWords,
 };
@@ -81,6 +80,10 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
 {
     std::vector<SpellGameSummary> m_best_games;
 }
+@property (nonatomic, readwrite) UPBallot *averagesTabRadioButton;
+@property (nonatomic, readwrite) UPBallot *bestGamesTabRadioButton;
+@property (nonatomic, readwrite) UPBallot *bestWordsTabRadioButton;
+@property (nonatomic) NSArray<UPBallot *> *radioButtons;
 @property (nonatomic, readwrite) UILabel *noStatsLabel;
 @property (nonatomic, readwrite) UITableView *bestGamesTable;
 @end
@@ -98,14 +101,59 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     self = [super initWithFrame:frame];
 
 //    SpellLayout &layout = SpellLayout::instance();
+
+    self.averagesTabRadioButton = [UPBallot ballotWithType:UPBallotTypeRadio];
+    self.averagesTabRadioButton.labelString = @"AVERAGES";
+    self.averagesTabRadioButton.tag = 0;
+    [self.averagesTabRadioButton setTarget:self action:@selector(radioButtonTapped:)];
+//    self.averagesTabRadioButton.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
+    self.averagesTabRadioButton.frame = CGRectMake(380, 330, 40 * 0.785, 36 * 0.785);
+    [self addSubview:self.averagesTabRadioButton];
+
+    self.bestGamesTabRadioButton = [UPBallot ballotWithType:UPBallotTypeRadio];
+    self.bestGamesTabRadioButton.labelString = @"GAMES";
+    self.bestGamesTabRadioButton.tag = 1;
+    [self.bestGamesTabRadioButton setTarget:self action:@selector(radioButtonTapped:)];
+    //    self.bestGamesTabRadioButton.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
+    self.bestGamesTabRadioButton.frame = CGRectMake(558, 330, 40 * 0.785, 36 * 0.785);
+    [self addSubview:self.bestGamesTabRadioButton];
+    
+    self.bestWordsTabRadioButton = [UPBallot ballotWithType:UPBallotTypeRadio];
+    self.bestWordsTabRadioButton.labelString = @"WORDS";
+    self.bestWordsTabRadioButton.tag = 2;
+    [self.bestWordsTabRadioButton setTarget:self action:@selector(radioButtonTapped:)];
+    //    self.bestWordsTabRadioButton.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
+    self.bestWordsTabRadioButton.frame = CGRectMake(700, 330, 40 * 0.785, 36 * 0.785);
+    [self addSubview:self.bestWordsTabRadioButton];
+    
+    self.radioButtons = @[ self.averagesTabRadioButton, self.bestGamesTabRadioButton, self.bestWordsTabRadioButton ];
     
     self.bestGamesTable = [[UITableView alloc] initWithFrame:CGRectZero];
     self.bestGamesTable.dataSource = self;
     self.bestGamesTable.delegate = self;
+
+    
     
     [self.bestGamesTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Stats"];
 
     return self;
+}
+
+- (void)radioButtonTapped:(UPBallot *)sender
+{
+    for (UPBallot *radioButton in self.radioButtons) {
+        if (radioButton != sender) {
+            radioButton.selected = NO;
+            [radioButton invalidate];
+            [radioButton update];
+        }
+    }
+    
+//    NSUInteger extrasSelectedIndex = sender.tag;
+//    [self setSelectedPane:self.panes[extrasSelectedIndex] duration:0.65];
+//
+//    UPSpellSettings *settings = [UPSpellSettings instance];
+//    settings.extrasSelectedIndex = extrasSelectedIndex;
 }
 
 - (void)prepare

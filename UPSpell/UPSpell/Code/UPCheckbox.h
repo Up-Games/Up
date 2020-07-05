@@ -11,12 +11,12 @@ typedef NS_ENUM(NSInteger, UPCheckboxShape) {
     UPCheckboxShapeRound,
 };
 
-@interface UPCheckbox : UPControl
+@interface UPBallot : UPControl
 
 @property (nonatomic, readonly) UPCheckboxShape shape;
 
-+ (UPCheckbox *)checkboxWithShape:(UPCheckboxShape)shape;
-+ (UPCheckbox *)checkboxWithShape:(UPCheckboxShape)shape target:(id)target action:(SEL)action;
++ (UPBallot *)checkboxWithShape:(UPCheckboxShape)shape;
++ (UPBallot *)checkboxWithShape:(UPCheckboxShape)shape target:(id)target action:(SEL)action;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;

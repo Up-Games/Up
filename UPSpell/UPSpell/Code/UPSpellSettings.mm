@@ -9,6 +9,9 @@
 
 @dynamic themeColorStyle;
 @dynamic themeColorHue;
+@dynamic quarkMode;
+@dynamic extrasSelectedIndex;
+@dynamic databaseSchemaVersion;
 
 + (UPSpellSettings *)instance
 {
@@ -30,6 +33,7 @@
 {
     self.themeColorStyle = UPThemeColorStyleLight;
     self.themeColorHue = 225;
+    self.quarkMode = NO;
     self.extrasSelectedIndex = 0;
     self.databaseSchemaVersion = 0;
 }

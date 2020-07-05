@@ -10,7 +10,7 @@
 #import <UpKit/UPTimeSpanning.h>
 
 #import "UIFont+UPSpell.h"
-#import "UPCheckbox.h"
+#import "UPBallot.h"
 #import "UPChoice.h"
 #import "UPControl+UPSpell.h"
 #import "UPHueWheel.h"
@@ -28,9 +28,9 @@
 @interface UPSpellExtrasPaneColors ()  <UPHueWheelDelegate>
 @property (nonatomic, readwrite) CGFloat hue;
 @property (nonatomic, readwrite) UPLabel *modesLabel;
-@property (nonatomic, readwrite) UPCheckbox *darkModeCheckbox;
-@property (nonatomic, readwrite) UPCheckbox *starkModeCheckbox;
-@property (nonatomic, readwrite) UPCheckbox *quarkModeCheckbox;
+@property (nonatomic, readwrite) UPBallot *darkModeCheckbox;
+@property (nonatomic, readwrite) UPBallot *starkModeCheckbox;
+@property (nonatomic, readwrite) UPBallot *quarkModeCheckbox;
 @property (nonatomic, readwrite) UPHueWheel *hueWheel;
 @property (nonatomic, readwrite) UPStepper *hueStepLess;
 @property (nonatomic, readwrite) UPStepper *hueStepMore;
@@ -77,19 +77,19 @@ static const int MilepostHue = 15;
 
     SpellLayout &layout = SpellLayout::instance();
     
-    self.darkModeCheckbox = [UPCheckbox checkboxWithShape:UPCheckboxShapeRound];
+    self.darkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheck];
     self.darkModeCheckbox.labelString = @"DARK";
     [self.darkModeCheckbox setTarget:self action:@selector(darkModeCheckboxTapped)];
     self.darkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
     [self addSubview:self.darkModeCheckbox];
     
-    self.starkModeCheckbox = [UPCheckbox checkboxWithShape:UPCheckboxShapeSquare];
+    self.starkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheck];
     self.starkModeCheckbox.labelString = @"STARK";
     [self.starkModeCheckbox setTarget:self action:@selector(starkModeCheckboxTapped)];
     self.starkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsStarkMode);
     [self addSubview:self.starkModeCheckbox];
     
-    self.quarkModeCheckbox = [UPCheckbox checkboxWithShape:UPCheckboxShapeSquare];
+    self.quarkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheck];
     self.quarkModeCheckbox.labelString = @"QUARK";
     self.quarkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsQuarkMode);
     [self addSubview:self.quarkModeCheckbox];

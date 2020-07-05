@@ -237,46 +237,46 @@ static UIBezierPath *CheckboxRoundCheckPath()
 }
 
 @interface UPBallot ()
-@property (nonatomic, readwrite) UPCheckboxShape shape;
+@property (nonatomic, readwrite) UPBallotType type;
 @property (nonatomic, weak) id target;
 @property (nonatomic) SEL action;
 @end
 
 @implementation UPBallot
 
-+ (UPBallot *)checkboxWithShape:(UPCheckboxShape)shape
++ (UPBallot *)ballotWithType:(UPBallotType)type
 {
-    return [[UPBallot alloc] initWithShape:shape target:nil action:nullptr];
+    return [[UPBallot alloc] initWithType:type target:nil action:nullptr];
 }
 
-+ (UPBallot *)checkboxWithShape:(UPCheckboxShape)shape target:(id)target action:(SEL)action
++ (UPBallot *)ballotWithType:(UPBallotType)type target:(id)target action:(SEL)action
 {
-    return [[UPBallot alloc] initWithShape:shape target:target action:action];
+    return [[UPBallot alloc] initWithType:type target:target action:action];
 }
 
-- (instancetype)initWithShape:(UPCheckboxShape)shape target:(id)target action:(SEL)action
+- (instancetype)initWithType:(UPBallotType)type target:(id)target action:(SEL)action
 {
     self = [super initWithFrame:CGRectZero];
-    self.shape = shape;
+    self.type = type;
     self.target = target;
     self.action = action;
 
     SpellLayout &layout = SpellLayout::instance();
     
-    self.canonicalSize = SpellLayout::CanonicalCheckboxSize;
+    self.canonicalSize = SpellLayout::CanonicalBallotSize;
     self.chargeOutsets = layout.checkbox_control_charge_outsets();
     [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
 
-    switch (self.shape) {
-        case UPCheckboxShapeDefault:
-        case UPCheckboxShapeSquare:
+    switch (self.type) {
+        case UPBallotTypeDefault:
+        case UPBallotTypeCheck:
             [self setFillPath:CheckboxSquareFillPath()];
             [self setStrokePath:CheckboxSquareStrokePath()];
             [self setAuxiliaryPath:CheckboxSquareHighlightedPath() forState:UPControlStateNormal];
             [self setAccentPath:CheckboxSquareCheckPath() forState:UPControlStateSelected];
             [self setAccentPath:CheckboxSquareCheckPath() forState:(UPControlStateHighlighted | UPControlStateSelected)];
             break;
-        case UPCheckboxShapeRound:
+        case UPBallotTypeRadio:
             [self setFillPath:CheckboxRoundFillPath()];
             [self setStrokePath:CheckboxRoundStrokePath()];
             [self setAuxiliaryPath:CheckboxRoundHighlightedPath() forState:UPControlStateNormal];
@@ -284,7 +284,6 @@ static UIBezierPath *CheckboxRoundCheckPath()
             [self setAccentPath:CheckboxRoundCheckPath() forState:(UPControlStateHighlighted | UPControlStateSelected)];
             break;
     }
-
 
     [self setFillColorCategory:UPColorCategoryControlShapeFill];
     [self setStrokeColorCategory:UPColorCategoryControlShapeStroke];

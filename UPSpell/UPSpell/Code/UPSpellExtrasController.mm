@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <UpKit/UPAssertions.h>
 #import <UpKit/UIColor+UP.h>
 #import <UpKit/UIDevice+UP.h>
 #import <UpKit/UPBezierPathView.h>
@@ -14,12 +15,13 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPAccessoryPane.h"
-#import "UPCheckbox.h"
+#import "UPBallot.h"
 #import "UPChoice.h"
 #import "UPControl+UPSpell.h"
 #import "UPHueWheel.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellExtrasPaneColors.h"
+#import "UPSpellExtrasPaneStats.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
 #import "UPSpellNavigationController.h"
@@ -38,6 +40,7 @@
 @property (nonatomic, readwrite) UPAccessoryPane *selectedPane;
 
 @property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
+@property (nonatomic) UPSpellExtrasPaneStats *statsPane;
 
 @property (nonatomic) NSArray<UPChoice *> *choices;
 @property (nonatomic) NSArray<UPAccessoryPane *> *panes;
@@ -103,16 +106,20 @@ using Location = UP::SpellLayout::Location;
     [self.choice4 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice4];
 
-    self.colorsPane = [[UPSpellExtrasPaneColors alloc] initWithFrame:layout.screen_bounds()];
+    self.colorsPane = [UPSpellExtrasPaneColors pane];
     self.colorsPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.colorsPane];
 
+    self.statsPane = [UPSpellExtrasPaneStats pane];
+    self.statsPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
+    [self.view addSubview:self.statsPane];
+    
     self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
     
     self.panes = @[
         self.colorsPane,
         [UPAccessoryPane pane],
-        [UPAccessoryPane pane],
+        self.statsPane,
         [UPAccessoryPane pane]
     ];
     

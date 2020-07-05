@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */; };
-		5D0FC21C24A125D000353563 /* UPCheckbox.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21A24A125D000353563 /* UPCheckbox.mm */; };
+		5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21A24A125D000353563 /* UPBallot.mm */; };
 		5D0FC21E24A130D700353563 /* MalloryCond-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */; };
 		5D0FC22124A168AC00353563 /* UPHueWheel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22024A168AC00353563 /* UPHueWheel.mm */; };
 		5D0FC22724A278D300353563 /* UPStepper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22624A278D300353563 /* UPStepper.mm */; };
@@ -196,8 +196,8 @@
 /* Begin PBXFileReference section */
 		5D0FC21324A02FB600353563 /* UPDialogGameNote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogGameNote.h; sourceTree = "<group>"; };
 		5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameNote.mm; sourceTree = "<group>"; };
-		5D0FC21A24A125D000353563 /* UPCheckbox.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPCheckbox.mm; sourceTree = "<group>"; };
-		5D0FC21B24A125D000353563 /* UPCheckbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPCheckbox.h; sourceTree = "<group>"; };
+		5D0FC21A24A125D000353563 /* UPBallot.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPBallot.mm; sourceTree = "<group>"; };
+		5D0FC21B24A125D000353563 /* UPBallot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPBallot.h; sourceTree = "<group>"; };
 		5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Black.otf"; sourceTree = "<group>"; };
 		5D0FC21F24A168AC00353563 /* UPHueWheel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPHueWheel.h; sourceTree = "<group>"; };
 		5D0FC22024A168AC00353563 /* UPHueWheel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPHueWheel.mm; sourceTree = "<group>"; };
@@ -562,8 +562,8 @@
 				5D0FC33224A65A6C00353563 /* UPAccessoryPane.mm */,
 				5DF9DF5A2466165700B2199D /* UPAppDelegate.h */,
 				5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */,
-				5D0FC21B24A125D000353563 /* UPCheckbox.h */,
-				5D0FC21A24A125D000353563 /* UPCheckbox.mm */,
+				5D0FC21B24A125D000353563 /* UPBallot.h */,
+				5D0FC21A24A125D000353563 /* UPBallot.mm */,
 				5D0FC23224A50E3B00353563 /* UPChoice.h */,
 				5D0FC23124A50E3B00353563 /* UPChoice.mm */,
 				5D57D1FA246DB97700705395 /* UPControl+UPSpell.h */,
@@ -927,7 +927,7 @@
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
 				5D0FC33624A65C0B00353563 /* UPSpellExtrasPaneColors.mm in Sources */,
 				5D0FC22124A168AC00353563 /* UPHueWheel.mm in Sources */,
-				5D0FC21C24A125D000353563 /* UPCheckbox.mm in Sources */,
+				5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */,
 				5D0FC22724A278D300353563 /* UPStepper.mm in Sources */,
 				5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */,
 				5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */,

@@ -399,8 +399,8 @@ void SpellLayout::calculate_checkbox_control_metrics()
 
     set_checkbox_control_label_left_margin(CanonicalCheckboxLabelLeftMargin * layout_scale());
     
-    CGFloat width_offset = up_size_width(CanonicalCheckboxSize)  * layout_scale() * 0.4;
-    CGFloat height_offset = up_size_height(CanonicalCheckboxSize) * layout_scale() * 0.4;
+    CGFloat width_offset = up_size_width(CanonicalBallotSize)  * layout_scale() * 0.4;
+    CGFloat height_offset = up_size_height(CanonicalBallotSize) * layout_scale() * 0.4;
     set_checkbox_control_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
 }
 

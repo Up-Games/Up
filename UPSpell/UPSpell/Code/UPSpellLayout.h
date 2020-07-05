@@ -92,7 +92,7 @@ public:
     static inline constexpr CGSize CanonicalRoundGameButtonSize = { 84,  84 };
     static inline constexpr CGSize CanonicalRoundBackButtonSize = { 64,  64 };
     static inline constexpr CGSize CanonicalTextButtonSize =     { 188,  76 };
-    static inline constexpr CGSize CanonicalCheckboxSize =       {  40,  36 };
+    static inline constexpr CGSize CanonicalBallotSize =         {  40,  36 };
     static inline constexpr CGSize CanonicalHueWheelSize =       { 220, 220 };
     static inline constexpr CGSize CanonicalStepperSize =        {  36,  36 };
 
@@ -159,9 +159,9 @@ public:
     static inline constexpr CGRect CanonicalExtrasColorsHueWheelFrame =    { 430,  36, up_size_width(CanonicalHueWheelSize), up_size_height(CanonicalHueWheelSize) };
     static inline constexpr CGRect CanonicalExtrasColorsHueStepMoreFrame = { 692,  98, 44, 44 };
     static inline constexpr CGRect CanonicalExtrasColorsHueStepLessFrame = { 692, 158, 44, 44 };
-    static inline constexpr CGRect CanonicalExtrasColorsDarkModeFrame =    { 780,  64, up_size_width(CanonicalCheckboxSize), up_size_height(CanonicalCheckboxSize) };
-    static inline constexpr CGRect CanonicalExtrasColorsStarkModeFrame =   { 780, 124, up_size_width(CanonicalCheckboxSize), up_size_height(CanonicalCheckboxSize) };
-    static inline constexpr CGRect CanonicalExtrasColorsQuarkModeFrame =   { 780, 184, up_size_width(CanonicalCheckboxSize), up_size_height(CanonicalCheckboxSize) };
+    static inline constexpr CGRect CanonicalExtrasColorsDarkModeFrame =    { 780,  64, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasColorsStarkModeFrame =   { 780, 124, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasColorsQuarkModeFrame =   { 780, 184, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasColorsDescriptionFrame = { 384, 278, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsExampleFrame =     { 400, 386, 540, 66 };
     static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =  { 384, 278, 572, 76 };
