@@ -47,6 +47,13 @@ using UP::TimeSpanning::start;
 using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Place;
 
+typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
+    UPSpellExtrasPaneStatsCategoryDefault,
+    UPSpellExtrasPaneStatsCategoryGeneral,
+    UPSpellExtrasPaneStatsCategoryBestGames,
+    UPSpellExtrasPaneStatsCategoryBestWords,
+};
+
 @interface UPGameSummaryTableViewCell : UITableViewCell
 {
     SpellGameSummary m_spell_game_summary;
@@ -67,8 +74,6 @@ using Spot = UP::SpellLayout::Place;
         
     return self;
 }
-
-
 
 @end
 
@@ -106,6 +111,7 @@ using Spot = UP::SpellLayout::Place;
 - (void)prepare
 {
     self.userInteractionEnabled = YES;
+
     
 //    SpellLayout &layout = SpellLayout::instance();
 //    self.hueDescription.frame = layout.frame_for(Role::ExtrasColorsDescription);
