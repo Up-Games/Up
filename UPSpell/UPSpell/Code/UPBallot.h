@@ -7,8 +7,8 @@
 
 typedef NS_ENUM(NSInteger, UPBallotType) {
     UPBallotTypeDefault,
-    UPBallotTypeCheck,
-    UPBallotTypeRadio,
+    UPBallotTypeCheckbox,
+    UPBallotTypeRadioButton,
 };
 
 @interface UPBallot : UPControl
@@ -16,7 +16,6 @@ typedef NS_ENUM(NSInteger, UPBallotType) {
 @property (nonatomic, readonly) UPBallotType type;
 
 + (UPBallot *)ballotWithType:(UPBallotType)type;
-+ (UPBallot *)ballotWithType:(UPBallotType)type target:(id)target action:(SEL)action;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;

@@ -56,6 +56,7 @@ public:
         ExtrasColorsDarkMode, ExtrasColorsStarkMode, ExtrasColorsQuarkMode, ExtrasColorsHueWheel,
         ExtrasColorsHueStepMore, ExtrasColorsHueStepLess, ExtrasColorsDescription, ExtrasColorsExample,
         ExtrasColorsIconPrompt, ExtrasColorsIconButtonNope, ExtrasColorsIconButtonYep,
+        ExtrasStatsAveragesTabButton, ExtrasStatsGamesTabButton, ExtrasStatsWordsTabButton, ExtrasStatsTable,
     };
 
     enum class Place {
@@ -109,9 +110,9 @@ public:
     static inline constexpr CGFloat CanonicalWordScoreCapHeight = 52;
     static inline constexpr CGFloat CanonicalWordScoreBonusCapHeight = 30;
     static inline constexpr CGFloat CanonicalWordScoreBonusBaselineAdjustment = 14;
-    static inline constexpr CGFloat CanonicalCheckboxLabelCapHeight = 25;
-    static inline constexpr CGFloat CanonicalCheckboxLabelBaselineAdjustment = 6.5;
-    static inline constexpr CGFloat CanonicalCheckboxLabelLeftMargin = 41;
+    static inline constexpr CGFloat CanonicalBallotLabelCapHeight = 25;
+    static inline constexpr CGFloat CanonicalBallotLabelBaselineAdjustment = 6.5;
+    static inline constexpr CGFloat CanonicalBallotLabelLeftMargin = 41;
 
     static inline constexpr CGFloat CanonicalChoiceLabelCapHeight = 30;
     static inline constexpr CGFloat CanonicalChoiceLabelBaselineAdjustment = -12;
@@ -167,6 +168,16 @@ public:
     static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =  { 384, 278, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsIconLayoutFrame =  { 460, 381, 440, 76 };
 
+    static inline constexpr CGRect CanonicalExtrasStatsAveragesTabButtonFrame = { 390, 450, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasStatsGamesTabButtonFrame =    { 621, 450, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasStatsWordsTabButtonFrame =    { 804, 450, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasStatsTableFrame =             { 384, 48, 572, 380 };
+    static inline constexpr CGFloat CanonicalExtrasGamesRankColumnWidth =               62;
+    static inline constexpr CGFloat CanonicalExtrasGamesGameScoreColumnWidth =         105;
+    static inline constexpr CGFloat CanonicalExtrasGamesWordsSpelledColumnWidth =      135;
+    static inline constexpr CGFloat CanonicalExtrasGamesAverageWordScoreColumnWidth =  135;
+    static inline constexpr CGFloat CanonicalExtrasGamesAverageWordLengthColumnWidth = 135;
+
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
         return *g_instance;
@@ -213,7 +224,7 @@ public:
     UIOffset word_tray_shake_offset() const { return m_word_tray_shake_offset; }
     
     UPOutsets game_controls_button_charge_outsets() const { return m_game_controls_button_charge_outsets; }
-    UPOutsets checkbox_control_charge_outsets() const { return m_checkbox_control_charge_outsets; }
+    UPOutsets ballot_control_charge_outsets() const { return m_ballot_control_charge_outsets; }
     UPOutsets stepper_control_charge_outsets() const { return m_stepper_control_charge_outsets; }
 
     UIFont *text_button_font() const { return m_text_button_font; }
@@ -223,11 +234,11 @@ public:
     UIFont *game_note_word_font() const { return m_game_note_word_font; }
     UIFont *word_score_font() const { return m_word_score_font; }
     UIFont *word_score_bonus_font() const { return m_word_score_bonus_font; }
-    UIFont *checkbox_control_font() const { return m_checkbox_control_font; }
+    UIFont *ballot_control_font() const { return m_ballot_control_font; }
     UIFont *choice_control_font() const { return m_choice_control_font; }
     UIFont *settings_description_font() const { return m_settings_description_font; }
 
-    CGFloat checkbox_control_label_left_margin() const { return m_checkbox_control_label_left_margin; }
+    CGFloat ballot_control_label_left_margin() const { return m_ballot_control_label_left_margin; }
     CGFloat choice_control_label_left_margin() const { return m_choice_control_label_left_margin; }
     CGFloat choice_control_label_right_margin() const { return m_choice_control_label_right_margin; }
 
@@ -264,9 +275,9 @@ private:
     void set_game_note_word_font(UIFont *font) { m_game_note_word_font = font; }
     void set_word_score_font(UIFont *font) { m_word_score_font = font; }
     void set_word_score_bonus_font(UIFont *font) { m_word_score_bonus_font = font; }
-    void set_checkbox_control_font(UIFont *font) { m_checkbox_control_font = font; }
-    void set_checkbox_control_label_left_margin(CGFloat f) { m_checkbox_control_label_left_margin = f; }
-    void set_checkbox_control_charge_outsets(UPOutsets outsets) { m_checkbox_control_charge_outsets = outsets; }
+    void set_ballot_control_font(UIFont *font) { m_ballot_control_font = font; }
+    void set_ballot_control_label_left_margin(CGFloat f) { m_ballot_control_label_left_margin = f; }
+    void set_ballot_control_charge_outsets(UPOutsets outsets) { m_ballot_control_charge_outsets = outsets; }
     void set_stepper_control_charge_outsets(UPOutsets outsets) { m_stepper_control_charge_outsets = outsets; }
     void set_choice_control_font(UIFont *font) { m_choice_control_font = font; }
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
@@ -292,7 +303,7 @@ private:
     void calculate_game_note_word_font_metrics();
     void calculate_word_score_font_metrics();
     void calculate_word_score_bonus_font_metrics();
-    void calculate_checkbox_control_metrics();
+    void calculate_ballot_control_metrics();
     void calculate_stepper_control_metrics();
     void calculate_choice_control_metrics();
     void calculate_settings_description_font_metrics();
@@ -348,11 +359,11 @@ private:
     __strong UIFont *m_game_note_word_font;
     __strong UIFont *m_word_score_font;
     __strong UIFont *m_word_score_bonus_font;
-    __strong UIFont *m_checkbox_control_font;
+    __strong UIFont *m_ballot_control_font;
     __strong UIFont *m_choice_control_font;
     __strong UIFont *m_settings_description_font;
 
-    CGFloat m_checkbox_control_label_left_margin = 0.0;
+    CGFloat m_ballot_control_label_left_margin = 0.0;
     CGFloat m_choice_control_label_left_margin = 0.0;
     CGFloat m_choice_control_label_right_margin = 0.0;
 
@@ -370,7 +381,7 @@ private:
     std::array<TilePointArray, TileCount> m_word_tray_tile_centers;
 
     UPOutsets m_game_controls_button_charge_outsets = UPOutsetsZero;
-    UPOutsets m_checkbox_control_charge_outsets = UPOutsetsZero;
+    UPOutsets m_ballot_control_charge_outsets = UPOutsetsZero;
     UPOutsets m_stepper_control_charge_outsets = UPOutsetsZero;
 
     CGRect m_game_timer_frame = CGRectZero;

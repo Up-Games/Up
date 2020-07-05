@@ -271,7 +271,7 @@ void SpellLayout::calculate()
     calculate_game_note_word_font_metrics();
     calculate_word_score_font_metrics();
     calculate_word_score_bonus_font_metrics();
-    calculate_checkbox_control_metrics();
+    calculate_ballot_control_metrics();
     calculate_stepper_control_metrics();
     calculate_choice_control_metrics();
     calculate_settings_description_font_metrics();
@@ -390,18 +390,18 @@ void SpellLayout::calculate_word_score_bonus_font_metrics()
     set_word_score_bonus_font(font);
 }
 
-void SpellLayout::calculate_checkbox_control_metrics()
+void SpellLayout::calculate_ballot_control_metrics()
 {
-    CGFloat cap_height = CanonicalCheckboxLabelCapHeight * layout_scale();
+    CGFloat cap_height = CanonicalBallotLabelCapHeight * layout_scale();
     UIFont *font = [UIFont checkboxControlFontWithCapHeight:cap_height];
-    font.baselineAdjustment = CanonicalCheckboxLabelBaselineAdjustment * layout_scale();
-    set_checkbox_control_font(font);
+    font.baselineAdjustment = CanonicalBallotLabelBaselineAdjustment * layout_scale();
+    set_ballot_control_font(font);
 
-    set_checkbox_control_label_left_margin(CanonicalCheckboxLabelLeftMargin * layout_scale());
+    set_ballot_control_label_left_margin(CanonicalBallotLabelLeftMargin * layout_scale());
     
     CGFloat width_offset = up_size_width(CanonicalBallotSize)  * layout_scale() * 0.4;
     CGFloat height_offset = up_size_height(CanonicalBallotSize) * layout_scale() * 0.4;
-    set_checkbox_control_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
+    set_ballot_control_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
 }
 
 void SpellLayout::calculate_stepper_control_metrics()
@@ -671,6 +671,11 @@ void SpellLayout::calculate_extras_locations()
     CGRect icon_button_layout_frame = layout_relative_aspect_rect(CanonicalExtrasColorsIconLayoutFrame);
     calculate_and_set_locations(Role::ExtrasColorsIconButtonNope, up_left_aligned_rect(text_button_size, icon_button_layout_frame));
     calculate_and_set_locations(Role::ExtrasColorsIconButtonYep, up_right_aligned_rect(text_button_size, icon_button_layout_frame));
+
+    calculate_and_set_locations(Role::ExtrasStatsAveragesTabButton, layout_relative_aspect_rect(CanonicalExtrasStatsAveragesTabButtonFrame));
+    calculate_and_set_locations(Role::ExtrasStatsGamesTabButton, layout_relative_aspect_rect(CanonicalExtrasStatsGamesTabButtonFrame));
+    calculate_and_set_locations(Role::ExtrasStatsWordsTabButton, layout_relative_aspect_rect(CanonicalExtrasStatsWordsTabButtonFrame));
+    calculate_and_set_locations(Role::ExtrasStatsTable, layout_relative_aspect_rect(CanonicalExtrasStatsTableFrame));
 }
 
 void SpellLayout::calculate_choice_locations()

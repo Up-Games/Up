@@ -16,7 +16,6 @@ typedef NS_ENUM(NSInteger, UPChoiceSide) {
 @property (nonatomic, readonly) UPChoiceSide side;
 
 + (UPChoice *)choiceWithSide:(UPChoiceSide)side;
-+ (UPChoice *)choiceWithSide:(UPChoiceSide)side target:(id)target action:(SEL)action;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;

@@ -154,11 +154,6 @@ UIBezierPath *ChoiceRightFillPathSelected()
     return [[UPChoice alloc] initWithWithSide:side target:nil action:nullptr];
 }
 
-+ (UPChoice *)choiceWithSide:(UPChoiceSide)side target:(id)target action:(SEL)action;
-{
-    return [[UPChoice alloc] initWithWithSide:side target:target action:action];
-}
-
 - (instancetype)initWithWithSide:(UPChoiceSide)side target:(id)target action:(SEL)action
 {
     self = [super initWithFrame:CGRectZero];

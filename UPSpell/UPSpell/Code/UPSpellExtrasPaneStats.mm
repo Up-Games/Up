@@ -49,14 +49,15 @@ using Spot = UP::SpellLayout::Place;
 typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     UPSpellExtrasPaneStatsCategoryDefault,
     UPSpellExtrasPaneStatsCategoryAverages,
-    UPSpellExtrasPaneStatsCategoryBestGames,
-    UPSpellExtrasPaneStatsCategoryBestWords,
+    UPSpellExtrasPaneStatsCategoryGames,
+    UPSpellExtrasPaneStatsCategoryWords,
 };
 
 @interface UPGameSummaryTableViewCell : UITableViewCell
 {
     SpellGameSummary m_spell_game_summary;
 }
+@property (nonatomic) int rank;
 @property (nonatomic) UPLabel *rankLabel;
 @property (nonatomic) UPLabel *gameScoreLabel;
 @property (nonatomic) UPLabel *wordsSubmittedCountLabel;
@@ -74,6 +75,29 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     return self;
 }
 
+- (void)setGameSummary:(const SpellGameSummary &)spell_game_summary
+{
+    m_spell_game_summary = spell_game_summary;
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    SpellLayout &layout = SpellLayout::instance();
+
+    UIFont *font = [UIFont checkboxControlFontOfSize:25];
+    CGFloat x = 0;
+
+    NSDictionary *rankAttributes = @{
+        NSForegroundColorAttributeName: [UIColor themeColorWithCategory:UPColorCategoryInformation],
+        NSFontAttributeName: font
+    };
+    CGFloat rankWidth = SpellLayout::CanonicalExtrasGamesRankColumnWidth * layout.layout_scale();
+    CGRect rankRect = CGRectMake(x, 0, rankWidth, 28);
+    
+    NSString *rankString = [NSString stringWithFormat:@"#%d", self.rank];
+    [rankString drawInRect:rankRect withAttributes:rankAttributes];
+}
+
 @end
 
 @interface UPSpellExtrasPaneStats () <UITableViewDataSource, UITableViewDelegate>
@@ -81,11 +105,13 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     std::vector<SpellGameSummary> m_best_games;
 }
 @property (nonatomic, readwrite) UPBallot *averagesTabRadioButton;
-@property (nonatomic, readwrite) UPBallot *bestGamesTabRadioButton;
-@property (nonatomic, readwrite) UPBallot *bestWordsTabRadioButton;
+@property (nonatomic, readwrite) UPBallot *gamesTabRadioButton;
+@property (nonatomic, readwrite) UPBallot *wordsTabRadioButton;
 @property (nonatomic) NSArray<UPBallot *> *radioButtons;
 @property (nonatomic, readwrite) UILabel *noStatsLabel;
-@property (nonatomic, readwrite) UITableView *bestGamesTable;
+@property (nonatomic, readwrite) UITableView *averagesTable;
+@property (nonatomic, readwrite) UITableView *gamesTable;
+@property (nonatomic, readwrite) UITableView *wordsTable;
 @end
 
 
@@ -100,46 +126,42 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
 {
     self = [super initWithFrame:frame];
 
-//    SpellLayout &layout = SpellLayout::instance();
+    SpellLayout &layout = SpellLayout::instance();
 
-    self.averagesTabRadioButton = [UPBallot ballotWithType:UPBallotTypeRadio];
+    self.averagesTabRadioButton = [UPBallot ballotWithType:UPBallotTypeRadioButton];
     self.averagesTabRadioButton.labelString = @"AVERAGES";
     self.averagesTabRadioButton.tag = 0;
-    [self.averagesTabRadioButton setTarget:self action:@selector(radioButtonTapped:)];
-//    self.averagesTabRadioButton.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
-    self.averagesTabRadioButton.frame = CGRectMake(380, 334, 40 * 0.785, 36 * 0.785);
+    [self.averagesTabRadioButton setTarget:self action:@selector(tabRadioButtonTapped:)];
+    self.averagesTabRadioButton.frame = layout.frame_for(Role::ExtrasStatsAveragesTabButton);
     [self addSubview:self.averagesTabRadioButton];
 
-    self.bestGamesTabRadioButton = [UPBallot ballotWithType:UPBallotTypeRadio];
-    self.bestGamesTabRadioButton.labelString = @"GAMES";
-    self.bestGamesTabRadioButton.tag = 1;
-    [self.bestGamesTabRadioButton setTarget:self action:@selector(radioButtonTapped:)];
-    //    self.bestGamesTabRadioButton.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
-    self.bestGamesTabRadioButton.frame = CGRectMake(558, 334, 40 * 0.785, 36 * 0.785);
-    [self addSubview:self.bestGamesTabRadioButton];
+    self.gamesTabRadioButton = [UPBallot ballotWithType:UPBallotTypeRadioButton];
+    self.gamesTabRadioButton.labelString = @"GAMES";
+    self.gamesTabRadioButton.tag = 1;
+    [self.gamesTabRadioButton setTarget:self action:@selector(tabRadioButtonTapped:)];
+    self.gamesTabRadioButton.frame = layout.frame_for(Role::ExtrasStatsGamesTabButton);
+    [self addSubview:self.gamesTabRadioButton];
     
-    self.bestWordsTabRadioButton = [UPBallot ballotWithType:UPBallotTypeRadio];
-    self.bestWordsTabRadioButton.labelString = @"WORDS";
-    self.bestWordsTabRadioButton.tag = 2;
-    [self.bestWordsTabRadioButton setTarget:self action:@selector(radioButtonTapped:)];
-    //    self.bestWordsTabRadioButton.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
-    self.bestWordsTabRadioButton.frame = CGRectMake(700, 334, 40 * 0.785, 36 * 0.785);
-    [self addSubview:self.bestWordsTabRadioButton];
+    self.wordsTabRadioButton = [UPBallot ballotWithType:UPBallotTypeRadioButton];
+    self.wordsTabRadioButton.labelString = @"WORDS";
+    self.wordsTabRadioButton.tag = 2;
+    [self.wordsTabRadioButton setTarget:self action:@selector(tabRadioButtonTapped:)];
+    self.wordsTabRadioButton.frame = layout.frame_for(Role::ExtrasStatsWordsTabButton);
+    [self addSubview:self.wordsTabRadioButton];
     
-    self.radioButtons = @[ self.averagesTabRadioButton, self.bestGamesTabRadioButton, self.bestWordsTabRadioButton ];
+    self.radioButtons = @[ self.averagesTabRadioButton, self.gamesTabRadioButton, self.wordsTabRadioButton ];
     
-    self.bestGamesTable = [[UITableView alloc] initWithFrame:CGRectZero];
-    self.bestGamesTable.dataSource = self;
-    self.bestGamesTable.delegate = self;
-
+    self.gamesTable = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.gamesTable.dataSource = self;
+    self.gamesTable.delegate = self;
+    [self.gamesTable registerClass:[UPGameSummaryTableViewCell class] forCellReuseIdentifier:@"UPGameSummaryTableViewCell"];
+    [self addSubview:self.gamesTable];
+//    self.gamesTable.backgroundColor = [UIColor testColor1];
     
-    
-    [self.bestGamesTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Stats"];
-
     return self;
 }
 
-- (void)radioButtonTapped:(UPBallot *)sender
+- (void)tabRadioButtonTapped:(UPBallot *)sender
 {
     for (UPBallot *radioButton in self.radioButtons) {
         if (radioButton != sender) {
@@ -149,24 +171,18 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
         }
     }
     
-//    NSUInteger extrasSelectedIndex = sender.tag;
-//    [self setSelectedPane:self.panes[extrasSelectedIndex] duration:0.65];
-//
-//    UPSpellSettings *settings = [UPSpellSettings instance];
-//    settings.extrasSelectedIndex = extrasSelectedIndex;
+    NSUInteger statsSelectedTabIndex = sender.tag;
+
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.statsSelectedTabIndex = statsSelectedTabIndex;
 }
 
 - (void)prepare
 {
     self.userInteractionEnabled = YES;
 
-    
-//    SpellLayout &layout = SpellLayout::instance();
-//    self.hueDescription.frame = layout.frame_for(Role::ExtrasColorsDescription);
-//    self.exampleTilesContainer.center = layout.center_for(Role::ExtrasColorsExample);
-//    self.iconPrompt.frame = layout.frame_for(Role::ExtrasColorsIconPrompt, Spot::OffBottomFar);
-//    self.iconButtonNope.frame = layout.frame_for(Role::ExtrasColorsIconButtonNope, Spot::OffBottomFar);
-//    self.iconButtonYep.frame = layout.frame_for(Role::ExtrasColorsIconButtonYep, Spot::OffBottomFar);
+    SpellLayout &layout = SpellLayout::instance();
+    self.gamesTable.frame = layout.frame_for(Role::ExtrasStatsTable);
 }
 
 - (void)cancelAnimations
@@ -177,8 +193,8 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView == self.bestGamesTable) {
-        return m_best_games.size();
+    if (tableView == self.gamesTable) {
+        return 12; //m_best_games.size();
     }
     return 0;
 }
@@ -187,24 +203,22 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
 {
     UITableViewCell *cell = nil;
     
-    if (tableView == self.bestGamesTable) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"Stats"];
-//        NSString *key = self.colorKeys[indexPath.row];
-//        if (self.selectedChip && [self.selectedChip.name isEqualToString:key]) {
-//            cell.colorChip = self.selectedChip;
-//        }
-//        else {
-//            cell.colorChip = self.colorChips[key];
-//        }
+    if (tableView == self.gamesTable) {
+        UPGameSummaryTableViewCell *gamesCell = [tableView dequeueReusableCellWithIdentifier:@"UPGameSummaryTableViewCell"];
+        gamesCell.rank = (int)indexPath.row + 1;
+        cell = gamesCell;
     }
 
     return cell;
 }
 
-//- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)column row:(int)row
-//{
-//    return nil;
-//}
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SpellLayout &layout = SpellLayout::instance();
+    return 50 * layout.layout_scale();
+}
 
 #pragma mark - Target / Action
 

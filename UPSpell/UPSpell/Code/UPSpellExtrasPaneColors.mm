@@ -77,19 +77,19 @@ static const int MilepostHue = 15;
 
     SpellLayout &layout = SpellLayout::instance();
     
-    self.darkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheck];
+    self.darkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
     self.darkModeCheckbox.labelString = @"DARK";
     [self.darkModeCheckbox setTarget:self action:@selector(darkModeCheckboxTapped)];
     self.darkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
     [self addSubview:self.darkModeCheckbox];
     
-    self.starkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheck];
+    self.starkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
     self.starkModeCheckbox.labelString = @"STARK";
     [self.starkModeCheckbox setTarget:self action:@selector(starkModeCheckboxTapped)];
     self.starkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsStarkMode);
     [self addSubview:self.starkModeCheckbox];
     
-    self.quarkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheck];
+    self.quarkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
     self.quarkModeCheckbox.labelString = @"QUARK";
     self.quarkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsQuarkMode);
     [self addSubview:self.quarkModeCheckbox];

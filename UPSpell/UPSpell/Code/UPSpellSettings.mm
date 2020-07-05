@@ -7,11 +7,12 @@
 
 @implementation UPSpellSettings
 
+@dynamic databaseSchemaVersion;
 @dynamic themeColorStyle;
 @dynamic themeColorHue;
 @dynamic quarkMode;
 @dynamic extrasSelectedIndex;
-@dynamic databaseSchemaVersion;
+@dynamic statsSelectedTabIndex;
 
 + (UPSpellSettings *)instance
 {
@@ -31,11 +32,12 @@
 
 - (void)setDefaultValues
 {
+    self.databaseSchemaVersion = 0;
     self.themeColorStyle = UPThemeColorStyleLight;
     self.themeColorHue = 225;
     self.quarkMode = NO;
     self.extrasSelectedIndex = 0;
-    self.databaseSchemaVersion = 0;
+    self.statsSelectedTabIndex = 0;
 }
 
 @end

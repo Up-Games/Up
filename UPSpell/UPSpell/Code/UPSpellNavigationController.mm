@@ -83,6 +83,10 @@ using UP::TimeSpanning::start;
     layout.calculate();
 
     self.view.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
+
+//    UIView *canvasView = [[UIView alloc] initWithFrame:layout.canvas_frame()];
+//    canvasView.backgroundColor = [UIColor testColor1];
+//    [self.view addSubview:canvasView];
     
     self.gameController = [[UPSpellGameController alloc] initWithNibName:nil bundle:nil];
     

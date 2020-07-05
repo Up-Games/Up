@@ -249,11 +249,6 @@ static UIBezierPath *CheckboxRoundCheckPath()
     return [[UPBallot alloc] initWithType:type target:nil action:nullptr];
 }
 
-+ (UPBallot *)ballotWithType:(UPBallotType)type target:(id)target action:(SEL)action
-{
-    return [[UPBallot alloc] initWithType:type target:target action:action];
-}
-
 - (instancetype)initWithType:(UPBallotType)type target:(id)target action:(SEL)action
 {
     self = [super initWithFrame:CGRectZero];
@@ -264,12 +259,12 @@ static UIBezierPath *CheckboxRoundCheckPath()
     SpellLayout &layout = SpellLayout::instance();
     
     self.canonicalSize = SpellLayout::CanonicalBallotSize;
-    self.chargeOutsets = layout.checkbox_control_charge_outsets();
+    self.chargeOutsets = layout.ballot_control_charge_outsets();
     [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
 
     switch (self.type) {
         case UPBallotTypeDefault:
-        case UPBallotTypeCheck: {
+        case UPBallotTypeCheckbox: {
             [self setFillPath:CheckboxSquareFillPath()];
             [self setStrokePath:CheckboxSquareStrokePath()];
             [self setAuxiliaryPath:CheckboxSquareHighlightedPath() forState:UPControlStateNormal];
@@ -278,7 +273,7 @@ static UIBezierPath *CheckboxRoundCheckPath()
             [self setAccentPath:check forState:(UPControlStateHighlighted | UPControlStateSelected)];
             break;
         }
-        case UPBallotTypeRadio: {
+        case UPBallotTypeRadioButton: {
             [self setFillPath:CheckboxRoundFillPath()];
             [self setStrokePath:CheckboxRoundStrokePath()];
             [self setAuxiliaryPath:CheckboxRoundHighlightedPath() forState:UPControlStateNormal];
@@ -300,7 +295,7 @@ static UIBezierPath *CheckboxRoundCheckPath()
     [self setAccentColorCategory:UPColorCategoryControlIndicator forState:UPControlStateSelected];
     [self setAccentColorCategory:UPColorCategoryControlIndicator forState:(UPControlStateHighlighted | UPControlStateSelected)];
     
-    self.label.font = SpellLayout::instance().checkbox_control_font();
+    self.label.font = SpellLayout::instance().ballot_control_font();
     self.label.textColorCategory = UPColorCategoryControlText;
     self.label.backgroundColorCategory = UPColorCategoryClear;
     [self.label addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
@@ -332,6 +327,11 @@ static UIBezierPath *CheckboxRoundCheckPath()
         }
         case UIGestureRecognizerStateEnded: {
             self.highlighted = NO;
+            
+            if (self.type == UPBallotTypeRadioButton && self.selected) {
+                return;
+            }
+            
             [self setSelected:!self.selected];
             [self update];
 #pragma clang diagnostic push
@@ -369,8 +369,8 @@ static UIBezierPath *CheckboxRoundCheckPath()
     [self.label sizeToFit];
     
     CGRect labelFrame = self.label.frame;
-    CGFloat labelOriginY = up_rect_height(bounds) - up_rect_height(labelFrame) + layout.checkbox_control_font().baselineAdjustment;
-    labelFrame.origin = CGPointMake(layout.checkbox_control_label_left_margin(), labelOriginY);
+    CGFloat labelOriginY = up_rect_height(bounds) - up_rect_height(labelFrame) + layout.ballot_control_font().baselineAdjustment;
+    labelFrame.origin = CGPointMake(layout.ballot_control_label_left_margin(), labelOriginY);
     self.label.frame = labelFrame;
 }
 
