@@ -92,7 +92,7 @@ public:
     static inline constexpr CGSize CanonicalRoundGameButtonSize = { 84,  84 };
     static inline constexpr CGSize CanonicalRoundBackButtonSize = { 64,  64 };
     static inline constexpr CGSize CanonicalTextButtonSize =     { 188,  76 };
-    static inline constexpr CGSize CanonicalCheckboxSize =       {  39,  35 };
+    static inline constexpr CGSize CanonicalCheckboxSize =       {  40,  36 };
     static inline constexpr CGSize CanonicalHueWheelSize =       { 220, 220 };
     static inline constexpr CGSize CanonicalStepperSize =        {  36,  36 };
 
@@ -110,7 +110,7 @@ public:
     static inline constexpr CGFloat CanonicalWordScoreBonusCapHeight = 30;
     static inline constexpr CGFloat CanonicalWordScoreBonusBaselineAdjustment = 14;
     static inline constexpr CGFloat CanonicalCheckboxLabelCapHeight = 25;
-    static inline constexpr CGFloat CanonicalCheckboxLabelBaselineAdjustment = 7;
+    static inline constexpr CGFloat CanonicalCheckboxLabelBaselineAdjustment = 6.5;
     static inline constexpr CGFloat CanonicalCheckboxLabelLeftMargin = 43;
 
     static inline constexpr CGFloat CanonicalChoiceLabelCapHeight = 30;

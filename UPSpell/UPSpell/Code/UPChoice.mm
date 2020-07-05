@@ -142,6 +142,7 @@ UIBezierPath *ChoiceRightFillPathSelected()
 }
 
 @interface UPChoice ()
+@property (nonatomic, readwrite) UPChoiceSide side;
 @property (nonatomic, weak) id target;
 @property (nonatomic) SEL action;
 @end
