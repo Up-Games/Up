@@ -56,7 +56,7 @@ public:
         ExtrasColorsDarkMode, ExtrasColorsStarkMode, ExtrasColorsQuarkMode, ExtrasColorsHueWheel,
         ExtrasColorsHueStepMore, ExtrasColorsHueStepLess, ExtrasColorsDescription, ExtrasColorsExample,
         ExtrasColorsIconPrompt, ExtrasColorsIconButtonNope, ExtrasColorsIconButtonYep,
-        ExtrasStatsAveragesTabButton, ExtrasStatsGamesTabButton, ExtrasStatsWordsTabButton, ExtrasStatsTable,
+        ExtrasStatsAveragesTabButton, ExtrasStatsGamesTabButton, ExtrasStatsWordsTabButton, ExtrasStatsHeader, ExtrasStatsTable
     };
 
     enum class Place {
@@ -168,10 +168,11 @@ public:
     static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =  { 384, 278, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsIconLayoutFrame =  { 460, 381, 440, 76 };
 
-    static inline constexpr CGRect CanonicalExtrasStatsAveragesTabButtonFrame = { 390, 450, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasStatsGamesTabButtonFrame =    { 621, 450, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasStatsWordsTabButtonFrame =    { 804, 450, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasStatsTableFrame =             { 384, 48, 572, 380 };
+    static inline constexpr CGRect CanonicalExtrasStatsAveragesTabButtonFrame = { 390, 444, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasStatsGamesTabButtonFrame =    { 621, 444, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasStatsWordsTabButtonFrame =    { 804, 444, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasStatsHeaderFrame =            { 384,  32, 572,  72 };
+    static inline constexpr CGRect CanonicalExtrasStatsTableFrame =             { 384, 104, 572, 306 };
     static inline constexpr CGFloat CanonicalExtrasGamesRankColumnWidth =               62;
     static inline constexpr CGFloat CanonicalExtrasGamesGameScoreColumnWidth =         105;
     static inline constexpr CGFloat CanonicalExtrasGamesWordsSpelledColumnWidth =      135;

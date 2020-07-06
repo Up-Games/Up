@@ -1903,8 +1903,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 #pragma mark - Model management
 
-- (void)createNewGameModel
+- (void)createNewGameModelIfNeeded
 {
+    LOG(General, "opcode: %d", self.model ? (int)self.model->back_state().action().opcode() : -1);
+    if (self.model && self.model->back_state().action().opcode() == SpellModel::Opcode::START) {
+        return;
+    }
+    
     if (self.model) {
         delete self.model;
     }
@@ -2024,7 +2029,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromNoneToInit
 {
-    [self createNewGameModel];
+    [self createNewGameModelIfNeeded];
     
     SpellLayout &layout = SpellLayout::instance();
 
@@ -2069,6 +2074,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT(self.model->is_blank_filled());
     ASSERT(self.lockCount == 0);
     [self viewLock];
+    [self createNewGameModelIfNeeded];
     [self viewMakeReadyWithCompletion:^{
         [self viewBloopOutExistingTileViewsWithCompletion:nil];
         [self setMode:Mode::Play];
@@ -2148,7 +2154,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)modeTransitionFromAttractToReady
 {
     [self viewBloopOutExistingTileViewsWithCompletion:^{
-        [self createNewGameModel];
+        [self createNewGameModelIfNeeded];
         [self viewBloopInBlankTileViewsWithCompletion:^{
             [self viewLock];
             [self viewMakeReadyWithCompletion:^{
@@ -2468,7 +2474,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromEndToReady
 {
-    [self createNewGameModel];
+    [self createNewGameModelIfNeeded];
     [self viewLock];
     [self viewFillUpSpellTileViews];
     [self viewMakeReadyWithCompletion:^{

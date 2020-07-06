@@ -1273,20 +1273,22 @@ void SpellModel::db_store()
     
     int words_submitted_count = game_words_submitted_count();
     int tiles_submitted_count = game_tiles_submitted_count();
-    double word_score_average = (double)game_score() / words_submitted_count;
-    double word_length_average = (double)tiles_submitted_count / words_submitted_count;
+    double word_score_average = game_score() / (double)words_submitted_count;
+    double word_length_average = tiles_submitted_count / (double)words_submitted_count;
 
     db_exec(db, sqlite3_reset(game_stmt));
     db_exec(db, sqlite3_bind_int(game_stmt, 1, game_key().value()));
     db_exec(db, sqlite3_bind_int(game_stmt, 2, game_score()));
     db_exec(db, sqlite3_bind_int(game_stmt, 3, words_submitted_count));
     db_exec(db, sqlite3_bind_int(game_stmt, 4, tiles_submitted_count));
-    db_exec(db, sqlite3_bind_int(game_stmt, 5, word_score_average));
-    db_exec(db, sqlite3_bind_int(game_stmt, 6, word_length_average));
+    db_exec(db, sqlite3_bind_double(game_stmt, 5, word_score_average));
+    db_exec(db, sqlite3_bind_double(game_stmt, 6, word_length_average));
     db_exec(db, sqlite3_bind_int(game_stmt, 7, game_completed() ? 1 : 0));  // FIXME: add another state for suspended games
     db_step(db, sqlite3_step(game_stmt));
     set_db_game_id(sqlite3_last_insert_rowid(db));
-    LOG(DB, "*** game id: %ld : %s", db_game_id(), game_completed() ? "Y" : "N");
+    LOG(DB, "*** game id: %ld : %d : %d : %d : %.2f : %.2f : %s",
+        db_game_id(), game_score(), words_submitted_count, tiles_submitted_count,
+        word_score_average, word_length_average, game_completed() ? "Y" : "N");
     
     db_exec(db, sqlite3_reset(tile_initial_stmt));
     db_exec(db, sqlite3_bind_int64(tile_initial_stmt, 1, db_game_id()));
