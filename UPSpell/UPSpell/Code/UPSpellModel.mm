@@ -1014,7 +1014,7 @@ std::pair<int, SpellModel::StatsRank> SpellModel::words_spelled_count_rank(int c
     std::pair<int, StatsRank> result = { 0, StatsRank::Unknown };
 
     int i = 0;
-    std::vector<int> ranked = all_time_words_spelled_counts();
+    std::vector<int> ranked = all_time_words_submitted_counts();
     if (ranked.size() == 0) {
         result = { 1, StatsRank::Alone };
     }
@@ -1031,6 +1031,34 @@ std::pair<int, SpellModel::StatsRank> SpellModel::words_spelled_count_rank(int c
             }
         }
     }
+    return result;
+}
+
+int SpellModel::all_time_games_played_count()
+{
+    int result = 0;
+    
+    sqlite3 *db = db_handle();
+    if (db == nullptr) {
+        return result;
+    }
+    
+    static const char *sql = "SELECT COUNT(game_id) FROM game;";
+    sqlite3_stmt *stmt = db_statement(db, sql);
+    if (!stmt) {
+        db_close(db);
+        return result;
+    }
+    
+    db_exec_r(db, sqlite3_reset(stmt), result);
+    
+    if (sqlite3_step(stmt) != SQLITE_ROW) {
+        return result;
+    }
+    result = sqlite3_column_int(stmt, 0);
+    
+    db_close(db);
+    
     return result;
 }
 
@@ -1102,7 +1130,7 @@ std::vector<int> SpellModel::all_time_word_scores(size_t limit)
     return result;
 }
 
-std::vector<int> SpellModel::all_time_words_spelled_counts(size_t limit)
+std::vector<int> SpellModel::all_time_words_submitted_counts(size_t limit)
 {
     std::vector<int> result;
     

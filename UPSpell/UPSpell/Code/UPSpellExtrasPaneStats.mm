@@ -56,6 +56,11 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
 };
 
 @interface UPGameSummaryTableViewHeaderView : UIView
+@property (nonatomic) CGRect gameScoreRect;
+@property (nonatomic) CGRect wordsSpelledRect;
+@property (nonatomic) CGRect wordScoreAverageRect;
+@property (nonatomic) CGRect wordLengthAverageRect;
+@property (nonatomic) NSDictionary *stringAttributes;
 @property (nonatomic) UPDivider *divider;
 @end
 
@@ -71,67 +76,71 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     self.divider = [UPDivider divider];
     self.divider.colorCategory = UPColorCategoryInformation;
     [self addSubview:self.divider];
+
+    SpellLayout &layout = SpellLayout::instance();
+
+    CGFloat cellHeight = 72 * layout.layout_scale();
+    CGFloat cellX = 0;
+
+    CGFloat rankWidth = SpellLayout::CanonicalExtrasGamesRankColumnWidth * layout.layout_scale();
+    cellX += rankWidth;
+
+    CGFloat gameScoreWidth = SpellLayout::CanonicalExtrasGamesGameScoreColumnWidth * layout.layout_scale();
+    self.gameScoreRect = CGRectMake(cellX, 0, gameScoreWidth, cellHeight);
+    cellX += gameScoreWidth;
+
+    CGFloat wordsSpelledWidth = SpellLayout::CanonicalExtrasGamesWordsSpelledColumnWidth * layout.layout_scale();
+    self.wordsSpelledRect = CGRectMake(cellX, 0, wordsSpelledWidth, cellHeight);
+    cellX += wordsSpelledWidth;
+
+    CGFloat wordScoreAverageWidth = SpellLayout::CanonicalExtrasGamesAverageWordScoreColumnWidth * layout.layout_scale();
+    self.wordScoreAverageRect = CGRectMake(cellX, 0, wordScoreAverageWidth, cellHeight);
+    cellX += wordScoreAverageWidth;
+
+    CGFloat wordLengthAverageWidth = SpellLayout::CanonicalExtrasGamesAverageWordLengthColumnWidth * layout.layout_scale();
+    self.wordLengthAverageRect = CGRectMake(cellX, 0, wordLengthAverageWidth, cellHeight);
+
+    [self updateThemeColors];
     
     return self;
 }
 
 - (void)layoutSubviews
 {
+    SpellLayout &layout = SpellLayout::instance();
+    CGFloat pixel = 1.0 / layout.screen_scale();
     CGRect bounds = self.bounds;
-    self.divider.frame = CGRectMake(0, up_rect_height(bounds) - 1, up_rect_width(bounds), 1);
+    self.divider.frame = CGRectMake(0, up_rect_height(bounds) - pixel, up_rect_width(bounds), pixel);
 }
 
 - (void)updateThemeColors
 {
-    [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
+    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    paragraphStyle.paragraphSpacing = -5;
+    
+    self.stringAttributes = @{
+        NSForegroundColorAttributeName: [UIColor themeColorWithCategory:UPColorCategoryInformation],
+        NSParagraphStyleAttributeName: paragraphStyle,
+        NSFontAttributeName: [UIFont choiceControlFontOfSize:21]
+    };
+
+    [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect
 {
-    SpellLayout &layout = SpellLayout::instance();
+    NSString *gameScoreString = @"GAME\nSCORE";
+    [gameScoreString drawInRect:self.gameScoreRect withAttributes:self.stringAttributes];
     
-    UIFont *font = [UIFont choiceControlFontOfSize:21];
-    
-    NSMutableParagraphStyle *centerAlignedParagraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    centerAlignedParagraphStyle.alignment = NSTextAlignmentCenter;
-    centerAlignedParagraphStyle.paragraphSpacing = -5;
-    
-    NSDictionary *centerAlignedGameSummaryAttributes = @{
-        NSForegroundColorAttributeName: [UIColor themeColorWithCategory:UPColorCategoryInformation],
-        NSParagraphStyleAttributeName: centerAlignedParagraphStyle,
-        NSFontAttributeName: font
-    };
-    
-    CGFloat cellHeight = 72 * layout.layout_scale();
-    CGFloat cellX = 0;
-    CGFloat cellY = 0;
-    
-    CGFloat rankWidth = SpellLayout::CanonicalExtrasGamesRankColumnWidth * layout.layout_scale();
-    cellX += rankWidth;
-    
-    CGFloat gameScoreWidth = SpellLayout::CanonicalExtrasGamesGameScoreColumnWidth * layout.layout_scale();
-    CGRect gameScoreRect = CGRectMake(cellX, cellY, gameScoreWidth, cellHeight);
-    NSString *gameScoreString = @"HIGH\nSCORES";
-    [gameScoreString drawInRect:gameScoreRect withAttributes:centerAlignedGameSummaryAttributes];
-    cellX += gameScoreWidth;
-    
-    CGFloat wordsSpelledWidth = SpellLayout::CanonicalExtrasGamesWordsSpelledColumnWidth * layout.layout_scale();
-    CGRect wordsSpelledRect = CGRectMake(cellX, cellY, wordsSpelledWidth, cellHeight);
     NSString *wordsSpelledString = @"WORDS\nSPELLED";
-    [wordsSpelledString drawInRect:wordsSpelledRect withAttributes:centerAlignedGameSummaryAttributes];
-    cellX += wordsSpelledWidth;
+    [wordsSpelledString drawInRect:self.wordsSpelledRect withAttributes:self.stringAttributes];
     
-    CGFloat wordScoreAverageWidth = SpellLayout::CanonicalExtrasGamesAverageWordScoreColumnWidth * layout.layout_scale();
-    CGRect wordScoreAverageRect = CGRectMake(cellX, cellY, wordScoreAverageWidth, cellHeight);
     NSString *wordScoreAverageString = @"AVG WORD\nSCORE";
-    [wordScoreAverageString drawInRect:wordScoreAverageRect withAttributes:centerAlignedGameSummaryAttributes];
-    cellX += wordScoreAverageWidth;
+    [wordScoreAverageString drawInRect:self.wordScoreAverageRect withAttributes:self.stringAttributes];
     
-    CGFloat wordLengthAverageWidth = SpellLayout::CanonicalExtrasGamesAverageWordLengthColumnWidth * layout.layout_scale();
-    CGRect wordLengthAverageRect = CGRectMake(cellX, cellY, wordLengthAverageWidth, cellHeight);
     NSString *wordLengthAverageString = @"AVG WORD\nLENGTH";
-    [wordLengthAverageString drawInRect:wordLengthAverageRect withAttributes:centerAlignedGameSummaryAttributes];
-    cellX += wordLengthAverageWidth;
+    [wordLengthAverageString drawInRect:self.wordLengthAverageRect withAttributes:self.stringAttributes];
 }
 
 @end
@@ -292,6 +301,7 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
     self.gamesTable = [[UITableView alloc] initWithFrame:CGRectZero];
     self.gamesTable.backgroundColor = [UIColor clearColor];
     self.gamesTable.backgroundView = nil;
+    self.gamesTable.allowsSelection = NO;
     self.gamesTable.dataSource = self;
     self.gamesTable.delegate = self;
     self.gamesTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -384,6 +394,8 @@ typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
 - (void)updateThemeColors
 {
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
+    [self.gamesTable reloadData];
+    [self.gamesHeader setNeedsDisplay];
 }
 
 @end

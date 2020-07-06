@@ -292,14 +292,15 @@ public:
 
     static std::vector<int> all_time_game_scores(size_t limit = 5);
     static std::vector<int> all_time_word_scores(size_t limit = 5);
-    static std::vector<int> all_time_words_spelled_counts(size_t limit = 5);
+    static std::vector<int> all_time_words_submitted_counts(size_t limit = 5);
 
-    static std::vector<SpellGameSummary> best_games(SpellGameSummary::Metric, size_t limit = 8);
+    static std::vector<SpellGameSummary> best_games(SpellGameSummary::Metric, size_t limit = 25);
 
+    static int all_time_games_played_count();
     static double all_time_average_game_score();
     static double all_time_word_score_average();
     static double all_time_word_length_average();
-    static double all_time_average_words_spelled_count();
+    static double all_time_average_words_submitted_count();
     static int all_time_total_tiles_used_count();
 
 private:

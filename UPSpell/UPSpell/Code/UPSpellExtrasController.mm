@@ -165,6 +165,8 @@ using Location = UP::SpellLayout::Location;
 
 - (void)setSelectedPane:(UPAccessoryPane *)selectedPane duration:(CFTimeInterval)duration
 {
+    [self cancelAnimations];
+    
     SpellLayout &layout = SpellLayout::instance();
 
     UPAccessoryPane *previousSelectedPane = _selectedPane;
@@ -184,16 +186,43 @@ using Location = UP::SpellLayout::Location;
         }
     }
     else {
+        [self lock];
+        
         selectedPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
         if (previousSelectedPane && previousSelectedPane != selectedPane) {
-            start(bloop_out(BandSettingsUI, @[UPViewMoveMake(previousSelectedPane, Role::Screen, Spot::OffTopFar)], duration,
+            NSArray *outMoves = @[UPViewMoveMake(previousSelectedPane, Role::Screen, Spot::OffTopFar)];
+            start(bloop_out(BandSettingsUI, outMoves, duration,
                             ^(UIViewAnimatingPosition) {
-                start(bloop_in(BandSettingsUI, @[UPViewMoveMake(selectedPane, Role::Screen)], duration, nil));
+                start(bloop_in(BandSettingsUI, @[UPViewMoveMake(selectedPane, Role::Screen)], duration, ^(UIViewAnimatingPosition) {
+                    [self unlock];
+                }));
             }));
         }
         else {
-            start(bloop_in(BandSettingsUI, @[UPViewMoveMake(selectedPane, Role::Screen)], duration, nil));
+            start(bloop_in(BandSettingsUI, @[UPViewMoveMake(selectedPane, Role::Screen)], duration, ^(UIViewAnimatingPosition) {
+                [self unlock];
+            }));
         }
+    }
+}
+
+- (void)lock
+{
+    for (UPAccessoryPane *pane in self.panes) {
+        pane.userInteractionEnabled = NO;
+    }
+    for (UPChoice *choice in self.choices) {
+        choice.userInteractionEnabled = NO;
+    }
+}
+
+- (void)unlock
+{
+    for (UPAccessoryPane *pane in self.panes) {
+        pane.userInteractionEnabled = YES;
+    }
+    for (UPChoice *choice in self.choices) {
+        choice.userInteractionEnabled = YES;
     }
 }
 
