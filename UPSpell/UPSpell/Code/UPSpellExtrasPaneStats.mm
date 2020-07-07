@@ -8,6 +8,8 @@
 #import <UpKit/UPDivider.h>
 #import <UpKit/UPGameKey.h>
 #import <UpKit/UPLabel.h>
+#import <UpKit/UPLayoutRule.h>
+#import <UpKit/UPMath.h>
 #import <UpKit/UPTapGestureRecognizer.h>
 #import <UpKit/UPTimeSpanning.h>
 
@@ -48,23 +50,19 @@ using UP::TimeSpanning::start;
 using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Place;
 
-typedef NS_ENUM(NSInteger, UPSpellExtrasPaneStatsCategory) {
-    UPSpellExtrasPaneStatsCategoryDefault,
-    UPSpellExtrasPaneStatsCategoryAverages,
-    UPSpellExtrasPaneStatsCategoryGames,
-    UPSpellExtrasPaneStatsCategoryWords,
-};
-
 static NSDictionary *g_gamesHeaderStringAttributes;
 static NSDictionary *g_gamesCellLeftAlignedStringAttributes;
 static NSDictionary *g_gamesCellCenterAlignedStringAttributes;
 static NSDictionary *g_gamesCellRightAlignedStringAttributes;
 static CGRect g_gamesColumnRankRect;
 static CGRect g_gamesColumnGameScoreRect;
+static CGRect g_gamesColumnGameScoreTextRect;
 static CGRect g_gamesColumnWordsSpelledRect;
+static CGRect g_gamesColumnWordsSpelledTextRect;
 static CGRect g_gamesColumnWordScoreAverageRect;
+static CGRect g_gamesColumnWordScoreAverageTextRect;
 static CGRect g_gamesColumnWordLengthAverageRect;
-static CGRect g_gamesColumnWordLengthAverageAlignmentRect;
+static CGRect g_gamesColumnWordLengthAverageTextRect;
 static CGFloat g_gamesCellVerticalCenterY;
 
 // =========================================================================================================================================
@@ -191,7 +189,9 @@ static CGFloat g_gamesCellVerticalCenterY;
 - (void)layoutSubviews
 {
     CGRect bounds = self.bounds;
-    self.selectionView.frame = CGRectMake(self.selectionX, 0, self.selectionWidth, up_rect_height(bounds));
+    CGRect selectionFrame = CGRectMake(self.selectionX, 0, self.selectionWidth, up_rect_height(bounds));
+    selectionFrame = CGRectInset(selectionFrame, 6, 0);
+    self.selectionView.frame = selectionFrame;
 }
 
 #pragma mark - Update theme colors
@@ -215,13 +215,10 @@ static CGFloat g_gamesCellVerticalCenterY;
 {
     SpellGameSummary m_spell_game_summary;
 }
+@property (nonatomic) NSString *message;
+@property (nonatomic) UPDivider *divider;
+@property (nonatomic) UPLabel *messageLabel;
 @property (nonatomic) int rank;
-@property (nonatomic) UPLabel *rankLabel;
-@property (nonatomic) UPLabel *gameScoreLabel;
-@property (nonatomic) UPLabel *wordsSubmittedCountLabel;
-@property (nonatomic) UPLabel *wordScoreAverageLabel;
-@property (nonatomic) UPLabel *wordLengthAverageLabel;
-@property (nonatomic) UPLabel *gameKeyLabel;
 @end
 
 @implementation UPGameSummaryTableViewCell
@@ -231,6 +228,15 @@ static CGFloat g_gamesCellVerticalCenterY;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     self.backgroundColor = [UIColor clearColor];
 
+    self.messageLabel = [UPLabel label];
+    self.messageLabel.textColorCategory = UPColorCategoryInformation;
+    self.messageLabel.font = [UIFont choiceControlFontOfSize:20];
+    self.messageLabel.textAlignment = NSTextAlignmentCenter;
+
+    self.divider = [UPDivider divider];
+    self.divider.colorCategory = UPColorCategoryInformation;
+    [self addSubview:self.divider];
+
     return self;
 }
 
@@ -239,27 +245,68 @@ static CGFloat g_gamesCellVerticalCenterY;
     m_spell_game_summary = spell_game_summary;
 }
 
+- (void)setMessage:(NSString *)message
+{
+    _message = message;
+    if (_message) {
+        self.messageLabel.string = _message;
+        [self addSubview:self.messageLabel];
+        [self setNeedsLayout];
+    }
+    else {
+        [self.messageLabel removeFromSuperview];
+    }
+}
+
+- (void)layoutSubviews
+{
+    SpellLayout &layout = SpellLayout::instance();
+    CGFloat pixel = 1.0 / layout.screen_scale();
+    CGRect bounds = self.bounds;
+    self.divider.frame = CGRectMake(0, up_rect_height(bounds) - pixel, up_rect_width(bounds), pixel);
+
+    if (self.message) {
+        CGRect bounds = CGRectInset(self.bounds, 0, 3);
+        CGSize messageSize = [self.messageLabel.attributedString size];
+        messageSize.width = up_rect_width(bounds);
+        UPLayoutRule *layoutRule = [UPLayoutRule layoutRuleWithReferenceFrame:bounds hLayout:UPLayoutHorizontalMiddle vLayout:UPLayoutVerticalBottom];
+        self.messageLabel.frame = [layoutRule layoutFrameForBoundsSize:messageSize];
+    }
+}
+
 - (void)drawRect:(CGRect)rect
 {
+    if (self.message) {
+        return;
+    }
+    
+    BOOL isEmpty = m_spell_game_summary.is_empty();
+    
     NSString *rankString = [NSString stringWithFormat:@"#%d", self.rank];
     [rankString drawInRect:CGRectOffset(g_gamesColumnRankRect, 0, g_gamesCellVerticalCenterY)
-            withAttributes:g_gamesCellLeftAlignedStringAttributes];
+            withAttributes:g_gamesCellRightAlignedStringAttributes];
 
-    NSString *gameScoreString = [NSString stringWithFormat:@"%d", m_spell_game_summary.game_score()];
-    [gameScoreString drawInRect:CGRectOffset(g_gamesColumnGameScoreRect, 0, g_gamesCellVerticalCenterY)
-                 withAttributes:g_gamesCellCenterAlignedStringAttributes];
+    NSString *gameScoreString = isEmpty ? @"–" : [NSString stringWithFormat:@"%d", m_spell_game_summary.game_score()];
+    [gameScoreString drawInRect:CGRectOffset(g_gamesColumnGameScoreTextRect, 0, g_gamesCellVerticalCenterY)
+                 withAttributes:isEmpty ? g_gamesCellCenterAlignedStringAttributes : g_gamesCellRightAlignedStringAttributes];
 
-    NSString *wordsSpelledString = [NSString stringWithFormat:@"%d", m_spell_game_summary.words_submitted_count()];
-    [wordsSpelledString drawInRect:CGRectOffset(g_gamesColumnWordsSpelledRect, 0, g_gamesCellVerticalCenterY)
-                    withAttributes:g_gamesCellCenterAlignedStringAttributes];
+    NSString *wordsSpelledString = isEmpty ? @"–" : [NSString stringWithFormat:@"%d", m_spell_game_summary.words_submitted_count()];
+    [wordsSpelledString drawInRect:CGRectOffset(g_gamesColumnWordsSpelledTextRect, 0, g_gamesCellVerticalCenterY)
+                    withAttributes:isEmpty ? g_gamesCellCenterAlignedStringAttributes : g_gamesCellRightAlignedStringAttributes];
 
-    NSString *wordScoreAverageString = [NSString stringWithFormat:@"%0.2f", m_spell_game_summary.word_score_average()];
-    [wordScoreAverageString drawInRect:CGRectOffset(g_gamesColumnWordScoreAverageRect, 0, g_gamesCellVerticalCenterY)
-                        withAttributes:g_gamesCellCenterAlignedStringAttributes];
+    NSString *wordScoreAverageString = isEmpty ? @"–" : [NSString stringWithFormat:@"%0.2f", m_spell_game_summary.word_score_average()];
+    [wordScoreAverageString drawInRect:CGRectOffset(g_gamesColumnWordScoreAverageTextRect, 0, g_gamesCellVerticalCenterY)
+                        withAttributes:isEmpty ? g_gamesCellCenterAlignedStringAttributes : g_gamesCellRightAlignedStringAttributes];
 
-    NSString *wordLengthAverageString = [NSString stringWithFormat:@"%0.2f", m_spell_game_summary.word_length_average()];
-    [wordLengthAverageString drawInRect:CGRectOffset(g_gamesColumnWordLengthAverageAlignmentRect, 0, g_gamesCellVerticalCenterY)
-                         withAttributes:g_gamesCellRightAlignedStringAttributes];
+    NSString *wordLengthAverageString = isEmpty ? @"–" : [NSString stringWithFormat:@"%0.2f", m_spell_game_summary.word_length_average()];
+    [wordLengthAverageString drawInRect:CGRectOffset(g_gamesColumnWordLengthAverageTextRect, 0, g_gamesCellVerticalCenterY)
+                         withAttributes:isEmpty ? g_gamesCellCenterAlignedStringAttributes : g_gamesCellRightAlignedStringAttributes];
+}
+
+- (void)updateThemeColors
+{
+    [self.divider updateThemeColors];
+    [self.messageLabel updateThemeColors];
 }
 
 @end
@@ -269,6 +316,7 @@ static CGFloat g_gamesCellVerticalCenterY;
 @interface UPSpellExtrasPaneStats () <UITableViewDataSource, UITableViewDelegate>
 {
     std::vector<SpellGameSummary> m_best_games;
+    SpellGameSummary m_most_recent_game;
 }
 @property (nonatomic) UPBallot *averagesTabRadioButton;
 @property (nonatomic) UPBallot *gamesTabRadioButton;
@@ -319,24 +367,22 @@ static CGFloat g_gamesCellVerticalCenterY;
     
     self.radioButtons = @[ self.averagesTabRadioButton, self.gamesTabRadioButton, self.wordsTabRadioButton ];
     
-    self.gamesBackgroundView = [UPTableColumnSelectionView tableColumnSelectionView];
-    self.gamesBackgroundView.selectionColorCategory = UPColorCategorySecondaryInactiveFill;
-    self.gamesBackgroundView.selectionX = 0;
-    self.gamesBackgroundView.selectionWidth = 120;
-    [self addSubview:self.gamesBackgroundView];
+//    self.gamesBackgroundView = [UPTableColumnSelectionView tableColumnSelectionView];
+//    self.gamesBackgroundView.selectionColorCategory = UPColorCategorySecondaryInactiveFill;
+//    [self addSubview:self.gamesBackgroundView];
 
     self.gamesHeader = [[UPGameSummaryTableViewHeaderView alloc] initWithFrame:CGRectZero];
     [self addSubview:self.gamesHeader];
 
     self.gamesTable = [[UITableView alloc] initWithFrame:CGRectZero];
-    UPTableColumnSelectionView *gamesTableColumnSelectionView = [UPTableColumnSelectionView tableColumnSelectionView];
-    self.gamesTable.backgroundView = gamesTableColumnSelectionView;
+    self.gamesTable.backgroundView = nil;
     self.gamesTable.backgroundColor = [UIColor clearColor];
     self.gamesTable.allowsSelection = NO;
+    self.gamesTable.scrollEnabled = NO;
     self.gamesTable.dataSource = self;
     self.gamesTable.delegate = self;
-    self.gamesTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.gamesTable.separatorColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
+//    self.gamesTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+//    self.gamesTable.separatorColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
     self.gamesTable.separatorInset = UIEdgeInsetsZero;
     self.gamesTable.sectionHeaderHeight = 0;
     [self.gamesTable registerClass:[UPGameSummaryTableViewCell class] forCellReuseIdentifier:@"UPGameSummaryTableViewCell"];
@@ -345,7 +391,7 @@ static CGFloat g_gamesCellVerticalCenterY;
     [self updateThemeColors];
 
     {
-        CGFloat cellHeight = 57 * layout.layout_scale();
+        CGFloat cellHeight = 54 * layout.layout_scale();
         CGSize cellTextSize = [@"0" sizeWithAttributes:g_gamesCellLeftAlignedStringAttributes];
         CGFloat cellX = 0;
         g_gamesCellVerticalCenterY = (cellHeight - cellTextSize.height) / 2;
@@ -357,42 +403,118 @@ static CGFloat g_gamesCellVerticalCenterY;
         
         CGFloat gameScoreWidth = SpellLayout::CanonicalExtrasGamesGameScoreColumnWidth * layout.layout_scale();
         g_gamesColumnGameScoreRect = CGRectMake(cellX, 0, gameScoreWidth, rectHeight);
+        CGSize gameScoreSize = [@"0000" sizeWithAttributes:g_gamesCellRightAlignedStringAttributes];
+        CGRect gameScoreTextRect = CGRectMake(0, 0, gameScoreSize.width, gameScoreSize.height);
+        g_gamesColumnGameScoreTextRect = up_rect_centered_x_in_rect(gameScoreTextRect, g_gamesColumnGameScoreRect);
         cellX += gameScoreWidth;
         
         CGFloat wordsSpelledWidth = SpellLayout::CanonicalExtrasGamesWordsSpelledColumnWidth * layout.layout_scale();
         g_gamesColumnWordsSpelledRect = CGRectMake(cellX, 0, wordsSpelledWidth, rectHeight);
+        CGSize wordsSpelledSize = [@"00" sizeWithAttributes:g_gamesCellRightAlignedStringAttributes];
+        CGRect wordsSpelledTextRect = CGRectMake(0, 0, wordsSpelledSize.width, wordsSpelledSize.height);
+        g_gamesColumnWordsSpelledTextRect = up_rect_centered_x_in_rect(wordsSpelledTextRect, g_gamesColumnWordsSpelledRect);
         cellX += wordsSpelledWidth;
         
         CGFloat wordScoreAverageWidth = SpellLayout::CanonicalExtrasGamesAverageWordScoreColumnWidth * layout.layout_scale();
         g_gamesColumnWordScoreAverageRect = CGRectMake(cellX, 0, wordScoreAverageWidth, rectHeight);
+        CGSize wordScoreAverageSize = [@"00.00" sizeWithAttributes:g_gamesCellRightAlignedStringAttributes];
+        CGRect wordScoreAverageTextRect = CGRectMake(0, 0, wordScoreAverageSize.width, wordScoreAverageSize.height);
+        g_gamesColumnWordScoreAverageTextRect = up_rect_centered_x_in_rect(wordScoreAverageTextRect, g_gamesColumnWordScoreAverageRect);
         cellX += wordScoreAverageWidth;
         
         CGFloat wordLengthAverageWidth = SpellLayout::CanonicalExtrasGamesAverageWordLengthColumnWidth * layout.layout_scale();
         g_gamesColumnWordLengthAverageRect = CGRectMake(cellX, 0, wordLengthAverageWidth, rectHeight);
         CGSize wordLengthAverageSize = [@"00.00" sizeWithAttributes:g_gamesCellRightAlignedStringAttributes];
-        CGRect wordLengthAverageAlignmentRect = CGRectMake(0, 0, wordLengthAverageSize.width, wordLengthAverageSize.height);
-        CGRect wordLengthAverageRect = up_rect_centered_x_in_rect(wordLengthAverageAlignmentRect, g_gamesColumnWordLengthAverageRect);
-        g_gamesColumnWordLengthAverageAlignmentRect = wordLengthAverageRect;
+        CGRect wordLengthAverageTextRect = CGRectMake(0, 0, wordLengthAverageSize.width, wordLengthAverageSize.height);
+        g_gamesColumnWordLengthAverageTextRect = up_rect_centered_x_in_rect(wordLengthAverageTextRect, g_gamesColumnWordLengthAverageRect);
     }
-    
+
+    self.gamesBackgroundView.selectionX = up_rect_min_x(g_gamesColumnWordLengthAverageRect);
+    self.gamesBackgroundView.selectionWidth = up_rect_width(g_gamesColumnWordLengthAverageRect);
+
 
     return self;
 }
 
 - (void)tabRadioButtonTapped:(UPBallot *)sender
 {
-    for (UPBallot *radioButton in self.radioButtons) {
-        if (radioButton != sender) {
-            radioButton.selected = NO;
-            [radioButton invalidate];
-            [radioButton update];
-        }
-    }
-    
     NSUInteger statsSelectedTabIndex = sender.tag;
-
+    
     UPSpellSettings *settings = [UPSpellSettings instance];
     settings.statsSelectedTabIndex = statsSelectedTabIndex;
+    
+    [self updateRadioButtons:statsSelectedTabIndex];
+    [self setSelectedTab:statsSelectedTabIndex];
+}
+
+- (void)updateRadioButtons:(NSUInteger)statsSelectedTabIndex
+{
+    for (UPBallot *radioButton in self.radioButtons) {
+        radioButton.selected = (radioButton.tag == statsSelectedTabIndex);
+        [radioButton invalidate];
+        [radioButton update];
+    }
+}
+
+- (void)setSelectedTab:(NSUInteger)statsSelectedTabIndex
+{
+    switch (statsSelectedTabIndex) {
+        default:
+        case 0: {
+            [self orderInAverages];
+            [self orderOutGames];
+            [self orderOutWords];
+            break;
+        }
+        case 1: {
+            [self orderOutAverages];
+            [self orderInGames];
+            [self orderOutWords];
+            break;
+        }
+        case 2: {
+            [self orderOutAverages];
+            [self orderOutGames];
+            [self orderInWords];
+            break;
+        }
+    }
+}
+
+- (void)orderInAverages
+{
+}
+
+- (void)orderOutAverages
+{
+}
+
+- (void)orderInGames
+{
+    [self addSubview:self.gamesBackgroundView];
+    [self addSubview:self.gamesHeader];
+    [self addSubview:self.gamesTable];
+
+    m_best_games = SpellModel::best_games(SpellGameSummary::Metric::GameScore, 20);
+    m_most_recent_game = SpellModel::most_recent_game();
+    
+    [self.gamesTable reloadData];
+    [self.gamesHeader setNeedsDisplay];
+}
+
+- (void)orderOutGames
+{
+    [self.gamesBackgroundView removeFromSuperview];
+    [self.gamesHeader removeFromSuperview];
+    [self.gamesTable removeFromSuperview];
+}
+
+- (void)orderInWords
+{
+}
+
+- (void)orderOutWords
+{
 }
 
 - (void)prepare
@@ -407,9 +529,9 @@ static CGFloat g_gamesCellVerticalCenterY;
     gamesBackgroundViewFrame.size.height += up_rect_height(self.gamesTable.frame);
     self.gamesBackgroundView.frame = gamesBackgroundViewFrame;
     
-    m_best_games = SpellModel::best_games(SpellGameSummary::Metric::GameScore, 20);
-    [self.gamesTable reloadData];
-    [self.gamesHeader setNeedsDisplay];
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    [self updateRadioButtons:settings.statsSelectedTabIndex];
+    [self setSelectedTab:settings.statsSelectedTabIndex];
 }
 
 - (void)cancelAnimations
@@ -421,7 +543,7 @@ static CGFloat g_gamesCellVerticalCenterY;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.gamesTable) {
-        return m_best_games.size();
+        return 5;
     }
     return 0;
 }
@@ -434,8 +556,22 @@ static CGFloat g_gamesCellVerticalCenterY;
     
     if (tableView == self.gamesTable) {
         UPGameSummaryTableViewCell *gamesCell = [tableView dequeueReusableCellWithIdentifier:@"UPGameSummaryTableViewCell"];
+        gamesCell.message = nil;
+        if (row < 3) {
+            if (row >= m_best_games.size()) {
+                [gamesCell setGameSummary:SpellGameSummary()];
+            }
+            else {
+                [gamesCell setGameSummary:m_best_games[row]];
+            }
+        }
+        else if (row == 3) {
+            gamesCell.message = @"MOST RECENT GAME";
+        }
+        else {
+            [gamesCell setGameSummary:m_most_recent_game];
+        }
         gamesCell.rank = (int)row + 1;
-        [gamesCell setGameSummary:m_best_games[row]];
         cell = gamesCell;
     }
 
@@ -452,7 +588,12 @@ static CGFloat g_gamesCellVerticalCenterY;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SpellLayout &layout = SpellLayout::instance();
-    return 57 * layout.layout_scale();
+    if (indexPath.row == 3) {
+        return 74 * layout.layout_scale();
+    }
+    else {
+        return 54 * layout.layout_scale();
+    }
 }
 
 #pragma mark - Target / Action
@@ -471,7 +612,7 @@ static CGFloat g_gamesCellVerticalCenterY;
     NSMutableParagraphStyle *rightAlignedParagraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     [rightAlignedParagraphStyle setAlignment:NSTextAlignmentRight];
     
-    UIFont *gamesHeaderFont = [UIFont choiceControlFontOfSize:21];
+    UIFont *gamesHeaderFont = [UIFont choiceControlFontOfSize:20];
     UIFont *gamesCellFont = [UIFont checkboxControlFontOfSize:27];
     
     g_gamesHeaderStringAttributes = @{
@@ -500,7 +641,7 @@ static CGFloat g_gamesCellVerticalCenterY;
     
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
     [self.gamesTable.backgroundView updateThemeColors];
-    self.gamesTable.separatorColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
+//    self.gamesTable.separatorColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
     [self.gamesHeader setNeedsDisplay];
     [self.gamesTable reloadData];
 }

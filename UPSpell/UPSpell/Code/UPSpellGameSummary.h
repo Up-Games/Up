@@ -30,7 +30,9 @@ public:
     double word_score_average() const { return m_word_score_average; }
     double word_length_average() const { return m_word_length_average; }
     GameKey game_key() const { return m_game_key; }
-    
+
+    template <bool B = true> bool is_empty() const { return (game_id() == 0) == B; }
+
 private:
     uint64_t m_game_id = 0;
     int m_game_score = 0;
