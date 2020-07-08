@@ -153,7 +153,7 @@ public:
     static inline constexpr CGRect CanonicalChoice2LayoutFrame =             {  30, 204, 940, 76 };
     static inline constexpr CGRect CanonicalChoice3LayoutFrame =             {  30, 288, 940, 76 };
     static inline constexpr CGRect CanonicalChoice4LayoutFrame =             {  30, 372, 940, 76 };
-    static inline constexpr CGSize CanonicalChoiceSize =                              {  300, 76 };
+    static inline constexpr CGSize CanonicalChoiceSize =                              {  280, 76 };
 
     static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 20;
 

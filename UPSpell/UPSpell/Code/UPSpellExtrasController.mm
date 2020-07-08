@@ -95,7 +95,7 @@ using Location = UP::SpellLayout::Location;
     [self.view addSubview:self.choice2];
     
     self.choice3 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice3.labelString = @"OBSESS";
+    self.choice3.labelString = @"STATS";
     self.choice3.tag = 2;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice3.frame = layout.frame_for(Role::ChoiceItem3Left, Spot::OffLeftNear);
@@ -103,7 +103,7 @@ using Location = UP::SpellLayout::Location;
     [self.view addSubview:self.choice3];
     
     self.choice4 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice4.labelString = @"OPTIONS";
+    self.choice4.labelString = @"OBSESS";
     self.choice4.tag = 3;
     self.choice4.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice4.frame = layout.frame_for(Role::ChoiceItem4Left, Spot::OffLeftNear);
