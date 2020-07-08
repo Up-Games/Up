@@ -276,7 +276,8 @@ void SpellLayout::calculate()
     calculate_stepper_control_metrics();
     calculate_choice_control_metrics();
     calculate_settings_description_font_metrics();
-    calculate_game_controls_button_charge_size();
+    calculate_game_controls_button_charge_outsets();
+    calculate_help_button_charge_outsets();
     calculate_locations();
 }
 
@@ -686,6 +687,8 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasStatsWordsTabButton, layout_relative_aspect_rect(CanonicalExtrasStatsWordsTabButtonFrame));
     calculate_and_set_locations(Role::ExtrasStatsHeader, layout_relative_aspect_rect(CanonicalExtrasStatsHeaderFrame));
     calculate_and_set_locations(Role::ExtrasStatsTable, layout_relative_aspect_rect(CanonicalExtrasStatsTableFrame));
+
+    calculate_and_set_locations(Role::ExtrasObsessHelp, layout_relative_aspect_rect(CanonicalExtrasObsessHelpButtonFrame));
 }
 
 void SpellLayout::calculate_choice_locations()
@@ -755,12 +758,20 @@ void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &def
     m_location_frames.emplace(Location(role, Place::OffRightFar), up_pixel_rect(off_right_far_frame, screen_scale()));
 }
 
-void SpellLayout::calculate_game_controls_button_charge_size()
+void SpellLayout::calculate_game_controls_button_charge_outsets()
 {
     CGSize size = up_size_scaled(CanonicalRoundGameButtonSize, layout_scale());
     CGFloat width_offset = up_size_width(size) * layout_scale() * 0.5;
     CGFloat height_offset = up_size_height(size) * layout_scale() * 0.5;
     set_game_controls_button_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
+}
+
+void SpellLayout::calculate_help_button_charge_outsets()
+{
+    CGSize size = up_size_scaled(CanonicalRoundHelpButtonSize, layout_scale());
+    CGFloat width_offset = up_size_width(size) * layout_scale() * 0.5;
+    CGFloat height_offset = up_size_height(size) * layout_scale() * 0.5;
+    set_help_button_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
 }
 
 void SpellLayout::calculate_game_timer_frame()

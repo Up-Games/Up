@@ -762,4 +762,14 @@ using namespace UP;
     return button;
 }
 
++ (UPButton *)roundHelpButton
+{
+    SpellLayout &layout = SpellLayout::instance();
+    UPButton *button = [UPButton roundBackButton];
+    button.canonicalSize = SpellLayout::CanonicalRoundHelpButtonSize;
+    [button setContentPath:TextPathQuestionMark() forState:UPControlStateNormal];
+    button.chargeOutsets = layout.help_button_charge_outsets();
+    return button;
+}
+
 @end

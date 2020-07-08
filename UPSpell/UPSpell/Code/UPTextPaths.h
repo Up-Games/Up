@@ -12,6 +12,7 @@ namespace UP {
 UIBezierPath *TextPathDialogGameOver();
 UIBezierPath *TextPathDialogPaused();
 UIBezierPath *TextPathDialogReady();
+UIBezierPath *TextPathQuestionMark();
 
 }  // namespace UP
 

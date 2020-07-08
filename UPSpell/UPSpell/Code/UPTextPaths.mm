@@ -350,6 +350,33 @@ UIBezierPath *TextPathDialogReady()
     return path;
 }
 
+UIBezierPath *TextPathQuestionMark()
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint: CGPointMake(31.04, 41.41)];
+    [path addCurveToPoint: CGPointMake(36.19, 46.78) controlPoint1: CGPointMake(33.95, 41.41) controlPoint2: CGPointMake(36.19, 43.87)];
+    [path addCurveToPoint: CGPointMake(31.04, 52.16) controlPoint1: CGPointMake(36.19, 49.7) controlPoint2: CGPointMake(33.95, 52.16)];
+    [path addCurveToPoint: CGPointMake(25.94, 46.73) controlPoint1: CGPointMake(28.13, 52.16) controlPoint2: CGPointMake(25.94, 49.7)];
+    [path addCurveToPoint: CGPointMake(31.04, 41.41) controlPoint1: CGPointMake(25.94, 43.87) controlPoint2: CGPointMake(28.13, 41.41)];
+    [path closePath];
+    [path moveToPoint: CGPointMake(32.94, 11.84)];
+    [path addCurveToPoint: CGPointMake(43.36, 21.3) controlPoint1: CGPointMake(39.44, 11.84) controlPoint2: CGPointMake(43.36, 15.71)];
+    [path addCurveToPoint: CGPointMake(36.47, 31.66) controlPoint1: CGPointMake(43.36, 26.23) controlPoint2: CGPointMake(40.78, 28.53)];
+    [path addCurveToPoint: CGPointMake(33.39, 36.59) controlPoint1: CGPointMake(34.01, 33.51) controlPoint2: CGPointMake(33.39, 34.74)];
+    [path addCurveToPoint: CGPointMake(33.5, 38.1) controlPoint1: CGPointMake(33.39, 37.26) controlPoint2: CGPointMake(33.45, 37.43)];
+    [path addLineToPoint: CGPointMake(28.46, 38.1)];
+    [path addCurveToPoint: CGPointMake(26.56, 32.9) controlPoint1: CGPointMake(27.23, 36.37) controlPoint2: CGPointMake(26.56, 34.91)];
+    [path addCurveToPoint: CGPointMake(31.54, 25.73) controlPoint1: CGPointMake(26.56, 29.82) controlPoint2: CGPointMake(28.35, 27.97)];
+    [path addCurveToPoint: CGPointMake(34.18, 22.2) controlPoint1: CGPointMake(33.45, 24.33) controlPoint2: CGPointMake(34.18, 23.49)];
+    [path addCurveToPoint: CGPointMake(31.54, 20.07) controlPoint1: CGPointMake(34.18, 20.86) controlPoint2: CGPointMake(33.17, 20.07)];
+    [path addCurveToPoint: CGPointMake(22.81, 24.94) controlPoint1: CGPointMake(28.91, 20.07) controlPoint2: CGPointMake(25.66, 21.81)];
+    [path addLineToPoint: CGPointMake(22.64, 24.94)];
+    [path addLineToPoint: CGPointMake(22.64, 15.42)];
+    [path addCurveToPoint: CGPointMake(32.94, 11.84) controlPoint1: CGPointMake(25.16, 13.41) controlPoint2: CGPointMake(28.58, 11.84)];
+    [path closePath];
+    return path;
+}
+
 }  // namespace UP
 
 #endif  // __cplusplus

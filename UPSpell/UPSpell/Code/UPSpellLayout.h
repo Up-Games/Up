@@ -56,7 +56,8 @@ public:
         ExtrasColorsDarkMode, ExtrasColorsStarkMode, ExtrasColorsQuarkMode, ExtrasColorsHueWheel,
         ExtrasColorsHueStepMore, ExtrasColorsHueStepLess, ExtrasColorsDescription, ExtrasColorsExample,
         ExtrasColorsIconPrompt, ExtrasColorsIconButtonNope, ExtrasColorsIconButtonYep,
-        ExtrasStatsAveragesTabButton, ExtrasStatsGamesTabButton, ExtrasStatsWordsTabButton, ExtrasStatsHeader, ExtrasStatsTable
+        ExtrasStatsAveragesTabButton, ExtrasStatsGamesTabButton, ExtrasStatsWordsTabButton, ExtrasStatsHeader, ExtrasStatsTable,
+        ExtrasObsessHelp,
     };
 
     enum class Place {
@@ -92,6 +93,7 @@ public:
 
     static inline constexpr CGSize CanonicalRoundGameButtonSize =  { 84,  84 };
     static inline constexpr CGSize CanonicalRoundBackButtonSize =  { 64,  64 };
+    static inline constexpr CGSize CanonicalRoundHelpButtonSize =  { 64,  64 };
     static inline constexpr CGSize CanonicalTextButtonSize =      { 188,  76 };
     static inline constexpr CGSize CanonicalSmallTextButtonSize = up_size_scaled(CanonicalTextButtonSize, 0.75);
     static inline constexpr CGSize CanonicalBallotSize =          {  40,  36 };
@@ -182,6 +184,8 @@ public:
     static inline constexpr CGFloat CanonicalExtrasGamesAverageWordScoreColumnWidth =  135;
     static inline constexpr CGFloat CanonicalExtrasGamesAverageWordLengthColumnWidth = 135;
 
+    static inline constexpr CGRect CanonicalExtrasObsessHelpButtonFrame = { 902, 407, up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
+
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
         return *g_instance;
@@ -230,6 +234,7 @@ public:
     UPOutsets game_controls_button_charge_outsets() const { return m_game_controls_button_charge_outsets; }
     UPOutsets ballot_control_charge_outsets() const { return m_ballot_control_charge_outsets; }
     UPOutsets stepper_control_charge_outsets() const { return m_stepper_control_charge_outsets; }
+    UPOutsets help_button_charge_outsets() const { return m_help_button_charge_outsets; }
 
     UIFont *text_button_font() const { return m_text_button_font; }
     UIFont *small_text_button_font() const { return m_small_text_button_font; }
@@ -290,6 +295,7 @@ private:
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
     void set_settings_description_font(UIFont *font) { m_settings_description_font = font; }
     void set_game_controls_button_charge_outsets(UPOutsets outsets) { m_game_controls_button_charge_outsets = outsets; }
+    void set_help_button_charge_outsets(UPOutsets outsets) { m_help_button_charge_outsets = outsets; }
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
     void set_game_score_frame(CGRect rect) { m_game_score_frame = rect; }
 
@@ -321,7 +327,8 @@ private:
     void calculate_game_locations();
     void calculate_choice_locations();
     void calculate_extras_locations();
-    void calculate_game_controls_button_charge_size();
+    void calculate_game_controls_button_charge_outsets();
+    void calculate_help_button_charge_outsets();
     void calculate_and_set_locations(const Role role, const CGRect &frame, CGFloat near_factor = CanonicalOffscreenNearFrameFactor);
 
     void calculate_game_timer_frame();
@@ -391,6 +398,7 @@ private:
     UPOutsets m_game_controls_button_charge_outsets = UPOutsetsZero;
     UPOutsets m_ballot_control_charge_outsets = UPOutsetsZero;
     UPOutsets m_stepper_control_charge_outsets = UPOutsetsZero;
+    UPOutsets m_help_button_charge_outsets = UPOutsetsZero;
 
     CGRect m_game_timer_frame = CGRectZero;
     CGRect m_game_score_frame = CGRectZero;
