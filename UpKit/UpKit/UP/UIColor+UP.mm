@@ -306,8 +306,15 @@ static CGFloat _ThemeHue = 222;
 {
     CGFloat r1, g1, b1, a1;
     [color1 getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
+    if (up_is_fuzzy_zero(r1) && up_is_fuzzy_zero(g1) && up_is_fuzzy_zero(b1) && up_is_fuzzy_zero(a1)) {
+        return [color2 colorWithAlphaComponent:fraction];  // treat this as a fade
+    }
+
     CGFloat r2, g2, b2, a2;
     [color2 getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
+    if (up_is_fuzzy_zero(r2) && up_is_fuzzy_zero(g2) && up_is_fuzzy_zero(b2) && up_is_fuzzy_zero(a2)) {
+        return [color1 colorWithAlphaComponent:(1.0 - fraction)];  // treat this as a fade
+    }
 
     CGFloat r3 = mix_channel(r1, r2, fraction);
     CGFloat g3 = mix_channel(g1, g2, fraction);
