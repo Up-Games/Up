@@ -97,6 +97,10 @@ public:
     static inline constexpr CGSize CanonicalHueWheelSize =       { 220, 220 };
     static inline constexpr CGSize CanonicalStepperSize =        {  36,  36 };
 
+    static inline constexpr CGFloat CanonicalTextButtonSizeClassLargeMultiplier = 1.0;
+    static inline constexpr CGFloat CanonicalTextButtonSizeClassMediumMultiplier = 0.75;
+    static inline constexpr CGFloat CanonicalTextButtonSizeClassSmallMultiplier = 0.6;
+
     static inline constexpr CGFloat CanonicalTextButtonCapHeight = 29;
     static inline constexpr CGFloat CanonicalTextButtonBaselineAdjustment = -3.5;
     static inline constexpr CGFloat CanonicalGameInformationCapHeight = 57;

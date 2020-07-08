@@ -8,6 +8,7 @@
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPControl.h>
 #import <UpKit/UPGeometry.h>
+#import <UpKit/UPLabel.h>
 
 #import "UPControl+UPSpell.h"
 #import "UPDialogMenu.h"
@@ -48,15 +49,19 @@ using UP::SpellLayout;
     self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageVerticallyCentered);
     [self addSubview:self.messagePathView];
 
-    self.extrasButton = [UPTextSettingsButton textButtonExtras];
+    self.extrasButton = [UPTextSettingsButton textSettingsButton];
+    self.extrasButton.labelString = @"EXTRAS";
     self.extrasButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopLeft);
     [self addSubview:self.extrasButton];
 
-    self.playButton = [UPTextButton textButtonPlay];
+    self.playButton = [UPTextButton textButton];
+    self.playButton.labelString = @"PLAY";
+    [self.playButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     self.playButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopCenter);
     [self addSubview:self.playButton];
 
-    self.aboutButton = [UPTextSettingsButton textButtonAbout];
+    self.aboutButton = [UPTextSettingsButton textSettingsButton];
+    self.aboutButton.labelString = @"ABOUT";
     self.aboutButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopRight);
     [self addSubview:self.aboutButton];
 

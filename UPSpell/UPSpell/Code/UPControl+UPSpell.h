@@ -8,10 +8,6 @@
 #import <UpKit/UPButton.h>
 #import <UpKit/UPControl.h>
 
-#import "UPChoice.h"
-#import "UPTextButton.h"
-#import "UPTextSettingsButton.h"
-
 namespace UP {
 
 UIBezierPath *RoundGameButtonFillPath();
@@ -45,29 +41,5 @@ UIBezierPath *ChoiceRightFillPathSelected();
 + (UPButton *)roundBackButton;
 + (UPButton *)roundBackButtonLeftArrow;
 + (UPButton *)roundBackButtonRightArrow;
-
-@end
-
-@interface UPTextButton (UPSpell)
-
-+ (UPTextButton *)textButtonPlay;
-+ (UPTextButton *)textButtonQuit;
-+ (UPTextButton *)textButtonResume;
-
-@end
-
-@interface UPTextSettingsButton (UPSpell)
-
-+ (UPTextSettingsButton *)textButtonAbout;
-+ (UPTextSettingsButton *)textButtonExtras;
-
-@end
-
-@interface UPChoice (UPSpell)
-
-+ (UPChoice *)choiceRightUpSpell;
-+ (UPChoice *)choiceRightRules;
-+ (UPChoice *)choiceRightLegal;
-+ (UPChoice *)choiceRightThanks;
 
 @end

@@ -8,7 +8,5 @@
 @interface UPTextSettingsButton : UPTextButton
 
 + (UPTextSettingsButton *)textSettingsButton;
-+ (UPTextSettingsButton *)textSettingsButtonWithLabelString:(NSString *)labelString;
-+ (UPTextSettingsButton *)textSettingsButtonWithTarget:(id)target action:(SEL)action;
 
 @end

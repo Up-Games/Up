@@ -14,18 +14,6 @@
     return [[UPTextSettingsButton alloc] initWithTarget:nil action:nullptr];
 }
 
-+ (UPTextSettingsButton *)textSettingsButtonWithLabelString:(NSString *)labelString;
-{
-    UPTextSettingsButton *button = [[UPTextSettingsButton alloc] initWithTarget:nil action:nullptr];
-    [button setLabelString:labelString];
-    return button;
-}
-
-+ (UPTextSettingsButton *)textSettingsButtonWithTarget:(id)target action:(SEL)action;
-{
-    return [[UPTextSettingsButton alloc] initWithTarget:target action:action];
-}
-
 - (instancetype)initWithTarget:(id)target action:(SEL)action
 {
     self = [super initWithTarget:target action:action];

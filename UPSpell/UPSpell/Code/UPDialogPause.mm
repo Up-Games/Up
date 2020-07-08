@@ -8,6 +8,7 @@
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPControl.h>
 #import <UpKit/UPGeometry.h>
+#import <UpKit/UPLabel.h>
 
 #import "UPControl+UPSpell.h"
 #import "UPDialogPause.h"
@@ -46,11 +47,15 @@ using UP::SpellLayout;
     self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageCenteredInWordTray);
     [self addSubview:self.messagePathView];
 
-    self.quitButton = [UPTextButton textButtonQuit];
+    self.quitButton = [UPTextButton textButton];
+    self.quitButton.labelString = @"QUIT";
+    [self.quitButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     self.quitButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonAlternativeResponse);
     [self addSubview:self.quitButton];
 
-    self.resumeButton = [UPTextButton textButtonResume];
+    self.resumeButton = [UPTextButton textButton];
+    self.resumeButton.labelString = @"RESUME";
+    [self.resumeButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     self.resumeButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonDefaultResponse);
     [self addSubview:self.resumeButton];
 

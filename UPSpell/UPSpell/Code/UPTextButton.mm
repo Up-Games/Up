@@ -7,6 +7,7 @@
 #import <UPKit/UPGeometry.h>
 #import <UPKit/UPLabel.h>
 
+#import "UIFont+UPSpell.h"
 #import "UPSpellLayout.h"
 #import "UPTextButton.h"
 
@@ -115,23 +116,12 @@ UIBezierPath *TextButtonStrokePath()
     return [[UPTextButton alloc] initWithTarget:nil action:nullptr];
 }
 
-+ (UPTextButton *)textButtonWithLabelString:(NSString *)labelString
-{
-    UPTextButton *button = [[UPTextButton alloc] initWithTarget:nil action:nullptr];
-    [button setLabelString:labelString];
-    return button;
-}
-
-+ (UPTextButton *)textButtonWithTarget:(id)target action:(SEL)action
-{
-    return [[UPTextButton alloc] initWithTarget:target action:action];
-}
-
 - (instancetype)initWithTarget:(id)target action:(SEL)action
 {
     self = [super initWithTarget:target action:action];
 
     self.canonicalSize = SpellLayout::CanonicalTextButtonSize;
+    
     [self setFillPath:TextButtonFillPath() forState:UPControlStateNormal];
     [self setFillColorCategory:UPColorCategoryPrimaryFill forState:UPControlStateNormal];
     [self setFillColorCategory:UPColorCategoryHighlightedFill forState:UPControlStateHighlighted];
@@ -154,12 +144,11 @@ UIBezierPath *TextButtonStrokePath()
     [super layoutSubviews];
         
     CGRect bounds = self.bounds;
-    SpellLayout &layout = SpellLayout::instance();
 
     [self.label sizeToFit];
     
     CGRect labelFrame = up_rect_centered_in_rect(self.label.frame, bounds);
-    CGFloat labelOriginY = up_rect_min_y(labelFrame) + layout.text_button_font().baselineAdjustment;
+    CGFloat labelOriginY = up_rect_min_y(labelFrame) + self.label.font.baselineAdjustment;
     labelFrame.origin = CGPointMake(0, labelOriginY);
     labelFrame.size.width = up_rect_width(bounds);
     self.label.frame = labelFrame;

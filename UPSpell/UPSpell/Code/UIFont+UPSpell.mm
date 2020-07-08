@@ -5,6 +5,8 @@
 
 #import <CoreText/CoreText.h>
 
+#import <UpKit/UIFont+UP.h>
+
 #import "UIFont+UPSpell.h"
 
 NSString * const UPTextButtonFontName = @"MalloryCondensed-BlackItalic";

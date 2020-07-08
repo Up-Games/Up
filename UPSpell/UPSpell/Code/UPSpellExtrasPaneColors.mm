@@ -166,13 +166,15 @@ static const int MilepostHue = 15;
     self.iconPrompt.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.iconPrompt];
 
-    self.iconButtonNope = [UPTextButton textButtonWithLabelString:@"NOPE"];
+    self.iconButtonNope = [UPTextButton textButton];
+    self.iconButtonNope.labelString = @"NOPE";
     [self.iconButtonNope setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     [self.iconButtonNope setTarget:self action:@selector(hideIconEasterEgg)];
     [self addSubview:self.iconButtonNope];
     self.iconButtonNope.frame = layout.frame_for(Role::ExtrasColorsIconButtonNope);
 
-    self.iconButtonYep = [UPTextButton textButtonWithLabelString:@"YEP!"];
+    self.iconButtonYep = [UPTextButton textButton];
+    self.iconButtonYep.labelString = @"YEP!";
     [self.iconButtonYep setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     [self.iconButtonYep setTarget:self action:@selector(iconButtonYepTapped)];
     [self addSubview:self.iconButtonYep];
