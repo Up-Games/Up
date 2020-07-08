@@ -65,11 +65,6 @@ UIBezierPath *ChoiceRightFillPathSelected();
 
 @interface UPChoice (UPSpell)
 
-+ (UPChoice *)choiceLeftColors;
-+ (UPChoice *)choiceLeftSounds;
-+ (UPChoice *)choiceLeftStats;
-+ (UPChoice *)choiceLeftGameKeys;
-
 + (UPChoice *)choiceRightUpSpell;
 + (UPChoice *)choiceRightRules;
 + (UPChoice *)choiceRightLegal;

@@ -810,34 +810,6 @@ using namespace UP;
 
 @implementation UPChoice (UPSpell)
 
-+ (UPChoice *)choiceLeftColors
-{
-    UPChoice *choice = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    choice.labelString = @"COLORS";
-    return choice;
-}
-
-+ (UPChoice *)choiceLeftSounds
-{
-    UPChoice *choice = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    choice.labelString = @"SOUNDS";
-    return choice;
-}
-
-+ (UPChoice *)choiceLeftStats
-{
-    UPChoice *choice = [UPChoice  choiceWithSide:UPChoiceSideLeft];
-    choice.labelString = @"STATS";
-    return choice;
-}
-
-+ (UPChoice *)choiceLeftGameKeys
-{
-    UPChoice *choice = [UPChoice  choiceWithSide:UPChoiceSideLeft];
-    choice.labelString = @"GAMEKEYS";
-    return choice;
-}
-
 + (UPChoice *)choiceRightUpSpell
 {
     UPChoice *choice = [UPChoice choiceWithSide:UPChoiceSideRight];

@@ -78,28 +78,32 @@ using Location = UP::SpellLayout::Location;
     self.backButton.chargeOutsets = UPOutsetsMake(0, 0, 0, 200 * layout.layout_scale());
     [self.view addSubview:self.backButton];
 
-    self.choice1 = [UPChoice choiceLeftColors];
+    self.choice1 = [UPChoice choiceWithSide:UPChoiceSideLeft];
+    self.choice1.labelString = @"COLOR";
     self.choice1.tag = 0;
     self.choice1.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice1.frame = layout.frame_for(Role::ChoiceItem1Left, Spot::OffLeftNear);
     [self.choice1 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice1];
     
-    self.choice2 = [UPChoice choiceLeftSounds];
+    self.choice2 = [UPChoice choiceWithSide:UPChoiceSideLeft];
+    self.choice2.labelString = @"SOUND";
     self.choice2.tag = 1;
     self.choice2.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice2.frame = layout.frame_for(Role::ChoiceItem2Left, Spot::OffLeftNear);
     [self.choice2 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice2];
     
-    self.choice3 = [UPChoice choiceLeftStats];
+    self.choice3 = [UPChoice choiceWithSide:UPChoiceSideLeft];
+    self.choice3.labelString = @"OBSESS";
     self.choice3.tag = 2;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice3.frame = layout.frame_for(Role::ChoiceItem3Left, Spot::OffLeftNear);
     [self.choice3 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice3];
     
-    self.choice4 = [UPChoice choiceLeftGameKeys];
+    self.choice4 = [UPChoice choiceWithSide:UPChoiceSideLeft];
+    self.choice4.labelString = @"OPTIONS";
     self.choice4.tag = 3;
     self.choice4.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice4.frame = layout.frame_for(Role::ChoiceItem4Left, Spot::OffLeftNear);
