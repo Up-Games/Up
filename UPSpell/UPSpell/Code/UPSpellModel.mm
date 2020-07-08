@@ -1338,8 +1338,8 @@ void SpellModel::db_store()
     
     int words_submitted_count = game_words_submitted_count();
     int tiles_submitted_count = game_tiles_submitted_count();
-    double word_score_average = game_score() / (double)words_submitted_count;
-    double word_length_average = tiles_submitted_count / (double)words_submitted_count;
+    double word_score_average = words_submitted_count ? (game_score() / (double)words_submitted_count) : 0;
+    double word_length_average = words_submitted_count ? (tiles_submitted_count / (double)words_submitted_count) : 0;
 
     db_exec(db, sqlite3_reset(game_stmt));
     db_exec(db, sqlite3_bind_int(game_stmt, 1, game_key().value()));
