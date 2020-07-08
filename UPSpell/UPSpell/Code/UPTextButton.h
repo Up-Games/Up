@@ -8,5 +8,6 @@
 @interface UPTextButton : UPButton
 
 + (UPTextButton *)textButton;
++ (UPTextButton *)smallTextButton;
 
 @end

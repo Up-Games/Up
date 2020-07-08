@@ -4,12 +4,16 @@
 //
 
 #import <UpKit/UIColor+UP.h>
+#import <UPKit/UPLabel.h>
 
 #import "UPTextSettingsButton.h"
+#import "UPSpellLayout.h"
+
+using UP::SpellLayout;
 
 @implementation UPTextSettingsButton
 
-+ (UPTextSettingsButton *)textSettingsButton;
++ (UPTextSettingsButton *)textSettingsButton
 {
     return [[UPTextSettingsButton alloc] initWithTarget:nil action:nullptr];
 }
@@ -23,6 +27,10 @@
     [self setStrokeColorCategory:UPColorCategoryClear forState:UPControlStateSelected];
     [self setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     [self setLabelColorCategory:UPColorCategoryControlText forState:UPControlStateSelected];
+    
+    SpellLayout &layout = SpellLayout::instance();
+    self.label.font = layout.text_button_font();
+
     self.autoHighlights = YES;
     self.autoSelects = YES;
     self.band = UP::BandModeUI;

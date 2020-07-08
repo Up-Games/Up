@@ -113,7 +113,18 @@ UIBezierPath *TextButtonStrokePath()
 
 + (UPTextButton *)textButton
 {
-    return [[UPTextButton alloc] initWithTarget:nil action:nullptr];
+    UPTextButton *button = [[UPTextButton alloc] initWithTarget:nil action:nullptr];
+    SpellLayout &layout = SpellLayout::instance();
+    button.label.font = layout.text_button_font();
+    return button;
+}
+
++ (UPTextButton *)smallTextButton
+{
+    UPTextButton *button = [[UPTextButton alloc] initWithTarget:nil action:nullptr];
+    SpellLayout &layout = SpellLayout::instance();
+    button.label.font = layout.small_text_button_font();
+    return button;
 }
 
 - (instancetype)initWithTarget:(id)target action:(SEL)action
@@ -129,9 +140,6 @@ UIBezierPath *TextButtonStrokePath()
     [self setStrokeColorCategory:UPColorCategoryPrimaryStroke forState:UPControlStateNormal];
     [self setStrokeColorCategory:UPColorCategoryHighlightedStroke forState:UPControlStateHighlighted];
 
-    SpellLayout &layout = SpellLayout::instance();
-
-    self.label.font = layout.text_button_font();
     self.label.textColorCategory = UPColorCategoryContent;
     self.label.backgroundColorCategory = UPColorCategoryClear;
     self.label.textAlignment = NSTextAlignmentCenter;

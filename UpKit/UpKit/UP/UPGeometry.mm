@@ -12,26 +12,6 @@ extern "C" {
 
 #pragma mark - Floats, Points, Sizes, and Rects
 
-CGFloat up_float_scaled(CGFloat fnum, CGFloat scale)
-{
-    return fnum * scale;
-}
-
-CGPoint up_point_scaled(CGPoint point, CGFloat scale)
-{
-    return CGPointMake(point.x * scale, point.y * scale);
-}
-
-CGSize up_size_scaled(CGSize size, CGFloat scale)
-{
-    return CGSizeMake(size.width * scale, size.height * scale);
-}
-
-UPOutsets up_outsets_scaled(UPOutsets outsets, CGFloat scale)
-{
-    return UPOutsetsMake(outsets.top * scale, outsets.left * scale, outsets.bottom * scale, outsets.right * scale);
-}
-
 CGRect up_rect_centered_in_rect(CGRect rectToCenter, CGRect referenceRect)
 {
     CGFloat x = CGRectGetMidX(referenceRect) - (CGRectGetWidth(rectToCenter) * 0.5);

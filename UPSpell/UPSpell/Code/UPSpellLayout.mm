@@ -265,6 +265,7 @@ void SpellLayout::calculate()
     calculate_player_tray_tile_frames();
     calculate_word_tray_tile_frames();
     calculate_text_button_font_metrics();
+    calculate_small_text_button_font_metrics();
     calculate_game_information_font_metrics();
     calculate_game_information_superscript_font_metrics();
     calculate_game_note_font_metrics();
@@ -342,6 +343,14 @@ void SpellLayout::calculate_text_button_font_metrics()
     UIFont *font = [UIFont textButtonFontWithCapHeight:cap_height];
     font.baselineAdjustment = CanonicalTextButtonBaselineAdjustment * layout_scale();
     set_text_button_font(font);
+}
+
+void SpellLayout::calculate_small_text_button_font_metrics()
+{
+    CGFloat cap_height = CanonicalSmallTextButtonCapHeight * layout_scale();
+    UIFont *font = [UIFont textButtonFontWithCapHeight:cap_height];
+    font.baselineAdjustment = CanonicalSmallTextButtonBaselineAdjustment * layout_scale();
+    set_small_text_button_font(font);
 }
 
 void SpellLayout::calculate_game_information_font_metrics()

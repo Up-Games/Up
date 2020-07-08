@@ -127,10 +127,12 @@ UP_STATIC_INLINE_CONST CGFloat up_rect_height(CGRect rect) { return rect.size.he
 
 UP_STATIC_INLINE_CONST CGRect up_rect_make(CGSize size) { return (CGRect){ 0, 0, up_size_width(size), up_size_height(size) }; }
 
-CGFloat up_float_scaled(CGFloat fnum, CGFloat scale);
-CGPoint up_point_scaled(CGPoint point, CGFloat scale);
-CGSize up_size_scaled(CGSize size, CGFloat scale);
-UPOutsets up_outsets_scaled(UPOutsets outsets, CGFloat scale);
+UP_STATIC_INLINE_CONST CGFloat up_float_scaled(CGFloat fnum, CGFloat scale) { return fnum * scale; }
+UP_STATIC_INLINE_CONST CGPoint up_point_scaled(CGPoint point, CGFloat scale) { return (CGPoint){ point.x * scale, point.y * scale }; }
+UP_STATIC_INLINE_CONST CGSize up_size_scaled(CGSize size, CGFloat scale) { return (CGSize){ size.width * scale, size.height * scale }; }
+UP_STATIC_INLINE_CONST UPOutsets up_outsets_scaled(UPOutsets outsets, CGFloat scale) {
+    return (UPOutsets){ outsets.top * scale, outsets.left * scale, outsets.bottom * scale, outsets.right * scale };
+}
 
 CGRect up_rect_centered_in_rect(CGRect rectToCenter, CGRect referenceRect);
 CGRect up_rect_centered_x_in_rect(CGRect rectToCenter, CGRect referenceRect);

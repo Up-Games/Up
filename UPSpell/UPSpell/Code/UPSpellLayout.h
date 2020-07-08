@@ -90,19 +90,18 @@ public:
     static constexpr CGSize CanonicalCanvasSize = { CanonicalCanvasWidth, CanonicalCanvasHeight };
     static constexpr CGFloat CanonicalAspectRatio = CanonicalCanvasWidth / CanonicalCanvasHeight;
 
-    static inline constexpr CGSize CanonicalRoundGameButtonSize = { 84,  84 };
-    static inline constexpr CGSize CanonicalRoundBackButtonSize = { 64,  64 };
-    static inline constexpr CGSize CanonicalTextButtonSize =     { 188,  76 };
-    static inline constexpr CGSize CanonicalBallotSize =         {  40,  36 };
-    static inline constexpr CGSize CanonicalHueWheelSize =       { 220, 220 };
-    static inline constexpr CGSize CanonicalStepperSize =        {  36,  36 };
-
-    static inline constexpr CGFloat CanonicalTextButtonSizeClassLargeMultiplier = 1.0;
-    static inline constexpr CGFloat CanonicalTextButtonSizeClassMediumMultiplier = 0.75;
-    static inline constexpr CGFloat CanonicalTextButtonSizeClassSmallMultiplier = 0.6;
+    static inline constexpr CGSize CanonicalRoundGameButtonSize =  { 84,  84 };
+    static inline constexpr CGSize CanonicalRoundBackButtonSize =  { 64,  64 };
+    static inline constexpr CGSize CanonicalTextButtonSize =      { 188,  76 };
+    static inline constexpr CGSize CanonicalSmallTextButtonSize = up_size_scaled(CanonicalTextButtonSize, 0.75);
+    static inline constexpr CGSize CanonicalBallotSize =          {  40,  36 };
+    static inline constexpr CGSize CanonicalHueWheelSize =        { 220, 220 };
+    static inline constexpr CGSize CanonicalStepperSize =         {  36,  36 };
 
     static inline constexpr CGFloat CanonicalTextButtonCapHeight = 29;
     static inline constexpr CGFloat CanonicalTextButtonBaselineAdjustment = -3.5;
+    static inline constexpr CGFloat CanonicalSmallTextButtonCapHeight = CanonicalTextButtonCapHeight * 0.8;
+    static inline constexpr CGFloat CanonicalSmallTextButtonBaselineAdjustment = -2.5;
     static inline constexpr CGFloat CanonicalGameInformationCapHeight = 57;
     static inline constexpr CGFloat CanonicalGameInformationSuperscriptCapHeight = 39;
     static inline constexpr CGFloat CanonicalGameInformationSuperscriptBaselineAdjustment = 27;
@@ -233,6 +232,7 @@ public:
     UPOutsets stepper_control_charge_outsets() const { return m_stepper_control_charge_outsets; }
 
     UIFont *text_button_font() const { return m_text_button_font; }
+    UIFont *small_text_button_font() const { return m_small_text_button_font; }
     UIFont *game_information_font() const { return m_game_information_font; }
     UIFont *game_information_superscript_font() const { return m_game_information_superscript_font; }
     UIFont *game_note_font() const { return m_game_note_font; }
@@ -274,6 +274,7 @@ private:
     void set_menu_game_view_transform(CGAffineTransform t) { m_menu_game_view_transform = t; }
     void set_extras_example_transform(CGAffineTransform t) { m_extras_example_transform = t; }
     void set_text_button_font(UIFont *font) { m_text_button_font = font; }
+    void set_small_text_button_font(UIFont *font) { m_small_text_button_font = font; }
     void set_game_information_font(UIFont *font) { m_game_information_font = font; }
     void set_game_information_superscript_font(UIFont *font) { m_game_information_superscript_font = font; }
     void set_game_note_font(UIFont *font) { m_game_note_font = font; }
@@ -302,6 +303,7 @@ private:
     void calculate_word_tray_tile_frames();
     void calculate_player_tray_tile_frames();
     void calculate_text_button_font_metrics();
+    void calculate_small_text_button_font_metrics();
     void calculate_game_information_font_metrics();
     void calculate_game_information_superscript_font_metrics();
     void calculate_game_note_font_metrics();
@@ -358,6 +360,7 @@ private:
     CGAffineTransform m_extras_example_transform;
 
     __strong UIFont *m_text_button_font;
+    __strong UIFont *m_small_text_button_font;
     __strong UIFont *m_game_information_font;
     __strong UIFont *m_game_information_superscript_font;
     __strong UIFont *m_game_note_font;
