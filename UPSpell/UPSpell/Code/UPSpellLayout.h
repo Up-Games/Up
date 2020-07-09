@@ -95,10 +95,12 @@ public:
     static inline constexpr CGSize CanonicalRoundBackButtonSize =  { 64,  64 };
     static inline constexpr CGSize CanonicalRoundHelpButtonSize =  { 64,  64 };
     static inline constexpr CGSize CanonicalTextButtonSize =      { 188,  76 };
-    static inline constexpr CGSize CanonicalSmallTextButtonSize = up_size_scaled(CanonicalTextButtonSize, 0.75);
     static inline constexpr CGSize CanonicalBallotSize =          {  40,  36 };
     static inline constexpr CGSize CanonicalHueWheelSize =        { 220, 220 };
     static inline constexpr CGSize CanonicalStepperSize =         {  36,  36 };
+    static inline constexpr CGSize CanonicalRotorSize =           {  52, 228 };
+
+    static inline constexpr CGSize CanonicalSmallTextButtonSize = up_size_scaled(CanonicalTextButtonSize, 0.75);
 
     static inline constexpr CGFloat CanonicalTextButtonCapHeight = 29;
     static inline constexpr CGFloat CanonicalTextButtonBaselineAdjustment = -3.5;
@@ -184,7 +186,11 @@ public:
     static inline constexpr CGFloat CanonicalExtrasGamesAverageWordScoreColumnWidth =  135;
     static inline constexpr CGFloat CanonicalExtrasGamesAverageWordLengthColumnWidth = 135;
 
-    static inline constexpr CGRect CanonicalExtrasObsessHelpButtonFrame = { 902, 407, up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
+    static inline constexpr CGRect CanonicalExtrasObsessGameKeyPickerFrame =  { 375, 24,
+        up_size_width(CanonicalRotorSize) * 7, up_size_height(CanonicalRotorSize) };
+    static inline constexpr CGRect CanonicalExtrasObsessRotor1Frame =  { 375, 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
+    static inline constexpr CGRect CanonicalExtrasObsessHelpButtonFrame = { 902, 407,
+        up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
@@ -255,6 +261,8 @@ public:
     CGAffineTransform menu_game_view_transform() const { return m_menu_game_view_transform; }
     CGAffineTransform extras_example_transform() const { return m_extras_example_transform; }
 
+    CGRect layout_relative_aspect_rect(CGRect) const;
+
 private:
     
     SpellLayout() {}
@@ -262,7 +270,6 @@ private:
     UP_STATIC_INLINE SpellLayout *g_instance;
     
     CGRect layout_centered_x_aspect_rect(CGRect) const;
-    CGRect layout_relative_aspect_rect(CGRect) const;
     CGRect layout_game_over_score_frame(NSString *) const;
 
     void set_aspect_mode(AspectMode aspect_mode) { m_aspect_mode = aspect_mode; }

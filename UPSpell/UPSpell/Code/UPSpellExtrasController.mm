@@ -21,6 +21,7 @@
 #import "UPHueWheel.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellExtrasPaneColors.h"
+#import "UPSpellExtrasPaneObsess.h"
 #import "UPSpellExtrasPaneStats.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
@@ -41,6 +42,7 @@
 
 @property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
 @property (nonatomic) UPSpellExtrasPaneStats *statsPane;
+@property (nonatomic) UPSpellExtrasPaneObsess *obsessPane;
 
 @property (nonatomic) NSArray<UPChoice *> *choices;
 @property (nonatomic) NSArray<UPAccessoryPane *> *panes;
@@ -118,13 +120,17 @@ using Location = UP::SpellLayout::Location;
     self.statsPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.statsPane];
     
+    self.obsessPane = [UPSpellExtrasPaneObsess pane];
+    self.obsessPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
+    [self.view addSubview:self.obsessPane];
+    
     self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
     
     self.panes = @[
         self.colorsPane,
         [UPAccessoryPane pane],
         self.statsPane,
-        [UPAccessoryPane pane]
+        self.obsessPane
     ];
     
     return self;
