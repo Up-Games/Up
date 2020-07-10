@@ -275,6 +275,7 @@ void SpellLayout::calculate()
     calculate_ballot_control_metrics();
     calculate_stepper_control_metrics();
     calculate_choice_control_metrics();
+    calculate_rotor_control_metrics();
     calculate_settings_description_font_metrics();
     calculate_game_controls_button_charge_outsets();
     calculate_help_button_charge_outsets();
@@ -430,6 +431,13 @@ void SpellLayout::calculate_choice_control_metrics()
 
     set_choice_control_label_left_margin(CanonicalChoiceLabelLeftMargin * layout_scale());
     set_choice_control_label_right_margin(CanonicalChoiceLabelRightMargin * layout_scale());
+}
+
+void SpellLayout::calculate_rotor_control_metrics()
+{
+    CGFloat cap_height = CanonicalRotorElementCapHeight * layout_scale();
+    UIFont *font = [UIFont rotorControlFontWithCapHeight:cap_height];
+    set_rotor_control_font(font);
 }
 
 void SpellLayout::calculate_settings_description_font_metrics()
@@ -689,6 +697,23 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasStatsTable, layout_relative_aspect_rect(CanonicalExtrasStatsTableFrame));
 
     calculate_and_set_locations(Role::ExtrasObsessHelp, layout_relative_aspect_rect(CanonicalExtrasObsessHelpButtonFrame));
+
+    // Obsess gamekey picker rotors
+    CGFloat rotor_y = up_rect_min_y(SpellLayout::CanonicalExtrasObsessGameKeyPickerFrame);
+    CGFloat rotor_w = up_size_width(SpellLayout::CanonicalRotorSize);
+    CGFloat rotor_h = up_size_height(SpellLayout::CanonicalRotorSize);
+    Role rotor_roles[ExtrasObsessGameKeyPickerRotorCount] = {
+        Role::ExtrasObsessGameKeyPickerRotor1, Role::ExtrasObsessGameKeyPickerRotor2, Role::ExtrasObsessGameKeyPickerRotor3,
+        Role::ExtrasObsessGameKeyPickerRotor4, Role::ExtrasObsessGameKeyPickerRotor5, Role::ExtrasObsessGameKeyPickerRotor6,
+        Role::ExtrasObsessGameKeyPickerRotor7 };
+    for (int i = 0; i < ExtrasObsessGameKeyPickerRotorCount; i++) {
+        CGFloat rotor_x = up_rect_min_x(SpellLayout::CanonicalExtrasObsessGameKeyPickerFrame) + (i * rotor_w);
+        if (i >= 3) {
+            rotor_x += CanonicalExtrasObsessGameKeyPickerAlphabetNumberGap;
+        }
+        CGRect rotorFrame = CGRectMake(rotor_x, rotor_y, rotor_w, rotor_h);
+        calculate_and_set_locations(rotor_roles[i], layout_relative_aspect_rect(rotorFrame));
+    }
 }
 
 void SpellLayout::calculate_choice_locations()

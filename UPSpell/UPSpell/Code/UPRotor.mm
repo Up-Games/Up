@@ -186,8 +186,8 @@ static UIBezierPath *RotorStrokePath()
 
 @interface UPRotorLabel : UIView
 @property (nonatomic) NSArray<NSString *> *elements;
-@property (nonatomic) CGFloat elementHeight;
 @property (nonatomic) NSUInteger selectedIndex;
+@property (nonatomic) CGFloat elementHeight;
 @end
 
 @implementation UPRotorLabel
@@ -209,7 +209,8 @@ static UIBezierPath *RotorStrokePath()
 
 - (void)drawRect:(CGRect)rect
 {
-    UIFont *font = [UIFont checkboxControlFontOfSize:40 * 0.786];
+    SpellLayout &layout = SpellLayout::instance();
+    UIFont *font = layout.rotor_control_font();
     
     CGRect bounds = self.bounds;
     CGFloat elementY = 0;
@@ -219,8 +220,7 @@ static UIBezierPath *RotorStrokePath()
     NSUInteger i = 0;
     elementY = self.elementHeight * 2;
     UIColor *selectedColor = [UIColor themeColorWithCategory:UPColorCategoryContent];
-    UIColor *unselectedColor = [selectedColor colorWithAlphaComponent:[UIColor themeDisabledAlpha]];
-        //[UIColor themeColorWithCategory:UPColorCategoryInactiveContent];
+    UIColor *unselectedColor = [selectedColor colorWithAlphaComponent:[UIColor themeControlContentInactiveAlpha]];
     for (NSString *element in self.elements) {
         attrString.string = element;
         if (i == self.selectedIndex) {
@@ -233,24 +233,18 @@ static UIBezierPath *RotorStrokePath()
         CGRect elementRect = textRect;
         elementRect.size.height = font.lineHeight;
         elementRect = up_rect_centered_in_rect(elementRect, textRect);
-        //elementRect.origin.y -= (font.capHeight / 2);
         elementRect.origin.y -= (font.lineHeight * 0.035);
-//        LOG(General, "rects: %@ : %@", NSStringFromCGRect(textRect), NSStringFromCGRect(elementRect));
         [attrString drawInRect:elementRect];
         elementY += self.elementHeight;
-
-//        CGContextRef ctx = UIGraphicsGetCurrentContext();
-//        CGContextSaveGState(ctx);
-//        if (i % 2 == 0) {
-//            CGContextSetFillColorWithColor(ctx, [UIColor testColor1].CGColor);
-//        }
-//        else {
-//            CGContextSetFillColorWithColor(ctx, [UIColor testColor2].CGColor);
-//        }
-//        CGContextFillRect(ctx, textRect);
-//        CGContextRestoreGState(ctx);
         i++;
     }
+}
+
+#pragma mark - Update theme colors
+
+- (void)updateThemeColors
+{
+    [self setNeedsDisplay];
 }
 
 @end
@@ -259,13 +253,11 @@ static UIBezierPath *RotorStrokePath()
 
 @interface UPRotor () <UIScrollViewDelegate>
 @property (nonatomic, readwrite) UPRotorType type;
+@property (nonatomic, readwrite) NSArray<NSString *> *elements;
 @property (nonatomic, weak) id target;
 @property (nonatomic) SEL action;
 @property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic) UPRotorLabel *elementsLabel;
-@property (nonatomic) NSMutableAttributedString *elementsString;
-@property (nonatomic) UPDivider *divider;
-@property (nonatomic) CGFloat zeroOffset;
 @property (nonatomic) CGFloat elementHeight;
 @end
 
@@ -292,57 +284,63 @@ static UIBezierPath *RotorStrokePath()
 
     [self setStrokePath:RotorStrokePath()];
 
-//    [self setAuxiliaryPath:RotorBezelPath()];
-//    [self setAuxiliaryColorCategory:UPColorCategoryInfinity];
-//    [self setAuxiliaryColorCategory:UPColorCategoryInactiveFill];
+    [self setAuxiliaryPath:RotorBezelPath()];
+    [self setAuxiliaryColorCategory:UPColorCategoryInfinity];
 
-    CGFloat canonicalHeight = 228;
-    self.elementHeight = (canonicalHeight / 5) * layout.layout_scale();
-    
-//    LOG(General, "elementHeight: %.2f : %.2f", canonicalHeight / 5, self.elementHeight);
+    // There is a maximum of five elements visible in the rotor at once, and when the rotor
+    // is at rest, the middle of these five is "selected" and appears centered vertically
+    // in the rotor.
+    static constexpr NSUInteger VisibleElementsCount = 5;
+    self.elementHeight = (self.canonicalSize.height / VisibleElementsCount) * layout.layout_scale();
     
     switch (type) {
         case UPRotorTypeDefault:
         case UPRotorTypeAlphabet: {
-            NSArray<NSString *> *elements = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J",
-                                              @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T",
-                                              @"U", @"V", @"W", @"X", @"Y", @"Z"];
-            self.elementsLabel = [[UPRotorLabel alloc] initWithElements:elements elementHeight:self.elementHeight];
+            self.elements = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J",
+                             @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T",
+                             @"U", @"V", @"W", @"X", @"Y", @"Z"];
+            self.elementsLabel = [[UPRotorLabel alloc] initWithElements:self.elements elementHeight:self.elementHeight];
             break;
         }
         case UPRotorTypeNumbers: {
-            NSArray<NSString *> *elements = @[@"0", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9"];
-            self.elementsLabel = [[UPRotorLabel alloc] initWithElements:elements elementHeight:self.elementHeight];
+            self.elements = @[@"0", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9"];
+            self.elementsLabel = [[UPRotorLabel alloc] initWithElements:self.elements elementHeight:self.elementHeight];
             break;
         }
     }
-
-//    self.divider = [UPDivider divider];
-//    self.divider.colorCategory = UPColorCategoryInactiveFill;
-//    [self addSubview:self.divider];
 
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.delaysContentTouches = NO;
     [self.scrollView addSubview:self.elementsLabel];
-//    self.zeroOffset = 86 * layout.layout_scale();
-//    self.elementHeight = up_rect_height(self.elementsLabel.frame) / self.elementsCount;
-//    self.scrollView.contentInset = UIEdgeInsetsMake(86 * layout.layout_scale(), 0, 86 * layout.layout_scale(), 0);
     self.scrollView.delegate = self;
     [self addSubview:self.scrollView];
     
-//    self.scrollView.contentSize = CGSizeMake();
+    [self bringPathViewToFront:self.auxiliaryPathView];
+    [self bringPathViewToFront:self.strokePathView];
 
-//    self.divider = [UPDivider divider];
-//    self.divider.colorCategory = UPColorCategoryInactiveFill;
-//    [self addSubview:self.divider];
-//    [self sendSubviewToBack:self.divider];
-    
-//    [self bringPathViewToFront:self.auxiliaryPathView];
-
-    
     return self;
+}
+
+- (void)selectIndex:(NSUInteger)index
+{
+    ASSERT(index < self.elements.count);
+    [self setSelectedIndex:index];
+    self.scrollView.contentOffset = CGPointMake(0, index * self.elementHeight);
+}
+
+@dynamic selectedString;
+- (NSString *)selectedString
+{
+    return self.elements[self.selectedIndex];
+}
+
+- (void)setSelectedIndex:(NSUInteger)selectedIndex
+{
+    ASSERT(selectedIndex < self.elements.count);
+    _selectedIndex = selectedIndex;
+    [self.elementsLabel setSelectedIndex:selectedIndex];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -351,25 +349,40 @@ static UIBezierPath *RotorStrokePath()
     NSUInteger selectedIndex = 0;
     CGFloat dy = FLT_MAX;
     for (NSUInteger i = 0; i < self.elementsCount; i++) {
-        CGFloat toffsetY = -self.zeroOffset + (i * self.elementHeight);
+        CGFloat toffsetY = i * self.elementHeight;
         CGFloat tdy = fabs(toffsetY - offsetY);
         if (tdy < dy) {
             dy = tdy;
             selectedIndex = i;
         }
     }
-//    LOG(General, "index: %lu", selectedIndex);
-    [self.elementsLabel setSelectedIndex:selectedIndex];
+    BOOL changed = (self.selectedIndex != selectedIndex);
+    [self setSelectedIndex:selectedIndex];
+    if (changed) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        if ([self.target respondsToSelector:self.action]) {
+            if ([NSStringFromSelector(self.action) hasSuffix:@":"]) {
+                [self.target performSelector:self.action withObject:self];
+            }
+            else {
+                [self.target performSelector:self.action];
+            }
+        }
+        else {
+            LOG(General, "Target does not respond to selector: %@ : %@", self.target, NSStringFromSelector(self.action));
+        }
+    }
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity
               targetContentOffset:(inout CGPoint *)targetContentOffset
 {
     CGFloat offsetY = targetContentOffset->y;
-    CGFloat closestY = -self.zeroOffset;
+    CGFloat closestY = 0;
     CGFloat dy = FLT_MAX;
     for (NSUInteger i = 0; i < self.elementsCount; i++) {
-        CGFloat toffsetY = -self.zeroOffset + (i * self.elementHeight);
+        CGFloat toffsetY = i * self.elementHeight;
         CGFloat tdy = fabs(toffsetY - offsetY);
         if (tdy < dy) {
             dy = tdy;
@@ -378,7 +391,6 @@ static UIBezierPath *RotorStrokePath()
         
     }
     targetContentOffset->y = closestY;
-//    LOG(General, "offset: %.2f : %.2f : %.2f", self.zeroOffset, self.elementHeight, closestY);
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
@@ -407,16 +419,24 @@ static UIBezierPath *RotorStrokePath()
 {
     [super layoutSubviews];
     
-//    SpellLayout &layout = SpellLayout::instance();
-
     CGRect bounds = self.bounds;
     self.scrollView.frame = bounds;
-    CGFloat elementsLabelHeight = (4 + [self elementsCount]) * self.elementHeight;
+    
+    // There are four "phantom" elements, two above the top element and two below the bottom element.
+    // These create room for the top and bottom elements to be centered in the rotor.
+    static constexpr NSUInteger PhantomElementsCount = 4;
+    CGFloat elementsLabelHeight = (PhantomElementsCount + [self elementsCount]) * self.elementHeight;
+    
     self.elementsLabel.frame = CGRectMake(0, 0, up_rect_width(bounds), elementsLabelHeight);
-//    LOG(General, "bounds:   %@", NSStringFromCGRect(bounds));
-//    LOG(General, "elements: %@", NSStringFromCGRect(self.elementsLabel.frame));
     self.scrollView.contentSize = self.elementsLabel.frame.size;
-    self.divider.frame = CGRectMake(0, up_rect_mid_y(bounds) - 0.5, up_rect_width(bounds), 1);
+}
+
+#pragma mark - Update theme colors
+
+- (void)updateThemeColors
+{
+    [super updateThemeColors];
+    [self.elementsLabel updateThemeColors];
 }
 
 @end

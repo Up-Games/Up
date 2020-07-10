@@ -283,6 +283,24 @@ static CGFloat _ThemeHue = 222;
     return [UIColor themeModalGameOverAlphaForStyle:_ThemeStyle];
 }
 
++ (CGFloat)themeControlContentInactiveAlphaForStyle:(UPThemeColorStyle)style
+{
+    switch (_ThemeStyle) {
+        case UPThemeColorStyleDefault:
+        case UPThemeColorStyleLight:
+        case UPThemeColorStyleDark:
+            return 0.3;
+        case UPThemeColorStyleLightStark:
+        case UPThemeColorStyleDarkStark:
+            return 0.2;
+    }
+}
+
++ (CGFloat)themeControlContentInactiveAlpha
+{
+    return [UIColor themeControlContentInactiveAlphaForStyle:_ThemeStyle];
+}
+
 // https://stackoverflow.com/a/9177602
 + (UIColor *)colorizedGray:(CGFloat)gray hue:(CGFloat)hue saturation:(CGFloat)saturation
 {

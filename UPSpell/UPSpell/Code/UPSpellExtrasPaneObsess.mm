@@ -33,6 +33,7 @@
 using UP::BandSettingsUI;
 using UP::BandSettingsAnimationDelay;
 using UP::BandSettingsUpdateDelay;
+using UP::GameKey;
 using UP::SpellGameSummary;
 using UP::SpellLayout;
 using UP::SpellModel;
@@ -40,6 +41,9 @@ using UP::TileArray;
 using UP::TileCount;
 using UP::TileIndex;
 using UP::TileModel;
+
+using UP::cpp_str;
+using UP::ns_str;
 
 using UP::TimeSpanning::bloop_in;
 using UP::TimeSpanning::bloop_out;
@@ -52,13 +56,10 @@ using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Place;
 
 @interface UPSpellExtrasPaneObsess ()
-@property (nonatomic) UPRotor *rotor1;
-@property (nonatomic) UPRotor *rotor2;
-@property (nonatomic) UPRotor *rotor3;
-@property (nonatomic) UPRotor *rotor4;
-@property (nonatomic) UPRotor *rotor5;
-@property (nonatomic) UPRotor *rotor6;
-@property (nonatomic) UPRotor *rotor7;
+{
+    GameKey m_game_key;
+}
+@property (nonatomic) NSArray<UPRotor *> *rotors;
 @end
 
 @implementation UPSpellExtrasPaneObsess
@@ -74,34 +75,24 @@ using Spot = UP::SpellLayout::Place;
 
     SpellLayout &layout = SpellLayout::instance();
 
-    self.rotor1 = [UPRotor rotorWithType:UPRotorTypeAlphabet];
-    self.rotor1.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor1Frame);
-    [self addSubview:self.rotor1];
-
-    self.rotor2 = [UPRotor rotorWithType:UPRotorTypeAlphabet];
-    self.rotor2.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor2Frame);
-    [self addSubview:self.rotor2];
-
-    self.rotor3 = [UPRotor rotorWithType:UPRotorTypeAlphabet];
-    self.rotor3.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor3Frame);
-    [self addSubview:self.rotor3];
-
-    self.rotor4 = [UPRotor rotorWithType:UPRotorTypeNumbers];
-    self.rotor4.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor4Frame);
-    [self addSubview:self.rotor4];
-
-    self.rotor5 = [UPRotor rotorWithType:UPRotorTypeNumbers];
-    self.rotor5.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor5Frame);
-    [self addSubview:self.rotor5];
-
-    self.rotor6 = [UPRotor rotorWithType:UPRotorTypeNumbers];
-    self.rotor6.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor6Frame);
-    [self addSubview:self.rotor6];
-
-    self.rotor7 = [UPRotor rotorWithType:UPRotorTypeNumbers];
-    self.rotor7.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor7Frame);
-    [self addSubview:self.rotor7];
-
+    UPRotorType rotor_types[SpellLayout::ExtrasObsessGameKeyPickerRotorCount] = {
+        UPRotorTypeAlphabet, UPRotorTypeAlphabet, UPRotorTypeAlphabet,
+        UPRotorTypeNumbers, UPRotorTypeNumbers, UPRotorTypeNumbers, UPRotorTypeNumbers
+    };
+    Role rotor_roles[SpellLayout::ExtrasObsessGameKeyPickerRotorCount] = {
+        Role::ExtrasObsessGameKeyPickerRotor1, Role::ExtrasObsessGameKeyPickerRotor2, Role::ExtrasObsessGameKeyPickerRotor3,
+        Role::ExtrasObsessGameKeyPickerRotor4, Role::ExtrasObsessGameKeyPickerRotor5, Role::ExtrasObsessGameKeyPickerRotor6,
+        Role::ExtrasObsessGameKeyPickerRotor7 };
+    NSMutableArray *rotors = [NSMutableArray array];
+    for (int i = 0; i < SpellLayout::ExtrasObsessGameKeyPickerRotorCount; i++) {
+        UPRotor *rotor = [UPRotor rotorWithType:rotor_types[i]];
+        [rotor setTarget:self action:@selector(gameKeyRotorsChanged)];
+        rotor.frame = layout.frame_for(rotor_roles[i]);
+        [self addSubview:rotor];
+        [rotors addObject:rotor];
+    }
+    self.rotors = rotors;
+    
     [self updateThemeColors];
 
     return self;
@@ -111,6 +102,10 @@ using Spot = UP::SpellLayout::Place;
 {
     self.userInteractionEnabled = YES;
 
+    m_game_key = GameKey::random();
+//    m_game_key = GameKey("YFE-1906");
+    [self setRotorsFromGameKey];
+    
 //    SpellLayout &layout = SpellLayout::instance();
 //    self.gamesHeader.frame = layout.frame_for(Role::ExtrasObsessHeader);
 //    self.gamesTable.frame = layout.frame_for(Role::ExtrasObsessTable);
@@ -122,6 +117,41 @@ using Spot = UP::SpellLayout::Place;
 //    UPSpellSettings *settings = [UPSpellSettings instance];
 //    [self updateRadioButtons:settings.statsSelectedTabIndex];
 //    [self setSelectedTab:settings.statsSelectedTabIndex];
+}
+
+- (void)setRotorsFromGameKey
+{
+    NSString *gameKeyString = ns_str(m_game_key.string());
+    for (int i = 0; i < SpellLayout::ExtrasObsessGameKeyPickerRotorCount; i++) {
+        UPRotor *rotor = self.rotors[i];
+        NSUInteger stringIndex = i <= 2 ? i : i + 1;
+        NSString *string = [gameKeyString substringWithRange:NSMakeRange(stringIndex, 1)];
+        if ([string isEqualToString:@"-"]) {
+            continue;
+        }
+        NSUInteger index = [rotor.elements indexOfObject:string];
+        ASSERT(index != NSNotFound);
+        [rotor selectIndex:index];
+    }
+}
+
+- (void)setGameKeyFromRotors
+{
+    NSMutableString *gameKeyString = [NSMutableString string];
+    for (int i = 0; i < SpellLayout::ExtrasObsessGameKeyPickerRotorCount; i++) {
+        UPRotor *rotor = self.rotors[i];
+        [gameKeyString appendString:rotor.selectedString];
+        if (gameKeyString.length == 3) {
+            [gameKeyString appendString:@"-"];
+        }
+    }
+    m_game_key = GameKey(cpp_str(gameKeyString));
+    LOG(General, "GameKey: %s", m_game_key.string().c_str());
+}
+
+- (void)gameKeyRotorsChanged
+{
+    [self setGameKeyFromRotors];
 }
 
 - (void)cancelAnimations

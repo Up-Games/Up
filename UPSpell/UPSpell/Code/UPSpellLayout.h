@@ -57,7 +57,9 @@ public:
         ExtrasColorsHueStepMore, ExtrasColorsHueStepLess, ExtrasColorsDescription, ExtrasColorsExample,
         ExtrasColorsIconPrompt, ExtrasColorsIconButtonNope, ExtrasColorsIconButtonYep,
         ExtrasStatsAveragesTabButton, ExtrasStatsGamesTabButton, ExtrasStatsWordsTabButton, ExtrasStatsHeader, ExtrasStatsTable,
-        ExtrasObsessHelp,
+        ExtrasObsessGameKeyPickerRotor1, ExtrasObsessGameKeyPickerRotor2, ExtrasObsessGameKeyPickerRotor3,
+        ExtrasObsessGameKeyPickerRotor4, ExtrasObsessGameKeyPickerRotor5, ExtrasObsessGameKeyPickerRotor6,
+        ExtrasObsessGameKeyPickerRotor7, ExtrasObsessHelp
     };
 
     enum class Place {
@@ -125,6 +127,7 @@ public:
     static inline constexpr CGFloat CanonicalChoiceLabelBaselineAdjustment = -12;
     static inline constexpr CGFloat CanonicalChoiceLabelLeftMargin = 82;
     static inline constexpr CGFloat CanonicalChoiceLabelRightMargin = 87;
+    static inline constexpr CGFloat CanonicalRotorElementCapHeight = 29;
 
     static inline constexpr CGSize CanonicalTileSize = { 100, 120 };
     static inline constexpr CGRect CanonicalTileFrame = { 0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize) };
@@ -186,15 +189,10 @@ public:
     static inline constexpr CGFloat CanonicalExtrasGamesAverageWordScoreColumnWidth =  135;
     static inline constexpr CGFloat CanonicalExtrasGamesAverageWordLengthColumnWidth = 135;
 
+    static inline constexpr int ExtrasObsessGameKeyPickerRotorCount = 7;
+    static inline constexpr CGFloat CanonicalExtrasObsessGameKeyPickerAlphabetNumberGap =  20;
     static inline constexpr CGRect CanonicalExtrasObsessGameKeyPickerFrame =  { 375, 24,
-        up_size_width(CanonicalRotorSize) * 7, up_size_height(CanonicalRotorSize) };
-    static inline constexpr CGRect CanonicalExtrasObsessRotor1Frame =  { 375, 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
-    static inline constexpr CGRect CanonicalExtrasObsessRotor2Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 1), 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
-    static inline constexpr CGRect CanonicalExtrasObsessRotor3Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 2), 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
-    static inline constexpr CGRect CanonicalExtrasObsessRotor4Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 3) + 18, 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
-    static inline constexpr CGRect CanonicalExtrasObsessRotor5Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 4) + 18, 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
-    static inline constexpr CGRect CanonicalExtrasObsessRotor6Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 5) + 18, 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
-    static inline constexpr CGRect CanonicalExtrasObsessRotor7Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 6) + 18, 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
+        (up_size_width(CanonicalRotorSize) * 7) + CanonicalExtrasObsessGameKeyPickerAlphabetNumberGap, up_size_height(CanonicalRotorSize) };
     static inline constexpr CGRect CanonicalExtrasObsessHelpButtonFrame = { 902, 407,
         up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
@@ -258,6 +256,7 @@ public:
     UIFont *word_score_bonus_font() const { return m_word_score_bonus_font; }
     UIFont *ballot_control_font() const { return m_ballot_control_font; }
     UIFont *choice_control_font() const { return m_choice_control_font; }
+    UIFont *rotor_control_font() const { return m_rotor_control_font; }
     UIFont *settings_description_font() const { return m_settings_description_font; }
 
     CGFloat ballot_control_label_left_margin() const { return m_ballot_control_label_left_margin; }
@@ -306,6 +305,7 @@ private:
     void set_choice_control_font(UIFont *font) { m_choice_control_font = font; }
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
+    void set_rotor_control_font(UIFont *font) { m_rotor_control_font = font; }
     void set_settings_description_font(UIFont *font) { m_settings_description_font = font; }
     void set_game_controls_button_charge_outsets(UPOutsets outsets) { m_game_controls_button_charge_outsets = outsets; }
     void set_help_button_charge_outsets(UPOutsets outsets) { m_help_button_charge_outsets = outsets; }
@@ -332,6 +332,7 @@ private:
     void calculate_ballot_control_metrics();
     void calculate_stepper_control_metrics();
     void calculate_choice_control_metrics();
+    void calculate_rotor_control_metrics();
     void calculate_settings_description_font_metrics();
     void calculate_locations();
     void calculate_player_tile_locations();
@@ -389,6 +390,7 @@ private:
     __strong UIFont *m_word_score_bonus_font;
     __strong UIFont *m_ballot_control_font;
     __strong UIFont *m_choice_control_font;
+    __strong UIFont *m_rotor_control_font;
     __strong UIFont *m_settings_description_font;
 
     CGFloat m_ballot_control_label_left_margin = 0.0;

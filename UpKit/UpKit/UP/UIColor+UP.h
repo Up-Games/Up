@@ -75,6 +75,9 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 + (CGFloat)themeModalGameOverAlphaForStyle:(UPThemeColorStyle)style;
 + (CGFloat)themeModalGameOverAlpha;
 
++ (CGFloat)themeControlContentInactiveAlphaForStyle:(UPThemeColorStyle)style;
++ (CGFloat)themeControlContentInactiveAlpha;
+
 + (UIColor *)colorizedGray:(CGFloat)gray hue:(CGFloat)hue saturation:(CGFloat)saturation;
 
 + (UIColor *)colorByMixingColor:(UIColor *)color1 color:(UIColor *)color2 fraction:(CGFloat)fraction;

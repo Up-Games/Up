@@ -16,6 +16,7 @@ NSString * const UPGameNoteWordFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPWordScoreBonusFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPCheckboxControlFontName = @"MalloryCondensed-Black";
 NSString * const UPChoiceControlFontName = @"MalloryCondensed-BlackItalic";
+NSString * const UPRotorControlFontName = @"MalloryCondensed-Black";
 NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
 NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
 
@@ -219,6 +220,30 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
     return [UIFont choiceControlFontOfSize:pointSize];
+}
+
++ (UIFont *)rotorControlFontOfSize:(CGFloat)fontSize
+{
+    UIFont *font = [UIFont fontWithName:UPRotorControlFontName size:fontSize];
+    UIFontDescriptor *descriptor = [font fontDescriptor];
+    NSDictionary *attributes = @{
+        UIFontDescriptorFeatureSettingsAttribute: @[
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+                }
+        ]
+    };
+    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
+}
+
++ (UIFont *)rotorControlFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPRotorControlFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont rotorControlFontOfSize:pointSize];
 }
 
 + (UIFont *)settingsDescriptionFontOfSize:(CGFloat)fontSize
