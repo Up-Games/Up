@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, UPRotorType) {
 @property (nonatomic, readonly) NSArray<NSString *> *elements;
 @property (nonatomic, readonly) NSString *selectedString;
 @property (nonatomic, readonly) NSUInteger selectedIndex;
+@property (nonatomic, readonly) BOOL changing;
 
 + (UPRotor *)rotorWithType:(UPRotorType)rotorType;
 

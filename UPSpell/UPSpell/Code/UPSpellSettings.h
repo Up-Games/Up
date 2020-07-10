@@ -12,6 +12,8 @@
 @property (nonatomic) BOOL quarkMode;
 @property (nonatomic) NSUInteger extrasSelectedIndex;
 @property (nonatomic) NSUInteger statsSelectedTabIndex;
+@property (nonatomic) BOOL obsessMode;
+@property (nonatomic) uint32_t obsessGameKeyValue;
 
 + (UPSpellSettings *)instance;
 - (instancetype)init NS_UNAVAILABLE;

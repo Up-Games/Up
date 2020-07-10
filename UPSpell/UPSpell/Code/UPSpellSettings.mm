@@ -13,6 +13,8 @@
 @dynamic quarkMode;
 @dynamic extrasSelectedIndex;
 @dynamic statsSelectedTabIndex;
+@dynamic obsessMode;
+@dynamic obsessGameKeyValue;
 
 + (UPSpellSettings *)instance
 {
@@ -38,6 +40,8 @@
     self.quarkMode = NO;
     self.extrasSelectedIndex = 0;
     self.statsSelectedTabIndex = 0;
+    self.obsessMode = NO;
+    self.obsessGameKeyValue = 0;
 }
 
 @end

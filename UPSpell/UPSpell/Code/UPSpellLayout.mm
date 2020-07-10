@@ -696,8 +696,6 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasStatsHeader, layout_relative_aspect_rect(CanonicalExtrasStatsHeaderFrame));
     calculate_and_set_locations(Role::ExtrasStatsTable, layout_relative_aspect_rect(CanonicalExtrasStatsTableFrame));
 
-    calculate_and_set_locations(Role::ExtrasObsessHelp, layout_relative_aspect_rect(CanonicalExtrasObsessHelpButtonFrame));
-
     // Obsess gamekey picker rotors
     CGFloat rotor_y = up_rect_min_y(SpellLayout::CanonicalExtrasObsessGameKeyPickerFrame);
     CGFloat rotor_w = up_size_width(SpellLayout::CanonicalRotorSize);
@@ -714,6 +712,10 @@ void SpellLayout::calculate_extras_locations()
         CGRect rotorFrame = CGRectMake(rotor_x, rotor_y, rotor_w, rotor_h);
         calculate_and_set_locations(rotor_roles[i], layout_relative_aspect_rect(rotorFrame));
     }
+    
+    calculate_and_set_locations(Role::ExtrasObsessCheckbox, layout_relative_aspect_rect(CanonicalExtrasObsessCheckboxFrame));
+    calculate_and_set_locations(Role::ExtrasObsessDescription, layout_relative_aspect_rect(CanonicalExtrasObsessDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasObsessHelp, layout_relative_aspect_rect(CanonicalExtrasObsessHelpButtonFrame));
 }
 
 void SpellLayout::calculate_choice_locations()

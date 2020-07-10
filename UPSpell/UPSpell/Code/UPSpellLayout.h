@@ -59,7 +59,7 @@ public:
         ExtrasStatsAveragesTabButton, ExtrasStatsGamesTabButton, ExtrasStatsWordsTabButton, ExtrasStatsHeader, ExtrasStatsTable,
         ExtrasObsessGameKeyPickerRotor1, ExtrasObsessGameKeyPickerRotor2, ExtrasObsessGameKeyPickerRotor3,
         ExtrasObsessGameKeyPickerRotor4, ExtrasObsessGameKeyPickerRotor5, ExtrasObsessGameKeyPickerRotor6,
-        ExtrasObsessGameKeyPickerRotor7, ExtrasObsessHelp
+        ExtrasObsessGameKeyPickerRotor7, ExtrasObsessCheckbox, ExtrasObsessDescription, ExtrasObsessHelp
     };
 
     enum class Place {
@@ -191,8 +191,10 @@ public:
 
     static inline constexpr int ExtrasObsessGameKeyPickerRotorCount = 7;
     static inline constexpr CGFloat CanonicalExtrasObsessGameKeyPickerAlphabetNumberGap =  20;
-    static inline constexpr CGRect CanonicalExtrasObsessGameKeyPickerFrame =  { 375, 24,
+    static inline constexpr CGRect CanonicalExtrasObsessGameKeyPickerFrame =  { 384, 24,
         (up_size_width(CanonicalRotorSize) * 7) + CanonicalExtrasObsessGameKeyPickerAlphabetNumberGap, up_size_height(CanonicalRotorSize) };
+    static inline constexpr CGRect CanonicalExtrasObsessCheckboxFrame = { 790, 116, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize)};
+    static inline constexpr CGRect CanonicalExtrasObsessDescriptionFrame = { 384, 258, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasObsessHelpButtonFrame = { 902, 407,
         up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 

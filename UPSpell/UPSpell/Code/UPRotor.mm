@@ -254,6 +254,7 @@ static UIBezierPath *RotorStrokePath()
 @interface UPRotor () <UIScrollViewDelegate>
 @property (nonatomic, readwrite) UPRotorType type;
 @property (nonatomic, readwrite) NSArray<NSString *> *elements;
+@property (nonatomic, readwrite) BOOL changing;
 @property (nonatomic, weak) id target;
 @property (nonatomic) SEL action;
 @property (nonatomic) UIScrollView *scrollView;
@@ -343,56 +344,6 @@ static UIBezierPath *RotorStrokePath()
     [self.elementsLabel setSelectedIndex:selectedIndex];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    NSUInteger selectedIndex = 0;
-    CGFloat dy = FLT_MAX;
-    for (NSUInteger i = 0; i < self.elementsCount; i++) {
-        CGFloat toffsetY = i * self.elementHeight;
-        CGFloat tdy = fabs(toffsetY - offsetY);
-        if (tdy < dy) {
-            dy = tdy;
-            selectedIndex = i;
-        }
-    }
-    BOOL changed = (self.selectedIndex != selectedIndex);
-    [self setSelectedIndex:selectedIndex];
-    if (changed) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        if ([self.target respondsToSelector:self.action]) {
-            if ([NSStringFromSelector(self.action) hasSuffix:@":"]) {
-                [self.target performSelector:self.action withObject:self];
-            }
-            else {
-                [self.target performSelector:self.action];
-            }
-        }
-        else {
-            LOG(General, "Target does not respond to selector: %@ : %@", self.target, NSStringFromSelector(self.action));
-        }
-    }
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity
-              targetContentOffset:(inout CGPoint *)targetContentOffset
-{
-    CGFloat offsetY = targetContentOffset->y;
-    CGFloat closestY = 0;
-    CGFloat dy = FLT_MAX;
-    for (NSUInteger i = 0; i < self.elementsCount; i++) {
-        CGFloat toffsetY = i * self.elementHeight;
-        CGFloat tdy = fabs(toffsetY - offsetY);
-        if (tdy < dy) {
-            dy = tdy;
-            closestY = toffsetY;
-        }
-        
-    }
-    targetContentOffset->y = closestY;
-}
-
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     return CGRectContainsPoint(self.bounds, point) ? self.scrollView : nil;
@@ -402,6 +353,12 @@ static UIBezierPath *RotorStrokePath()
 {
     self.target = target;
     self.action = action;
+}
+
+- (void)setChanging:(BOOL)changing
+{
+    _changing = changing;
+    [self sendAction];
 }
 
 - (NSUInteger)elementsCount
@@ -429,6 +386,85 @@ static UIBezierPath *RotorStrokePath()
     
     self.elementsLabel.frame = CGRectMake(0, 0, up_rect_width(bounds), elementsLabelHeight);
     self.scrollView.contentSize = self.elementsLabel.frame.size;
+}
+
+- (void)sendAction
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    if ([self.target respondsToSelector:self.action]) {
+        if ([NSStringFromSelector(self.action) hasSuffix:@":"]) {
+            [self.target performSelector:self.action withObject:self];
+        }
+        else {
+            [self.target performSelector:self.action];
+        }
+    }
+    else {
+        LOG(General, "Target does not respond to selector: %@ : %@", self.target, NSStringFromSelector(self.action));
+    }
+}
+
+#pragma mark - UIScrollVoewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    NSUInteger selectedIndex = 0;
+    CGFloat dy = FLT_MAX;
+    for (NSUInteger i = 0; i < self.elementsCount; i++) {
+        CGFloat toffsetY = i * self.elementHeight;
+        CGFloat tdy = fabs(toffsetY - offsetY);
+        if (tdy < dy) {
+            dy = tdy;
+            selectedIndex = i;
+        }
+    }
+    BOOL changed = (self.selectedIndex != selectedIndex);
+    [self setSelectedIndex:selectedIndex];
+    if (changed) {
+        [self sendAction];
+    }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    CGFloat offsetY = targetContentOffset->y;
+    CGFloat closestY = 0;
+    CGFloat dy = FLT_MAX;
+    for (NSUInteger i = 0; i < self.elementsCount; i++) {
+        CGFloat toffsetY = i * self.elementHeight;
+        CGFloat tdy = fabs(toffsetY - offsetY);
+        if (tdy < dy) {
+            dy = tdy;
+            closestY = toffsetY;
+        }
+        
+    }
+    targetContentOffset->y = closestY;
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    self.changing = YES;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)willDecelerate
+{
+    if (!willDecelerate) {
+        [self setChanging:NO];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self setChanging:NO];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    [self setChanging:NO];
 }
 
 #pragma mark - Update theme colors

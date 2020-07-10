@@ -60,6 +60,9 @@ using Spot = UP::SpellLayout::Place;
     GameKey m_game_key;
 }
 @property (nonatomic) NSArray<UPRotor *> *rotors;
+@property (nonatomic) UPBallot *obsessCheckbox;
+@property (nonatomic) UPLabel *obsessDescription;
+@property (nonatomic) UPButton *helpButton;
 @end
 
 @implementation UPSpellExtrasPaneObsess
@@ -93,6 +96,24 @@ using Spot = UP::SpellLayout::Place;
     }
     self.rotors = rotors;
     
+    self.obsessCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
+    self.obsessCheckbox.labelString = @"OBSESS";
+    [self.obsessCheckbox setTarget:self action:@selector(obsessCheckboxTapped)];
+    self.obsessCheckbox.frame = layout.frame_for(Role::ExtrasObsessCheckbox);
+    [self addSubview:self.obsessCheckbox];
+
+    self.obsessDescription = [UPLabel label];
+    self.obsessDescription.frame = layout.frame_for(Role::ExtrasObsessDescription);
+    self.obsessDescription.font = layout.settings_description_font();
+    self.obsessDescription.textColorCategory = UPColorCategoryControlText;
+    self.obsessDescription.backgroundColorCategory = UPColorCategoryClear;
+    self.obsessDescription.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:self.obsessDescription];
+
+    self.helpButton = [UPButton roundHelpButton];
+    self.helpButton.frame = layout.frame_for(Role::ExtrasObsessHelp);
+    [self addSubview:self.helpButton];
+
     [self updateThemeColors];
 
     return self;
@@ -102,21 +123,30 @@ using Spot = UP::SpellLayout::Place;
 {
     self.userInteractionEnabled = YES;
 
-    m_game_key = GameKey::random();
-//    m_game_key = GameKey("YFE-1906");
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    if (settings.obsessMode) {
+        m_game_key = GameKey(settings.obsessGameKeyValue);
+        [self.obsessCheckbox setSelected:YES];
+    }
+    else {
+        m_game_key = GameKey::random();
+        [self.obsessCheckbox setSelected:NO];
+    }
+
     [self setRotorsFromGameKey];
-    
-//    SpellLayout &layout = SpellLayout::instance();
-//    self.gamesHeader.frame = layout.frame_for(Role::ExtrasObsessHeader);
-//    self.gamesTable.frame = layout.frame_for(Role::ExtrasObsessTable);
-//
-//    CGRect gamesBackgroundViewFrame = self.gamesHeader.frame;
-//    gamesBackgroundViewFrame.size.height += up_rect_height(self.gamesTable.frame);
-//    self.gamesBackgroundView.frame = gamesBackgroundViewFrame;
-//
-//    UPSpellSettings *settings = [UPSpellSettings instance];
-//    [self updateRadioButtons:settings.statsSelectedTabIndex];
-//    [self setSelectedTab:settings.statsSelectedTabIndex];
+    [self updateObsessDescription];
+}
+
+- (void)obsessCheckboxTapped
+{
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.obsessMode = self.obsessCheckbox.selected;
+    if (self.obsessCheckbox.selected) {
+        UPSpellSettings *settings = [UPSpellSettings instance];
+        settings.obsessGameKeyValue = m_game_key.value();
+    }
+
+    [self updateObsessDescription];
 }
 
 - (void)setRotorsFromGameKey
@@ -146,12 +176,43 @@ using Spot = UP::SpellLayout::Place;
         }
     }
     m_game_key = GameKey(cpp_str(gameKeyString));
-    LOG(General, "GameKey: %s", m_game_key.string().c_str());
 }
 
 - (void)gameKeyRotorsChanged
 {
     [self setGameKeyFromRotors];
+    [self updateObsessDescription];
+    
+    BOOL changing = NO;
+    for (UPRotor *rotor in self.rotors) {
+        if (rotor.changing) {
+            changing = YES;
+            break;
+        }
+    }
+    if (changing) {
+        // blank stats
+    }
+    else {
+        if (self.obsessCheckbox.selected) {
+            UPSpellSettings *settings = [UPSpellSettings instance];
+            settings.obsessGameKeyValue = m_game_key.value();
+        }
+    }
+}
+
+- (void)updateObsessDescription
+{
+    NSMutableString *string = [NSMutableString string];
+    if (self.obsessCheckbox.selected) {
+        NSString *gameKeyString = ns_str(m_game_key.string());
+        [string appendFormat:@"All new games use GAMEKEY %@ and repeat\nthe same sequence of letter tiles", gameKeyString];
+    }
+    else {
+        [string appendString:@"Each new game uses a different GAMEKEY chosen\n"
+         "at random to give a varied sequence of letter tiles"];
+    }
+    self.obsessDescription.string = string;
 }
 
 - (void)cancelAnimations
