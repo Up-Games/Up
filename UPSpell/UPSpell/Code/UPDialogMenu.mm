@@ -65,10 +65,6 @@ using UP::SpellLayout;
     self.aboutButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopRight);
     [self addSubview:self.aboutButton];
     
-    UPButton *roundHelpButton = [UPButton roundHelpButton];
-    roundHelpButton.frame = layout.frame_for(SpellLayout::Role::ExtrasObsessHelp);
-    [self addSubview:roundHelpButton];
-    
     [self updateThemeColors];
 
     return self;

@@ -52,7 +52,13 @@ using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Place;
 
 @interface UPSpellExtrasPaneObsess ()
-@property (nonatomic) UPRotor *rotor;
+@property (nonatomic) UPRotor *rotor1;
+@property (nonatomic) UPRotor *rotor2;
+@property (nonatomic) UPRotor *rotor3;
+@property (nonatomic) UPRotor *rotor4;
+@property (nonatomic) UPRotor *rotor5;
+@property (nonatomic) UPRotor *rotor6;
+@property (nonatomic) UPRotor *rotor7;
 @end
 
 @implementation UPSpellExtrasPaneObsess
@@ -68,10 +74,34 @@ using Spot = UP::SpellLayout::Place;
 
     SpellLayout &layout = SpellLayout::instance();
 
-    self.rotor = [UPRotor rotorWithType:UPRotorTypeNumbers];
-    self.rotor.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor1Frame);
-    [self addSubview:self.rotor];
-    
+    self.rotor1 = [UPRotor rotorWithType:UPRotorTypeAlphabet];
+    self.rotor1.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor1Frame);
+    [self addSubview:self.rotor1];
+
+    self.rotor2 = [UPRotor rotorWithType:UPRotorTypeAlphabet];
+    self.rotor2.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor2Frame);
+    [self addSubview:self.rotor2];
+
+    self.rotor3 = [UPRotor rotorWithType:UPRotorTypeAlphabet];
+    self.rotor3.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor3Frame);
+    [self addSubview:self.rotor3];
+
+    self.rotor4 = [UPRotor rotorWithType:UPRotorTypeNumbers];
+    self.rotor4.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor4Frame);
+    [self addSubview:self.rotor4];
+
+    self.rotor5 = [UPRotor rotorWithType:UPRotorTypeNumbers];
+    self.rotor5.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor5Frame);
+    [self addSubview:self.rotor5];
+
+    self.rotor6 = [UPRotor rotorWithType:UPRotorTypeNumbers];
+    self.rotor6.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor6Frame);
+    [self addSubview:self.rotor6];
+
+    self.rotor7 = [UPRotor rotorWithType:UPRotorTypeNumbers];
+    self.rotor7.frame = layout.layout_relative_aspect_rect(SpellLayout::CanonicalExtrasObsessRotor7Frame);
+    [self addSubview:self.rotor7];
+
     [self updateThemeColors];
 
     return self;

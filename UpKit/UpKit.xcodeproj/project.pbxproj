@@ -11,6 +11,8 @@
 		5D0FC23024A3A1CC00353563 /* UPDivider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22E24A3A1CC00353563 /* UPDivider.mm */; };
 		5D0FC32F24A5865100353563 /* UIDevice+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0FC32D24A5865100353563 /* UIDevice+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D0FC33024A5865100353563 /* UIDevice+UP.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC32E24A5865100353563 /* UIDevice+UP.m */; };
+		5D12E4A324B7B37900C73F64 /* NSMutableAttributedString+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D12E4A124B7B37900C73F64 /* NSMutableAttributedString+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D12E4A424B7B37900C73F64 /* NSMutableAttributedString+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D12E4A224B7B37900C73F64 /* NSMutableAttributedString+UP.mm */; };
 		5D269CB1245CDB31000B6A1D /* UIImage+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D269CAF245CDB31000B6A1D /* UIImage+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D269CB2245CDB31000B6A1D /* UIImage+UP.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D269CB0245CDB31000B6A1D /* UIImage+UP.m */; };
 		5D2CAC84245B538B00B81332 /* NSValue+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D2CAC83245B538B00B81332 /* NSValue+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -133,6 +135,8 @@
 		5D0FC22E24A3A1CC00353563 /* UPDivider.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDivider.mm; sourceTree = "<group>"; };
 		5D0FC32D24A5865100353563 /* UIDevice+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDevice+UP.h"; sourceTree = "<group>"; };
 		5D0FC32E24A5865100353563 /* UIDevice+UP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+UP.m"; sourceTree = "<group>"; };
+		5D12E4A124B7B37900C73F64 /* NSMutableAttributedString+UP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+UP.h"; sourceTree = "<group>"; };
+		5D12E4A224B7B37900C73F64 /* NSMutableAttributedString+UP.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSMutableAttributedString+UP.mm"; sourceTree = "<group>"; };
 		5D269CAF245CDB31000B6A1D /* UIImage+UP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UP.h"; sourceTree = "<group>"; };
 		5D269CB0245CDB31000B6A1D /* UIImage+UP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UP.m"; sourceTree = "<group>"; };
 		5D2CAC83245B538B00B81332 /* NSValue+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSValue+UP.h"; sourceTree = "<group>"; };
@@ -346,6 +350,8 @@
 		5DFE62232453CF4E00D9CA0B /* UP */ = {
 			isa = PBXGroup;
 			children = (
+				5D12E4A124B7B37900C73F64 /* NSMutableAttributedString+UP.h */,
+				5D12E4A224B7B37900C73F64 /* NSMutableAttributedString+UP.mm */,
 				5D2CAC83245B538B00B81332 /* NSValue+UP.h */,
 				5D2CAC85245B53F200B81332 /* NSValue+UP.m */,
 				5DEBE01E2454F1D200016047 /* UIColor+UP.h */,
@@ -450,6 +456,7 @@
 				5DC67DF72473069A009BCDBB /* UPGameTimer.h in Headers */,
 				5DF9DF422465B35700B2199D /* UPLexicon.h in Headers */,
 				5DD71DA32458F39200F3F9E2 /* UPAny.h in Headers */,
+				5D12E4A324B7B37900C73F64 /* NSMutableAttributedString+UP.h in Headers */,
 				5DEBE02E245716F900016047 /* UPStringTools.h in Headers */,
 				5D5216F2246D87DF005A2E9F /* UPControl.h in Headers */,
 				5D4AE832248FC9A900213904 /* UPObjCProperty.h in Headers */,
@@ -651,6 +658,7 @@
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5D4AE82E248F1FE600213904 /* UPSettings.mm in Sources */,
 				5DA8E064247C063B008D3015 /* UPTicker.m in Sources */,
+				5D12E4A424B7B37900C73F64 /* NSMutableAttributedString+UP.mm in Sources */,
 				5DF9DF432465B35700B2199D /* UPLexicon.mm in Sources */,
 				5DCFD09A24ACF27100CA5C24 /* UPSqlite.mm in Sources */,
 				5DCFD09E24AD4BC900CA5C24 /* UPGameTimer.m in Sources */,

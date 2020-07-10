@@ -189,6 +189,12 @@ public:
     static inline constexpr CGRect CanonicalExtrasObsessGameKeyPickerFrame =  { 375, 24,
         up_size_width(CanonicalRotorSize) * 7, up_size_height(CanonicalRotorSize) };
     static inline constexpr CGRect CanonicalExtrasObsessRotor1Frame =  { 375, 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
+    static inline constexpr CGRect CanonicalExtrasObsessRotor2Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 1), 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
+    static inline constexpr CGRect CanonicalExtrasObsessRotor3Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 2), 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
+    static inline constexpr CGRect CanonicalExtrasObsessRotor4Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 3) + 18, 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
+    static inline constexpr CGRect CanonicalExtrasObsessRotor5Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 4) + 18, 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
+    static inline constexpr CGRect CanonicalExtrasObsessRotor6Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 5) + 18, 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
+    static inline constexpr CGRect CanonicalExtrasObsessRotor7Frame =  { 375 + (up_size_width(CanonicalRotorSize) * 6) + 18, 24, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
     static inline constexpr CGRect CanonicalExtrasObsessHelpButtonFrame = { 902, 407,
         up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
