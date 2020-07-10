@@ -618,6 +618,9 @@ const SpellModel::State &SpellModel::apply(const Action &action)
     const State &state = m_states.emplace_back(action, incoming_word, tiles(), game_score());
     LOG(State, "%s", cpp_str(state).c_str());
 
+//    if (action.opcode() == Opcode::START) {
+//        db_drop();
+//    }
     if (action.opcode() == Opcode::END) {
         db_store();
     }
@@ -1430,6 +1433,17 @@ static const char *db_path()
         }
     }
     return path;
+}
+
+void SpellModel::db_drop()
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *path = [NSString stringWithUTF8String:db_path()];
+    NSError *error = nil;
+    BOOL ok = [fm removeItemAtPath:path error:&error];
+    if (!ok) {
+        NSLog(@"db_drop error: %@ : %@", path, error);
+    }
 }
 
 sqlite3 *SpellModel::db_handle()

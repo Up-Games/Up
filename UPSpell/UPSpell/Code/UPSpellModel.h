@@ -338,6 +338,7 @@ private:
     static sqlite3 *db_handle();
 
     void db_store();
+    void db_drop();
     void set_db_game_id(uint64_t db_game_id) { m_db_game_id = db_game_id; }
     uint64_t db_game_id() const { return m_db_game_id; }
 
