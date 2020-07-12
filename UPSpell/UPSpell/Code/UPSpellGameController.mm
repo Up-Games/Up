@@ -1494,8 +1494,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         }
     }
     for (UPTileView *tileView in submittedTileViews) {
-        ASSERT(tileView.submitLocation.role() != Role::None);
-        [moves addObject:UPViewMoveMake(tileView, tileView.submitLocation)];
+        if (tileView.submitLocation.role() != Role::None) {
+            [moves addObject:UPViewMoveMake(tileView, tileView.submitLocation)];
+        }
     }
     start(bloop_out(BandModeUI, moves, duration, ^(UIViewAnimatingPosition) {
         [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
