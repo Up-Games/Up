@@ -184,8 +184,7 @@ UIBezierPath *ChoiceRightFillPathSelected()
     }
 
     self.label.font = SpellLayout::instance().choice_control_font();
-    self.label.textColorCategory = UPColorCategoryControlText;
-    self.label.backgroundColorCategory = UPColorCategoryClear;
+    self.label.colorCategory = UPColorCategoryControlText;
 
     return self;
 }

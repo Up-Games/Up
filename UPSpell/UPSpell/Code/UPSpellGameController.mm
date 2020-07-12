@@ -1154,7 +1154,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)viewUpdateWordScoreLabel
 {
-    UIColor *wordScoreColor = [UIColor themeColorWithCategory:self.gameView.wordScoreLabel.textColorCategory];
+    UIColor *wordScoreColor = [UIColor themeColorWithCategory:self.gameView.wordScoreLabel.colorCategory];
     
     SpellLayout &layout = SpellLayout::instance();
     NSString *string = [NSString stringWithFormat:@"+%d \n", self.model->word().total_score()];
@@ -1743,31 +1743,31 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     id labelString = nil;
     
 //    if (!labelString) {
-//        id noteString = [self statsNoteGameHighScore];
+//        id noteString = [self gameNoteGameHighScore];
 //        if (noteString) {
 //            labelString = noteString;
 //        }
 //    }
     if (!labelString) {
-        id noteString = [self statsNoteAllTimeBestWord];
+        id noteString = [self gameNoteAllTimeBestWord];
         if (noteString) {
             labelString = noteString;
         }
     }
     if (!labelString) {
-        id noteString = [self statsNoteWordsSubmittedRank];
+        id noteString = [self gameNoteWordsSubmittedRank];
         if (noteString) {
             labelString = noteString;
         }
     }
     if (!labelString) {
-        id noteString = [self statsNoteBestWordInGame];
+        id noteString = [self gameNoteBestWordInGame];
         if (noteString) {
             labelString = noteString;
         }
     }
     if (!labelString) {
-        labelString = [self statsNoteRandomWord];
+        labelString = [self gameNoteRandomWord];
     }
 
     self.dialogGameNote.noteLabel.attributedString = labelString;
@@ -1789,7 +1789,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
         [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
         [attrString appendAttributedString:bottomString];
-        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.textColorCategory];
+        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameNote.noteLabel.colorCategory];
         [attrString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, attrString.length)];
 
         self.dialogGameNote.noteLabel.attributedString = attrString;
@@ -1799,7 +1799,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 #pragma mark - Stats note strings
 
-- (NSString *)statsNoteGameHighScore
+- (NSString *)gameNoteGameHighScore
 {
     ASSERT(self.mode == Mode::End);
 
@@ -1827,7 +1827,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     return result;
 }
 
-- (NSString *)statsNoteAllTimeBestWord
+- (NSString *)gameNoteAllTimeBestWord
 {
     ASSERT(self.mode == Mode::End);
 
@@ -1852,7 +1852,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     return result;
 }
 
-- (NSString *)statsNoteWordsSubmittedRank
+- (NSString *)gameNoteWordsSubmittedRank
 {
     ASSERT(self.mode == Mode::End);
     
@@ -1878,7 +1878,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     return result;
 }
 
-- (NSString *)statsNoteBestWordInGame
+- (NSString *)gameNoteBestWordInGame
 {
     ASSERT(self.mode == Mode::End);
     
@@ -1892,7 +1892,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     return [NSString stringWithFormat:@"BEST WORD IN GAME\n%@ +%d", wordString, word.total_score()];
 }
 
-- (NSString *)statsNoteRandomWord
+- (NSString *)gameNoteRandomWord
 {
     ASSERT(self.mode == Mode::End);
     

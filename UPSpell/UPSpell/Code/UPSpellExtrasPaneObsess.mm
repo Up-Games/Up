@@ -105,8 +105,7 @@ using Spot = UP::SpellLayout::Place;
     self.obsessDescription = [UPLabel label];
     self.obsessDescription.frame = layout.frame_for(Role::ExtrasObsessDescription);
     self.obsessDescription.font = layout.settings_description_font();
-    self.obsessDescription.textColorCategory = UPColorCategoryControlText;
-    self.obsessDescription.backgroundColorCategory = UPColorCategoryClear;
+    self.obsessDescription.colorCategory = UPColorCategoryControlText;
     self.obsessDescription.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.obsessDescription];
 
@@ -206,11 +205,11 @@ using Spot = UP::SpellLayout::Place;
     NSMutableString *string = [NSMutableString string];
     if (self.obsessCheckbox.selected) {
         NSString *gameKeyString = ns_str(m_game_key.string());
-        [string appendFormat:@"All new games use GAMEKEY %@ and repeat\nthe same sequence of letter tiles", gameKeyString];
+        [string appendFormat:@"New games use GAMEKEY %@ and repeat\nthe same sequence of letter tiles", gameKeyString];
     }
     else {
-        [string appendString:@"Each new game uses a different GAMEKEY chosen\n"
-         "at random to give a varied sequence of letter tiles"];
+        [string appendString:@"New games use a GAMEKEY chosen at random\n"
+         "to give a varied sequence of letter tiles."];
     }
     self.obsessDescription.string = string;
 }

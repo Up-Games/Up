@@ -22,7 +22,7 @@
 #import "UPSpellExtrasController.h"
 #import "UPSpellExtrasPaneColors.h"
 #import "UPSpellExtrasPaneObsess.h"
-#import "UPSpellExtrasPaneStats.h"
+#import "UPSpellExtrasPaneHistory.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
 #import "UPSpellNavigationController.h"
@@ -41,7 +41,7 @@
 @property (nonatomic, readwrite) UPAccessoryPane *selectedPane;
 
 @property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
-@property (nonatomic) UPSpellExtrasPaneStats *statsPane;
+@property (nonatomic) UPSpellExtrasPaneHistory *historyPane;
 @property (nonatomic) UPSpellExtrasPaneObsess *obsessPane;
 
 @property (nonatomic) NSArray<UPChoice *> *choices;
@@ -97,7 +97,7 @@ using Location = UP::SpellLayout::Location;
     [self.view addSubview:self.choice2];
     
     self.choice3 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice3.labelString = @"STATS";
+    self.choice3.labelString = @"HISTORY";
     self.choice3.tag = 2;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice3.frame = layout.frame_for(Role::ChoiceItem3Left, Spot::OffLeftNear);
@@ -116,9 +116,9 @@ using Location = UP::SpellLayout::Location;
     self.colorsPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.colorsPane];
 
-    self.statsPane = [UPSpellExtrasPaneStats pane];
-    self.statsPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
-    [self.view addSubview:self.statsPane];
+    self.historyPane = [UPSpellExtrasPaneHistory pane];
+    self.historyPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
+    [self.view addSubview:self.historyPane];
     
     self.obsessPane = [UPSpellExtrasPaneObsess pane];
     self.obsessPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
@@ -129,7 +129,7 @@ using Location = UP::SpellLayout::Location;
     self.panes = @[
         self.colorsPane,
         [UPAccessoryPane pane],
-        self.statsPane,
+        self.historyPane,
         self.obsessPane
     ];
     

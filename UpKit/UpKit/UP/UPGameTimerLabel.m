@@ -25,12 +25,12 @@ static const NSUInteger _StringLength = 5;
 
 + (UPGameTimerLabel *)label
 {
-    return [[self alloc] initWithFrame:CGRectZero];
+    return [[self alloc] init];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)init
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
     self.formattedTimeString = [NSMutableString string];
     self.attributedTimeString = [[NSMutableAttributedString alloc] initWithString:_StringDummy];
     return self;
@@ -82,7 +82,7 @@ static const NSUInteger _StringLength = 5;
         NSRange range = NSMakeRange(0, _StringLength);
         NSRange kernRange = NSMakeRange(_StringLength - 2, 1);
         NSRange tenthsRange = NSMakeRange(_StringLength - 1, 1);
-        UIColor *textColor = [UIColor themeColorWithCategory:self.textColorCategory];
+        UIColor *textColor = [UIColor themeColorWithCategory:self.colorCategory];
         
         [self.attributedTimeString beginEditing];
         [self.attributedTimeString replaceCharactersInRange:range withString:self.formattedTimeString];

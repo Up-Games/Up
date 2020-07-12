@@ -56,7 +56,7 @@ public:
         ExtrasColorsDarkMode, ExtrasColorsStarkMode, ExtrasColorsQuarkMode, ExtrasColorsHueWheel,
         ExtrasColorsHueStepMore, ExtrasColorsHueStepLess, ExtrasColorsDescription, ExtrasColorsExample,
         ExtrasColorsIconPrompt, ExtrasColorsIconButtonNope, ExtrasColorsIconButtonYep,
-        ExtrasStatsAveragesTabButton, ExtrasStatsGamesTabButton, ExtrasStatsWordsTabButton, ExtrasStatsHeader, ExtrasStatsTable,
+        ExtrasStatsHeader, ExtrasStatsTable,
         ExtrasObsessGameKeyPickerRotor1, ExtrasObsessGameKeyPickerRotor2, ExtrasObsessGameKeyPickerRotor3,
         ExtrasObsessGameKeyPickerRotor4, ExtrasObsessGameKeyPickerRotor5, ExtrasObsessGameKeyPickerRotor6,
         ExtrasObsessGameKeyPickerRotor7, ExtrasObsessCheckbox, ExtrasObsessDescription, ExtrasObsessHelp
@@ -181,19 +181,18 @@ public:
     static inline constexpr CGRect CanonicalExtrasStatsAveragesTabButtonFrame = { 390, 444, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasStatsGamesTabButtonFrame =    { 621, 444, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasStatsWordsTabButtonFrame =    { 804, 444, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasStatsHeaderFrame =            { 384,  32, 572,  72 };
-    static inline constexpr CGRect CanonicalExtrasStatsTableFrame =             { 384, 104, 572, 300 };
-    static inline constexpr CGFloat CanonicalExtrasGamesRankColumnWidth =               62;
-    static inline constexpr CGFloat CanonicalExtrasGamesGameScoreColumnWidth =         105;
-    static inline constexpr CGFloat CanonicalExtrasGamesWordsSpelledColumnWidth =      135;
-    static inline constexpr CGFloat CanonicalExtrasGamesAverageWordScoreColumnWidth =  135;
-    static inline constexpr CGFloat CanonicalExtrasGamesAverageWordLengthColumnWidth = 135;
+    static inline constexpr CGRect CanonicalExtrasStatsHeaderFrame =            { 384,  32, 572,  36 };
+    static inline constexpr CGRect CanonicalExtrasStatsTableFrame =             { 384,  72, 572, 400 };
+    static inline constexpr CGFloat CanonicalExtrasHistoryGameScoreColumnWidth =  140;
+    static inline constexpr CGFloat CanonicalExtrasHistoryGameIDColumnWidth =     140;
+    static inline constexpr CGFloat CanonicalExtrasHistoryGameKeyColumnWidth =    180;
+    static inline constexpr CGFloat CanonicalExtrasHistoryChevronColumnWidth =     92;
 
     static inline constexpr int ExtrasObsessGameKeyPickerRotorCount = 7;
     static inline constexpr CGFloat CanonicalExtrasObsessGameKeyPickerAlphabetNumberGap =  20;
     static inline constexpr CGRect CanonicalExtrasObsessGameKeyPickerFrame =  { 384, 24,
         (up_size_width(CanonicalRotorSize) * 7) + CanonicalExtrasObsessGameKeyPickerAlphabetNumberGap, up_size_height(CanonicalRotorSize) };
-    static inline constexpr CGRect CanonicalExtrasObsessCheckboxFrame = { 790, 116, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize)};
+    static inline constexpr CGRect CanonicalExtrasObsessCheckboxFrame = { 790, 117, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize)};
     static inline constexpr CGRect CanonicalExtrasObsessDescriptionFrame = { 384, 258, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasObsessHelpButtonFrame = { 902, 407,
         up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };

@@ -26,16 +26,15 @@
 
 + (UPLabel *)label
 {
-    return [[self alloc] initWithFrame:CGRectZero];
+    return [[self alloc] init];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)init
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:CGRectZero];
     TextLayer().contentsScale = [[UIScreen mainScreen] scale];
     self.opaque = NO;
-    self.backgroundColorCategory = UPColorCategoryClear;
-    self.textColorCategory = UPColorCategoryInformation;
+    self.colorCategory = UPColorCategoryInformation;
     [self updateThemeColors];
     return self;
 }
@@ -113,15 +112,9 @@
     TextLayer().alignmentMode = alignmentMode;
 }
 
-- (void)setBackgroundColorCategory:(UPColorCategory)backgroundColorCategory
+- (void)setColorCategory:(UPColorCategory)textColorCategory
 {
-    _backgroundColorCategory = backgroundColorCategory;
-    [self updateThemeColors];
-}
-
-- (void)setTextColorCategory:(UPColorCategory)textColorCategory
-{
-    _textColorCategory = textColorCategory;
+    _colorCategory = textColorCategory;
     [self updateThemeColors];
 }
 
@@ -161,8 +154,7 @@
 
 - (void)updateThemeColors
 {
-    self.backgroundColor = [UIColor themeColorWithCategory:self.backgroundColorCategory];
-    self.textColor = [UIColor themeColorWithCategory:self.textColorCategory];
+    self.textColor = [UIColor themeColorWithCategory:self.colorCategory];
 }
 
 @end

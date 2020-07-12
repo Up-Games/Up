@@ -1,13 +1,13 @@
 //
-//  UPSpellExtrasPaneStats.h
+//  UPSpellExtrasPaneHistory.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
 #import "UPAccessoryPane.h"
 
-@interface UPSpellExtrasPaneStats : UPAccessoryPane
+@interface UPSpellExtrasPaneHistory : UPAccessoryPane
 
-+ (UPSpellExtrasPaneStats *)pane;
++ (UPSpellExtrasPaneHistory *)pane;
 
 - (void)cancelAnimations;
 

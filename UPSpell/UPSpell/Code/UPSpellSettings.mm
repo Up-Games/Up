@@ -12,7 +12,8 @@
 @dynamic themeColorHue;
 @dynamic quarkMode;
 @dynamic extrasSelectedIndex;
-@dynamic statsSelectedTabIndex;
+@dynamic historySelectedColumnTag;
+@dynamic historySelectedColumnSortDescending;
 @dynamic obsessMode;
 @dynamic obsessGameKeyValue;
 
@@ -39,7 +40,8 @@
     self.themeColorHue = 225;
     self.quarkMode = NO;
     self.extrasSelectedIndex = 0;
-    self.statsSelectedTabIndex = 0;
+    self.historySelectedColumnTag = 0;
+    self.historySelectedColumnSortDescending = YES;
     self.obsessMode = NO;
     self.obsessGameKeyValue = 0;
 }

@@ -11,7 +11,8 @@
 @property (nonatomic) CGFloat themeColorHue;
 @property (nonatomic) BOOL quarkMode;
 @property (nonatomic) NSUInteger extrasSelectedIndex;
-@property (nonatomic) NSUInteger statsSelectedTabIndex;
+@property (nonatomic) NSUInteger historySelectedColumnTag;
+@property (nonatomic) BOOL historySelectedColumnSortDescending;
 @property (nonatomic) BOOL obsessMode;
 @property (nonatomic) uint32_t obsessGameKeyValue;
 

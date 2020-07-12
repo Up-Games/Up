@@ -296,8 +296,7 @@ static UIBezierPath *CheckboxRoundCheckPath()
     [self setAccentColorCategory:UPColorCategoryControlIndicator forState:(UPControlStateHighlighted | UPControlStateSelected)];
     
     self.label.font = SpellLayout::instance().ballot_control_font();
-    self.label.textColorCategory = UPColorCategoryControlText;
-    self.label.backgroundColorCategory = UPColorCategoryClear;
+    self.label.colorCategory = UPColorCategoryControlText;
     [self.label addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
 
     [self updateThemeColors];

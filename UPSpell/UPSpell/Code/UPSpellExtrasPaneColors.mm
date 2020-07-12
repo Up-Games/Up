@@ -112,8 +112,7 @@ static const int MilepostHue = 15;
     self.hueDescription = [UPLabel label];
     self.hueDescription.frame = layout.frame_for(Role::ExtrasColorsDescription);
     self.hueDescription.font = layout.settings_description_font();
-    self.hueDescription.textColorCategory = UPColorCategoryControlText;
-    self.hueDescription.backgroundColorCategory = UPColorCategoryClear;
+    self.hueDescription.colorCategory = UPColorCategoryControlText;
     self.hueDescription.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.hueDescription];
     
@@ -161,8 +160,7 @@ static const int MilepostHue = 15;
     self.iconPrompt.string = @"Change the UP Spell app icon on your homescreen\nto match the hue on the wheel?";
     self.iconPrompt.frame = layout.frame_for(Role::ExtrasColorsIconPrompt);
     self.iconPrompt.font = layout.settings_description_font();
-    self.iconPrompt.textColorCategory = UPColorCategoryControlText;
-    self.iconPrompt.backgroundColorCategory = UPColorCategoryClear;
+    self.iconPrompt.colorCategory = UPColorCategoryControlText;
     self.iconPrompt.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.iconPrompt];
 
@@ -360,10 +358,10 @@ static const int MilepostHue = 15;
         [string appendString:@"with more filled-in shapes\nthan outlined shapes "];
     }
     if (self.darkModeCheckbox.selected) {
-        [string appendString:@"on a dark background"];
+        [string appendString:@"on a dark background."];
     }
     else {
-        [string appendString:@"on a light background"];
+        [string appendString:@"on a light background."];
     }
     self.hueDescription.string = string;
 }

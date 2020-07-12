@@ -690,9 +690,6 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasColorsIconButtonNope, up_left_aligned_rect(text_button_size, icon_button_layout_frame));
     calculate_and_set_locations(Role::ExtrasColorsIconButtonYep, up_right_aligned_rect(text_button_size, icon_button_layout_frame));
 
-    calculate_and_set_locations(Role::ExtrasStatsAveragesTabButton, layout_relative_aspect_rect(CanonicalExtrasStatsAveragesTabButtonFrame));
-    calculate_and_set_locations(Role::ExtrasStatsGamesTabButton, layout_relative_aspect_rect(CanonicalExtrasStatsGamesTabButtonFrame));
-    calculate_and_set_locations(Role::ExtrasStatsWordsTabButton, layout_relative_aspect_rect(CanonicalExtrasStatsWordsTabButtonFrame));
     calculate_and_set_locations(Role::ExtrasStatsHeader, layout_relative_aspect_rect(CanonicalExtrasStatsHeaderFrame));
     calculate_and_set_locations(Role::ExtrasStatsTable, layout_relative_aspect_rect(CanonicalExtrasStatsTableFrame));
 

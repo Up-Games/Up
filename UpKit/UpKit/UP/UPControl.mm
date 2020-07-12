@@ -301,7 +301,6 @@ UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
     if (!_label) {
         _label = [UPLabel label];
         _label.userInteractionEnabled = NO;
-        _label.backgroundColorCategory = UPColorCategoryClear;
         [self addSubview:_label];
     }
 }
@@ -1120,7 +1119,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
         UIColor *colorForState = [self labelColorForState:effectiveState];
         BOOL colorsDiffer = ![colorForPreviousState isEqual:colorForState];
         if (duration > UPTickerInterval && colorsDiffer) {
-            self.label.textColorCategory = [self labelColorCategoryForState:effectivePreviousState];
+            self.label.colorCategory = [self labelColorCategoryForState:effectivePreviousState];
             UPAnimator *animator = set_color(self.band, @[self], duration, UPControlElementLabel, effectivePreviousState, effectiveState,
                                              ^(UIViewAnimatingPosition) {
                 self.accentPathColorAnimatorSerialNumber = UP::NotASerialNumber;
@@ -1129,7 +1128,7 @@ UP_STATIC_INLINE NSUInteger up_control_key_label(UPControlState controlState)
             self.accentPathColorAnimatorSerialNumber = animator.serialNumber;
         }
         else {
-            self.label.textColorCategory = [self labelColorCategoryForState:effectiveState];
+            self.label.colorCategory = [self labelColorCategoryForState:effectiveState];
         }
     }
 

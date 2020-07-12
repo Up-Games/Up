@@ -11,11 +11,13 @@
 @property (nonatomic) NSString *string;
 @property (nonatomic) NSAttributedString *attributedString;
 @property (nonatomic) UIFont *font;
+@property (nonatomic) UPColorCategory colorCategory;
 @property (nonatomic) NSTextAlignment textAlignment;
-@property (nonatomic) UPColorCategory backgroundColorCategory;
-@property (nonatomic) UPColorCategory textColorCategory;
 @property (nonatomic) UIColor *textColor;
 
 + (UPLabel *)label;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+- (instancetype)init;
 
 @end

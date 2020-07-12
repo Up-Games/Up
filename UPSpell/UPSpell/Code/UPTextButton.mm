@@ -140,8 +140,7 @@ UIBezierPath *TextButtonStrokePath()
     [self setStrokeColorCategory:UPColorCategoryPrimaryStroke forState:UPControlStateNormal];
     [self setStrokeColorCategory:UPColorCategoryHighlightedStroke forState:UPControlStateHighlighted];
 
-    self.label.textColorCategory = UPColorCategoryContent;
-    self.label.backgroundColorCategory = UPColorCategoryClear;
+    self.label.colorCategory = UPColorCategoryContent;
     self.label.textAlignment = NSTextAlignmentCenter;
 
     return self;

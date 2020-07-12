@@ -40,7 +40,7 @@ using UP::SpellLayout;
     self.noteLabel = [UPLabel label];
     self.noteLabel.string = @"‘GRUBMITS’ WAS YOUR HIGHEST SCORING WORD (32)";
     self.noteLabel.font = layout.game_note_font();
-    self.noteLabel.textColorCategory = UPColorCategoryInformation;
+    self.noteLabel.colorCategory = UPColorCategoryInformation;
     self.noteLabel.textAlignment = NSTextAlignmentCenter;
     self.noteLabel.frame = layout.frame_for(SpellLayout::Role::DialogGameNote);
     [self addSubview:self.noteLabel];
