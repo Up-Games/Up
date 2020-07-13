@@ -690,9 +690,9 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasColorsIconButtonNope, up_left_aligned_rect(text_button_size, icon_button_layout_frame));
     calculate_and_set_locations(Role::ExtrasColorsIconButtonYep, up_right_aligned_rect(text_button_size, icon_button_layout_frame));
     
-//    calculate_and_set_locations(Role::ExtrasObsessCheckbox, layout_relative_aspect_rect(CanonicalExtrasObsessCheckboxFrame));
-//    calculate_and_set_locations(Role::ExtrasObsessDescription, layout_relative_aspect_rect(CanonicalExtrasObsessDescriptionFrame));
-//    calculate_and_set_locations(Role::ExtrasObsessHelp, layout_relative_aspect_rect(CanonicalExtrasObsessHelpButtonFrame));
+    calculate_and_set_locations(Role::ExtrasRetryTopDescription, layout_relative_aspect_rect(CanonicalExtrasRetryTopDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasRetryBottomDescription, layout_relative_aspect_rect(CanonicalExtrasRetryBottomDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasRetryQuickRetry, layout_relative_aspect_rect(CanonicalExtrasRetryQuickRetryFrame));
 }
 
 void SpellLayout::calculate_choice_locations()

@@ -9,6 +9,4 @@
 
 + (UPSpellExtrasPaneRetry *)pane;
 
-//- (void)cancelAnimations;
-
 @end

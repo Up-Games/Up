@@ -57,9 +57,7 @@ public:
         ExtrasColorsHueStepMore, ExtrasColorsHueStepLess, ExtrasColorsDescription, ExtrasColorsExample,
         ExtrasColorsIconPrompt, ExtrasColorsIconButtonNope, ExtrasColorsIconButtonYep,
         ExtrasStatsHeader, ExtrasStatsTable,
-        ExtrasObsessGameKeyPickerRotor1, ExtrasObsessGameKeyPickerRotor2, ExtrasObsessGameKeyPickerRotor3,
-        ExtrasObsessGameKeyPickerRotor4, ExtrasObsessGameKeyPickerRotor5, ExtrasObsessGameKeyPickerRotor6,
-        ExtrasObsessGameKeyPickerRotor7, ExtrasObsessCheckbox, ExtrasObsessDescription, ExtrasObsessHelp
+        ExtrasRetryTopDescription, ExtrasRetryQuickRetry, ExtrasRetryBottomDescription,
     };
 
     enum class Place {
@@ -177,6 +175,10 @@ public:
     static inline constexpr CGRect CanonicalExtrasColorsExampleFrame =     { 400, 386, 540, 66 };
     static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =  { 384, 278, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsIconLayoutFrame =  { 460, 381, 440, 76 };
+
+    static inline constexpr CGRect CanonicalExtrasRetryTopDescriptionFrame =    { 384,  36, 572,  76 };
+    static inline constexpr CGRect CanonicalExtrasRetryBottomDescriptionFrame = { 384, 380, 572, 114 };
+    static inline constexpr CGRect CanonicalExtrasRetryQuickRetryFrame =        { 550, 335, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();

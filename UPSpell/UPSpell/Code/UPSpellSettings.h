@@ -13,8 +13,8 @@
 @property (nonatomic) NSUInteger extrasSelectedIndex;
 @property (nonatomic) NSUInteger historySelectedColumnTag;
 @property (nonatomic) BOOL historySelectedColumnSortDescending;
-@property (nonatomic) BOOL obsessMode;
-@property (nonatomic) uint32_t obsessGameKeyValue;
+@property (nonatomic) BOOL quickRetry;
+@property (nonatomic) uint32_t quickRetryGameKeyValue;
 
 + (UPSpellSettings *)instance;
 - (instancetype)init NS_UNAVAILABLE;

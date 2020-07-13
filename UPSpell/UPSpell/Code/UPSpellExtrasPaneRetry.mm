@@ -17,8 +17,6 @@
 #import "UPBallot.h"
 #import "UPControl+UPSpell.h"
 #import "UPHueWheel.h"
-#import "UPRotor.h"
-#import "UPSpellGameSummary.h"
 #import "UPSpellExtrasPaneRetry.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellLayout.h"
@@ -56,12 +54,9 @@ using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Place;
 
 @interface UPSpellExtrasPaneRetry ()
-{
-    GameKey m_game_key;
-}
-@property (nonatomic) NSArray<UPRotor *> *rotors;
-@property (nonatomic) UPBallot *obsessCheckbox;
-@property (nonatomic) UPLabel *obsessDescription;
+@property (nonatomic) UPBallot *quickRetryCheckbox;
+@property (nonatomic) UPLabel *topDescription;
+@property (nonatomic) UPLabel *bottomDescription;
 @end
 
 @implementation UPSpellExtrasPaneRetry
@@ -77,18 +72,27 @@ using Spot = UP::SpellLayout::Place;
 
     SpellLayout &layout = SpellLayout::instance();
 
-    self.obsessCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
-    self.obsessCheckbox.labelString = @"OBSESS";
-    [self.obsessCheckbox setTarget:self action:@selector(obsessCheckboxTapped)];
-    self.obsessCheckbox.frame = layout.frame_for(Role::ExtrasObsessCheckbox);
-    [self addSubview:self.obsessCheckbox];
+    self.topDescription = [UPLabel label];
+    self.topDescription.frame = layout.frame_for(Role::ExtrasRetryTopDescription);
+    self.topDescription.font = layout.settings_description_font();
+    self.topDescription.colorCategory = UPColorCategoryControlText;
+    self.topDescription.textAlignment = NSTextAlignmentCenter;
+    self.topDescription.string = @"Tap RETRY to repeat a game. Try to improve\nyour score using the same sequence of letters.";
+    [self addSubview:self.topDescription];
 
-    self.obsessDescription = [UPLabel label];
-    self.obsessDescription.frame = layout.frame_for(Role::ExtrasObsessDescription);
-    self.obsessDescription.font = layout.settings_description_font();
-    self.obsessDescription.colorCategory = UPColorCategoryControlText;
-    self.obsessDescription.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:self.obsessDescription];
+    self.quickRetryCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
+    self.quickRetryCheckbox.labelString = @"QUICK RETRY";
+    [self.quickRetryCheckbox setTarget:self action:@selector(quickRetryCheckboxTapped)];
+    self.quickRetryCheckbox.frame = layout.frame_for(Role::ExtrasRetryQuickRetry);
+    [self addSubview:self.quickRetryCheckbox];
+
+    self.bottomDescription = [UPLabel label];
+    self.bottomDescription.frame = layout.frame_for(Role::ExtrasRetryBottomDescription);
+    self.bottomDescription.font = layout.settings_description_font();
+    self.bottomDescription.colorCategory = UPColorCategoryControlText;
+    self.bottomDescription.textAlignment = NSTextAlignmentCenter;
+    self.bottomDescription.string = @"Adds a RETRY checkbox to the GAME OVER screen.\nCheck it and tap PLAY to repeat the last game.";
+    [self addSubview:self.bottomDescription];
 
     [self updateThemeColors];
 
@@ -100,42 +104,13 @@ using Spot = UP::SpellLayout::Place;
     self.userInteractionEnabled = YES;
 
     UPSpellSettings *settings = [UPSpellSettings instance];
-    if (settings.obsessMode) {
-        m_game_key = GameKey(settings.obsessGameKeyValue);
-        [self.obsessCheckbox setSelected:YES];
-    }
-    else {
-        m_game_key = GameKey::random();
-        [self.obsessCheckbox setSelected:NO];
-    }
-
-    [self updateObsessDescription];
+    [self.quickRetryCheckbox setSelected:settings.quickRetry];
 }
 
-- (void)obsessCheckboxTapped
+- (void)quickRetryCheckboxTapped
 {
     UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.obsessMode = self.obsessCheckbox.selected;
-    if (self.obsessCheckbox.selected) {
-        UPSpellSettings *settings = [UPSpellSettings instance];
-        settings.obsessGameKeyValue = m_game_key.value();
-    }
-
-    [self updateObsessDescription];
-}
-
-- (void)updateObsessDescription
-{
-    NSMutableString *string = [NSMutableString string];
-    if (self.obsessCheckbox.selected) {
-        NSString *gameKeyString = ns_str(m_game_key.string());
-        [string appendFormat:@"New games use GAMEKEY %@ and repeat\nthe same sequence of letter tiles", gameKeyString];
-    }
-    else {
-        [string appendString:@"New games use a GAMEKEY chosen at random\n"
-         "to give a varied sequence of letter tiles."];
-    }
-    self.obsessDescription.string = string;
+    settings.quickRetry = self.quickRetryCheckbox.selected;
 }
 
 #pragma mark - Target / Action

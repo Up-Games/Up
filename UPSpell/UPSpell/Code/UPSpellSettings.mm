@@ -14,8 +14,8 @@
 @dynamic extrasSelectedIndex;
 @dynamic historySelectedColumnTag;
 @dynamic historySelectedColumnSortDescending;
-@dynamic obsessMode;
-@dynamic obsessGameKeyValue;
+@dynamic quickRetry;
+@dynamic quickRetryGameKeyValue;
 
 + (UPSpellSettings *)instance
 {
@@ -42,8 +42,8 @@
     self.extrasSelectedIndex = 0;
     self.historySelectedColumnTag = 0;
     self.historySelectedColumnSortDescending = YES;
-    self.obsessMode = NO;
-    self.obsessGameKeyValue = 0;
+    self.quickRetry = NO;
+    self.quickRetryGameKeyValue = 0;
 }
 
 @end
