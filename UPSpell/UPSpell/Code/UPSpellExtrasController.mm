@@ -21,8 +21,7 @@
 #import "UPHueWheel.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellExtrasPaneColors.h"
-#import "UPSpellExtrasPaneObsess.h"
-#import "UPSpellExtrasPaneHistory.h"
+#import "UPSpellExtrasPaneRetry.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
 #import "UPSpellNavigationController.h"
@@ -41,8 +40,7 @@
 @property (nonatomic, readwrite) UPAccessoryPane *selectedPane;
 
 @property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
-@property (nonatomic) UPSpellExtrasPaneHistory *historyPane;
-@property (nonatomic) UPSpellExtrasPaneObsess *obsessPane;
+@property (nonatomic) UPSpellExtrasPaneRetry *retryPane;
 
 @property (nonatomic) NSArray<UPChoice *> *choices;
 @property (nonatomic) NSArray<UPAccessoryPane *> *panes;
@@ -97,7 +95,7 @@ using Location = UP::SpellLayout::Location;
     [self.view addSubview:self.choice2];
     
     self.choice3 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice3.labelString = @"HISTORY";
+    self.choice3.labelString = @"STATS";
     self.choice3.tag = 2;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice3.frame = layout.frame_for(Role::ChoiceItem3Left, Spot::OffLeftNear);
@@ -105,7 +103,7 @@ using Location = UP::SpellLayout::Location;
     [self.view addSubview:self.choice3];
     
     self.choice4 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice4.labelString = @"OBSESS";
+    self.choice4.labelString = @"RETRY";
     self.choice4.tag = 3;
     self.choice4.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice4.frame = layout.frame_for(Role::ChoiceItem4Left, Spot::OffLeftNear);
@@ -116,21 +114,17 @@ using Location = UP::SpellLayout::Location;
     self.colorsPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.colorsPane];
 
-    self.historyPane = [UPSpellExtrasPaneHistory pane];
-    self.historyPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
-    [self.view addSubview:self.historyPane];
-    
-    self.obsessPane = [UPSpellExtrasPaneObsess pane];
-    self.obsessPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
-    [self.view addSubview:self.obsessPane];
+    self.retryPane = [UPSpellExtrasPaneRetry pane];
+    self.retryPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
+    [self.view addSubview:self.retryPane];
     
     self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
     
     self.panes = @[
         self.colorsPane,
         [UPAccessoryPane pane],
-        self.historyPane,
-        self.obsessPane
+        [UPAccessoryPane pane],
+        self.retryPane,
     ];
     
     return self;

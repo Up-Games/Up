@@ -33,9 +33,11 @@
 {
     self = [super initWithFrame:CGRectZero];
     TextLayer().contentsScale = [[UIScreen mainScreen] scale];
+    TextLayer().masksToBounds = NO;
     self.opaque = NO;
     self.colorCategory = UPColorCategoryInformation;
     [self updateThemeColors];
+    self.backgroundColor = [UIColor clearColor];
     return self;
 }
 
@@ -147,7 +149,17 @@
 
 - (CGSize)sizeThatFits:(CGSize)size
 {
-    return [self.attributedString size];
+    CGSize fitsSize = [self.attributedString size];
+    return fitsSize;
+}
+
+- (void)layerWillDraw:(CALayer *)layer
+{
+    if (self.addsLeftwardScoot) {
+        CGRect bounds = self.bounds;
+        bounds.origin.x -= 1;
+        layer.bounds = bounds;
+    }
 }
 
 #pragma mark - Theme colors

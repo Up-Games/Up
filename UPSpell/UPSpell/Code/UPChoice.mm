@@ -185,7 +185,8 @@ UIBezierPath *ChoiceRightFillPathSelected()
 
     self.label.font = SpellLayout::instance().choice_control_font();
     self.label.colorCategory = UPColorCategoryControlText;
-
+    self.label.addsLeftwardScoot = YES;
+    
     return self;
 }
 
@@ -234,8 +235,7 @@ UIBezierPath *ChoiceRightFillPathSelected()
     
     [self.label sizeToFit];
     
-    CGRect labelFrame = self.label.frame;
-    labelFrame.size.width += 2; // pad the width to prevent clipping
+    CGRect labelFrame = CGRectInset(self.label.frame, -3, 0);
     CGFloat labelOriginY = up_rect_height(bounds) - up_rect_height(labelFrame) + layout.choice_control_font().baselineAdjustment;
 
     switch (self.side) {

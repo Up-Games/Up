@@ -689,30 +689,10 @@ void SpellLayout::calculate_extras_locations()
     CGRect icon_button_layout_frame = layout_relative_aspect_rect(CanonicalExtrasColorsIconLayoutFrame);
     calculate_and_set_locations(Role::ExtrasColorsIconButtonNope, up_left_aligned_rect(text_button_size, icon_button_layout_frame));
     calculate_and_set_locations(Role::ExtrasColorsIconButtonYep, up_right_aligned_rect(text_button_size, icon_button_layout_frame));
-
-    calculate_and_set_locations(Role::ExtrasStatsHeader, layout_relative_aspect_rect(CanonicalExtrasStatsHeaderFrame));
-    calculate_and_set_locations(Role::ExtrasStatsTable, layout_relative_aspect_rect(CanonicalExtrasStatsTableFrame));
-
-    // Obsess gamekey picker rotors
-    CGFloat rotor_y = up_rect_min_y(SpellLayout::CanonicalExtrasObsessGameKeyPickerFrame);
-    CGFloat rotor_w = up_size_width(SpellLayout::CanonicalRotorSize);
-    CGFloat rotor_h = up_size_height(SpellLayout::CanonicalRotorSize);
-    Role rotor_roles[ExtrasObsessGameKeyPickerRotorCount] = {
-        Role::ExtrasObsessGameKeyPickerRotor1, Role::ExtrasObsessGameKeyPickerRotor2, Role::ExtrasObsessGameKeyPickerRotor3,
-        Role::ExtrasObsessGameKeyPickerRotor4, Role::ExtrasObsessGameKeyPickerRotor5, Role::ExtrasObsessGameKeyPickerRotor6,
-        Role::ExtrasObsessGameKeyPickerRotor7 };
-    for (int i = 0; i < ExtrasObsessGameKeyPickerRotorCount; i++) {
-        CGFloat rotor_x = up_rect_min_x(SpellLayout::CanonicalExtrasObsessGameKeyPickerFrame) + (i * rotor_w);
-        if (i >= 3) {
-            rotor_x += CanonicalExtrasObsessGameKeyPickerAlphabetNumberGap;
-        }
-        CGRect rotorFrame = CGRectMake(rotor_x, rotor_y, rotor_w, rotor_h);
-        calculate_and_set_locations(rotor_roles[i], layout_relative_aspect_rect(rotorFrame));
-    }
     
-    calculate_and_set_locations(Role::ExtrasObsessCheckbox, layout_relative_aspect_rect(CanonicalExtrasObsessCheckboxFrame));
-    calculate_and_set_locations(Role::ExtrasObsessDescription, layout_relative_aspect_rect(CanonicalExtrasObsessDescriptionFrame));
-    calculate_and_set_locations(Role::ExtrasObsessHelp, layout_relative_aspect_rect(CanonicalExtrasObsessHelpButtonFrame));
+//    calculate_and_set_locations(Role::ExtrasObsessCheckbox, layout_relative_aspect_rect(CanonicalExtrasObsessCheckboxFrame));
+//    calculate_and_set_locations(Role::ExtrasObsessDescription, layout_relative_aspect_rect(CanonicalExtrasObsessDescriptionFrame));
+//    calculate_and_set_locations(Role::ExtrasObsessHelp, layout_relative_aspect_rect(CanonicalExtrasObsessHelpButtonFrame));
 }
 
 void SpellLayout::calculate_choice_locations()

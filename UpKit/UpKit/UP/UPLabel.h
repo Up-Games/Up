@@ -14,6 +14,7 @@
 @property (nonatomic) UPColorCategory colorCategory;
 @property (nonatomic) NSTextAlignment textAlignment;
 @property (nonatomic) UIColor *textColor;
+@property (nonatomic) BOOL addsLeftwardScoot;
 
 + (UPLabel *)label;
 

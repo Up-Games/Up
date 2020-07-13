@@ -178,25 +178,6 @@ public:
     static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =  { 384, 278, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsIconLayoutFrame =  { 460, 381, 440, 76 };
 
-    static inline constexpr CGRect CanonicalExtrasStatsAveragesTabButtonFrame = { 390, 444, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasStatsGamesTabButtonFrame =    { 621, 444, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasStatsWordsTabButtonFrame =    { 804, 444, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasStatsHeaderFrame =            { 384,  32, 572,  36 };
-    static inline constexpr CGRect CanonicalExtrasStatsTableFrame =             { 384,  72, 572, 400 };
-    static inline constexpr CGFloat CanonicalExtrasHistoryGameScoreColumnWidth =  140;
-    static inline constexpr CGFloat CanonicalExtrasHistoryGameIDColumnWidth =     140;
-    static inline constexpr CGFloat CanonicalExtrasHistoryGameKeyColumnWidth =    180;
-    static inline constexpr CGFloat CanonicalExtrasHistoryChevronColumnWidth =     92;
-
-    static inline constexpr int ExtrasObsessGameKeyPickerRotorCount = 7;
-    static inline constexpr CGFloat CanonicalExtrasObsessGameKeyPickerAlphabetNumberGap =  20;
-    static inline constexpr CGRect CanonicalExtrasObsessGameKeyPickerFrame =  { 384, 24,
-        (up_size_width(CanonicalRotorSize) * 7) + CanonicalExtrasObsessGameKeyPickerAlphabetNumberGap, up_size_height(CanonicalRotorSize) };
-    static inline constexpr CGRect CanonicalExtrasObsessCheckboxFrame = { 790, 117, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize)};
-    static inline constexpr CGRect CanonicalExtrasObsessDescriptionFrame = { 384, 258, 572, 76 };
-    static inline constexpr CGRect CanonicalExtrasObsessHelpButtonFrame = { 902, 407,
-        up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
-
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
         return *g_instance;

@@ -1,5 +1,5 @@
 //
-//  UPSpellExtrasPaneObsess.mm
+//  UPSpellExtrasPaneRetry.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -19,7 +19,7 @@
 #import "UPHueWheel.h"
 #import "UPRotor.h"
 #import "UPSpellGameSummary.h"
-#import "UPSpellExtrasPaneObsess.h"
+#import "UPSpellExtrasPaneRetry.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
@@ -55,19 +55,18 @@ using UP::TimeSpanning::start;
 using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Place;
 
-@interface UPSpellExtrasPaneObsess ()
+@interface UPSpellExtrasPaneRetry ()
 {
     GameKey m_game_key;
 }
 @property (nonatomic) NSArray<UPRotor *> *rotors;
 @property (nonatomic) UPBallot *obsessCheckbox;
 @property (nonatomic) UPLabel *obsessDescription;
-@property (nonatomic) UPButton *helpButton;
 @end
 
-@implementation UPSpellExtrasPaneObsess
+@implementation UPSpellExtrasPaneRetry
 
-+ (UPSpellExtrasPaneObsess *)pane
++ (UPSpellExtrasPaneRetry *)pane
 {
     return [[self alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
 }
@@ -78,24 +77,6 @@ using Spot = UP::SpellLayout::Place;
 
     SpellLayout &layout = SpellLayout::instance();
 
-    UPRotorType rotor_types[SpellLayout::ExtrasObsessGameKeyPickerRotorCount] = {
-        UPRotorTypeAlphabet, UPRotorTypeAlphabet, UPRotorTypeAlphabet,
-        UPRotorTypeNumbers, UPRotorTypeNumbers, UPRotorTypeNumbers, UPRotorTypeNumbers
-    };
-    Role rotor_roles[SpellLayout::ExtrasObsessGameKeyPickerRotorCount] = {
-        Role::ExtrasObsessGameKeyPickerRotor1, Role::ExtrasObsessGameKeyPickerRotor2, Role::ExtrasObsessGameKeyPickerRotor3,
-        Role::ExtrasObsessGameKeyPickerRotor4, Role::ExtrasObsessGameKeyPickerRotor5, Role::ExtrasObsessGameKeyPickerRotor6,
-        Role::ExtrasObsessGameKeyPickerRotor7 };
-    NSMutableArray *rotors = [NSMutableArray array];
-    for (int i = 0; i < SpellLayout::ExtrasObsessGameKeyPickerRotorCount; i++) {
-        UPRotor *rotor = [UPRotor rotorWithType:rotor_types[i]];
-        [rotor setTarget:self action:@selector(gameKeyRotorsChanged)];
-        rotor.frame = layout.frame_for(rotor_roles[i]);
-        [self addSubview:rotor];
-        [rotors addObject:rotor];
-    }
-    self.rotors = rotors;
-    
     self.obsessCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
     self.obsessCheckbox.labelString = @"OBSESS";
     [self.obsessCheckbox setTarget:self action:@selector(obsessCheckboxTapped)];
@@ -108,10 +89,6 @@ using Spot = UP::SpellLayout::Place;
     self.obsessDescription.colorCategory = UPColorCategoryControlText;
     self.obsessDescription.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.obsessDescription];
-
-    self.helpButton = [UPButton roundHelpButton];
-    self.helpButton.frame = layout.frame_for(Role::ExtrasObsessHelp);
-    [self addSubview:self.helpButton];
 
     [self updateThemeColors];
 
@@ -132,7 +109,6 @@ using Spot = UP::SpellLayout::Place;
         [self.obsessCheckbox setSelected:NO];
     }
 
-    [self setRotorsFromGameKey];
     [self updateObsessDescription];
 }
 
@@ -148,58 +124,6 @@ using Spot = UP::SpellLayout::Place;
     [self updateObsessDescription];
 }
 
-- (void)setRotorsFromGameKey
-{
-    NSString *gameKeyString = ns_str(m_game_key.string());
-    for (int i = 0; i < SpellLayout::ExtrasObsessGameKeyPickerRotorCount; i++) {
-        UPRotor *rotor = self.rotors[i];
-        NSUInteger stringIndex = i <= 2 ? i : i + 1;
-        NSString *string = [gameKeyString substringWithRange:NSMakeRange(stringIndex, 1)];
-        if ([string isEqualToString:@"-"]) {
-            continue;
-        }
-        NSUInteger index = [rotor.elements indexOfObject:string];
-        ASSERT(index != NSNotFound);
-        [rotor selectIndex:index];
-    }
-}
-
-- (void)setGameKeyFromRotors
-{
-    NSMutableString *gameKeyString = [NSMutableString string];
-    for (int i = 0; i < SpellLayout::ExtrasObsessGameKeyPickerRotorCount; i++) {
-        UPRotor *rotor = self.rotors[i];
-        [gameKeyString appendString:rotor.selectedString];
-        if (gameKeyString.length == 3) {
-            [gameKeyString appendString:@"-"];
-        }
-    }
-    m_game_key = GameKey(cpp_str(gameKeyString));
-}
-
-- (void)gameKeyRotorsChanged
-{
-    [self setGameKeyFromRotors];
-    [self updateObsessDescription];
-    
-    BOOL changing = NO;
-    for (UPRotor *rotor in self.rotors) {
-        if (rotor.changing) {
-            changing = YES;
-            break;
-        }
-    }
-    if (changing) {
-        // blank stats
-    }
-    else {
-        if (self.obsessCheckbox.selected) {
-            UPSpellSettings *settings = [UPSpellSettings instance];
-            settings.obsessGameKeyValue = m_game_key.value();
-        }
-    }
-}
-
 - (void)updateObsessDescription
 {
     NSMutableString *string = [NSMutableString string];
@@ -213,11 +137,6 @@ using Spot = UP::SpellLayout::Place;
     }
     self.obsessDescription.string = string;
 }
-
-- (void)cancelAnimations
-{
-}
-
 
 #pragma mark - Target / Action
 

@@ -616,7 +616,6 @@ const SpellModel::State &SpellModel::apply(const Action &action)
     }
 
     const State &state = m_states.emplace_back(action, incoming_word, tiles(), game_score());
-    LOG(State, "%s", cpp_str(state).c_str());
 
 //    if (action.opcode() == Opcode::START) {
 //        db_drop();

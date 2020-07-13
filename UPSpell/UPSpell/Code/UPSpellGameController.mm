@@ -1743,20 +1743,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     id labelString = nil;
     
-//    if (!labelString) {
-//        id noteString = [self gameNoteGameHighScore];
-//        if (noteString) {
-//            labelString = noteString;
-//        }
-//    }
     if (!labelString) {
-        id noteString = [self gameNoteAllTimeBestWord];
-        if (noteString) {
-            labelString = noteString;
-        }
-    }
-    if (!labelString) {
-        id noteString = [self gameNoteWordsSubmittedRank];
+        id noteString = [self gameNoteGameHighScore];
         if (noteString) {
             labelString = noteString;
         }
@@ -1828,57 +1816,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     return result;
 }
 
-- (NSString *)gameNoteAllTimeBestWord
-{
-    ASSERT(self.mode == Mode::End);
-
-    std::vector<Word> words = self.model->game_best_word();
-    if (words.size() != 1) {
-        return nil;
-    }
-    
-    const Word &word = words[0];
-    NSString *wordString = ns_str(word.string());
-    std::pair<int, StatsRank> rank = self.model->word_score_rank(word.total_score());
-    if (rank.first != 1) {
-        return nil;
-    }
-    NSString *result = nil;
-    if (rank.second == StatsRank::Alone) {
-        result = [NSString stringWithFormat:@"ALL-TIME BEST WORD!\n%@ +%d", wordString, word.total_score()];
-    }
-    else if (rank.second == StatsRank::Tied) {
-        result = [NSString stringWithFormat:@"TIED ALL-TIME BEST WORD!\n%@ +%d", wordString, word.total_score()];
-    }
-    return result;
-}
-
-- (NSString *)gameNoteWordsSubmittedRank
-{
-    ASSERT(self.mode == Mode::End);
-    
-    NSString *result = nil;
-
-    int count = self.model->game_words_submitted_count();
-    std::pair<int, StatsRank> rank = self.model->words_spelled_count_rank(count);
-    if (rank.second == StatsRank::Alone) {
-        switch (rank.first) {
-            case 1:
-                result = [NSString stringWithFormat:@"MOST WORDS SPELLED IN A GAME: %d", count];
-                break;
-        }
-    }
-    else if (rank.second == StatsRank::Tied) {
-        switch (rank.first) {
-            case 1:
-                result = [NSString stringWithFormat:@"TIED MOST WORDS SPELLED IN A GAME: %d", count];
-                break;
-        }
-    }
-    
-    return result;
-}
-
 - (NSString *)gameNoteBestWordInGame
 {
     ASSERT(self.mode == Mode::End);
@@ -1890,7 +1827,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     const Word &word = words[0];
     NSString *wordString = ns_str(word.string());
-    return [NSString stringWithFormat:@"BEST WORD IN GAME\n%@ +%d", wordString, word.total_score()];
+    return [NSString stringWithFormat:@"BEST WORD IN GAME: %@ +%d", wordString, word.total_score()];
 }
 
 - (NSString *)gameNoteRandomWord
@@ -1906,7 +1843,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)createNewGameModelIfNeeded
 {
-    LOG(General, "opcode: %d", self.model ? (int)self.model->back_state().action().opcode() : -1);
     if (self.model && self.model->back_state().action().opcode() == SpellModel::Opcode::START) {
         return;
     }
