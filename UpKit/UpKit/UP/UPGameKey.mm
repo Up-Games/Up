@@ -9,7 +9,7 @@
 
 @interface UPGameKey ()
 {
-    UP::GameKey inner;
+    UP::GameKey m_inner;
 }
 @end
 
@@ -39,15 +39,27 @@
 - (instancetype)_initWithString:(NSString *)string
 {
     self = [super init];
-    inner = UP::GameKey(UP::cpp_str(string));
+    m_inner = UP::GameKey(UP::cpp_str(string));
     return self;
 }
 
 - (instancetype)_initWithValue:(uint32_t)value
 {
     self = [super init];
-    inner = UP::GameKey(value);
+    m_inner = UP::GameKey(value);
     return self;
+}
+
+@dynamic string;
+- (NSString *)string
+{
+    return UP::ns_str(m_inner.string());
+}
+
+@dynamic value;
+- (uint32_t)value
+{
+    return m_inner.value();
 }
 
 @end

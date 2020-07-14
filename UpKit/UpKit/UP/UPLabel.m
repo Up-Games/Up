@@ -150,6 +150,9 @@
 - (CGSize)sizeThatFits:(CGSize)size
 {
     CGSize fitsSize = [self.attributedString size];
+    if (self.addsLeftwardScoot) {
+        fitsSize.width += 1;
+    }
     return fitsSize;
 }
 

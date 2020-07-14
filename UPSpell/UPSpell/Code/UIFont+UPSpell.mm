@@ -222,30 +222,6 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     return [UIFont choiceControlFontOfSize:pointSize];
 }
 
-+ (UIFont *)rotorControlFontOfSize:(CGFloat)fontSize
-{
-    UIFont *font = [UIFont fontWithName:UPRotorControlFontName size:fontSize];
-    UIFontDescriptor *descriptor = [font fontDescriptor];
-    NSDictionary *attributes = @{
-        UIFontDescriptorFeatureSettingsAttribute: @[
-                @{
-                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
-                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
-                }
-        ]
-    };
-    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
-    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
-}
-
-+ (UIFont *)rotorControlFontWithCapHeight:(CGFloat)capHeight
-{
-    UIFont *canonicalFont = [UIFont fontWithName:UPRotorControlFontName size:1];
-    CGFloat factor = capHeight / canonicalFont.capHeight;
-    CGFloat pointSize = canonicalFont.pointSize * factor;
-    return [UIFont rotorControlFontOfSize:pointSize];
-}
-
 + (UIFont *)settingsDescriptionFontOfSize:(CGFloat)fontSize
 {
     UIFont *font = [UIFont fontWithName:UPSettingsDescriptionFontName size:fontSize];

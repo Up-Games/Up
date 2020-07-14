@@ -33,9 +33,6 @@ extern NSString * const UPGameInformationFontName;
 + (UIFont *)choiceControlFontOfSize:(CGFloat)fontSize;
 + (UIFont *)choiceControlFontWithCapHeight:(CGFloat)capHeight;
 
-+ (UIFont *)rotorControlFontOfSize:(CGFloat)fontSize;
-+ (UIFont *)rotorControlFontWithCapHeight:(CGFloat)capHeight;
-
 + (UIFont *)settingsDescriptionFontOfSize:(CGFloat)fontSize;
 + (UIFont *)settingsDescriptionFontWithCapHeight:(CGFloat)capHeight;
 

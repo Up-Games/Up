@@ -16,6 +16,7 @@
 #import "UPDialogGameOver.h"
 #import "UPDialogMenu.h"
 #import "UPDialogPause.h"
+#import "UPDialogPlay.h"
 #import "UPSceneDelegate.h"
 #import "UPSpellGameView.h"
 #import "UPSpellLayout.h"
@@ -99,6 +100,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 @property (nonatomic) UPDialogGameOver *dialogGameOver;
 @property (nonatomic) UPDialogGameNote *dialogGameNote;
 @property (nonatomic) UPDialogPause *dialogPause;
+@property (nonatomic) UPDialogPlay *dialogPlay;
 @property (nonatomic) UPDialogMenu *dialogMenu;
 @property (nonatomic) NSInteger lockCount;
 
@@ -165,6 +167,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self.dialogPause.resumeButton setTarget:self action:@selector(dialogPauseResumeButtonTapped:)];
     self.dialogPause.hidden = YES;
     self.dialogPause.frame = layout.screen_bounds();
+
+    self.dialogPlay = [UPDialogPlay instance];
+    [self.view addSubview:self.dialogPlay];
+    [self.dialogPlay.cancelButton setTarget:self action:@selector(dialogPlayCancelButtonTapped:)];
+    [self.dialogPlay.okButton setTarget:self action:@selector(dialogPlayOKButtonTapped:)];
+    self.dialogPlay.hidden = YES;
+    self.dialogPlay.frame = layout.screen_bounds();
 
     self.touchedTileView = nil;
     self.pickedTileView = nil;
@@ -636,6 +645,18 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.mode == Mode::Pause);
     [self setMode:Mode::Play];
+}
+
+- (void)dialogPlayCancelButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+{
+    ASSERT(self.mode == Mode::PlayDialog);
+    [self setMode:Mode::Init];
+}
+
+- (void)dialogPlayOKButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+{
+    ASSERT(self.mode == Mode::PlayDialog);
+    //    [self setMode:Mode::Play];
 }
 
 - (void)roundButtonPauseTapped
@@ -1836,7 +1857,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     Lexicon &lexicon = Lexicon::instance();
     std::u32string random_string = lexicon.random_key(Random::instance());
-    return [NSString stringWithFormat:@"RANDOM WORD FROM THE LEXICON\n%@", ns_str(random_string)];
+    return [NSString stringWithFormat:@"RANDOM WORD FROM THE LEXICON: %@", ns_str(random_string)];
 }
 
 #pragma mark - Model management
@@ -1887,26 +1908,29 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)configureModeTransitionTables
 {
     m_default_transition_table = {
-        { Mode::None,     Mode::Init,     @selector(modeTransitionFromNoneToInit) },
-        { Mode::Init,     Mode::Attract,  @selector(modeTransitionFromInitToAttract) },
-        { Mode::Init,     Mode::About,    @selector(modeTransitionFromInitToAbout) },
-        { Mode::Init,     Mode::Extras,   @selector(modeTransitionFromInitToExtras) },
-        { Mode::Init,     Mode::Ready,    @selector(modeTransitionFromInitToReady) },
-        { Mode::About,    Mode::Init,     @selector(modeTransitionFromAboutToInit) },
-        { Mode::Extras,   Mode::Init,     @selector(modeTransitionFromExtrasToInit) },
-        { Mode::Attract,  Mode::About,    @selector(modeTransitionFromAttractToAbout) },
-        { Mode::Attract,  Mode::Extras,   @selector(modeTransitionFromAttractToExtras) },
-        { Mode::Attract,  Mode::Ready,    @selector(modeTransitionFromAttractToReady) },
-        { Mode::Ready,    Mode::Play,     @selector(modeTransitionFromReadyToPlay) },
-        { Mode::Play,     Mode::Pause,    @selector(modeTransitionFromPlayToPause) },
-        { Mode::Play,     Mode::GameOver, @selector(modeTransitionFromPlayToGameOver) },
-        { Mode::Pause,    Mode::Play,     @selector(modeTransitionFromPauseToPlay) },
-        { Mode::Pause,    Mode::Quit,     @selector(modeTransitionFromPauseToQuit) },
-        { Mode::GameOver, Mode::End,      @selector(modeTransitionFromOverToEnd) },
-        { Mode::End,      Mode::About,    @selector(modeTransitionFromEndToAbout) },
-        { Mode::End,      Mode::Extras,   @selector(modeTransitionFromEndToExtras) },
-        { Mode::End,      Mode::Ready,    @selector(modeTransitionFromEndToReady) },
-        { Mode::Quit,     Mode::End,      @selector(modeTransitionFromQuitToEnd) },
+        { Mode::None,       Mode::Init,       @selector(modeTransitionFromNoneToInit) },
+        { Mode::Init,       Mode::Attract,    @selector(modeTransitionFromInitToAttract) },
+        { Mode::Init,       Mode::About,      @selector(modeTransitionFromInitToAbout) },
+        { Mode::Init,       Mode::Extras,     @selector(modeTransitionFromInitToExtras) },
+        { Mode::Init,       Mode::PlayDialog, @selector(modeTransitionFromInitToPlayDialog) },
+        { Mode::Init,       Mode::Ready,      @selector(modeTransitionFromInitToReady) },
+        { Mode::About,      Mode::Init,       @selector(modeTransitionFromAboutToInit) },
+        { Mode::Extras,     Mode::Init,       @selector(modeTransitionFromExtrasToInit) },
+        { Mode::Attract,    Mode::About,      @selector(modeTransitionFromAttractToAbout) },
+        { Mode::Attract,    Mode::Extras,     @selector(modeTransitionFromAttractToExtras) },
+        { Mode::Attract,    Mode::Ready,      @selector(modeTransitionFromAttractToReady) },
+        { Mode::PlayDialog, Mode::Init,       @selector(modeTransitionFromPlayDialogToInit) },
+        { Mode::PlayDialog, Mode::Ready,      @selector(modeTransitionFromPlayDialogToReady) },
+        { Mode::Ready,      Mode::Play,       @selector(modeTransitionFromReadyToPlay) },
+        { Mode::Play,       Mode::Pause,      @selector(modeTransitionFromPlayToPause) },
+        { Mode::Play,       Mode::GameOver,   @selector(modeTransitionFromPlayToGameOver) },
+        { Mode::Pause,      Mode::Play,       @selector(modeTransitionFromPauseToPlay) },
+        { Mode::Pause,      Mode::Quit,       @selector(modeTransitionFromPauseToQuit) },
+        { Mode::GameOver,   Mode::End,        @selector(modeTransitionFromOverToEnd) },
+        { Mode::End,        Mode::About,      @selector(modeTransitionFromEndToAbout) },
+        { Mode::End,        Mode::Extras,     @selector(modeTransitionFromEndToExtras) },
+        { Mode::End,        Mode::Ready,      @selector(modeTransitionFromEndToReady) },
+        { Mode::Quit,       Mode::End,        @selector(modeTransitionFromQuitToEnd) },
     };
 
     m_did_become_active_transition_table = {
@@ -2006,6 +2030,45 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }];
 }
 
+- (void)modeTransitionFromInitToPlayDialog
+{
+    [self viewLock];
+    [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
+    
+    // special modal fixups for play dialog
+    self.dialogMenu.playButton.highlightedLocked = YES;
+    self.dialogMenu.playButton.highlighted = YES;
+    self.dialogMenu.playButton.alpha = [UIColor themeModalActiveAlpha];
+    self.dialogMenu.extrasButton.alpha = [UIColor themeModalBackgroundAlpha];
+    self.dialogMenu.aboutButton.alpha = [UIColor themeModalBackgroundAlpha];
+
+    SpellLayout &layout = SpellLayout::instance();
+    self.dialogPlay.placardCarouselScrollView.center = layout.center_for(Role::PlayDialogCarouselScrollView, Spot::OffBottomNear);
+    self.dialogPlay.placardCarouselPageControl.center = layout.center_for(Role::PlayDialogCarouselPagingDots, Spot::OffBottomNear);
+    self.dialogPlay.cancelButton.center = layout.center_for(Role::PlayDialogButtonCancel, Spot::OffBottomFar);
+    self.dialogPlay.okButton.center = layout.center_for(Role::PlayDialogButtonOK, Spot::OffBottomFar);
+    
+    NSArray<UPViewMove *> *farMoves = @[
+        UPViewMoveMake(self.dialogPlay.cancelButton, Role::PlayDialogButtonCancel),
+        UPViewMoveMake(self.dialogPlay.okButton, Role::PlayDialogButtonOK),
+    ];
+    start(bloop_in(BandModeUI, farMoves, 0.25, ^(UIViewAnimatingPosition) {
+        [self viewUnlock];
+    }));
+
+    NSArray<UPViewMove *> *nearMoves = @[
+        UPViewMoveMake(self.dialogPlay.placardCarouselScrollView, Role::PlayDialogCarouselScrollView),
+        UPViewMoveMake(self.dialogPlay.placardCarouselPageControl, Role::PlayDialogCarouselPagingDots),
+    ];
+    start(bloop_in(BandModeUI, nearMoves, 0.25, nil));
+    
+    self.dialogPlay.hidden = NO;
+    self.dialogPlay.alpha = 0.0;
+    [UIView animateWithDuration:0.15 animations:^{
+        self.dialogPlay.alpha = 1.0;
+    }];
+}
+
 - (void)modeTransitionFromInitToReady
 {
     ASSERT(self.model->is_blank_filled());
@@ -2100,6 +2163,46 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             }];
         }];
     }];
+}
+
+- (void)modeTransitionFromPlayDialogToInit
+{
+    [self viewLock];
+    
+    [UIView animateWithDuration:0.15 delay:0.15 options:0 animations:^{
+        self.dialogPlay.alpha = 0.0;
+    } completion:nil];
+    
+    NSArray<UPViewMove *> *nearMoves = @[
+        UPViewMoveMake(self.dialogPlay.placardCarouselScrollView, Role::PlayDialogCarouselScrollView, Spot::OffBottomNear),
+        UPViewMoveMake(self.dialogPlay.placardCarouselPageControl, Role::PlayDialogCarouselPagingDots, Spot::OffBottomNear),
+    ];
+    NSArray<UPViewMove *> *farMoves = @[
+        UPViewMoveMake(self.dialogPlay.cancelButton, Location(Role::PlayDialogButtonCancel, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogPlay.okButton, Location(Role::PlayDialogButtonOK, Spot::OffBottomFar)),
+    ];
+    
+    start(bloop_out(BandModeUI, farMoves, 0.25, nil));
+    
+    start(bloop_out(BandModeUI, nearMoves, DefaultBloopDuration, ^(UIViewAnimatingPosition) {
+        self.dialogPlay.hidden = YES;
+        self.dialogPlay.alpha = 1.0;
+        [UIView animateWithDuration:0.3 animations:^{
+            self.dialogMenu.playButton.highlightedLocked = NO;
+            self.dialogMenu.playButton.highlighted = NO;
+            self.dialogMenu.playButton.alpha = 1.0;
+            self.dialogMenu.extrasButton.alpha = 1.0;
+            self.dialogMenu.aboutButton.alpha = 1.0;
+            [self viewRestoreGameAlpha];
+        } completion:^(BOOL finished) {
+            [self viewUnlock];
+        }];
+    }));
+}
+
+- (void)modeTransitionFromPlayDialogToReady
+{
+    
 }
 
 - (void)modeTransitionFromReadyToPlay

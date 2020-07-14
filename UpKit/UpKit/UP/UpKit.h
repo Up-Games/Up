@@ -33,6 +33,7 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPMath.h>
 #import <UpKit/UPNeedsUpdater.h>
 #import <UpKit/UPObjCProperty.h>
+#import <UpKit/UPPlacard.h>
 #import <UpKit/UPRandom.h>
 #import <UpKit/UPBand.h>
 #import <UpKit/UPSerialNumber.h>

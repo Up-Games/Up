@@ -11,10 +11,7 @@
 @property (nonatomic) CGFloat themeColorHue;
 @property (nonatomic) BOOL quarkMode;
 @property (nonatomic) NSUInteger extrasSelectedIndex;
-@property (nonatomic) NSUInteger historySelectedColumnTag;
-@property (nonatomic) BOOL historySelectedColumnSortDescending;
-@property (nonatomic) BOOL quickRetry;
-@property (nonatomic) uint32_t quickRetryGameKeyValue;
+@property (nonatomic) BOOL retryMode;
 
 + (UPSpellSettings *)instance;
 - (instancetype)init NS_UNAVAILABLE;

@@ -108,6 +108,30 @@ CGRect up_right_aligned_rect(CGSize size, CGRect reference_rect)
                       up_size_height(size));
 }
 
+CGRect up_top_aligned_rect(CGSize size, CGRect reference_rect)
+{
+    return CGRectMake(up_rect_min_x(reference_rect),
+                      up_rect_min_y(reference_rect),
+                      up_size_width(size),
+                      up_size_height(size));
+}
+
+CGRect up_middle_aligned_rect(CGSize size, CGRect reference_rect)
+{
+    return CGRectMake(up_rect_min_x(reference_rect),
+                      up_rect_mid_y(reference_rect) - (up_size_height(size) * 0.5),
+                      up_size_width(size),
+                      up_size_height(size));
+}
+
+CGRect up_bottom_aligned_rect(CGSize size, CGRect reference_rect)
+{
+    return CGRectMake(up_rect_min_x(reference_rect),
+                      up_rect_max_y(reference_rect) - up_size_height(size),
+                      up_size_width(size),
+                      up_size_height(size));
+}
+
 CGFloat up_aspect_ratio_for_size(CGSize size)
 {
     return size.width / size.height;

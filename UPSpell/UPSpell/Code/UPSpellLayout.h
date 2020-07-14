@@ -48,16 +48,17 @@ public:
         GameTimer, GameScore,
         GameScoreGameOver1, GameScoreGameOver2, GameScoreGameOver3, GameScoreGameOver4,
         WordScore, WordScoreBonus,
-        DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessageWithGameNote, DialogGameNote,
+        DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessagePlay, DialogMessageWithGameNote, DialogGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse,
+        PlayDialogCarouselScrollView, PlayDialogCarouselPagingDots, PlayDialogButtonCancel, PlayDialogButtonOK,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
         ChoiceBackRight, ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
         ExtrasColorsDarkMode, ExtrasColorsStarkMode, ExtrasColorsQuarkMode, ExtrasColorsHueWheel,
         ExtrasColorsHueStepMore, ExtrasColorsHueStepLess, ExtrasColorsDescription, ExtrasColorsExample,
         ExtrasColorsIconPrompt, ExtrasColorsIconButtonNope, ExtrasColorsIconButtonYep,
         ExtrasStatsHeader, ExtrasStatsTable,
-        ExtrasRetryTopDescription, ExtrasRetryQuickRetry, ExtrasRetryBottomDescription,
+        ExtrasRetryCheckbox, ExtrasRetryDescription,
     };
 
     enum class Place {
@@ -147,6 +148,11 @@ public:
     static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  76 };
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
 
+    static inline constexpr CGRect CanonicalDialogPlayCarouselLayoutFrame = { 340, 135, 320, 240 };
+    static inline constexpr CGSize CanonicalDialogPlayPlacardSize = { 320, 220 };
+    static inline constexpr CGSize CanonicalDialogPlayPagingDotsSize = { 320, 24 };
+    static inline constexpr CGRect CanonicalDialogPlayControlsLayoutFrame = { 125, 378, 750, 76 };
+
     static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 369, 1000, 100 };
     static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 27;
     static inline constexpr CGFloat CanonicalGameNoteWordFontCapHeight = 27;
@@ -176,9 +182,8 @@ public:
     static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =  { 384, 278, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsIconLayoutFrame =  { 460, 381, 440, 76 };
 
-    static inline constexpr CGRect CanonicalExtrasRetryTopDescriptionFrame =    { 384,  36, 572,  76 };
-    static inline constexpr CGRect CanonicalExtrasRetryBottomDescriptionFrame = { 384, 380, 572, 114 };
-    static inline constexpr CGRect CanonicalExtrasRetryQuickRetryFrame =        { 550, 335, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 590, 360, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasRetryDescriptionFrame = { 384, 60, 572, 300 };
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
@@ -194,6 +199,9 @@ public:
     CGRect frame_for(const Location &);
     template <class ...Args> CGRect frame_for(Args... args) { return frame_for(Location(std::forward<Args>(args)...)); }
 
+    CGSize size_for(const Location &);
+    template <class ...Args> CGSize size_for(Args... args) { return size_for(Location(std::forward<Args>(args)...)); }
+    
     CGPoint center_for(const Location &);
     template <class ...Args> CGPoint center_for(Args... args) { return center_for(Location(std::forward<Args>(args)...)); }
 
@@ -240,7 +248,6 @@ public:
     UIFont *word_score_bonus_font() const { return m_word_score_bonus_font; }
     UIFont *ballot_control_font() const { return m_ballot_control_font; }
     UIFont *choice_control_font() const { return m_choice_control_font; }
-    UIFont *rotor_control_font() const { return m_rotor_control_font; }
     UIFont *settings_description_font() const { return m_settings_description_font; }
 
     CGFloat ballot_control_label_left_margin() const { return m_ballot_control_label_left_margin; }
@@ -289,7 +296,6 @@ private:
     void set_choice_control_font(UIFont *font) { m_choice_control_font = font; }
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
-    void set_rotor_control_font(UIFont *font) { m_rotor_control_font = font; }
     void set_settings_description_font(UIFont *font) { m_settings_description_font = font; }
     void set_game_controls_button_charge_outsets(UPOutsets outsets) { m_game_controls_button_charge_outsets = outsets; }
     void set_help_button_charge_outsets(UPOutsets outsets) { m_help_button_charge_outsets = outsets; }
@@ -316,7 +322,6 @@ private:
     void calculate_ballot_control_metrics();
     void calculate_stepper_control_metrics();
     void calculate_choice_control_metrics();
-    void calculate_rotor_control_metrics();
     void calculate_settings_description_font_metrics();
     void calculate_locations();
     void calculate_player_tile_locations();
@@ -374,7 +379,6 @@ private:
     __strong UIFont *m_word_score_bonus_font;
     __strong UIFont *m_ballot_control_font;
     __strong UIFont *m_choice_control_font;
-    __strong UIFont *m_rotor_control_font;
     __strong UIFont *m_settings_description_font;
 
     CGFloat m_ballot_control_label_left_margin = 0.0;

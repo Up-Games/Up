@@ -147,6 +147,9 @@ CGPoint up_rect_center(CGRect);
 CGRect up_left_aligned_rect(CGSize size, CGRect reference_rect);
 CGRect up_center_aligned_rect(CGSize size, CGRect reference_rect);
 CGRect up_right_aligned_rect(CGSize size, CGRect reference_rect);
+CGRect up_top_aligned_rect(CGSize size, CGRect reference_rect);
+CGRect up_middle_aligned_rect(CGSize size, CGRect reference_rect);
+CGRect up_bottom_aligned_rect(CGSize size, CGRect reference_rect);
 
 CGFloat up_aspect_ratio_for_size(CGSize);
 CGFloat up_aspect_ratio_for_rect(CGRect);

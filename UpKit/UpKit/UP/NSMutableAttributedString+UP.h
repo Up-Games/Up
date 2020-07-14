@@ -25,10 +25,7 @@
 - (void)setBaselineOffset:(CGFloat)baselineOffset;
 - (void)setBaselineOffset:(CGFloat)baselineOffset range:(NSRange)range;
 
-- (void)setParagraphSpacing:(CGFloat)paragraphSpacing;
-- (void)setParagraphSpacing:(CGFloat)leading range:(NSRange)range;
-
-- (void)setTextAlignment:(NSTextAlignment)textAlignment;
-- (void)setTextAlignment:(NSTextAlignment)textAlignment range:(NSRange)range;
+- (void)setTextAlignment:(NSTextAlignment)textAlignment paragraphSpacing:(CGFloat)paragraphSpacing;
+- (void)setTextAlignment:(NSTextAlignment)textAlignment paragraphSpacing:(CGFloat)paragraphSpacing range:(NSRange)range;
 
 @end

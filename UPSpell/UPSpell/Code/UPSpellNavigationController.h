@@ -5,7 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class UPSpellGameController;
+@class UPSpellGameRetry;
 
 @interface UPSpellNavigationController : UINavigationController <UIViewControllerTransitioningDelegate>
 

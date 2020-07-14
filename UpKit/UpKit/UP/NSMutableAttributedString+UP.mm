@@ -56,42 +56,17 @@
     [self addAttribute:NSBaselineOffsetAttributeName value:@(baselineOffset) range:range];
 }
 
-- (void)setParagraphSpacing:(CGFloat)paragraphSpacing
+- (void)setTextAlignment:(NSTextAlignment)textAlignment paragraphSpacing:(CGFloat)paragraphSpacing
 {
-    [self setParagraphSpacing:paragraphSpacing range:NSMakeRange(0, self.length)];
+    [self setTextAlignment:textAlignment paragraphSpacing:paragraphSpacing range:NSMakeRange(0, self.length)];
 }
 
-- (void)setParagraphSpacing:(CGFloat)paragraphSpacing range:(NSRange)range
+- (void)setTextAlignment:(NSTextAlignment)textAlignment paragraphSpacing:(CGFloat)paragraphSpacing range:(NSRange)range
 {
-    NSMutableParagraphStyle *paragraphStyle = [self _paragraphStyleForRange:range];
+    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    paragraphStyle.alignment = textAlignment;
     paragraphStyle.paragraphSpacing = paragraphSpacing;
     [self addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:range];
-}
-
-- (void)setTextAlignment:(NSTextAlignment)textAlignment
-{
-    [self setTextAlignment:textAlignment range:NSMakeRange(0, self.length)];
-}
-
-- (void)setTextAlignment:(NSTextAlignment)textAlignment range:(NSRange)range
-{
-    NSMutableParagraphStyle *paragraphStyle = [self _paragraphStyleForRange:range];
-    paragraphStyle.alignment = textAlignment;
-    [self addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:range];
-}
-
-- (NSMutableParagraphStyle *)_paragraphStyleForRange:(NSRange)range
-{
-    NSMutableParagraphStyle *paragraphStyle = nil;
-    NSRange effectiveRange;
-    id value = [self attribute:NSParagraphStyleAttributeName atIndex:range.location effectiveRange:&effectiveRange];
-    if (value && [value isKindOfClass:[NSMutableParagraphStyle class]] && NSEqualRanges(range, effectiveRange)) {
-        paragraphStyle = [value mutableCopy];
-    }
-    else {
-        paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    }
-    return paragraphStyle;
 }
 
 @end

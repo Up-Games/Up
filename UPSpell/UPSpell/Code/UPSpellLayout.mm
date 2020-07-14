@@ -275,7 +275,6 @@ void SpellLayout::calculate()
     calculate_ballot_control_metrics();
     calculate_stepper_control_metrics();
     calculate_choice_control_metrics();
-    calculate_rotor_control_metrics();
     calculate_settings_description_font_metrics();
     calculate_game_controls_button_charge_outsets();
     calculate_help_button_charge_outsets();
@@ -286,6 +285,12 @@ CGRect SpellLayout::frame_for(const Location &loc)
 {
     auto it = m_location_frames.find(loc);
     return it == m_location_frames.end() ? CGRectZero : it->second;
+}
+
+CGSize SpellLayout::size_for(const Location &loc)
+{
+    auto it = m_location_frames.find(loc);
+    return it == m_location_frames.end() ? CGSizeZero : it->second.size;
 }
 
 CGPoint SpellLayout::center_for(const Location &loc)
@@ -431,13 +436,6 @@ void SpellLayout::calculate_choice_control_metrics()
 
     set_choice_control_label_left_margin(CanonicalChoiceLabelLeftMargin * layout_scale());
     set_choice_control_label_right_margin(CanonicalChoiceLabelRightMargin * layout_scale());
-}
-
-void SpellLayout::calculate_rotor_control_metrics()
-{
-    CGFloat cap_height = CanonicalRotorElementCapHeight * layout_scale();
-    UIFont *font = [UIFont rotorControlFontWithCapHeight:cap_height];
-    set_rotor_control_font(font);
 }
 
 void SpellLayout::calculate_settings_description_font_metrics()
@@ -641,6 +639,16 @@ void SpellLayout::calculate_dialog_locations()
     CGRect response_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogResponseButtonsLayoutFrame);
     calculate_and_set_locations(Role::DialogButtonDefaultResponse, up_right_aligned_rect(button_size, response_buttons_layout_frame));
     calculate_and_set_locations(Role::DialogButtonAlternativeResponse, up_left_aligned_rect(button_size, response_buttons_layout_frame));
+
+    CGRect play_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogPlayControlsLayoutFrame);
+    calculate_and_set_locations(Role::PlayDialogButtonCancel, up_left_aligned_rect(button_size, play_buttons_layout_frame));
+    calculate_and_set_locations(Role::PlayDialogButtonOK, up_right_aligned_rect(button_size, play_buttons_layout_frame));
+    
+    CGRect play_carousel_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogPlayCarouselLayoutFrame);
+    CGSize placard_scroll_view_size = up_size_scaled(CanonicalDialogPlayPlacardSize, layout_scale());
+    CGSize placard_paging_dot_size = up_size_scaled(CanonicalDialogPlayPagingDotsSize, layout_scale());
+    calculate_and_set_locations(Role::PlayDialogCarouselScrollView, up_top_aligned_rect(placard_scroll_view_size, play_carousel_layout_frame));
+    calculate_and_set_locations(Role::PlayDialogCarouselPagingDots, up_bottom_aligned_rect(placard_paging_dot_size, play_carousel_layout_frame));
 }
 
 void SpellLayout::calculate_game_locations()
@@ -690,9 +698,8 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasColorsIconButtonNope, up_left_aligned_rect(text_button_size, icon_button_layout_frame));
     calculate_and_set_locations(Role::ExtrasColorsIconButtonYep, up_right_aligned_rect(text_button_size, icon_button_layout_frame));
     
-    calculate_and_set_locations(Role::ExtrasRetryTopDescription, layout_relative_aspect_rect(CanonicalExtrasRetryTopDescriptionFrame));
-    calculate_and_set_locations(Role::ExtrasRetryBottomDescription, layout_relative_aspect_rect(CanonicalExtrasRetryBottomDescriptionFrame));
-    calculate_and_set_locations(Role::ExtrasRetryQuickRetry, layout_relative_aspect_rect(CanonicalExtrasRetryQuickRetryFrame));
+    calculate_and_set_locations(Role::ExtrasRetryDescription, layout_relative_aspect_rect(CanonicalExtrasRetryDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasRetryCheckbox, layout_relative_aspect_rect(CanonicalExtrasRetryCheckboxFrame));
 }
 
 void SpellLayout::calculate_choice_locations()

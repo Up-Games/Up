@@ -150,6 +150,9 @@ UP_STATIC_INLINE bool operator!=(const GameKey &a, const GameKey &b) { return !(
 #if __OBJC__
 @interface UPGameKey : NSObject
 
+@property (nonatomic, readonly) NSString *string;
+@property (nonatomic, readonly) uint32_t value;
+
 + (UPGameKey *)randomGameKey;
 + (UPGameKey *)gameKeyWithString:(NSString *)string;
 + (UPGameKey *)gameKeyWithValue:(uint32_t)value;

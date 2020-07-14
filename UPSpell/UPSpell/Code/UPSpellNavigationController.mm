@@ -13,6 +13,7 @@
 #import "UPSpellAboutController.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellGameController.h"
+#import "UPSpellGameRetry.h"
 #import "UPSpellLayout.h"
 #import "UPSpellSettings.h"
 #import "UPTilePaths.h"
@@ -30,6 +31,7 @@ static UPSpellNavigationController *_Instance;
 
 using UP::SpellLayout;
 using Location = UP::SpellLayout::Location;
+using Mode = UP::Mode;
 using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Place;
 
@@ -84,10 +86,6 @@ using UP::TimeSpanning::start;
 
     self.view.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
 
-//    UIView *canvasView = [[UIView alloc] initWithFrame:layout.canvas_frame()];
-//    canvasView.backgroundColor = [UIColor testColor1];
-//    [self.view addSubview:canvasView];
-    
     self.gameController = [[UPSpellGameController alloc] initWithNibName:nil bundle:nil];
     
     self.aboutController = [[UPSpellAboutController alloc] initWithNibName:nil bundle:nil];
@@ -129,7 +127,13 @@ using UP::TimeSpanning::start;
 
 - (void)dialogMenuPlayButtonTapped
 {
-    [self.gameController setMode:UP::Mode::Ready];
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    if (settings.retryMode) {
+        [self.gameController setMode:Mode::PlayDialog];
+    }
+    else {
+        [self.gameController setMode:Mode::Ready];
+    }
 }
 
 - (void)dialogMenuExtrasButtonTapped
@@ -144,13 +148,13 @@ using UP::TimeSpanning::start;
 
 - (void)presentExtrasController
 {
-    [self.gameController setMode:UP::Mode::Extras];
+    [self.gameController setMode:Mode::Extras];
     [self presentViewController:self.extrasController animated:YES completion:nil];
 }
 
 - (void)presentAboutController
 {
-    [self.gameController setMode:UP::Mode::About];
+    [self.gameController setMode:Mode::About];
     [self presentViewController:self.aboutController animated:YES completion:nil];
 }
 
@@ -160,7 +164,8 @@ using UP::TimeSpanning::start;
     [self dismissViewControllerAnimated:YES completion:^{
         self.dialogMenu.extrasButton.selected = NO;
         self.dialogMenu.aboutButton.selected = NO;
-        [self.gameController setMode:UP::Mode::Init];
+        self.gameController.retry = nil;
+        [self.gameController setMode:Mode::Init];
     }];
 }
 

@@ -259,6 +259,71 @@ UIBezierPath *TextPathDialogPaused()
     return path;
 }
 
+UIBezierPath *TextPathDialogPlay()
+{
+    // P
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint: CGPointMake(358.62, 67.89)];
+    [path addLineToPoint: CGPointMake(354.56, 88.58)];
+    [path addLineToPoint: CGPointMake(356.85, 88.58)];
+    [path addCurveToPoint: CGPointMake(367.25, 74.33) controlPoint1: CGPointMake(362.88, 88.58) controlPoint2: CGPointMake(367.25, 82.55)];
+    [path addCurveToPoint: CGPointMake(360.7, 67.89) controlPoint1: CGPointMake(367.25, 70.38) controlPoint2: CGPointMake(365.27, 67.89)];
+    [path addLineToPoint: CGPointMake(358.62, 67.89)];
+    [path closePath];
+    [path moveToPoint: CGPointMake(351.96, 103.35)];
+    [path addLineToPoint: CGPointMake(347.7, 125.4)];
+    [path addLineToPoint: CGPointMake(328.46, 125.4)];
+    [path addLineToPoint: CGPointMake(342.5, 52.6)];
+    [path addLineToPoint: CGPointMake(362.78, 52.6)];
+    [path addCurveToPoint: CGPointMake(386.18, 73.71) controlPoint1: CGPointMake(378.9, 52.6) controlPoint2: CGPointMake(386.18, 61.54)];
+    [path addCurveToPoint: CGPointMake(355.5, 103.35) controlPoint1: CGPointMake(386.18, 90.98) controlPoint2: CGPointMake(374.53, 103.35)];
+    [path addLineToPoint: CGPointMake(351.96, 103.35)];
+    [path closePath];
+    
+    // L
+    [path moveToPoint: CGPointMake(420.29, 125.4)];
+    [path addLineToPoint: CGPointMake(381.91, 125.4)];
+    [path addLineToPoint: CGPointMake(395.95, 52.6)];
+    [path addLineToPoint: CGPointMake(415.09, 52.6)];
+    [path addLineToPoint: CGPointMake(404.38, 108.76)];
+    [path addLineToPoint: CGPointMake(423.51, 108.76)];
+    [path addLineToPoint: CGPointMake(420.29, 125.4)];
+    [path closePath];
+    
+    // A
+    [path moveToPoint: CGPointMake(465.01, 97.11)];
+    [path addLineToPoint: CGPointMake(464.07, 72.05)];
+    [path addLineToPoint: CGPointMake(453.67, 97.11)];
+    [path addLineToPoint: CGPointMake(465.01, 97.11)];
+    [path closePath];
+    [path moveToPoint: CGPointMake(456.48, 52.5)];
+    [path addLineToPoint: CGPointMake(479.46, 52.5)];
+    [path addLineToPoint: CGPointMake(484.66, 125.4)];
+    [path addLineToPoint: CGPointMake(464.9, 125.4)];
+    [path addLineToPoint: CGPointMake(464.69, 112.19)];
+    [path addLineToPoint: CGPointMake(448.26, 112.19)];
+    [path addLineToPoint: CGPointMake(442.85, 125.4)];
+    [path addLineToPoint: CGPointMake(423.09, 125.4)];
+    [path addLineToPoint: CGPointMake(456.48, 52.5)];
+    [path closePath];
+    
+    // Y
+    [path moveToPoint: CGPointMake(518.98, 98.46)];
+    [path addLineToPoint: CGPointMake(513.78, 125.4)];
+    [path addLineToPoint: CGPointMake(494.65, 125.4)];
+    [path addLineToPoint: CGPointMake(499.85, 98.46)];
+    [path addLineToPoint: CGPointMake(489.76, 52.6)];
+    [path addLineToPoint: CGPointMake(509.52, 52.6)];
+    [path addLineToPoint: CGPointMake(513.05, 79.12)];
+    [path addLineToPoint: CGPointMake(526.47, 52.6)];
+    [path addLineToPoint: CGPointMake(546.54, 52.6)];
+    [path addLineToPoint: CGPointMake(546.54, 52.81)];
+    [path addLineToPoint: CGPointMake(518.98, 98.46)];
+    [path closePath];
+
+    return path;
+}
+
 UIBezierPath *TextPathDialogReady()
 {
     // R

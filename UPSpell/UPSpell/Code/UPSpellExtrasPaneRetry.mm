@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <UpKit/NSMutableAttributedString+UP.h>
 #import <UpKit/UIColor+UP.h>
 #import <UpKit/UPBand.h>
 #import <UpKit/UPDivider.h>
@@ -10,6 +11,7 @@
 #import <UpKit/UPLabel.h>
 #import <UpKit/UPLayoutRule.h>
 #import <UpKit/UPMath.h>
+#import <UpKit/UPPlacard.h>
 #import <UpKit/UPTapGestureRecognizer.h>
 #import <UpKit/UPTimeSpanning.h>
 
@@ -19,6 +21,7 @@
 #import "UPHueWheel.h"
 #import "UPSpellExtrasPaneRetry.h"
 #import "UPSpellExtrasController.h"
+#import "UPSpellGameRetry.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
 #import "UPSpellNavigationController.h"
@@ -54,9 +57,8 @@ using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Place;
 
 @interface UPSpellExtrasPaneRetry ()
-@property (nonatomic) UPBallot *quickRetryCheckbox;
-@property (nonatomic) UPLabel *topDescription;
-@property (nonatomic) UPLabel *bottomDescription;
+@property (nonatomic) UPBallot *retryCheckbox;
+@property (nonatomic) UPLabel *retryDescription;
 @end
 
 @implementation UPSpellExtrasPaneRetry
@@ -72,27 +74,22 @@ using Spot = UP::SpellLayout::Place;
 
     SpellLayout &layout = SpellLayout::instance();
 
-    self.topDescription = [UPLabel label];
-    self.topDescription.frame = layout.frame_for(Role::ExtrasRetryTopDescription);
-    self.topDescription.font = layout.settings_description_font();
-    self.topDescription.colorCategory = UPColorCategoryControlText;
-    self.topDescription.textAlignment = NSTextAlignmentCenter;
-    self.topDescription.string = @"Tap RETRY to repeat a game. Try to improve\nyour score using the same sequence of letters.";
-    [self addSubview:self.topDescription];
+    self.retryDescription = [UPLabel label];
+    self.retryDescription.frame = layout.frame_for(Role::ExtrasRetryDescription);
+    self.retryDescription.font = layout.settings_description_font();
+    self.retryDescription.colorCategory = UPColorCategoryControlText;
+    self.retryDescription.textAlignment = NSTextAlignmentLeft;
+    self.retryDescription.string = @"RETRY lets you repeat a previous game, giving you\n"
+        "a chance to improve your score using the same\nsequence of letters.\n\n"
+        "When RETRY is enabled, tapping PLAY presents the\nchoice to repeat your high-scoring game, repeat\n"
+        "your last game, or start a new game.";
+    [self addSubview:self.retryDescription];
 
-    self.quickRetryCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
-    self.quickRetryCheckbox.labelString = @"QUICK RETRY";
-    [self.quickRetryCheckbox setTarget:self action:@selector(quickRetryCheckboxTapped)];
-    self.quickRetryCheckbox.frame = layout.frame_for(Role::ExtrasRetryQuickRetry);
-    [self addSubview:self.quickRetryCheckbox];
-
-    self.bottomDescription = [UPLabel label];
-    self.bottomDescription.frame = layout.frame_for(Role::ExtrasRetryBottomDescription);
-    self.bottomDescription.font = layout.settings_description_font();
-    self.bottomDescription.colorCategory = UPColorCategoryControlText;
-    self.bottomDescription.textAlignment = NSTextAlignmentCenter;
-    self.bottomDescription.string = @"Adds a RETRY checkbox to the GAME OVER screen.\nCheck it and tap PLAY to repeat the last game.";
-    [self addSubview:self.bottomDescription];
+    self.retryCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
+    self.retryCheckbox.labelString = @"RETRY";
+    [self.retryCheckbox setTarget:self action:@selector(retryCheckboxTapped)];
+    self.retryCheckbox.frame = layout.frame_for(Role::ExtrasRetryCheckbox);
+    [self addSubview:self.retryCheckbox];
 
     [self updateThemeColors];
 
@@ -104,13 +101,13 @@ using Spot = UP::SpellLayout::Place;
     self.userInteractionEnabled = YES;
 
     UPSpellSettings *settings = [UPSpellSettings instance];
-    [self.quickRetryCheckbox setSelected:settings.quickRetry];
+    [self.retryCheckbox setSelected:settings.retryMode];
 }
 
-- (void)quickRetryCheckboxTapped
+- (void)retryCheckboxTapped
 {
     UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.quickRetry = self.quickRetryCheckbox.selected;
+    settings.retryMode = self.retryCheckbox.selected;
 }
 
 #pragma mark - Target / Action

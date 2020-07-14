@@ -11,6 +11,7 @@ namespace UP {
 
 UIBezierPath *TextPathDialogGameOver();
 UIBezierPath *TextPathDialogPaused();
+UIBezierPath *TextPathDialogPlay();
 UIBezierPath *TextPathDialogReady();
 UIBezierPath *TextPathQuestionMark();
 

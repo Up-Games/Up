@@ -12,10 +12,7 @@
 @dynamic themeColorHue;
 @dynamic quarkMode;
 @dynamic extrasSelectedIndex;
-@dynamic historySelectedColumnTag;
-@dynamic historySelectedColumnSortDescending;
-@dynamic quickRetry;
-@dynamic quickRetryGameKeyValue;
+@dynamic retryMode;
 
 + (UPSpellSettings *)instance
 {
@@ -40,10 +37,7 @@
     self.themeColorHue = 225;
     self.quarkMode = NO;
     self.extrasSelectedIndex = 0;
-    self.historySelectedColumnTag = 0;
-    self.historySelectedColumnSortDescending = YES;
-    self.quickRetry = NO;
-    self.quickRetryGameKeyValue = 0;
+    self.retryMode = NO;
 }
 
 @end

@@ -13,6 +13,8 @@
 		5D0FC33024A5865100353563 /* UIDevice+UP.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC32E24A5865100353563 /* UIDevice+UP.m */; };
 		5D12E4A324B7B37900C73F64 /* NSMutableAttributedString+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D12E4A124B7B37900C73F64 /* NSMutableAttributedString+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D12E4A424B7B37900C73F64 /* NSMutableAttributedString+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D12E4A224B7B37900C73F64 /* NSMutableAttributedString+UP.mm */; };
+		5D12E4AB24BCA91A00C73F64 /* UPPlacard.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D12E4A924BCA91A00C73F64 /* UPPlacard.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D12E4AC24BCA91A00C73F64 /* UPPlacard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D12E4AA24BCA91A00C73F64 /* UPPlacard.mm */; };
 		5D269CB1245CDB31000B6A1D /* UIImage+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D269CAF245CDB31000B6A1D /* UIImage+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D269CB2245CDB31000B6A1D /* UIImage+UP.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D269CB0245CDB31000B6A1D /* UIImage+UP.m */; };
 		5D2CAC84245B538B00B81332 /* NSValue+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D2CAC83245B538B00B81332 /* NSValue+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -137,6 +139,8 @@
 		5D0FC32E24A5865100353563 /* UIDevice+UP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+UP.m"; sourceTree = "<group>"; };
 		5D12E4A124B7B37900C73F64 /* NSMutableAttributedString+UP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+UP.h"; sourceTree = "<group>"; };
 		5D12E4A224B7B37900C73F64 /* NSMutableAttributedString+UP.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSMutableAttributedString+UP.mm"; sourceTree = "<group>"; };
+		5D12E4A924BCA91A00C73F64 /* UPPlacard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPPlacard.h; sourceTree = "<group>"; };
+		5D12E4AA24BCA91A00C73F64 /* UPPlacard.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPPlacard.mm; sourceTree = "<group>"; };
 		5D269CAF245CDB31000B6A1D /* UIImage+UP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UP.h"; sourceTree = "<group>"; };
 		5D269CB0245CDB31000B6A1D /* UIImage+UP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UP.m"; sourceTree = "<group>"; };
 		5D2CAC83245B538B00B81332 /* NSValue+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSValue+UP.h"; sourceTree = "<group>"; };
@@ -407,14 +411,16 @@
 				5DBC20DA249BC33C002A6ADC /* UPNeedsUpdater.mm */,
 				5D4AE830248FC9A800213904 /* UPObjCProperty.h */,
 				5D4AE82F248FC9A800213904 /* UPObjCProperty.mm */,
+				5D12E4A924BCA91A00C73F64 /* UPPlacard.h */,
+				5D12E4AA24BCA91A00C73F64 /* UPPlacard.mm */,
 				5DB9B1AF2487EA9800A4AAA8 /* UPRandom.cpp */,
 				5DF9DF982466412B00B2199D /* UPRandom.h */,
 				5DB9B1AD2487360900A4AAA8 /* UPSerialNumber.cpp */,
 				5DA8E06D247D50AB008D3015 /* UPSerialNumber.h */,
 				5D4AE82B248F1FE600213904 /* UPSettings.h */,
 				5D4AE82C248F1FE600213904 /* UPSettings.mm */,
-				5DCFD09924ACF27100CA5C24 /* UPSqlite.mm */,
 				5DCFD09724ACF1E900CA5C24 /* UPSqlite.h */,
+				5DCFD09924ACF27100CA5C24 /* UPSqlite.mm */,
 				5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */,
 				5DA8E03D2475E14D008D3015 /* UPStackTrace.h */,
 				5DEBE02C245716F900016047 /* UPStringTools.h */,
@@ -482,6 +488,7 @@
 				5DA8E03F2475E14D008D3015 /* UPStackTrace.h in Headers */,
 				5DBC20CC249AD86C002A6ADC /* UPTapGestureRecognizer.h in Headers */,
 				5DF9DF992466412B00B2199D /* UPRandom.h in Headers */,
+				5D12E4AB24BCA91A00C73F64 /* UPPlacard.h in Headers */,
 				5DFE62262453CFCD00D9CA0B /* UPConstants.h in Headers */,
 				5DC618BB246F045700090E7A /* UIFont+UP.h in Headers */,
 				5DD71D4B2457824A00F3F9E2 /* UPGeometry.h in Headers */,
@@ -654,6 +661,7 @@
 				5DC67DFC247367D1009BCDBB /* UPGameTimerLabel.m in Sources */,
 				5DC618BC246F045700090E7A /* UIFont+UP.mm in Sources */,
 				5DA8E054247AC79F008D3015 /* UPAnimator.mm in Sources */,
+				5D12E4AC24BCA91A00C73F64 /* UPPlacard.mm in Sources */,
 				5DBC20DC249BC33C002A6ADC /* UPNeedsUpdater.mm in Sources */,
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5D4AE82E248F1FE600213904 /* UPSettings.mm in Sources */,
