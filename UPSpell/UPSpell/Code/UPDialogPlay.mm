@@ -11,6 +11,7 @@
 #import <UpKit/UPLabel.h>
 
 #import "UPControl+UPSpell.h"
+#import "UIFont+UPSpell.h"
 #import "UPDialogPlay.h"
 #import "UPSpellLayout.h"
 #import "UPTextButton.h"
@@ -22,7 +23,7 @@ using UP::SpellLayout;
 using Place = SpellLayout::Place;
 using Role = SpellLayout::Role;
 
-@interface UPDialogPlay ()
+@interface UPDialogPlay () <UIScrollViewDelegate>
 @property (nonatomic, readwrite) UIScrollView *placardCarouselScrollView;
 @property (nonatomic, readwrite) UIPageControl *placardCarouselPageControl;
 @property (nonatomic, readwrite) UPButton *okButton;
@@ -52,14 +53,39 @@ using Role = SpellLayout::Role;
     self.placardCarouselScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     self.placardCarouselScrollView.frame = layout.frame_for(Role::PlayDialogCarouselScrollView, Place::OffBottomFar);
     [self addSubview:self.placardCarouselScrollView];
+    self.placardCarouselScrollView.pagingEnabled = YES;
+    self.placardCarouselScrollView.delegate = self;
 //    self.placardCarouselScrollView.backgroundColor = [UIColor testColor1];
+
+    CGSize placardSize = self.placardCarouselScrollView.bounds.size;
+    CGRect placardContainerFrame = CGRectMake(0, 0, up_size_width(placardSize), up_size_height(placardSize));
+    UIView *placardContainerView = [[UPContainerView alloc] initWithFrame:placardContainerFrame];
+    
+    self.highScorePlacard = [UPPlacard placard];
+    self.highScorePlacard.frame = CGRectMake(up_size_width(placardSize) * 0, 0, up_size_width(placardSize), up_size_height(placardSize));
+    self.highScorePlacard.attributedString = [self placardRetryStringWithTitle:@"HIGH-SCORE GAME" score:232];
+    [placardContainerView addSubview:self.highScorePlacard];
+
+    self.lastGamePlacard = [UPPlacard placard];
+    self.lastGamePlacard.frame = CGRectMake(up_size_width(placardSize) * 1, 0, up_size_width(placardSize), up_size_height(placardSize));
+    self.lastGamePlacard.attributedString = [self placardRetryStringWithTitle:@"LAST GAME" score:165];
+    [placardContainerView addSubview:self.lastGamePlacard];
+    
+    self.randomizedGamePlacard = [UPPlacard placard];
+    self.randomizedGamePlacard.frame = CGRectMake(up_size_width(placardSize) * 2, 0, up_size_width(placardSize), up_size_height(placardSize));
+    self.randomizedGamePlacard.attributedString = [self placardNewGameString];
+    [placardContainerView addSubview:self.randomizedGamePlacard];
+    
+    [self.placardCarouselScrollView addSubview:placardContainerView];
+    self.placardCarouselScrollView.contentSize = CGSizeMake(up_size_width(placardSize) * 3, up_size_height(placardSize));
+    self.placardCarouselScrollView.showsVerticalScrollIndicator = NO;
+    self.placardCarouselScrollView.showsHorizontalScrollIndicator = NO;
 
     self.placardCarouselPageControl = [[UIPageControl alloc] initWithFrame:CGRectZero];
     self.placardCarouselPageControl.frame = layout.frame_for(Role::PlayDialogCarouselPagingDots, Place::OffBottomFar);
     self.placardCarouselPageControl.numberOfPages = 3;
     self.placardCarouselPageControl.currentPage = 0;
     [self addSubview:self.placardCarouselPageControl];
-//    self.placardCarouselPageControl.backgroundColor = [UIColor testColor2];
 
     self.okButton = [UPTextButton textButton];
     self.okButton.labelString = @"OK";
@@ -78,6 +104,56 @@ using Role = SpellLayout::Role;
     return self;
 }
 
+- (NSAttributedString *)placardRetryStringWithTitle:(NSString *)modifier score:(int)score
+{
+    SpellLayout &layout = SpellLayout::instance();
+    NSMutableAttributedString *newline = [[NSMutableAttributedString alloc] initWithString:@"\n"];
+
+    NSMutableAttributedString *placardString = [[NSMutableAttributedString alloc] init];
+
+    NSMutableAttributedString *retryLine = [[NSMutableAttributedString alloc] initWithString:@"RETRY"];
+    [retryLine setFont:[UIFont checkboxControlFontOfSize:84 * layout.layout_scale()]];
+    [retryLine appendAttributedString:newline];
+    [retryLine setTextAlignment:NSTextAlignmentCenter paragraphSpacing:-14 * layout.layout_scale()];
+    [placardString appendAttributedString:retryLine];
+
+    NSMutableAttributedString *modifierLine = [[NSMutableAttributedString alloc] initWithString:modifier];
+    [modifierLine setFont:[UIFont checkboxControlFontOfSize:42 * layout.layout_scale()]];
+    [modifierLine appendAttributedString:newline];
+    [modifierLine setTextAlignment:NSTextAlignmentCenter paragraphSpacing:-12 * layout.layout_scale()];
+    [placardString appendAttributedString:modifierLine];
+
+    NSString *scoreString = score >= 0 ? [NSString stringWithFormat:@"%d", score] : @"–";
+    NSMutableAttributedString *scoreLine = [[NSMutableAttributedString alloc] initWithString:scoreString];
+    [scoreLine setFont:[UIFont checkboxControlFontOfSize:64 * layout.layout_scale()]];
+    [scoreLine setTextAlignment:NSTextAlignmentCenter paragraphSpacing:0];
+    [placardString appendAttributedString:scoreLine];
+
+    return placardString;
+}
+
+- (NSAttributedString *)placardNewGameString
+{
+    SpellLayout &layout = SpellLayout::instance();
+
+    NSMutableAttributedString *newline = [[NSMutableAttributedString alloc] initWithString:@"\n"];
+    NSMutableAttributedString *placardString = [[NSMutableAttributedString alloc] initWithString:@"NEW\nGAME"];
+    [placardString setFont:[UIFont checkboxControlFontOfSize:84 * layout.layout_scale()]];
+    [placardString appendAttributedString:newline];
+    [placardString setTextAlignment:NSTextAlignmentCenter paragraphSpacing:-20 * layout.layout_scale()];
+    
+    return placardString;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSUInteger pageIndex = round(scrollView.contentOffset.x / scrollView.bounds.size.width);
+    if (pageIndex != self.placardCarouselPageControl.currentPage) {
+        self.placardCarouselPageControl.currentPage = pageIndex;
+        [self.placardCarouselPageControl updateCurrentPageDisplay];
+    }
+}
+
 #pragma mark - Theme colors
 
 - (void)updateThemeColors
@@ -86,7 +162,7 @@ using Role = SpellLayout::Role;
     
     UIColor *pageControlColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
     self.placardCarouselPageControl.currentPageIndicatorTintColor = pageControlColor;
-    self.placardCarouselPageControl.pageIndicatorTintColor = [pageControlColor colorWithAlphaComponent:[UIColor themeDisabledAlpha]];
+    self.placardCarouselPageControl.pageIndicatorTintColor = [pageControlColor colorWithAlphaComponent:[UIColor themeControlContentInactiveAlpha]];
 }
 
 @end

@@ -81,7 +81,7 @@ using Spot = UP::SpellLayout::Place;
     self.retryDescription.textAlignment = NSTextAlignmentLeft;
     self.retryDescription.string = @"RETRY lets you repeat a previous game, giving you\n"
         "a chance to improve your score using the same\nsequence of letters.\n\n"
-        "When RETRY is enabled, tapping PLAY presents the\nchoice to repeat your high-scoring game, repeat\n"
+        "When RETRY is enabled, tapping PLAY presents the\nchoice to repeat your high-score game, repeat\n"
         "your last game, or start a new game.";
     [self addSubview:self.retryDescription];
 

@@ -148,8 +148,8 @@ public:
     static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  76 };
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
 
-    static inline constexpr CGRect CanonicalDialogPlayCarouselLayoutFrame = { 340, 135, 320, 240 };
-    static inline constexpr CGSize CanonicalDialogPlayPlacardSize = { 320, 220 };
+    static inline constexpr CGRect CanonicalDialogPlayCarouselLayoutFrame = { 340, 120, 320, 256 };
+    static inline constexpr CGSize CanonicalDialogPlayPlacardSize = { 320, 232 };
     static inline constexpr CGSize CanonicalDialogPlayPagingDotsSize = { 320, 24 };
     static inline constexpr CGRect CanonicalDialogPlayControlsLayoutFrame = { 125, 378, 750, 76 };
 
