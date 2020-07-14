@@ -40,7 +40,7 @@
 @property (nonatomic, readwrite) UPAccessoryPane *selectedPane;
 
 @property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
-@property (nonatomic) UPSpellExtrasPaneRetry *retryPane;
+@property (nonatomic) UPSpellExtrasPaneRetry *repeatPane;
 
 @property (nonatomic) NSArray<UPChoice *> *choices;
 @property (nonatomic) NSArray<UPAccessoryPane *> *panes;
@@ -61,7 +61,7 @@ using UP::TimeSpanning::find_move;
 using UP::TimeSpanning::start;
 
 using Role = UP::SpellLayout::Role;
-using Spot = UP::SpellLayout::Place;
+using Place = UP::SpellLayout::Place;
 using Location = UP::SpellLayout::Location;
 
 @implementation UPSpellExtrasController
@@ -74,7 +74,7 @@ using Location = UP::SpellLayout::Location;
 
     self.backButton = [UPButton roundBackButtonLeftArrow];
     self.backButton.canonicalSize = SpellLayout::CanonicalRoundBackButtonSize;
-    self.backButton.frame = layout.frame_for(Role::ChoiceBackLeft, Spot::OffLeftNear);
+    self.backButton.frame = layout.frame_for(Role::ChoiceBackLeft, Place::OffLeftNear);
     self.backButton.chargeOutsets = UPOutsetsMake(0, 0, 0, 200 * layout.layout_scale());
     [self.view addSubview:self.backButton];
 
@@ -82,7 +82,7 @@ using Location = UP::SpellLayout::Location;
     self.choice1.labelString = @"COLOR";
     self.choice1.tag = 0;
     self.choice1.canonicalSize = SpellLayout::CanonicalChoiceSize;
-    self.choice1.frame = layout.frame_for(Role::ChoiceItem1Left, Spot::OffLeftNear);
+    self.choice1.frame = layout.frame_for(Role::ChoiceItem1Left, Place::OffLeftNear);
     [self.choice1 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice1];
     
@@ -90,41 +90,41 @@ using Location = UP::SpellLayout::Location;
     self.choice2.labelString = @"SOUND";
     self.choice2.tag = 1;
     self.choice2.canonicalSize = SpellLayout::CanonicalChoiceSize;
-    self.choice2.frame = layout.frame_for(Role::ChoiceItem2Left, Spot::OffLeftNear);
+    self.choice2.frame = layout.frame_for(Role::ChoiceItem2Left, Place::OffLeftNear);
     [self.choice2 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice2];
     
     self.choice3 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice3.labelString = @"STATS";
+    self.choice3.labelString = @"REPEAT";
     self.choice3.tag = 2;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
-    self.choice3.frame = layout.frame_for(Role::ChoiceItem3Left, Spot::OffLeftNear);
+    self.choice3.frame = layout.frame_for(Role::ChoiceItem3Left, Place::OffLeftNear);
     [self.choice3 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice3];
     
     self.choice4 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice4.labelString = @"RETRY";
+    self.choice4.labelString = @"SHARE";
     self.choice4.tag = 3;
     self.choice4.canonicalSize = SpellLayout::CanonicalChoiceSize;
-    self.choice4.frame = layout.frame_for(Role::ChoiceItem4Left, Spot::OffLeftNear);
+    self.choice4.frame = layout.frame_for(Role::ChoiceItem4Left, Place::OffLeftNear);
     [self.choice4 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice4];
 
     self.colorsPane = [UPSpellExtrasPaneColors pane];
-    self.colorsPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
+    self.colorsPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
     [self.view addSubview:self.colorsPane];
 
-    self.retryPane = [UPSpellExtrasPaneRetry pane];
-    self.retryPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
-    [self.view addSubview:self.retryPane];
+    self.repeatPane = [UPSpellExtrasPaneRetry pane];
+    self.repeatPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    [self.view addSubview:self.repeatPane];
     
     self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
     
     self.panes = @[
         self.colorsPane,
         [UPAccessoryPane pane],
+        self.repeatPane,
         [UPAccessoryPane pane],
-        self.retryPane,
     ];
     
     return self;
@@ -183,7 +183,7 @@ using Location = UP::SpellLayout::Location;
     
     if (up_is_fuzzy_zero(duration)) {
         if (previousSelectedPane) {
-            previousSelectedPane.center = layout.center_for(Role::Screen, Spot::OffTopFar);
+            previousSelectedPane.center = layout.center_for(Role::Screen, Place::OffTopFar);
         }
         if (selectedPane) {
             selectedPane.center = layout.center_for(Role::Screen);
@@ -192,9 +192,9 @@ using Location = UP::SpellLayout::Location;
     else {
         [self lock];
         
-        selectedPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
+        selectedPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
         if (previousSelectedPane && previousSelectedPane != selectedPane) {
-            NSArray *outMoves = @[UPViewMoveMake(previousSelectedPane, Role::Screen, Spot::OffTopFar)];
+            NSArray *outMoves = @[UPViewMoveMake(previousSelectedPane, Role::Screen, Place::OffTopFar)];
             start(bloop_out(BandSettingsUI, outMoves, duration,
                             ^(UIViewAnimatingPosition) {
                 start(bloop_in(BandSettingsUI, @[UPViewMoveMake(selectedPane, Role::Screen)], duration, ^(UIViewAnimatingPosition) {

@@ -7,17 +7,16 @@
 #import <UpKit/UpKit.h>
 
 @class UPButton;
+@class UPChoice;
 @class UPPlacard;
 
 @interface UPDialogPlay : UPContainerView
 
-@property (nonatomic, readonly) UIScrollView *placardCarouselScrollView;
-@property (nonatomic, readonly) UIPageControl *placardCarouselPageControl;
-@property (nonatomic, readonly) UPButton *okButton;
-@property (nonatomic, readonly) UPButton *cancelButton;
-@property (nonatomic, readonly) UPPlacard *highScorePlacard;
-@property (nonatomic, readonly) UPPlacard *lastGamePlacard;
-@property (nonatomic, readonly) UPPlacard *randomizedGamePlacard;
+@property (nonatomic, readonly) UPButton *backButton;
+@property (nonatomic, readonly) UPButton *goButton;
+@property (nonatomic, readonly) UPChoice *choice1;
+@property (nonatomic, readonly) UPChoice *choice2;
+@property (nonatomic, readonly) UPChoice *choice3;
 
 + (UPDialogPlay *)instance;
 

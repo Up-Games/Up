@@ -54,9 +54,10 @@ using UP::SpellLayout;
     self.extrasButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopLeft);
     [self addSubview:self.extrasButton];
 
-    self.playButton = [UPTextButton textButton];
+//    self.playButton = [UPTextButton textButton];
+    self.playButton = [UPTextSettingsButton textSettingsButton];
     self.playButton.labelString = @"PLAY";
-    [self.playButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
+//    [self.playButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     self.playButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopCenter);
     [self addSubview:self.playButton];
 

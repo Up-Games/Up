@@ -639,16 +639,6 @@ void SpellLayout::calculate_dialog_locations()
     CGRect response_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogResponseButtonsLayoutFrame);
     calculate_and_set_locations(Role::DialogButtonDefaultResponse, up_right_aligned_rect(button_size, response_buttons_layout_frame));
     calculate_and_set_locations(Role::DialogButtonAlternativeResponse, up_left_aligned_rect(button_size, response_buttons_layout_frame));
-
-    CGRect play_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogPlayControlsLayoutFrame);
-    calculate_and_set_locations(Role::PlayDialogButtonCancel, up_left_aligned_rect(button_size, play_buttons_layout_frame));
-    calculate_and_set_locations(Role::PlayDialogButtonOK, up_right_aligned_rect(button_size, play_buttons_layout_frame));
-    
-    CGRect play_carousel_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogPlayCarouselLayoutFrame);
-    CGSize placard_scroll_view_size = up_size_scaled(CanonicalDialogPlayPlacardSize, layout_scale());
-    CGSize placard_paging_dot_size = up_size_scaled(CanonicalDialogPlayPagingDotsSize, layout_scale());
-    calculate_and_set_locations(Role::PlayDialogCarouselScrollView, up_top_aligned_rect(placard_scroll_view_size, play_carousel_layout_frame));
-    calculate_and_set_locations(Role::PlayDialogCarouselPagingDots, up_bottom_aligned_rect(placard_paging_dot_size, play_carousel_layout_frame));
 }
 
 void SpellLayout::calculate_game_locations()
@@ -708,29 +698,64 @@ void SpellLayout::calculate_choice_locations()
     CGSize choice_item_row_size = up_size_scaled(CanonicalChoiceSize, layout_scale());
     CGSize text_button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
 
+    CGFloat center_margin = up_float_scaled(CanonicalChoiceCenterMargin, layout_scale());
+    CGFloat center_title_margin = up_float_scaled(CanonicalChoiceCenterTitleMargin, layout_scale());
+    
     CGRect back_layout_frame = layout_centered_x_aspect_rect(CanonicalChoiceBackButtonRowLayoutFrame);
     calculate_and_set_locations(Role::ChoiceBackLeft, up_left_aligned_rect(back_button_size, back_layout_frame));
     calculate_and_set_locations(Role::ChoiceBackRight, up_right_aligned_rect(back_button_size, back_layout_frame));
+
+    CGRect back_center_layout_frame = back_layout_frame;
+    back_center_layout_frame.origin.x += center_margin;
+    back_center_layout_frame.size.width -= center_margin;
+    calculate_and_set_locations(Role::ChoiceBackCenter, up_left_aligned_rect(back_button_size, back_center_layout_frame));
 
     CGRect title_layout_frame = layout_centered_x_aspect_rect(CanonicalChoiceTitleLayoutFrame);
     calculate_and_set_locations(Role::ChoiceTitleLeft, up_left_aligned_rect(text_button_size, title_layout_frame));
     calculate_and_set_locations(Role::ChoiceTitleRight, up_right_aligned_rect(text_button_size, title_layout_frame));
 
+    CGRect title_center_layout_frame = title_layout_frame;
+    title_center_layout_frame.origin.x += center_title_margin;
+    title_center_layout_frame.size.width -= center_title_margin;
+    calculate_and_set_locations(Role::ChoiceTitleCenter, up_left_aligned_rect(text_button_size, title_center_layout_frame));
+
+
     CGRect item_row1_layout_frame = layout_centered_x_aspect_rect(CanonicalChoice1LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem1Left, up_left_aligned_rect(choice_item_row_size, item_row1_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem1Right, up_right_aligned_rect(choice_item_row_size, item_row1_layout_frame));
+
+    CGRect item_row1_center_layout_frame = item_row1_layout_frame;
+    item_row1_center_layout_frame.origin.x += center_margin;
+    item_row1_center_layout_frame.size.width -= center_margin;
+    calculate_and_set_locations(Role::ChoiceItem1Center, up_left_aligned_rect(choice_item_row_size, item_row1_center_layout_frame));
+
 
     CGRect item_row2_layout_frame = layout_centered_x_aspect_rect(CanonicalChoice2LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem2Left, up_left_aligned_rect(choice_item_row_size, item_row2_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem2Right, up_right_aligned_rect(choice_item_row_size, item_row2_layout_frame));
 
+    CGRect item_row2_center_layout_frame = item_row2_layout_frame;
+    item_row2_center_layout_frame.origin.x += center_margin;
+    item_row2_center_layout_frame.size.width -= center_margin;
+    calculate_and_set_locations(Role::ChoiceItem2Center, up_left_aligned_rect(choice_item_row_size, item_row2_center_layout_frame));
+
+    
     CGRect item_row3_layout_frame = layout_centered_x_aspect_rect(CanonicalChoice3LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem3Left, up_left_aligned_rect(choice_item_row_size, item_row3_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem3Right, up_right_aligned_rect(choice_item_row_size, item_row3_layout_frame));
 
+    CGRect item_row3_center_layout_frame = item_row3_layout_frame;
+    item_row3_center_layout_frame.origin.x += center_margin;
+    item_row3_center_layout_frame.size.width -= center_margin;
+    calculate_and_set_locations(Role::ChoiceItem3Center, up_left_aligned_rect(choice_item_row_size, item_row3_center_layout_frame));
+    
+    
     CGRect item_row4_layout_frame = layout_centered_x_aspect_rect(CanonicalChoice4LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem4Left, up_left_aligned_rect(choice_item_row_size, item_row4_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem4Right, up_right_aligned_rect(choice_item_row_size, item_row4_layout_frame));
+
+
+    calculate_and_set_locations(Role::ChoiceGoButtonCenter, layout_relative_aspect_rect(CanonicalChoiceCenterGoFrame));
 }
 
 void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &default_frame, CGFloat near_factor)

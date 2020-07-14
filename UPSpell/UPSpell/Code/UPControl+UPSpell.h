@@ -41,6 +41,7 @@ UIBezierPath *ChoiceRightFillPathSelected();
 + (UPButton *)roundBackButton;
 + (UPButton *)roundBackButtonLeftArrow;
 + (UPButton *)roundBackButtonRightArrow;
++ (UPButton *)roundBackButtonEx;
 + (UPButton *)roundHelpButton;
 
 @end

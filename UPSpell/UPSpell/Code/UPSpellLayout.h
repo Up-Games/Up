@@ -51,9 +51,9 @@ public:
         DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessagePlay, DialogMessageWithGameNote, DialogGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse,
-        PlayDialogCarouselScrollView, PlayDialogCarouselPagingDots, PlayDialogButtonCancel, PlayDialogButtonOK,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
         ChoiceBackRight, ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
+        ChoiceBackCenter, ChoiceTitleCenter, ChoiceItem1Center, ChoiceItem2Center, ChoiceItem3Center, ChoiceGoButtonCenter,
         ExtrasColorsDarkMode, ExtrasColorsStarkMode, ExtrasColorsQuarkMode, ExtrasColorsHueWheel,
         ExtrasColorsHueStepMore, ExtrasColorsHueStepLess, ExtrasColorsDescription, ExtrasColorsExample,
         ExtrasColorsIconPrompt, ExtrasColorsIconButtonNope, ExtrasColorsIconButtonYep,
@@ -148,11 +148,6 @@ public:
     static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  76 };
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
 
-    static inline constexpr CGRect CanonicalDialogPlayCarouselLayoutFrame = { 340, 120, 320, 256 };
-    static inline constexpr CGSize CanonicalDialogPlayPlacardSize = { 320, 232 };
-    static inline constexpr CGSize CanonicalDialogPlayPagingDotsSize = { 320, 24 };
-    static inline constexpr CGRect CanonicalDialogPlayControlsLayoutFrame = { 125, 378, 750, 76 };
-
     static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 369, 1000, 100 };
     static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 27;
     static inline constexpr CGFloat CanonicalGameNoteWordFontCapHeight = 27;
@@ -169,6 +164,12 @@ public:
     static inline constexpr CGRect CanonicalChoice4LayoutFrame =             {  30, 372, 940, 76 };
     static inline constexpr CGSize CanonicalChoiceSize =                              {  280, 76 };
 
+    
+    static inline constexpr CGFloat CanonicalChoiceCenterMargin =  145;
+    static inline constexpr CGFloat CanonicalChoiceCenterTitleMargin =  124;
+    static inline constexpr CGRect CanonicalChoiceCenterGoFrame =  { 713, 376, up_size_width(CanonicalTextButtonSize), up_size_height(CanonicalTextButtonSize) };
+
+    
     static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 20;
 
     static inline constexpr CGRect CanonicalExtrasColorsHueWheelFrame =    { 430,  36, up_size_width(CanonicalHueWheelSize), up_size_height(CanonicalHueWheelSize) };

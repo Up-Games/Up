@@ -12,6 +12,7 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
+#import "UPChoice.h"
 #import "UPDialogGameNote.h"
 #import "UPDialogGameOver.h"
 #import "UPDialogMenu.h"
@@ -81,7 +82,7 @@ using UP::role_in_player_tray;
 using UP::role_in_word;
 using Location = UP::SpellLayout::Location;
 using Role = UP::SpellLayout::Role;
-using Spot = UP::SpellLayout::Place;
+using Place = UP::SpellLayout::Place;
 using Mode = UP::Mode;
 using ModeTransitionTable = UP::ModeTransitionTable;
 
@@ -170,8 +171,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     self.dialogPlay = [UPDialogPlay instance];
     [self.view addSubview:self.dialogPlay];
-    [self.dialogPlay.cancelButton setTarget:self action:@selector(dialogPlayCancelButtonTapped:)];
-    [self.dialogPlay.okButton setTarget:self action:@selector(dialogPlayOKButtonTapped:)];
+    [self.dialogPlay.backButton setTarget:self action:@selector(playChoiceBackButtonTapped:)];
+    [self.dialogPlay.goButton setTarget:self action:@selector(playChoiceGoButtonTapped:)];
     self.dialogPlay.hidden = YES;
     self.dialogPlay.frame = layout.screen_bounds();
 
@@ -647,16 +648,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self setMode:Mode::Play];
 }
 
-- (void)dialogPlayCancelButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+- (void)playChoiceBackButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
     ASSERT(self.mode == Mode::PlayDialog);
     [self setMode:Mode::Init];
 }
 
-- (void)dialogPlayOKButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+- (void)playChoiceGoButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
     ASSERT(self.mode == Mode::PlayDialog);
-    //    [self setMode:Mode::Play];
+    [self setMode:Mode::Ready];
 }
 
 - (void)roundButtonPauseTapped
@@ -1147,7 +1148,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     for (UPTileView *tileView in wordTrayTileViews) {
         Tile &tile = self.model->find_tile(tileView);
         ASSERT(tile.position().in_word_tray());
-        Location location(role_in_word(tile.position().index(), self.model->word().length()), Spot::OffTopNear);
+        Location location(role_in_word(tile.position().index(), self.model->word().length()), Place::OffTopNear);
         tileView.submitLocation = location;
         [moves addObject:UPViewMoveMake(tileView, location)];
     }
@@ -1158,10 +1159,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     Role role = (self.model->word().length() >= 5 || self.model->word().total_multiplier() > 1) ? Role::WordScoreBonus : Role::WordScore;
 
     SpellLayout &layout = SpellLayout::instance();
-    self.gameView.wordScoreLabel.frame = layout.frame_for(role, Spot::OffBottomFar);
+    self.gameView.wordScoreLabel.frame = layout.frame_for(role, Place::OffBottomFar);
     self.gameView.wordScoreLabel.hidden = NO;
     
-    UPViewMove *wordScoreInMove = UPViewMoveMake(self.gameView.wordScoreLabel, Location(role, Spot::Default));
+    UPViewMove *wordScoreInMove = UPViewMoveMake(self.gameView.wordScoreLabel, Location(role, Place::Default));
 
     delay(BandGameDelay, 0.25, ^{
         self.showingWordScoreLabel = YES;
@@ -1231,7 +1232,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)viewBloopOutWordScoreLabelWithDuration:(CFTimeInterval)duration
 {
     if (self.showingWordScoreLabel) {
-        UPViewMove *wordScoreOutMove = UPViewMoveMake(self.gameView.wordScoreLabel, Location(Role::WordScore, Spot::OffTopNear));
+        UPViewMove *wordScoreOutMove = UPViewMoveMake(self.gameView.wordScoreLabel, Location(Role::WordScore, Place::OffTopNear));
         start(bloop_out(BandGameUI, @[wordScoreOutMove], duration, ^(UIViewAnimatingPosition) {
             self.showingWordScoreLabel = NO;
             self.gameView.wordScoreLabel.hidden = YES;
@@ -1259,7 +1260,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     int count = 0;
     for (const auto idx : idxs) {
         UPTileView *tileView = playerTrayTileViews[idx];
-        Location location(role_in_player_tray(TilePosition(TileTray::Player, idx)), Spot::OffBottomNear);
+        Location location(role_in_player_tray(TilePosition(TileTray::Player, idx)), Place::OffBottomNear);
         UPAnimator *animator = slide(BandGameUI, @[UPViewMoveMake(tileView, location)], 1.1, ^(UIViewAnimatingPosition) {
             [tileView removeFromSuperview];
         });
@@ -1290,9 +1291,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             tile.set_view(tileView);
             tileView.band = UP::BandGameUIColor;
             Role role = role_in_player_tray(TilePosition(TileTray::Player, idx));
-            tileView.frame = layout.frame_for(Location(role, Spot::OffBottomNear));
+            tileView.frame = layout.frame_for(Location(role, Place::OffBottomNear));
             [self.gameView.tileContainerView addSubview:tileView];
-            [moves addObject:UPViewMoveMake(tileView, Location(role, Spot::Default))];
+            [moves addObject:UPViewMoveMake(tileView, Location(role, Place::Default))];
         }
         idx++;
     }
@@ -1506,10 +1507,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             UPTileView *tileView = tile.view();
             if (tile.in_word_tray()) {
                 Role role = role_in_word(tile.position().index(), wordLength);
-                [moves addObject:UPViewMoveMake(tileView, role, Spot::OffBottomNear)];
+                [moves addObject:UPViewMoveMake(tileView, role, Place::OffBottomNear)];
             }
             else {
-                [moves addObject:UPViewMoveMake(tileView, role_in_player_tray(tile.position()), Spot::OffBottomNear)];
+                [moves addObject:UPViewMoveMake(tileView, role_in_player_tray(tile.position()), Place::OffBottomNear)];
             }
             [submittedTileViews removeObject:tileView];
         }
@@ -1546,9 +1547,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         tile.set_view(tileView);
         tileView.band = BandModeUI;
         Role role = role_in_player_tray(tile.position());
-        tileView.frame = layout.frame_for(Location(role, Spot::OffBottomNear));
+        tileView.frame = layout.frame_for(Location(role, Place::OffBottomNear));
         [self.gameView.tileContainerView addSubview:tileView];
-        [tileInMoves addObject:UPViewMoveMake(tileView, Location(role, Spot::Default))];
+        [tileInMoves addObject:UPViewMoveMake(tileView, Location(role, Place::Default))];
         idx++;
     }
     start(bloop_in(BandModeUI, tileInMoves, duration, ^(UIViewAnimatingPosition) {
@@ -1571,8 +1572,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     for (auto &tile : self.model->tiles()) {
         UPTileView *tileView = tile.view();
         Role role = role_in_player_tray(tile.position());
-        tileView.frame = layout.frame_for(Location(role, Spot::OffBottomNear));
-        [tileInMoves addObject:UPViewMoveMake(tileView, Location(role, Spot::Default))];
+        tileView.frame = layout.frame_for(Location(role, Place::OffBottomNear));
+        [tileInMoves addObject:UPViewMoveMake(tileView, Location(role, Place::Default))];
         idx++;
     }
 
@@ -1601,10 +1602,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             UPTileView *tileView = tile.view();
             Location location;
             if (tile.in_word_tray()) {
-                location = Location(role_in_word(tile.position().index(), wordLength), Spot::OffBottomNear);
+                location = Location(role_in_word(tile.position().index(), wordLength), Place::OffBottomNear);
             }
             else {
-                location = Location(role_in_player_tray(tile.position()), Spot::OffBottomNear);
+                location = Location(role_in_player_tray(tile.position()), Place::OffBottomNear);
             }
             UPAnimator *animator = slide(BandModeUI, @[UPViewMoveMake(tileView, location)], 0.75, ^(UIViewAnimatingPosition) {
                 [tileView removeFromSuperview];
@@ -1622,11 +1623,11 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     [self viewLock];
     
-    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffLeftFar));
-    UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffLeftFar));
-    UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffLeftNear));
-    UPViewMove *dialogGameOverMove = UPViewMoveMake(self.dialogGameOver, Location(Role::Screen, Spot::OffLeftNear));
-    UPViewMove *dialogGameNoteMove = UPViewMoveMake(self.dialogGameNote, Location(Role::Screen, Spot::OffLeftNear));
+    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Place::OffLeftFar));
+    UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Place::OffLeftFar));
+    UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Place::OffLeftNear));
+    UPViewMove *dialogGameOverMove = UPViewMoveMake(self.dialogGameOver, Location(Role::Screen, Place::OffLeftNear));
+    UPViewMove *dialogGameNoteMove = UPViewMoveMake(self.dialogGameNote, Location(Role::Screen, Place::OffLeftNear));
 
     CFTimeInterval duration = 0.75;
     CFTimeInterval stagger = 0.075;
@@ -1653,11 +1654,11 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     [self viewLock];
     
-    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffRightFar));
-    UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
-    UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffRightNear));
-    UPViewMove *dialogGameOverMove = UPViewMoveMake(self.dialogGameOver, Location(Role::Screen, Spot::OffRightNear));
-    UPViewMove *dialogGameNoteMove = UPViewMoveMake(self.dialogGameNote, Location(Role::Screen, Spot::OffRightNear));
+    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Place::OffRightFar));
+    UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Place::OffRightFar));
+    UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Place::OffRightNear));
+    UPViewMove *dialogGameOverMove = UPViewMoveMake(self.dialogGameOver, Location(Role::Screen, Place::OffRightNear));
+    UPViewMove *dialogGameNoteMove = UPViewMoveMake(self.dialogGameNote, Location(Role::Screen, Place::OffRightNear));
 
     CFTimeInterval duration = 0.75;
     CFTimeInterval stagger = 0.075;
@@ -1690,10 +1691,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
     
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
+    self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageVerticallyCentered, Place::OffBottomNear);
     self.dialogGameOver.transform = CGAffineTransformIdentity;
     self.dialogGameOver.hidden = YES;
-    self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogGameNote, Spot::OffBottomFar);
+    self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogGameNote, Place::OffBottomFar);
     self.dialogGameNote.hidden = YES;
 }
 
@@ -1720,21 +1721,24 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     // move extras and about buttons offscreen
     NSArray<UPViewMove *> *outGameOverMoves = @[
-        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Spot::OffBottomNear),
-        UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Place::OffBottomNear),
+        UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Place::OffBottomFar),
     ];
     start(bloop_out(BandModeUI, outGameOverMoves, 0.2, nil));
     NSArray<UPViewMove *> *outMoves = @[
-        UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffTopNear)),
-        UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffTopNear)),
+        UPViewMoveMake(self.dialogMenu.extrasButton, Location(Role::DialogButtonTopLeft, Place::OffTopNear)),
+        UPViewMoveMake(self.dialogMenu.aboutButton, Location(Role::DialogButtonTopRight, Place::OffTopNear)),
     ];
     start(bloop_out(BandModeUI, outMoves, 0.3, ^(UIViewAnimatingPosition) {
         self.dialogGameOver.transform = CGAffineTransformIdentity;
         
         delay(BandModeDelay, 0.35, ^{
             // move play button
-            UPViewMove *playButtonMove = UPViewMoveMake(self.dialogMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
-            start(slide(BandModeUI, @[playButtonMove], 0.3, nil));
+            NSArray<UPViewMove *> *playMoves = @[
+                UPViewMoveMake(self.dialogMenu.playButton, Role::DialogButtonTopCenter, Place::OffTopNear),
+            ];
+            start(slide(BandModeUI, playMoves, 0.3, nil));
+
             // change transform of game view
             [UIView animateWithDuration:0.75 animations:^{
                 self.gameView.transform = CGAffineTransformIdentity;
@@ -1929,6 +1933,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         { Mode::GameOver,   Mode::End,        @selector(modeTransitionFromOverToEnd) },
         { Mode::End,        Mode::About,      @selector(modeTransitionFromEndToAbout) },
         { Mode::End,        Mode::Extras,     @selector(modeTransitionFromEndToExtras) },
+        { Mode::End,        Mode::PlayDialog, @selector(modeTransitionFromEndToPlayDialog) },
         { Mode::End,        Mode::Ready,      @selector(modeTransitionFromEndToReady) },
         { Mode::Quit,       Mode::End,        @selector(modeTransitionFromQuitToEnd) },
     };
@@ -1997,7 +2002,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.dialogMenu.transform = CGAffineTransformIdentity;
     self.dialogMenu.hidden = NO;
     self.dialogMenu.alpha = 1;
-    self.dialogMenu.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
+    self.dialogMenu.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Place::OffBottomNear);
 
     self.gameView.transform = layout.menu_game_view_transform();
     [self viewUpdateGameControls];
@@ -2027,45 +2032,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewLock];
     [self viewOrderInExtrasWithCompletion:^{
         [self viewUnlock];
-    }];
-}
-
-- (void)modeTransitionFromInitToPlayDialog
-{
-    [self viewLock];
-    [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
-    
-    // special modal fixups for play dialog
-    self.dialogMenu.playButton.highlightedLocked = YES;
-    self.dialogMenu.playButton.highlighted = YES;
-    self.dialogMenu.playButton.alpha = [UIColor themeModalActiveAlpha];
-    self.dialogMenu.extrasButton.alpha = [UIColor themeModalBackgroundAlpha];
-    self.dialogMenu.aboutButton.alpha = [UIColor themeModalBackgroundAlpha];
-
-    SpellLayout &layout = SpellLayout::instance();
-    self.dialogPlay.placardCarouselScrollView.center = layout.center_for(Role::PlayDialogCarouselScrollView, Spot::OffBottomNear);
-    self.dialogPlay.placardCarouselPageControl.center = layout.center_for(Role::PlayDialogCarouselPagingDots, Spot::OffBottomNear);
-    self.dialogPlay.cancelButton.center = layout.center_for(Role::PlayDialogButtonCancel, Spot::OffBottomFar);
-    self.dialogPlay.okButton.center = layout.center_for(Role::PlayDialogButtonOK, Spot::OffBottomFar);
-    
-    NSArray<UPViewMove *> *farMoves = @[
-        UPViewMoveMake(self.dialogPlay.cancelButton, Role::PlayDialogButtonCancel),
-        UPViewMoveMake(self.dialogPlay.okButton, Role::PlayDialogButtonOK),
-    ];
-    start(bloop_in(BandModeUI, farMoves, 0.25, ^(UIViewAnimatingPosition) {
-        [self viewUnlock];
-    }));
-
-    NSArray<UPViewMove *> *nearMoves = @[
-        UPViewMoveMake(self.dialogPlay.placardCarouselScrollView, Role::PlayDialogCarouselScrollView),
-        UPViewMoveMake(self.dialogPlay.placardCarouselPageControl, Role::PlayDialogCarouselPagingDots),
-    ];
-    start(bloop_in(BandModeUI, nearMoves, 0.25, nil));
-    
-    self.dialogPlay.hidden = NO;
-    self.dialogPlay.alpha = 0.0;
-    [UIView animateWithDuration:0.15 animations:^{
-        self.dialogPlay.alpha = 1.0;
     }];
 }
 
@@ -2165,6 +2131,50 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }];
 }
 
+- (void)modeTransitionFromInitToPlayDialog
+{
+    [self viewLock];
+    [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
+
+    self.dialogMenu.playButton.userInteractionEnabled = NO;
+
+    SpellLayout &layout = SpellLayout::instance();
+    self.dialogPlay.backButton.center = layout.center_for(Role::ChoiceBackCenter, Place::OffTopNear);
+    self.dialogPlay.goButton.center = layout.center_for(Role::ChoiceGoButtonCenter, Place::OffBottomFar);
+
+    self.dialogPlay.choice1.center = layout.center_for(Role::ChoiceItem1Center, Place::OffBottomNear);
+    self.dialogPlay.choice2.center = layout.center_for(Role::ChoiceItem2Center, Place::OffBottomNear);
+    self.dialogPlay.choice3.center = layout.center_for(Role::ChoiceItem3Center, Place::OffBottomNear);
+
+    delay(BandModeDelay, 0.35, ^{
+        NSArray<UPViewMove *> *buttonInMoves = @[
+            UPViewMoveMake(self.dialogMenu.playButton, Role::ChoiceTitleCenter),
+            UPViewMoveMake(self.dialogPlay.backButton, Role::ChoiceBackCenter),
+            UPViewMoveMake(self.dialogPlay.goButton, Role::ChoiceGoButtonCenter),
+            UPViewMoveMake(self.dialogPlay.choice1, Role::ChoiceItem1Center),
+            UPViewMoveMake(self.dialogPlay.choice2, Role::ChoiceItem2Center),
+            UPViewMoveMake(self.dialogPlay.choice3, Role::ChoiceItem3Center),
+        ];
+        start(bloop_in(BandModeUI, buttonInMoves, 0.45, ^(UIViewAnimatingPosition) {
+            [self viewUnlock];
+        }));
+    });
+
+    NSArray<UPViewMove *> *buttonOutMoves = @[
+        UPViewMoveMake(self.dialogMenu.extrasButton, Role::DialogButtonTopLeft, Place::OffLeftNear),
+        UPViewMoveMake(self.dialogMenu.aboutButton, Role::DialogButtonTopRight, Place::OffRightNear),
+        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Place::OffBottomNear),
+        UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Place::OffBottomFar),
+    ];
+    start(bloop_out(BandModeUI, buttonOutMoves, 0.4, nil));
+    
+    self.dialogPlay.hidden = NO;
+    self.dialogPlay.alpha = 0.0;
+    [UIView animateWithDuration:0.15 animations:^{
+        self.dialogPlay.alpha = 1.0;
+    }];
+}
+
 - (void)modeTransitionFromPlayDialogToInit
 {
     [self viewLock];
@@ -2173,26 +2183,32 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         self.dialogPlay.alpha = 0.0;
     } completion:nil];
     
-    NSArray<UPViewMove *> *nearMoves = @[
-        UPViewMoveMake(self.dialogPlay.placardCarouselScrollView, Role::PlayDialogCarouselScrollView, Spot::OffBottomNear),
-        UPViewMoveMake(self.dialogPlay.placardCarouselPageControl, Role::PlayDialogCarouselPagingDots, Spot::OffBottomNear),
-    ];
-    NSArray<UPViewMove *> *farMoves = @[
-        UPViewMoveMake(self.dialogPlay.cancelButton, Location(Role::PlayDialogButtonCancel, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogPlay.okButton, Location(Role::PlayDialogButtonOK, Spot::OffBottomFar)),
+    delay(BandModeDelay, 0.2, ^{
+        NSArray<UPViewMove *> *buttonInMoves = @[
+            UPViewMoveMake(self.dialogMenu.extrasButton, Role::DialogButtonTopLeft),
+            UPViewMoveMake(self.dialogMenu.aboutButton, Role::DialogButtonTopRight),
+        ];
+        start(bloop_in(BandModeUI, buttonInMoves, 0.4, nil));
+    });
+
+    start(bloop_in(BandModeUI, @[UPViewMoveMake(self.dialogMenu.playButton, Role::DialogButtonTopCenter)], 0.6, ^(UIViewAnimatingPosition) {
+        self.dialogMenu.playButton.userInteractionEnabled = YES;
+    }));
+    
+    NSArray<UPViewMove *> *buttonOutMoves = @[
+        UPViewMoveMake(self.dialogPlay.backButton, Location(Role::ChoiceBackCenter, Place::OffTopNear)),
+        UPViewMoveMake(self.dialogPlay.goButton, Location(Role::ChoiceGoButtonCenter, Place::OffBottomNear)),
+        UPViewMoveMake(self.dialogPlay.choice1, Role::ChoiceItem1Center, Place::OffBottomNear),
+        UPViewMoveMake(self.dialogPlay.choice2, Role::ChoiceItem2Center, Place::OffBottomNear),
+        UPViewMoveMake(self.dialogPlay.choice3, Role::ChoiceItem3Center, Place::OffBottomNear),
     ];
     
-    start(bloop_out(BandModeUI, farMoves, 0.25, nil));
+    self.dialogMenu.playButton.selected = NO;
     
-    start(bloop_out(BandModeUI, nearMoves, DefaultBloopDuration, ^(UIViewAnimatingPosition) {
+    start(bloop_out(BandModeUI, buttonOutMoves, DefaultBloopDuration, ^(UIViewAnimatingPosition) {
         self.dialogPlay.hidden = YES;
         self.dialogPlay.alpha = 1.0;
-        [UIView animateWithDuration:0.3 animations:^{
-            self.dialogMenu.playButton.highlightedLocked = NO;
-            self.dialogMenu.playButton.highlighted = NO;
-            self.dialogMenu.playButton.alpha = 1.0;
-            self.dialogMenu.extrasButton.alpha = 1.0;
-            self.dialogMenu.aboutButton.alpha = 1.0;
+        [UIView animateWithDuration:0.4 animations:^{
             [self viewRestoreGameAlpha];
         } completion:^(BOOL finished) {
             [self viewUnlock];
@@ -2202,7 +2218,59 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromPlayDialogToReady
 {
-    
+    ASSERT(self.model->is_blank_filled());
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
+
+    self.dialogPlay.goButton.highlightedLocked = YES;
+    self.dialogPlay.goButton.highlighted = YES;
+    self.dialogPlay.backButton.alpha = [UIColor themeControlContentInactiveAlpha];
+    self.dialogPlay.choice2.alpha = [UIColor themeControlContentInactiveAlpha];
+    self.dialogPlay.choice3.alpha = [UIColor themeControlContentInactiveAlpha];
+
+    delay(BandModeDelay, 0.75, ^{
+        SpellLayout &layout = SpellLayout::instance();
+
+        self.dialogMenu.extrasButton.center = layout.center_for(Role::DialogButtonTopLeft, Place::OffTopNear);
+        self.dialogMenu.aboutButton.center = layout.center_for(Role::DialogButtonTopRight, Place::OffTopNear);
+        
+        NSArray<UPViewMove *> *buttonOutMoves = @[
+            UPViewMoveMake(self.dialogMenu.playButton, Location(Role::ChoiceTitleCenter, Place::OffTopNear)),
+            UPViewMoveMake(self.dialogPlay.backButton, Location(Role::ChoiceBackCenter, Place::OffTopNear)),
+            UPViewMoveMake(self.dialogPlay.goButton, Location(Role::ChoiceGoButtonCenter, Place::OffBottomNear)),
+            UPViewMoveMake(self.dialogPlay.choice1, Role::ChoiceItem1Center, Place::OffTopNear),
+            UPViewMoveMake(self.dialogPlay.choice2, Role::ChoiceItem2Center, Place::OffTopNear),
+            UPViewMoveMake(self.dialogPlay.choice3, Role::ChoiceItem3Center, Place::OffTopNear),
+        ];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.dialogPlay.choice1.alpha = 1;
+            self.dialogPlay.choice2.alpha = 0;
+            self.dialogPlay.choice3.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.dialogPlay.choice1.alpha = 1;
+            self.dialogPlay.choice2.alpha = 1;
+            self.dialogPlay.choice3.alpha = 1;
+            self.dialogPlay.backButton.alpha = 1;
+        }];
+        start(bloop_out(BandModeUI, buttonOutMoves, DefaultBloopDuration, ^(UIViewAnimatingPosition) {
+            self.dialogMenu.playButton.userInteractionEnabled = YES;
+            self.dialogMenu.playButton.selected = NO;
+            self.dialogPlay.goButton.highlightedLocked = NO;
+            self.dialogPlay.goButton.highlighted = NO;
+            [self createNewGameModelIfNeeded];
+            [self viewMakeReadyWithCompletion:^{
+                [self viewBloopOutExistingTileViewsWithCompletion:nil];
+                [self setMode:Mode::Play];
+            }];
+        }));
+    });
+}
+
+- (void)modeTransitionFromEndToPlayDialog
+{
+    [self createNewGameModelIfNeeded];
+    [self viewFillUpSpellTileViews];
+    [self modeTransitionFromInitToPlayDialog];
 }
 
 - (void)modeTransitionFromReadyToPlay
@@ -2217,7 +2285,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.model->apply(Action(self.gameTimer.remainingTime, Opcode::PLAY));
     
     // bloop out ready message
-    UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear));
+    UPViewMove *readyMove = UPViewMoveMake(self.dialogMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear));
     start(bloop_out(BandModeUI, @[readyMove], 0.25, nil));
     // animate game view to full alpha and fade out dialog menu
     [UIView animateWithDuration:0.1 delay:0.2 options:0 animations:^{
@@ -2264,9 +2332,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.gameView.pauseControl.alpha = [UIColor themeModalActiveAlpha];
     
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
-    self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar);
-    self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse, Spot::OffBottomFar);
+    self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear);
+    self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Place::OffBottomFar);
+    self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse, Place::OffBottomFar);
     
     NSArray<UPViewMove *> *farMoves = @[
         UPViewMoveMake(self.dialogPause.quitButton, Role::DialogButtonAlternativeResponse),
@@ -2326,11 +2394,11 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     } completion:nil];
 
     NSArray<UPViewMove *> *nearMoves = @[
-        UPViewMoveMake(self.dialogPause.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear)),
+        UPViewMoveMake(self.dialogPause.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear)),
     ];
     NSArray<UPViewMove *> *farMoves = @[
-        UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
+        UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
     ];
 
     start(bloop_out(BandModeUI, farMoves, 0.25, nil));
@@ -2383,11 +2451,11 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     } completion:nil];
     
     NSArray<UPViewMove *> *nearMoves = @[
-        UPViewMoveMake(self.dialogPause.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear)),
+        UPViewMoveMake(self.dialogPause.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear)),
     ];
     NSArray<UPViewMove *> *farMoves = @[
-        UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
+        UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
     ];
     start(bloop_out(BandModeUI, farMoves, DefaultBloopDuration, nil));
     start(bloop_out(BandModeUI, nearMoves, 0.35, ^(UIViewAnimatingPosition) {
@@ -2424,11 +2492,11 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.gameView.gameScoreLabel.alpha = [UIColor themeModalActiveAlpha];
 
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
+    self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear);
     self.dialogGameOver.center = layout.center_for(Location(Role::Screen));
     self.dialogGameOver.hidden = NO;
     self.dialogGameOver.alpha = 0.0;
-    self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogGameNote, Spot::OffBottomNear);
+    self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogGameNote, Place::OffBottomNear);
     self.dialogGameNote.center = layout.center_for(Location(Role::Screen));
     self.dialogGameNote.hidden = NO;
     [UIView animateWithDuration:0.15 animations:^{
@@ -2472,9 +2540,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             [self viewBloopInBlankTileViewsWithDuration:GameOverInOutBloopDuration completion:nil];
             self.dialogMenu.hidden = NO;
             self.dialogMenu.alpha = 1;
-            self.dialogMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft, Spot::OffTopNear));
-            self.dialogMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
-            self.dialogMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Spot::OffTopNear));
+            self.dialogMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft, Place::OffTopNear));
+            self.dialogMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter, Place::OffTopNear));
+            self.dialogMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Place::OffTopNear));
             self.dialogMenu.playButton.highlightedLocked = NO;
             self.dialogMenu.playButton.highlighted = NO;
             NSArray<UPViewMove *> *buttonMoves = @[
@@ -2541,9 +2609,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         } completion:^(BOOL finished) {
             self.dialogMenu.hidden = NO;
             self.dialogMenu.alpha = 1;
-            self.dialogMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft, Spot::OffTopNear));
-            self.dialogMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
-            self.dialogMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Spot::OffTopNear));
+            self.dialogMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft, Place::OffTopNear));
+            self.dialogMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter, Place::OffTopNear));
+            self.dialogMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Place::OffTopNear));
             self.dialogMenu.playButton.highlightedLocked = NO;
             self.dialogMenu.playButton.highlighted = NO;
             delay(BandModeDelay, 0.1, ^{
