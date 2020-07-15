@@ -17,6 +17,7 @@
 @property (nonatomic, readonly) UPChoice *choice1;
 @property (nonatomic, readonly) UPChoice *choice2;
 @property (nonatomic, readonly) UPChoice *choice3;
+@property (nonatomic, readonly) NSArray<UPChoice *> *choices;
 
 + (UPDialogPlay *)instance;
 

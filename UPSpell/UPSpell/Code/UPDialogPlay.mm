@@ -15,6 +15,7 @@
 #import "UPChoice.h"
 #import "UPDialogPlay.h"
 #import "UPSpellLayout.h"
+#import "UPSpellSettings.h"
 #import "UPTextButton.h"
 #import "UPTextSettingsButton.h"
 #import "UPTextPaths.h"
@@ -30,6 +31,7 @@ using Role = SpellLayout::Role;
 @property (nonatomic, readwrite) UPChoice *choice1;
 @property (nonatomic, readwrite) UPChoice *choice2;
 @property (nonatomic, readwrite) UPChoice *choice3;
+@property (nonatomic, readwrite) NSArray<UPChoice *> *choices;
 @end
 
 @implementation UPDialogPlay
@@ -65,7 +67,7 @@ using Role = SpellLayout::Role;
     self.choice1.tag = 0;
     self.choice1.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice1.frame = layout.frame_for(Role::ChoiceItem1Center, Place::OffBottomNear);
-    //    [self.choice1 setTarget:self action:@selector(choiceSelected:)];
+    [self.choice1 setTarget:self action:@selector(choiceSelected:)];
     [self addSubview:self.choice1];
     
     self.choice2 = [UPChoice choiceWithSide:UPChoiceSideLeft];
@@ -73,7 +75,7 @@ using Role = SpellLayout::Role;
     self.choice2.tag = 1;
     self.choice2.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice2.frame = layout.frame_for(Role::ChoiceItem2Center, Place::OffBottomNear);
-    //    [self.choice2 setTarget:self action:@selector(choiceSelected:)];
+    [self.choice2 setTarget:self action:@selector(choiceSelected:)];
     [self addSubview:self.choice2];
     
     self.choice3 = [UPChoice choiceWithSide:UPChoiceSideLeft];
@@ -81,12 +83,28 @@ using Role = SpellLayout::Role;
     self.choice3.tag = 2;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice3.frame = layout.frame_for(Role::ChoiceItem3Center, Place::OffBottomNear);
-    //    [self.choice3 setTarget:self action:@selector(choiceSelected:)];
+    [self.choice3 setTarget:self action:@selector(choiceSelected:)];
     [self addSubview:self.choice3];
+    
+    self.choices = @[ self.choice1, self.choice2, self.choice3 ];
     
     [self updateThemeColors];
 
     return self;
+}
+
+- (void)choiceSelected:(UPChoice *)sender
+{
+    for (UPChoice *choice in self.choices) {
+        if (choice != sender) {
+            choice.selected = NO;
+            [choice invalidate];
+            [choice update];
+        }
+    }
+    
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.playMenuSelectedIndex = sender.tag;
 }
 
 #pragma mark - Theme colors

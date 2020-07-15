@@ -12,6 +12,7 @@
 @property (nonatomic) BOOL quarkMode;
 @property (nonatomic) NSUInteger extrasSelectedIndex;
 @property (nonatomic) BOOL retryMode;
+@property (nonatomic) NSUInteger playMenuSelectedIndex;
 
 + (UPSpellSettings *)instance;
 - (instancetype)init NS_UNAVAILABLE;

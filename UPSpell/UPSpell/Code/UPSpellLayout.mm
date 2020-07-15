@@ -719,7 +719,6 @@ void SpellLayout::calculate_choice_locations()
     title_center_layout_frame.size.width -= center_title_margin;
     calculate_and_set_locations(Role::ChoiceTitleCenter, up_left_aligned_rect(text_button_size, title_center_layout_frame));
 
-
     CGRect item_row1_layout_frame = layout_centered_x_aspect_rect(CanonicalChoice1LayoutFrame);
     calculate_and_set_locations(Role::ChoiceItem1Left, up_left_aligned_rect(choice_item_row_size, item_row1_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem1Right, up_right_aligned_rect(choice_item_row_size, item_row1_layout_frame));
@@ -754,8 +753,11 @@ void SpellLayout::calculate_choice_locations()
     calculate_and_set_locations(Role::ChoiceItem4Left, up_left_aligned_rect(choice_item_row_size, item_row4_layout_frame));
     calculate_and_set_locations(Role::ChoiceItem4Right, up_right_aligned_rect(choice_item_row_size, item_row4_layout_frame));
 
-
     calculate_and_set_locations(Role::ChoiceGoButtonCenter, layout_relative_aspect_rect(CanonicalChoiceCenterGoFrame));
+
+    CGRect item_top_center = item_row1_center_layout_frame;
+    item_top_center.origin.y = title_layout_frame.origin.y;
+    calculate_and_set_locations(Role::ChoiceItemTopCenter, item_top_center);
 }
 
 void SpellLayout::calculate_and_set_locations(const Role role, const CGRect &default_frame, CGFloat near_factor)

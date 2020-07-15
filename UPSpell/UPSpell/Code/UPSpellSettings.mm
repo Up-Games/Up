@@ -13,6 +13,7 @@
 @dynamic quarkMode;
 @dynamic extrasSelectedIndex;
 @dynamic retryMode;
+@dynamic playMenuSelectedIndex;
 
 + (UPSpellSettings *)instance
 {
@@ -38,6 +39,7 @@
     self.quarkMode = NO;
     self.extrasSelectedIndex = 0;
     self.retryMode = NO;
+    self.playMenuSelectedIndex = 0;
 }
 
 @end
