@@ -140,7 +140,7 @@ using Role = SpellLayout::Role;
 
         if (m_high_score_summary.game_id() == m_last_game_summary.game_id() ||
             m_high_score_summary.game_score() == m_last_game_summary.game_score()) {
-            self.choice2.labelString = [NSString stringWithFormat:@"LAST GAME WAS HIGH SCORE"];
+            self.choice2.labelString = @"LAST GAME WAS HIGH SCORE";
             if (self.choice2.selected) {
                 [self.choice2 setSelected:NO];
                 [self.choice1 setSelected:YES];
@@ -149,7 +149,7 @@ using Role = SpellLayout::Role;
             self.choice2.userInteractionEnabled = NO;
         }
         else if (m_high_score_summary.game_key() == m_last_game_summary.game_key()) {
-            self.choice2.labelString = [NSString stringWithFormat:@"LAST GAME WAS HIGH SCORE RETRY"];
+            self.choice2.labelString = [NSString stringWithFormat:@"LAST GAME (%d) RETRIED HIGH SCORE", m_last_game_summary.game_score()];
             if (self.choice2.selected) {
                 [self.choice2 setSelected:NO];
                 [self.choice1 setSelected:YES];

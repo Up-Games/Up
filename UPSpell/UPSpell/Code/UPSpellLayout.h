@@ -165,8 +165,8 @@ public:
     static inline constexpr CGSize CanonicalChoiceSize =                              {  280, 76 };
 
     
-    static inline constexpr CGFloat CanonicalChoiceCenterMargin =  145;
-    static inline constexpr CGFloat CanonicalChoiceCenterTitleMargin =  124;
+    static inline constexpr CGFloat CanonicalChoiceCenterMargin = 136;
+    static inline constexpr CGFloat CanonicalChoiceCenterTitleMargin =  115;
     static inline constexpr CGRect CanonicalChoiceCenterGoFrame =  { 713, 376, up_size_width(CanonicalTextButtonSize), up_size_height(CanonicalTextButtonSize) };
 
     
