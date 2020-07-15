@@ -1,5 +1,5 @@
 //
-//  UPDialogMenu.h
+//  UPDialogTopMenu.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -9,14 +9,14 @@
 @class UPBezierPathView;
 @class UPButton;
 
-@interface UPDialogMenu : UPContainerView
+@interface UPDialogTopMenu : UPContainerView
 
 @property (nonatomic, readonly) UPBezierPathView *messagePathView;
 @property (nonatomic, readonly) UPButton *extrasButton;
 @property (nonatomic, readonly) UPButton *playButton;
 @property (nonatomic, readonly) UPButton *aboutButton;
 
-+ (UPDialogMenu *)instance;
++ (UPDialogTopMenu *)instance;
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 

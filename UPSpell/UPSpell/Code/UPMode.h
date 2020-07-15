@@ -27,7 +27,7 @@ enum class Mode {
     About,
     Extras,
     Attract,
-    PlayDialog,
+    PlayMenu,
     Ready,
     Play,
     Pause,
@@ -49,8 +49,8 @@ UP_STATIC_INLINE const char *cstr_for(Mode mode)
             return "Extras";
         case Mode::Attract:
             return "Attract";
-        case Mode::PlayDialog:
-            return "PlayDialog";
+        case Mode::PlayMenu:
+            return "PlayMenu";
         case Mode::Ready:
             return "Ready";
         case Mode::Play:

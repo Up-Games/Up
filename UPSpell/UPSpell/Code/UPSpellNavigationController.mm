@@ -7,7 +7,7 @@
 
 #import "UPAccessoryPane.h"
 #import "UPChoice.h"
-#import "UPDialogMenu.h"
+#import "UPDialogTopMenu.h"
 #import "UPSceneDelegate.h"
 #import "UPSpellNavigationController.h"
 #import "UPSpellAboutController.h"
@@ -21,7 +21,7 @@
 #import "UPViewMove+UPSpell.h"
 
 @interface UPSpellNavigationController () <UINavigationControllerDelegate>
-@property (nonatomic) UPDialogMenu *dialogMenu;
+@property (nonatomic) UPDialogTopMenu *dialogTopMenu;
 @property (nonatomic) UPSpellGameController *gameController;
 @property (nonatomic) UPSpellExtrasController *extrasController;
 @property (nonatomic) UPSpellAboutController *aboutController;
@@ -96,15 +96,15 @@ using UP::TimeSpanning::start;
     self.extrasController.modalPresentationStyle = UIModalPresentationCustom;
     [self.extrasController.backButton setTarget:self action:@selector(dismissPresentedController)];
 
-    self.dialogMenu = [UPDialogMenu instance];
-    [self.view addSubview:self.dialogMenu];
+    self.dialogTopMenu = [UPDialogTopMenu instance];
+    [self.view addSubview:self.dialogTopMenu];
 
-    [self.dialogMenu.playButton setTarget:self action:@selector(dialogMenuPlayButtonTapped)];
-    [self.dialogMenu.extrasButton setTarget:self action:@selector(dialogMenuExtrasButtonTapped)];
-    [self.dialogMenu.aboutButton setTarget:self action:@selector(dialogMenuAboutButtonTapped)];
+    [self.dialogTopMenu.playButton setTarget:self action:@selector(dialogMenuPlayButtonTapped)];
+    [self.dialogTopMenu.extrasButton setTarget:self action:@selector(dialogMenuExtrasButtonTapped)];
+    [self.dialogTopMenu.aboutButton setTarget:self action:@selector(dialogMenuAboutButtonTapped)];
 
-    self.dialogMenu.hidden = YES;
-    self.dialogMenu.frame = layout.screen_bounds();
+    self.dialogTopMenu.hidden = YES;
+    self.dialogTopMenu.frame = layout.screen_bounds();
     
     NSArray<UIViewController *> *viewControllers = @[
         self.gameController
@@ -119,7 +119,7 @@ using UP::TimeSpanning::start;
     [self.gameController updateThemeColors];
     [self.extrasController updateThemeColors];
     [self.aboutController updateThemeColors];
-    [self.dialogMenu updateThemeColors];
+    [self.dialogTopMenu updateThemeColors];
     self.view.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
 }
 
@@ -129,7 +129,7 @@ using UP::TimeSpanning::start;
 {
     UPSpellSettings *settings = [UPSpellSettings instance];
     if (settings.retryMode) {
-        [self.gameController setMode:Mode::PlayDialog];
+        [self.gameController setMode:Mode::PlayMenu];
     }
     else {
         [self.gameController setMode:Mode::Ready];
@@ -162,8 +162,8 @@ using UP::TimeSpanning::start;
 {
     [self.extrasController cancelAnimations];
     [self dismissViewControllerAnimated:YES completion:^{
-        self.dialogMenu.extrasButton.selected = NO;
-        self.dialogMenu.aboutButton.selected = NO;
+        self.dialogTopMenu.extrasButton.selected = NO;
+        self.dialogTopMenu.aboutButton.selected = NO;
         self.gameController.retry = nil;
         [self.gameController setMode:Mode::Init];
     }];

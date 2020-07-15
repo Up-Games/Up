@@ -1,5 +1,5 @@
 //
-//  UPDialogPlay.h
+//  UPDialogPlayMenu.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 @class UPChoice;
 @class UPPlacard;
 
-@interface UPDialogPlay : UPContainerView
+@interface UPDialogPlayMenu : UPContainerView
 
 @property (nonatomic, readonly) UPButton *backButton;
 @property (nonatomic, readonly) UPButton *goButton;
@@ -19,7 +19,7 @@
 @property (nonatomic, readonly) UPChoice *choice3;
 @property (nonatomic, readonly) NSArray<UPChoice *> *choices;
 
-+ (UPDialogPlay *)instance;
++ (UPDialogPlayMenu *)instance;
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 

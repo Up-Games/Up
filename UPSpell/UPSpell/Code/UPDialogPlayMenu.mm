@@ -1,5 +1,5 @@
 //
-//  UPDialogPlay.mm
+//  UPDialogPlayMenu.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -13,7 +13,7 @@
 #import "UPControl+UPSpell.h"
 #import "UIFont+UPSpell.h"
 #import "UPChoice.h"
-#import "UPDialogPlay.h"
+#import "UPDialogPlayMenu.h"
 #import "UPSpellLayout.h"
 #import "UPSpellSettings.h"
 #import "UPTextButton.h"
@@ -25,7 +25,7 @@ using UP::SpellLayout;
 using Place = SpellLayout::Place;
 using Role = SpellLayout::Role;
 
-@interface UPDialogPlay ()
+@interface UPDialogPlayMenu ()
 @property (nonatomic, readwrite) UPButton *backButton;
 @property (nonatomic, readwrite) UPButton *goButton;
 @property (nonatomic, readwrite) UPChoice *choice1;
@@ -34,14 +34,14 @@ using Role = SpellLayout::Role;
 @property (nonatomic, readwrite) NSArray<UPChoice *> *choices;
 @end
 
-@implementation UPDialogPlay
+@implementation UPDialogPlayMenu
 
-+ (UPDialogPlay *)instance
++ (UPDialogPlayMenu *)instance
 {
     static dispatch_once_t onceToken;
-    static UPDialogPlay *_Instance;
+    static UPDialogPlayMenu *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPDialogPlay alloc] _init];
+        _Instance = [[UPDialogPlayMenu alloc] _init];
     });
     return _Instance;
 }
