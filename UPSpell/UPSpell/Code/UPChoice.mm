@@ -166,10 +166,12 @@ UIBezierPath *ChoiceRightFillPathSelected()
     [self setFillPath:ChoiceFillPath() forState:UPControlStateSelected];
     [self setFillColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
     [self setFillColorCategory:UPColorCategoryControlShapeActiveFill forState:UPControlStateSelected];
+    [self setFillColorCategory:UPColorCategoryClear forState:UPControlStateDisabled];
 
     [self setStrokePath:ChoiceStrokePath() forState:UPControlStateSelected];
     [self setStrokeColorCategory:UPColorCategoryClear forState:UPControlStateNormal];
     [self setStrokeColorCategory:UPColorCategoryPrimaryStroke forState:UPControlStateSelected];
+    [self setStrokeColorCategory:UPColorCategoryClear forState:UPControlStateDisabled];
 
     [self setAuxiliaryColorCategory:UPColorCategoryControlText forState:UPControlStateSelected];
 
@@ -184,7 +186,9 @@ UIBezierPath *ChoiceRightFillPathSelected()
     }
 
     self.label.font = SpellLayout::instance().choice_control_font();
-    self.label.colorCategory = UPColorCategoryControlText;
+    [self setLabelColorCategory:UPColorCategoryControlText forState:UPControlStateNormal];
+    [self setLabelColorCategory:UPColorCategoryControlText forState:UPControlStateSelected];
+    [self setLabelColorCategory:UPColorCategoryControlTextInactive forState:UPControlStateDisabled];
     self.label.addsLeftwardScoot = YES;
     
     return self;
@@ -201,7 +205,7 @@ UIBezierPath *ChoiceRightFillPathSelected()
     if (gesture.state != UIGestureRecognizerStateRecognized) {
         return;
     }
-    if (self.selected) {
+    if (self.selected || !self.enabled) {
         return;
     }
 

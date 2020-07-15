@@ -1238,7 +1238,7 @@ SpellGameSummary SpellModel::high_score_game()
     
     static const char *sql =
     "SELECT game_id, game_score, game_words_submitted_count, game_word_score_average, game_word_length_average, game_key FROM game"
-    " ORDER BY game_id ASC";
+    " ORDER BY game_score DESC";
     
     sqlite3_stmt *stmt = db_statement(db, sql);
     if (!stmt) {

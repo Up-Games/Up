@@ -117,24 +117,51 @@ using Role = SpellLayout::Role;
 
 - (void)updateChoiceLabels
 {
+    self.choice1.userInteractionEnabled = YES;
+    self.choice2.userInteractionEnabled = YES;
+
     int gamesPlayedCount = SpellModel::all_time_games_played_count();
     if (gamesPlayedCount == 0) {
         m_high_score_summary = SpellGameSummary();
         m_last_game_summary = SpellGameSummary();
         self.choice1.labelString = @"RETRY HIGH SCORE GAME";
-        [self.choice1 setDisabled:YES];
         self.choice2.labelString = @"RETRY LAST GAME";
+        [self.choice1 setDisabled:YES];
         [self.choice2 setDisabled:YES];
+        self.choice1.userInteractionEnabled = NO;
+        self.choice2.userInteractionEnabled = NO;
     }
     else {
         m_high_score_summary = SpellModel::high_score_game();
-        self.choice1.labelString = [NSString stringWithFormat:@"RETRY HIGH SCORE GAME (%d)", m_high_score_summary.game_score()];
-
         m_last_game_summary = SpellModel::most_recent_game();
-        self.choice2.labelString = [NSString stringWithFormat:@"RETRY LAST GAME (%d)", m_last_game_summary.game_score()];
 
+        self.choice1.labelString = [NSString stringWithFormat:@"RETRY HIGH SCORE GAME (%d)", m_high_score_summary.game_score()];
         [self.choice1 setDisabled:NO];
-        [self.choice2 setDisabled:NO];
+
+        if (m_high_score_summary.game_id() == m_last_game_summary.game_id() ||
+            m_high_score_summary.game_score() == m_last_game_summary.game_score()) {
+            self.choice2.labelString = [NSString stringWithFormat:@"LAST GAME WAS HIGH SCORE"];
+            if (self.choice2.selected) {
+                [self.choice2 setSelected:NO];
+                [self.choice1 setSelected:YES];
+            }
+            [self.choice2 setDisabled:YES];
+            self.choice2.userInteractionEnabled = NO;
+        }
+        else if (m_high_score_summary.game_key() == m_last_game_summary.game_key()) {
+            self.choice2.labelString = [NSString stringWithFormat:@"LAST GAME WAS HIGH SCORE RETRY"];
+            if (self.choice2.selected) {
+                [self.choice2 setSelected:NO];
+                [self.choice1 setSelected:YES];
+            }
+            [self.choice2 setDisabled:YES];
+            self.choice2.userInteractionEnabled = NO;
+        }
+        else {
+            self.choice2.labelString = [NSString stringWithFormat:@"RETRY LAST GAME (%d)", m_last_game_summary.game_score()];
+            [self.choice2 setDisabled:NO];
+        }
+
     }
 
     UPSpellSettings *settings = [UPSpellSettings instance];

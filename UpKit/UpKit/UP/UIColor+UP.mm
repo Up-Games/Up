@@ -59,6 +59,7 @@ static CGFloat _ThemeHue = 222;
         case UPColorCategoryControlShapeActiveFill:
         case UPColorCategoryControlShapeStroke:
         case UPColorCategoryControlText:
+        case UPColorCategoryControlTextInactive:
         case UPColorCategoryControlIndicator:
             ASSERT_NOT_REACHED();
             return nil;
@@ -197,6 +198,17 @@ static CGFloat _ThemeHue = 222;
                 case UPThemeColorStyleLightStark:
                 case UPThemeColorStyleDarkStark:
                     return UPColorCategoryContent;
+            }
+        }
+        case UPColorCategoryControlTextInactive: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryInactiveFill;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryInactiveContent;
             }
         }
         case UPColorCategoryOneBit: {

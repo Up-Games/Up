@@ -285,6 +285,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    if (self.mode != Mode::Play) {
+        return;
+    }
+    
     if (self.lockCount > 0) {
         if (self.touchedControl) {
             [self preemptTouchedControl];
@@ -329,6 +333,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    if (self.mode != Mode::Play) {
+        return;
+    }
+
     if (self.lockCount > 0) {
         if (self.touchedControl) {
             [self preemptTouchedControl];
@@ -414,6 +422,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    if (self.mode != Mode::Play) {
+        return;
+    }
+
     if (self.lockCount > 0) {
         if (self.touchedControl) {
             [self preemptTouchedControl];
@@ -1717,7 +1729,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ];
     start(bloop_out(BandModeUI, buttonOutMoves, 0.4, nil));
     [UIView animateWithDuration:0.4 animations:^{
-        [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
+        [self viewSetGameAlpha:0];
     } completion:nil];
     
     
