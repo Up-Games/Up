@@ -22,6 +22,7 @@
 #import "UPSpellGameView.h"
 #import "UPSpellLayout.h"
 #import "UPSpellSettings.h"
+#import "UPTextButton.h"
 #import "UPTileModel.h"
 #import "UPTileView.h"
 #import "UPTilePaths.h"

@@ -132,7 +132,9 @@ UIBezierPath *TextButtonStrokePath()
     self = [super initWithTarget:target action:action];
 
     self.canonicalSize = SpellLayout::CanonicalTextButtonSize;
-    
+    self.band = UP::BandModeUI;
+    self.autoHighlights = YES;
+
     [self setFillPath:TextButtonFillPath() forState:UPControlStateNormal];
     [self setFillColorCategory:UPColorCategoryPrimaryFill forState:UPControlStateNormal];
     [self setFillColorCategory:UPColorCategoryHighlightedFill forState:UPControlStateHighlighted];
@@ -140,10 +142,34 @@ UIBezierPath *TextButtonStrokePath()
     [self setStrokeColorCategory:UPColorCategoryPrimaryStroke forState:UPControlStateNormal];
     [self setStrokeColorCategory:UPColorCategoryHighlightedStroke forState:UPControlStateHighlighted];
 
-    self.label.colorCategory = UPColorCategoryContent;
+    [self setFillColorCategory:UPColorCategoryHighlightedFill forState:(UPControlStateSelected | UPControlStateHighlighted)];
+    [self setFillColorCategory:UPColorCategoryClear forState:UPControlStateSelected];
+    [self setStrokeColorCategory:UPColorCategoryPrimaryStroke forState:(UPControlStateSelected | UPControlStateHighlighted)];
+    [self setStrokeColorCategory:UPColorCategoryClear forState:UPControlStateSelected];
+    [self setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
+    [self setLabelColorCategory:UPColorCategoryControlText forState:UPControlStateSelected];
+
+    SpellLayout &layout = SpellLayout::instance();
+    self.label.font = layout.text_button_font();
     self.label.textAlignment = NSTextAlignmentCenter;
 
     return self;
+}
+
+- (void)setBehavior:(UPTextButtonBehavior)behavior
+{
+    _behavior = behavior;
+    switch (behavior) {
+        case UPTextButtonBehaviorDefault:
+        case UPTextButtonBehaviorPushButton: {
+            self.autoSelects = NO;
+            break;
+        }
+        case UPTextButtonBehaviorModeButton: {
+            self.autoSelects = YES;
+            break;
+        }
+    }
 }
 
 - (void)layoutSubviews
@@ -167,6 +193,24 @@ UIBezierPath *TextButtonStrokePath()
 {
     [super updateThemeColors];
     [self.label updateThemeColors];
+
+    switch ([UIColor themeColorStyle]) {
+        case UPThemeColorStyleDefault:
+        case UPThemeColorStyleLight:
+        case UPThemeColorStyleDark:
+            [self setFillColorAnimationDuration:0.1 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+            [self setFillColorAnimationDuration:0.1 fromState:UPControlStateSelected toState:UPControlStateNormal];
+            [self setStrokeColorAnimationDuration:0 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+            [self setStrokeColorAnimationDuration:0 fromState:UPControlStateSelected toState:UPControlStateNormal];
+            break;
+        case UPThemeColorStyleLightStark:
+        case UPThemeColorStyleDarkStark:
+            [self setFillColorAnimationDuration:0 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+            [self setFillColorAnimationDuration:0 fromState:UPControlStateSelected toState:UPControlStateNormal];
+            [self setStrokeColorAnimationDuration:0.1 fromState:(UPControlStateSelected | UPControlStateHighlighted) toState:UPControlStateSelected];
+            [self setStrokeColorAnimationDuration:0.1 fromState:UPControlStateSelected toState:UPControlStateNormal];
+            break;
+    }
 }
 
 @end

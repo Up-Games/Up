@@ -17,7 +17,6 @@
 #import "UPSpellLayout.h"
 #import "UPSpellSettings.h"
 #import "UPTextButton.h"
-#import "UPTextSettingsButton.h"
 #import "UPTextPaths.h"
 
 using UP::SpellLayout;
@@ -53,7 +52,7 @@ using Role = SpellLayout::Role;
 
     self.backButton = [UPButton roundBackButtonEx];
     self.backButton.frame = layout.frame_for(Role::ChoiceBackCenter, Place::OffTopNear);
-    self.backButton.chargeOutsets = UPOutsetsMake(0, 0, 0, 200 * layout.layout_scale());
+    self.backButton.chargeOutsets = UPOutsetsMake(0, 0, 0, 140 * layout.layout_scale());
     [self addSubview:self.backButton];
 
     self.goButton = [UPTextButton textButton];

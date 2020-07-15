@@ -18,6 +18,7 @@
 #import "UIFont+UPSpell.h"
 #import "UPBallot.h"
 #import "UPControl+UPSpell.h"
+#import "UPDialogTopMenu.h"
 #import "UPHueWheel.h"
 #import "UPSpellExtrasPaneRetry.h"
 #import "UPSpellExtrasController.h"
@@ -106,8 +107,14 @@ using Spot = UP::SpellLayout::Place;
 
 - (void)retryCheckboxTapped
 {
+    BOOL selected = self.retryCheckbox.selected;
+    
     UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.retryMode = self.retryCheckbox.selected;
+    settings.retryMode = selected;
+    
+    // It's a wart that this code knows about UPDialogTopMenu
+    UPDialogTopMenu *dialogTopMenu = [UPDialogTopMenu instance];
+    dialogTopMenu.playButton.behavior = selected ? UPTextButtonBehaviorModeButton : UPTextButtonBehaviorPushButton;
 }
 
 #pragma mark - Target / Action

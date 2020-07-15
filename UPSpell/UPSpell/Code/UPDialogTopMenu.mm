@@ -13,17 +13,17 @@
 #import "UPControl+UPSpell.h"
 #import "UPDialogTopMenu.h"
 #import "UPSpellLayout.h"
+#import "UPSpellSettings.h"
 #import "UPTextButton.h"
-#import "UPTextSettingsButton.h"
 #import "UPTextPaths.h"
 
 using UP::SpellLayout;
 
 @interface UPDialogTopMenu ()
 @property (nonatomic, readwrite) UPBezierPathView *messagePathView;
-@property (nonatomic, readwrite) UPButton *extrasButton;
-@property (nonatomic, readwrite) UPButton *playButton;
-@property (nonatomic, readwrite) UPButton *aboutButton;
+@property (nonatomic, readwrite) UPTextButton *extrasButton;
+@property (nonatomic, readwrite) UPTextButton *playButton;
+@property (nonatomic, readwrite) UPTextButton *aboutButton;
 @end
 
 @implementation UPDialogTopMenu
@@ -49,19 +49,24 @@ using UP::SpellLayout;
     self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageVerticallyCentered);
     [self addSubview:self.messagePathView];
 
-    self.extrasButton = [UPTextSettingsButton textSettingsButton];
+    self.extrasButton = [UPTextButton textButton];
+    self.extrasButton.behavior = UPTextButtonBehaviorModeButton;
     self.extrasButton.labelString = @"EXTRAS";
     self.extrasButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopLeft);
     [self addSubview:self.extrasButton];
 
-//    self.playButton = [UPTextButton textButton];
-    self.playButton = [UPTextSettingsButton textSettingsButton];
+    self.playButton = [UPTextButton textButton];
     self.playButton.labelString = @"PLAY";
-//    [self.playButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     self.playButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopCenter);
     [self addSubview:self.playButton];
 
-    self.aboutButton = [UPTextSettingsButton textSettingsButton];
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    if (settings.retryMode) {
+        self.playButton.behavior = UPTextButtonBehaviorModeButton;
+    }
+    
+    self.aboutButton = [UPTextButton textButton];
+    self.aboutButton.behavior = UPTextButtonBehaviorModeButton;
     self.aboutButton.labelString = @"ABOUT";
     self.aboutButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopRight);
     [self addSubview:self.aboutButton];

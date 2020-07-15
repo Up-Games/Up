@@ -16,6 +16,7 @@
 #import "UPSpellGameRetry.h"
 #import "UPSpellLayout.h"
 #import "UPSpellSettings.h"
+#import "UPTextButton.h"
 #import "UPTilePaths.h"
 #import "UPTilePaths.h"
 #import "UPViewMove+UPSpell.h"
