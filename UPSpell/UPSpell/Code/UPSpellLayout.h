@@ -183,8 +183,8 @@ public:
     static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =  { 384, 278, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsIconLayoutFrame =  { 460, 381, 440, 76 };
 
-    static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 590, 360, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasRetryDescriptionFrame = { 384, 60, 572, 300 };
+    static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 590, 340, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasRetryDescriptionFrame = { 384, 64, 572, 300 };
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
