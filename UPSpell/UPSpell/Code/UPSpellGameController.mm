@@ -2149,6 +2149,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewLock];
     [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
 
+    [self.dialogPlayMenu updateChoiceLabels];
+    
     self.dialogTopMenu.playButton.userInteractionEnabled = NO;
 
     SpellLayout &layout = SpellLayout::instance();

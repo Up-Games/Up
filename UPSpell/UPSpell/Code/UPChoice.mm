@@ -253,6 +253,31 @@ UIBezierPath *ChoiceRightFillPathSelected()
     self.label.frame = labelFrame;
 }
 
+- (CGSize)sizeThatFits:(CGSize)size
+{
+    if (!self.variableWidth) {
+        return size;
+    }
+
+    CGSize fitsSize = size;
+    SpellLayout &layout = SpellLayout::instance();
+    [self.label sizeToFit];
+    CGSize labelSize = self.label.bounds.size;
+    CGFloat width = labelSize.width;
+    switch (self.side) {
+        case UPChoiceSideDefault:
+        case UPChoiceSideLeft:
+            width += (layout.choice_control_label_left_margin() * 2);
+            break;
+        case UPChoiceSideRight: {
+            width += (layout.choice_control_label_right_margin() * 2);
+            break;
+        }
+    }
+    fitsSize.width = width;
+    return fitsSize;
+}
+
 #pragma mark - Update theme colors
 
 - (void)updateThemeColors

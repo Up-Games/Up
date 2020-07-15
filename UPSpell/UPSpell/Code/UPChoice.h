@@ -14,6 +14,7 @@ typedef NS_ENUM(NSInteger, UPChoiceSide) {
 @interface UPChoice : UPControl
 
 @property (nonatomic, readonly) UPChoiceSide side;
+@property (nonatomic) BOOL variableWidth;
 
 + (UPChoice *)choiceWithSide:(UPChoiceSide)side;
 

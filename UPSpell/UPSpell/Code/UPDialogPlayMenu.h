@@ -23,4 +23,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
+- (void)updateChoiceLabels;
+
 @end

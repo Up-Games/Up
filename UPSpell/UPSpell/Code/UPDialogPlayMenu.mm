@@ -64,6 +64,7 @@ using Role = SpellLayout::Role;
 
     self.choice1 = [UPChoice choiceWithSide:UPChoiceSideLeft];
     self.choice1.labelString = @"REPEAT";
+    self.choice1.variableWidth = YES;
     self.choice1.tag = 0;
     self.choice1.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice1.frame = layout.frame_for(Role::ChoiceItem1Center, Place::OffBottomNear);
@@ -72,6 +73,7 @@ using Role = SpellLayout::Role;
     
     self.choice2 = [UPChoice choiceWithSide:UPChoiceSideLeft];
     self.choice2.labelString = @"REPEAT";
+    self.choice1.variableWidth = YES;
     self.choice2.tag = 1;
     self.choice2.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice2.frame = layout.frame_for(Role::ChoiceItem2Center, Place::OffBottomNear);
@@ -80,6 +82,7 @@ using Role = SpellLayout::Role;
     
     self.choice3 = [UPChoice choiceWithSide:UPChoiceSideLeft];
     self.choice3.labelString = @"NEW GAME";
+    self.choice1.variableWidth = YES;
     self.choice3.tag = 2;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice3.frame = layout.frame_for(Role::ChoiceItem3Center, Place::OffBottomNear);
@@ -91,6 +94,16 @@ using Role = SpellLayout::Role;
     [self updateThemeColors];
 
     return self;
+}
+
+- (void)updateChoiceLabels
+{
+    for (UPChoice *choice in self.choices) {
+        CGRect bounds = choice.bounds;
+        CGSize size = [choice sizeThatFits:bounds.size];
+        LOG(General, "choice size: %d : %@", choice.tag, NSStringFromCGSize(size));
+        choice.frame = CGRectMake(up_rect_min_x(bounds), up_rect_min_y(bounds), up_size_width(size), up_size_height(size));
+    }
 }
 
 - (void)choiceSelected:(UPChoice *)sender
