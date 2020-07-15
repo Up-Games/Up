@@ -7,6 +7,7 @@
 #import <UpKit/UIView+UP.h>
 #import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPControl.h>
+#import <UpKit/UPGameKey.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPLabel.h>
 
@@ -14,17 +15,25 @@
 #import "UIFont+UPSpell.h"
 #import "UPChoice.h"
 #import "UPDialogPlayMenu.h"
+#import "UPSpellGameSummary.h"
 #import "UPSpellLayout.h"
+#import "UPSpellModel.h"
 #import "UPSpellSettings.h"
 #import "UPTextButton.h"
 #import "UPTextPaths.h"
 
+using UP::SpellGameSummary;
 using UP::SpellLayout;
+using UP::SpellModel;
 
 using Place = SpellLayout::Place;
 using Role = SpellLayout::Role;
 
 @interface UPDialogPlayMenu ()
+{
+    SpellGameSummary m_high_score_summary;
+    SpellGameSummary m_last_game_summary;
+}
 @property (nonatomic, readwrite) UPButton *backButton;
 @property (nonatomic, readwrite) UPButton *goButton;
 @property (nonatomic, readwrite) UPChoice *choice1;
@@ -62,18 +71,17 @@ using Role = SpellLayout::Role;
     [self addSubview:self.goButton];
 
     self.choice1 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice1.labelString = @"REPEAT";
     self.choice1.variableWidth = YES;
-    self.choice1.tag = 0;
+    self.choice1.tag = UPDialogPlayMenuChoiceRetryHighScore;
     self.choice1.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice1.frame = layout.frame_for(Role::ChoiceItem1Center, Place::OffBottomNear);
     [self.choice1 setTarget:self action:@selector(choiceSelected:)];
     [self addSubview:self.choice1];
     
     self.choice2 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice2.labelString = @"REPEAT";
-    self.choice1.variableWidth = YES;
-    self.choice2.tag = 1;
+    self.choice2.labelString = @"RETRY LAST GAME (165)";
+    self.choice2.variableWidth = YES;
+    self.choice2.tag = UPDialogPlayMenuChoiceRetryLastGame;
     self.choice2.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice2.frame = layout.frame_for(Role::ChoiceItem2Center, Place::OffBottomNear);
     [self.choice2 setTarget:self action:@selector(choiceSelected:)];
@@ -81,8 +89,8 @@ using Role = SpellLayout::Role;
     
     self.choice3 = [UPChoice choiceWithSide:UPChoiceSideLeft];
     self.choice3.labelString = @"NEW GAME";
-    self.choice1.variableWidth = YES;
-    self.choice3.tag = 2;
+    self.choice3.variableWidth = YES;
+    self.choice3.tag = UPDialogPlayMenuChoiceNewGame;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice3.frame = layout.frame_for(Role::ChoiceItem3Center, Place::OffBottomNear);
     [self.choice3 setTarget:self action:@selector(choiceSelected:)];
@@ -95,13 +103,44 @@ using Role = SpellLayout::Role;
     return self;
 }
 
+@dynamic gameKeyForHighScore;
+- (UPGameKey *)gameKeyForHighScore
+{
+    return [UPGameKey gameKeyWithValue:m_high_score_summary.game_key().value()];
+}
+
+@dynamic gameKeyForLastGame;
+- (UPGameKey *)gameKeyForLastGame
+{
+    return [UPGameKey gameKeyWithValue:m_last_game_summary.game_key().value()];
+}
+
 - (void)updateChoiceLabels
 {
+    int gamesPlayedCount = SpellModel::all_time_games_played_count();
+    if (gamesPlayedCount == 0) {
+        m_high_score_summary = SpellGameSummary();
+        m_last_game_summary = SpellGameSummary();
+        self.choice1.labelString = @"RETRY HIGH SCORE GAME";
+        [self.choice1 setDisabled:YES];
+        self.choice2.labelString = @"RETRY LAST GAME";
+        [self.choice2 setDisabled:YES];
+    }
+    else {
+        m_high_score_summary = SpellModel::high_score_game();
+        self.choice1.labelString = [NSString stringWithFormat:@"RETRY HIGH SCORE GAME (%d)", m_high_score_summary.game_score()];
+
+        m_last_game_summary = SpellModel::most_recent_game();
+        self.choice2.labelString = [NSString stringWithFormat:@"RETRY LAST GAME (%d)", m_last_game_summary.game_score()];
+
+        [self.choice1 setDisabled:NO];
+        [self.choice2 setDisabled:NO];
+    }
+
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    NSUInteger playMenuSelectedIndex = settings.playMenuSelectedIndex;
     for (UPChoice *choice in self.choices) {
-        CGRect bounds = choice.bounds;
-        CGSize size = [choice sizeThatFits:bounds.size];
-        LOG(General, "choice size: %d : %@", choice.tag, NSStringFromCGSize(size));
-        choice.frame = CGRectMake(up_rect_min_x(bounds), up_rect_min_y(bounds), up_size_width(size), up_size_height(size));
+        choice.selected = (choice.tag == playMenuSelectedIndex);
     }
 }
 

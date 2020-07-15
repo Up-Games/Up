@@ -295,6 +295,7 @@ public:
     static std::vector<int> all_time_words_submitted_counts(size_t limit = 5);
 
     static std::vector<SpellGameSummary> best_games(SpellGameSummary::Metric, size_t limit = 25);
+    static SpellGameSummary high_score_game();
     static SpellGameSummary most_recent_game();
 
     static int all_time_games_played_count();

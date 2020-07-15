@@ -4,11 +4,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <UpKit/UpKit.h>
+#import <UpKit/UPContainerView.h>
 
 @class UPButton;
 @class UPChoice;
-@class UPPlacard;
+@class UPGameKey;
+
+typedef NS_ENUM(NSInteger, UPDialogPlayMenuChoice) {
+    UPDialogPlayMenuChoiceDefault,
+    UPDialogPlayMenuChoiceRetryHighScore = 0,
+    UPDialogPlayMenuChoiceRetryLastGame = 1,
+    UPDialogPlayMenuChoiceNewGame = 2,
+};
 
 @interface UPDialogPlayMenu : UPContainerView
 
@@ -18,6 +25,8 @@
 @property (nonatomic, readonly) UPChoice *choice2;
 @property (nonatomic, readonly) UPChoice *choice3;
 @property (nonatomic, readonly) NSArray<UPChoice *> *choices;
+@property (nonatomic, readonly) UPGameKey *gameKeyForHighScore;
+@property (nonatomic, readonly) UPGameKey *gameKeyForLastGame;
 
 + (UPDialogPlayMenu *)instance;
 

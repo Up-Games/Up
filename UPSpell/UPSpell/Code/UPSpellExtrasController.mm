@@ -95,7 +95,7 @@ using Location = UP::SpellLayout::Location;
     [self.view addSubview:self.choice2];
     
     self.choice3 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice3.labelString = @"REPEAT";
+    self.choice3.labelString = @"RETRY";
     self.choice3.tag = 2;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice3.frame = layout.frame_for(Role::ChoiceItem3Left, Place::OffLeftNear);

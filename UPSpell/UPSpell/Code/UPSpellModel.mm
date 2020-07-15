@@ -1227,6 +1227,44 @@ std::vector<SpellGameSummary> SpellModel::best_games(SpellGameSummary::Metric me
     return result;
 }
 
+SpellGameSummary SpellModel::high_score_game()
+{
+    SpellGameSummary result;
+    
+    sqlite3 *db = db_handle();
+    if (db == nullptr) {
+        return result;
+    }
+    
+    static const char *sql =
+    "SELECT game_id, game_score, game_words_submitted_count, game_word_score_average, game_word_length_average, game_key FROM game"
+    " ORDER BY game_id ASC";
+    
+    sqlite3_stmt *stmt = db_statement(db, sql);
+    if (!stmt) {
+        db_close(db);
+        return result;
+    }
+    
+    db_exec_r(db, sqlite3_reset(stmt), result);
+    
+    if (sqlite3_step(stmt) != SQLITE_ROW) {
+        return result;
+    }
+    
+    uint64_t game_id = sqlite3_column_int64(stmt, 0);
+    int game_score = sqlite3_column_int(stmt, 1);
+    int words_submitted_count = sqlite3_column_int(stmt, 2);
+    double word_score_average = sqlite3_column_double(stmt, 3);
+    double word_length_average = sqlite3_column_double(stmt, 4);
+    GameKey game_key = GameKey(sqlite3_column_int(stmt, 5));
+    result = SpellGameSummary(game_id, game_score, words_submitted_count, word_score_average, word_length_average, game_key);
+    
+    db_close(db);
+    
+    return result;
+}
+
 SpellGameSummary SpellModel::most_recent_game()
 {
     SpellGameSummary result;

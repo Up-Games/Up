@@ -251,6 +251,11 @@ UIBezierPath *ChoiceRightFillPathSelected()
     }
 
     self.label.frame = labelFrame;
+
+    if (self.variableWidth) {
+        CGSize defaultSize = up_size_scaled(SpellLayout::CanonicalChoiceSize, layout.layout_scale());
+        self.auxiliaryPathView.frame = CGRectMake(0, 0, defaultSize.width, defaultSize.height);
+    }
 }
 
 - (CGSize)sizeThatFits:(CGSize)size
@@ -267,10 +272,10 @@ UIBezierPath *ChoiceRightFillPathSelected()
     switch (self.side) {
         case UPChoiceSideDefault:
         case UPChoiceSideLeft:
-            width += (layout.choice_control_label_left_margin() * 2);
+            width += (layout.choice_control_label_left_margin() * 1.6);
             break;
         case UPChoiceSideRight: {
-            width += (layout.choice_control_label_right_margin() * 2);
+            width += (layout.choice_control_label_right_margin() * 1.6);
             break;
         }
     }
