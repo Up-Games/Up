@@ -1687,7 +1687,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)viewOrderInPlayMenu
 {
     [self viewLock];
-    
+    [self viewFillUpSpellTileViews];
+
     [self.dialogPlayMenu updateChoiceLabels];
     
     self.dialogTopMenu.playButton.userInteractionEnabled = NO;
@@ -2319,6 +2320,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         }));
         delay(BandModeDelay, 0.25, ^{
             [self createNewGameModelIfNeeded];
+            [self viewFillUpSpellTileViews];
             [self viewMakeReadyFromMode:Mode::PlayMenu completion:^{
                 self.playMenuChoice = nil;
                 [self viewBloopOutExistingTileViewsWithCompletion:nil];
