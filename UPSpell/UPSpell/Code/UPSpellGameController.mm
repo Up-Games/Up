@@ -1700,7 +1700,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.dialogGameNote.hidden = YES;
 }
 
-- (void)viewMakeReadyWithCompletion:(void (^)(void))completion
+- (void)viewMakeReadyFromMode:(Mode)mode completion:(void (^)(void))completion
 {
     ASSERT(self.model->is_blank_filled());
     ASSERT(self.lockCount > 0);
@@ -1721,48 +1721,58 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         }];
     });
 
-    // move extras and about buttons offscreen
-    NSArray<UPViewMove *> *outGameOverMoves = @[
-        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Place::OffBottomNear),
-        UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Place::OffBottomFar),
-    ];
-    start(bloop_out(BandModeUI, outGameOverMoves, 0.2, nil));
-    NSArray<UPViewMove *> *outMoves = @[
-        UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft, Place::OffTopNear)),
-        UPViewMoveMake(self.dialogTopMenu.aboutButton, Location(Role::DialogButtonTopRight, Place::OffTopNear)),
-    ];
-    start(bloop_out(BandModeUI, outMoves, 0.3, ^(UIViewAnimatingPosition) {
-        self.dialogGameOver.transform = CGAffineTransformIdentity;
-        
-        delay(BandModeDelay, 0.35, ^{
-            // move play button
-            NSArray<UPViewMove *> *playMoves = @[
-                UPViewMoveMake(self.dialogTopMenu.playButton, Role::DialogButtonTopCenter, Place::OffTopNear),
-                UPViewMoveMake(self.playMenuChoice, Role::ChoiceItemTopCenter, Place::OffTopNear),
-            ];
-            start(slide(BandModeUI, playMoves, 0.3, nil));
-
-            // change transform of game view
-            [UIView animateWithDuration:0.75 animations:^{
-                self.gameView.transform = CGAffineTransformIdentity;
+    void (^bottomHalf)(void) = ^{
+        // change transform of game view
+        [UIView animateWithDuration:0.75 animations:^{
+            self.gameView.transform = CGAffineTransformIdentity;
+        }];
+        delay(BandModeDelay, 0.45, ^{
+            // bloop in ready message
+            self.dialogTopMenu.messagePathView.alpha = 0;
+            [UIView animateWithDuration:0.2 animations:^{
+                self.dialogTopMenu.messagePathView.alpha = 1;
             }];
-            delay(BandModeDelay, 0.45, ^{
-                // bloop in ready message
-                self.dialogTopMenu.messagePathView.alpha = 0;
-                [UIView animateWithDuration:0.2 animations:^{
-                    self.dialogTopMenu.messagePathView.alpha = 1;
-                }];
-                UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray));
-                start(bloop_in(BandModeUI, @[readyMove], 0.3,  ^(UIViewAnimatingPosition) {
-                    delay(BandModeDelay, 1.5, ^{
-                        if (completion) {
-                            completion();
-                        }
-                    });
-                }));
-            });
+            UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray));
+            start(bloop_in(BandModeUI, @[readyMove], 0.3,  ^(UIViewAnimatingPosition) {
+                delay(BandModeDelay, 1.5, ^{
+                    if (completion) {
+                        completion();
+                    }
+                });
+            }));
         });
-    }));
+    };
+    
+    BOOL comingFromPlayMenu = mode == Mode::PlayMenu;
+    if (comingFromPlayMenu) {
+        self.dialogGameOver.transform = CGAffineTransformIdentity;
+        bottomHalf();
+    }
+    else {
+        // move extras and about buttons offscreen
+        NSArray<UPViewMove *> *outGameOverMoves = @[
+            UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Place::OffBottomNear),
+            UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Place::OffBottomFar),
+        ];
+        start(bloop_out(BandModeUI, outGameOverMoves, 0.2, nil));
+        NSArray<UPViewMove *> *outMoves = @[
+            UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft, Place::OffTopNear)),
+            UPViewMoveMake(self.dialogTopMenu.aboutButton, Location(Role::DialogButtonTopRight, Place::OffTopNear)),
+        ];
+        start(bloop_out(BandModeUI, outMoves, 0.3, ^(UIViewAnimatingPosition) {
+            self.dialogGameOver.transform = CGAffineTransformIdentity;
+            
+            delay(BandModeDelay, 0.35, ^{
+                // move play button
+                NSArray<UPViewMove *> *playMoves = @[
+                    UPViewMoveMake(self.dialogTopMenu.playButton, Role::DialogButtonTopCenter, Place::OffTopNear),
+                    UPViewMoveMake(self.playMenuChoice, Role::ChoiceItemTopCenter, Place::OffTopNear),
+                ];
+                start(slide(BandModeUI, playMoves, 0.3, nil));
+                bottomHalf();
+            });
+        }));
+    }
 }
 
 - (void)viewSetNoteLabelString
@@ -2044,7 +2054,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT(self.lockCount == 0);
     [self viewLock];
     [self createNewGameModelIfNeeded];
-    [self viewMakeReadyWithCompletion:^{
+    [self viewMakeReadyFromMode:Mode::Init completion:^{
         [self viewBloopOutExistingTileViewsWithCompletion:nil];
         [self setMode:Mode::Play];
     }];
@@ -2126,7 +2136,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         [self createNewGameModelIfNeeded];
         [self viewBloopInBlankTileViewsWithCompletion:^{
             [self viewLock];
-            [self viewMakeReadyWithCompletion:^{
+            [self viewMakeReadyFromMode:Mode::Attract completion:^{
                 [self viewBloopOutExistingTileViewsWithCompletion:nil];
                 [self setMode:Mode::Play];
             }];
@@ -2275,7 +2285,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             self.dialogPlayMenu.goButton.highlightedLocked = NO;
             self.dialogPlayMenu.goButton.highlighted = NO;
             [self createNewGameModelIfNeeded];
-            [self viewMakeReadyWithCompletion:^{
+            [self viewMakeReadyFromMode:Mode::PlayMenu completion:^{
                 self.playMenuChoice = nil;
                 [self viewBloopOutExistingTileViewsWithCompletion:nil];
                 [self setMode:Mode::Play];
@@ -2603,7 +2613,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self createNewGameModelIfNeeded];
     [self viewLock];
     [self viewFillUpSpellTileViews];
-    [self viewMakeReadyWithCompletion:^{
+    [self viewMakeReadyFromMode:Mode::End completion:^{
         [self viewBloopOutExistingTileViewsWithCompletion:nil];
         [self setMode:Mode::Play];
     }];
