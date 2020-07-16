@@ -149,7 +149,7 @@ using Role = SpellLayout::Role;
             self.choice2.userInteractionEnabled = NO;
         }
         else if (m_high_score_summary.game_key() == m_last_game_summary.game_key()) {
-            self.choice2.labelString = [NSString stringWithFormat:@"LAST GAME (%d) RETRIED HIGH SCORE", m_last_game_summary.game_score()];
+            self.choice2.labelString = [NSString stringWithFormat:@"LAST (%d) RETRIED HIGH SCORE GAME", m_last_game_summary.game_score()];
             if (self.choice2.selected) {
                 [self.choice2 setSelected:NO];
                 [self.choice1 setSelected:YES];

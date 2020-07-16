@@ -39,7 +39,7 @@
     self.quarkMode = NO;
     self.extrasSelectedIndex = 0;
     self.retryMode = NO;
-    self.playMenuSelectedIndex = 0;
+    self.playMenuSelectedIndex = 2;
 }
 
 @end
