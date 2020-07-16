@@ -296,7 +296,7 @@ public:
 
     static std::vector<SpellGameSummary> best_games(SpellGameSummary::Metric, size_t limit = 25);
     static SpellGameSummary high_score_game();
-    static SpellGameSummary most_recent_game();
+    static SpellGameSummary last_game();
 
     static int all_time_games_played_count();
     static double all_time_average_game_score();

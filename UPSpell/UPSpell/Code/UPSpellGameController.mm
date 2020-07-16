@@ -2251,7 +2251,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice2, Role::ChoiceItem2Center, Place::OffBottomFar),
         UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice3, Role::ChoiceItem3Center, Place::OffBottomFar),
     ];
-    start(bloop_out(BandModeUI, buttonOutMoves, 0.4, ^(UIViewAnimatingPosition) {
+    start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
         self.dialogPlayMenu.hidden = YES;
         self.dialogPlayMenu.alpha = 1.0;
     }));
@@ -2260,7 +2260,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         NSArray<UPViewMove *> *playMoves = @[
             UPViewMoveMake(self.dialogTopMenu.playButton, Role::DialogButtonTopCenter),
         ];
-        start(bloop_in(BandModeUI, playMoves, 0.4, ^(UIViewAnimatingPosition) {
+        start(bloop_in(BandModeUI, playMoves, 0.5, ^(UIViewAnimatingPosition) {
             self.dialogTopMenu.playButton.userInteractionEnabled = YES;
         }));
         self.dialogTopMenu.playButton.selected = NO;
@@ -2268,7 +2268,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             UPViewMoveMake(self.dialogTopMenu.extrasButton, Role::DialogButtonTopLeft),
             UPViewMoveMake(self.dialogTopMenu.aboutButton, Role::DialogButtonTopRight),
         ];
-        start(bloop_in(BandModeUI, buttonInMoves, 0.4, nil));
+        start(bloop_in(BandModeUI, buttonInMoves, 0.5, nil));
     });
 
     delay(BandModeDelay, 0.1, ^{
@@ -2278,8 +2278,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         start(slide(BandModeUI, slideMoves, 0.2, nil));
     });
     
-    [UIView animateWithDuration:0.35 delay:0.15 options:0 animations:^{
-        [self viewRestoreGameAlpha];
+    [UIView animateWithDuration:0.25 delay:0.15 options:0 animations:^{
+        [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
     } completion:^(BOOL finished) {
         [self viewUnlock];
     }];

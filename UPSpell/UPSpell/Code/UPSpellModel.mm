@@ -1267,11 +1267,11 @@ SpellGameSummary SpellModel::high_score_game()
     result = SpellGameSummary(game_id, game_score, words_submitted_count, word_score_average, word_length_average, game_key);
     
     db_close(db);
-    
+
     return result;
 }
 
-SpellGameSummary SpellModel::most_recent_game()
+SpellGameSummary SpellModel::last_game()
 {
     SpellGameSummary result;
     

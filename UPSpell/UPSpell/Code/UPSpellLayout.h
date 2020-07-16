@@ -164,11 +164,9 @@ public:
     static inline constexpr CGRect CanonicalChoice4LayoutFrame =             {  30, 372, 940, 76 };
     static inline constexpr CGSize CanonicalChoiceSize =                              {  280, 76 };
 
-    
     static inline constexpr CGFloat CanonicalChoiceCenterMargin = 136;
     static inline constexpr CGFloat CanonicalChoiceCenterTitleMargin =  115;
     static inline constexpr CGRect CanonicalChoiceCenterGoFrame =  { 713, 376, up_size_width(CanonicalTextButtonSize), up_size_height(CanonicalTextButtonSize) };
-
     
     static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 20;
 
@@ -183,7 +181,7 @@ public:
     static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =  { 384, 278, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsIconLayoutFrame =  { 460, 381, 440, 76 };
 
-    static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 590, 340, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 476, 340, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasRetryDescriptionFrame = { 384, 64, 572, 300 };
 
     static SpellLayout &create_instance() {

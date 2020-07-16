@@ -80,7 +80,8 @@ using Spot = UP::SpellLayout::Place;
     self.retryDescription.font = layout.settings_description_font();
     self.retryDescription.colorCategory = UPColorCategoryControlText;
     self.retryDescription.textAlignment = NSTextAlignmentLeft;
-    self.retryDescription.string = @"RETRY repeats games, allowing you to improve your\n"
+    self.retryDescription.string =
+       @"RETRY repeats games, allowing you to improve your\n"
         "score using the same letters as a previous game.\n\n"
         "When RETRY is enabled, tapping PLAY on the main\n"
         "screen gives you a choice: retry your high score\n"
@@ -88,7 +89,7 @@ using Spot = UP::SpellLayout::Place;
     [self addSubview:self.retryDescription];
 
     self.retryCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
-    self.retryCheckbox.labelString = @"RETRY";
+    self.retryCheckbox.labelString = @"SHOW RETRY CHOICES";
     [self.retryCheckbox setTarget:self action:@selector(retryCheckboxTapped)];
     self.retryCheckbox.frame = layout.frame_for(Role::ExtrasRetryCheckbox);
     [self addSubview:self.retryCheckbox];
