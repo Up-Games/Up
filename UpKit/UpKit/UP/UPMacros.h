@@ -41,3 +41,9 @@
 #if !defined(LIKELY)
 #define LIKELY(x) (x)
 #endif
+
+#if __OBJC__
+#define UP_ENCODE(_Coder_, _Item_, _Type_) [_Coder_ encode##_Type_:self._Item_ forKey:NSStringFromSelector(@selector(_Item_))]
+#define UP_DECODE(_Coder_, _Item_, _Type_) self._Item_ = [_Coder_ decode##_Type_##ForKey:NSStringFromSelector(@selector(_Item_))]
+#endif  // __OBJC__
+

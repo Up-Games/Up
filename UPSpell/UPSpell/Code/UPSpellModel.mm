@@ -227,7 +227,7 @@ const SpellModel::State &SpellModel::back_state() const
     return state;
 }
 
-bool SpellModel::game_completed() const
+bool SpellModel::is_game_completed() const
 {
     if (back_state().action().opcode() != Opcode::END) {
         return false;
@@ -1394,12 +1394,12 @@ void SpellModel::db_store()
     db_exec(db, sqlite3_bind_int(game_stmt, 4, tiles_submitted_count));
     db_exec(db, sqlite3_bind_double(game_stmt, 5, word_score_average));
     db_exec(db, sqlite3_bind_double(game_stmt, 6, word_length_average));
-    db_exec(db, sqlite3_bind_int(game_stmt, 7, game_completed() ? 1 : 0));  // FIXME: add another state for suspended games
+    db_exec(db, sqlite3_bind_int(game_stmt, 7, is_game_completed() ? 1 : 0));  // FIXME: add another state for suspended games
     db_step(db, sqlite3_step(game_stmt));
     set_db_game_id(sqlite3_last_insert_rowid(db));
     LOG(DB, "*** game id: %ld : %d : %d : %d : %.2f : %.2f : %s",
         db_game_id(), game_score(), words_submitted_count, tiles_submitted_count,
-        word_score_average, word_length_average, game_completed() ? "Y" : "N");
+        word_score_average, word_length_average, is_game_completed() ? "Y" : "N");
     
     db_exec(db, sqlite3_reset(tile_initial_stmt));
     db_exec(db, sqlite3_bind_int64(tile_initial_stmt, 1, db_game_id()));
@@ -1594,3 +1594,77 @@ sqlite3 *SpellModel::db_handle()
 }
 
 }  // namespace UP
+
+// =========================================================================================================================================
+
+#if __OBJC__
+
+using UP::GameKey;
+using UP::SpellModel;
+using UP::SpellModelPtr;
+
+@interface UPSpellModel ()
+{
+    SpellModelPtr m_inner;
+}
+
+@end
+
+@implementation UPSpellModel
+
++ (UPSpellModel *)spellModel
+{
+    return [[self alloc] initWithInner:nullptr];
+}
+
++ (UPSpellModel *)spellModelWithInner:(SpellModelPtr)inner
+{
+    return [[self alloc] initWithInner:inner];
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    m_inner = std::make_shared<SpellModel>(GameKey::random());
+    return self;
+}
+
+- (instancetype)initWithInner:(SpellModelPtr)inner
+{
+    self = [self init];
+    m_inner = inner;
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super init];
+    
+    UPGameKey *gameKey = [coder decodeObjectForKey:NSStringFromSelector(@selector(gameKey))];
+    m_inner = std::make_shared<SpellModel>(GameKey(gameKey.value));
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.gameKey forKey:NSStringFromSelector(@selector(gameKey))];
+}
+
+@dynamic gameKey;
+- (UPGameKey *)gameKey
+{
+    return [UPGameKey gameKeyWithValue:m_inner->game_key().value()];
+}
+
+@dynamic supportsSecureCoding;
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+@end
+
+#endif  // __OBJC__
+
+// =========================================================================================================================================

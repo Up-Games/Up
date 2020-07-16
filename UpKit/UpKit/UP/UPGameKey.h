@@ -148,7 +148,9 @@ UP_STATIC_INLINE bool operator!=(const GameKey &a, const GameKey &b) { return !(
 // =========================================================================================================================================
 
 #if __OBJC__
-@interface UPGameKey : NSObject
+@interface UPGameKey : NSObject <NSSecureCoding>
+
+@property (class, readonly) BOOL supportsSecureCoding;
 
 @property (nonatomic, readonly) NSString *string;
 @property (nonatomic, readonly) uint32_t value;
@@ -157,7 +159,8 @@ UP_STATIC_INLINE bool operator!=(const GameKey &a, const GameKey &b) { return !(
 + (UPGameKey *)gameKeyWithString:(NSString *)string;
 + (UPGameKey *)gameKeyWithValue:(uint32_t)value;
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithString:(NSString *)string;
+- (instancetype)initWithValue:(uint32_t)value;
 
 @end
 #endif  // __OBJC__

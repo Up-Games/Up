@@ -14,8 +14,6 @@
 @class UPTileView;
 struct sqlite3;
 
-#if __cplusplus
-
 #import <array>
 #import <limits>
 #import <string>
@@ -258,7 +256,7 @@ public:
 
     const std::vector<State> &states() const { return m_states; }
     const State &back_state() const;
-    bool game_completed() const;
+    bool is_game_completed() const;
 
     const Word &word() const { return m_word; }
 
@@ -352,9 +350,25 @@ private:
     uint64_t m_db_game_id = 0;
 };
 
-// =========================================================================================================================================
-
+using SpellModelPtr = std::shared_ptr<class SpellModel>;
 
 }  // namespace UP
 
-#endif  // __cplusplus
+// =========================================================================================================================================
+
+#if __OBJC__
+@interface UPSpellModel : NSObject <NSSecureCoding>
+
+@property (class, readonly) BOOL supportsSecureCoding;
+@property (nonatomic, readonly) UP::SpellModelPtr *inner;
+
+@property (nonatomic, readonly) UPGameKey *gameKey;
+
++ (UPSpellModel *)spellModel;
++ (UPSpellModel *)spellModelWithInner:(UP::SpellModelPtr)inner;
+
+@end
+#endif  // __OBJC__
+
+// =========================================================================================================================================
+

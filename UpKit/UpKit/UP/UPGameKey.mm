@@ -3,6 +3,7 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <UpKit/UPMacros.h>
 #import <UpKit/UPStringTools.h>
 
 #import "UPGameKey.h"
@@ -17,37 +18,50 @@
 
 + (UPGameKey *)randomGameKey
 {
-    return [[UPGameKey alloc] _initRandom];
+    return [[UPGameKey alloc] init];
 }
 
 + (UPGameKey *)gameKeyWithString:(NSString *)string
 {
-    return [[UPGameKey alloc] _initWithString:string];
+    return [[UPGameKey alloc] initWithString:string];
 }
 
 + (UPGameKey *)gameKeyWithValue:(uint32_t)value
 {
-    return [[UPGameKey alloc] _initWithValue:value];
+    return [[UPGameKey alloc] initWithValue:value];
 }
 
-- (instancetype)_initRandom
+- (instancetype)init
 {
     self = [super init];
+    m_inner = UP::GameKey::random();
     return self;
 }
 
-- (instancetype)_initWithString:(NSString *)string
+- (instancetype)initWithString:(NSString *)string
 {
     self = [super init];
     m_inner = UP::GameKey(UP::cpp_str(string));
     return self;
 }
 
-- (instancetype)_initWithValue:(uint32_t)value
+- (instancetype)initWithValue:(uint32_t)value
 {
     self = [super init];
     m_inner = UP::GameKey(value);
     return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    uint32_t value = [coder decodeInt32ForKey:NSStringFromSelector(@selector(value))];
+    self = [self initWithValue:value];
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeInt32:m_inner.value() forKey:NSStringFromSelector(@selector(value))];
 }
 
 @dynamic string;
@@ -60,6 +74,12 @@
 - (uint32_t)value
 {
     return m_inner.value();
+}
+
+@dynamic supportsSecureCoding;
++ (BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 @end

@@ -92,13 +92,13 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 
 @interface UPSpellGameController () <UPGameTimerObserver>
 {
+    std::shared_ptr<SpellModel> m_spell_model;
     ModeTransitionTable m_default_transition_table;
     ModeTransitionTable m_did_become_active_transition_table;
     ModeTransitionTable m_will_enter_foreground_transition_table;
     ModeTransitionTable m_will_resign_active_transition_table;
     ModeTransitionTable m_did_enter_background_transition_table;
 }
-@property (nonatomic) SpellModel *model;
 @property (nonatomic) UPSpellGameView *gameView;
 @property (nonatomic) UPGameTimer *gameTimer;
 @property (nonatomic) BOOL showingWordScoreLabel;
@@ -191,11 +191,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self setMode:Mode::Init];
 }
 
-- (void)dealloc
-{
-    delete self.model;
-}
-
 - (UIRectEdge)preferredScreenEdgesDeferringSystemGestures
 {
     return self.mode == Mode::Play ? UIRectEdgeAll : UIRectEdgeNone;
@@ -257,7 +252,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (NSArray *)wordTrayTileViews
 {
     NSMutableArray *array = [NSMutableArray array];
-    for (const auto &tile : self.model->tiles()) {
+    for (const auto &tile : m_spell_model->tiles()) {
         if (tile.in_word_tray()) {
             ASSERT(tile.has_view());
             [array addObject:tile.view()];
@@ -270,7 +265,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.pickedTileView);
     NSMutableArray *array = [NSMutableArray array];
-    for (const auto &tile : self.model->tiles()) {
+    for (const auto &tile : m_spell_model->tiles()) {
         if (tile.in_word_tray()) {
             ASSERT(tile.has_view());
             if (tile.view() != self.pickedTileView) {
@@ -325,7 +320,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         [self resetActiveTouchTracking];
         if ([self.touchedControl isKindOfClass:[UPTileView class]]) {
             UPTileView *tileView = (UPTileView *)self.touchedControl;
-            Tile &tile = self.model->find_tile(tileView);
+            Tile &tile = m_spell_model->find_tile(tileView);
             [self applyActionPick:tile];
         }
     }
@@ -392,13 +387,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
     
     if (self.touchedControl == self.gameView.wordTrayControl && self.touchedTileView && self.activeTouchCurrentPanDistance > 25) {
-        ASSERT(self.model->word().length() > 0);
+        ASSERT(m_spell_model->word().length() > 0);
         ASSERT(self.pickedTileView == nil);
         self.gameView.wordTrayControl.highlighted = NO;
         self.touchedTileView.highlighted = YES;
         self.touchedControl = self.touchedTileView;
         [self resetActiveTouchTracking];
-        Tile &tile = self.model->find_tile(self.touchedTileView);
+        Tile &tile = m_spell_model->find_tile(self.touchedTileView);
         [self applyActionPick:tile];
     }
     
@@ -409,7 +404,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             SpellLayout &layout = SpellLayout::instance();
             tileView.center = up_point_with_exponential_barrier(self.activeTouchPanPoint, layout.tile_drag_barrier_frame());
             BOOL tileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), self.activeTouchPanPoint);
-            Tile &tile = self.model->find_tile(tileView);
+            Tile &tile = m_spell_model->find_tile(tileView);
             if (tileInsideWordTray) {
                 [self applyActionHoverIfNeeded:tile];
             }
@@ -552,7 +547,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     LOG(Gestures, "   inside [p]: %s", projectedTileInsideWordTray ? "Y" : "N");
     LOG(Gestures, "   move:       %s", projectedTileInsideWordTray ? "Y" : "N");
     LOG(Gestures, "   add:        %s", ((!pannedFar && putBack) || movingUp || !self.activeTouchPanEverMovedUp) ? "Y" : "N");
-    Tile &tile = self.model->find_tile(tileView);
+    Tile &tile = m_spell_model->find_tile(tileView);
     if (self.pickedTilePosition.in_player_tray()) {
         if (projectedTileInsideWordTray) {
             [self applyActionAdd:tile];
@@ -584,7 +579,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     if ([self.touchedControl isKindOfClass:[UPTileView class]]) {
         UPTileView *tileView = (UPTileView *)self.touchedControl;
-        Tile &tile = self.model->find_tile(tileView);
+        Tile &tile = m_spell_model->find_tile(tileView);
         [self applyActionDrop:tile];
     }
     self.touchedControl.highlighted = NO;
@@ -600,7 +595,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UPControl *wordTrayControl = self.gameView.wordTrayControl;
     CGPoint wordTrayControlPoint = [wordTrayControl convertPoint:point fromView:self.gameView.window];
     if (wordTrayControl.userInteractionEnabled && [wordTrayControl pointInside:wordTrayControlPoint withEvent:event] &&
-        self.model->word().length() > 0) {
+        m_spell_model->word().length() > 0) {
         return wordTrayControl;
     }
     
@@ -621,7 +616,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (UPTileView *)hitTestTileViews:(CGPoint)point withEvent:(UIEvent *)event
 {
-    for (UPTileView *tileView in self.model->all_tile_views()) {
+    for (UPTileView *tileView in m_spell_model->all_tile_views()) {
         CGPoint tilePoint = [tileView convertPoint:point fromView:self.gameView.window];
         if (tileView.userInteractionEnabled && [tileView pointInside:tilePoint withEvent:event]) {
             return tileView;
@@ -644,7 +639,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     if (self.gameView.wordTrayControl.active) {
         [self applyActionSubmit];
     }
-    else if (self.model->word().length() == 0) {
+    else if (m_spell_model->word().length() == 0) {
         // Don't penalize. In the case it's a stray tap, let the player off the hook.
         // FIXME: beep
     }
@@ -686,7 +681,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)roundButtonClearTapped
 {
     ASSERT(self.mode == Mode::Play);
-    if (self.model->word().length()) {
+    if (m_spell_model->word().length()) {
         [self applyActionClear];
     }
     else {
@@ -698,7 +693,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.mode == Mode::Play);
     
-    const Tile &tile = self.model->find_tile(tileView);
+    const Tile &tile = m_spell_model->find_tile(tileView);
     if (tile.in_word_tray()) {
         [self wordTrayTapped];
     }
@@ -715,7 +710,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT_POS(self.pickedTilePosition);
 
     // find the word position closest to the tile
-    size_t word_length = self.pickedTilePosition.in_word_tray() ? self.model->word().length() : self.model->word().length() + 1;
+    size_t word_length = self.pickedTilePosition.in_word_tray() ? m_spell_model->word().length() : m_spell_model->word().length() + 1;
     SpellLayout &layout = SpellLayout::instance();
     CGPoint center = tileView.center;
     CGFloat min_d = std::numeric_limits<CGFloat>::max();
@@ -744,21 +739,21 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
 
     BOOL wordTrayTilesNeedMoves = wordTrayTileViews.count > 0;
-    TilePosition word_pos = TilePosition(TileTray::Word, self.model->word().length());
-    const State &state = self.model->back_state();
+    TilePosition word_pos = TilePosition(TileTray::Word, m_spell_model->word().length());
+    const State &state = m_spell_model->back_state();
     if (state.action().opcode() == SpellModel::Opcode::HOVER) {
         word_pos = state.action().pos1();
         wordTrayTilesNeedMoves = NO;
     }
 
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::ADD, tile.position(), word_pos));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::ADD, tile.position(), word_pos));
 
     if (wordTrayTilesNeedMoves) {
         SpellLayout &layout = SpellLayout::instance();
         for (UPTileView *wordTrayTileView in wordTrayTileViews) {
-            Tile &tile = self.model->find_tile(wordTrayTileView);
+            Tile &tile = m_spell_model->find_tile(wordTrayTileView);
             ASSERT(tile.position().in_word_tray());
-            Location location = role_in_word(tile.position().index(), self.model->word().length());
+            Location location = role_in_word(tile.position().index(), m_spell_model->word().length());
             UPViewMove *bloopMove = find_move(wordTrayTileView, UPAnimatorTypeBloopIn);
             if (bloopMove) {
                 bloopMove.destination = layout.center_for(location);
@@ -778,7 +773,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     UPTileView *tileView = tile.view();
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
-    Location location(role_in_word(word_pos.index(), self.model->word().length()));
+    Location location(role_in_word(word_pos.index(), m_spell_model->word().length()));
     start(bloop_in(BandGameUITile, @[UPViewMoveMake(tileView, location)], DefaultBloopDuration, nil));
 
     [self viewUpdateGameControls];
@@ -792,13 +787,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     cancel(BandGameDelay);
 
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::REMOVE, tile.position()));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::REMOVE, tile.position()));
 
     [self viewSlideWordTrayViewsIntoPosition];
 
     UPTileView *tileView = tile.view();
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
-    start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, self.model->player_tray_index(tileView)))], 0.3, nil));
+    start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, m_spell_model->player_tray_index(tileView)))], 0.3, nil));
 
     [self viewUpdateGameControls];
 }
@@ -810,7 +805,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     cancel(BandGameAll);
 
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::MOVE, tile.position(), position));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::MOVE, tile.position(), position));
 
     [self viewSlideWordTrayViewsIntoPosition];
     [self viewUpdateGameControls];
@@ -830,7 +825,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.pickedTileView = tileView;
     self.pickedTilePosition = tile.position();
 
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::PICK, tile.position()));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::PICK, tile.position()));
 
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
 }
@@ -847,9 +842,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     TilePosition hover_pos = [self calculateHoverPosition:tile];
     ASSERT_POS(hover_pos);
 
-    const State &state = self.model->back_state();
+    const State &state = m_spell_model->back_state();
     if (state.action().opcode() != SpellModel::Opcode::HOVER || state.action().pos1() != hover_pos) {
-        self.model->apply(Action(self.gameTimer.remainingTime, Opcode::HOVER, hover_pos));
+        m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::HOVER, hover_pos));
     }
 
     [self viewHover:hover_pos];
@@ -864,12 +859,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     cancel(BandGameDelay);
     cancel(@[tile.view()], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
 
-    const State &state = self.model->back_state();
+    const State &state = m_spell_model->back_state();
     if (state.action().opcode() != SpellModel::Opcode::HOVER) {
         return;
     }
 
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::NOVER));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::NOVER));
 
     [self viewNover];
     [self viewUpdateGameControls];
@@ -885,16 +880,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     UPTileView *tileView = tile.view();
 
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::DROP, self.pickedTilePosition));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::DROP, self.pickedTilePosition));
 
     CFTimeInterval duration = DefaultBloopDuration;
     
     if (self.pickedTilePosition.in_word_tray()) {
-        Location location(role_in_word(self.pickedTilePosition.index(), self.model->word().length()));
+        Location location(role_in_word(self.pickedTilePosition.index(), m_spell_model->word().length()));
         start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], duration, nil));
     }
     else {
-        Tile &tile = self.model->find_tile(tileView);
+        Tile &tile = m_spell_model->find_tile(tileView);
         start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, tile.position().index()))], duration, nil));
     }
 
@@ -911,17 +906,16 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     UPTileView *tileView = tile.view();
 
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::DROP, self.pickedTilePosition));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::DROP, self.pickedTilePosition));
     
     CFTimeInterval duration = GameOverRespositionBloopDuration;
-    
+    size_t word_length = m_spell_model->word().length();
     delay(BandModeDelay, GameOverRespositionBloopDelay, ^{
         if (self.pickedTilePosition.in_word_tray()) {
-            Location location(role_in_word(self.pickedTilePosition.index(), self.model->word().length()));
+            Location location(role_in_word(self.pickedTilePosition.index(), word_length));
             start(bloop_in(BandModeUI, @[UPViewMoveMake(tileView, location)], duration, nil));
         }
         else {
-            Tile &tile = self.model->find_tile(tileView);
             start(bloop_in(BandModeUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, tile.position().index()))], duration, nil));
         }
     });
@@ -933,13 +927,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     cancel(BandGameUI);
 
     [self viewClearWordTray];
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::CLEAR));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::CLEAR));
     [self viewUpdateGameControls];
 }
 
 - (void)applyActionSubmit
 {
-    const State &state = self.model->back_state();
+    const State &state = m_spell_model->back_state();
     if (state.action().opcode() == SpellModel::Opcode::SUBMIT) {
         return;
     }
@@ -947,7 +941,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     cancel(BandGameDelay);
 
     [self viewSubmitWord];
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::SUBMIT));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::SUBMIT));
     delay(BandGameDelay, 0.25, ^{
         [self viewFillPlayerTray];
         [self viewUpdateGameControls];
@@ -960,7 +954,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     [self viewLockIncludingPause:NO];
 
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::REJECT));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::REJECT));
 
     // assess time penalty and shake word tray side-to-side
     [self viewPenaltyForReject];
@@ -994,10 +988,10 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     [self viewLockIncludingPause:NO];
 
-    NSArray *playerTrayTileViews = self.model->player_tray_tile_views();
+    NSArray *playerTrayTileViews = m_spell_model->player_tray_tile_views();
     ASSERT(playerTrayTileViews.count == TileCount);
 
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::DUMP));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::DUMP));
 
     [self viewPenaltyForDump];
     [self viewDumpPlayerTray:playerTrayTileViews];
@@ -1011,7 +1005,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)applyActionQuit
 {
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::QUIT));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::QUIT));
     [self setMode:Mode::Quit];
 }
 
@@ -1021,7 +1015,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     // word tray
     if (self.mode == Mode::Attract || self.mode == Mode::Play) {
-        self.gameView.wordTrayControl.active = self.model->word().in_lexicon();
+        self.gameView.wordTrayControl.active = m_spell_model->word().in_lexicon();
     }
     else {
         self.gameView.wordTrayControl.active = NO;
@@ -1029,7 +1023,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self.gameView.wordTrayControl setNeedsUpdate];
 
     // clear button
-    if (self.model->word().length()) {
+    if (m_spell_model->word().length()) {
         [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
     }
     else {
@@ -1037,7 +1031,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
     [self.gameView.clearControl setNeedsUpdate];
 
-    self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", self.model->game_score()];
+    self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", m_spell_model->game_score()];
 }
 
 - (void)viewSlideWordTrayViewsIntoPosition
@@ -1051,8 +1045,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
-        Tile &tile = self.model->find_tile(tileView);
-        [moves addObject:UPViewMoveMake(tileView, role_in_word(tile.position().index(), self.model->word().length()))];
+        Tile &tile = m_spell_model->find_tile(tileView);
+        [moves addObject:UPViewMoveMake(tileView, role_in_word(tile.position().index(), m_spell_model->word().length()))];
     }
     start(UP::TimeSpanning::slide(BandGameUITileSlide, moves, DefaultTileSlideDuration, nil));
 }
@@ -1064,13 +1058,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         return;
     }
 
-    size_t word_length = self.pickedTilePosition.in_word_tray() ? self.model->word().length() : self.model->word().length() + 1;
+    size_t word_length = self.pickedTilePosition.in_word_tray() ? m_spell_model->word().length() : m_spell_model->word().length() + 1;
 
     if (self.pickedTilePosition.in_player_tray()) {
         NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
         for (UPTileView *tileView in wordTrayTileViews) {
             ASSERT(tileView != self.pickedTileView);
-            const Tile &tile = self.model->find_tile(tileView);
+            const Tile &tile = m_spell_model->find_tile(tileView);
             TileIndex idx = tile.position().index();
             if (idx >= hover_pos.index()) {
                 idx++;
@@ -1083,7 +1077,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
         for (UPTileView *tileView in wordTrayTileViews) {
             ASSERT(tileView != self.pickedTileView);
-            const Tile &tile = self.model->find_tile(tileView);
+            const Tile &tile = m_spell_model->find_tile(tileView);
             TileIndex idx = tile.position().index();
             if (idx < self.pickedTilePosition.index() && hover_pos.index() <= idx) {
                 idx++;
@@ -1105,13 +1099,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         return;
     }
 
-    size_t word_length = self.pickedTilePosition.in_word_tray() ? self.model->word().length() - 1 : self.model->word().length();
+    size_t word_length = self.pickedTilePosition.in_word_tray() ? m_spell_model->word().length() - 1 : m_spell_model->word().length();
 
     if (self.pickedTilePosition.in_player_tray()) {
         NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
         for (UPTileView *tileView in wordTrayTileViews) {
             ASSERT(tileView != self.pickedTileView);
-            const Tile &tile = self.model->find_tile(tileView);
+            const Tile &tile = m_spell_model->find_tile(tileView);
             TileIndex idx = tile.position().index();
             Location location(role_in_word(idx, word_length));
             [moves addObject:UPViewMoveMake(tileView, location)];
@@ -1122,7 +1116,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
         for (UPTileView *tileView in wordTrayTileViews) {
             ASSERT(tileView != self.pickedTileView);
-            const Tile &tile = self.model->find_tile(tileView);
+            const Tile &tile = m_spell_model->find_tile(tileView);
             TileIndex idx = tile.position().index();
             if (idx > self.pickedTilePosition.index()) {
                 idx--;
@@ -1144,7 +1138,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
-        TileIndex idx = self.model->player_tray_index(tileView);
+        TileIndex idx = m_spell_model->player_tray_index(tileView);
         [moves addObject:UPViewMoveMake(tileView, Location(role_for(TileTray::Player, idx)))];
     }
     start(bloop_in(BandGameUI, moves, 0.3, nil));
@@ -1163,9 +1157,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
-        Tile &tile = self.model->find_tile(tileView);
+        Tile &tile = m_spell_model->find_tile(tileView);
         ASSERT(tile.position().in_word_tray());
-        Location location(role_in_word(tile.position().index(), self.model->word().length()), Place::OffTopNear);
+        Location location(role_in_word(tile.position().index(), m_spell_model->word().length()), Place::OffTopNear);
         tileView.submitLocation = location;
         [moves addObject:UPViewMoveMake(tileView, location)];
     }
@@ -1173,7 +1167,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     [self viewUpdateWordScoreLabel];
 
-    Role role = (self.model->word().length() >= 5 || self.model->word().total_multiplier() > 1) ? Role::WordScoreBonus : Role::WordScore;
+    Role role = (m_spell_model->word().length() >= 5 || m_spell_model->word().total_multiplier() > 1) ? Role::WordScoreBonus : Role::WordScore;
 
     SpellLayout &layout = SpellLayout::instance();
     self.gameView.wordScoreLabel.frame = layout.frame_for(role, Place::OffBottomFar);
@@ -1196,7 +1190,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     UIColor *wordScoreColor = [UIColor themeColorWithCategory:self.gameView.wordScoreLabel.colorCategory];
     
     SpellLayout &layout = SpellLayout::instance();
-    NSString *string = [NSString stringWithFormat:@"+%d \n", self.model->word().total_score()];
+    NSString *string = [NSString stringWithFormat:@"+%d \n", m_spell_model->word().total_score()];
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
     NSRange range = NSMakeRange(0, string.length);
     [attrString addAttribute:NSFontAttributeName value:layout.word_score_font() range:range];
@@ -1204,8 +1198,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     Role role = Role::WordScore;
     
-    const size_t word_length = self.model->word().length();
-    const int word_multiplier = self.model->word().total_multiplier();
+    const size_t word_length = m_spell_model->word().length();
+    const int word_multiplier = m_spell_model->word().total_multiplier();
     NSString *lengthBonusString = nil;
     switch (word_length) {
         case 5:
@@ -1301,7 +1295,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     TileIndex idx = 0;
-    for (auto &tile : self.model->tiles()) {
+    for (auto &tile : m_spell_model->tiles()) {
         if (tile.has_view<false>()) {
             const TileModel &model = tile.model();
             UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
@@ -1429,13 +1423,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)viewFillUpSpellTileViews
 {
-    ASSERT(self.model->is_blank_filled());
+    ASSERT(m_spell_model->is_blank_filled());
     
     [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     SpellLayout &layout = SpellLayout::instance();
     TileIndex idx = 0;
-    for (auto &tile : self.model->tiles()) {
+    for (auto &tile : m_spell_model->tiles()) {
         TileModel model;
         switch (idx) {
             case 0:
@@ -1471,13 +1465,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)viewFillBlankTileViews
 {
-    ASSERT(self.model->is_blank_filled());
+    ASSERT(m_spell_model->is_blank_filled());
     
     [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     SpellLayout &layout = SpellLayout::instance();
     TileIndex idx = 0;
-    for (auto &tile : self.model->tiles()) {
+    for (auto &tile : m_spell_model->tiles()) {
         if (tile.has_view<false>()) {
             const TileModel &model = tile.model();
             UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
@@ -1493,7 +1487,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)viewBloopTileViewsToPlayerTrayWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
 {
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
-    for (const auto &tile : self.model->tiles()) {
+    for (const auto &tile : m_spell_model->tiles()) {
         if (tile.has_view()) {
             UPTileView *tileView = tile.view();
             [moves addObject:UPViewMoveMake(tileView, role_in_player_tray(tile.position()))];
@@ -1509,7 +1503,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)viewBloopOutExistingTileViewsWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
 {
-    [self viewBloopOutExistingTileViewsWithDuration:duration tiles:self.model->tiles() wordLength:self.model->word().length() completion:completion];
+    [self viewBloopOutExistingTileViewsWithDuration:duration tiles:m_spell_model->tiles() wordLength:m_spell_model->word().length() completion:completion];
 }
 
 - (void)viewBloopOutExistingTileViewsWithDuration:(CFTimeInterval)duration
@@ -1552,13 +1546,13 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)viewBloopInBlankTileViewsWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
 {
-    ASSERT(self.model->is_blank_filled());
-    ASSERT(self.model->is_player_tray_filled());
+    ASSERT(m_spell_model->is_blank_filled());
+    ASSERT(m_spell_model->is_player_tray_filled());
     
     SpellLayout &layout = SpellLayout::instance();
     NSMutableArray<UPViewMove *> *tileInMoves = [NSMutableArray array];
     TileIndex idx = 0;
-    for (auto &tile : self.model->tiles()) {
+    for (auto &tile : m_spell_model->tiles()) {
         const TileModel &model = tile.model();
         UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
         tile.set_view(tileView);
@@ -1578,15 +1572,15 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)viewBloopInUpSpellTileViewsWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
 {
-    ASSERT(self.model->is_blank_filled());
-    ASSERT(self.model->is_player_tray_filled());
+    ASSERT(m_spell_model->is_blank_filled());
+    ASSERT(m_spell_model->is_player_tray_filled());
 
     [self viewFillUpSpellTileViews];
 
     SpellLayout &layout = SpellLayout::instance();
     NSMutableArray<UPViewMove *> *tileInMoves = [NSMutableArray array];
     TileIndex idx = 0;
-    for (auto &tile : self.model->tiles()) {
+    for (auto &tile : m_spell_model->tiles()) {
         UPTileView *tileView = tile.view();
         Role role = role_in_player_tray(tile.position());
         tileView.frame = layout.frame_for(Location(role, Place::OffBottomNear));
@@ -1759,7 +1753,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT(self.lockCount > 0);
     
     // reset game controls
-    self.model->reset_game_score();
+    m_spell_model->reset_game_score();
     [self.gameTimer reset];
     [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
@@ -1775,7 +1769,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)viewMakeReadyFromMode:(Mode)mode completion:(void (^)(void))completion
 {
-    ASSERT(self.model->is_blank_filled());
+    ASSERT(m_spell_model->is_blank_filled());
     ASSERT(self.lockCount > 0);
     
     // lock play button in highlighted state
@@ -1783,7 +1777,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     self.dialogTopMenu.playButton.highlighted = YES;
     
     // reset game controls
-    self.model->reset_game_score();
+    m_spell_model->reset_game_score();
     [self.gameTimer reset];
     [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
@@ -1905,8 +1899,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     NSString *result = nil;
     
-    int score = self.model->game_score();
-    std::pair<int, StatsRank> rank = self.model->game_score_rank(score);
+    int score = m_spell_model->game_score();
+    std::pair<int, StatsRank> rank = m_spell_model->game_score_rank(score);
     if (rank.second == StatsRank::Alone) {
         switch (rank.first) {
             case 1: {
@@ -1931,7 +1925,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.mode == Mode::End);
     
-    std::vector<Word> words = self.model->game_best_word();
+    std::vector<Word> words = m_spell_model->game_best_word();
     if (words.size() != 1) {
         return nil;
     }
@@ -1955,8 +1949,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)createNewGameModelIfNeeded
 {
     if (self.playMenuChoice && self.playMenuChoice.tag != UPDialogPlayMenuChoiceNewGame) {
-        delete self.model;
-
         GameKey game_key;
         if (self.playMenuChoice.tag == UPDialogPlayMenuChoiceRetryHighScore) {
             game_key = GameKey(self.dialogPlayMenu.gameKeyForHighScore.value);
@@ -1964,19 +1956,14 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         else if (self.playMenuChoice.tag == UPDialogPlayMenuChoiceRetryLastGame) {
             game_key = GameKey(self.dialogPlayMenu.gameKeyForLastGame.value);
         }
-        self.model = new SpellModel(game_key);
+        m_spell_model = std::make_shared<SpellModel>(game_key);
 //        LOG(General, "GameKey: %s", game_key.string().c_str());
     }
     else {
-        if (self.model && self.model->back_state().action().opcode() == SpellModel::Opcode::START) {
+        if (m_spell_model && m_spell_model->back_state().action().opcode() == SpellModel::Opcode::START) {
             return;
         }
-        
-        if (self.model) {
-            delete self.model;
-        }
-        GameKey game_key = GameKey::random();
-        self.model = new SpellModel(game_key);
+        m_spell_model = std::make_shared<SpellModel>(GameKey::random());
     }
 }
 
@@ -2143,7 +2130,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromInitToReady
 {
-    ASSERT(self.model->is_blank_filled());
+    ASSERT(m_spell_model->is_blank_filled());
     ASSERT(self.lockCount == 0);
     [self viewLock];
     [self createNewGameModelIfNeeded];
@@ -2291,7 +2278,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
 - (void)modeTransitionFromPlayMenuToReady
 {
-    ASSERT(self.model->is_blank_filled());
+    ASSERT(m_spell_model->is_blank_filled());
     ASSERT(self.lockCount == 0);
     [self viewLock];
 
@@ -2352,7 +2339,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
 
     [self.gameTimer reset];
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::PLAY));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::PLAY));
     
     // bloop out ready message
     UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear));
@@ -2498,7 +2485,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
     }
 
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::QUIT));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::QUIT));
 
     [self viewLock];
     cancel(BandGameAll);
@@ -2548,7 +2535,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
 
     [self viewUpdateGameControls];
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::OVER));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::OVER));
 
     [self cancelActiveTouch];
     [self viewUnhighlightTileViews];
@@ -2587,11 +2574,11 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.lockCount == 1);
 
-    TileArray incoming_tiles = self.model->tiles();
-    size_t incoming_word_length = self.model->word().length();
+    TileArray incoming_tiles = m_spell_model->tiles();
+    size_t incoming_word_length = m_spell_model->word().length();
     
     [self viewSetNoteLabelString];
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
 
     delay(BandModeDelay, 1.0, ^{
         SpellLayout &layout = SpellLayout::instance();
@@ -2672,9 +2659,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(self.lockCount == 1);
 
-    TileArray incoming_tiles = self.model->tiles();
-    size_t incoming_word_length = self.model->word().length();
-    self.model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
+    TileArray incoming_tiles = m_spell_model->tiles();
+    size_t incoming_word_length = m_spell_model->word().length();
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
 
     delay(BandModeDelay, 0.35, ^{
         [self viewDumpAllTilesFromCurrentPosition:incoming_tiles wordLength:incoming_word_length];

@@ -573,7 +573,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = UP;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Up Games";
 				TargetAttributes = {
 					5DF9DF9D24676B5700B2199D = {
@@ -709,6 +709,7 @@
 		5DF9DFA224676B5800B2199D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 784YP5V58W;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -721,6 +722,7 @@
 		5DF9DFA324676B5800B2199D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 784YP5V58W;
 				ENABLE_HARDENED_RUNTIME = YES;
