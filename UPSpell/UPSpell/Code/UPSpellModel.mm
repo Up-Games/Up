@@ -966,7 +966,9 @@ std::pair<int, SpellModel::StatsRank> SpellModel::game_score_rank(int score)
     
     std::vector<int> ranked = all_time_game_scores();
     if (ranked.size() == 0) {
-        result = { 1, StatsRank::Alone };
+        if (score > 0) {
+            result = { 1, StatsRank::Alone };
+        }
     }
     else {
         int i = 0;
@@ -993,7 +995,9 @@ std::pair<int, SpellModel::StatsRank> SpellModel::word_score_rank(int score)
     int i = 0;
     std::vector<int> ranked = all_time_word_scores();
     if (ranked.size() == 0) {
-        result = { 1, StatsRank::Alone };
+        if (score > 0) {
+            result = { 1, StatsRank::Alone };
+        }
     }
     else {
         for (auto rank : ranked) {
@@ -1018,7 +1022,9 @@ std::pair<int, SpellModel::StatsRank> SpellModel::words_spelled_count_rank(int c
     int i = 0;
     std::vector<int> ranked = all_time_words_submitted_counts();
     if (ranked.size() == 0) {
-        result = { 1, StatsRank::Alone };
+        if (count > 0) {
+            result = { 1, StatsRank::Alone };
+        }
     }
     else {
         for (auto rank : ranked) {

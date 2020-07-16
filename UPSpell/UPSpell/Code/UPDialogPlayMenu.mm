@@ -120,16 +120,24 @@ using Role = SpellLayout::Role;
     self.choice1.userInteractionEnabled = YES;
     self.choice2.userInteractionEnabled = YES;
 
+    m_high_score_summary = SpellGameSummary();
+    m_last_game_summary = SpellGameSummary();
+
     int gamesPlayedCount = SpellModel::all_time_games_played_count();
     if (gamesPlayedCount == 0) {
-        m_high_score_summary = SpellGameSummary();
-        m_last_game_summary = SpellGameSummary();
         self.choice1.labelString = @"RETRY HIGH SCORE GAME";
         self.choice2.labelString = @"RETRY LAST GAME";
         [self.choice1 setDisabled:YES];
         [self.choice2 setDisabled:YES];
         self.choice1.userInteractionEnabled = NO;
         self.choice2.userInteractionEnabled = NO;
+        [self.choice3 setSelected:YES];
+    }
+    else if (m_high_score_summary.game_score() == 0) {
+        self.choice1.labelString = @"RETRY HIGH SCORE GAME";
+        self.choice2.labelString = @"RETRY LAST GAME (0)";
+        [self.choice1 setDisabled:YES];
+        self.choice1.userInteractionEnabled = NO;
     }
     else {
         m_high_score_summary = SpellModel::high_score_game();
@@ -149,7 +157,7 @@ using Role = SpellLayout::Role;
             self.choice2.userInteractionEnabled = NO;
         }
         else if (m_high_score_summary.game_key() == m_last_game_summary.game_key()) {
-            self.choice2.labelString = [NSString stringWithFormat:@"LAST (%d) RETRIED HIGH SCORE GAME", m_last_game_summary.game_score()];
+            self.choice2.labelString = [NSString stringWithFormat:@"LAST GAME (%d) RETRIED HIGH SCORE", m_last_game_summary.game_score()];
             if (self.choice2.selected) {
                 [self.choice2 setSelected:NO];
                 [self.choice1 setSelected:YES];
