@@ -264,12 +264,13 @@ UIBezierPath *ChoiceRightFillPathSelected()
 
 - (CGSize)sizeThatFits:(CGSize)size
 {
+    SpellLayout &layout = SpellLayout::instance();
+
     if (!self.variableWidth) {
-        return size;
+        return up_size_scaled(SpellLayout::CanonicalChoiceSize, layout.layout_scale());
     }
 
     CGSize fitsSize = size;
-    SpellLayout &layout = SpellLayout::instance();
     [self.label sizeToFit];
     CGSize labelSize = self.label.bounds.size;
     CGFloat width = labelSize.width;

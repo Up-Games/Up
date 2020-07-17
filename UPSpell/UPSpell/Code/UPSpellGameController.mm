@@ -2035,7 +2035,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     BOOL restored = NO;
     NSString *saveFilePath = [[NSFileManager defaultManager] documentsDirectoryPathWithFileName:UPSpellInProgressGameFileName];
     if (saveFilePath) {
-        LOG(General, "restoreInProgressGameIfExists: %@", saveFilePath);
+        //LOG(General, "restoreInProgressGameIfExists: %@", saveFilePath);
         NSData *data = [NSData dataWithContentsOfFile:saveFilePath];
         if (data) {
             UPSpellModel *model = [NSKeyedUnarchiver unarchivedObjectOfClass:[UPSpellModel class] fromData:data error:&error];

@@ -160,7 +160,7 @@
 {
     if (self.addsLeftwardScoot) {
         CGRect bounds = self.bounds;
-        bounds.origin.x -= 1;
+        bounds.origin.x = -1;
         layer.bounds = bounds;
     }
 }
