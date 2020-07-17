@@ -987,16 +987,16 @@ using UP::TileIndex;
 {
     self = [super init];
     
-    UP_DECODE_T(coder, TileTray, tray, Int32);
-    UP_DECODE_T(coder, TileIndex, index, Int64);
+    self.tray = static_cast<TileTray>([coder decodeInt32ForKey:NSStringFromSelector(@selector(tray))]);
+    self.index = static_cast<TileIndex>([coder decodeInt64ForKey:NSStringFromSelector(@selector(index))]);
     
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    UP_ENCODE_T(coder, uint32_t, tray, Int32);
-    UP_ENCODE_T(coder, TileIndex, index, Int64);
+    [coder encodeInt32:static_cast<uint32_t>(self.tray) forKey:NSStringFromSelector(@selector(tray))];
+    [coder encodeInt64:self.index forKey:NSStringFromSelector(@selector(index))];
 }
 
 @dynamic supportsSecureCoding;
@@ -1033,17 +1033,17 @@ UP_STATIC_INLINE TilePosition make_tile_position(_UPTilePosition *tilePosition)
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super init];
-    
-    UP_DECODE_T(coder, char32_t, glyph, Int32);
-    UP_DECODE(coder, multiplier, Int);
+
+    self.glyph = static_cast<char32_t>([coder decodeInt32ForKey:NSStringFromSelector(@selector(glyph))]);
+    self.multiplier = [coder decodeIntForKey:NSStringFromSelector(@selector(multiplier))];
     
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    UP_ENCODE_T(coder, uint32_t, glyph, Int32);
-    UP_ENCODE(coder, multiplier, Int);
+    [coder encodeInt32:static_cast<char32_t>(self.glyph) forKey:NSStringFromSelector(@selector(glyph))];
+    [coder encodeInt:self.multiplier forKey:NSStringFromSelector(@selector(multiplier))];
 }
 
 @dynamic supportsSecureCoding;
@@ -1089,8 +1089,8 @@ UP_STATIC_INLINE TileModel make_tile_model(_UPTileModel *model)
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    UP_ENCODE(coder, model, Object);
-    UP_ENCODE(coder, position, Object);
+    [coder encodeObject:self.model forKey:NSStringFromSelector(@selector(model))];
+    [coder encodeObject:self.position forKey:NSStringFromSelector(@selector(position))];
 }
 
 @dynamic supportsSecureCoding;
@@ -1132,8 +1132,8 @@ UP_STATIC_INLINE Tile make_tile(_UPTile *tile)
 {
     self = [super init];
     
-    UP_DECODE_T(coder, SpellModel::Opcode, opcode, Int32);
-    UP_DECODE(coder, timestamp, Double);
+    self.opcode = static_cast<SpellModel::Opcode>([coder decodeInt32ForKey:NSStringFromSelector(@selector(opcode))]);
+    self.timestamp = [coder decodeDoubleForKey:NSStringFromSelector(@selector(timestamp))];
     self.position1 = [coder decodeObjectOfClass:[_UPTilePosition class] forKey:NSStringFromSelector(@selector(position1))];
     self.position2 = [coder decodeObjectOfClass:[_UPTilePosition class] forKey:NSStringFromSelector(@selector(position2))];
     
@@ -1142,10 +1142,10 @@ UP_STATIC_INLINE Tile make_tile(_UPTile *tile)
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    UP_ENCODE_T(coder, uint32_t, opcode, Int32);
-    UP_ENCODE(coder, timestamp, Double);
-    UP_ENCODE(coder, position1, Object);
-    UP_ENCODE(coder, position2, Object);
+    [coder encodeInt32:static_cast<uint32_t>(self.opcode) forKey:NSStringFromSelector(@selector(opcode))];
+    [coder encodeDouble:self.timestamp forKey:NSStringFromSelector(@selector(timestamp))];
+    [coder encodeObject:self.position1 forKey:NSStringFromSelector(@selector(position1))];
+    [coder encodeObject:self.position2 forKey:NSStringFromSelector(@selector(position2))];
 }
 
 @dynamic supportsSecureCoding;
@@ -1194,16 +1194,16 @@ UP_STATIC_INLINE SpellModel::Action make_action(_UPSpellModelAction *action)
     NSSet *allowedClasses = [NSSet setWithArray:@[ [_UPTile class], [NSArray class] ]];
     self.tiles = [coder decodeObjectOfClasses:allowedClasses forKey:NSStringFromSelector(@selector(tiles))];
 
-    UP_DECODE(coder, gameScore, Int);
+    self.gameScore = [coder decodeIntForKey:NSStringFromSelector(@selector(gameScore))];
 
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    UP_ENCODE(coder, action, Object);
-    UP_ENCODE(coder, tiles, Object);
-    UP_ENCODE(coder, gameScore, Int);
+    [coder encodeObject:self.action forKey:NSStringFromSelector(@selector(action))];
+    [coder encodeObject:self.tiles forKey:NSStringFromSelector(@selector(tiles))];
+    [coder encodeInt:self.gameScore forKey:NSStringFromSelector(@selector(gameScore))];
 }
 
 @dynamic supportsSecureCoding;

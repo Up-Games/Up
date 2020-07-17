@@ -45,14 +45,8 @@
 #if __OBJC__
 #define UP_ENCODE(_Coder_, _Item_, _EncodeType_) \
     [_Coder_ encode##_EncodeType_:self._Item_ forKey:NSStringFromSelector(@selector(_Item_))]
-#define UP_ENCODE_T(_Coder_, _ItemType_, _Item_, _EncodeType_) \
-[_Coder_ encode##_EncodeType_:static_cast<_ItemType_>(self._Item_) forKey:NSStringFromSelector(@selector(_Item_))]
 
 #define UP_DECODE(_Coder_, _Item_, _DecodeType_) \
     self._Item_ = [_Coder_ decode##_DecodeType_##ForKey:NSStringFromSelector(@selector(_Item_))]
-#define UP_DECODE_T(_Coder_, _ItemType_, _Item_, _DecodeType_) \
-    self._Item_ = static_cast<_ItemType_>([_Coder_ decode##_DecodeType_##ForKey:NSStringFromSelector(@selector(_Item_))])
-#define UP_DECODE_OBJECT(_Coder_, _ObjectType_, _Item_) \
-    self._Item_ = ([_Coder_ decodeObjectOfClass:[_ObjectType_ class] forKey:NSStringFromSelector(@selector(_Item_))])
 #endif  // __OBJC__
 
