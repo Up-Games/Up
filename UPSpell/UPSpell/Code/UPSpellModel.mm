@@ -622,6 +622,7 @@ const SpellModel::State &SpellModel::apply(const Action &action)
 //    }
     if (action.opcode() == Opcode::END) {
         db_store();
+        
     }
     
     return state;
@@ -814,10 +815,12 @@ void SpellModel::apply_submit(const Action &action)
     ASSERT(positions_valid());
 
     m_game_score += word().total_score();
+    m_game_words_submitted++;
+    m_game_tiles_submitted += word().length();
     clear_and_sentinelize_word_tray();
     fill_player_tray();
     update_word();
-
+    
     ASSERT(positions_valid());
     ASSERT(word().length() == 0);
     ASSERT(!word().in_lexicon());
@@ -938,27 +941,27 @@ std::vector<Word> SpellModel::game_best_word() const
     return result;
 }
 
-int SpellModel::game_words_submitted_count() const
-{
-    int result = 0;
-    for (const auto &state : states()) {
-        if (state.action().opcode() == Opcode::SUBMIT) {
-            result++;
-        }
-    }
-    return result;
-}
-
-int SpellModel::game_tiles_submitted_count() const
-{
-    int result = 0;
-    for (const auto &state : states()) {
-        if (state.action().opcode() == Opcode::SUBMIT) {
-            result += state.incoming_word().length();
-        }
-    }
-    return result;
-}
+//int SpellModel::game_words_submitted_count() const
+//{
+//    int result = 0;
+//    for (const auto &state : states()) {
+//        if (state.action().opcode() == Opcode::SUBMIT) {
+//            result++;
+//        }
+//    }
+//    return result;
+//}
+//
+//int SpellModel::game_tiles_submitted_count() const
+//{
+//    int result = 0;
+//    for (const auto &state : states()) {
+//        if (state.action().opcode() == Opcode::SUBMIT) {
+//            result += state.incoming_word().length();
+//        }
+//    }
+//    return result;
+//}
 
 std::pair<int, SpellModel::StatsRank> SpellModel::game_score_rank(int score)
 {
@@ -1382,8 +1385,8 @@ void SpellModel::db_store()
 
     db_begin_transaction(db);
     
-    int words_submitted_count = game_words_submitted_count();
-    int tiles_submitted_count = game_tiles_submitted_count();
+    int words_submitted_count = game_words_submitted();
+    int tiles_submitted_count = game_tiles_submitted();
     double word_score_average = words_submitted_count ? (game_score() / (double)words_submitted_count) : 0;
     double word_length_average = words_submitted_count ? (tiles_submitted_count / (double)words_submitted_count) : 0;
 
@@ -1602,12 +1605,286 @@ sqlite3 *SpellModel::db_handle()
 using UP::GameKey;
 using UP::SpellModel;
 using UP::SpellModelPtr;
+using UP::Tile;
+using UP::TileArray;
+using UP::TileCount;
+using UP::TileModel;
+using UP::TilePosition;
+using UP::TileTray;
+using UP::TileIndex;
+
+// =========================================================================================================================================
+
+@interface _UPTilePosition : NSObject <NSSecureCoding>
+@property (class, readonly) BOOL supportsSecureCoding;
+@property (nonatomic) TileTray tray;
+@property (nonatomic) TileIndex index;
+@end
+
+@implementation _UPTilePosition
+
++ (_UPTilePosition *)makeWith:(const TilePosition &)tile_position
+{
+    _UPTilePosition *obj = [[_UPTilePosition alloc] init];
+    obj.tray = tile_position.tray();
+    obj.index = tile_position.index();
+    return obj;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super init];
+    
+    UP_DECODE_T(coder, TileTray, tray, Int32);
+    UP_DECODE_T(coder, TileIndex, index, Int64);
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    UP_ENCODE_T(coder, uint32_t, tray, Int32);
+    UP_ENCODE_T(coder, TileIndex, index, Int64);
+}
+
+@dynamic supportsSecureCoding;
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+@end
+
+UP_STATIC_INLINE TilePosition make_tile_position(_UPTilePosition *tilePosition)
+{
+    return TilePosition(tilePosition.tray, tilePosition.index);
+}
+
+// =========================================================================================================================================
+
+@interface _UPTileModel : NSObject <NSSecureCoding>
+@property (class, readonly) BOOL supportsSecureCoding;
+@property (nonatomic) char32_t glyph;
+@property (nonatomic) int multiplier;
+@end
+
+@implementation _UPTileModel
+
++ (_UPTileModel *)makeWith:(const TileModel &)tile_model
+{
+    _UPTileModel *obj = [[_UPTileModel alloc] init];
+    obj.glyph = tile_model.glyph();
+    obj.multiplier = tile_model.multiplier();
+    return obj;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super init];
+    
+    UP_DECODE_T(coder, char32_t, glyph, Int32);
+    UP_DECODE(coder, multiplier, Int);
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    UP_ENCODE_T(coder, uint32_t, glyph, Int32);
+    UP_ENCODE(coder, multiplier, Int);
+}
+
+@dynamic supportsSecureCoding;
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+@end
+
+UP_STATIC_INLINE TileModel make_tile_model(_UPTileModel *model)
+{
+    return TileModel(model.glyph, model.multiplier);
+}
+
+// =========================================================================================================================================
+
+@interface _UPTile : NSObject <NSSecureCoding>
+@property (class, readonly) BOOL supportsSecureCoding;
+@property (nonatomic) _UPTileModel *model;
+@property (nonatomic) _UPTilePosition *position;
+@end
+
+@implementation _UPTile
+
++ (_UPTile *)makeWith:(const Tile &)tile
+{
+    _UPTile *obj = [[_UPTile alloc] init];
+    obj.model = [_UPTileModel makeWith:tile.model()];
+    obj.position = [_UPTilePosition makeWith:tile.position()];
+    return obj;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super init];
+    
+    UP_DECODE(coder, model, Object);
+    UP_DECODE(coder, position, Object);
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    UP_ENCODE(coder, model, Object);
+    UP_ENCODE(coder, position, Object);
+}
+
+@dynamic supportsSecureCoding;
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+@end
+
+UP_STATIC_INLINE Tile make_tile(_UPTile *tile)
+{
+    return Tile(make_tile_model(tile.model), make_tile_position(tile.position));
+}
+
+// =========================================================================================================================================
+
+@interface _UPSpellModelAction : NSObject <NSSecureCoding>
+@property (class, readonly) BOOL supportsSecureCoding;
+@property (nonatomic) SpellModel::Opcode opcode;
+@property (nonatomic) CFTimeInterval timestamp;
+@property (nonatomic) _UPTilePosition *position1;
+@property (nonatomic) _UPTilePosition *position2;
+@end
+
+@implementation _UPSpellModelAction
+
++ (_UPSpellModelAction *)makeWith:(const SpellModel::Action &)action
+{
+    _UPSpellModelAction *obj = [[_UPSpellModelAction alloc] init];
+    obj.opcode = action.opcode();
+    obj.timestamp = action.timestamp();
+    obj.position1 = [_UPTilePosition makeWith:action.pos1()];
+    obj.position2 = [_UPTilePosition makeWith:action.pos2()];
+    return obj;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super init];
+    
+    UP_DECODE_T(coder, SpellModel::Opcode, opcode, Int32);
+    UP_DECODE(coder, timestamp, Double);
+    UP_DECODE(coder, position1, Object);
+    UP_DECODE(coder, position2, Object);
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    UP_ENCODE_T(coder, uint32_t, opcode, Int32);
+    UP_ENCODE(coder, timestamp, Double);
+    UP_ENCODE(coder, position1, Object);
+    UP_ENCODE(coder, position2, Object);
+}
+
+@dynamic supportsSecureCoding;
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+@end
+
+UP_STATIC_INLINE SpellModel::Action make_action(_UPSpellModelAction *action)
+{
+    return SpellModel::Action(action.timestamp, action.opcode, make_tile_position(action.position1), make_tile_position(action.position2));
+}
+
+// =========================================================================================================================================
+
+@interface _UPSpellModelState : NSObject <NSSecureCoding>
+@property (class, readonly) BOOL supportsSecureCoding;
+@property (nonatomic) _UPSpellModelAction *action;
+@property (nonatomic) NSArray<_UPTile *> *tiles;
+@property (nonatomic) int gameScore;
+@end
+
+@implementation _UPSpellModelState
+
++ (_UPSpellModelState *)makeWith:(const SpellModel::State &)state
+{
+    _UPSpellModelState *obj = [[_UPSpellModelState alloc] init];
+    obj.action = [_UPSpellModelAction makeWith:state.action()];
+    NSMutableArray<_UPTile *> *tilesArray = [NSMutableArray array];
+    for (const auto &tile : state.outgoing_tiles()) {
+        [tilesArray addObject:[_UPTile makeWith:tile]];
+    }
+    obj.tiles = tilesArray;
+    obj.gameScore = state.outgoing_game_score();
+    return obj;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super init];
+    
+    UP_DECODE(coder, action, Object);
+    UP_DECODE(coder, tiles, Object);
+    UP_DECODE(coder, gameScore, Int);
+
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    UP_ENCODE(coder, action, Object);
+    UP_ENCODE(coder, tiles, Object);
+    UP_ENCODE(coder, gameScore, Int);
+}
+
+@dynamic supportsSecureCoding;
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+@end
+
+UP_STATIC_INLINE TileArray make_tile_array(NSArray<_UPTile *> *tiles)
+{
+    ASSERT(tiles.count == TileCount);
+
+    TileArray result;
+    TileIndex idx = 0;
+    for (_UPTile *tile in tiles) {
+        result[idx] = make_tile(tile);
+        idx++;
+    }
+    return result;
+}
+
+UP_STATIC_INLINE SpellModel::State make_state(_UPSpellModelState *state)
+{
+    return SpellModel::State(make_action(state.action), UP::Word(), make_tile_array(state.tiles), state.gameScore);
+}
+
+// =========================================================================================================================================
+
+static NSString * const UPSpellModelStatesArchiveKey = @"STATES";
 
 @interface UPSpellModel ()
 {
     SpellModelPtr m_inner;
 }
-
 @end
 
 @implementation UPSpellModel
@@ -1641,7 +1918,19 @@ using UP::SpellModelPtr;
     self = [super init];
     
     UPGameKey *gameKey = [coder decodeObjectForKey:NSStringFromSelector(@selector(gameKey))];
-    m_inner = std::make_shared<SpellModel>(GameKey(gameKey.value));
+    GameKey game_key = GameKey(gameKey.value);
+    
+    std::vector<SpellModel::State> states;
+    NSArray<_UPSpellModelState *> *decodedStates = [coder decodeObjectForKey:UPSpellModelStatesArchiveKey];
+    if (decodedStates) {
+        for (_UPSpellModelState *decodedState : decodedStates) {
+            states.push_back(make_state(decodedState));
+        }
+        m_inner = std::make_shared<SpellModel>(game_key, states);
+    }
+    else {
+        m_inner = std::make_shared<SpellModel>(game_key);
+    }
     
     return self;
 }
@@ -1649,6 +1938,20 @@ using UP::SpellModelPtr;
 - (void)encodeWithCoder:(NSCoder *)coder
 {
     [coder encodeObject:self.gameKey forKey:NSStringFromSelector(@selector(gameKey))];
+
+    if (!m_inner->is_game_completed()) {
+        NSMutableArray<_UPSpellModelState *> *states = [NSMutableArray array];
+        for (const auto &state : m_inner->states()) {
+            [states addObject:[_UPSpellModelState makeWith:state]];
+        }
+        [coder encodeObject:states forKey:UPSpellModelStatesArchiveKey];
+    }
+}
+
+@dynamic inner;
+- (SpellModelPtr)inner
+{
+    return m_inner;
 }
 
 @dynamic gameKey;

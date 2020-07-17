@@ -22,6 +22,7 @@
 #import "UPSpellGameSummary.h"
 #import "UPSpellGameView.h"
 #import "UPSpellLayout.h"
+#import "UPSpellPersistentData.h"
 #import "UPSpellSettings.h"
 #import "UPTextButton.h"
 #import "UPTileModel.h"
@@ -47,6 +48,7 @@ using UP::Random;
 using UP::SpellGameSummary;
 using UP::SpellLayout;
 using UP::SpellModel;
+using UP::SpellModelPtr;
 using UP::Tile;
 using UP::TileModel;
 using UP::TileCount;
@@ -188,7 +190,15 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self configureModeTransitionTables];
     [self configureLifecycleNotifications];
 
-    [self setMode:Mode::Init];
+    [UPSpellPersistentData instance]; // restores data from disk
+    
+    m_spell_model = [self restoreInProgressGameIfExists];
+    if (m_spell_model) {
+        // restore game screen and show pause screen
+    }
+    else {
+        [self setMode:Mode::Init];
+    }
 }
 
 - (UIRectEdge)preferredScreenEdgesDeferringSystemGestures
@@ -1967,6 +1977,115 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
 }
 
+#pragma mark - Archiving persistent data and in-progress game
+
+static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-game.dat";
+static NSString * const UPSpellPersistentDataFileName = @"up-spell-persistent.dat";
+
+static NSString *save_file_path(NSString *name)
+{
+    NSString *path = nil;
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *possibleURLs = [fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+    if (possibleURLs.count > 0) {
+        NSURL *documentDirectoryURL = [possibleURLs objectAtIndex:0];
+        NSURL *archiveFileURL = [documentDirectoryURL URLByAppendingPathComponent:name];
+        path = [NSString stringWithUTF8String:[[archiveFileURL path] fileSystemRepresentation]];
+    }
+    return path;
+}
+
+- (void)updatePersistentData
+{
+    ASSERT(m_spell_model->back_opcode() == Opcode::END);
+
+    UPSpellPersistentData *data = [UPSpellPersistentData instance];
+    
+    if (data.highScore <= m_spell_model->game_score() && m_spell_model->game_score() > 0) {
+        data.highScore = m_spell_model->game_score();
+        data.highGameKey = m_spell_model->game_key().value();
+    }
+
+    data.lastScore = m_spell_model->game_score();
+    data.lastGameKey = m_spell_model->game_key().value();
+    
+    data.totalGamesPlayed++;
+    data.totalGameScore += m_spell_model->game_score();
+    data.totalWordsSubmitted += m_spell_model->game_words_submitted();
+    data.totalTilesSubmitted += m_spell_model->game_tiles_submitted();
+}
+
+- (void)saveInProgressGameIfNecessary
+{
+    if (m_spell_model->back_opcode() != Opcode::END) {
+        [self removeInProgressGameFileLogErrors:NO];
+        return;
+    }
+
+    UPSpellModel *model = [UPSpellModel spellModelWithInner:m_spell_model];
+    NSError *error;
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model requiringSecureCoding:YES error:&error];
+    if (error) {
+        LOG(General, "error writing in-progress game data data: %@", error);
+    }
+    else {
+        NSString *saveFilePath = save_file_path(UPSpellPersistentDataFileName);
+        if (saveFilePath) {
+            [data writeToFile:saveFilePath atomically:YES];
+            LOG(General, "saveInProgressGameIfNecessary: %@", saveFilePath);
+        }
+        else {
+            LOG(General, "error writing in-progress game data: save file unavailable, %@", saveFilePath);
+        }
+    }
+}
+
+- (SpellModelPtr)restoreInProgressGameIfExists
+{
+    SpellModelPtr result = nullptr;
+    NSError *error;
+    
+    BOOL restored = NO;
+    NSString *saveFilePath = save_file_path(UPSpellInProgressGameFileName);
+    if (saveFilePath) {
+        NSData *data = [NSData dataWithContentsOfFile:saveFilePath];
+        if (!data) {
+            //LOG(General, "error reading in-progress game data: save data unavailable: %@", saveFilePath);
+        }
+        else {
+            Class cls = [UPSpellModel class];
+            UPSpellModel *model = [NSKeyedUnarchiver unarchivedObjectOfClass:cls fromData:data error:&error];
+            if (!error) {
+                restored = YES;
+                result = model.inner;
+            }
+            else {
+                LOG(General, "error reading in-progress game data: %@ : %@", saveFilePath, error);
+            }
+        }
+    }
+    
+    [self removeInProgressGameFileLogErrors:restored];
+    
+    return result;
+}
+
+- (void)removeInProgressGameFile
+{
+    [self removeInProgressGameFileLogErrors:YES];
+}
+
+- (void)removeInProgressGameFileLogErrors:(BOOL)logErrors
+{
+    NSString *saveFilePath = save_file_path(UPSpellInProgressGameFileName);
+    NSError *error;
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:saveFilePath error:&error];
+    if (logErrors) {
+        LOG(General, "error removing in-progress game data file: %@ : %@", saveFilePath, error);
+    }
+}
+
 #pragma mark - Lifecycle notifications
 
 - (void)configureLifecycleNotifications
@@ -1975,10 +2094,12 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     [nc addObserverForName:UIApplicationDidBecomeActiveNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
+        [self removeInProgressGameFileLogErrors:NO];
     }];
     
     [nc addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
+        [self removeInProgressGameFileLogErrors:NO];
     }];
     
     [nc addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:NSOperationQueue.mainQueue
@@ -1992,6 +2113,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         if (self.mode == Mode::Play) {
             [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioDidEnterBackground];
         }
+        [self saveInProgressGameIfNecessary];
     }];
 }
 
@@ -2580,6 +2702,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self viewSetNoteLabelString];
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
 
+    [self updatePersistentData];
+    [[UPSpellPersistentData instance] save];
+    
     delay(BandModeDelay, 1.0, ^{
         SpellLayout &layout = SpellLayout::instance();
         [UIView animateWithDuration:1.0 animations:^{
@@ -2662,6 +2787,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     TileArray incoming_tiles = m_spell_model->tiles();
     size_t incoming_word_length = m_spell_model->word().length();
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
+    
+    [self updatePersistentData];
+    [[UPSpellPersistentData instance] save];
 
     delay(BandModeDelay, 0.35, ^{
         [self viewDumpAllTilesFromCurrentPosition:incoming_tiles wordLength:incoming_word_length];

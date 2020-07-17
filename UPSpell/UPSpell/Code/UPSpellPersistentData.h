@@ -5,25 +5,22 @@
 
 #import <Foundation/Foundation.h>
 
-#import "UPSpellModel.h"
-
 @interface UPSpellPersistentData : NSObject <NSSecureCoding>
 
 @property (class, readonly) BOOL supportsSecureCoding;
 
-@property (nonatomic, readonly) int highScore;
-@property (nonatomic, readonly) uint32_t highGameKey;
-@property (nonatomic, readonly) int lastScore;
-@property (nonatomic, readonly) uint32_t lastGameKey;
+@property (nonatomic) int highScore;
+@property (nonatomic) uint32_t highGameKey;
+@property (nonatomic) int lastScore;
+@property (nonatomic) uint32_t lastGameKey;
 
-@property (nonatomic, readonly) NSInteger totalGamesPlayed;
-@property (nonatomic, readonly) NSInteger totalGameScore;
-@property (nonatomic, readonly) NSInteger totalWordsSubmitted;
-@property (nonatomic, readonly) NSInteger totalTitlesSubmitted;
+@property (nonatomic) NSInteger totalGamesPlayed;
+@property (nonatomic) NSInteger totalGameScore;
+@property (nonatomic) NSInteger totalWordsSubmitted;
+@property (nonatomic) NSInteger totalTilesSubmitted;
 
-@property(nonatomic, readonly) UPSpellModel *gameInProgress;
++ (UPSpellPersistentData *)instance;
 
-- (instancetype)init;
-- (instancetype)initWithCoder:(NSCoder *)coder;
+- (void)save;
 
 @end

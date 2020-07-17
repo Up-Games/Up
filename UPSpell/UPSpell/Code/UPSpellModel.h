@@ -233,6 +233,13 @@ public:
 
     SpellModel() { apply_start(Action(Opcode::START)); }
     SpellModel(const GameKey &game_key) : m_game_key(game_key), m_tile_sequence(game_key) { apply(Action(Opcode::START)); }
+    SpellModel(const GameKey &game_key, std::vector<State> &states) : m_game_key(game_key), m_tile_sequence(game_key) {
+        ASSERT(states.size());
+        ASSERT(states.front().action().opcode() == Opcode::START);
+        for (const auto &state : states) {
+            apply(state.action());
+        }
+    }
 
     GameKey game_key() const { return m_game_key; }
     
@@ -257,6 +264,7 @@ public:
     const std::vector<State> &states() const { return m_states; }
     const State &back_state() const;
     bool is_game_completed() const;
+    Opcode back_opcode() const { return back_state().action().opcode(); }
 
     const Word &word() const { return m_word; }
 
@@ -276,13 +284,14 @@ public:
 
     std::string cpp_str(Opcode) const;
     std::string cpp_str(const State &) const;
-    
+
+    int game_words_submitted() const { return m_game_words_submitted; }
+    int game_tiles_submitted() const { return m_game_tiles_submitted; }
+
     enum class StatsRank { Unknown, Alone, Tied };
     static constexpr size_t NotALimit = std::numeric_limits<size_t>::max();
     
     std::vector<Word> game_best_word() const;
-    int game_words_submitted_count() const;
-    int game_tiles_submitted_count() const;
     
     static std::pair<int, StatsRank> game_score_rank(int score);
     static std::pair<int, StatsRank> word_score_rank(int score);
@@ -347,6 +356,8 @@ private:
     std::vector<State> m_states;
     Word m_word;
     int m_game_score = 0;
+    int m_game_words_submitted = 0;
+    int m_game_tiles_submitted = 0;
     uint64_t m_db_game_id = 0;
 };
 
@@ -360,7 +371,7 @@ using SpellModelPtr = std::shared_ptr<class SpellModel>;
 @interface UPSpellModel : NSObject <NSSecureCoding>
 
 @property (class, readonly) BOOL supportsSecureCoding;
-@property (nonatomic, readonly) UP::SpellModelPtr *inner;
+@property (nonatomic, readonly) UP::SpellModelPtr inner;
 
 @property (nonatomic, readonly) UPGameKey *gameKey;
 
