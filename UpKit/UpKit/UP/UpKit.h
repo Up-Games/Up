@@ -38,7 +38,6 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPBand.h>
 #import <UpKit/UPSerialNumber.h>
 #import <UpKit/UPSettings.h>
-#import <UpKit/UPSqlite.h>
 #import <UpKit/UPStringTools.h>
 #import <UpKit/UPTapGestureRecognizer.h>
 #import <UpKit/UPTickingAnimator.h>
@@ -50,6 +49,7 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPUtility.h>
 #import <UpKit/UPViewMove.h>
 
+#import <UpKit/NSFileManager+UP.h>
 #import <UpKit/NSMutableAttributedString+UP.h>
 #import <UpKit/NSValue+UP.h>
 #import <UpKit/UIColor+UP.h>

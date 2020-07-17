@@ -15,6 +15,7 @@
 #import "UIFont+UPSpell.h"
 #import "UPChoice.h"
 #import "UPDialogPlayMenu.h"
+#import "UPSpellDossier.h"
 #import "UPSpellGameSummary.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
@@ -103,28 +104,14 @@ using Role = SpellLayout::Role;
     return self;
 }
 
-@dynamic gameKeyForHighScore;
-- (UPGameKey *)gameKeyForHighScore
-{
-    return [UPGameKey gameKeyWithValue:m_high_score_summary.game_key().value()];
-}
-
-@dynamic gameKeyForLastGame;
-- (UPGameKey *)gameKeyForLastGame
-{
-    return [UPGameKey gameKeyWithValue:m_last_game_summary.game_key().value()];
-}
-
 - (void)updateChoiceLabels
 {
     self.choice1.userInteractionEnabled = YES;
     self.choice2.userInteractionEnabled = YES;
 
-    m_high_score_summary = SpellModel::high_score_game();
-    m_last_game_summary = SpellModel::last_game();
-
-    int gamesPlayedCount = SpellModel::all_time_games_played_count();
-    if (gamesPlayedCount == 0) {
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    
+    if (dossier.totalGamesPlayed == 0) {
         self.choice1.labelString = @"RETRY HIGH SCORE GAME";
         self.choice2.labelString = @"RETRY LAST GAME";
         [self.choice1 setDisabled:YES];
@@ -133,21 +120,17 @@ using Role = SpellLayout::Role;
         self.choice2.userInteractionEnabled = NO;
         [self.choice3 setSelected:YES];
     }
-    else if (m_high_score_summary.game_score() == 0) {
+    else if (dossier.highScore == 0) {
         self.choice1.labelString = @"RETRY HIGH SCORE GAME";
         self.choice2.labelString = @"RETRY LAST GAME (0)";
         [self.choice1 setDisabled:YES];
         self.choice1.userInteractionEnabled = NO;
     }
     else {
-        m_high_score_summary = SpellModel::high_score_game();
-        m_last_game_summary = SpellModel::last_game();
-
-        self.choice1.labelString = [NSString stringWithFormat:@"RETRY HIGH SCORE GAME (%d)", m_high_score_summary.game_score()];
+        self.choice1.labelString = [NSString stringWithFormat:@"RETRY HIGH SCORE GAME (%d)", dossier.highScore];
         [self.choice1 setDisabled:NO];
 
-        if (m_high_score_summary.game_id() == m_last_game_summary.game_id() ||
-            m_high_score_summary.game_score() == m_last_game_summary.game_score()) {
+        if (dossier.highScore == dossier.lastScore) {
             self.choice2.labelString = @"LAST GAME WAS HIGH SCORE";
             if (self.choice2.selected) {
                 [self.choice2 setSelected:NO];
@@ -156,8 +139,8 @@ using Role = SpellLayout::Role;
             [self.choice2 setDisabled:YES];
             self.choice2.userInteractionEnabled = NO;
         }
-        else if (m_high_score_summary.game_key() == m_last_game_summary.game_key()) {
-            self.choice2.labelString = [NSString stringWithFormat:@"LAST GAME (%d) RETRIED HIGH SCORE", m_last_game_summary.game_score()];
+        else if (dossier.highGameKey == dossier.lastGameKey) {
+            self.choice2.labelString = [NSString stringWithFormat:@"LAST GAME (%d) RETRIED HIGH SCORE", dossier.lastScore];
             if (self.choice2.selected) {
                 [self.choice2 setSelected:NO];
                 [self.choice1 setSelected:YES];
@@ -166,7 +149,7 @@ using Role = SpellLayout::Role;
             self.choice2.userInteractionEnabled = NO;
         }
         else {
-            self.choice2.labelString = [NSString stringWithFormat:@"RETRY LAST GAME (%d)", m_last_game_summary.game_score()];
+            self.choice2.labelString = [NSString stringWithFormat:@"RETRY LAST GAME (%d)", dossier.lastScore];
             [self.choice2 setDisabled:NO];
         }
 

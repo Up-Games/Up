@@ -28,6 +28,8 @@
 		5D5216F2246D87DF005A2E9F /* UPControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5216F0246D87DF005A2E9F /* UPControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D5216F3246D87DF005A2E9F /* UPControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216F1246D87DF005A2E9F /* UPControl.mm */; };
 		5D54078624845488003F193D /* UPBand.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D54078524845488003F193D /* UPBand.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D6261A624C1FE4100D19EEF /* NSFileManager+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D6261A424C1FE4100D19EEF /* NSFileManager+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D6261A724C1FE4100D19EEF /* NSFileManager+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6261A524C1FE4100D19EEF /* NSFileManager+UP.mm */; };
 		5DA8E0372475962A008D3015 /* UPUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E035247595B8008D3015 /* UPUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E03A2475C796008D3015 /* UPAssertions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E0382475C796008D3015 /* UPAssertions.mm */; };
 		5DA8E03B2475C796008D3015 /* UPAssertions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E0392475C796008D3015 /* UPAssertions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -67,9 +69,6 @@
 		5DC67DF72473069A009BCDBB /* UPGameTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC67DF52473069A009BCDBB /* UPGameTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC67DFB247367D1009BCDBB /* UPGameTimerLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC67DF9247367D1009BCDBB /* UPGameTimerLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC67DFC247367D1009BCDBB /* UPGameTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DFA247367D1009BCDBB /* UPGameTimerLabel.m */; };
-		5DCFD09824ACF1E900CA5C24 /* UPSqlite.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DCFD09724ACF1E900CA5C24 /* UPSqlite.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DCFD09A24ACF27100CA5C24 /* UPSqlite.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DCFD09924ACF27100CA5C24 /* UPSqlite.mm */; };
-		5DCFD09C24ACF61300CA5C24 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCFD09B24ACF61300CA5C24 /* libsqlite3.tbd */; };
 		5DCFD09E24AD4BC900CA5C24 /* UPGameTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DCFD09D24AD4BC900CA5C24 /* UPGameTimer.m */; };
 		5DD71D442457731700F3F9E2 /* UPLayoutRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD71D422457731700F3F9E2 /* UPLayoutRule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DD71D452457731700F3F9E2 /* UPLayoutRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD71D432457731700F3F9E2 /* UPLayoutRule.m */; };
@@ -154,6 +153,8 @@
 		5D5216F0246D87DF005A2E9F /* UPControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPControl.h; sourceTree = "<group>"; };
 		5D5216F1246D87DF005A2E9F /* UPControl.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPControl.mm; sourceTree = "<group>"; };
 		5D54078524845488003F193D /* UPBand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPBand.h; sourceTree = "<group>"; };
+		5D6261A424C1FE4100D19EEF /* NSFileManager+UP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+UP.h"; sourceTree = "<group>"; };
+		5D6261A524C1FE4100D19EEF /* NSFileManager+UP.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSFileManager+UP.mm"; sourceTree = "<group>"; };
 		5DA8E035247595B8008D3015 /* UPUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPUtility.h; sourceTree = "<group>"; };
 		5DA8E0382475C796008D3015 /* UPAssertions.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAssertions.mm; sourceTree = "<group>"; };
 		5DA8E0392475C796008D3015 /* UPAssertions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAssertions.h; sourceTree = "<group>"; };
@@ -193,16 +194,12 @@
 		5DC67DF52473069A009BCDBB /* UPGameTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameTimer.h; sourceTree = "<group>"; };
 		5DC67DF9247367D1009BCDBB /* UPGameTimerLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameTimerLabel.h; sourceTree = "<group>"; };
 		5DC67DFA247367D1009BCDBB /* UPGameTimerLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPGameTimerLabel.m; sourceTree = "<group>"; };
-		5DCFD09724ACF1E900CA5C24 /* UPSqlite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSqlite.h; sourceTree = "<group>"; };
-		5DCFD09924ACF27100CA5C24 /* UPSqlite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSqlite.mm; sourceTree = "<group>"; };
-		5DCFD09B24ACF61300CA5C24 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		5DCFD09D24AD4BC900CA5C24 /* UPGameTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UPGameTimer.m; sourceTree = "<group>"; };
 		5DD71D422457731700F3F9E2 /* UPLayoutRule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPLayoutRule.h; sourceTree = "<group>"; };
 		5DD71D432457731700F3F9E2 /* UPLayoutRule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutRule.m; sourceTree = "<group>"; };
 		5DD71D462457748000F3F9E2 /* UPLayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPLayoutTests.m; sourceTree = "<group>"; };
 		5DD71D482457824A00F3F9E2 /* UPGeometry.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGeometry.mm; sourceTree = "<group>"; };
 		5DD71D492457824A00F3F9E2 /* UPGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPGeometry.h; sourceTree = "<group>"; };
-		5DD71D4C2457832400F3F9E2 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		5DD71D9A2457AFB200F3F9E2 /* UPBezierPathView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPBezierPathView.h; sourceTree = "<group>"; };
 		5DD71D9B2457AFB200F3F9E2 /* UPBezierPathView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPBezierPathView.m; sourceTree = "<group>"; };
 		5DD71D9E2458DA3A00F3F9E2 /* UIView+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+UP.h"; sourceTree = "<group>"; };
@@ -248,7 +245,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DCFD09C24ACF61300CA5C24 /* libsqlite3.tbd in Frameworks */,
 				5DEBE0242454F22700016047 /* QuartzCore.framework in Frameworks */,
 				5DEBE0232454F21800016047 /* UIKit.framework in Frameworks */,
 			);
@@ -268,8 +264,6 @@
 		5DEBE0142454C77700016047 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5DCFD09B24ACF61300CA5C24 /* libsqlite3.tbd */,
-				5DD71D4C2457832400F3F9E2 /* Accelerate.framework */,
 				5DEBE0222454F21800016047 /* UIKit.framework */,
 				5DEBE0152454C77700016047 /* QuartzCore.framework */,
 			);
@@ -354,6 +348,8 @@
 		5DFE62232453CF4E00D9CA0B /* UP */ = {
 			isa = PBXGroup;
 			children = (
+				5D6261A424C1FE4100D19EEF /* NSFileManager+UP.h */,
+				5D6261A524C1FE4100D19EEF /* NSFileManager+UP.mm */,
 				5D12E4A124B7B37900C73F64 /* NSMutableAttributedString+UP.h */,
 				5D12E4A224B7B37900C73F64 /* NSMutableAttributedString+UP.mm */,
 				5D2CAC83245B538B00B81332 /* NSValue+UP.h */,
@@ -419,8 +415,6 @@
 				5DA8E06D247D50AB008D3015 /* UPSerialNumber.h */,
 				5D4AE82B248F1FE600213904 /* UPSettings.h */,
 				5D4AE82C248F1FE600213904 /* UPSettings.mm */,
-				5DCFD09724ACF1E900CA5C24 /* UPSqlite.h */,
-				5DCFD09924ACF27100CA5C24 /* UPSqlite.mm */,
 				5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */,
 				5DA8E03D2475E14D008D3015 /* UPStackTrace.h */,
 				5DEBE02C245716F900016047 /* UPStringTools.h */,
@@ -495,7 +489,7 @@
 				5DEBE0202454F1D200016047 /* UIColor+UP.h in Headers */,
 				5DFE6219245364C700D9CA0B /* UpKit.h in Headers */,
 				5DD71D442457731700F3F9E2 /* UPLayoutRule.h in Headers */,
-				5DCFD09824ACF1E900CA5C24 /* UPSqlite.h in Headers */,
+				5D6261A624C1FE4100D19EEF /* NSFileManager+UP.h in Headers */,
 				5DBADB7324678F4000D9D1FF /* UPGameKey.h in Headers */,
 				5DA8E063247C063B008D3015 /* UPTicker.h in Headers */,
 				5DA8E06E247D50AB008D3015 /* UPSerialNumber.h in Headers */,
@@ -662,13 +656,13 @@
 				5DC618BC246F045700090E7A /* UIFont+UP.mm in Sources */,
 				5DA8E054247AC79F008D3015 /* UPAnimator.mm in Sources */,
 				5D12E4AC24BCA91A00C73F64 /* UPPlacard.mm in Sources */,
+				5D6261A724C1FE4100D19EEF /* NSFileManager+UP.mm in Sources */,
 				5DBC20DC249BC33C002A6ADC /* UPNeedsUpdater.mm in Sources */,
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5D4AE82E248F1FE600213904 /* UPSettings.mm in Sources */,
 				5DA8E064247C063B008D3015 /* UPTicker.m in Sources */,
 				5D12E4A424B7B37900C73F64 /* NSMutableAttributedString+UP.mm in Sources */,
 				5DF9DF432465B35700B2199D /* UPLexicon.mm in Sources */,
-				5DCFD09A24ACF27100CA5C24 /* UPSqlite.mm in Sources */,
 				5DCFD09E24AD4BC900CA5C24 /* UPGameTimer.m in Sources */,
 				5DA8E0402475E14D008D3015 /* UPStackTrace.cpp in Sources */,
 				5D2CAC86245B53F200B81332 /* NSValue+UP.m in Sources */,

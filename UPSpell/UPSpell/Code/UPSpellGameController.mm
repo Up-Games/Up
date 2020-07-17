@@ -22,7 +22,7 @@
 #import "UPSpellGameSummary.h"
 #import "UPSpellGameView.h"
 #import "UPSpellLayout.h"
-#import "UPSpellPersistentData.h"
+#import "UPSpellDossier.h"
 #import "UPSpellSettings.h"
 #import "UPTextButton.h"
 #import "UPTileModel.h"
@@ -35,7 +35,6 @@
 using Action = UP::SpellModel::Action;
 using Opcode = UP::SpellModel::Opcode;
 using State = UP::SpellModel::State;
-using StatsRank = UP::SpellModel::StatsRank;
 using TileArray = UP::TileArray;
 using TileIndex = UP::TileIndex;
 using TilePosition = UP::TilePosition;
@@ -190,7 +189,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self configureModeTransitionTables];
     [self configureLifecycleNotifications];
 
-    [UPSpellPersistentData instance]; // restores data from disk
+    [UPSpellDossier instance]; // restores data from disk
     
     m_spell_model = [self restoreInProgressGameIfExists];
     if (m_spell_model) {
@@ -1908,24 +1907,18 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT(self.mode == Mode::End);
 
     NSString *result = nil;
-    
+
     int score = m_spell_model->game_score();
-    std::pair<int, StatsRank> rank = m_spell_model->game_score_rank(score);
-    if (rank.second == StatsRank::Alone) {
-        switch (rank.first) {
-            case 1: {
-                result = @"NEW HIGH SCORE!";
-                break;
-            }
-        }
+    if (score == 0) {
+        return result;
     }
-    else if (rank.second == StatsRank::Tied) {
-        switch (rank.first) {
-            case 1: {
-                result = @"TIED HIGH SCORE!";
-                break;
-            }
-        }
+    
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    if (score > dossier.highScore) {
+        result = @"NEW HIGH SCORE!";
+    }
+    else if (score == dossier.highScore) {
+        result = @"TIED HIGH SCORE!";
     }
 
     return result;
@@ -1959,18 +1952,19 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)createNewGameModelIfNeeded
 {
     if (self.playMenuChoice && self.playMenuChoice.tag != UPDialogPlayMenuChoiceNewGame) {
+        UPSpellDossier *dossier = [UPSpellDossier instance];
         GameKey game_key;
         if (self.playMenuChoice.tag == UPDialogPlayMenuChoiceRetryHighScore) {
-            game_key = GameKey(self.dialogPlayMenu.gameKeyForHighScore.value);
+            game_key = GameKey(dossier.highGameKey);
         }
         else if (self.playMenuChoice.tag == UPDialogPlayMenuChoiceRetryLastGame) {
-            game_key = GameKey(self.dialogPlayMenu.gameKeyForLastGame.value);
+            game_key = GameKey(dossier.lastGameKey);
         }
         m_spell_model = std::make_shared<SpellModel>(game_key);
 //        LOG(General, "GameKey: %s", game_key.string().c_str());
     }
     else {
-        if (m_spell_model && m_spell_model->back_state().action().opcode() == SpellModel::Opcode::START) {
+        if (m_spell_model && m_spell_model->back_opcode() == SpellModel::Opcode::START) {
             return;
         }
         m_spell_model = std::make_shared<SpellModel>(GameKey::random());
@@ -1980,40 +1974,6 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 #pragma mark - Archiving persistent data and in-progress game
 
 static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-game.dat";
-static NSString * const UPSpellPersistentDataFileName = @"up-spell-persistent.dat";
-
-static NSString *save_file_path(NSString *name)
-{
-    NSString *path = nil;
-    NSFileManager *fm = [NSFileManager defaultManager];
-    NSArray *possibleURLs = [fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
-    if (possibleURLs.count > 0) {
-        NSURL *documentDirectoryURL = [possibleURLs objectAtIndex:0];
-        NSURL *archiveFileURL = [documentDirectoryURL URLByAppendingPathComponent:name];
-        path = [NSString stringWithUTF8String:[[archiveFileURL path] fileSystemRepresentation]];
-    }
-    return path;
-}
-
-- (void)updatePersistentData
-{
-    ASSERT(m_spell_model->back_opcode() == Opcode::END);
-
-    UPSpellPersistentData *data = [UPSpellPersistentData instance];
-    
-    if (data.highScore <= m_spell_model->game_score() && m_spell_model->game_score() > 0) {
-        data.highScore = m_spell_model->game_score();
-        data.highGameKey = m_spell_model->game_key().value();
-    }
-
-    data.lastScore = m_spell_model->game_score();
-    data.lastGameKey = m_spell_model->game_key().value();
-    
-    data.totalGamesPlayed++;
-    data.totalGameScore += m_spell_model->game_score();
-    data.totalWordsSubmitted += m_spell_model->game_words_submitted();
-    data.totalTilesSubmitted += m_spell_model->game_tiles_submitted();
-}
 
 - (void)saveInProgressGameIfNecessary
 {
@@ -2029,7 +1989,7 @@ static NSString *save_file_path(NSString *name)
         LOG(General, "error writing in-progress game data data: %@", error);
     }
     else {
-        NSString *saveFilePath = save_file_path(UPSpellPersistentDataFileName);
+        NSString *saveFilePath = [[NSFileManager defaultManager] documentsDirectoryPathWithFileName:UPSpellInProgressGameFileName];
         if (saveFilePath) {
             [data writeToFile:saveFilePath atomically:YES];
             LOG(General, "saveInProgressGameIfNecessary: %@", saveFilePath);
@@ -2046,7 +2006,7 @@ static NSString *save_file_path(NSString *name)
     NSError *error;
     
     BOOL restored = NO;
-    NSString *saveFilePath = save_file_path(UPSpellInProgressGameFileName);
+    NSString *saveFilePath = [[NSFileManager defaultManager] documentsDirectoryPathWithFileName:UPSpellInProgressGameFileName];
     if (saveFilePath) {
         NSData *data = [NSData dataWithContentsOfFile:saveFilePath];
         if (!data) {
@@ -2077,7 +2037,7 @@ static NSString *save_file_path(NSString *name)
 
 - (void)removeInProgressGameFileLogErrors:(BOOL)logErrors
 {
-    NSString *saveFilePath = save_file_path(UPSpellInProgressGameFileName);
+    NSString *saveFilePath = [[NSFileManager defaultManager] documentsDirectoryPathWithFileName:UPSpellInProgressGameFileName];
     NSError *error;
     NSFileManager *fm = [NSFileManager defaultManager];
     [fm removeItemAtPath:saveFilePath error:&error];
@@ -2702,8 +2662,9 @@ static NSString *save_file_path(NSString *name)
     [self viewSetNoteLabelString];
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
 
-    [self updatePersistentData];
-    [[UPSpellPersistentData instance] save];
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    [dossier updateWithModel:m_spell_model];
+    [dossier save];
     
     delay(BandModeDelay, 1.0, ^{
         SpellLayout &layout = SpellLayout::instance();
@@ -2788,8 +2749,10 @@ static NSString *save_file_path(NSString *name)
     size_t incoming_word_length = m_spell_model->word().length();
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     
-    [self updatePersistentData];
-    [[UPSpellPersistentData instance] save];
+    [self removeInProgressGameFileLogErrors:NO];
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    [dossier updateWithModel:m_spell_model];
+    [dossier save];
 
     delay(BandModeDelay, 0.35, ^{
         [self viewDumpAllTilesFromCurrentPosition:incoming_tiles wordLength:incoming_word_length];

@@ -25,8 +25,6 @@ typedef NS_ENUM(NSInteger, UPDialogPlayMenuChoice) {
 @property (nonatomic, readonly) UPChoice *choice2;
 @property (nonatomic, readonly) UPChoice *choice3;
 @property (nonatomic, readonly) NSArray<UPChoice *> *choices;
-@property (nonatomic, readonly) UPGameKey *gameKeyForHighScore;
-@property (nonatomic, readonly) UPGameKey *gameKeyForLastGame;
 
 + (UPDialogPlayMenu *)instance;
 

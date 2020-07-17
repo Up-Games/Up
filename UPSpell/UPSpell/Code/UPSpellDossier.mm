@@ -1,5 +1,5 @@
 //
-//  UPSpellPersistentData.mm
+//  UPSpellDossier.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -8,21 +8,21 @@
 #import <UpKit/UPAssertions.h>
 #import <UpKit/UPMacros.h>
 
-#import "UPSpellPersistentData.h"
+#import "UPSpellDossier.h"
 
-@interface UPSpellPersistentData ()
+@interface UPSpellDossier ()
 @end
 
-@implementation UPSpellPersistentData
+@implementation UPSpellDossier
 
-+ (UPSpellPersistentData *)instance
++ (UPSpellDossier *)instance
 {
     static dispatch_once_t onceToken;
-    static UPSpellPersistentData *_Instance;
+    static UPSpellDossier *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [UPSpellPersistentData restore];
+        _Instance = [UPSpellDossier restore];
         if (!_Instance) {
-            _Instance = [[UPSpellPersistentData alloc] init];
+            _Instance = [[UPSpellDossier alloc] init];
         }
     });
     return _Instance;
@@ -81,7 +81,27 @@
     return YES;
 }
 
-static NSString * const UPSpellPersistentDataFileName = @"up-spell-persistent.dat";
+- (void)updateWithModel:(UP::SpellModelPtr)model
+{
+    ASSERT(model->back_opcode() == UP::SpellModel::Opcode::END);
+    
+    UPSpellDossier *data = [UPSpellDossier instance];
+    
+    if (data.highScore <= model->game_score() && model->game_score() > 0) {
+        data.highScore = model->game_score();
+        data.highGameKey = model->game_key().value();
+    }
+    
+    data.lastScore = model->game_score();
+    data.lastGameKey = model->game_key().value();
+    
+    data.totalGamesPlayed++;
+    data.totalGameScore += model->game_score();
+    data.totalWordsSubmitted += model->game_words_submitted();
+    data.totalTilesSubmitted += model->game_tiles_submitted();
+}
+
+static NSString * const UPSpellDossierFileName = @"up-spell-dossier.dat";
 
 static NSString *save_file_path(NSString *name)
 {
@@ -104,7 +124,7 @@ static NSString *save_file_path(NSString *name)
         NSLog(@"error writing persistent data: %@", error);
     }
     else {
-        NSString *saveFilePath = save_file_path(UPSpellPersistentDataFileName);
+        NSString *saveFilePath = save_file_path(UPSpellDossierFileName);
         if (saveFilePath) {
             [data writeToFile:saveFilePath atomically:YES];
             LOG(General, "savePersistentData: %@", saveFilePath);
@@ -115,9 +135,9 @@ static NSString *save_file_path(NSString *name)
     }
 }
 
-+ (UPSpellPersistentData *)restore
++ (UPSpellDossier *)restore
 {
-    NSString *saveFilePath = save_file_path(UPSpellPersistentDataFileName);
+    NSString *saveFilePath = save_file_path(UPSpellDossierFileName);
     if (!saveFilePath) {
         NSLog(@"error reading persistent data: save file unavailable: %@", saveFilePath);
         return nil;
@@ -129,8 +149,8 @@ static NSString *save_file_path(NSString *name)
         return nil;
     }
     NSError *error;
-    Class cls = [UPSpellPersistentData class];
-    UPSpellPersistentData *persistentData = [NSKeyedUnarchiver unarchivedObjectOfClass:cls fromData:data error:&error];
+    Class cls = [UPSpellDossier class];
+    UPSpellDossier *persistentData = [NSKeyedUnarchiver unarchivedObjectOfClass:cls fromData:data error:&error];
     if (error) {
         NSLog(@"error reading persistent data: %@ : %@", saveFilePath, error);
         return nil;

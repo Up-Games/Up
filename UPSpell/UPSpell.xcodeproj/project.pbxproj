@@ -149,7 +149,7 @@
 		5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1442485B820006264D2 /* UPTextPaths.mm */; };
 		5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */; };
 		5D5EA14C248702BF006264D2 /* MalloryCond-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D5EA14A24870128006264D2 /* MalloryCond-BlackItalic.otf */; };
-		5D6261A324C0944600D19EEF /* UPSpellPersistentData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6261A224C0944600D19EEF /* UPSpellPersistentData.mm */; };
+		5D6261A324C0944600D19EEF /* UPSpellDossier.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6261A224C0944600D19EEF /* UPSpellDossier.mm */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.mm */; };
 		5DA0A06624BCD4EA0029CE0E /* UPSpellGameRetry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA0A06524BCD4EA0029CE0E /* UPSpellGameRetry.mm */; };
 		5DA0A06924BD08590029CE0E /* UPDialogPlayMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA0A06824BD08590029CE0E /* UPDialogPlayMenu.mm */; };
@@ -158,7 +158,6 @@
 		5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */; };
 		5DB9B1AC248705FA00A4AAA8 /* UPSpellGameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AB248705FA00A4AAA8 /* UPSpellGameView.mm */; };
 		5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */; };
-		5DCFD09624ABB5C800CA5C24 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCFD09524ABB5C800CA5C24 /* libsqlite3.tbd */; };
 		5DF9DF5C2466165700B2199D /* UPAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */; };
 		5DF9DF5F2466165700B2199D /* UPSceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */; };
 		5DF9DF622466165700B2199D /* UPSpellGameController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF612466165700B2199D /* UPSpellGameController.mm */; };
@@ -360,8 +359,8 @@
 		5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameOver.mm; sourceTree = "<group>"; };
 		5D5EA14A24870128006264D2 /* MalloryCond-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-BlackItalic.otf"; sourceTree = "<group>"; };
 		5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryNrrw-Bold.otf"; sourceTree = "<group>"; };
-		5D6261A124C0944600D19EEF /* UPSpellPersistentData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellPersistentData.h; sourceTree = "<group>"; };
-		5D6261A224C0944600D19EEF /* UPSpellPersistentData.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellPersistentData.mm; sourceTree = "<group>"; };
+		5D6261A124C0944600D19EEF /* UPSpellDossier.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellDossier.h; sourceTree = "<group>"; };
+		5D6261A224C0944600D19EEF /* UPSpellDossier.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellDossier.mm; sourceTree = "<group>"; };
 		5D723114246B34C0006027A3 /* UPTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileView.h; sourceTree = "<group>"; };
 		5D72311F246B3917006027A3 /* UIFont+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UPSpell.h"; sourceTree = "<group>"; };
 		5D723120246B3996006027A3 /* UIFont+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIFont+UPSpell.mm"; sourceTree = "<group>"; };
@@ -381,7 +380,6 @@
 		5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTilePaths.h; sourceTree = "<group>"; };
 		5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPTilePaths-private.mm"; sourceTree = "<group>"; };
 		5DC67DF424730207009BCDBB /* UPSpellMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellMacros.h; sourceTree = "<group>"; };
-		5DCFD09524ABB5C800CA5C24 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		5DF9DF572466165700B2199D /* UP Spell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UP Spell.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF9DF5A2466165700B2199D /* UPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAppDelegate.h; sourceTree = "<group>"; };
 		5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAppDelegate.mm; sourceTree = "<group>"; };
@@ -405,7 +403,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DCFD09624ABB5C800CA5C24 /* libsqlite3.tbd in Frameworks */,
 				5DF9DF8C2466168500B2199D /* UpKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -591,6 +588,8 @@
 				5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */,
 				5D4AE826248BDF2300213904 /* UPSpellAboutController.h */,
 				5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */,
+				5D6261A124C0944600D19EEF /* UPSpellDossier.h */,
+				5D6261A224C0944600D19EEF /* UPSpellDossier.mm */,
 				5D4AE823248BDED200213904 /* UPSpellExtrasController.h */,
 				5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */,
 				5D0FC33424A65C0B00353563 /* UPSpellExtrasPaneColors.h */,
@@ -611,8 +610,6 @@
 				5DA8E078247D723A008D3015 /* UPSpellModel.mm */,
 				5D54078224841631003F193D /* UPSpellNavigationController.h */,
 				5D54078324841631003F193D /* UPSpellNavigationController.mm */,
-				5D6261A124C0944600D19EEF /* UPSpellPersistentData.h */,
-				5D6261A224C0944600D19EEF /* UPSpellPersistentData.mm */,
 				5D0FC22A24A2A5C300353563 /* UPSpellSettings.h */,
 				5D0FC22B24A2A5C300353563 /* UPSpellSettings.mm */,
 				5D0FC22524A278D300353563 /* UPStepper.h */,
@@ -686,7 +683,6 @@
 		5DF9DF8A2466168500B2199D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5DCFD09524ABB5C800CA5C24 /* libsqlite3.tbd */,
 				5DF9DF8B2466168500B2199D /* UpKit.framework */,
 			);
 			name = Frameworks;
@@ -940,7 +936,7 @@
 				5DA0A06924BD08590029CE0E /* UPDialogPlayMenu.mm in Sources */,
 				5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */,
 				5D0FC22724A278D300353563 /* UPStepper.mm in Sources */,
-				5D6261A324C0944600D19EEF /* UPSpellPersistentData.mm in Sources */,
+				5D6261A324C0944600D19EEF /* UPSpellDossier.mm in Sources */,
 				5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */,
 				5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */,
 				5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */,

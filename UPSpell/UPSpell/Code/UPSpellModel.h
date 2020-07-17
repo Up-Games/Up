@@ -285,32 +285,9 @@ public:
     std::string cpp_str(Opcode) const;
     std::string cpp_str(const State &) const;
 
-    int game_words_submitted() const { return m_game_words_submitted; }
-    int game_tiles_submitted() const { return m_game_tiles_submitted; }
-
-    enum class StatsRank { Unknown, Alone, Tied };
-    static constexpr size_t NotALimit = std::numeric_limits<size_t>::max();
-    
+    size_t game_words_submitted() const { return m_game_submitted_words.size(); }
+    size_t game_tiles_submitted() const;
     std::vector<Word> game_best_word() const;
-    
-    static std::pair<int, StatsRank> game_score_rank(int score);
-    static std::pair<int, StatsRank> word_score_rank(int score);
-    static std::pair<int, StatsRank> words_spelled_count_rank(int count);
-
-    static std::vector<int> all_time_game_scores(size_t limit = 5);
-    static std::vector<int> all_time_word_scores(size_t limit = 5);
-    static std::vector<int> all_time_words_submitted_counts(size_t limit = 5);
-
-    static std::vector<SpellGameSummary> best_games(SpellGameSummary::Metric, size_t limit = 25);
-    static SpellGameSummary high_score_game();
-    static SpellGameSummary last_game();
-
-    static int all_time_games_played_count();
-    static double all_time_average_game_score();
-    static double all_time_word_score_average();
-    static double all_time_word_length_average();
-    static double all_time_average_words_submitted_count();
-    static int all_time_total_tiles_used_count();
 
 private:
     std::string tiles_description() const;
@@ -343,22 +320,13 @@ private:
     void apply_quit(const Action &action);
     void apply_end(const Action &action);
 
-    static sqlite3 *db_handle();
-
-    void db_store();
-    void db_drop();
-    void set_db_game_id(uint64_t db_game_id) { m_db_game_id = db_game_id; }
-    uint64_t db_game_id() const { return m_db_game_id; }
-
     GameKey m_game_key;
     TileSequence m_tile_sequence;
     TileArray m_tiles;
     std::vector<State> m_states;
     Word m_word;
     int m_game_score = 0;
-    int m_game_words_submitted = 0;
-    int m_game_tiles_submitted = 0;
-    uint64_t m_db_game_id = 0;
+    std::vector<Word> m_game_submitted_words;
 };
 
 using SpellModelPtr = std::shared_ptr<class SpellModel>;
