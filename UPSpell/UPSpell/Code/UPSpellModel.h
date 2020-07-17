@@ -166,23 +166,24 @@ private:
 class SpellModel {
 public:
     enum class Opcode: uint8_t {
-        NOP    =  0, // no-op
-        START  =  1, // the start state for every game
-        PLAY   =  2, // start playing a game
-        ADD    =  3, // move a player tray to the word tray
-        REMOVE =  4, // remove a tile from the word tray, tightening up the remaining tiles (if any)
-        MOVE   =  5, // move a word tray tile to a new word tray position
-        PICK   =  6, // drag a tile to pick it up
-        HOVER  =  7, // float above a position where a tile could be moved
-        NOVER  =  8, // cancel a previous hover, tightening up the remaining tiles (if any)
-        DROP   =  9, // drop a picked-up tile, leaving it where it was
-        SUBMIT = 10, // accept submission of tiles in the word tray to score points
-        REJECT = 11, // reject submission of tiles in the word tray to score points
-        CLEAR  = 12, // return the tiles in the word to their positions in the player tray
-        DUMP   = 13, // dump player tray tiles and replace them with a new set of tiles
-        OVER   = 14, // game over
-        QUIT   = 15, // quit the game early
-        END    = 16, // the end state after game over or quit
+        NOP,    // no-op
+        START,  // the start state for every game
+        PLAY,   // start playing a game
+        ADD,    // move a player tray to the word tray
+        REMOVE, // remove a tile from the word tray, tightening up the remaining tiles (if any)
+        MOVE,   // move a word tray tile to a new word tray position
+        PICK,   // drag a tile to pick it up
+        HOVER,  // float above a position where a tile could be moved
+        NOVER,  // cancel a previous hover, tightening up the remaining tiles (if any)
+        DROP,   // drop a picked-up tile, leaving it where it was
+        SUBMIT, // accept submission of tiles in the word tray to score points
+        REJECT, // reject submission of tiles in the word tray to score points
+        CLEAR,  // return the tiles in the word to their positions in the player tray
+        DUMP,   // dump player tray tiles and replace them with a new set of tiles
+        PAUSE,  // pause
+        OVER,   // game over
+        QUIT,   // quit the game early
+        END,    // the end state after game over or quit
     };
 
     static constexpr int SevenLetterWordBonus = 12;
@@ -316,6 +317,7 @@ private:
     void apply_reject(const Action &action);
     void apply_clear(const Action &action);
     void apply_dump(const Action &action);
+    void apply_pause(const Action &action);
     void apply_over(const Action &action);
     void apply_quit(const Action &action);
     void apply_end(const Action &action);
@@ -340,8 +342,6 @@ using SpellModelPtr = std::shared_ptr<class SpellModel>;
 
 @property (class, readonly) BOOL supportsSecureCoding;
 @property (nonatomic, readonly) UP::SpellModelPtr inner;
-
-@property (nonatomic, readonly) UPGameKey *gameKey;
 
 + (UPSpellModel *)spellModel;
 + (UPSpellModel *)spellModelWithInner:(UP::SpellModelPtr)inner;

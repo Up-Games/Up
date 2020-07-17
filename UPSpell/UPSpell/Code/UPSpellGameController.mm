@@ -193,7 +193,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     
     m_spell_model = [self restoreInProgressGameIfExists];
     if (m_spell_model) {
-        // restore game screen and show pause screen
+        [self setMode:Mode::Pause];
     }
     else {
         [self setMode:Mode::Init];
@@ -1023,7 +1023,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 - (void)viewUpdateGameControls
 {
     // word tray
-    if (self.mode == Mode::Attract || self.mode == Mode::Play) {
+    if (self.mode == Mode::Attract || self.mode == Mode::Play || self.mode == Mode::Pause) {
         self.gameView.wordTrayControl.active = m_spell_model->word().in_lexicon();
     }
     else {
@@ -1487,6 +1487,31 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             tile.set_view(tileView);
             tileView.band = BandGameUI;
             tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, idx)));
+            [self.gameView.tileContainerView addSubview:tileView];
+        }
+        idx++;
+    }
+}
+
+- (void)viewRestoreInProgressGame
+{
+    [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    SpellLayout &layout = SpellLayout::instance();
+    TileIndex idx = 0;
+    for (auto &tile : m_spell_model->tiles()) {
+        if (tile.has_view<false>()) {
+            const TileModel &model = tile.model();
+            UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
+            tile.set_view(tileView);
+            tileView.band = BandGameUI;
+            if (tile.in_word_tray()) {
+                tileView.frame = layout.frame_for(role_in_word(tile.position().index(), m_spell_model->word().length()));
+            }
+            else {
+                tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, idx)));
+            }
+
             [self.gameView.tileContainerView addSubview:tileView];
         }
         idx++;
@@ -1977,11 +2002,13 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)saveInProgressGameIfNecessary
 {
-    if (m_spell_model->back_opcode() != Opcode::END) {
+    if (m_spell_model->back_opcode() == Opcode::START || m_spell_model->back_opcode() == Opcode::END) {
         [self removeInProgressGameFileLogErrors:NO];
         return;
     }
 
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::PAUSE));
+    
     UPSpellModel *model = [UPSpellModel spellModelWithInner:m_spell_model];
     NSError *error;
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model requiringSecureCoding:YES error:&error];
@@ -2008,19 +2035,19 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     BOOL restored = NO;
     NSString *saveFilePath = [[NSFileManager defaultManager] documentsDirectoryPathWithFileName:UPSpellInProgressGameFileName];
     if (saveFilePath) {
+        LOG(General, "restoreInProgressGameIfExists: %@", saveFilePath);
         NSData *data = [NSData dataWithContentsOfFile:saveFilePath];
-        if (!data) {
-            //LOG(General, "error reading in-progress game data: save data unavailable: %@", saveFilePath);
-        }
-        else {
-            Class cls = [UPSpellModel class];
-            UPSpellModel *model = [NSKeyedUnarchiver unarchivedObjectOfClass:cls fromData:data error:&error];
-            if (!error) {
-                restored = YES;
-                result = model.inner;
+        if (data) {
+            UPSpellModel *model = [NSKeyedUnarchiver unarchivedObjectOfClass:[UPSpellModel class] fromData:data error:&error];
+            if (error) {
+                LOG(General, "error reading in-progress game data: %@ : %@", saveFilePath, error);
+            }
+            else if (model.inner->back_opcode() != Opcode::PAUSE) {
+                LOG(General, "in-progress game doesn't end with PAUSE: %@ : %@", saveFilePath, error);
             }
             else {
-                LOG(General, "error reading in-progress game data: %@ : %@", saveFilePath, error);
+                restored = YES;
+                result = model.inner;
             }
         }
     }
@@ -2041,7 +2068,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     NSError *error;
     NSFileManager *fm = [NSFileManager defaultManager];
     [fm removeItemAtPath:saveFilePath error:&error];
-    if (logErrors) {
+    if (error && logErrors) {
         LOG(General, "error removing in-progress game data file: %@ : %@", saveFilePath, error);
     }
 }
@@ -2083,6 +2110,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 {
     m_default_transition_table = {
         { Mode::None,     Mode::Init,     @selector(modeTransitionFromNoneToInit) },
+        { Mode::None,     Mode::Pause,    @selector(modeTransitionFromNoneToPause) },
         { Mode::Init,     Mode::Attract,  @selector(modeTransitionFromInitToAttract) },
         { Mode::Init,     Mode::About,    @selector(modeTransitionFromInitToAbout) },
         { Mode::Init,     Mode::Extras,   @selector(modeTransitionFromInitToExtras) },
@@ -2179,6 +2207,46 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewFillUpSpellTileViews];
     [self viewLock];
     [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
+    [self viewUnlock];
+}
+
+- (void)modeTransitionFromNoneToPause
+{
+    ASSERT(m_spell_model->back_opcode() == Opcode::PAUSE);
+
+    [self viewLock];
+    
+    self.gameView.transform = CGAffineTransformIdentity;
+    [self.gameTimer resetTo:m_spell_model->back_state().action().timestamp()];
+    [self viewUpdateGameControls];
+    [self viewRestoreInProgressGame];
+    [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
+
+    if (@available(iOS 11.0, *)) {
+        [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
+    }
+        
+    // special modal fixups for pause
+    self.gameView.pauseControl.highlightedLocked = YES;
+    self.gameView.pauseControl.highlighted = YES;
+    self.gameView.pauseControl.alpha = [UIColor themeModalActiveAlpha];
+    
+    SpellLayout &layout = SpellLayout::instance();
+    self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray);
+    self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse);
+    self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse);
+    self.dialogPause.hidden = NO;
+    self.dialogPause.alpha = 1.0;
+    
+    self.dialogTopMenu.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear);
+
+    self.dialogTopMenu.alpha = 1.0;
+    self.dialogTopMenu.hidden = YES;
+    self.dialogGameOver.alpha = 1.0;
+    self.dialogGameOver.hidden = YES;
+    self.dialogGameNote.alpha = 1.0;
+    self.dialogGameNote.hidden = YES;
+
     [self viewUnlock];
 }
 

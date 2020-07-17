@@ -246,6 +246,7 @@ bool SpellModel::is_game_completed() const
             case Opcode::REJECT:
             case Opcode::CLEAR:
             case Opcode::DUMP:
+            case Opcode::PAUSE:
             case Opcode::QUIT:
                 return false;
             case Opcode::OVER:
@@ -509,6 +510,8 @@ std::string SpellModel::cpp_str(Opcode opcode) const
             return "CLEAR";
         case Opcode::DUMP:
             return "DUMP";
+        case Opcode::PAUSE:
+            return "PAUSE";
         case Opcode::OVER:
             return "OVER";
         case Opcode::QUIT:
@@ -629,6 +632,9 @@ const SpellModel::State &SpellModel::apply(const Action &action)
             break;
         case Opcode::DUMP:
             apply_dump(action);
+            break;
+        case Opcode::PAUSE:
+            apply_pause(action);
             break;
         case Opcode::OVER:
             apply_over(action);
@@ -896,6 +902,16 @@ void SpellModel::apply_dump(const Action &action)
     ASSERT(positions_valid());
 }
 
+void SpellModel::apply_pause(const Action &action)
+{
+    ASSERT(action.opcode() == Opcode::PAUSE);
+    ASSERT_NPOS(action.pos1());
+    ASSERT_NPOS(action.pos2());
+    ASSERT(positions_valid());
+    
+    // no-op
+}
+
 void SpellModel::apply_over(const Action &action)
 {
     ASSERT(action.opcode() == Opcode::OVER);
@@ -993,7 +1009,7 @@ using UP::TileIndex;
 
 UP_STATIC_INLINE TilePosition make_tile_position(_UPTilePosition *tilePosition)
 {
-    return TilePosition(tilePosition.tray, tilePosition.index);
+    return tilePosition.index == UP::NotATileIndex ? TilePosition() : TilePosition(tilePosition.tray, tilePosition.index);
 }
 
 // =========================================================================================================================================
@@ -1065,8 +1081,8 @@ UP_STATIC_INLINE TileModel make_tile_model(_UPTileModel *model)
 {
     self = [super init];
     
-    UP_DECODE(coder, model, Object);
-    UP_DECODE(coder, position, Object);
+    self.model = [coder decodeObjectOfClass:[_UPTileModel class] forKey:NSStringFromSelector(@selector(model))];
+    self.position = [coder decodeObjectOfClass:[_UPTilePosition class] forKey:NSStringFromSelector(@selector(position))];
     
     return self;
 }
@@ -1118,8 +1134,8 @@ UP_STATIC_INLINE Tile make_tile(_UPTile *tile)
     
     UP_DECODE_T(coder, SpellModel::Opcode, opcode, Int32);
     UP_DECODE(coder, timestamp, Double);
-    UP_DECODE(coder, position1, Object);
-    UP_DECODE(coder, position2, Object);
+    self.position1 = [coder decodeObjectOfClass:[_UPTilePosition class] forKey:NSStringFromSelector(@selector(position1))];
+    self.position2 = [coder decodeObjectOfClass:[_UPTilePosition class] forKey:NSStringFromSelector(@selector(position2))];
     
     return self;
 }
@@ -1173,8 +1189,11 @@ UP_STATIC_INLINE SpellModel::Action make_action(_UPSpellModelAction *action)
 {
     self = [super init];
     
-    UP_DECODE(coder, action, Object);
-    UP_DECODE(coder, tiles, Object);
+    self.action = [coder decodeObjectOfClass:[_UPSpellModelAction class] forKey:NSStringFromSelector(@selector(action))];
+
+    NSSet *allowedClasses = [NSSet setWithArray:@[ [_UPTile class], [NSArray class] ]];
+    self.tiles = [coder decodeObjectOfClasses:allowedClasses forKey:NSStringFromSelector(@selector(tiles))];
+
     UP_DECODE(coder, gameScore, Int);
 
     return self;
@@ -1216,6 +1235,7 @@ UP_STATIC_INLINE SpellModel::State make_state(_UPSpellModelState *state)
 // =========================================================================================================================================
 
 static NSString * const UPSpellModelStatesArchiveKey = @"STATES";
+static NSString * const UPSpellGameKeyValueArchiveKey = @"GAMEKEY_VALUE";
 
 @interface UPSpellModel ()
 {
@@ -1253,12 +1273,13 @@ static NSString * const UPSpellModelStatesArchiveKey = @"STATES";
 {
     self = [super init];
     
-    UPGameKey *gameKey = [coder decodeObjectForKey:NSStringFromSelector(@selector(gameKey))];
-    GameKey game_key = GameKey(gameKey.value);
+    uint32_t game_key_value = [coder decodeInt32ForKey:UPSpellGameKeyValueArchiveKey];
+    GameKey game_key = GameKey(game_key_value);
     
-    std::vector<SpellModel::State> states;
-    NSArray<_UPSpellModelState *> *decodedStates = [coder decodeObjectForKey:UPSpellModelStatesArchiveKey];
-    if (decodedStates) {
+    if ([coder containsValueForKey:UPSpellModelStatesArchiveKey]) {
+        std::vector<SpellModel::State> states;
+        NSSet *allowedClasses = [NSSet setWithArray:@[ [_UPSpellModelState class], [NSArray class] ]];
+        NSArray<_UPSpellModelState *> *decodedStates = [coder decodeObjectOfClasses:allowedClasses forKey:UPSpellModelStatesArchiveKey];
         for (_UPSpellModelState *decodedState : decodedStates) {
             states.push_back(make_state(decodedState));
         }
@@ -1273,7 +1294,8 @@ static NSString * const UPSpellModelStatesArchiveKey = @"STATES";
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeObject:self.gameKey forKey:NSStringFromSelector(@selector(gameKey))];
+    uint32_t game_key_value = m_inner->game_key().value();
+    [coder encodeInt32:game_key_value forKey:UPSpellGameKeyValueArchiveKey];
 
     if (!m_inner->is_game_completed()) {
         NSMutableArray<_UPSpellModelState *> *states = [NSMutableArray array];
@@ -1288,12 +1310,6 @@ static NSString * const UPSpellModelStatesArchiveKey = @"STATES";
 - (SpellModelPtr)inner
 {
     return m_inner;
-}
-
-@dynamic gameKey;
-- (UPGameKey *)gameKey
-{
-    return [UPGameKey gameKeyWithValue:m_inner->game_key().value()];
 }
 
 @dynamic supportsSecureCoding;

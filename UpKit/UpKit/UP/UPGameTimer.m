@@ -95,6 +95,17 @@ const CFTimeInterval UPGameTimerDefaultDuration = 10;
     }
 }
 
+- (void)resetTo:(CFTimeInterval)remainingTime
+{
+    [self stop];
+    CFTimeInterval now = CACurrentMediaTime();
+    self.startTime = now;
+    self.remainingTime = remainingTime;
+    for (id observer in self.observers) {
+        [observer gameTimerReset:self];
+    }
+}
+
 - (void)cancel
 {
     [self stop];
