@@ -54,7 +54,7 @@ using UP::TimeSpanning::start;
 
 - (void)viewDidLoad
 {
-    LOG_CHANNEL_ON(DB);
+    LOG_CHANNEL_ON(Audio);
     LOG_CHANNEL_ON(General);
     //LOG_CHANNEL_ON(Gestures);
     //LOG_CHANNEL_ON(Layout);

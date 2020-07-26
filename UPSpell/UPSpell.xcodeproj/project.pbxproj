@@ -145,6 +145,11 @@
 		5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */; };
 		5D54078424841631003F193D /* UPSpellNavigationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D54078324841631003F193D /* UPSpellNavigationController.mm */; };
 		5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */; };
+		5D5B53F224CDCACD00FD50D4 /* UPSoundPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B53F124CDCACD00FD50D4 /* UPSoundPlayer.mm */; };
+		5D5B53F424CDCB5000FD50D4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5B53F324CDCB5000FD50D4 /* AVFoundation.framework */; };
+		5D5B53F724CDF18A00FD50D4 /* Tile-Tick.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B53F624CDF18A00FD50D4 /* Tile-Tick.aif */; };
+		5D5B53FC24CDF34E00FD50D4 /* Trumpet-Stab-1.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B53FB24CDF34E00FD50D4 /* Trumpet-Stab-1.aif */; };
+		5D5B53FE24CDF51E00FD50D4 /* Game-Over.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B53FD24CDF51E00FD50D4 /* Game-Over.aac */; };
 		5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1412485B49E006264D2 /* UPDialogPause.mm */; };
 		5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1442485B820006264D2 /* UPTextPaths.mm */; };
 		5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */; };
@@ -351,6 +356,12 @@
 		5D544C0F248805F5001FA8DF /* UPDialogTopMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogTopMenu.h; sourceTree = "<group>"; };
 		5D57D1FA246DB97700705395 /* UPControl+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UPControl+UPSpell.h"; sourceTree = "<group>"; };
 		5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPControl+UPSpell.mm"; sourceTree = "<group>"; };
+		5D5B53F024CDCACD00FD50D4 /* UPSoundPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSoundPlayer.h; sourceTree = "<group>"; };
+		5D5B53F124CDCACD00FD50D4 /* UPSoundPlayer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSoundPlayer.mm; sourceTree = "<group>"; };
+		5D5B53F324CDCB5000FD50D4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5D5B53F624CDF18A00FD50D4 /* Tile-Tick.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tile-Tick.aif"; sourceTree = "<group>"; };
+		5D5B53FB24CDF34E00FD50D4 /* Trumpet-Stab-1.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trumpet-Stab-1.aif"; sourceTree = "<group>"; };
+		5D5B53FD24CDF51E00FD50D4 /* Game-Over.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Game-Over.aac"; sourceTree = "<group>"; };
 		5D5EA1402485B49E006264D2 /* UPDialogPause.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogPause.h; sourceTree = "<group>"; };
 		5D5EA1412485B49E006264D2 /* UPDialogPause.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogPause.mm; sourceTree = "<group>"; };
 		5D5EA1432485B820006264D2 /* UPTextPaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTextPaths.h; sourceTree = "<group>"; };
@@ -403,6 +414,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D5B53F424CDCB5000FD50D4 /* AVFoundation.framework in Frameworks */,
 				5DF9DF8C2466168500B2199D /* UpKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -556,6 +568,16 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
+		5D5B53F524CDF18A00FD50D4 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				5D5B53FD24CDF51E00FD50D4 /* Game-Over.aac */,
+				5D5B53F624CDF18A00FD50D4 /* Tile-Tick.aif */,
+				5D5B53FB24CDF34E00FD50D4 /* Trumpet-Stab-1.aif */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		5D723117246B3678006027A3 /* Code */ = {
 			isa = PBXGroup;
 			children = (
@@ -586,6 +608,8 @@
 				5DBC20C12497B9AD002A6ADC /* UPMode.h */,
 				5DF9DF5D2466165700B2199D /* UPSceneDelegate.h */,
 				5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */,
+				5D5B53F024CDCACD00FD50D4 /* UPSoundPlayer.h */,
+				5D5B53F124CDCACD00FD50D4 /* UPSoundPlayer.mm */,
 				5D4AE826248BDF2300213904 /* UPSpellAboutController.h */,
 				5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */,
 				5D6261A124C0944600D19EEF /* UPSpellDossier.h */,
@@ -667,6 +691,7 @@
 				5D723118246B3694006027A3 /* Fonts */,
 				5D0FC23C24A5770600353563 /* Icons */,
 				5D0FC23B24A53C3E00353563 /* Resources */,
+				5D5B53F524CDF18A00FD50D4 /* Sounds */,
 			);
 			path = UPSpell;
 			sourceTree = "<group>";
@@ -683,6 +708,7 @@
 		5DF9DF8A2466168500B2199D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5D5B53F324CDCB5000FD50D4 /* AVFoundation.framework */,
 				5DF9DF8B2466168500B2199D /* UpKit.framework */,
 			);
 			name = Frameworks;
@@ -780,6 +806,7 @@
 				5D0FC2D324A57DC500353563 /* up-games-icon-255-60@2x.png in Resources */,
 				5D0FC2E624A57DC500353563 /* up-games-icon-225-76@2x.png in Resources */,
 				5D0FC31D24A57DC500353563 /* up-games-icon-240-83@2x.png in Resources */,
+				5D5B53FE24CDF51E00FD50D4 /* Game-Over.aac in Resources */,
 				5D0FC2F324A57DC500353563 /* up-games-icon-225-76.png in Resources */,
 				5D0FC2C524A57DC500353563 /* up-games-icon-015-83@2x.png in Resources */,
 				5D0FC2E124A57DC500353563 /* up-games-icon-090-60@3x.png in Resources */,
@@ -806,6 +833,7 @@
 				5D0FC2EA24A57DC500353563 /* up-games-icon-000-76@2x.png in Resources */,
 				5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */,
 				5D0FC2EB24A57DC500353563 /* up-games-icon-255-83@2x.png in Resources */,
+				5D5B53FC24CDF34E00FD50D4 /* Trumpet-Stab-1.aif in Resources */,
 				5D0FC2D924A57DC500353563 /* up-games-icon-045-60@2x.png in Resources */,
 				5D0FC32024A57DC500353563 /* up-games-icon-345-60@3x.png in Resources */,
 				5D0FC2EE24A57DC500353563 /* up-games-icon-255-76.png in Resources */,
@@ -818,6 +846,7 @@
 				5D0FC2CA24A57DC500353563 /* up-games-icon-210-76.png in Resources */,
 				5D0FC2F124A57DC500353563 /* up-games-icon-255-76@2x.png in Resources */,
 				5D0FC2C624A57DC500353563 /* up-games-icon-030-76.png in Resources */,
+				5D5B53F724CDF18A00FD50D4 /* Tile-Tick.aif in Resources */,
 				5D0FC2B724A57DC500353563 /* up-games-icon-210-83@2x.png in Resources */,
 				5D0FC2FA24A57DC500353563 /* up-games-icon-165-60@2x.png in Resources */,
 				5D0FC2C824A57DC500353563 /* up-games-icon-000-60@3x.png in Resources */,
@@ -925,6 +954,7 @@
 				5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */,
 				5DF9DF6D2466165800B2199D /* main.m in Sources */,
 				5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */,
+				5D5B53F224CDCACD00FD50D4 /* UPSoundPlayer.mm in Sources */,
 				5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */,
 				5DA0A06624BCD4EA0029CE0E /* UPSpellGameRetry.mm in Sources */,
 				5D0FC23324A50E3B00353563 /* UPChoice.mm in Sources */,

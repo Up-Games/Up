@@ -19,6 +19,7 @@
 #import "UPDialogPause.h"
 #import "UPDialogPlayMenu.h"
 #import "UPSceneDelegate.h"
+#import "UPSoundPlayer.h"
 #import "UPSpellGameSummary.h"
 #import "UPSpellGameView.h"
 #import "UPSpellLayout.h"
@@ -188,6 +189,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 
     [self configureModeTransitionTables];
     [self configureLifecycleNotifications];
+    [self configureSounds];
 
     [UPSpellDossier instance]; // restores data from disk
     
@@ -826,6 +828,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT(self.pickedTileView == nil);
     ASSERT_NPOS(self.pickedTilePosition);
 
+    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
+    [soundPlayer playSoundID:UPSoundIDTick volume:0.7];
+    
     [self viewOrderOutWordScoreLabel];
 
     UPTileView *tileView = tile.view();
@@ -946,6 +951,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     if (state.action().opcode() == SpellModel::Opcode::SUBMIT) {
         return;
     }
+
+    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
+    [soundPlayer playSoundID:UPSoundIDHappy1 volume:0.7];
 
     cancel(BandGameDelay);
 
@@ -2104,6 +2112,17 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }];
 }
 
+#pragma mark - Sounds
+
+- (void)configureSounds
+{
+    NSBundle *bundle = [NSBundle mainBundle];
+    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Tile-Tick" ofType:@"aif"] forSoundID:UPSoundIDTick concurrentCount:10];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpet-Stab-1" ofType:@"aif"] forSoundID:UPSoundIDHappy1 concurrentCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forSoundID:UPSoundIDGameOver concurrentCount:1];
+}
+
 #pragma mark - Modes
 
 - (void)configureModeTransitionTables
@@ -2679,6 +2698,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self viewUnlock];
     }
     [self viewLock];
+
+    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
+    [soundPlayer playSoundID:UPSoundIDGameOver volume:0.7];
 
     if (@available(iOS 11.0, *)) {
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
