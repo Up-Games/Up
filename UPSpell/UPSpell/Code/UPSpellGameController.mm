@@ -131,6 +131,8 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 @property (nonatomic) BOOL activeTouchPanEverMovedUp;
 @property (nonatomic) CFTimeInterval activeTouchPreviousTimestamp;
 
+@property (nonatomic) NSInteger tuneNumber;
+
 @end
 
 static constexpr CFTimeInterval DefaultBloopDuration = 0.2;
@@ -192,6 +194,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     [self configureSounds];
 
     [UPSpellDossier instance]; // restores data from disk
+    
+    self.tuneNumber = 1;
     
     m_spell_model = [self restoreInProgressGameIfExists];
     if (m_spell_model) {
@@ -1813,7 +1817,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 {
     ASSERT(m_spell_model->is_blank_filled());
     ASSERT(self.lockCount > 0);
-    
+
     // lock play button in highlighted state
     self.dialogTopMenu.playButton.highlightedLocked = YES;
     self.dialogTopMenu.playButton.highlighted = YES;
@@ -1830,6 +1834,9 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
         }];
     });
 
+    UPSoundPlayer *player = [UPSoundPlayer instance];
+    [player playSoundID:up_sound_id_for_intro_number(self.tuneNumber) properties:{ 1, 0, 0 }];
+
     void (^bottomHalf)(void) = ^{
         // change transform of game view
         [UIView animateWithDuration:0.75 animations:^{
@@ -1843,7 +1850,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
             }];
             UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray));
             start(bloop_in(BandModeUI, @[readyMove], 0.3,  ^(UIViewAnimatingPosition) {
-                delay(BandModeDelay, 1.5, ^{
+                delay(BandModeDelay, 1.0, ^{
                     if (completion) {
                         completion();
                     }
@@ -2120,6 +2127,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer setFilePath:[bundle pathForResource:@"Tile-Tick" ofType:@"aif"] forSoundID:UPSoundIDTick concurrentCount:10];
     [soundPlayer setFilePath:[bundle pathForResource:@"Trumpet-Stab-1" ofType:@"aif"] forSoundID:UPSoundIDHappy1 concurrentCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Variation-19-In" ofType:@"aac"] forSoundID:UPSoundIDTune1Intro concurrentCount:1];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Variation-19-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune1 concurrentCount:1];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Variation-19-Out" ofType:@"aac"] forSoundID:UPSoundIDTune1Outro concurrentCount:1];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Waltz-In" ofType:@"aac"] forSoundID:UPSoundIDTune2Intro concurrentCount:1];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Waltz-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune2 concurrentCount:1];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Waltz-Out" ofType:@"aac"] forSoundID:UPSoundIDTune2Outro concurrentCount:1];
     [soundPlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forSoundID:UPSoundIDGameOver concurrentCount:1];
 }
 
@@ -2509,6 +2522,16 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
     [self.gameTimer reset];
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::PLAY));
+
+    static constexpr CFTimeInterval _GameStartDelay = 0.64;
+    
+    UPSoundPlayer *player = [UPSoundPlayer instance];
+    [player playSoundID:up_sound_id_for_tune_number(self.tuneNumber) properties:{ 0.7, _GameStartDelay, 0 }];
+    [player playSoundID:up_sound_id_for_outro_number(self.tuneNumber) properties:{ 1, _GameStartDelay + 115, 0 }];
+
+    delay(BandModeDelay, _GameStartDelay, ^{
+        [self.gameTimer start];
+    });
     
     // bloop out ready message
     UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear));
@@ -2533,9 +2556,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             // create new game model and start game
             [self viewRestoreGameAlpha];
             [self viewUnlock];
-            [self viewFillPlayerTrayWithCompletion:^{
-                [self.gameTimer start];
-            }];
+            [self viewFillPlayerTrayWithCompletion:nil];
         });
     }];
 }

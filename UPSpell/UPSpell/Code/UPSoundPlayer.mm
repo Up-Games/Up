@@ -8,8 +8,9 @@
 
 #import <objc/runtime.h>
 
-#import <UpKit/UPAssertions.h>
 #import <AVFoundation/AVFoundation.h>
+
+#import <UpKit/UPAssertions.h>
 
 #import "UPSoundPlayer.h"
 
@@ -98,10 +99,15 @@
 
 - (NSError *)playSoundID:(UPSoundID)soundID
 {
-    return [self playSoundID:soundID volume:1.0];
+    return [self playSoundID:soundID properties:{ 1, 0, 0 }];
 }
 
 - (NSError *)playSoundID:(UPSoundID)soundID volume:(float)volume
+{
+    return [self playSoundID:soundID properties:{ volume, 0, 0 }];
+}
+
+- (NSError *)playSoundID:(UPSoundID)soundID properties:(UPSoundPlayProperties)properties
 {
     std::lock_guard<std::mutex> guard(m_mutex);
     
@@ -112,9 +118,15 @@
     for (auto it = range.first; it != range.second; ++it) {
         AVAudioPlayer *player = it->second;
         if (!player.playing) {
-            float effectiveVolume = self.systemVolume * volume;
-            [player setVolume:effectiveVolume];
-            [player play];
+            player.volume = self.systemVolume * properties.volume;
+            player.currentTime = UPClampT(CFTimeInterval, properties.soundTimeOffset, 0, player.duration);
+            if (properties.beginTimeOffset > 0) {
+                [player playAtTime:player.deviceCurrentTime + properties.beginTimeOffset];
+            }
+            else {
+                [player play];
+            }
+            LOG(Audio, "player device time: %.3f", player.deviceCurrentTime);
             playStarted = YES;
             break;
         }
@@ -125,6 +137,29 @@
     }
     
     return error;
+}
+
+- (void)pauseSoundID:(UPSoundID)soundID
+{
+    std::lock_guard<std::mutex> guard(m_mutex);
+    auto range = m_map.equal_range(soundID);
+    for (auto it = range.first; it != range.second; ++it) {
+        AVAudioPlayer *player = it->second;
+        if (player.playing) {
+            [player pause];
+        }
+    }
+}
+
+- (void)pauseAll
+{
+    std::lock_guard<std::mutex> guard(m_mutex);
+    for (auto it = m_map.begin(); it != m_map.end(); ++it) {
+        AVAudioPlayer *player = it->second;
+        if (player.playing) {
+            [player pause];
+        }
+    }
 }
 
 #pragma mark - Internal
@@ -180,6 +215,7 @@
     auto range = m_map.equal_range(player.soundID);
     for (auto it = range.first; it != range.second; ++it) {
         if (player == it->second) {
+            [player stop];
             m_map.erase(it);
             break;
         }
