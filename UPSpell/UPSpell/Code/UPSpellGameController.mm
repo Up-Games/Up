@@ -833,7 +833,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     ASSERT_NPOS(self.pickedTilePosition);
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer playSoundID:UPSoundIDTick volume:0.7];
+    [soundPlayer playSoundID:UPSoundIDTick volume:1.0];
     
     [self viewOrderOutWordScoreLabel];
 
@@ -863,6 +863,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     const State &state = m_spell_model->back_state();
     if (state.action().opcode() != SpellModel::Opcode::HOVER || state.action().pos1() != hover_pos) {
         m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::HOVER, hover_pos));
+        UPSoundPlayer *player = [UPSoundPlayer instance];
+        [player playSoundID:UPSoundIDWhoosh volume:1.0];
     }
 
     [self viewHover:hover_pos];
@@ -883,6 +885,8 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     }
 
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::NOVER));
+    UPSoundPlayer *player = [UPSoundPlayer instance];
+    [player playSoundID:UPSoundIDWhoosh volume:1.0];
 
     [self viewNover];
     [self viewUpdateGameControls];
@@ -2125,7 +2129,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 {
     NSBundle *bundle = [NSBundle mainBundle];
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Tile-Tick" ofType:@"aif"] forSoundID:UPSoundIDTick concurrentCount:10];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Tile-Tick-E" ofType:@"aif"] forSoundID:UPSoundIDTick concurrentCount:10];
     [soundPlayer setFilePath:[bundle pathForResource:@"Trumpet-Stab-1" ofType:@"aif"] forSoundID:UPSoundIDHappy1 concurrentCount:3];
     [soundPlayer setFilePath:[bundle pathForResource:@"Variation-19-In" ofType:@"aac"] forSoundID:UPSoundIDTune1Intro concurrentCount:1];
     [soundPlayer setFilePath:[bundle pathForResource:@"Variation-19-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune1 concurrentCount:1];
@@ -2134,6 +2138,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [soundPlayer setFilePath:[bundle pathForResource:@"Waltz-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune2 concurrentCount:1];
     [soundPlayer setFilePath:[bundle pathForResource:@"Waltz-Out" ofType:@"aac"] forSoundID:UPSoundIDTune2Outro concurrentCount:1];
     [soundPlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forSoundID:UPSoundIDGameOver concurrentCount:1];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Tub-3" ofType:@"aif"] forSoundID:UPSoundIDWhoosh concurrentCount:3];
 }
 
 #pragma mark - Modes
