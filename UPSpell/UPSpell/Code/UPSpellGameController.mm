@@ -864,7 +864,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     if (state.action().opcode() != SpellModel::Opcode::HOVER || state.action().pos1() != hover_pos) {
         if (m_spell_model->back_opcode() != SpellModel::Opcode::PICK) {
             UPSoundPlayer *player = [UPSoundPlayer instance];
-            [player playSoundID:UPSoundIDWhoosh volume:0.6];
+            [player playSoundID:UPSoundIDWhup volume:0.6];
         }
         m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::HOVER, hover_pos));
     }
@@ -887,7 +887,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::NOVER));
 
     UPSoundPlayer *player = [UPSoundPlayer instance];
-    [player playSoundID:UPSoundIDWhoosh volume:0.6];
+    [player playSoundID:UPSoundIDWhup volume:0.6];
 
     [self viewNover];
     [self viewUpdateGameControls];
@@ -953,20 +953,31 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::CLEAR));
 
     UPSoundPlayer *player = [UPSoundPlayer instance];
-    [player playSoundID:UPSoundIDClear volume:0.8];
+    [player playSoundID:UPSoundIDClear volume:0.5];
 
     [self viewUpdateGameControls];
 }
 
 - (void)applyActionSubmit
 {
+    const Word &word = m_spell_model->word();
     const State &state = m_spell_model->back_state();
     if (state.action().opcode() == SpellModel::Opcode::SUBMIT) {
         return;
     }
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer playSoundID:UPSoundIDHappy1 volume:0.6];
+    UPSoundID soundID = UPSoundIDHappy1;
+    if (word.total_multiplier() == 2 || word.length() == 5) {
+        soundID = UPSoundIDHappy2;
+    }
+    else if (word.total_multiplier() > 2 || word.length() == 6 || word.total_score() > 25) {
+        soundID = UPSoundIDHappy3;
+    }
+    else if (word.total_multiplier() > 4 || word.length() == 7 || word.total_score() > 30) {
+        soundID = UPSoundIDHappy4;
+    }
+    [soundPlayer playSoundID:soundID volume:0.8];
 
     cancel(BandGameDelay);
 
@@ -987,7 +998,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::REJECT));
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer playSoundID:UPSoundIDSad1 volume:0.6];
+    [soundPlayer playSoundID:UPSoundIDSad1 volume:0.3];
 
     // assess time penalty and shake word tray side-to-side
     [self viewPenaltyForReject];
@@ -1027,7 +1038,7 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::DUMP));
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer playSoundID:UPSoundIDSad2 volume:0.6];
+    [soundPlayer playSoundID:UPSoundIDSad2 volume:0.3];
 
     [self viewPenaltyForDump];
     [self viewDumpPlayerTray:playerTrayTileViews];
@@ -2141,10 +2152,13 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     NSBundle *bundle = [NSBundle mainBundle];
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer setFilePath:[bundle pathForResource:@"Tile-Tick-E" ofType:@"aif"] forSoundID:UPSoundIDTick concurrentCount:10];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Tub-4" ofType:@"aif"] forSoundID:UPSoundIDWhoosh concurrentCount:8];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-1" ofType:@"aac"] forSoundID:UPSoundIDHappy1 concurrentCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Tile-Tick-F" ofType:@"aif"] forSoundID:UPSoundIDWhup concurrentCount:8];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-1A" ofType:@"aac"] forSoundID:UPSoundIDHappy1 concurrentCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-2A" ofType:@"aac"] forSoundID:UPSoundIDHappy2 concurrentCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-3A" ofType:@"aac"] forSoundID:UPSoundIDHappy3 concurrentCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-4A" ofType:@"aac"] forSoundID:UPSoundIDHappy4 concurrentCount:3];
     [soundPlayer setFilePath:[bundle pathForResource:@"Sad-Horns-2" ofType:@"aac"] forSoundID:UPSoundIDSad1 concurrentCount:2];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-Trombones-3" ofType:@"aac"] forSoundID:UPSoundIDSad2 concurrentCount:2];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-Horns-3" ofType:@"aac"] forSoundID:UPSoundIDSad2 concurrentCount:2];
     [soundPlayer setFilePath:[bundle pathForResource:@"Variation-19-In" ofType:@"aac"] forSoundID:UPSoundIDTune1Intro concurrentCount:1];
     [soundPlayer setFilePath:[bundle pathForResource:@"Variation-19-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune1 concurrentCount:1];
     [soundPlayer setFilePath:[bundle pathForResource:@"Variation-19-Out" ofType:@"aac"] forSoundID:UPSoundIDTune1Outro concurrentCount:1];
@@ -2152,7 +2166,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [soundPlayer setFilePath:[bundle pathForResource:@"Waltz-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune2 concurrentCount:1];
     [soundPlayer setFilePath:[bundle pathForResource:@"Waltz-Out" ofType:@"aac"] forSoundID:UPSoundIDTune2Outro concurrentCount:1];
     [soundPlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forSoundID:UPSoundIDGameOver concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Whistle-B" ofType:@"aif"] forSoundID:UPSoundIDClear concurrentCount:2];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Whistle-C" ofType:@"aif"] forSoundID:UPSoundIDClear concurrentCount:2];
 }
 
 #pragma mark - Modes
@@ -2740,7 +2754,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewLock];
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer playSoundID:UPSoundIDGameOver volume:0.7];
+    [soundPlayer playSoundID:UPSoundIDGameOver volume:1.0];
 
     if (@available(iOS 11.0, *)) {
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];

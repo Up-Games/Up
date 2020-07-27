@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, UPSoundID) {
     UPSoundIDHappy4,
     UPSoundIDSad1,
     UPSoundIDSad2,
-    UPSoundIDWhoosh,
+    UPSoundIDWhup,
     UPSoundIDClear,
     UPSoundIDGameOver,
     UPSoundIDTune1Intro,
