@@ -87,7 +87,6 @@
     for (auto it = range.first; it != range.second; ++it) {
         UPSound *sound = it->second;
         if (!sound.playing) {
-            LOG(Sound, "play: %ld (%.2f)", soundID, volume);
             [self _playSound:sound volume:volume];
             played = YES;
             break;

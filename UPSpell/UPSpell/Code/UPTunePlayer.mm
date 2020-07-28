@@ -88,7 +88,6 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
         else {
             [player play];
         }
-        LOG(Sound, "play: %.3f : %.3f", player.deviceCurrentTime, properties.beginTimeOffset);
     }
     
     return error;

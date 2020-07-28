@@ -791,19 +791,19 @@ using namespace UP;
     [control setFillColorCategory:UPColorCategorySecondaryInactiveFill forState:UPControlStateNormal];
     [control setFillColorCategory:UPColorCategorySecondaryActiveFill forState:UPControlStateActive];
     [control setFillColorCategory:UPColorCategorySecondaryHighlightedFill forState:(UPControlStateHighlighted | UPControlStateActive)];
-    [control setFillColorAnimationDuration:0.1 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
-    [control setFillColorAnimationDuration:0.1 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateNormal];
-    [control setFillColorAnimationDuration:0.1 fromState:UPControlStateActive toState:UPControlStateNormal];
-    [control setFillColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+//    [control setFillColorAnimationDuration:0.1 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
+//    [control setFillColorAnimationDuration:0.1 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateNormal];
+//    [control setFillColorAnimationDuration:0.1 fromState:UPControlStateActive toState:UPControlStateNormal];
+//    [control setFillColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     [control setStrokePath:WordTrayStrokePath() forState:UPControlStateNormal];
     [control setStrokeColorCategory:UPColorCategorySecondaryInactiveStroke forState:UPControlStateNormal];
     [control setStrokeColorCategory:UPColorCategorySecondaryActiveStroke forState:UPControlStateActive];
     [control setStrokeColorCategory:UPColorCategorySecondaryHighlightedStroke forState:(UPControlStateHighlighted | UPControlStateActive)];
     [control setStrokeColorCategory:UPColorCategorySecondaryHighlightedStroke forState:UPControlStateHighlighted];
-    [control setStrokeColorAnimationDuration:0.1 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
-    [control setStrokeColorAnimationDuration:0.1 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateNormal];
-    [control setStrokeColorAnimationDuration:0.1 fromState:UPControlStateActive toState:UPControlStateNormal];
-    [control setStrokeColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+//    [control setStrokeColorAnimationDuration:0.1 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateActive];
+//    [control setStrokeColorAnimationDuration:0.1 fromState:(UPControlStateHighlighted | UPControlStateActive) toState:UPControlStateNormal];
+//    [control setStrokeColorAnimationDuration:0.1 fromState:UPControlStateActive toState:UPControlStateNormal];
+//    [control setStrokeColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     return control;
 }
 

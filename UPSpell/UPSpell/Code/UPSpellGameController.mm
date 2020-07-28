@@ -136,7 +136,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 
 @end
 
-static constexpr CFTimeInterval GameStartDelay = 0.7;
+static constexpr CFTimeInterval GameStartDelay = 0.64;
 static constexpr CFTimeInterval DefaultBloopDuration = 0.2;
 static constexpr CFTimeInterval DefaultTileSlideDuration = 0.1;
 static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
@@ -300,20 +300,13 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
         return;
     }
     
-    if (self.lockCount > 0) {
-        if (self.touchedControl) {
-            [self preemptTouchedControl];
-        }
-        return;
-    }
-
     UPControl *incomingTouchedControl = self.touchedControl;
     
     for (UITouch *touch in touches) {
         if (touch != self.activeTouch) {
             CGPoint point = [touch locationInView:self.gameView];
             UPControl *hitControl = [self hitTestGameView:point withEvent:event];
-            if (hitControl) {
+            if (hitControl && hitControl.userInteractionEnabled) {
                 if (self.touchedControl && hitControl != self.touchedControl && hitControl != self.gameView.wordTrayControl) {
                     [self preemptTouchedControl];
                 }
@@ -348,10 +341,8 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
         return;
     }
 
-    if (self.lockCount > 0) {
-        if (self.touchedControl) {
-            [self preemptTouchedControl];
-        }
+    if (self.touchedControl && !self.touchedControl.userInteractionEnabled) {
+        [self preemptTouchedControl];
         return;
     }
 
@@ -437,10 +428,8 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
         return;
     }
 
-    if (self.lockCount > 0) {
-        if (self.touchedControl) {
-            [self preemptTouchedControl];
-        }
+    if (self.touchedControl && !self.touchedControl.userInteractionEnabled) {
+        [self preemptTouchedControl];
         return;
     }
 
@@ -1427,7 +1416,6 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     self.lockCount++;
 
     self.dialogTopMenu.userInteractionEnabled = NO;
-    self.dialogPause.userInteractionEnabled = NO;
 
     UIView *roundButtonPause = self.gameView.pauseControl;
     for (UIView *view in self.gameView.subviews) {
@@ -1454,7 +1442,6 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     }
 
     self.dialogTopMenu.userInteractionEnabled = YES;
-    self.dialogPause.userInteractionEnabled = YES;
 
     for (UIView *view in self.gameView.subviews) {
         view.userInteractionEnabled = YES;
@@ -2157,6 +2144,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         if (self.mode == Mode::Play) {
             [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioWillResignActive];
         }
+        [self saveInProgressGameIfNecessary];
     }];
     [nc addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
@@ -2773,6 +2761,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self.gameTimer stop];
     pause(BandGameAll);
     [[UPSoundPlayer instance] stop];
+    [[UPTunePlayer instance] stop];
     [self viewLock];
     [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
     
@@ -2817,14 +2806,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         
-        __block CFTimeInterval mark;
-        delay(BandModeDelay, 0.2, ^{
-            mark = CACurrentMediaTime();
-            LOG(General, "mark 1:  %.3f", mark);
-            [self sequenceTuneWithDelay:0.1 gameTimeElapsed:self.gameTimer.elapsedTime];
-        });
+        [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
         delay(BandModeDelay, 0.3, ^{
-            LOG(General, "mark 2:  %.3f", CACurrentMediaTime() - mark);
             [self.gameTimer start];
             start(BandGameAll);
         });
