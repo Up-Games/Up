@@ -54,7 +54,6 @@ using UP::TimeSpanning::start;
 
 - (void)viewDidLoad
 {
-    LOG_CHANNEL_ON(Audio);
     LOG_CHANNEL_ON(General);
     //LOG_CHANNEL_ON(Gestures);
     //LOG_CHANNEL_ON(Layout);
@@ -62,6 +61,7 @@ using UP::TimeSpanning::start;
     //LOG_CHANNEL_ON(Lexicon);
     //LOG_CHANNEL_ON(Mode);
     //LOG_CHANNEL_ON(Settings);
+    LOG_CHANNEL_ON(Sound);
     //LOG_CHANNEL_ON(State);
 
     _Instance = self;

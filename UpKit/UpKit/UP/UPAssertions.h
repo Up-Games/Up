@@ -157,7 +157,6 @@ NO_RETURN_DUE_TO_CRASH void UPCrash(void);
 #if LOG_DISABLED
 #else
 #define UP_LOG_CHANNELS(M) \
-M(Audio) \
 M(General) \
 M(Gestures) \
 M(Layout) \
@@ -165,6 +164,7 @@ M(Leaks) \
 M(Lexicon) \
 M(Mode) \
 M(Settings) \
+M(Sound) \
 M(State) \
 
 UP_LOG_CHANNELS(DECLARE_LOG_CHANNEL)

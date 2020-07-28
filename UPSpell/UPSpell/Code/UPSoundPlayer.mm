@@ -131,7 +131,7 @@
         }
     }
     if (!playStarted) {
-        LOG(Audio, "player not available for soundID: %ld", soundID);
+        LOG(Sound, "player not available for soundID: %ld", soundID);
         error = [NSError errorWithDomain:NSPOSIXErrorDomain code:EBUSY userInfo:nil];
     }
     
@@ -234,7 +234,7 @@
 {
     std::lock_guard<std::mutex> guard(m_mutex);
     if (!flag) {
-        LOG(Audio, "unsuccessful audio play: %ld", player.soundID);
+        LOG(Sound, "unsuccessful audio play: %ld", player.soundID);
         [self _replacePlayer:player];
     }
 }
@@ -242,7 +242,7 @@
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error
 {
     std::lock_guard<std::mutex> guard(m_mutex);
-    LOG(Audio, "audio decode error: %ld: %@", player.soundID, error);
+    LOG(Sound, "audio decode error: %ld: %@", player.soundID, error);
     [self _replacePlayer:player];
 }
 
