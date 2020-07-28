@@ -135,7 +135,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 
 @end
 
-static constexpr CFTimeInterval GameStartDelay = 0.60;
+static constexpr CFTimeInterval GameStartDelay = 0.7;
 static constexpr CFTimeInterval DefaultBloopDuration = 0.2;
 static constexpr CFTimeInterval DefaultTileSlideDuration = 0.1;
 static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
@@ -2232,14 +2232,14 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
 
-    LOG(Sound, "sequenceTuneWithDelay: %.2f : %.3f", delay, gameTimeElapsed);
+//    LOG(Sound, "sequenceTuneWithDelay: %.2f : %.3f", delay, gameTimeElapsed);
     
     static constexpr CFTimeInterval UPGameTimerCanonicalDuration = 120;
     
     if (UPGameTimerDefaultDuration - effectiveGameTimeElapsed > GameOverOutroDuration) {
         CFTimeInterval tuneBeginTime = delay;
         CFTimeInterval tuneTimeOffset = (UPGameTimerCanonicalDuration - UPGameTimerDefaultDuration) + effectiveGameTimeElapsed;
-        LOG(Sound, "tune:   %.2f : %.3f", tuneBeginTime, tuneTimeOffset);
+//        LOG(Sound, "tune:   %.2f : %.3f", tuneBeginTime, tuneTimeOffset);
         [soundPlayer playSoundID:up_sound_id_for_tune_number(self.tuneNumber) properties:{ 0.7, tuneBeginTime, tuneTimeOffset }];
     }
 
@@ -2247,12 +2247,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         CFTimeInterval outroIntervalFromEnd = UPGameTimerDefaultDuration - GameOverOutroDuration;
         CFTimeInterval outroBeginTime = delay + outroIntervalFromEnd - effectiveGameTimeElapsed;
         CFTimeInterval outroTimeOffset = UPMaxT(CFTimeInterval, 0, effectiveGameTimeElapsed - outroIntervalFromEnd);
-        LOG(Sound, "outro: %.2f : %.3f", outroBeginTime, outroTimeOffset);
+//        LOG(Sound, "outro: %.2f : %.3f", outroBeginTime, outroTimeOffset);
         [soundPlayer playSoundID:up_sound_id_for_outro_number(self.tuneNumber) properties:{ 1, outroBeginTime, outroTimeOffset }];
     }
     
     CFTimeInterval gameOverBeginTime = delay + (UPGameTimerDefaultDuration - effectiveGameTimeElapsed);
-    LOG(Sound, "over:   %.2f", gameOverBeginTime);
+//    LOG(Sound, "over:   %.2f", gameOverBeginTime);
     [soundPlayer playSoundID:UPSoundIDGameOver properties:{ 1, gameOverBeginTime, 0 }];
 }
 
@@ -2770,8 +2770,15 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     start(bloop_out(BandModeUI, nearMoves, DefaultBloopDuration, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
-        [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
+        
+        __block CFTimeInterval mark;
+        delay(BandModeDelay, 0.2, ^{
+            mark = CACurrentMediaTime();
+            LOG(General, "mark 1:  %.3f", mark);
+            [self sequenceTuneWithDelay:0.1 gameTimeElapsed:self.gameTimer.elapsedTime];
+        });
         delay(BandModeDelay, 0.3, ^{
+            LOG(General, "mark 2:  %.3f", CACurrentMediaTime() - mark);
             [self.gameTimer start];
             start(BandGameAll);
         });

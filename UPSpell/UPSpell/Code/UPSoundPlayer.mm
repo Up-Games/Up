@@ -126,6 +126,7 @@
             else {
                 [player play];
             }
+            LOG(Sound, "play: %.3f : %.3f", player.deviceCurrentTime, properties.beginTimeOffset);
             playStarted = YES;
             break;
         }
@@ -198,9 +199,7 @@
         return nil;
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [player prepareToPlay];
-    });
+    [player prepareToPlay];
     player.delegate = self;
     
     return player;

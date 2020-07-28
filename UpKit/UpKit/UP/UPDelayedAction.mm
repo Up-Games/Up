@@ -41,7 +41,7 @@ static uint32_t _InstanceCount;
     self.block = block;
     self.serialNumber = UP::next_serial_number();
     
-    self.previousTick = 0;
+    self.previousTick = CACurrentMediaTime();
 
     _InstanceCount++;
     LOG(Leaks, "delay+: %@ (%d)", self, _InstanceCount);
@@ -63,6 +63,7 @@ static uint32_t _InstanceCount;
 
 - (void)start
 {
+    self.previousTick = CACurrentMediaTime();
     self.state = UPDelayedActionStateRunning;
     [[UPTicker instance] addTicking:self];
     UP::TimeSpanning::add(self);
@@ -70,7 +71,7 @@ static uint32_t _InstanceCount;
 
 - (void)pause
 {
-    self.previousTick = 0;
+    self.previousTick = CACurrentMediaTime();
     self.state = UPDelayedActionStatePaused;
     [[UPTicker instance] removeTicking:self];
 }
@@ -84,7 +85,7 @@ static uint32_t _InstanceCount;
 
 - (void)cancel
 {
-    self.previousTick = 0;
+    self.previousTick = CACurrentMediaTime();
     self.state = UPDelayedActionStateCancelled;
     [[UPTicker instance] removeTicking:self];
     UP::TimeSpanning::remove(self);
@@ -111,12 +112,7 @@ static uint32_t _InstanceCount;
     if (self.state != UPDelayedActionStateRunning) {
         return;
     }
-    if (up_is_fuzzy_zero(self.previousTick)) {
-        self.remainingDuration -= UPTickerInterval;
-    }
-    else {
-        self.remainingDuration -= (now - self.previousTick);
-    }
+    self.remainingDuration -= (now - self.previousTick);
     self.previousTick = now;
     self.remainingDuration = UPMaxT(CFTimeInterval, self.remainingDuration, 0);
     if (up_is_fuzzy_zero(self.remainingDuration)) {
