@@ -1865,7 +1865,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
         }];
     });
 
-    self.tuneNumber = UP::Random::instance().uint32_in_range(1, 6);
+    self.tuneNumber = [self pickNextTune];
     
     UPSoundPlayer *player = [UPSoundPlayer instance];
     [player playSoundID:up_sound_id_for_intro_number(self.tuneNumber) properties:{ 1, 0, 0 }];
@@ -2002,7 +2002,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     ASSERT(self.mode == Mode::End);
     
     std::vector<Word> words = m_spell_model->game_best_word();
-    if (words.size() != 1) {
+    if (words.size() == 0) {
         return nil;
     }
 
@@ -2096,6 +2096,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             else {
                 restored = YES;
                 result = model.inner;
+                
+                // FIXME: restore tune
             }
         }
     }
@@ -2186,6 +2188,34 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [soundPlayer setFilePath:[bundle pathForResource:@"Square-Out" ofType:@"aac"] forSoundID:UPSoundIDTune6Outro concurrentCount:1];
     [soundPlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forSoundID:UPSoundIDGameOver concurrentCount:1];
     [soundPlayer setFilePath:[bundle pathForResource:@"Whistle-C" ofType:@"aif"] forSoundID:UPSoundIDClear concurrentCount:2];
+}
+
+- (NSInteger)pickNextTune
+{
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    NSMutableArray<NSNumber *> *tuneHistory = [settings.tuneHistory mutableCopy];
+    Random &rng = Random::instance();
+    NSInteger tuneNumber = 1;
+    while (1) {
+        BOOL found = YES;
+        NSInteger r = rng.uint32_in_range(1, 6);
+        for (NSNumber *n in tuneHistory) {
+            if (n.integerValue == r) {
+                found = NO;
+                break;
+            }
+        }
+        if (found) {
+            tuneNumber = r;
+            if (tuneHistory.count >= 4) {
+                [tuneHistory removeObjectAtIndex:0];
+            }
+            [tuneHistory addObject:@(tuneNumber)];
+            settings.tuneHistory = tuneHistory;
+            break;
+        }
+    }
+    return tuneNumber;
 }
 
 #pragma mark - Modes

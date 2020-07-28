@@ -126,7 +126,6 @@
             else {
                 [player play];
             }
-            LOG(Audio, "player device time: %.3f", player.deviceCurrentTime);
             playStarted = YES;
             break;
         }

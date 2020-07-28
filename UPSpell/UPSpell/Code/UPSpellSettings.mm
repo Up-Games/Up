@@ -14,6 +14,7 @@
 @dynamic extrasSelectedIndex;
 @dynamic retryMode;
 @dynamic playMenuSelectedIndex;
+@dynamic tuneHistory;
 
 + (UPSpellSettings *)instance
 {
@@ -40,6 +41,7 @@
     self.extrasSelectedIndex = 0;
     self.retryMode = NO;
     self.playMenuSelectedIndex = 2;
+    self.tuneHistory = [NSArray array];
 }
 
 @end
