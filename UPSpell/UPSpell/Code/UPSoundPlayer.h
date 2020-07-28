@@ -21,12 +21,6 @@ typedef NS_ENUM(NSInteger, UPSoundID) {
     UPSoundIDWhoop,
 };
 
-struct UPSoundPlayProperties {
-    float volume;
-    CFTimeInterval beginTimeOffset;
-    CFTimeInterval soundTimeOffset;
-};
-
 @interface UPSoundPlayer : NSObject
 
 @property (nonatomic) float systemVolume;
@@ -39,11 +33,8 @@ struct UPSoundPlayProperties {
 
 - (NSError *)playSoundID:(UPSoundID)soundID;
 - (NSError *)playSoundID:(UPSoundID)soundID volume:(float)volume;
-- (NSError *)playSoundID:(UPSoundID)soundID properties:(UPSoundPlayProperties)properties;
 
-- (void)pauseSoundID:(UPSoundID)soundID;
-- (void)pauseAll;
-
-- (void)fastPlaySoundID:(UPSoundID)soundID volume:(float)volume;
+- (void)prepare;
+- (void)stop;
 
 @end

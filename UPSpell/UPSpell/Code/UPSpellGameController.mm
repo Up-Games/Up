@@ -835,7 +835,6 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer playSoundID:UPSoundIDTap volume:1.0];
-//    [soundPlayer fastPlaySoundID:UPSoundIDTap volume:1.0];
     
     [self viewOrderOutWordScoreLabel];
 
@@ -1867,8 +1866,10 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
         }];
     });
 
+    [[UPSoundPlayer instance] prepare];
+
     self.tuneNumber = [self pickNextTune];
-    [self setupFilesForTuneNumber:self.tuneNumber];
+    [self configureTunesForTuneNumber:self.tuneNumber];
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
     [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 1, 0, 0 }];
 
@@ -2099,7 +2100,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
                 restored = YES;
                 result = model.inner;
                 
-                // restore tune
+                // restore tune and prepare sound engine
                 UPSpellSettings *settings = [UPSpellSettings instance];
                 NSArray<NSNumber *> *tuneHistory = settings.tuneHistory;
                 if (tuneHistory.count) {
@@ -2108,7 +2109,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
                 else {
                     self.tuneNumber = 1;
                 }
-                [self setupFilesForTuneNumber:self.tuneNumber];
+                [self configureTunesForTuneNumber:self.tuneNumber];
+                [[UPSoundPlayer instance] prepare];
             }
         }
     }
@@ -2165,7 +2167,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }];
 }
 
-#pragma mark - Sounds
+#pragma mark - Sounds and Tunes
 
 - (void)configureSounds
 {
@@ -2182,41 +2184,13 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [soundPlayer setFilePath:[bundle pathForResource:@"Whistle-C" ofType:@"aif"] forSoundID:UPSoundIDWhoop concurrentCount:2];
 }
 
-- (NSUInteger)pickNextTune
-{
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    NSMutableArray<NSNumber *> *tuneHistory = [settings.tuneHistory mutableCopy];
-    Random &rng = Random::instance();
-    NSUInteger tuneNumber = 1;
-    while (1) {
-        BOOL found = YES;
-        NSUInteger r = rng.uint32_in_range(1, 6);
-        for (NSNumber *n in tuneHistory) {
-            if (n.integerValue == r) {
-                found = NO;
-                break;
-            }
-        }
-        if (found) {
-            tuneNumber = r;
-            if (tuneHistory.count >= 4) {
-                [tuneHistory removeObjectAtIndex:0];
-            }
-            [tuneHistory addObject:@(tuneNumber)];
-            settings.tuneHistory = tuneHistory;
-            break;
-        }
-    }
-    return tuneNumber;
-}
-
-- (void)setupFilesForTuneNumber:(NSUInteger)tuneNumber
+- (void)configureTunesForTuneNumber:(NSUInteger)tuneNumber
 {
     ASSERT(tuneNumber <= UPTuneCount);
     
     NSBundle *bundle = [NSBundle mainBundle];
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
-
+    
     [tunePlayer clear];
     
     switch (tuneNumber) {
@@ -2264,6 +2238,34 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             break;
         }
     }
+}
+
+- (NSUInteger)pickNextTune
+{
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    NSMutableArray<NSNumber *> *tuneHistory = [settings.tuneHistory mutableCopy];
+    Random &rng = Random::instance();
+    NSUInteger tuneNumber = 1;
+    while (1) {
+        BOOL found = YES;
+        NSUInteger r = rng.uint32_in_range(1, 6);
+        for (NSNumber *n in tuneHistory) {
+            if (n.integerValue == r) {
+                found = NO;
+                break;
+            }
+        }
+        if (found) {
+            tuneNumber = r;
+            if (tuneHistory.count >= 4) {
+                [tuneHistory removeObjectAtIndex:0];
+            }
+            [tuneHistory addObject:@(tuneNumber)];
+            settings.tuneHistory = tuneHistory;
+            break;
+        }
+    }
+    return tuneNumber;
 }
 
 - (void)sequenceTuneWithDelay:(CFTimeInterval)delay gameTimeElapsed:(CFTimeInterval)gameTimeElapsed
@@ -2727,7 +2729,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self cancelActiveTouch];
     [self.gameTimer stop];
     pause(BandGameAll);
-    [[UPSoundPlayer instance] pauseAll];
+    [[UPSoundPlayer instance] stop];
     [[UPTunePlayer instance] stop];
     [self viewLock];
     [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
@@ -2770,7 +2772,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
     [self.gameTimer stop];
     pause(BandGameAll);
-    [[UPSoundPlayer instance] pauseAll];
+    [[UPSoundPlayer instance] stop];
     [self viewLock];
     [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
     
@@ -2795,6 +2797,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }
 
     [self viewLock];
+    [[UPSoundPlayer instance] prepare];
 
     [UIView animateWithDuration:0.15 delay:0.15 options:0 animations:^{
         self.dialogPause.alpha = 0.0;
@@ -2850,7 +2853,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewLock];
     cancel(BandGameAll);
     [self.gameTimer cancel];
-    [[UPSoundPlayer instance] pauseAll];
+    [[UPSoundPlayer instance] stop];
     [[UPTunePlayer instance] stop];
     [self viewUpdateGameControls];
     [self cancelActiveTouch];
