@@ -6,55 +6,24 @@
 #import <map>
 #import <mutex>
 
-#import <objc/runtime.h>
-
 #import <AVFoundation/AVFoundation.h>
 
 #import <UpKit/UPAssertions.h>
 
+#import "AVAudioPlayer+UPSpell.h"
 #import "UPSoundPlayer.h"
-
-// =========================================================================================================================================
-
-@interface AVAudioPlayer (UP)
-@property (nonatomic) NSString *filePath;
-@property (nonatomic) UPSoundID soundID;
-@end
-
-@implementation AVAudioPlayer (UP)
-
-@dynamic filePath;
-- (void)setFilePath:(NSString *)filePath
-{
-    objc_setAssociatedObject(self, @selector(filePath), filePath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSString *)filePath
-{
-    return objc_getAssociatedObject(self, @selector(filePath));
-}
-
-@dynamic soundID;
-- (void)setSoundID:(UPSoundID)soundID
-{
-    objc_setAssociatedObject(self, @selector(soundID), @(soundID), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (UPSoundID)soundID
-{
-    id obj = objc_getAssociatedObject(self, @selector(soundID));
-    return obj ? (UPSoundID)[obj unsignedIntegerValue] : UPSoundIDNone;
-}
-
-@end
-
-// =========================================================================================================================================
 
 @interface UPSoundPlayer () <AVAudioPlayerDelegate>
 {
     std::multimap<UPSoundID, __strong AVAudioPlayer *> m_map;
     std::mutex m_mutex;
 }
+
+@property (nonatomic) AVAudioEngine *engine;
+@property (nonatomic) AVAudioFile *tapFile;
+@property (nonatomic) AVAudioPlayerNode *tapNode;
+@property (nonatomic) AVAudioPCMBuffer *tapBuffer;
+
 @end
 
 @implementation UPSoundPlayer
@@ -74,6 +43,41 @@
     self = [super init];
     
     self.systemVolume = 1.0;
+    
+    NSError *error = nil;
+    self.engine = [[AVAudioEngine alloc] init];
+    self.tapNode = [[AVAudioPlayerNode alloc] init];
+    [self.engine attachNode:self.tapNode];
+
+    if (error) {
+        LOG(Sound, "bad engine: %@", error);
+    }
+    else {
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSURL *fileURL = [bundle URLForResource:@"Tile-Tick-E" withExtension:@"aif"];
+        self.tapFile = [[AVAudioFile alloc] initForReading:fileURL error:&error];
+        if (error) {
+            LOG(Sound, "bad file: %@", error);
+        }
+        else {
+            
+            AVAudioMixerNode *mainMixer = self.engine.mainMixerNode;
+            [self.engine connect:self.tapNode to:mainMixer format:self.tapFile.processingFormat];
+            AVAudioChannelLayout *channelLayout = [[AVAudioChannelLayout alloc] initWithLayoutTag:kAudioChannelLayoutTag_Stereo];
+            AVAudioFormat *channelFormat = [[AVAudioFormat alloc] initWithCommonFormat:AVAudioPCMFormatFloat32 sampleRate:44100.0
+                                                                      interleaved:NO channelLayout:channelLayout];
+            self.tapBuffer = [[AVAudioPCMBuffer alloc] initWithPCMFormat:channelFormat frameCapacity:1024];
+            [self.tapFile readIntoBuffer:self.tapBuffer error:&error];
+            if (error) {
+                LOG(Sound, "bad buffer: %@", error);
+            }
+        }
+
+        [self.engine startAndReturnError:&error];
+        if (error) {
+            LOG(Sound, "bad engine: %@", error);
+        }
+    }
     
     return self;
 }
@@ -244,5 +248,13 @@
     LOG(Sound, "audio decode error: %ld: %@", player.soundID, error);
     [self _replacePlayer:player];
 }
+
+
+- (void)fastPlaySoundID:(UPSoundID)soundID volume:(float)volume
+{
+    [self.tapNode scheduleBuffer:self.tapBuffer atTime:nil options:AVAudioPlayerNodeBufferInterrupts completionHandler:nil];
+    [self.tapNode play];
+}
+
 
 @end

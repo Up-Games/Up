@@ -171,6 +171,8 @@
 		5D5B546624CF9CCF00FD50D4 /* Invention-8-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545E24CF9CCF00FD50D4 /* Invention-8-Tune.aac */; };
 		5D5B546724CF9CCF00FD50D4 /* Bill-Cheatum-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545F24CF9CCF00FD50D4 /* Bill-Cheatum-Tune.aac */; };
 		5D5B546824CF9CCF00FD50D4 /* Square-In.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B546024CF9CCF00FD50D4 /* Square-In.aac */; };
+		5D5B546B24D0A40500FD50D4 /* UPTunePlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B546924D0A40500FD50D4 /* UPTunePlayer.mm */; };
+		5D5B546E24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B546C24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm */; };
 		5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1412485B49E006264D2 /* UPDialogPause.mm */; };
 		5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1442485B820006264D2 /* UPTextPaths.mm */; };
 		5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */; };
@@ -404,6 +406,10 @@
 		5D5B545E24CF9CCF00FD50D4 /* Invention-8-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Invention-8-Tune.aac"; sourceTree = "<group>"; };
 		5D5B545F24CF9CCF00FD50D4 /* Bill-Cheatum-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bill-Cheatum-Tune.aac"; sourceTree = "<group>"; };
 		5D5B546024CF9CCF00FD50D4 /* Square-In.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-In.aac"; sourceTree = "<group>"; };
+		5D5B546924D0A40500FD50D4 /* UPTunePlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTunePlayer.mm; sourceTree = "<group>"; };
+		5D5B546A24D0A40500FD50D4 /* UPTunePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTunePlayer.h; sourceTree = "<group>"; };
+		5D5B546C24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "AVAudioPlayer+UPSpell.mm"; sourceTree = "<group>"; };
+		5D5B546D24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAudioPlayer+UPSpell.h"; sourceTree = "<group>"; };
 		5D5EA1402485B49E006264D2 /* UPDialogPause.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogPause.h; sourceTree = "<group>"; };
 		5D5EA1412485B49E006264D2 /* UPDialogPause.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogPause.mm; sourceTree = "<group>"; };
 		5D5EA1432485B820006264D2 /* UPTextPaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTextPaths.h; sourceTree = "<group>"; };
@@ -644,6 +650,8 @@
 		5D723117246B3678006027A3 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				5D5B546D24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.h */,
+				5D5B546C24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm */,
 				5D72311F246B3917006027A3 /* UIFont+UPSpell.h */,
 				5D723120246B3996006027A3 /* UIFont+UPSpell.mm */,
 				5D0FC33124A65A6C00353563 /* UPAccessoryPane.h */,
@@ -712,6 +720,8 @@
 				5DA8E04524775A2E008D3015 /* UPTileSequence.h */,
 				5D723114246B34C0006027A3 /* UPTileView.h */,
 				5DA8E0432476BF41008D3015 /* UPTileView.mm */,
+				5D5B546A24D0A40500FD50D4 /* UPTunePlayer.h */,
+				5D5B546924D0A40500FD50D4 /* UPTunePlayer.mm */,
 				5D34613624887918009FB46D /* UPViewMove+UPSpell.h */,
 			);
 			path = Code;
@@ -1042,6 +1052,7 @@
 				5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */,
 				5DA0A06624BCD4EA0029CE0E /* UPSpellGameRetry.mm in Sources */,
 				5D0FC23324A50E3B00353563 /* UPChoice.mm in Sources */,
+				5D5B546B24D0A40500FD50D4 /* UPTunePlayer.mm in Sources */,
 				5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */,
 				5D4AE82A248ED25500213904 /* UPDialogTopMenu.mm in Sources */,
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
@@ -1053,6 +1064,7 @@
 				5D6261A324C0944600D19EEF /* UPSpellDossier.mm in Sources */,
 				5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */,
 				5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */,
+				5D5B546E24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm in Sources */,
 				5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */,
 				5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */,
 				5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */,

@@ -29,6 +29,7 @@
 #import "UPTileModel.h"
 #import "UPTileView.h"
 #import "UPTilePaths.h"
+#import "UPTunePlayer.h"
 #import "UPSpellGameController.h"
 #import "UPSpellNavigationController.h"
 #import "UPViewMove+UPSpell.h"
@@ -834,6 +835,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer playSoundID:UPSoundIDTap volume:1.0];
+//    [soundPlayer fastPlaySoundID:UPSoundIDTap volume:1.0];
     
     [self viewOrderOutWordScoreLabel];
 
@@ -1866,9 +1868,9 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     });
 
     self.tuneNumber = [self pickNextTune];
-    
-    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer playSoundID:up_sound_id_for_intro_number(self.tuneNumber) properties:{ 1, 0, 0 }];
+    [self setupFilesForTuneNumber:self.tuneNumber];
+    UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+    [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 1, 0, 0 }];
 
     void (^bottomHalf)(void) = ^{
         // change transform of game view
@@ -2106,6 +2108,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
                 else {
                     self.tuneNumber = 1;
                 }
+                [self setupFilesForTuneNumber:self.tuneNumber];
             }
         }
     }
@@ -2176,37 +2179,18 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-4A" ofType:@"aac"] forSoundID:UPSoundIDHappy4 concurrentCount:3];
     [soundPlayer setFilePath:[bundle pathForResource:@"Sad-Horns-2" ofType:@"aac"] forSoundID:UPSoundIDSad1 concurrentCount:2];
     [soundPlayer setFilePath:[bundle pathForResource:@"Sad-Horns-3" ofType:@"aac"] forSoundID:UPSoundIDSad2 concurrentCount:2];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Variation-19-In" ofType:@"aac"] forSoundID:UPSoundIDTune1Intro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Variation-19-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune1 concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Variation-19-Out" ofType:@"aac"] forSoundID:UPSoundIDTune1Outro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Waltz-In" ofType:@"aac"] forSoundID:UPSoundIDTune2Intro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Waltz-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune2 concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Waltz-Out" ofType:@"aac"] forSoundID:UPSoundIDTune2Outro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Invention-8-In" ofType:@"aac"] forSoundID:UPSoundIDTune3Intro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Invention-8-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune3 concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Invention-8-Out" ofType:@"aac"] forSoundID:UPSoundIDTune3Outro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Square-In" ofType:@"aac"] forSoundID:UPSoundIDTune4Intro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Bill-Cheatum-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune4 concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Square-Out" ofType:@"aac"] forSoundID:UPSoundIDTune4Outro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Square-In" ofType:@"aac"] forSoundID:UPSoundIDTune5Intro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Forked-Deer-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune5 concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Square-Out" ofType:@"aac"] forSoundID:UPSoundIDTune5Outro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Square-In" ofType:@"aac"] forSoundID:UPSoundIDTune6Intro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Cindy-Tune" ofType:@"aac"] forSoundID:UPSoundIDTune6 concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Square-Out" ofType:@"aac"] forSoundID:UPSoundIDTune6Outro concurrentCount:1];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forSoundID:UPSoundIDGameOver concurrentCount:1];
     [soundPlayer setFilePath:[bundle pathForResource:@"Whistle-C" ofType:@"aif"] forSoundID:UPSoundIDWhoop concurrentCount:2];
 }
 
-- (NSInteger)pickNextTune
+- (NSUInteger)pickNextTune
 {
     UPSpellSettings *settings = [UPSpellSettings instance];
     NSMutableArray<NSNumber *> *tuneHistory = [settings.tuneHistory mutableCopy];
     Random &rng = Random::instance();
-    NSInteger tuneNumber = 1;
+    NSUInteger tuneNumber = 1;
     while (1) {
         BOOL found = YES;
-        NSInteger r = rng.uint32_in_range(1, 6);
+        NSUInteger r = rng.uint32_in_range(1, 6);
         for (NSNumber *n in tuneHistory) {
             if (n.integerValue == r) {
                 found = NO;
@@ -2226,21 +2210,79 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     return tuneNumber;
 }
 
+- (void)setupFilesForTuneNumber:(NSUInteger)tuneNumber
+{
+    ASSERT(tuneNumber <= UPTuneCount);
+    
+    NSBundle *bundle = [NSBundle mainBundle];
+    UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+
+    [tunePlayer clear];
+    
+    switch (tuneNumber) {
+        default:
+        case 1: {
+            [tunePlayer setFilePath:[bundle pathForResource:@"Variation-19-In" ofType:@"aac"] forTuneID:UPTuneID1 segment:UPTuneSegmentIntro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Variation-19-Tune" ofType:@"aac"] forTuneID:UPTuneID1 segment:UPTuneSegmentMain];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Variation-19-Out" ofType:@"aac"] forTuneID:UPTuneID1 segment:UPTuneSegmentOutro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forTuneID:UPTuneID1 segment:UPTuneSegmentOver];
+            break;
+        }
+        case 2: {
+            [tunePlayer setFilePath:[bundle pathForResource:@"Waltz-In" ofType:@"aac"] forTuneID:UPTuneID2 segment:UPTuneSegmentIntro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Waltz-Tune" ofType:@"aac"] forTuneID:UPTuneID2 segment:UPTuneSegmentMain];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Waltz-Out" ofType:@"aac"] forTuneID:UPTuneID2 segment:UPTuneSegmentOutro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forTuneID:UPTuneID2 segment:UPTuneSegmentOver];
+            break;
+        }
+        case 3: {
+            [tunePlayer setFilePath:[bundle pathForResource:@"Invention-8-In" ofType:@"aac"] forTuneID:UPTuneID3 segment:UPTuneSegmentIntro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Invention-8-Tune" ofType:@"aac"] forTuneID:UPTuneID3 segment:UPTuneSegmentMain];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Invention-8-Out" ofType:@"aac"] forTuneID:UPTuneID3 segment:UPTuneSegmentOutro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forTuneID:UPTuneID3 segment:UPTuneSegmentOver];
+            break;
+        }
+        case 4: {
+            [tunePlayer setFilePath:[bundle pathForResource:@"Square-In" ofType:@"aac"] forTuneID:UPTuneID4 segment:UPTuneSegmentIntro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Bill-Cheatum-Tune" ofType:@"aac"] forTuneID:UPTuneID4 segment:UPTuneSegmentMain];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Square-Out" ofType:@"aac"] forTuneID:UPTuneID4 segment:UPTuneSegmentOutro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forTuneID:UPTuneID4 segment:UPTuneSegmentOver];
+            break;
+        }
+        case 5: {
+            [tunePlayer setFilePath:[bundle pathForResource:@"Square-In" ofType:@"aac"] forTuneID:UPTuneID5 segment:UPTuneSegmentIntro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Forked-Deer-Tune" ofType:@"aac"] forTuneID:UPTuneID5 segment:UPTuneSegmentMain];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Square-Out" ofType:@"aac"] forTuneID:UPTuneID5 segment:UPTuneSegmentOutro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forTuneID:UPTuneID5 segment:UPTuneSegmentOver];
+            break;
+        }
+        case 6: {
+            [tunePlayer setFilePath:[bundle pathForResource:@"Square-In" ofType:@"aac"] forTuneID:UPTuneID6 segment:UPTuneSegmentIntro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Cindy-Tune" ofType:@"aac"] forTuneID:UPTuneID6 segment:UPTuneSegmentMain];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Square-Out" ofType:@"aac"] forTuneID:UPTuneID6 segment:UPTuneSegmentOutro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forTuneID:UPTuneID6 segment:UPTuneSegmentOver];
+            break;
+        }
+    }
+}
+
 - (void)sequenceTuneWithDelay:(CFTimeInterval)delay gameTimeElapsed:(CFTimeInterval)gameTimeElapsed
 {
     CFTimeInterval effectiveGameTimeElapsed = UPClampT(CFTimeInterval, gameTimeElapsed, 0, UPGameTimerDefaultDuration);
     
-    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
+    UPTunePlayer *tunePlayer = [UPTunePlayer instance];
 
 //    LOG(Sound, "sequenceTuneWithDelay: %.2f : %.3f", delay, gameTimeElapsed);
     
     static constexpr CFTimeInterval UPGameTimerCanonicalDuration = 120;
     
+    UPTuneID tuneID = UPTuneID(self.tuneNumber);
+    
     if (UPGameTimerDefaultDuration - effectiveGameTimeElapsed > GameOverOutroDuration) {
         CFTimeInterval tuneBeginTime = delay;
         CFTimeInterval tuneTimeOffset = (UPGameTimerCanonicalDuration - UPGameTimerDefaultDuration) + effectiveGameTimeElapsed;
 //        LOG(Sound, "tune:   %.2f : %.3f", tuneBeginTime, tuneTimeOffset);
-        [soundPlayer playSoundID:up_sound_id_for_tune_number(self.tuneNumber) properties:{ 0.7, tuneBeginTime, tuneTimeOffset }];
+        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 0.7, tuneBeginTime, tuneTimeOffset }];
     }
 
     if (UPGameTimerDefaultDuration - effectiveGameTimeElapsed > 1) {
@@ -2248,12 +2290,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         CFTimeInterval outroBeginTime = delay + outroIntervalFromEnd - effectiveGameTimeElapsed;
         CFTimeInterval outroTimeOffset = UPMaxT(CFTimeInterval, 0, effectiveGameTimeElapsed - outroIntervalFromEnd);
 //        LOG(Sound, "outro: %.2f : %.3f", outroBeginTime, outroTimeOffset);
-        [soundPlayer playSoundID:up_sound_id_for_outro_number(self.tuneNumber) properties:{ 1, outroBeginTime, outroTimeOffset }];
+        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOutro properties:{ 1, outroBeginTime, outroTimeOffset }];
     }
     
     CFTimeInterval gameOverBeginTime = delay + (UPGameTimerDefaultDuration - effectiveGameTimeElapsed);
 //    LOG(Sound, "over:   %.2f", gameOverBeginTime);
-    [soundPlayer playSoundID:UPSoundIDGameOver properties:{ 1, gameOverBeginTime, 0 }];
+    [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOver properties:{ 1, gameOverBeginTime, 0 }];
 }
 
 #pragma mark - Modes
@@ -2686,6 +2728,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self.gameTimer stop];
     pause(BandGameAll);
     [[UPSoundPlayer instance] pauseAll];
+    [[UPTunePlayer instance] stop];
     [self viewLock];
     [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
 
@@ -2808,6 +2851,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     cancel(BandGameAll);
     [self.gameTimer cancel];
     [[UPSoundPlayer instance] pauseAll];
+    [[UPTunePlayer instance] stop];
     [self viewUpdateGameControls];
     [self cancelActiveTouch];
     [self viewUnhighlightTileViews];
