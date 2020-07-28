@@ -75,38 +75,34 @@
     return error;
 }
 
-- (NSError *)playSoundID:(UPSoundID)soundID
+- (void)playSoundID:(UPSoundID)soundID
 {
-    return [self playSoundID:soundID volume:1.0];
+    [self playSoundID:soundID volume:1.0];
 }
 
-- (NSError *)playSoundID:(UPSoundID)soundID volume:(float)volume
+- (void)playSoundID:(UPSoundID)soundID volume:(float)volume
 {
-    NSError *error = nil;
-
-    BOOL playStarted = NO;
+    BOOL played = NO;
     auto range = m_map.equal_range(soundID);
     for (auto it = range.first; it != range.second; ++it) {
         UPSound *sound = it->second;
-        AVAudioPlayerNode *player = sound.player;
         if (!sound.playing) {
-            player.volume = self.systemVolume * volume;
-            [player scheduleBuffer:sound.buffer atTime:nil options:AVAudioPlayerNodeBufferInterrupts completionHandler:^{
-                sound.playing = NO;
-            }];
-            sound.playing = YES;
-            [player play];
             LOG(Sound, "play: %ld (%.2f)", soundID, volume);
-            playStarted = YES;
+            [self _playSound:sound volume:volume];
+            played = YES;
             break;
         }
     }
-    if (!playStarted) {
-        LOG(Sound, "player not available for soundID: %ld", soundID);
-        error = [NSError errorWithDomain:NSPOSIXErrorDomain code:EBUSY userInfo:nil];
+    if (!played) {
+        if (range.first != range.second) {
+            UPSound *sound = range.first->second;
+            LOG(Sound, "play [backup]: %ld (%.2f)", soundID, volume);
+            [self _playSound:sound volume:volume];
+        }
+        else {
+            LOG(Sound, "no player available for soundID: %ld", soundID);
+        }
     }
-    
-    return error;
 }
 
 - (void)prepare
@@ -133,6 +129,17 @@
 }
 
 #pragma mark - Internal
+
+- (void)_playSound:(UPSound *)sound volume:(float)volume
+{
+    AVAudioPlayerNode *player = sound.player;
+    player.volume = self.systemVolume * volume;
+    [player scheduleBuffer:sound.buffer atTime:nil options:AVAudioPlayerNodeBufferInterrupts completionHandler:^{
+        sound.playing = NO;
+    }];
+    sound.playing = YES;
+    [player play];
+}
 
 - (UPSound *)_createSoundWithFilePath:(NSString *)filePath error:(NSError **)error
 {

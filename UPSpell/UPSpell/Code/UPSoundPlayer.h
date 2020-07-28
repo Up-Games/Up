@@ -31,8 +31,8 @@ typedef NS_ENUM(NSInteger, UPSoundID) {
 
 - (NSError *)setFilePath:(NSString *)filePath forSoundID:(UPSoundID)soundID concurrentCount:(NSUInteger)concurrentCount;
 
-- (NSError *)playSoundID:(UPSoundID)soundID;
-- (NSError *)playSoundID:(UPSoundID)soundID volume:(float)volume;
+- (void)playSoundID:(UPSoundID)soundID;
+- (void)playSoundID:(UPSoundID)soundID volume:(float)volume;
 
 - (void)prepare;
 - (void)stop;
