@@ -196,9 +196,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     [self configureSounds];
 
     [UPSpellDossier instance]; // restores data from disk
-    
-    self.tuneNumber = 5;
-    
+        
     m_spell_model = [self restoreInProgressGameIfExists];
     if (m_spell_model) {
         [self setMode:Mode::Pause];
@@ -866,7 +864,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     if (state.action().opcode() != SpellModel::Opcode::HOVER || state.action().pos1() != hover_pos) {
         if (m_spell_model->back_opcode() != SpellModel::Opcode::PICK) {
             UPSoundPlayer *player = [UPSoundPlayer instance];
-            [player playSoundID:UPSoundIDWhup volume:0.6];
+            [player playSoundID:UPSoundIDWhup volume:0.3];
         }
         m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::HOVER, hover_pos));
     }
@@ -889,7 +887,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::NOVER));
 
     UPSoundPlayer *player = [UPSoundPlayer instance];
-    [player playSoundID:UPSoundIDWhup volume:0.6];
+    [player playSoundID:UPSoundIDWhup volume:0.3];
 
     [self viewNover];
     [self viewUpdateGameControls];
@@ -970,16 +968,16 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     UPSoundID soundID = UPSoundIDHappy1;
-    if (word.total_score() < 25 && (word.total_multiplier() == 2 || word.length() == 5)) {
+    if (word.total_score() >= 15) {
         soundID = UPSoundIDHappy2;
     }
-    else if (word.total_multiplier() > 2 || word.length() == 6 || word.total_score() >= 25) {
+    else if (word.total_score() >= 25) {
         soundID = UPSoundIDHappy3;
     }
-    else if (word.total_multiplier() > 4 || word.length() == 7 || word.total_score() > 30) {
+    else if (word.total_score() >= 35) {
         soundID = UPSoundIDHappy4;
     }
-    [soundPlayer playSoundID:soundID volume:0.95];
+    [soundPlayer playSoundID:soundID volume:1.0];
 
     cancel(BandGameDelay);
 
@@ -1867,6 +1865,8 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
         }];
     });
 
+    self.tuneNumber = UP::Random::instance().uint32_in_range(1, 6);
+    
     UPSoundPlayer *player = [UPSoundPlayer instance];
     [player playSoundID:up_sound_id_for_intro_number(self.tuneNumber) properties:{ 1, 0, 0 }];
 
