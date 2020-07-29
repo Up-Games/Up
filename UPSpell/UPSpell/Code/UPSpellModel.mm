@@ -182,6 +182,29 @@ TileIndex SpellModel::player_tray_index(const TilePosition &pos)
     }
 }
 
+void SpellModel::reposition_word_tray_tiles_in_player_tray()
+{
+    // Eliminates crossing tiles when clearing by moving tile to the in-order
+    // empty spot in the player tray
+    TileArray word_tiles;
+    for (const auto &tile : tiles()) {
+        if (tile.in_word_tray()) {
+            word_tiles[tile.position().index()] = tile;
+        }
+    }
+    TileArray respositioned_tiles = tiles();
+    TileIndex idx = 0;
+    TileIndex widx = 0;
+    for (auto &tile : tiles()) {
+        if (tile.in_word_tray()) {
+            respositioned_tiles[idx] = word_tiles[widx];
+            widx++;
+        }
+        idx++;
+    }
+    m_tiles = respositioned_tiles;
+}
+
 NSArray *SpellModel::all_tile_views() const
 {
     NSMutableArray *array = [NSMutableArray array];

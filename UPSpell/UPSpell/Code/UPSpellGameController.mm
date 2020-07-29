@@ -1204,6 +1204,8 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     cancel(BandGameUITile);
     cancel(BandGameUITileSlide);
 
+    m_spell_model->reposition_word_tray_tiles_in_player_tray();
+    
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
         TileIndex idx = m_spell_model->player_tray_index(tileView);
