@@ -149,6 +149,7 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) CGFloat activeTouchTotalPanDistance;
 @property (nonatomic) CGFloat activeTouchFurthestPanDistance;
 @property (nonatomic) BOOL activeTouchPanEverMovedUp;
+@property (nonatomic) CFTimeInterval activeTouchStartTimestamp;
 @property (nonatomic) CFTimeInterval activeTouchPreviousTimestamp;
 
 @property (nonatomic) NSInteger tuneNumber;
@@ -325,11 +326,20 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
             CGPoint point = [touch locationInView:self.gameView];
             UPControl *hitControl = [self hitTestGameView:point withEvent:event];
             if (hitControl && hitControl.userInteractionEnabled) {
-                if (self.touchedControl && hitControl != self.touchedControl && hitControl != self.gameView.wordTrayControl) {
-                    [self preemptTouchedControl];
+                if (self.touchedControl && hitControl != self.touchedControl) {
+                    BOOL touchedControlIsTile = [self.touchedControl isKindOfClass:[UPTileView class]];
+                    BOOL hitControlIsTile = [hitControl isKindOfClass:[UPTileView class]];
+                    BOOL hitControlIsWordTray = (hitControl == self.gameView.wordTrayControl);
+                    if ((touchedControlIsTile && hitControlIsTile) || (touchedControlIsTile && hitControlIsWordTray)) {
+                        [self acceptTouchedControl];
+                    }
+                    else {
+                        [self cancelActiveTouch];
+                    }
                 }
                 self.touchedControl = hitControl;
                 self.activeTouch = touch;
+                self.activeTouchStartTimestamp = CACurrentMediaTime();
                 self.touchedTileView = [self hitTestTileViews:point withEvent:event];
                 self.touchedControl.highlighted = YES;
                 break;
@@ -360,7 +370,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     }
 
     if (self.touchedControl && !self.touchedControl.userInteractionEnabled) {
-        [self preemptTouchedControl];
+        [self cancelActiveTouch];
         return;
     }
 
@@ -447,7 +457,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     }
 
     if (self.touchedControl && !self.touchedControl.userInteractionEnabled) {
-        [self preemptTouchedControl];
+        [self cancelActiveTouch];
         return;
     }
 
@@ -487,7 +497,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     [self cancelActiveTouch];
 }
 
-- (void)preemptTouchedControl
+- (void)acceptTouchedControl
 {
     ASSERT(self.touchedControl);
     
@@ -535,6 +545,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     self.activeTouchVelocity = CGPointZero;
     self.activeTouchPreviousPoint = self.activeTouchPoint;
     self.activeTouchPreviousTimestamp = CACurrentMediaTime();
+    self.activeTouchStartTimestamp = 0;
     
     CGPoint center = up_rect_center(self.touchedControl.bounds);
     CGFloat dx = center.x - touchPointInView.x;
@@ -572,7 +583,11 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     LOG(Gestures, "   add:        %s", ((!pannedFar && putBack) || movingUp || !self.activeTouchPanEverMovedUp) ? "Y" : "N");
     Tile &tile = m_spell_model->find_tile(tileView);
     if (self.pickedTilePosition.in_player_tray()) {
-        if (projectedTileInsideWordTray) {
+        CFTimeInterval now = CACurrentMediaTime();
+        if (now - self.activeTouchStartTimestamp < 0.1) {
+            [self applyActionAdd:tile];
+        }
+        else if (projectedTileInsideWordTray) {
             [self applyActionAdd:tile];
         }
         else if ((!pannedFar && putBack) || movingUp || !self.activeTouchPanEverMovedUp) {
@@ -1253,13 +1268,13 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     NSString *lengthBonusString = nil;
     switch (word_length) {
         case 5:
-            lengthBonusString = [NSString stringWithFormat:@"+%d 5 TILES", SpellModel::FiveLetterWordBonus];
+            lengthBonusString = [NSString stringWithFormat:@"5 TILES +%d", SpellModel::FiveLetterWordBonus];
             break;
         case 6:
-            lengthBonusString = [NSString stringWithFormat:@"+%d 6 TILES", SpellModel::SixLetterWordBonus];
+            lengthBonusString = [NSString stringWithFormat:@"6 TILES +%d", SpellModel::SixLetterWordBonus];
             break;
         case 7:
-            lengthBonusString = [NSString stringWithFormat:@"+%d 7 TILES", SpellModel::SevenLetterWordBonus];
+            lengthBonusString = [NSString stringWithFormat:@"7 TILES +%d", SpellModel::SevenLetterWordBonus];
             break;
     }
     BOOL has_length_bonus = lengthBonusString != nil;
