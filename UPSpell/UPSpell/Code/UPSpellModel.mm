@@ -182,7 +182,7 @@ TileIndex SpellModel::player_tray_index(const TilePosition &pos)
     }
 }
 
-void SpellModel::reposition_word_tray_tiles_in_player_tray()
+void SpellModel::move_word_tray_tiles_back_to_player_tray()
 {
     // Eliminates crossing tiles when clearing by moving tile to the in-order
     // empty spot in the player tray
@@ -203,6 +203,16 @@ void SpellModel::reposition_word_tray_tiles_in_player_tray()
         idx++;
     }
     m_tiles = respositioned_tiles;
+}
+
+void SpellModel::swap_tiles_at_indices(TileIndex a, TileIndex b)
+{
+    ASSERT(valid(a));
+    ASSERT(valid(b));
+
+    Tile tmp = m_tiles[a];
+    m_tiles[a] = m_tiles[b];
+    m_tiles[b] = tmp;
 }
 
 NSArray *SpellModel::all_tile_views() const

@@ -258,7 +258,8 @@ public:
     TileIndex player_tray_index(const UPTileView *);
     TileIndex player_tray_index(const TilePosition &);
 
-    void reposition_word_tray_tiles_in_player_tray();
+    void move_word_tray_tiles_back_to_player_tray();
+    void swap_tiles_at_indices(TileIndex, TileIndex);
 
     NSArray *all_tile_views() const;
     NSArray *player_tray_tile_views() const;

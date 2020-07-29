@@ -159,7 +159,6 @@ static constexpr CFTimeInterval GameStartDelay = 0.64;
 static constexpr CFTimeInterval DefaultBloopDuration = 0.2;
 static constexpr CFTimeInterval DefaultTileSlideDuration = 0.1;
 static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
-static constexpr CFTimeInterval GameOverRespositionBloopDelay = 0.4;
 static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
 static constexpr CFTimeInterval GameOverOutroDuration = 5;
 
@@ -817,7 +816,11 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
 
     UPTileView *tileView = tile.view();
     [self.gameView.tileContainerView bringSubviewToFront:tileView];
-    start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, m_spell_model->player_tray_index(tileView)))], 0.3, nil));
+
+    Tile &tileBefore = m_spell_model->find_tile(tileView);
+    [self viewMoveTileToClosestOpenPlayerTrayPosition:tileBefore];
+    Tile &tileAfter = m_spell_model->find_tile(tileView);
+    start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, tileAfter.position().index()))], DefaultBloopDuration, nil));
 
     [self viewUpdateGameControls];
 }
@@ -921,36 +924,13 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
         start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, location)], duration, nil));
     }
     else {
-        Tile &tile = m_spell_model->find_tile(tileView);
-        start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, tile.position().index()))], duration, nil));
+        Tile &tileBefore = m_spell_model->find_tile(tileView);
+        [self viewMoveTileToClosestOpenPlayerTrayPosition:tileBefore];
+        Tile &tileAfter = m_spell_model->find_tile(tileView);
+        start(bloop_in(BandGameUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, tileAfter.position().index()))], duration, nil));
     }
 
     [self viewUpdateGameControls];
-}
-
-- (void)applyActionDropForGameOver:(const Tile &)tile
-{
-    ASSERT(tile.has_view());
-    ASSERT(self.pickedTileView == tile.view());
-    ASSERT_POS(self.pickedTilePosition);
-    
-    cancel(BandGameDelay);
-    
-    UPTileView *tileView = tile.view();
-
-    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::DROP, self.pickedTilePosition));
-    
-    CFTimeInterval duration = GameOverRespositionBloopDuration;
-    size_t word_length = m_spell_model->word().length();
-    delay(BandModeDelay, GameOverRespositionBloopDelay, ^{
-        if (self.pickedTilePosition.in_word_tray()) {
-            Location location(role_in_word(self.pickedTilePosition.index(), word_length));
-            start(bloop_in(BandModeUI, @[UPViewMoveMake(tileView, location)], duration, nil));
-        }
-        else {
-            start(bloop_in(BandModeUI, @[UPViewMoveMake(tileView, role_for(TileTray::Player, tile.position().index()))], duration, nil));
-        }
-    });
 }
 
 - (void)applyActionClear
@@ -1204,7 +1184,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     cancel(BandGameUITile);
     cancel(BandGameUITileSlide);
 
-    m_spell_model->reposition_word_tray_tiles_in_player_tray();
+    m_spell_model->move_word_tray_tiles_back_to_player_tray();
     
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
     for (UPTileView *tileView in wordTrayTileViews) {
@@ -1273,13 +1253,13 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     NSString *lengthBonusString = nil;
     switch (word_length) {
         case 5:
-            lengthBonusString = [NSString stringWithFormat:@"+%d FOR 5 TILES", SpellModel::FiveLetterWordBonus];
+            lengthBonusString = [NSString stringWithFormat:@"+%d 5 TILES", SpellModel::FiveLetterWordBonus];
             break;
         case 6:
-            lengthBonusString = [NSString stringWithFormat:@"+%d FOR 6 TILES", SpellModel::SixLetterWordBonus];
+            lengthBonusString = [NSString stringWithFormat:@"+%d 6 TILES", SpellModel::SixLetterWordBonus];
             break;
         case 7:
-            lengthBonusString = [NSString stringWithFormat:@"+%d FOR 7 TILES", SpellModel::SevenLetterWordBonus];
+            lengthBonusString = [NSString stringWithFormat:@"+%d 7 TILES", SpellModel::SevenLetterWordBonus];
             break;
     }
     BOOL has_length_bonus = lengthBonusString != nil;
@@ -1288,11 +1268,11 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
         role = Role::WordScoreBonus;
         NSMutableString *bonusString = [NSMutableString string];
         if (has_multiplier_bonus && has_length_bonus) {
-            [bonusString appendFormat:@"%d× WORD BONUS & ", word_multiplier];
+            [bonusString appendFormat:@"%d× WORD & ", word_multiplier];
             [bonusString appendString:lengthBonusString];
         }
         else if (has_multiplier_bonus) {
-            [bonusString appendFormat:@"%d× WORD BONUS", word_multiplier];
+            [bonusString appendFormat:@"%d× WORD ", word_multiplier];
         }
         else {
             [bonusString appendString:lengthBonusString];
@@ -1325,6 +1305,36 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
 {
     self.gameView.wordScoreLabel.hidden = YES;
     self.showingWordScoreLabel = NO;
+}
+
+- (void)viewMoveTileToClosestOpenPlayerTrayPosition:(Tile &)tile
+{
+    ASSERT(tile.has_view());
+    ASSERT(tile.in_player_tray());
+
+    SpellLayout &layout = SpellLayout::instance();
+    
+    UPTileView *tileView = tile.view();
+    CGPoint existingTileCenter = layout.center_for(Location(role_for(TileTray::Player, tile.position().index())));
+    CGFloat minDistance = up_point_distance(tileView.center, existingTileCenter);
+    TileIndex pidx = tile.position().index();
+    
+    NSArray *wordTrayTileViews = [self wordTrayTileViews];
+    for (UPTileView *tv in wordTrayTileViews) {
+        TileIndex idx = m_spell_model->player_tray_index(tv);
+        CGPoint center = layout.center_for(Location(role_for(TileTray::Player, idx)));
+        CGFloat distance = up_point_distance(tileView.center, center);
+        if (minDistance > distance) {
+            minDistance = distance;
+            pidx = idx;
+        }
+    }
+    
+    if (tile.position().index() != pidx) {
+        TileIndex tidx = tile.position().index();
+        tile.set_position(TilePosition(TileTray::Player, pidx));
+        m_spell_model->swap_tiles_at_indices(tidx, pidx);
+    }
 }
 
 - (void)viewDumpPlayerTray:(NSArray *)playerTrayTileViews
