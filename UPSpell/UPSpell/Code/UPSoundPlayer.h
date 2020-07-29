@@ -17,22 +17,21 @@ typedef NS_ENUM(NSInteger, UPSoundID) {
     UPSoundIDHappy4,
     UPSoundIDSad1,
     UPSoundIDSad2,
-    UPSoundIDWhup,
+    UPSoundIDTub,
     UPSoundIDWhoop,
 };
 
 @interface UPSoundPlayer : NSObject
 
-@property (nonatomic) float systemVolume;
+@property (nonatomic) float mainVolume;
 
 + (UPSoundPlayer *)instance;
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (NSError *)setFilePath:(NSString *)filePath forSoundID:(UPSoundID)soundID concurrentCount:(NSUInteger)concurrentCount;
+- (NSError *)setFilePath:(NSString *)filePath forSoundID:(UPSoundID)soundID volume:(float)volume playerCount:(NSUInteger)playerCount;
 
 - (void)playSoundID:(UPSoundID)soundID;
-- (void)playSoundID:(UPSoundID)soundID volume:(float)volume;
 
 - (void)prepare;
 - (void)stop;

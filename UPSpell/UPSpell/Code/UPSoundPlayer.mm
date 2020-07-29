@@ -19,6 +19,7 @@
 @property (nonatomic) AVAudioFile *file;
 @property (nonatomic) AVAudioPlayerNode *player;
 @property (nonatomic) AVAudioPCMBuffer *buffer;
+@property (nonatomic) AVAudioMixerNode *outputMixer;
 @property (nonatomic) BOOL playing;
 @end
 
@@ -52,22 +53,29 @@
 {
     self = [super init];
     
-    self.systemVolume = 1.0;
+    self.mainVolume = 1.0;
     self.engine = [[AVAudioEngine alloc] init];
 
     return self;
 }
 
-- (NSError *)setFilePath:(NSString *)filePath forSoundID:(UPSoundID)soundID concurrentCount:(NSUInteger)concurrentCount
+- (void)setMainVolume:(float)mainVolume
+{
+    _mainVolume = mainVolume;
+    
+    [self prepare];
+    self.engine.mainMixerNode.outputVolume = mainVolume;
+}
+
+- (NSError *)setFilePath:(NSString *)filePath forSoundID:(UPSoundID)soundID volume:(float)volume playerCount:(NSUInteger)playerCount
 {
     m_map.erase(soundID);
 
     NSError *error = nil;
-    
-    for (NSUInteger i = 0; i < concurrentCount; i++) {
-        
+    for (NSUInteger i = 0; i < playerCount; i++) {
         UPSound *sound = [self _createSoundWithFilePath:filePath error:&error];
         if (sound) {
+            sound.outputMixer.outputVolume = volume;
             m_map.insert({ soundID, sound });
         }
     }
@@ -77,17 +85,12 @@
 
 - (void)playSoundID:(UPSoundID)soundID
 {
-    [self playSoundID:soundID volume:1.0];
-}
-
-- (void)playSoundID:(UPSoundID)soundID volume:(float)volume
-{
     BOOL played = NO;
     auto range = m_map.equal_range(soundID);
     for (auto it = range.first; it != range.second; ++it) {
         UPSound *sound = it->second;
         if (!sound.playing) {
-            [self _playSound:sound volume:volume];
+            [self _playSound:sound];
             played = YES;
             break;
         }
@@ -95,8 +98,8 @@
     if (!played) {
         if (range.first != range.second) {
             UPSound *sound = range.first->second;
-            LOG(Sound, "play [backup]: %ld (%.2f)", soundID, volume);
-            [self _playSound:sound volume:volume];
+            LOG(Sound, "play [backup]: %ld", soundID);
+            [self _playSound:sound];
         }
         else {
             LOG(Sound, "no player available for soundID: %ld", soundID);
@@ -106,8 +109,6 @@
 
 - (void)prepare
 {
-    [self stop];
-    
     if (!self.engine.isRunning) {
         NSError *error = nil;
         [self.engine startAndReturnError:&error];
@@ -129,10 +130,9 @@
 
 #pragma mark - Internal
 
-- (void)_playSound:(UPSound *)sound volume:(float)volume
+- (void)_playSound:(UPSound *)sound
 {
     AVAudioPlayerNode *player = sound.player;
-    player.volume = self.systemVolume * volume;
     [player scheduleBuffer:sound.buffer atTime:nil options:AVAudioPlayerNodeBufferInterrupts completionHandler:^{
         sound.playing = NO;
     }];
@@ -172,7 +172,10 @@
             }
         }
         else {
-            [self.engine connect:sound.player to:self.engine.mainMixerNode format:sound.file.processingFormat];
+            sound.outputMixer = [[AVAudioMixerNode alloc] init];
+            [self.engine attachNode:sound.outputMixer];
+            [self.engine connect:sound.player to:sound.outputMixer format:sound.file.processingFormat];
+            [self.engine connect:sound.outputMixer to:self.engine.mainMixerNode format:sound.file.processingFormat];
             [sound.player prepareWithFrameCount:AVAudioFrameCount(sound.file.length)];
         }
     }

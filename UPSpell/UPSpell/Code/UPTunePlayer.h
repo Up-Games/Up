@@ -36,7 +36,7 @@ struct UPTuneProperties {
 
 @interface UPTunePlayer : NSObject
 
-@property (nonatomic) float systemVolume;
+@property (nonatomic) float mainVolume;
 
 + (UPTunePlayer *)instance;
 

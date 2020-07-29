@@ -45,7 +45,7 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
 {
     self = [super init];
     
-    self.systemVolume = 1.0;
+    self.mainVolume = 1.0;
         
     return self;
 }
@@ -80,7 +80,7 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
     }
     else {
         AVAudioPlayer *player = it->second;
-        player.volume = self.systemVolume * properties.volume;
+        player.volume = self.mainVolume * properties.volume;
         player.currentTime = UPClampT(CFTimeInterval, properties.soundTimeOffset, 0, player.duration);
         if (properties.beginTimeOffset > 0) {
             [player playAtTime:player.deviceCurrentTime + properties.beginTimeOffset];
