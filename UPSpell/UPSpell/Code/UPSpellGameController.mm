@@ -5,6 +5,7 @@
 
 #import <limits>
 #import <memory>
+#import <vector>
 
 #import <CoreText/CoreText.h>
 #import <QuartzCore/QuartzCore.h>
@@ -93,6 +94,23 @@ using Place = UP::SpellLayout::Place;
 using Mode = UP::Mode;
 using ModeTransitionTable = UP::ModeTransitionTable;
 
+typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
+    UPSpellGameAlphaStateReasonDefault,
+    UPSpellGameAlphaStateReasonInit,
+    UPSpellGameAlphaStateReasonPlayMenu,
+    UPSpellGameAlphaStateReasonReady,
+    UPSpellGameAlphaStateReasonPrePlay,
+    UPSpellGameAlphaStateReasonPlay,
+    UPSpellGameAlphaStateReasonReject,
+    UPSpellGameAlphaStateReasonDump,
+    UPSpellGameAlphaStateReasonRestoredPause,
+    UPSpellGameAlphaStateReasonPause,
+    UPSpellGameAlphaStateReasonGameOver,
+    UPSpellGameAlphaStateReasonQuitToEnd,
+    UPSpellGameAlphaStateReasonOverToEnd,
+    UPSpellGameAlphaStateReasonOrderOutGameEnd,
+};
+
 @interface UPSpellGameController () <UPGameTimerObserver>
 {
     std::shared_ptr<SpellModel> m_spell_model;
@@ -101,6 +119,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
     ModeTransitionTable m_will_enter_foreground_transition_table;
     ModeTransitionTable m_will_resign_active_transition_table;
     ModeTransitionTable m_did_enter_background_transition_table;
+    std::vector<UPSpellGameAlphaStateReason> m_alpha_reason_stack;
 }
 @property (nonatomic) UPSpellGameView *gameView;
 @property (nonatomic) UPGameTimer *gameTimer;
@@ -1360,22 +1379,17 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
 - (void)viewPenaltyForDump
 {
     ASSERT(self.lockCount > 0);
-    const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.gameView.clearControl.highlightedLocked = YES;
     self.gameView.clearControl.highlighted = YES;
-    self.gameView.wordTrayControl.alpha = disabledAlpha;
-    self.gameView.tileContainerView.alpha = disabledAlpha;
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonDump];
 }
 
 - (void)viewPenaltyForReject
 {
     ASSERT(self.lockCount > 0);
-    const CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
     self.gameView.wordTrayControl.highlightedLocked = YES;
     self.gameView.wordTrayControl.highlighted = YES;
-    self.gameView.wordTrayControl.alpha = disabledAlpha;
-    self.gameView.clearControl.alpha = disabledAlpha;
-    self.gameView.tileContainerView.alpha = disabledAlpha;
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonReject];
 }
 
 - (void)viewPenaltyFinished
@@ -1385,25 +1399,127 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     self.gameView.wordTrayControl.highlighted = NO;
     self.gameView.clearControl.highlightedLocked = NO;
     self.gameView.clearControl.highlighted = NO;
-    self.gameView.clearControl.alpha = 1.0;
-    self.gameView.wordTrayControl.alpha = 1.0;
-    self.gameView.tileContainerView.alpha = 1.0;
+    m_alpha_reason_stack.clear();
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
 }
 
-- (void)viewSetGameAlpha:(CGFloat)alpha
+- (void)viewSetGameAlphaWithReason:(UPSpellGameAlphaStateReason)reason
 {
     ASSERT(self.lockCount > 0);
-    for (UIView *view in self.gameView.subviews) {
-        view.alpha = alpha;
-    }
-}
 
-- (void)viewRestoreGameAlpha
-{
-    ASSERT(self.lockCount > 0);
-    for (UIView *view in self.gameView.subviews) {
-        view.alpha = 1.0;
+    switch (reason) {
+        case UPSpellGameAlphaStateReasonInit:
+        case UPSpellGameAlphaStateReasonOrderOutGameEnd:
+        case UPSpellGameAlphaStateReasonReady:
+        case UPSpellGameAlphaStateReasonQuitToEnd: {
+            CGFloat alpha = [UIColor themeDisabledAlpha];
+            for (UIView *view in self.gameView.subviews) {
+                view.alpha = alpha;
+            }
+            m_alpha_reason_stack.clear();
+            break;
+        }
+        case UPSpellGameAlphaStateReasonRestoredPause: {
+            CGFloat alpha = [UIColor themeModalBackgroundAlpha];
+            for (UIView *view in self.gameView.subviews) {
+                view.alpha = alpha;
+            }
+            m_alpha_reason_stack.clear();
+            break;
+        }
+        case UPSpellGameAlphaStateReasonPause: {
+            CGFloat alpha = [UIColor themeModalBackgroundAlpha];
+            for (UIView *view in self.gameView.subviews) {
+                view.alpha = alpha;
+            }
+            break;
+        }
+        case UPSpellGameAlphaStateReasonPlayMenu: {
+            CGFloat alpha = 0.02;
+            for (UIView *view in self.gameView.subviews) {
+                view.alpha = alpha;
+            }
+            m_alpha_reason_stack.clear();
+            break;
+        }
+        case UPSpellGameAlphaStateReasonPrePlay: {
+            for (UIView *view in self.gameView.subviews) {
+                view.alpha = 1.0;
+            }
+            self.gameView.tileContainerView.alpha = [UIColor themeDisabledAlpha];
+            m_alpha_reason_stack.clear();
+            break;
+        }
+        case UPSpellGameAlphaStateReasonDefault:
+        case UPSpellGameAlphaStateReasonPlay: {
+            if (m_alpha_reason_stack.size()) {
+                if (m_alpha_reason_stack.back() == UPSpellGameAlphaStateReasonReject) {
+                    for (UIView *view in self.gameView.subviews) {
+                        if (view == self.gameView.wordTrayControl ||
+                            view == self.gameView.clearControl ||
+                            view == self.gameView.tileContainerView) {
+                            view.alpha = [UIColor themeDisabledAlpha];
+                        }
+                        else {
+                            view.alpha = 1.0;
+                        }
+                    }
+                }
+                else if (m_alpha_reason_stack.back() == UPSpellGameAlphaStateReasonDump) {
+                    for (UIView *view in self.gameView.subviews) {
+                        if (view == self.gameView.wordTrayControl ||
+                            view == self.gameView.tileContainerView) {
+                            view.alpha = [UIColor themeDisabledAlpha];
+                        }
+                        else {
+                            view.alpha = 1.0;
+                        }
+                    }
+                }
+            }
+            else {
+                CGFloat alpha = 1.0;
+                for (UIView *view in self.gameView.subviews) {
+                    view.alpha = alpha;
+                }
+            }
+            m_alpha_reason_stack.clear();
+            break;
+        }
+        case UPSpellGameAlphaStateReasonReject: {
+            CGFloat alpha = [UIColor themeDisabledAlpha];
+            for (UIView *view in @[ self.gameView.wordTrayControl, self.gameView.clearControl, self.gameView.tileContainerView ]) {
+                view.alpha = alpha;
+            }
+            m_alpha_reason_stack.push_back(UPSpellGameAlphaStateReasonReject);
+            break;
+        }
+        case UPSpellGameAlphaStateReasonDump: {
+            CGFloat alpha = [UIColor themeDisabledAlpha];
+            for (UIView *view in @[ self.gameView.wordTrayControl, self.gameView.tileContainerView ]) {
+                view.alpha = alpha;
+            }
+            m_alpha_reason_stack.push_back(UPSpellGameAlphaStateReasonDump);
+            break;
+            break;
+        }
+        case UPSpellGameAlphaStateReasonGameOver: {
+            CGFloat alpha = [UIColor themeModalGameOverAlpha];
+            for (UIView *view in self.gameView.subviews) {
+                view.alpha = alpha;
+            }
+            m_alpha_reason_stack.clear();
+            break;
+        }
+        case UPSpellGameAlphaStateReasonOverToEnd: {
+            CGFloat alpha = [UIColor themeModalBackgroundAlpha];
+            for (UIView *view in self.gameView.subviews) {
+                view.alpha = alpha;
+            }
+            break;
+        }
     }
+    
 }
 
 - (void)viewLock
@@ -1788,7 +1904,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     ];
     start(bloop_out(BandModeUI, buttonOutMoves, 0.4, nil));
     [UIView animateWithDuration:0.4 animations:^{
-        [self viewSetGameAlpha:0.02];
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlayMenu];
     } completion:nil];
     
     
@@ -1822,7 +1938,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     [self.gameTimer reset];
     [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
-    [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonOrderOutGameEnd];
     
     SpellLayout &layout = SpellLayout::instance();
     self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageVerticallyCentered, Place::OffBottomNear);
@@ -1849,7 +1965,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     
     delay(BandModeDelay, 0.1, ^{
         [UIView animateWithDuration:0.2 animations:^{
-            [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
+            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonReady];
         }];
     });
 
@@ -2390,7 +2506,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewUpdateGameControls];
     [self viewFillUpSpellTileViews];
     [self viewLock];
-    [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
     [self viewUnlock];
 }
 
@@ -2404,7 +2520,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self.gameTimer resetTo:m_spell_model->back_state().action().timestamp()];
     [self viewUpdateGameControls];
     [self viewRestoreInProgressGame];
-    [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPause];
 
     if (@available(iOS 11.0, *)) {
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
@@ -2600,7 +2716,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     });
     
     [UIView animateWithDuration:0.25 delay:0.15 options:0 animations:^{
-        [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
     } completion:^(BOOL finished) {
         [self viewUnlock];
     }];
@@ -2685,10 +2801,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     start(bloop_out(BandModeUI, @[readyMove], 0.25, nil));
     // animate game view to full alpha and fade out dialog menu
     [UIView animateWithDuration:0.1 delay:0.2 options:0 animations:^{
-        [self viewRestoreGameAlpha];
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPrePlay];
     } completion:nil];
-    // keep the tile views alpha disabled until just before filling them with game tiles
-    self.gameView.tileContainerView.alpha = [UIColor themeDisabledAlpha];
     [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
         self.dialogTopMenu.alpha = 0;
     } completion:^(BOOL finished) {
@@ -2701,7 +2815,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         self.dialogGameNote.hidden = YES;
         delay(BandModeDelay, 0.1, ^{
             // create new game model and start game
-            [self viewRestoreGameAlpha];
+            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
             [self viewUnlock];
             [self viewFillPlayerTrayWithCompletion:nil];
         });
@@ -2720,7 +2834,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [[UPSoundPlayer instance] stop];
     [[UPTunePlayer instance] stop];
     [self viewLock];
-    [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPause];
 
     // special modal fixups for pause
     self.gameView.pauseControl.highlightedLocked = YES;
@@ -2763,7 +2877,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [[UPSoundPlayer instance] stop];
     [[UPTunePlayer instance] stop];
     [self viewLock];
-    [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
+
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPause];
     
     // special modal fixups for pause
     self.gameView.pauseControl.highlightedLocked = YES;
@@ -2814,7 +2929,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [UIView animateWithDuration:0.3 animations:^{
             self.gameView.pauseControl.highlightedLocked = NO;
             self.gameView.pauseControl.highlighted = NO;
-            [self viewRestoreGameAlpha];
+            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
         } completion:^(BOOL finished) {
             self.gameView.pauseControl.highlightedLocked = NO;
             self.gameView.pauseControl.highlighted = NO;
@@ -2891,8 +3006,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [UIView animateWithDuration:0.2 animations:^{
         self.gameView.wordTrayControl.transform = CGAffineTransformIdentity;
     }];
-    
-    [self viewSetGameAlpha:[UIColor themeModalGameOverAlpha]];
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGameOver];
+
     self.gameView.timerLabel.alpha = [UIColor themeModalActiveAlpha];
     self.gameView.gameScoreLabel.alpha = [UIColor themeModalActiveAlpha];
 
@@ -2937,7 +3052,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [UIView animateWithDuration:1.0 animations:^{
             self.dialogGameOver.transform = layout.menu_game_view_transform();
             self.gameView.transform = layout.menu_game_view_transform();
-            [self viewSetGameAlpha:[UIColor themeModalBackgroundAlpha]];
+            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonOverToEnd];
         }];
         self.gameView.timerLabel.alpha = 1.0;
         self.gameView.gameScoreLabel.alpha = 1.0;
@@ -3026,7 +3141,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
         [UIView animateWithDuration:1.2 animations:^{
             self.gameView.transform = layout.menu_game_view_transform();
-            [self viewSetGameAlpha:[UIColor themeDisabledAlpha]];
+            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonQuitToEnd];
         } completion:^(BOOL finished) {
             self.dialogTopMenu.hidden = NO;
             self.dialogTopMenu.alpha = 1;
