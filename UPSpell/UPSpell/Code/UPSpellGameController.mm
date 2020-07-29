@@ -1010,9 +1010,10 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     [soundPlayer playSoundID:UPSoundIDSad1 volume:0.3];
 
     // assess time penalty and shake word tray side-to-side
-    [UIView animateWithDuration:0.1 animations:^{
+    [UIView animateWithDuration:0.15 animations:^{
         [self viewPenaltyForReject];
     }];
+
     self.gameView.wordTrayControl.active = NO;
     SpellLayout &layout = SpellLayout::instance();
     NSMutableArray *views = [NSMutableArray arrayWithObject:self.gameView.wordTrayControl];
@@ -1020,14 +1021,14 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     delay(BandGameDelay, 0.1, ^{
         start(shake(BandGameUI, views, 0.9, layout.word_tray_shake_offset(), ^(UIViewAnimatingPosition finishedPosition) {
             if (finishedPosition == UIViewAnimatingPositionEnd) {
-                delay(BandGameDelay, 0.15, ^{
-                    [UIView animateWithDuration:0.1 animations:^{
+                delay(BandGameDelay, 0.1, ^{
+                    [UIView animateWithDuration:0.15 animations:^{
                         [self viewPenaltyFinished];
                     }];
-                    delay(BandGameDelay, 0.1, ^{
-                        [self applyActionClear];
-                        [self viewUnlock];
-                    });
+                });
+                delay(BandGameDelay, 0.25, ^{
+                    [self applyActionClear];
+                    [self viewUnlock];
                 });
             }
             else {
@@ -1054,13 +1055,19 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer playSoundID:UPSoundIDSad2 volume:0.3];
 
-    [self viewPenaltyForDump];
+    [UIView animateWithDuration:0.15 animations:^{
+        [self viewPenaltyForDump];
+    }];
     [self viewDumpPlayerTray:playerTrayTileViews];
     delay(BandGameDelay, 1.65, ^{
+        delay(BandGameDelay, 0.1, ^{
+            [UIView animateWithDuration:0.15 animations:^{
+                [self viewPenaltyFinished];
+            }];
+        });
         [self viewFillPlayerTrayWithCompletion:^{
             [self viewUnlock];
         }];
-        [self viewPenaltyFinished];
     });
 }
 
@@ -1496,7 +1503,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
         }
         case UPSpellGameAlphaStateReasonDump: {
             CGFloat alpha = [UIColor themeDisabledAlpha];
-            for (UIView *view in @[ self.gameView.wordTrayControl, self.gameView.tileContainerView ]) {
+            for (UIView *view in @[ self.gameView.tileContainerView ]) {
                 view.alpha = alpha;
             }
             m_alpha_reason_stack.push_back(UPSpellGameAlphaStateReasonDump);
