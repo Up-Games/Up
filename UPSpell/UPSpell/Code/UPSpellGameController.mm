@@ -880,19 +880,20 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     cancel(BandGameDelay);
     cancel(@[tile.view()], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
 
-    TilePosition hover_pos = [self calculateHoverPosition:tile];
-    ASSERT_POS(hover_pos);
+    TilePosition hover_position = [self calculateHoverPosition:tile];
+    ASSERT_POS(hover_position);
 
     const State &state = m_spell_model->back_state();
-    if (state.action().opcode() != SpellModel::Opcode::HOVER || state.action().pos1() != hover_pos) {
+    if (state.action().opcode() != SpellModel::Opcode::HOVER || state.action().pos1() != hover_position) {
         if (m_spell_model->back_opcode() != SpellModel::Opcode::PICK) {
             UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
             [soundPlayer playSoundID:UPSoundIDTub];
         }
-        m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::HOVER, hover_pos));
+        m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::HOVER, hover_position));
     }
     
-    [self viewHover:hover_pos];
+    [self viewHover:hover_position];
+    [self viewUpdateGameControls];
 }
 
 - (void)applyActionNoverIfNeeded:(const Tile &)tile
@@ -1074,7 +1075,9 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
 {
     // word tray
     if (self.mode == Mode::Attract || self.mode == Mode::Play || self.mode == Mode::Pause) {
-        self.gameView.wordTrayControl.active = m_spell_model->word().in_lexicon();
+        Opcode back = m_spell_model->back_opcode();
+        BOOL active = m_spell_model->word().in_lexicon() && back != Opcode::HOVER && back != Opcode::NOVER;
+        self.gameView.wordTrayControl.active = active;
     }
     else {
         self.gameView.wordTrayControl.active = NO;
