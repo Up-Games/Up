@@ -584,7 +584,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     Tile &tile = m_spell_model->find_tile(tileView);
     if (self.pickedTilePosition.in_player_tray()) {
         CFTimeInterval now = CACurrentMediaTime();
-        if (now - self.activeTouchStartTimestamp < 0.1) {
+        if (now - self.activeTouchStartTimestamp <= 0.25) {
             [self applyActionAdd:tile];
         }
         else if (projectedTileInsideWordTray) {
@@ -2308,14 +2308,15 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     NSBundle *bundle = [NSBundle mainBundle];
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer setFilePath:[bundle pathForResource:@"Tile-Tick-E" ofType:@"aif"] forSoundID:UPSoundIDTap volume:0.15 playerCount:10];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Tile-Tick-F" ofType:@"aif"] forSoundID:UPSoundIDTub volume:0.15 playerCount:8];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-1A" ofType:@"aac"] forSoundID:UPSoundIDHappy1 volume:1.0 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-2A" ofType:@"aac"] forSoundID:UPSoundIDHappy2 volume:1.0 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-3A" ofType:@"aac"] forSoundID:UPSoundIDHappy3 volume:1.0 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-4A" ofType:@"aac"] forSoundID:UPSoundIDHappy4 volume:1.0 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Tile-Tick-F" ofType:@"aif"] forSoundID:UPSoundIDTub volume:0.2 playerCount:8];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-1A" ofType:@"aac"] forSoundID:UPSoundIDHappy1 volume:0.9 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-2A" ofType:@"aac"] forSoundID:UPSoundIDHappy2 volume:0.9 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-3A" ofType:@"aac"] forSoundID:UPSoundIDHappy3 volume:0.9 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-4A" ofType:@"aac"] forSoundID:UPSoundIDHappy4 volume:0.9 playerCount:3];
     [soundPlayer setFilePath:[bundle pathForResource:@"Sad-Horns-2" ofType:@"aac"] forSoundID:UPSoundIDSad1 volume:0.3 playerCount:2];
     [soundPlayer setFilePath:[bundle pathForResource:@"Sad-Horns-3" ofType:@"aac"] forSoundID:UPSoundIDSad2 volume:0.3 playerCount:2];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Whistle-C" ofType:@"aif"] forSoundID:UPSoundIDWhoop volume:0.4 playerCount:2];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Whistle-C" ofType:@"aif"] forSoundID:UPSoundIDWhoop volume:0.15 playerCount:2];
+    soundPlayer.mainVolume = 0.75;
 }
 
 - (void)configureTunesForTuneNumber:(NSUInteger)tuneNumber
