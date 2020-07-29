@@ -173,6 +173,7 @@
 		5D5B546824CF9CCF00FD50D4 /* Square-In.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B546024CF9CCF00FD50D4 /* Square-In.aac */; };
 		5D5B546B24D0A40500FD50D4 /* UPTunePlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B546924D0A40500FD50D4 /* UPTunePlayer.mm */; };
 		5D5B546E24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B546C24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm */; };
+		5D5B547024D21A9C00FD50D4 /* Clock-Tock-Out.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B546F24D21A9C00FD50D4 /* Clock-Tock-Out.aac */; };
 		5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1412485B49E006264D2 /* UPDialogPause.mm */; };
 		5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1442485B820006264D2 /* UPTextPaths.mm */; };
 		5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */; };
@@ -410,6 +411,7 @@
 		5D5B546A24D0A40500FD50D4 /* UPTunePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTunePlayer.h; sourceTree = "<group>"; };
 		5D5B546C24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "AVAudioPlayer+UPSpell.mm"; sourceTree = "<group>"; };
 		5D5B546D24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAudioPlayer+UPSpell.h"; sourceTree = "<group>"; };
+		5D5B546F24D21A9C00FD50D4 /* Clock-Tock-Out.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clock-Tock-Out.aac"; sourceTree = "<group>"; };
 		5D5EA1402485B49E006264D2 /* UPDialogPause.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogPause.h; sourceTree = "<group>"; };
 		5D5EA1412485B49E006264D2 /* UPDialogPause.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogPause.mm; sourceTree = "<group>"; };
 		5D5EA1432485B820006264D2 /* UPTextPaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTextPaths.h; sourceTree = "<group>"; };
@@ -619,6 +621,7 @@
 		5D5B53F524CDF18A00FD50D4 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				5D5B546F24D21A9C00FD50D4 /* Clock-Tock-Out.aac */,
 				5D5B544724CF6BA500FD50D4 /* Sad-Horns-2.aac */,
 				5D5B544F24CF8D3900FD50D4 /* Sad-Horns-3.aac */,
 				5D5B545124CF922A00FD50D4 /* Trumpets-1A.aac */,
@@ -968,6 +971,7 @@
 				5D0FC2BE24A57DC500353563 /* up-games-icon-045-76@2x.png in Resources */,
 				5D0FC2F624A57DC500353563 /* up-games-icon-180-76@2x.png in Resources */,
 				5D0FC30824A57DC500353563 /* up-games-icon-105-76@2x.png in Resources */,
+				5D5B547024D21A9C00FD50D4 /* Clock-Tock-Out.aac in Resources */,
 				5D5B544E24CF8ADB00FD50D4 /* Whistle-C.aif in Resources */,
 				5D0FC30124A57DC500353563 /* up-games-icon-300-76.png in Resources */,
 				5D0FC2E824A57DC500353563 /* up-games-icon-225-83@2x.png in Resources */,
