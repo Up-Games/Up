@@ -545,7 +545,6 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     self.activeTouchVelocity = CGPointZero;
     self.activeTouchPreviousPoint = self.activeTouchPoint;
     self.activeTouchPreviousTimestamp = CACurrentMediaTime();
-    self.activeTouchStartTimestamp = 0;
     
     CGPoint center = up_rect_center(self.touchedControl.bounds);
     CGFloat dx = center.x - touchPointInView.x;
@@ -570,6 +569,8 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     BOOL tileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), tileView.center);
     CGPoint projectedDownCenter = CGPointMake(tileView.center.x, tileView.center.y + (movingDownVelocity * 0.15));
     BOOL projectedTileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), projectedDownCenter);
+    CFTimeInterval now = CACurrentMediaTime();
+    CFTimeInterval elapsed = now - self.activeTouchStartTimestamp;
     LOG(Gestures, "pan ended: f: %.2f ; c: %.2f ; v: %.2f", self.activeTouchFurthestPanDistance, self.activeTouchCurrentPanDistance, v.y);
     LOG(Gestures, "   center:     %@", NSStringFromCGPoint(tileView.center));
     LOG(Gestures, "   projected:  %@", NSStringFromCGPoint(projectedDownCenter));
@@ -581,16 +582,10 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     LOG(Gestures, "   inside [p]: %s", projectedTileInsideWordTray ? "Y" : "N");
     LOG(Gestures, "   move:       %s", projectedTileInsideWordTray ? "Y" : "N");
     LOG(Gestures, "   add:        %s", ((!pannedFar && putBack) || movingUp || !self.activeTouchPanEverMovedUp) ? "Y" : "N");
+    LOG(Gestures, "   elapsed:    %.3f", elapsed);
     Tile &tile = m_spell_model->find_tile(tileView);
     if (self.pickedTilePosition.in_player_tray()) {
-        CFTimeInterval now = CACurrentMediaTime();
-        if (now - self.activeTouchStartTimestamp <= 0.25) {
-            [self applyActionAdd:tile];
-        }
-        else if (projectedTileInsideWordTray) {
-            [self applyActionAdd:tile];
-        }
-        else if ((!pannedFar && putBack) || movingUp || !self.activeTouchPanEverMovedUp) {
+        if (elapsed <= 0.5 || !pannedFar || projectedTileInsideWordTray) {
             [self applyActionAdd:tile];
         }
         else {
@@ -885,7 +880,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
 
     const State &state = m_spell_model->back_state();
     if (state.action().opcode() != SpellModel::Opcode::HOVER || state.action().pos1() != hover_position) {
-        if (m_spell_model->back_opcode() != SpellModel::Opcode::PICK) {
+        if (tile.position().in_player_tray() || m_spell_model->back_opcode() != SpellModel::Opcode::PICK) {
             UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
             [soundPlayer playSoundID:UPSoundIDTub];
         }
