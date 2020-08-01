@@ -2398,7 +2398,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             break;
         }
     }
-    return 1;
+    return tuneNumber;
 }
 
 - (void)sequenceTuneWithDelay:(CFTimeInterval)delay gameTimeElapsed:(CFTimeInterval)gameTimeElapsed
@@ -2820,26 +2820,21 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self.gameTimer start];
     });
     
-    // bloop out ready message
     UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear));
     start(bloop_out(BandModeUI, @[readyMove], 0.25, nil));
-    // animate game view to full alpha and fade out dialog menu
-    [UIView animateWithDuration:0.1 delay:0.2 options:0 animations:^{
-        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPrePlay];
-    } completion:nil];
     [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
         self.dialogTopMenu.alpha = 0;
     } completion:^(BOOL finished) {
-        // animate game view to full alpha and restore alpha of dialog menu
         self.dialogTopMenu.alpha = 1;
         self.dialogTopMenu.hidden = YES;
         self.dialogGameOver.alpha = 1.0;
         self.dialogGameOver.hidden = YES;
         self.dialogGameNote.alpha = 1.0;
         self.dialogGameNote.hidden = YES;
-        delay(BandModeDelay, 0.1, ^{
-            // create new game model and start game
+        [UIView animateWithDuration:0.1 animations:^{
             [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
+        } completion:nil];
+        delay(BandModeDelay, 0.1, ^{
             [self viewUnlock];
             [self viewFillPlayerTrayWithCompletion:nil];
         });
