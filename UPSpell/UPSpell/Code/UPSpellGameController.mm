@@ -1472,6 +1472,9 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
         }
         case UPSpellGameAlphaStateReasonPrePlay: {
             for (UIView *view in self.gameView.subviews) {
+                if (view == self.gameView.tileContainerView) {
+                    continue;
+                }
                 view.alpha = 1.0;
             }
             self.gameView.tileContainerView.alpha = [UIColor themeDisabledAlpha];
@@ -2831,7 +2834,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         self.dialogGameOver.hidden = YES;
         self.dialogGameNote.alpha = 1.0;
         self.dialogGameNote.hidden = YES;
-        [UIView animateWithDuration:0.1 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
         } completion:nil];
         delay(BandModeDelay, 0.1, ^{
@@ -3025,6 +3028,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [UIView animateWithDuration:0.2 animations:^{
         self.gameView.wordTrayControl.transform = CGAffineTransformIdentity;
     }];
+    [self viewPenaltyFinished];
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGameOver];
 
     self.gameView.timerLabel.alpha = [UIColor themeModalActiveAlpha];
