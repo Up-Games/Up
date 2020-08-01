@@ -19,8 +19,10 @@ namespace UP {
     
 class TileSequence {
 public:
-    TileSequence() : m_game_key(GameKey()) { m_random.seed_value(m_game_key.value()); }
-    TileSequence(const GameKey &game_key) : m_game_key(game_key) { m_random.seed_value(m_game_key.value()); }
+    explicit TileSequence(const GameKey &game_key = GameKey()) : m_game_key(game_key) {
+        m_random.seed_value(m_game_key.value());
+        m_multiplier_countdown = m_random.uint32_in_range(1, MultiplierStart);
+    }
 
     GameKey game_key() const { return m_game_key; }
     
@@ -34,18 +36,23 @@ public:
         }
         char32_t c = m_letters.back();
         m_letters.pop_back();
-        int r = m_random.uint32_less_than(100);
         int m = 1;
-        if (r >= 96) {
+        m_multiplier_countdown--;
+        if (m_multiplier_countdown == 0) {
+            m_multiplier_countdown = MultiplierSpan;
             m = 2;
         }
         return TileModel(c, m);
     }
     
 private:
+    static constexpr int MultiplierStart = 10;
+    static constexpr int MultiplierSpan = 25;
+
     GameKey m_game_key;
     Random m_random;
     std::vector<char32_t> m_letters;
+    int m_multiplier_countdown = 0;
 };
     
 }  // namespace UP
