@@ -147,33 +147,31 @@
 		5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */; };
 		5D5B53F224CDCACD00FD50D4 /* UPSoundPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B53F124CDCACD00FD50D4 /* UPSoundPlayer.mm */; };
 		5D5B53F424CDCB5000FD50D4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5B53F324CDCB5000FD50D4 /* AVFoundation.framework */; };
-		5D5B53FE24CDF51E00FD50D4 /* Game-Over.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B53FD24CDF51E00FD50D4 /* Game-Over.aac */; };
-		5D5B540224CE182400FD50D4 /* Variation-19-Out.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B53FF24CE182400FD50D4 /* Variation-19-Out.aac */; };
-		5D5B540324CE182400FD50D4 /* Variation-19-In.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B540024CE182400FD50D4 /* Variation-19-In.aac */; };
-		5D5B540424CE182400FD50D4 /* Variation-19-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B540124CE182400FD50D4 /* Variation-19-Tune.aac */; };
-		5D5B540824CE1CAB00FD50D4 /* Waltz-Out.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B540524CE1CAB00FD50D4 /* Waltz-Out.aac */; };
-		5D5B540924CE1CAB00FD50D4 /* Waltz-In.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B540624CE1CAB00FD50D4 /* Waltz-In.aac */; };
-		5D5B540A24CE1CAB00FD50D4 /* Waltz-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B540724CE1CAB00FD50D4 /* Waltz-Tune.aac */; };
-		5D5B543924CF5C7500FD50D4 /* Tile-Tick-E.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B543824CF5C7500FD50D4 /* Tile-Tick-E.aif */; };
-		5D5B544824CF6BA500FD50D4 /* Sad-Horns-2.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B544724CF6BA500FD50D4 /* Sad-Horns-2.aac */; };
-		5D5B544A24CF834500FD50D4 /* Tile-Tick-F.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B544924CF834500FD50D4 /* Tile-Tick-F.aif */; };
-		5D5B544E24CF8ADB00FD50D4 /* Whistle-C.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B544D24CF8ADB00FD50D4 /* Whistle-C.aif */; };
-		5D5B545024CF8D3900FD50D4 /* Sad-Horns-3.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B544F24CF8D3900FD50D4 /* Sad-Horns-3.aac */; };
-		5D5B545524CF922B00FD50D4 /* Trumpets-1A.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545124CF922A00FD50D4 /* Trumpets-1A.aac */; };
-		5D5B545624CF922B00FD50D4 /* Trumpets-3A.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545224CF922A00FD50D4 /* Trumpets-3A.aac */; };
-		5D5B545724CF922B00FD50D4 /* Trumpets-2A.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545324CF922B00FD50D4 /* Trumpets-2A.aac */; };
-		5D5B545824CF922B00FD50D4 /* Trumpets-4A.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545424CF922B00FD50D4 /* Trumpets-4A.aac */; };
-		5D5B546124CF9CCF00FD50D4 /* Invention-8-In.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545924CF9CCE00FD50D4 /* Invention-8-In.aac */; };
-		5D5B546224CF9CCF00FD50D4 /* Square-Out.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545A24CF9CCE00FD50D4 /* Square-Out.aac */; };
-		5D5B546324CF9CCF00FD50D4 /* Forked-Deer-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545B24CF9CCE00FD50D4 /* Forked-Deer-Tune.aac */; };
-		5D5B546424CF9CCF00FD50D4 /* Invention-8-Out.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545C24CF9CCE00FD50D4 /* Invention-8-Out.aac */; };
-		5D5B546524CF9CCF00FD50D4 /* Cindy-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545D24CF9CCE00FD50D4 /* Cindy-Tune.aac */; };
-		5D5B546624CF9CCF00FD50D4 /* Invention-8-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545E24CF9CCF00FD50D4 /* Invention-8-Tune.aac */; };
-		5D5B546724CF9CCF00FD50D4 /* Bill-Cheatum-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B545F24CF9CCF00FD50D4 /* Bill-Cheatum-Tune.aac */; };
-		5D5B546824CF9CCF00FD50D4 /* Square-In.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B546024CF9CCF00FD50D4 /* Square-In.aac */; };
 		5D5B546B24D0A40500FD50D4 /* UPTunePlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B546924D0A40500FD50D4 /* UPTunePlayer.mm */; };
 		5D5B546E24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B546C24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm */; };
-		5D5B547024D21A9C00FD50D4 /* Clock-Tock-Out.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B546F24D21A9C00FD50D4 /* Clock-Tock-Out.aac */; };
+		5D5B548824D4F8E000FD50D4 /* Invention-8-In.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547124D4F8DF00FD50D4 /* Invention-8-In.aac */; };
+		5D5B548924D4F8E000FD50D4 /* Game-Over.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547224D4F8DF00FD50D4 /* Game-Over.aac */; };
+		5D5B548A24D4F8E000FD50D4 /* Square-In.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547324D4F8DF00FD50D4 /* Square-In.aac */; };
+		5D5B548B24D4F8E000FD50D4 /* Sad-Horns-3.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547424D4F8DF00FD50D4 /* Sad-Horns-3.aac */; };
+		5D5B548C24D4F8E000FD50D4 /* Invention-8-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547524D4F8DF00FD50D4 /* Invention-8-Tune.aac */; };
+		5D5B548D24D4F8E000FD50D4 /* Cindy-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547624D4F8DF00FD50D4 /* Cindy-Tune.aac */; };
+		5D5B548F24D4F8E000FD50D4 /* Tub-3.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547824D4F8DF00FD50D4 /* Tub-3.aif */; };
+		5D5B549024D4F8E000FD50D4 /* Variation-19-In.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547924D4F8E000FD50D4 /* Variation-19-In.aac */; };
+		5D5B549124D4F8E000FD50D4 /* Waltz-In.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547A24D4F8E000FD50D4 /* Waltz-In.aac */; };
+		5D5B549224D4F8E000FD50D4 /* Waltz-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547B24D4F8E000FD50D4 /* Waltz-Tune.aac */; };
+		5D5B549324D4F8E000FD50D4 /* Trumpets-3A.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547C24D4F8E000FD50D4 /* Trumpets-3A.aac */; };
+		5D5B549524D4F8E000FD50D4 /* Trumpets-1A.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547E24D4F8E000FD50D4 /* Trumpets-1A.aac */; };
+		5D5B549624D4F8E000FD50D4 /* Whistle-C.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B547F24D4F8E000FD50D4 /* Whistle-C.aif */; };
+		5D5B549724D4F8E000FD50D4 /* Clock-Tock-Out.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B548024D4F8E000FD50D4 /* Clock-Tock-Out.aac */; };
+		5D5B549824D4F8E000FD50D4 /* Trumpets-2A.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B548124D4F8E000FD50D4 /* Trumpets-2A.aac */; };
+		5D5B549924D4F8E000FD50D4 /* Tile-Tick-F.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B548224D4F8E000FD50D4 /* Tile-Tick-F.aif */; };
+		5D5B549A24D4F8E000FD50D4 /* Sad-Horns-2.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B548324D4F8E000FD50D4 /* Sad-Horns-2.aac */; };
+		5D5B549B24D4F8E000FD50D4 /* Variation-19-In.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B548424D4F8E000FD50D4 /* Variation-19-In.aif */; };
+		5D5B549C24D4F8E000FD50D4 /* Trumpets-4A.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B548524D4F8E000FD50D4 /* Trumpets-4A.aac */; };
+		5D5B549D24D4F8E000FD50D4 /* Variation-19-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B548624D4F8E000FD50D4 /* Variation-19-Tune.aac */; };
+		5D5B549E24D4F8E000FD50D4 /* Tile-Tick-E.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B548724D4F8E000FD50D4 /* Tile-Tick-E.aif */; };
+		5D5B54A024D4F8EE00FD50D4 /* Bill-Cheatum-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B549F24D4F8EE00FD50D4 /* Bill-Cheatum-Tune.aac */; };
+		5D5B54A224D4F9B400FD50D4 /* Forked-Deer-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54A124D4F9B400FD50D4 /* Forked-Deer-Tune.aac */; };
 		5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1412485B49E006264D2 /* UPDialogPause.mm */; };
 		5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1442485B820006264D2 /* UPTextPaths.mm */; };
 		5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */; };
@@ -383,35 +381,33 @@
 		5D5B53F024CDCACD00FD50D4 /* UPSoundPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSoundPlayer.h; sourceTree = "<group>"; };
 		5D5B53F124CDCACD00FD50D4 /* UPSoundPlayer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSoundPlayer.mm; sourceTree = "<group>"; };
 		5D5B53F324CDCB5000FD50D4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		5D5B53FD24CDF51E00FD50D4 /* Game-Over.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Game-Over.aac"; sourceTree = "<group>"; };
-		5D5B53FF24CE182400FD50D4 /* Variation-19-Out.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Variation-19-Out.aac"; sourceTree = "<group>"; };
-		5D5B540024CE182400FD50D4 /* Variation-19-In.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Variation-19-In.aac"; sourceTree = "<group>"; };
-		5D5B540124CE182400FD50D4 /* Variation-19-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Variation-19-Tune.aac"; sourceTree = "<group>"; };
-		5D5B540524CE1CAB00FD50D4 /* Waltz-Out.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Waltz-Out.aac"; sourceTree = "<group>"; };
-		5D5B540624CE1CAB00FD50D4 /* Waltz-In.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Waltz-In.aac"; sourceTree = "<group>"; };
-		5D5B540724CE1CAB00FD50D4 /* Waltz-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Waltz-Tune.aac"; sourceTree = "<group>"; };
-		5D5B543824CF5C7500FD50D4 /* Tile-Tick-E.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tile-Tick-E.aif"; sourceTree = "<group>"; };
-		5D5B544724CF6BA500FD50D4 /* Sad-Horns-2.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sad-Horns-2.aac"; sourceTree = "<group>"; };
-		5D5B544924CF834500FD50D4 /* Tile-Tick-F.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tile-Tick-F.aif"; sourceTree = "<group>"; };
-		5D5B544D24CF8ADB00FD50D4 /* Whistle-C.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Whistle-C.aif"; sourceTree = "<group>"; };
-		5D5B544F24CF8D3900FD50D4 /* Sad-Horns-3.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sad-Horns-3.aac"; sourceTree = "<group>"; };
-		5D5B545124CF922A00FD50D4 /* Trumpets-1A.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trumpets-1A.aac"; sourceTree = "<group>"; };
-		5D5B545224CF922A00FD50D4 /* Trumpets-3A.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trumpets-3A.aac"; sourceTree = "<group>"; };
-		5D5B545324CF922B00FD50D4 /* Trumpets-2A.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trumpets-2A.aac"; sourceTree = "<group>"; };
-		5D5B545424CF922B00FD50D4 /* Trumpets-4A.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trumpets-4A.aac"; sourceTree = "<group>"; };
-		5D5B545924CF9CCE00FD50D4 /* Invention-8-In.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Invention-8-In.aac"; sourceTree = "<group>"; };
-		5D5B545A24CF9CCE00FD50D4 /* Square-Out.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-Out.aac"; sourceTree = "<group>"; };
-		5D5B545B24CF9CCE00FD50D4 /* Forked-Deer-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Forked-Deer-Tune.aac"; sourceTree = "<group>"; };
-		5D5B545C24CF9CCE00FD50D4 /* Invention-8-Out.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Invention-8-Out.aac"; sourceTree = "<group>"; };
-		5D5B545D24CF9CCE00FD50D4 /* Cindy-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cindy-Tune.aac"; sourceTree = "<group>"; };
-		5D5B545E24CF9CCF00FD50D4 /* Invention-8-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Invention-8-Tune.aac"; sourceTree = "<group>"; };
-		5D5B545F24CF9CCF00FD50D4 /* Bill-Cheatum-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bill-Cheatum-Tune.aac"; sourceTree = "<group>"; };
-		5D5B546024CF9CCF00FD50D4 /* Square-In.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-In.aac"; sourceTree = "<group>"; };
 		5D5B546924D0A40500FD50D4 /* UPTunePlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTunePlayer.mm; sourceTree = "<group>"; };
 		5D5B546A24D0A40500FD50D4 /* UPTunePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTunePlayer.h; sourceTree = "<group>"; };
 		5D5B546C24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "AVAudioPlayer+UPSpell.mm"; sourceTree = "<group>"; };
 		5D5B546D24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAudioPlayer+UPSpell.h"; sourceTree = "<group>"; };
-		5D5B546F24D21A9C00FD50D4 /* Clock-Tock-Out.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clock-Tock-Out.aac"; sourceTree = "<group>"; };
+		5D5B547124D4F8DF00FD50D4 /* Invention-8-In.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Invention-8-In.aac"; sourceTree = "<group>"; };
+		5D5B547224D4F8DF00FD50D4 /* Game-Over.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Game-Over.aac"; sourceTree = "<group>"; };
+		5D5B547324D4F8DF00FD50D4 /* Square-In.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-In.aac"; sourceTree = "<group>"; };
+		5D5B547424D4F8DF00FD50D4 /* Sad-Horns-3.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sad-Horns-3.aac"; sourceTree = "<group>"; };
+		5D5B547524D4F8DF00FD50D4 /* Invention-8-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Invention-8-Tune.aac"; sourceTree = "<group>"; };
+		5D5B547624D4F8DF00FD50D4 /* Cindy-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cindy-Tune.aac"; sourceTree = "<group>"; };
+		5D5B547824D4F8DF00FD50D4 /* Tub-3.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tub-3.aif"; sourceTree = "<group>"; };
+		5D5B547924D4F8E000FD50D4 /* Variation-19-In.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Variation-19-In.aac"; sourceTree = "<group>"; };
+		5D5B547A24D4F8E000FD50D4 /* Waltz-In.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Waltz-In.aac"; sourceTree = "<group>"; };
+		5D5B547B24D4F8E000FD50D4 /* Waltz-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Waltz-Tune.aac"; sourceTree = "<group>"; };
+		5D5B547C24D4F8E000FD50D4 /* Trumpets-3A.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trumpets-3A.aac"; sourceTree = "<group>"; };
+		5D5B547E24D4F8E000FD50D4 /* Trumpets-1A.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trumpets-1A.aac"; sourceTree = "<group>"; };
+		5D5B547F24D4F8E000FD50D4 /* Whistle-C.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Whistle-C.aif"; sourceTree = "<group>"; };
+		5D5B548024D4F8E000FD50D4 /* Clock-Tock-Out.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clock-Tock-Out.aac"; sourceTree = "<group>"; };
+		5D5B548124D4F8E000FD50D4 /* Trumpets-2A.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trumpets-2A.aac"; sourceTree = "<group>"; };
+		5D5B548224D4F8E000FD50D4 /* Tile-Tick-F.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tile-Tick-F.aif"; sourceTree = "<group>"; };
+		5D5B548324D4F8E000FD50D4 /* Sad-Horns-2.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sad-Horns-2.aac"; sourceTree = "<group>"; };
+		5D5B548424D4F8E000FD50D4 /* Variation-19-In.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Variation-19-In.aif"; sourceTree = "<group>"; };
+		5D5B548524D4F8E000FD50D4 /* Trumpets-4A.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trumpets-4A.aac"; sourceTree = "<group>"; };
+		5D5B548624D4F8E000FD50D4 /* Variation-19-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Variation-19-Tune.aac"; sourceTree = "<group>"; };
+		5D5B548724D4F8E000FD50D4 /* Tile-Tick-E.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tile-Tick-E.aif"; sourceTree = "<group>"; };
+		5D5B549F24D4F8EE00FD50D4 /* Bill-Cheatum-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bill-Cheatum-Tune.aac"; sourceTree = "<group>"; };
+		5D5B54A124D4F9B400FD50D4 /* Forked-Deer-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Forked-Deer-Tune.aac"; sourceTree = "<group>"; };
 		5D5EA1402485B49E006264D2 /* UPDialogPause.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogPause.h; sourceTree = "<group>"; };
 		5D5EA1412485B49E006264D2 /* UPDialogPause.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogPause.mm; sourceTree = "<group>"; };
 		5D5EA1432485B820006264D2 /* UPTextPaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTextPaths.h; sourceTree = "<group>"; };
@@ -621,31 +617,29 @@
 		5D5B53F524CDF18A00FD50D4 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				5D5B546F24D21A9C00FD50D4 /* Clock-Tock-Out.aac */,
-				5D5B544724CF6BA500FD50D4 /* Sad-Horns-2.aac */,
-				5D5B544F24CF8D3900FD50D4 /* Sad-Horns-3.aac */,
-				5D5B545124CF922A00FD50D4 /* Trumpets-1A.aac */,
-				5D5B545324CF922B00FD50D4 /* Trumpets-2A.aac */,
-				5D5B545224CF922A00FD50D4 /* Trumpets-3A.aac */,
-				5D5B545424CF922B00FD50D4 /* Trumpets-4A.aac */,
-				5D5B543824CF5C7500FD50D4 /* Tile-Tick-E.aif */,
-				5D5B544924CF834500FD50D4 /* Tile-Tick-F.aif */,
-				5D5B544D24CF8ADB00FD50D4 /* Whistle-C.aif */,
-				5D5B53FD24CDF51E00FD50D4 /* Game-Over.aac */,
-				5D5B540024CE182400FD50D4 /* Variation-19-In.aac */,
-				5D5B53FF24CE182400FD50D4 /* Variation-19-Out.aac */,
-				5D5B540124CE182400FD50D4 /* Variation-19-Tune.aac */,
-				5D5B540624CE1CAB00FD50D4 /* Waltz-In.aac */,
-				5D5B540524CE1CAB00FD50D4 /* Waltz-Out.aac */,
-				5D5B540724CE1CAB00FD50D4 /* Waltz-Tune.aac */,
-				5D5B545F24CF9CCF00FD50D4 /* Bill-Cheatum-Tune.aac */,
-				5D5B545D24CF9CCE00FD50D4 /* Cindy-Tune.aac */,
-				5D5B545B24CF9CCE00FD50D4 /* Forked-Deer-Tune.aac */,
-				5D5B545924CF9CCE00FD50D4 /* Invention-8-In.aac */,
-				5D5B545C24CF9CCE00FD50D4 /* Invention-8-Out.aac */,
-				5D5B545E24CF9CCF00FD50D4 /* Invention-8-Tune.aac */,
-				5D5B546024CF9CCF00FD50D4 /* Square-In.aac */,
-				5D5B545A24CF9CCE00FD50D4 /* Square-Out.aac */,
+				5D5B549F24D4F8EE00FD50D4 /* Bill-Cheatum-Tune.aac */,
+				5D5B547624D4F8DF00FD50D4 /* Cindy-Tune.aac */,
+				5D5B548024D4F8E000FD50D4 /* Clock-Tock-Out.aac */,
+				5D5B54A124D4F9B400FD50D4 /* Forked-Deer-Tune.aac */,
+				5D5B547224D4F8DF00FD50D4 /* Game-Over.aac */,
+				5D5B547124D4F8DF00FD50D4 /* Invention-8-In.aac */,
+				5D5B547524D4F8DF00FD50D4 /* Invention-8-Tune.aac */,
+				5D5B548324D4F8E000FD50D4 /* Sad-Horns-2.aac */,
+				5D5B547424D4F8DF00FD50D4 /* Sad-Horns-3.aac */,
+				5D5B547324D4F8DF00FD50D4 /* Square-In.aac */,
+				5D5B548724D4F8E000FD50D4 /* Tile-Tick-E.aif */,
+				5D5B548224D4F8E000FD50D4 /* Tile-Tick-F.aif */,
+				5D5B547E24D4F8E000FD50D4 /* Trumpets-1A.aac */,
+				5D5B548124D4F8E000FD50D4 /* Trumpets-2A.aac */,
+				5D5B547C24D4F8E000FD50D4 /* Trumpets-3A.aac */,
+				5D5B548524D4F8E000FD50D4 /* Trumpets-4A.aac */,
+				5D5B547824D4F8DF00FD50D4 /* Tub-3.aif */,
+				5D5B547924D4F8E000FD50D4 /* Variation-19-In.aac */,
+				5D5B548424D4F8E000FD50D4 /* Variation-19-In.aif */,
+				5D5B548624D4F8E000FD50D4 /* Variation-19-Tune.aac */,
+				5D5B547A24D4F8E000FD50D4 /* Waltz-In.aac */,
+				5D5B547B24D4F8E000FD50D4 /* Waltz-Tune.aac */,
+				5D5B547F24D4F8E000FD50D4 /* Whistle-C.aif */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -872,32 +866,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D0FC32124A57DC500353563 /* up-games-icon-345-76@2x.png in Resources */,
-				5D5B546524CF9CCF00FD50D4 /* Cindy-Tune.aac in Resources */,
 				5D0FC30F24A57DC500353563 /* up-games-icon-255-60@3x.png in Resources */,
 				5D0FC2E224A57DC500353563 /* up-games-icon-120-60@3x.png in Resources */,
 				5D0FC2FE24A57DC500353563 /* up-games-icon-150-60@3x.png in Resources */,
 				5D0FC32C24A57DC500353563 /* up-games-icon-135-60@3x.png in Resources */,
 				5D0FC2F824A57DC500353563 /* up-games-icon-120-76@2x.png in Resources */,
+				5D5B549024D4F8E000FD50D4 /* Variation-19-In.aac in Resources */,
 				5D0FC30D24A57DC500353563 /* up-games-icon-165-76.png in Resources */,
 				5D0FC2CE24A57DC500353563 /* up-games-icon-135-83@2x.png in Resources */,
 				5D0FC2D324A57DC500353563 /* up-games-icon-255-60@2x.png in Resources */,
 				5D0FC2E624A57DC500353563 /* up-games-icon-225-76@2x.png in Resources */,
 				5D0FC31D24A57DC500353563 /* up-games-icon-240-83@2x.png in Resources */,
-				5D5B53FE24CDF51E00FD50D4 /* Game-Over.aac in Resources */,
 				5D0FC2F324A57DC500353563 /* up-games-icon-225-76.png in Resources */,
 				5D0FC2C524A57DC500353563 /* up-games-icon-015-83@2x.png in Resources */,
 				5D0FC2E124A57DC500353563 /* up-games-icon-090-60@3x.png in Resources */,
+				5D5B549624D4F8E000FD50D4 /* Whistle-C.aif in Resources */,
 				5D0FC21E24A130D700353563 /* MalloryCond-Black.otf in Resources */,
 				5D0FC2D124A57DC500353563 /* up-games-icon-105-60@2x.png in Resources */,
 				5D0FC31724A57DC500353563 /* up-games-icon-075-76.png in Resources */,
 				5D0FC30C24A57DC500353563 /* up-games-icon-315-60@3x.png in Resources */,
 				5D0FC2BB24A57DC500353563 /* up-games-icon-045-83@2x.png in Resources */,
 				5D0FC2F024A57DC500353563 /* up-games-icon-225-60@2x.png in Resources */,
-				5D5B544A24CF834500FD50D4 /* Tile-Tick-F.aif in Resources */,
+				5D5B549D24D4F8E000FD50D4 /* Variation-19-Tune.aac in Resources */,
 				5D0FC30224A57DC500353563 /* up-games-icon-210-76@2x.png in Resources */,
 				5D0FC2CD24A57DC500353563 /* up-games-icon-330-60@2x.png in Resources */,
 				5D0FC2ED24A57DC500353563 /* up-games-icon-150-76@2x.png in Resources */,
-				5D5B545524CF922B00FD50D4 /* Trumpets-1A.aac in Resources */,
 				5D0FC2D224A57DC500353563 /* up-games-icon-195-83@2x.png in Resources */,
 				5D0FC31F24A57DC500353563 /* up-games-icon-330-83@2x.png in Resources */,
 				5D0FC2D524A57DC500353563 /* up-games-icon-030-60@2x.png in Resources */,
@@ -910,59 +903,54 @@
 				5D0FC31924A57DC500353563 /* up-games-icon-285-60@2x.png in Resources */,
 				5DF9DF6A2466165800B2199D /* LaunchScreen.storyboard in Resources */,
 				5D0FC2EA24A57DC500353563 /* up-games-icon-000-76@2x.png in Resources */,
-				5D5B545624CF922B00FD50D4 /* Trumpets-3A.aac in Resources */,
-				5D5B540924CE1CAB00FD50D4 /* Waltz-In.aac in Resources */,
 				5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */,
 				5D0FC2EB24A57DC500353563 /* up-games-icon-255-83@2x.png in Resources */,
 				5D0FC2D924A57DC500353563 /* up-games-icon-045-60@2x.png in Resources */,
 				5D0FC32024A57DC500353563 /* up-games-icon-345-60@3x.png in Resources */,
 				5D0FC2EE24A57DC500353563 /* up-games-icon-255-76.png in Resources */,
 				5D0FC2CC24A57DC500353563 /* up-games-icon-075-83@2x.png in Resources */,
-				5D5B546424CF9CCF00FD50D4 /* Invention-8-Out.aac in Resources */,
 				5D0FC30A24A57DC500353563 /* up-games-icon-150-76.png in Resources */,
 				5D0FC2D824A57DC500353563 /* up-games-icon-195-60@3x.png in Resources */,
-				5D5B545724CF922B00FD50D4 /* Trumpets-2A.aac in Resources */,
 				5D0FC2D424A57DC500353563 /* up-games-icon-285-76.png in Resources */,
 				5D0FC2E924A57DC500353563 /* up-games-icon-345-60@2x.png in Resources */,
 				5D0FC31A24A57DC500353563 /* up-games-icon-000-60@2x.png in Resources */,
+				5D5B548924D4F8E000FD50D4 /* Game-Over.aac in Resources */,
 				5D0FC2CA24A57DC500353563 /* up-games-icon-210-76.png in Resources */,
 				5D0FC2F124A57DC500353563 /* up-games-icon-255-76@2x.png in Resources */,
 				5D0FC2C624A57DC500353563 /* up-games-icon-030-76.png in Resources */,
-				5D5B543924CF5C7500FD50D4 /* Tile-Tick-E.aif in Resources */,
-				5D5B540224CE182400FD50D4 /* Variation-19-Out.aac in Resources */,
 				5D0FC2B724A57DC500353563 /* up-games-icon-210-83@2x.png in Resources */,
-				5D5B540324CE182400FD50D4 /* Variation-19-In.aac in Resources */,
 				5D0FC2FA24A57DC500353563 /* up-games-icon-165-60@2x.png in Resources */,
+				5D5B54A024D4F8EE00FD50D4 /* Bill-Cheatum-Tune.aac in Resources */,
 				5D0FC2C824A57DC500353563 /* up-games-icon-000-60@3x.png in Resources */,
 				5D0FC32624A57DC500353563 /* up-games-icon-285-83@2x.png in Resources */,
 				5D0FC32B24A57DC500353563 /* up-games-icon-090-60@2x.png in Resources */,
 				5D0FC2BD24A57DC500353563 /* up-games-icon-135-60@2x.png in Resources */,
 				5D0FC2DE24A57DC500353563 /* up-games-icon-330-76@2x.png in Resources */,
-				5D5B545024CF8D3900FD50D4 /* Sad-Horns-3.aac in Resources */,
-				5D5B546224CF9CCF00FD50D4 /* Square-Out.aac in Resources */,
+				5D5B548B24D4F8E000FD50D4 /* Sad-Horns-3.aac in Resources */,
 				5D0FC32824A57DC500353563 /* up-games-icon-180-60@3x.png in Resources */,
 				5D0FC30E24A57DC500353563 /* up-games-icon-120-83@2x.png in Resources */,
 				5D0FC32224A57DC500353563 /* up-games-icon-195-60@2x.png in Resources */,
 				5D0FC2E724A57DC500353563 /* up-games-icon-300-60@3x.png in Resources */,
 				5D0FC30B24A57DC500353563 /* up-games-icon-165-60@3x.png in Resources */,
 				5D0FC2B824A57DC500353563 /* up-games-icon-045-60@3x.png in Resources */,
-				5D5B546124CF9CCF00FD50D4 /* Invention-8-In.aac in Resources */,
-				5D5B540A24CE1CAB00FD50D4 /* Waltz-Tune.aac in Resources */,
 				5D0FC31E24A57DC500353563 /* up-games-icon-090-76@2x.png in Resources */,
+				5D5B549E24D4F8E000FD50D4 /* Tile-Tick-E.aif in Resources */,
 				5D0FC31224A57DC500353563 /* up-games-icon-090-76.png in Resources */,
 				5D0FC2D624A57DC500353563 /* up-games-icon-240-76@2x.png in Resources */,
+				5D5B54A224D4F9B400FD50D4 /* Forked-Deer-Tune.aac in Resources */,
 				5D0FC2F424A57DC500353563 /* up-games-icon-315-76@2x.png in Resources */,
 				5D0FC2F724A57DC500353563 /* up-games-icon-105-60@3x.png in Resources */,
 				5D0FC2DA24A57DC500353563 /* up-games-icon-060-76.png in Resources */,
 				5D0FC2C724A57DC500353563 /* up-games-icon-240-60@3x.png in Resources */,
+				5D5B549724D4F8E000FD50D4 /* Clock-Tock-Out.aac in Resources */,
 				5D0FC2B624A57DC500353563 /* up-games-icon-075-60@2x.png in Resources */,
-				5D5B540824CE1CAB00FD50D4 /* Waltz-Out.aac in Resources */,
 				5D0FC2C924A57DC500353563 /* up-games-icon-225-60@3x.png in Resources */,
 				5D0FC2EC24A57DC500353563 /* up-games-icon-195-76@2x.png in Resources */,
-				5D5B540424CE182400FD50D4 /* Variation-19-Tune.aac in Resources */,
 				5D0FC2DB24A57DC500353563 /* up-games-icon-030-76@2x.png in Resources */,
 				5D0FC2FF24A57DC500353563 /* up-games-icon-195-76.png in Resources */,
 				5D0FC2C224A57DC500353563 /* up-games-icon-150-83@2x.png in Resources */,
+				5D5B549B24D4F8E000FD50D4 /* Variation-19-In.aif in Resources */,
+				5D5B548F24D4F8E000FD50D4 /* Tub-3.aif in Resources */,
 				5D0FC31324A57DC500353563 /* up-games-icon-000-83@2x.png in Resources */,
 				5D0FC22924A2A4C400353563 /* MalloryCond-BoldItalic.otf in Resources */,
 				5D0FC2BF24A57DC500353563 /* up-games-icon-075-60@3x.png in Resources */,
@@ -971,56 +959,60 @@
 				5D0FC2BE24A57DC500353563 /* up-games-icon-045-76@2x.png in Resources */,
 				5D0FC2F624A57DC500353563 /* up-games-icon-180-76@2x.png in Resources */,
 				5D0FC30824A57DC500353563 /* up-games-icon-105-76@2x.png in Resources */,
-				5D5B547024D21A9C00FD50D4 /* Clock-Tock-Out.aac in Resources */,
-				5D5B544E24CF8ADB00FD50D4 /* Whistle-C.aif in Resources */,
 				5D0FC30124A57DC500353563 /* up-games-icon-300-76.png in Resources */,
 				5D0FC2E824A57DC500353563 /* up-games-icon-225-83@2x.png in Resources */,
+				5D5B549A24D4F8E000FD50D4 /* Sad-Horns-2.aac in Resources */,
 				5D0FC31824A57DC500353563 /* up-games-icon-345-83@2x.png in Resources */,
 				5D0FC2EF24A57DC500353563 /* up-games-icon-315-60@2x.png in Resources */,
 				5D0FC30424A57DC500353563 /* up-games-icon-060-60@2x.png in Resources */,
 				5D0FC30724A57DC500353563 /* up-games-icon-330-76.png in Resources */,
 				5D0FC30524A57DC500353563 /* up-games-icon-000-76.png in Resources */,
-				5D5B545824CF922B00FD50D4 /* Trumpets-4A.aac in Resources */,
 				5D0FC2D024A57DC500353563 /* up-games-icon-330-60@3x.png in Resources */,
 				5D0FC2BC24A57DC500353563 /* up-games-icon-060-83@2x.png in Resources */,
 				5D0FC2FB24A57DC500353563 /* up-games-icon-090-83@2x.png in Resources */,
 				5D0FC2DD24A57DC500353563 /* up-games-icon-060-60@3x.png in Resources */,
 				5D0FC30324A57DC500353563 /* up-games-icon-180-76.png in Resources */,
 				5D0FC2E524A57DC500353563 /* up-games-icon-270-76.png in Resources */,
-				5D5B546624CF9CCF00FD50D4 /* Invention-8-Tune.aac in Resources */,
 				5D0FC2B524A57DC500353563 /* up-games-icon-015-60@3x.png in Resources */,
 				5D0FC31B24A57DC500353563 /* up-games-icon-120-76.png in Resources */,
 				5D0FC2C324A57DC500353563 /* up-games-icon-075-76@2x.png in Resources */,
-				5D5B546324CF9CCF00FD50D4 /* Forked-Deer-Tune.aac in Resources */,
 				5DF9DF672466165800B2199D /* Assets.xcassets in Resources */,
 				5D0FC31624A57DC500353563 /* up-games-icon-300-60@2x.png in Resources */,
 				5D0FC30924A57DC500353563 /* up-games-icon-285-76@2x.png in Resources */,
 				5D0FC2F224A57DC500353563 /* up-games-icon-180-60@2x.png in Resources */,
 				5D0FC30024A57DC500353563 /* up-games-icon-015-60@2x.png in Resources */,
+				5D5B548824D4F8E000FD50D4 /* Invention-8-In.aac in Resources */,
 				5D0FC31424A57DC500353563 /* up-games-icon-240-60@2x.png in Resources */,
 				5D5EA14C248702BF006264D2 /* MalloryCond-BlackItalic.otf in Resources */,
 				5DF9DF652466165700B2199D /* Main.storyboard in Resources */,
 				5D0FC2DC24A57DC500353563 /* up-games-icon-135-76@2x.png in Resources */,
+				5D5B548C24D4F8E000FD50D4 /* Invention-8-Tune.aac in Resources */,
+				5D5B549C24D4F8E000FD50D4 /* Trumpets-4A.aac in Resources */,
+				5D5B549924D4F8E000FD50D4 /* Tile-Tick-F.aif in Resources */,
 				5D0FC32924A57DC500353563 /* up-games-icon-015-76@2x.png in Resources */,
 				5D0FC2FC24A57DC500353563 /* up-games-icon-165-76@2x.png in Resources */,
 				5D0FC2BA24A57DC500353563 /* up-games-icon-015-76.png in Resources */,
+				5D5B549124D4F8E000FD50D4 /* Waltz-In.aac in Resources */,
 				5D0FC2E324A57DC500353563 /* up-games-icon-300-83@2x.png in Resources */,
 				5D0FC31C24A57DC500353563 /* up-games-icon-120-60@2x.png in Resources */,
 				5D0FC31124A57DC500353563 /* up-games-icon-300-76@2x.png in Resources */,
+				5D5B549224D4F8E000FD50D4 /* Waltz-Tune.aac in Resources */,
 				5D0FC32524A57DC500353563 /* up-games-icon-030-83@2x.png in Resources */,
 				5D0FC31524A57DC500353563 /* up-games-icon-270-60@3x.png in Resources */,
 				5D0FC2D724A57DC500353563 /* up-games-icon-165-83@2x.png in Resources */,
-				5D5B546824CF9CCF00FD50D4 /* Square-In.aac in Resources */,
 				5D0FC2E424A57DC500353563 /* up-games-icon-345-76.png in Resources */,
+				5D5B548D24D4F8E000FD50D4 /* Cindy-Tune.aac in Resources */,
 				5D0FC32A24A57DC500353563 /* up-games-icon-135-76.png in Resources */,
-				5D5B546724CF9CCF00FD50D4 /* Bill-Cheatum-Tune.aac in Resources */,
 				5D0FC32424A57DC500353563 /* up-games-icon-150-60@2x.png in Resources */,
 				5D0FC2CF24A57DC500353563 /* up-games-icon-105-76.png in Resources */,
+				5D5B549824D4F8E000FD50D4 /* Trumpets-2A.aac in Resources */,
+				5D5B548A24D4F8E000FD50D4 /* Square-In.aac in Resources */,
 				5D0FC2DF24A57DC500353563 /* up-games-icon-180-83@2x.png in Resources */,
 				5D0FC2E024A57DC500353563 /* up-games-icon-315-83@2x.png in Resources */,
+				5D5B549324D4F8E000FD50D4 /* Trumpets-3A.aac in Resources */,
 				5D0FC32724A57DC500353563 /* up-games-icon-210-60@2x.png in Resources */,
+				5D5B549524D4F8E000FD50D4 /* Trumpets-1A.aac in Resources */,
 				5D0FC2C024A57DC500353563 /* up-games-icon-285-60@3x.png in Resources */,
-				5D5B544824CF6BA500FD50D4 /* Sad-Horns-2.aac in Resources */,
 				5D0FC2CB24A57DC500353563 /* up-games-icon-270-83@2x.png in Resources */,
 				5D0FC30624A57DC500353563 /* up-games-icon-240-76.png in Resources */,
 			);
