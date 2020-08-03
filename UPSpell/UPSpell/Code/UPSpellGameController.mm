@@ -158,9 +158,9 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 
 static constexpr CFTimeInterval GameStartDelay = 0.64;
 static constexpr CFTimeInterval DefaultBloopDuration = 0.2;
-static constexpr CFTimeInterval DefaultTileSlideDuration = 0.1;
+static constexpr CFTimeInterval DefaultTileSlideDuration = 0.05;
 static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
-static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.85;
+static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.65;
 static constexpr CFTimeInterval GameOverOutroDuration = 5;
 
 @implementation UPSpellGameController
@@ -216,7 +216,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     [self configureSounds];
 
     [UPSpellDossier instance]; // restores data from disk
-        
+    
     m_spell_model = [self restoreInProgressGameIfExists];
     if (m_spell_model) {
         [self setMode:Mode::Pause];
@@ -964,13 +964,13 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     UPSoundID soundID = UPSoundIDHappy1;
-    if (word.total_score() >= 35) {
+    if (word.total_score() >= 30) {
         soundID = UPSoundIDHappy4;
     }
-    else if (word.total_score() >= 25) {
+    else if (word.total_score() >= 20) {
         soundID = UPSoundIDHappy3;
     }
-    else if (word.total_score() >= 15) {
+    else if (word.total_score() >= 10) {
         soundID = UPSoundIDHappy2;
     }
     [soundPlayer playSoundID:soundID];
@@ -1260,13 +1260,13 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     NSString *lengthBonusString = nil;
     switch (word_length) {
         case 5:
-            lengthBonusString = [NSString stringWithFormat:@"5 TILES +%d", SpellModel::FiveLetterWordBonus];
+            lengthBonusString = [NSString stringWithFormat:@"TILES +%d", SpellModel::FiveLetterWordBonus];
             break;
         case 6:
-            lengthBonusString = [NSString stringWithFormat:@"6 TILES +%d", SpellModel::SixLetterWordBonus];
+            lengthBonusString = [NSString stringWithFormat:@"TILES +%d", SpellModel::SixLetterWordBonus];
             break;
         case 7:
-            lengthBonusString = [NSString stringWithFormat:@"7 TILES +%d", SpellModel::SevenLetterWordBonus];
+            lengthBonusString = [NSString stringWithFormat:@"TILES +%d", SpellModel::SevenLetterWordBonus];
             break;
     }
     BOOL has_length_bonus = lengthBonusString != nil;
@@ -2003,7 +2003,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     self.tuneNumber = [self pickNextTune];
     [self configureTunesForTuneNumber:self.tuneNumber];
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
-    [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 1, 0, 0 }];
+    [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 0.65, 0, 0 }];
 
     void (^bottomHalf)(void) = ^{
         // change transform of game view
@@ -2315,7 +2315,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [soundPlayer setFilePath:[bundle pathForResource:@"Sad-Horns-2" ofType:@"aac"] forSoundID:UPSoundIDSad1 volume:0.3 playerCount:2];
     [soundPlayer setFilePath:[bundle pathForResource:@"Sad-Horns-3" ofType:@"aac"] forSoundID:UPSoundIDSad2 volume:0.3 playerCount:2];
     [soundPlayer setFilePath:[bundle pathForResource:@"Whistle-C" ofType:@"aif"] forSoundID:UPSoundIDWhoop volume:0.15 playerCount:2];
-    soundPlayer.mainVolume = 0.75;
+    soundPlayer.mainVolume = 0.5;
 }
 
 - (void)configureTunesForTuneNumber:(NSUInteger)tuneNumber
@@ -2365,13 +2365,14 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             break;
         }
         case 6: {
-            [tunePlayer setFilePath:[bundle pathForResource:@"Square-Pulse-In-E" ofType:@"aac"] forTuneID:UPTuneID6 segment:UPTuneSegmentIntro];
+            [tunePlayer setFilePath:[bundle pathForResource:@"Square-In-E" ofType:@"aac"] forTuneID:UPTuneID6 segment:UPTuneSegmentIntro];
             [tunePlayer setFilePath:[bundle pathForResource:@"Cindy-Tune" ofType:@"aac"] forTuneID:UPTuneID6 segment:UPTuneSegmentMain];
             [tunePlayer setFilePath:[bundle pathForResource:@"Clock-Tock-Out" ofType:@"aac"] forTuneID:UPTuneID6 segment:UPTuneSegmentOutro];
             [tunePlayer setFilePath:[bundle pathForResource:@"Game-Over" ofType:@"aac"] forTuneID:UPTuneID6 segment:UPTuneSegmentOver];
             break;
         }
     }
+    tunePlayer.mainVolume = 1;
 }
 
 - (NSUInteger)pickNextTune
@@ -2399,7 +2400,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             break;
         }
     }
-    return tuneNumber;
+    return 6;
 }
 
 - (void)sequenceTuneWithDelay:(CFTimeInterval)delay gameTimeElapsed:(CFTimeInterval)gameTimeElapsed
@@ -2415,18 +2416,18 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     if (UPGameTimerDefaultDuration - effectiveGameTimeElapsed > GameOverOutroDuration) {
         CFTimeInterval tuneBeginTime = delay;
         CFTimeInterval tuneTimeOffset = (UPGameTimerCanonicalDuration - UPGameTimerDefaultDuration) + effectiveGameTimeElapsed;
-        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 0.7, tuneBeginTime, tuneTimeOffset }];
+        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 0.8, tuneBeginTime, tuneTimeOffset }];
     }
 
     if (UPGameTimerDefaultDuration - effectiveGameTimeElapsed > 1) {
         CFTimeInterval outroIntervalFromEnd = UPGameTimerDefaultDuration - GameOverOutroDuration;
         CFTimeInterval outroBeginTime = delay + outroIntervalFromEnd - effectiveGameTimeElapsed;
         CFTimeInterval outroTimeOffset = UPMaxT(CFTimeInterval, 0, effectiveGameTimeElapsed - outroIntervalFromEnd);
-        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOutro properties:{ 1, outroBeginTime, outroTimeOffset }];
+        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOutro properties:{ 1.0, outroBeginTime, outroTimeOffset }];
     }
     
     CFTimeInterval gameOverBeginTime = delay + (UPGameTimerDefaultDuration - effectiveGameTimeElapsed);
-    [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOver properties:{ 1, gameOverBeginTime, 0 }];
+    [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOver properties:{ 1.0, gameOverBeginTime, 0 }];
 }
 
 #pragma mark - Modes

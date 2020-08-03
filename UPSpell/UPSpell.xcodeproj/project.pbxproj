@@ -173,6 +173,7 @@
 		5D5B54A524D6086600FD50D4 /* Square-Pulse-In-G.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54A324D6086600FD50D4 /* Square-Pulse-In-G.aac */; };
 		5D5B54A624D6086600FD50D4 /* Square-Pulse-In-C.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54A424D6086600FD50D4 /* Square-Pulse-In-C.aac */; };
 		5D5B54A824D6242900FD50D4 /* Square-Pulse-In-E.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54A724D6242900FD50D4 /* Square-Pulse-In-E.aac */; };
+		5D5B54AA24D7A00B00FD50D4 /* Square-In-E.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54A924D7A00B00FD50D4 /* Square-In-E.aac */; };
 		5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1412485B49E006264D2 /* UPDialogPause.mm */; };
 		5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1442485B820006264D2 /* UPTextPaths.mm */; };
 		5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */; };
@@ -410,6 +411,7 @@
 		5D5B54A324D6086600FD50D4 /* Square-Pulse-In-G.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-Pulse-In-G.aac"; sourceTree = "<group>"; };
 		5D5B54A424D6086600FD50D4 /* Square-Pulse-In-C.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-Pulse-In-C.aac"; sourceTree = "<group>"; };
 		5D5B54A724D6242900FD50D4 /* Square-Pulse-In-E.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-Pulse-In-E.aac"; sourceTree = "<group>"; };
+		5D5B54A924D7A00B00FD50D4 /* Square-In-E.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-In-E.aac"; sourceTree = "<group>"; };
 		5D5EA1402485B49E006264D2 /* UPDialogPause.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogPause.h; sourceTree = "<group>"; };
 		5D5EA1412485B49E006264D2 /* UPDialogPause.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogPause.mm; sourceTree = "<group>"; };
 		5D5EA1432485B820006264D2 /* UPTextPaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTextPaths.h; sourceTree = "<group>"; };
@@ -628,6 +630,7 @@
 				5D5B547524D4F8DF00FD50D4 /* Invention-8-Tune.aac */,
 				5D5B548324D4F8E000FD50D4 /* Sad-Horns-2.aac */,
 				5D5B547424D4F8DF00FD50D4 /* Sad-Horns-3.aac */,
+				5D5B54A924D7A00B00FD50D4 /* Square-In-E.aac */,
 				5D5B54A424D6086600FD50D4 /* Square-Pulse-In-C.aac */,
 				5D5B54A724D6242900FD50D4 /* Square-Pulse-In-E.aac */,
 				5D5B54A324D6086600FD50D4 /* Square-Pulse-In-G.aac */,
@@ -909,6 +912,7 @@
 				5DF9DF6A2466165800B2199D /* LaunchScreen.storyboard in Resources */,
 				5D0FC2EA24A57DC500353563 /* up-games-icon-000-76@2x.png in Resources */,
 				5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */,
+				5D5B54AA24D7A00B00FD50D4 /* Square-In-E.aac in Resources */,
 				5D0FC2EB24A57DC500353563 /* up-games-icon-255-83@2x.png in Resources */,
 				5D0FC2D924A57DC500353563 /* up-games-icon-045-60@2x.png in Resources */,
 				5D0FC32024A57DC500353563 /* up-games-icon-345-60@3x.png in Resources */,
