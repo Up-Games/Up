@@ -170,10 +170,9 @@
 		5D5B549E24D4F8E000FD50D4 /* Tile-Tick-E.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B548724D4F8E000FD50D4 /* Tile-Tick-E.aif */; };
 		5D5B54A024D4F8EE00FD50D4 /* Bill-Cheatum-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B549F24D4F8EE00FD50D4 /* Bill-Cheatum-Tune.aac */; };
 		5D5B54A224D4F9B400FD50D4 /* Forked-Deer-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54A124D4F9B400FD50D4 /* Forked-Deer-Tune.aac */; };
-		5D5B54A524D6086600FD50D4 /* Square-Pulse-In-G.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54A324D6086600FD50D4 /* Square-Pulse-In-G.aac */; };
-		5D5B54A624D6086600FD50D4 /* Square-Pulse-In-C.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54A424D6086600FD50D4 /* Square-Pulse-In-C.aac */; };
-		5D5B54A824D6242900FD50D4 /* Square-Pulse-In-E.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54A724D6242900FD50D4 /* Square-Pulse-In-E.aac */; };
 		5D5B54AA24D7A00B00FD50D4 /* Square-In-E.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54A924D7A00B00FD50D4 /* Square-In-E.aac */; };
+		5D5B54AC24D863BC00FD50D4 /* Square-In-G.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54AB24D863BC00FD50D4 /* Square-In-G.aac */; };
+		5D5B54AE24D884AC00FD50D4 /* Square-In-C.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D5B54AD24D884AB00FD50D4 /* Square-In-C.aac */; };
 		5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1412485B49E006264D2 /* UPDialogPause.mm */; };
 		5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1442485B820006264D2 /* UPTextPaths.mm */; };
 		5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */; };
@@ -408,10 +407,9 @@
 		5D5B548724D4F8E000FD50D4 /* Tile-Tick-E.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tile-Tick-E.aif"; sourceTree = "<group>"; };
 		5D5B549F24D4F8EE00FD50D4 /* Bill-Cheatum-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bill-Cheatum-Tune.aac"; sourceTree = "<group>"; };
 		5D5B54A124D4F9B400FD50D4 /* Forked-Deer-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Forked-Deer-Tune.aac"; sourceTree = "<group>"; };
-		5D5B54A324D6086600FD50D4 /* Square-Pulse-In-G.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-Pulse-In-G.aac"; sourceTree = "<group>"; };
-		5D5B54A424D6086600FD50D4 /* Square-Pulse-In-C.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-Pulse-In-C.aac"; sourceTree = "<group>"; };
-		5D5B54A724D6242900FD50D4 /* Square-Pulse-In-E.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-Pulse-In-E.aac"; sourceTree = "<group>"; };
 		5D5B54A924D7A00B00FD50D4 /* Square-In-E.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-In-E.aac"; sourceTree = "<group>"; };
+		5D5B54AB24D863BC00FD50D4 /* Square-In-G.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-In-G.aac"; sourceTree = "<group>"; };
+		5D5B54AD24D884AB00FD50D4 /* Square-In-C.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Square-In-C.aac"; sourceTree = "<group>"; };
 		5D5EA1402485B49E006264D2 /* UPDialogPause.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogPause.h; sourceTree = "<group>"; };
 		5D5EA1412485B49E006264D2 /* UPDialogPause.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogPause.mm; sourceTree = "<group>"; };
 		5D5EA1432485B820006264D2 /* UPTextPaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTextPaths.h; sourceTree = "<group>"; };
@@ -630,10 +628,9 @@
 				5D5B547524D4F8DF00FD50D4 /* Invention-8-Tune.aac */,
 				5D5B548324D4F8E000FD50D4 /* Sad-Horns-2.aac */,
 				5D5B547424D4F8DF00FD50D4 /* Sad-Horns-3.aac */,
+				5D5B54AD24D884AB00FD50D4 /* Square-In-C.aac */,
 				5D5B54A924D7A00B00FD50D4 /* Square-In-E.aac */,
-				5D5B54A424D6086600FD50D4 /* Square-Pulse-In-C.aac */,
-				5D5B54A724D6242900FD50D4 /* Square-Pulse-In-E.aac */,
-				5D5B54A324D6086600FD50D4 /* Square-Pulse-In-G.aac */,
+				5D5B54AB24D863BC00FD50D4 /* Square-In-G.aac */,
 				5D5B548724D4F8E000FD50D4 /* Tile-Tick-E.aif */,
 				5D5B548224D4F8E000FD50D4 /* Tile-Tick-F.aif */,
 				5D5B547E24D4F8E000FD50D4 /* Trumpets-1A.aac */,
@@ -892,14 +889,13 @@
 				5D0FC31724A57DC500353563 /* up-games-icon-075-76.png in Resources */,
 				5D0FC30C24A57DC500353563 /* up-games-icon-315-60@3x.png in Resources */,
 				5D0FC2BB24A57DC500353563 /* up-games-icon-045-83@2x.png in Resources */,
-				5D5B54A824D6242900FD50D4 /* Square-Pulse-In-E.aac in Resources */,
 				5D0FC2F024A57DC500353563 /* up-games-icon-225-60@2x.png in Resources */,
 				5D5B549D24D4F8E000FD50D4 /* Variation-19-Tune.aac in Resources */,
 				5D0FC30224A57DC500353563 /* up-games-icon-210-76@2x.png in Resources */,
 				5D0FC2CD24A57DC500353563 /* up-games-icon-330-60@2x.png in Resources */,
 				5D0FC2ED24A57DC500353563 /* up-games-icon-150-76@2x.png in Resources */,
 				5D0FC2D224A57DC500353563 /* up-games-icon-195-83@2x.png in Resources */,
-				5D5B54A624D6086600FD50D4 /* Square-Pulse-In-C.aac in Resources */,
+				5D5B54AC24D863BC00FD50D4 /* Square-In-G.aac in Resources */,
 				5D0FC31F24A57DC500353563 /* up-games-icon-330-83@2x.png in Resources */,
 				5D0FC2D524A57DC500353563 /* up-games-icon-030-60@2x.png in Resources */,
 				5D0FC2C124A57DC500353563 /* up-games-icon-270-60@2x.png in Resources */,
@@ -946,6 +942,7 @@
 				5D5B549E24D4F8E000FD50D4 /* Tile-Tick-E.aif in Resources */,
 				5D0FC31224A57DC500353563 /* up-games-icon-090-76.png in Resources */,
 				5D0FC2D624A57DC500353563 /* up-games-icon-240-76@2x.png in Resources */,
+				5D5B54AE24D884AC00FD50D4 /* Square-In-C.aac in Resources */,
 				5D5B54A224D4F9B400FD50D4 /* Forked-Deer-Tune.aac in Resources */,
 				5D0FC2F424A57DC500353563 /* up-games-icon-315-76@2x.png in Resources */,
 				5D0FC2F724A57DC500353563 /* up-games-icon-105-60@3x.png in Resources */,
@@ -1012,7 +1009,6 @@
 				5D5B548D24D4F8E000FD50D4 /* Cindy-Tune.aac in Resources */,
 				5D0FC32A24A57DC500353563 /* up-games-icon-135-76.png in Resources */,
 				5D0FC32424A57DC500353563 /* up-games-icon-150-60@2x.png in Resources */,
-				5D5B54A524D6086600FD50D4 /* Square-Pulse-In-G.aac in Resources */,
 				5D0FC2CF24A57DC500353563 /* up-games-icon-105-76.png in Resources */,
 				5D5B549824D4F8E000FD50D4 /* Trumpets-2A.aac in Resources */,
 				5D0FC2DF24A57DC500353563 /* up-games-icon-180-83@2x.png in Resources */,
