@@ -45,7 +45,7 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
 {
     self = [super init];
     
-    self.mainVolume = 1.0;
+    self.volume = 1.0;
         
     return self;
 }
@@ -80,7 +80,7 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
     }
     else {
         AVAudioPlayer *player = it->second;
-        player.volume = self.mainVolume * properties.volume;
+        player.volume = properties.volumeOverride ? properties.volume : self.volume * properties.volume;
         player.currentTime = UPClampT(CFTimeInterval, properties.soundTimeOffset, 0, player.duration);
         if (properties.beginTimeOffset > 0) {
             [player playAtTime:player.deviceCurrentTime + properties.beginTimeOffset];
@@ -110,6 +110,36 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
     
     std::lock_guard<std::mutex> guard(m_mutex);
     m_map.clear();
+}
+
+- (void)setVolumeFromLevel:(NSUInteger)level
+{
+    switch (level) {
+        case 0:
+            self.volume = 0.0;
+            break;
+        case 1:
+        default:
+            break;
+        case 2:
+            self.volume = 0.3;
+            break;
+        case 3:
+            self.volume = 0.4;
+            break;
+        case 4:
+            self.volume = 0.5;
+            break;
+        case 5:
+            self.volume = 0.6667;
+            break;
+        case 6:
+            self.volume = 0.8333;
+            break;
+        case 7:
+            self.volume = 1.0;
+            break;
+    }
 }
 
 #pragma mark - Internal

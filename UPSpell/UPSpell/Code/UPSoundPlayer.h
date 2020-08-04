@@ -18,12 +18,12 @@ typedef NS_ENUM(NSInteger, UPSoundID) {
     UPSoundIDSad1,
     UPSoundIDSad2,
     UPSoundIDTub,
-    UPSoundIDWhoop,
+    UPSoundIDWhoops,
 };
 
 @interface UPSoundPlayer : NSObject
 
-@property (nonatomic) float mainVolume;
+@property (nonatomic) float volume;
 
 + (UPSoundPlayer *)instance;
 
@@ -35,5 +35,7 @@ typedef NS_ENUM(NSInteger, UPSoundID) {
 
 - (void)prepare;
 - (void)stop;
+
+- (void)setVolumeFromLevel:(NSUInteger)level;
 
 @end

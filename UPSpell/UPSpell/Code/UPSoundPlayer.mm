@@ -9,6 +9,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import <UpKit/UPAssertions.h>
+#import <UpKit/UPMath.h>
 
 #import "AVAudioPlayer+UPSpell.h"
 #import "UPSoundPlayer.h"
@@ -53,18 +54,18 @@
 {
     self = [super init];
     
-    self.mainVolume = 1.0;
+    self.volume = 0.5;
     self.engine = [[AVAudioEngine alloc] init];
 
     return self;
 }
 
-- (void)setMainVolume:(float)mainVolume
+- (void)setVolume:(float)volume
 {
-    _mainVolume = mainVolume;
+    _volume = volume;
     
     [self prepare];
-    self.engine.mainMixerNode.outputVolume = mainVolume;
+    self.engine.mainMixerNode.outputVolume = volume;
 }
 
 - (NSError *)setFilePath:(NSString *)filePath forSoundID:(UPSoundID)soundID volume:(float)volume playerCount:(NSUInteger)playerCount
@@ -85,6 +86,10 @@
 
 - (void)playSoundID:(UPSoundID)soundID
 {
+    if (up_is_fuzzy_zero(self.volume)) {
+        return;
+    }
+    
     BOOL played = NO;
     auto range = m_map.equal_range(soundID);
     for (auto it = range.first; it != range.second; ++it) {
@@ -126,6 +131,37 @@
         [sound.player pause];
     }
     [self.engine stop];
+}
+
+- (void)setVolumeFromLevel:(NSUInteger)level
+{
+    switch (level) {
+        case 0:
+            self.volume = 0.0;
+            break;
+        case 1:
+        default:
+            self.volume = 0.15;
+            break;
+        case 2:
+            self.volume = 0.3;
+            break;
+        case 3:
+            self.volume = 0.4;
+            break;
+        case 4:
+            self.volume = 0.5;
+            break;
+        case 5:
+            self.volume = 0.6667;
+            break;
+        case 6:
+            self.volume = 0.8333;
+            break;
+        case 7:
+            self.volume = 1.0;
+            break;
+    }
 }
 
 #pragma mark - Internal

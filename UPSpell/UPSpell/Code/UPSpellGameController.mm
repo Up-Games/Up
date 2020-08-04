@@ -154,6 +154,10 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 
 @property (nonatomic) NSInteger tuneNumber;
 @property (nonatomic) CFTimeInterval tapSoundTimestamp;
+@property (nonatomic) BOOL soundEffectsEnabled;
+@property (nonatomic) BOOL tileTapsEnabled;
+@property (nonatomic) BOOL countdownClicksEnabled;
+@property (nonatomic) BOOL tunesEnabled;
 
 @end
 
@@ -852,8 +856,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     ASSERT(self.pickedTileView == nil);
     ASSERT_NPOS(self.pickedTilePosition);
 
-    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer playSoundID:UPSoundIDTap];
+    [self playSoundIDIfEnabled:UPSoundIDTap];
     self.tapSoundTimestamp = CACurrentMediaTime();
     
     [self viewOrderOutWordScoreLabel];
@@ -885,8 +888,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     if (state.action().opcode() != SpellModel::Opcode::HOVER || state.action().pos1() != hover_position) {
         if (tile.position().in_player_tray() || m_spell_model->back_opcode() != SpellModel::Opcode::PICK) {
             if ([self shouldPlayTubSound]) {
-                UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-                [soundPlayer playSoundID:UPSoundIDTub];
+                [self playSoundIDIfEnabled:UPSoundIDTub];
             }
         }
         m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::HOVER, hover_position));
@@ -911,8 +913,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::NOVER));
 
     if ([self shouldPlayTubSound]) {
-        UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-        [soundPlayer playSoundID:UPSoundIDTub];
+        [self playSoundIDIfEnabled:UPSoundIDTub];
     }
 
     [self viewNover];
@@ -955,8 +956,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     [self viewClearWordTray];
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::CLEAR));
 
-    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer playSoundID:UPSoundIDWhoop];
+    [self playSoundIDIfEnabled:UPSoundIDWhoops];
 
     [self viewUpdateGameControls];
 }
@@ -969,7 +969,6 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
         return;
     }
 
-    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     UPSoundID soundID = UPSoundIDHappy1;
     if (word.total_score() >= 30) {
         soundID = UPSoundIDHappy4;
@@ -980,7 +979,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     else if (word.total_score() >= 10) {
         soundID = UPSoundIDHappy2;
     }
-    [soundPlayer playSoundID:soundID];
+    [self playSoundIDIfEnabled:soundID];
 
     cancel(BandGameDelay);
 
@@ -1000,8 +999,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
 
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::REJECT));
 
-    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer playSoundID:UPSoundIDSad1];
+    [self playSoundIDIfEnabled:UPSoundIDSad1];
 
     // assess time penalty and shake word tray side-to-side
     [UIView animateWithDuration:0.15 animations:^{
@@ -1046,8 +1044,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
 
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::DUMP));
 
-    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer playSoundID:UPSoundIDSad2];
+    [self playSoundIDIfEnabled:UPSoundIDSad2];
 
     [UIView animateWithDuration:0.15 animations:^{
         [self viewPenaltyForDump];
@@ -2005,12 +2002,14 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
         }];
     });
 
-    [[UPSoundPlayer instance] prepare];
+    [self updateSoundAndTunesSettings];
 
     self.tuneNumber = [self pickNextTune];
     [self configureTunesForTuneNumber:self.tuneNumber];
-    UPTunePlayer *tunePlayer = [UPTunePlayer instance];
-    [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 0.7, 0, 0 }];
+    if (self.tunesEnabled) {
+        UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+        [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 0.7, NO, 0, 0 }];
+    }
 
     void (^bottomHalf)(void) = ^{
         // change transform of game view
@@ -2249,7 +2248,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
                     self.tuneNumber = 1;
                 }
                 [self configureTunesForTuneNumber:self.tuneNumber];
-                [[UPSoundPlayer instance] prepare];
+                [self updateSoundAndTunesSettings];
             }
         }
     }
@@ -2313,16 +2312,64 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 {
     NSBundle *bundle = [NSBundle mainBundle];
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Tile-Tick-E" ofType:@"aif"] forSoundID:UPSoundIDTap volume:0.125 playerCount:10];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Tile-Tick-F" ofType:@"aif"] forSoundID:UPSoundIDTub volume:0.2 playerCount:8];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-1A" ofType:@"aac"] forSoundID:UPSoundIDHappy1 volume:0.5 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-2A" ofType:@"aac"] forSoundID:UPSoundIDHappy2 volume:0.5 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-3A" ofType:@"aac"] forSoundID:UPSoundIDHappy3 volume:0.5 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Trumpets-4A" ofType:@"aac"] forSoundID:UPSoundIDHappy4 volume:0.5 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-Horns-2" ofType:@"aac"] forSoundID:UPSoundIDSad1 volume:0.3 playerCount:2];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-Horns-3" ofType:@"aac"] forSoundID:UPSoundIDSad2 volume:0.3 playerCount:2];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Whistle-C" ofType:@"aif"] forSoundID:UPSoundIDWhoop volume:0.15 playerCount:2];
-    soundPlayer.mainVolume = 0.5;
+    [soundPlayer setFilePath:[bundle pathForResource:@"Tap" ofType:@"aac"] forSoundID:UPSoundIDTap volume:0.3 playerCount:10];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Tub" ofType:@"aac"] forSoundID:UPSoundIDTub volume:0.3 playerCount:8];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-1" ofType:@"aac"] forSoundID:UPSoundIDHappy1 volume:1.0 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-2" ofType:@"aac"] forSoundID:UPSoundIDHappy2 volume:1.0 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-3" ofType:@"aac"] forSoundID:UPSoundIDHappy3 volume:1.0 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-4" ofType:@"aac"] forSoundID:UPSoundIDHappy4 volume:1.0 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-1" ofType:@"aac"] forSoundID:UPSoundIDSad1 volume:0.8 playerCount:2];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-2" ofType:@"aac"] forSoundID:UPSoundIDSad2 volume:0.8 playerCount:2];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Whoops" ofType:@"aac"] forSoundID:UPSoundIDWhoops volume:0.6 playerCount:2];
+}
+
+- (void)updateSoundAndTunesSettings
+{
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    self.soundEffectsEnabled = settings.soundEffectsEnabled;
+    self.tileTapsEnabled = settings.tileTapsEnabled;
+    self.countdownClicksEnabled = settings.countdownClicksEnabled;
+
+    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
+    [soundPlayer setVolumeFromLevel:settings.soundEffectsLevel];
+    if (self.soundEffectsEnabled) {
+        [[UPSoundPlayer instance] prepare];
+    }
+    else {
+        [[UPSoundPlayer instance] stop];
+    }
+
+    self.tunesEnabled = settings.tunesEnabled;
+    
+    UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+    [tunePlayer setVolumeFromLevel:settings.tunesLevel];
+}
+
+- (void)playSoundIDIfEnabled:(UPSoundID)soundID
+{
+    BOOL play = YES;
+    switch (soundID) {
+        case UPSoundIDNone:
+            play = NO;
+            break;
+        case UPSoundIDTap:
+        case UPSoundIDTub:
+            play = self.soundEffectsEnabled && self.tileTapsEnabled;
+            break;
+        case UPSoundIDHappy1:
+        case UPSoundIDHappy2:
+        case UPSoundIDHappy3:
+        case UPSoundIDHappy4:
+        case UPSoundIDSad1:
+        case UPSoundIDSad2:
+        case UPSoundIDWhoops:
+            play = self.soundEffectsEnabled;
+            break;
+    }
+    if (play) {
+        UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
+        [soundPlayer playSoundID:soundID];
+    }
 }
 
 - (void)configureTunesForTuneNumber:(NSUInteger)tuneNumber
@@ -2379,7 +2426,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             break;
         }
     }
-    tunePlayer.mainVolume = 1;
 }
 
 - (NSUInteger)pickNextTune
@@ -2420,21 +2466,25 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     UPTuneID tuneID = UPTuneID(self.tuneNumber);
     
-    if (UPGameTimerDefaultDuration - effectiveGameTimeElapsed > GameOverOutroDuration) {
+    if (self.tunesEnabled && UPGameTimerDefaultDuration - effectiveGameTimeElapsed > GameOverOutroDuration) {
         CFTimeInterval tuneBeginTime = delay;
         CFTimeInterval tuneTimeOffset = (UPGameTimerCanonicalDuration - UPGameTimerDefaultDuration) + effectiveGameTimeElapsed;
-        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 0.8, tuneBeginTime, tuneTimeOffset }];
+        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 0.8, NO, tuneBeginTime, tuneTimeOffset }];
     }
 
-    if (UPGameTimerDefaultDuration - effectiveGameTimeElapsed > 1) {
-        CFTimeInterval outroIntervalFromEnd = UPGameTimerDefaultDuration - GameOverOutroDuration;
-        CFTimeInterval outroBeginTime = delay + outroIntervalFromEnd - effectiveGameTimeElapsed;
-        CFTimeInterval outroTimeOffset = UPMaxT(CFTimeInterval, 0, effectiveGameTimeElapsed - outroIntervalFromEnd);
-        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOutro properties:{ 1.0, outroBeginTime, outroTimeOffset }];
+    if (self.soundEffectsEnabled && self.countdownClicksEnabled) {
+        UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
+        float volume = soundPlayer.volume;
+        if (UPGameTimerDefaultDuration - effectiveGameTimeElapsed > 1) {
+            CFTimeInterval outroIntervalFromEnd = UPGameTimerDefaultDuration - GameOverOutroDuration;
+            CFTimeInterval outroBeginTime = delay + outroIntervalFromEnd - effectiveGameTimeElapsed;
+            CFTimeInterval outroTimeOffset = UPMaxT(CFTimeInterval, 0, effectiveGameTimeElapsed - outroIntervalFromEnd);
+            [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOutro properties:{ volume, YES, outroBeginTime, outroTimeOffset }];
+        }
+        
+        CFTimeInterval gameOverBeginTime = delay + (UPGameTimerDefaultDuration - effectiveGameTimeElapsed);
+        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOver properties:{ volume, YES, gameOverBeginTime, 0 }];
     }
-    
-    CFTimeInterval gameOverBeginTime = delay + (UPGameTimerDefaultDuration - effectiveGameTimeElapsed);
-    [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOver properties:{ 1.0, gameOverBeginTime, 0 }];
 }
 
 - (BOOL)shouldPlayTubSound

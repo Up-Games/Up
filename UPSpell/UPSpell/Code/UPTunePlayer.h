@@ -30,13 +30,14 @@ typedef NS_ENUM(NSInteger, UPTuneSegment) {
 
 struct UPTuneProperties {
     float volume;
+    BOOL volumeOverride;
     CFTimeInterval beginTimeOffset;
     CFTimeInterval soundTimeOffset;
 };
 
 @interface UPTunePlayer : NSObject
 
-@property (nonatomic) float mainVolume;
+@property (nonatomic) float volume;
 
 + (UPTunePlayer *)instance;
 
@@ -48,5 +49,7 @@ struct UPTuneProperties {
 
 - (void)stop;
 - (void)clear;
+
+- (void)setVolumeFromLevel:(NSUInteger)level;
 
 @end

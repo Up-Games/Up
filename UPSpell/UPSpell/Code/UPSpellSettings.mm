@@ -7,7 +7,7 @@
 
 @implementation UPSpellSettings
 
-@dynamic databaseSchemaVersion;
+@dynamic dataVersion;
 @dynamic themeColorStyle;
 @dynamic themeColorHue;
 @dynamic quarkMode;
@@ -15,6 +15,12 @@
 @dynamic retryMode;
 @dynamic playMenuSelectedIndex;
 @dynamic tuneHistory;
+@dynamic tunesEnabled;
+@dynamic tunesLevel;
+@dynamic soundEffectsEnabled;
+@dynamic tileTapsEnabled;
+@dynamic countdownClicksEnabled;
+@dynamic soundEffectsLevel;
 
 + (UPSpellSettings *)instance
 {
@@ -34,7 +40,7 @@
 
 - (void)setDefaultValues
 {
-    self.databaseSchemaVersion = 0;
+    self.dataVersion = 0;
     self.themeColorStyle = UPThemeColorStyleLight;
     self.themeColorHue = 225;
     self.quarkMode = NO;
@@ -42,6 +48,12 @@
     self.retryMode = NO;
     self.playMenuSelectedIndex = 2;
     self.tuneHistory = [NSArray array];
+    self.tunesEnabled = YES;
+    self.tunesLevel = 4;
+    self.soundEffectsEnabled = YES;
+    self.tileTapsEnabled = YES;
+    self.countdownClicksEnabled = YES;
+    self.soundEffectsLevel = 4;
 }
 
 @end
