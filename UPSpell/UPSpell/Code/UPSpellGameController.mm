@@ -2400,7 +2400,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             break;
         }
     }
-    return 4;
+    return 1;
 }
 
 - (void)sequenceTuneWithDelay:(CFTimeInterval)delay gameTimeElapsed:(CFTimeInterval)gameTimeElapsed
