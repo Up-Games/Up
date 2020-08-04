@@ -1570,11 +1570,8 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
         view.userInteractionEnabled = NO;
     }
     
-    // This lock/unlock do-si-do cancels gestures and touches on tile views
     for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
-        BOOL userInteractionEnabled = tileView.userInteractionEnabled;
         tileView.userInteractionEnabled = NO;
-        tileView.userInteractionEnabled = userInteractionEnabled;
     }
 }
 
@@ -1590,6 +1587,9 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
 
     for (UIView *view in self.gameView.subviews) {
         view.userInteractionEnabled = YES;
+    }
+    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
+        tileView.userInteractionEnabled = YES;
     }
 }
 
@@ -2400,7 +2400,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             break;
         }
     }
-    return 1;
+    return 2;
 }
 
 - (void)sequenceTuneWithDelay:(CFTimeInterval)delay gameTimeElapsed:(CFTimeInterval)gameTimeElapsed
