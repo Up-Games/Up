@@ -153,6 +153,7 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) CFTimeInterval activeTouchPreviousTimestamp;
 
 @property (nonatomic) NSInteger tuneNumber;
+@property (nonatomic) CFTimeInterval tapSoundTimestamp;
 
 @end
 
@@ -162,6 +163,7 @@ static constexpr CFTimeInterval DefaultTileSlideDuration = 0.05;
 static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
 static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.4;
 static constexpr CFTimeInterval GameOverOutroDuration = 5;
+static constexpr CFTimeInterval TapToTubInterval = 0.15;
 
 @implementation UPSpellGameController
 
@@ -852,6 +854,7 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer playSoundID:UPSoundIDTap];
+    self.tapSoundTimestamp = CACurrentMediaTime();
     
     [self viewOrderOutWordScoreLabel];
 
@@ -881,8 +884,10 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     const State &state = m_spell_model->back_state();
     if (state.action().opcode() != SpellModel::Opcode::HOVER || state.action().pos1() != hover_position) {
         if (tile.position().in_player_tray() || m_spell_model->back_opcode() != SpellModel::Opcode::PICK) {
-            UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-            [soundPlayer playSoundID:UPSoundIDTub];
+            if ([self shouldPlayTubSound]) {
+                UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
+                [soundPlayer playSoundID:UPSoundIDTub];
+            }
         }
         m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::HOVER, hover_position));
     }
@@ -905,8 +910,10 @@ static constexpr CFTimeInterval GameOverOutroDuration = 5;
     }
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::NOVER));
 
-    UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-    [soundPlayer playSoundID:UPSoundIDTub];
+    if ([self shouldPlayTubSound]) {
+        UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
+        [soundPlayer playSoundID:UPSoundIDTub];
+    }
 
     [self viewNover];
     [self viewUpdateGameControls];
@@ -2400,7 +2407,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             break;
         }
     }
-    return 2;
+    return tuneNumber;
 }
 
 - (void)sequenceTuneWithDelay:(CFTimeInterval)delay gameTimeElapsed:(CFTimeInterval)gameTimeElapsed
@@ -2428,6 +2435,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     CFTimeInterval gameOverBeginTime = delay + (UPGameTimerDefaultDuration - effectiveGameTimeElapsed);
     [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOver properties:{ 1.0, gameOverBeginTime, 0 }];
+}
+
+- (BOOL)shouldPlayTubSound
+{
+    CFTimeInterval now = CACurrentMediaTime();
+    return now - self.tapSoundTimestamp > TapToTubInterval;
 }
 
 #pragma mark - Modes
