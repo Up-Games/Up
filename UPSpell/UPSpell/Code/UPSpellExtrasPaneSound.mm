@@ -32,6 +32,7 @@
 #import "UPStepper.h"
 #import "UPTextButton.h"
 #import "UPTileView.h"
+#import "UPTunePlayer.h"
 #import "UPViewMove+UPSpell.h"
 
 using UP::BandSettingsUI;
@@ -107,6 +108,11 @@ using Role = UP::SpellLayout::Role;
     self.tunesCheckbox.frame = layout.frame_for(Role::ExtrasSoundTunesCheckbox);
     [self addSubview:self.tunesCheckbox];
 
+    self.tunesVolumeSlider = [UPSlider discreteSliderWithMarks:6];
+    [self.tunesVolumeSlider setTarget:self action:@selector(tunesSliderChanged)];
+    self.tunesVolumeSlider.frame = layout.frame_for(Role::ExtrasSoundTunesSlider);
+    [self addSubview:self.tunesVolumeSlider];
+
     [self updateThemeColors];
 
     return self;
@@ -124,6 +130,10 @@ using Role = UP::SpellLayout::Role;
 
     self.previousSoundEffectsLevel = settings.soundEffectsLevel;
     self.previousTunesLevel = settings.tunesLevel;
+
+    NSBundle *bundle = [NSBundle mainBundle];
+    UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+    [tunePlayer setFilePath:[bundle pathForResource:@"Tune" ofType:@"aac"] forTuneID:UPTuneIDDemo segment:UPTuneSegmentMain];
 }
 
 - (void)effectsCheckboxTapped
@@ -147,12 +157,17 @@ using Role = UP::SpellLayout::Role;
 
 - (void)effectsSliderChanged
 {
+    UIGestureRecognizerState gestureState = self.tunesVolumeSlider.slideGesture.state;
+
     NSUInteger mark = self.effectsVolumeSlider.valueAsMark + 1;
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer prepare];
 
-    if (self.effectsVolumeSlider.slideGesture.state == UIGestureRecognizerStateBegan) {
+    if (gestureState == UIGestureRecognizerStateBegan) {
+        self.effectsCheckbox.userInteractionEnabled = NO;
+        self.tunesCheckbox.userInteractionEnabled = NO;
+        self.tunesVolumeSlider.userInteractionEnabled = NO;
         self.soundEffectsLevelChanged = NO;
     }
     
@@ -166,13 +181,19 @@ using Role = UP::SpellLayout::Role;
         });
     }
 
-    if (self.effectsVolumeSlider.slideGesture.state == UIGestureRecognizerStateEnded) {
+    if (gestureState == UIGestureRecognizerStateEnded) {
         delay(BandSettingsUpdateDelay, 0.1, ^{
             [soundPlayer playSoundID:UPSoundIDHappy1];
         });
         UPSpellSettings *settings = [UPSpellSettings instance];
         settings.soundEffectsLevel = mark;
         LOG(General, "*** soundEffectsLevel: %ld", mark);
+    }
+
+    if (gestureState == UIGestureRecognizerStateEnded || gestureState == UIGestureRecognizerStateCancelled) {
+        self.effectsCheckbox.userInteractionEnabled = YES;
+        self.tunesCheckbox.userInteractionEnabled = YES;
+        self.tunesVolumeSlider.userInteractionEnabled = YES;
     }
 }
 
@@ -181,7 +202,57 @@ using Role = UP::SpellLayout::Role;
     BOOL selected = self.tunesCheckbox.selected;
     
     UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.retryMode = selected;
+    settings.tunesEnabled = selected;
+
+    UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+    if (selected) {
+        [tunePlayer setVolumeFromLevel:self.previousSoundEffectsLevel];
+        delay(BandSettingsUpdateDelay, 0.1, ^{
+            [tunePlayer stop];
+            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, 0, 0 }];
+        });
+    }
+    else {
+        [tunePlayer setVolumeFromLevel:0];
+    }
+}
+
+- (void)tunesSliderChanged
+{
+    UIGestureRecognizerState gestureState = self.tunesVolumeSlider.slideGesture.state;
+
+    NSUInteger mark = self.tunesVolumeSlider.valueAsMark + 1;
+    
+    UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+    
+    if (gestureState == UIGestureRecognizerStateBegan) {
+        self.effectsCheckbox.userInteractionEnabled = NO;
+        self.effectsVolumeSlider.userInteractionEnabled = NO;
+        self.tunesCheckbox.userInteractionEnabled = NO;
+        self.previousTunesLevel = NO;
+        [tunePlayer stop];
+        [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, -1, 0, 0 }];
+    }
+    
+    BOOL sameAsPrevious = self.previousSoundEffectsLevel == mark;
+    if (!sameAsPrevious) {
+        self.previousTunesLevel = YES;
+        self.previousSoundEffectsLevel = mark;
+        [tunePlayer setVolumeFromLevel:mark];
+    }
+    
+    if (gestureState == UIGestureRecognizerStateEnded) {
+        [tunePlayer stop];
+        UPSpellSettings *settings = [UPSpellSettings instance];
+        settings.tunesLevel = mark;
+        LOG(General, "*** tunesLevel: %ld", mark);
+    }
+
+    if (gestureState == UIGestureRecognizerStateEnded || gestureState == UIGestureRecognizerStateCancelled) {
+        self.effectsCheckbox.userInteractionEnabled = YES;
+        self.effectsVolumeSlider.userInteractionEnabled = YES;
+        self.tunesCheckbox.userInteractionEnabled = YES;
+    }
 }
 
 #pragma mark - Target / Action

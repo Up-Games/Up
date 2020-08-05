@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, UPTuneID) {
     UPTuneID4,
     UPTuneID5,
     UPTuneID6,
+    UPTuneIDDemo,
 };
 
 typedef NS_ENUM(NSInteger, UPTuneSegment) {
@@ -31,9 +32,12 @@ typedef NS_ENUM(NSInteger, UPTuneSegment) {
 struct UPTuneProperties {
     float volume;
     BOOL volumeOverride;
+    NSInteger numberOfLoops;
     CFTimeInterval beginTimeOffset;
     CFTimeInterval soundTimeOffset;
 };
+
+extern NSString * const UPTunePlayerFinishedPlayingNotification;
 
 @interface UPTunePlayer : NSObject
 
@@ -46,6 +50,8 @@ struct UPTuneProperties {
 - (NSError *)setFilePath:(NSString *)filePath forTuneID:(UPTuneID)tuneID segment:(UPTuneSegment)segment;
 
 - (NSError *)playTuneID:(UPTuneID)tuneID segment:(UPTuneSegment)segment properties:(UPTuneProperties)properties;
+
+- (BOOL)isPlayingTuneID:(UPTuneID)tuneID segment:(UPTuneSegment)segment;
 
 - (void)stop;
 - (void)clear;

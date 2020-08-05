@@ -2470,7 +2470,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     if (self.tunesEnabled && UPGameTimerDefaultDuration - effectiveGameTimeElapsed > GameOverOutroDuration) {
         CFTimeInterval tuneBeginTime = delay;
         CFTimeInterval tuneTimeOffset = (UPGameTimerCanonicalDuration - UPGameTimerDefaultDuration) + effectiveGameTimeElapsed;
-        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 0.8, NO, tuneBeginTime, tuneTimeOffset }];
+        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 0.8, NO, 0, tuneBeginTime, tuneTimeOffset }];
     }
 
     if (self.soundEffectsEnabled && self.countdownClicksEnabled) {
@@ -2480,11 +2480,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             CFTimeInterval outroIntervalFromEnd = UPGameTimerDefaultDuration - GameOverOutroDuration;
             CFTimeInterval outroBeginTime = delay + outroIntervalFromEnd - effectiveGameTimeElapsed;
             CFTimeInterval outroTimeOffset = UPMaxT(CFTimeInterval, 0, effectiveGameTimeElapsed - outroIntervalFromEnd);
-            [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOutro properties:{ volume, YES, outroBeginTime, outroTimeOffset }];
+            [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOutro properties:{ volume, YES, 0, outroBeginTime, outroTimeOffset }];
         }
         
         CFTimeInterval gameOverBeginTime = delay + (UPGameTimerDefaultDuration - effectiveGameTimeElapsed);
-        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOver properties:{ volume, YES, gameOverBeginTime, 0 }];
+        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOver properties:{ volume, YES, 0, gameOverBeginTime, 0 }];
     }
 }
 

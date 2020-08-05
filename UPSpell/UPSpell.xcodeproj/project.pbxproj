@@ -180,6 +180,7 @@
 		5D6FB58A24DAFC2500CDC293 /* UPSlider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB58924DAFC2500CDC293 /* UPSlider.mm */; };
 		5D6FB59124DB151E00CDC293 /* UPSpellExtrasPaneSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB58F24DB151E00CDC293 /* UPSpellExtrasPaneSound.mm */; };
 		5D6FB59324DB205200CDC293 /* None.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D6FB59224DB205200CDC293 /* None.aac */; };
+		5D6FB59724DB3F7500CDC293 /* Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D6FB59624DB3F7500CDC293 /* Tune.aac */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.mm */; };
 		5DA0A06624BCD4EA0029CE0E /* UPSpellGameRetry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA0A06524BCD4EA0029CE0E /* UPSpellGameRetry.mm */; };
 		5DA0A06924BD08590029CE0E /* UPDialogPlayMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA0A06824BD08590029CE0E /* UPDialogPlayMenu.mm */; };
@@ -426,6 +427,7 @@
 		5D6FB58F24DB151E00CDC293 /* UPSpellExtrasPaneSound.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasPaneSound.mm; sourceTree = "<group>"; };
 		5D6FB59024DB151E00CDC293 /* UPSpellExtrasPaneSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasPaneSound.h; sourceTree = "<group>"; };
 		5D6FB59224DB205200CDC293 /* None.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = None.aac; sourceTree = "<group>"; };
+		5D6FB59624DB3F7500CDC293 /* Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tune.aac; sourceTree = "<group>"; };
 		5D723114246B34C0006027A3 /* UPTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileView.h; sourceTree = "<group>"; };
 		5D72311F246B3917006027A3 /* UIFont+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UPSpell.h"; sourceTree = "<group>"; };
 		5D723120246B3996006027A3 /* UIFont+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIFont+UPSpell.mm"; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 				5D5B54AB24D863BC00FD50D4 /* Square-In-G.aac */,
 				5D5B54B024DA107A00FD50D4 /* Tap.aac */,
 				5D6FB58624DA134F00CDC293 /* Tub.aac */,
+				5D6FB59624DB3F7500CDC293 /* Tune.aac */,
 				5D5B547924D4F8E000FD50D4 /* Variation-19-In.aac */,
 				5D5B548624D4F8E000FD50D4 /* Variation-19-Tune.aac */,
 				5D5B547A24D4F8E000FD50D4 /* Waltz-In.aac */,
@@ -1021,6 +1024,7 @@
 				5D0FC2E424A57DC500353563 /* up-games-icon-345-76.png in Resources */,
 				5D5B548D24D4F8E000FD50D4 /* Cindy-Tune.aac in Resources */,
 				5D0FC32A24A57DC500353563 /* up-games-icon-135-76.png in Resources */,
+				5D6FB59724DB3F7500CDC293 /* Tune.aac in Resources */,
 				5D0FC32424A57DC500353563 /* up-games-icon-150-60@2x.png in Resources */,
 				5D0FC2CF24A57DC500353563 /* up-games-icon-105-76.png in Resources */,
 				5D0FC2DF24A57DC500353563 /* up-games-icon-180-83@2x.png in Resources */,

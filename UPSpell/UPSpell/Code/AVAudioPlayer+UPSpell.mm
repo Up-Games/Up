@@ -56,5 +56,4 @@
     return obj ? (UPTuneSegment)[obj unsignedIntegerValue] : UPTuneSegmentNone;
 }
 
-
 @end

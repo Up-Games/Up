@@ -141,13 +141,13 @@
             break;
         case 1:
         default:
-            self.volume = 0.15;
+            self.volume = 0.125;
             break;
         case 2:
-            self.volume = 0.3;
+            self.volume = 0.25;
             break;
         case 3:
-            self.volume = 0.4;
+            self.volume = 0.375;
             break;
         case 4:
             self.volume = 0.5;

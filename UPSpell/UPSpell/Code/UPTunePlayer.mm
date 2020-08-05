@@ -15,6 +15,8 @@
 #import "AVAudioPlayer+UPSpell.h"
 #import "UPTunePlayer.h"
 
+NSString * const UPTunePlayerFinishedPlayingNotification = @"UPTunePlayerFinishedPlayingNotification";
+
 UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment segment)
 {
     return (segment << 8) | tuneID;
@@ -81,6 +83,7 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
     else {
         AVAudioPlayer *player = it->second;
         player.volume = properties.volumeOverride ? properties.volume : self.volume * properties.volume;
+        player.numberOfLoops = properties.numberOfLoops;
         player.currentTime = UPClampT(CFTimeInterval, properties.soundTimeOffset, 0, player.duration);
         if (properties.beginTimeOffset > 0) {
             [player playAtTime:player.deviceCurrentTime + properties.beginTimeOffset];
@@ -91,6 +94,18 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
     }
     
     return error;
+}
+
+- (BOOL)isPlayingTuneID:(UPTuneID)tuneID segment:(UPTuneSegment)segment
+{
+    std::lock_guard<std::mutex> guard(m_mutex);
+    for (auto it = m_map.begin(); it != m_map.end(); ++it) {
+        AVAudioPlayer *player = it->second;
+        if (player.playing) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (void)stop
@@ -120,12 +135,13 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
             break;
         case 1:
         default:
+            self.volume = 0.125;
             break;
         case 2:
-            self.volume = 0.3;
+            self.volume = 0.25;
             break;
         case 3:
-            self.volume = 0.4;
+            self.volume = 0.375;
             break;
         case 4:
             self.volume = 0.5;
@@ -139,6 +155,19 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
         case 7:
             self.volume = 1.0;
             break;
+    }
+}
+
+- (void)setVolume:(float)volume
+{
+    _volume = volume;
+
+    std::lock_guard<std::mutex> guard(m_mutex);
+    for (auto it = m_map.begin(); it != m_map.end(); ++it) {
+        AVAudioPlayer *player = it->second;
+        if (player.playing) {
+            player.volume = _volume;
+        }
     }
 }
 
@@ -217,6 +246,14 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
         LOG(Sound, "unsuccessful tune play: %ld", player.tuneID);
         [self _replacePlayer:player];
     }
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:UPTunePlayerFinishedPlayingNotification object:nil userInfo:@{
+        @"successfully" : @(flag),
+        @"tuneID" : @(player.tuneID),
+        @"segment" : @(player.segment),
+        @"numberOfLoops" : @(player.numberOfLoops),
+    }];
 }
 
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error
