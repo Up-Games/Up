@@ -68,6 +68,7 @@ using Role = UP::SpellLayout::Role;
 @property (nonatomic) BOOL soundEffectsLevelChanged;
 @property (nonatomic) NSUInteger previousSoundEffectsLevel;
 @property (nonatomic) NSUInteger previousTunesLevel;
+@property (nonatomic) BOOL changingTunesLevel;
 @end
 
 @implementation UPSpellExtrasPaneSound
@@ -115,6 +116,9 @@ using Role = UP::SpellLayout::Role;
 
     [self updateThemeColors];
 
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(tunePlayerFinishedPlaying:) name:UPTunePlayerFinishedPlayingNotification object:nil];
+    
     return self;
 }
 
@@ -133,7 +137,7 @@ using Role = UP::SpellLayout::Role;
 
     NSBundle *bundle = [NSBundle mainBundle];
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
-    [tunePlayer setFilePath:[bundle pathForResource:@"Tune" ofType:@"aac"] forTuneID:UPTuneIDDemo segment:UPTuneSegmentMain];
+    [tunePlayer setFilePath:[bundle pathForResource:@"Demo-Tune" ofType:@"aac"] forTuneID:UPTuneIDDemo segment:UPTuneSegmentMain];
 }
 
 - (void)effectsCheckboxTapped
@@ -204,11 +208,13 @@ using Role = UP::SpellLayout::Role;
     UPSpellSettings *settings = [UPSpellSettings instance];
     settings.tunesEnabled = selected;
 
+    self.changingTunesLevel = NO;
+
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+    [tunePlayer stop];
     if (selected) {
         [tunePlayer setVolumeFromLevel:self.previousSoundEffectsLevel];
         delay(BandSettingsUpdateDelay, 0.1, ^{
-            [tunePlayer stop];
             [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, 0, 0 }];
         });
     }
@@ -226,13 +232,16 @@ using Role = UP::SpellLayout::Role;
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
     
     if (gestureState == UIGestureRecognizerStateBegan) {
+        self.changingTunesLevel = YES;
         self.effectsCheckbox.userInteractionEnabled = NO;
         self.effectsVolumeSlider.userInteractionEnabled = NO;
         self.tunesCheckbox.userInteractionEnabled = NO;
         self.previousTunesLevel = NO;
-        [tunePlayer stop];
-        [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, -1, 0, 0 }];
+        if (![tunePlayer isPlayingTuneID:UPTuneIDDemo segment:UPTuneSegmentMain]) {
+            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, -1, 0, 0 }];
+        }
     }
+    
     
     BOOL sameAsPrevious = self.previousSoundEffectsLevel == mark;
     if (!sameAsPrevious) {
@@ -252,6 +261,23 @@ using Role = UP::SpellLayout::Role;
         self.effectsCheckbox.userInteractionEnabled = YES;
         self.effectsVolumeSlider.userInteractionEnabled = YES;
         self.tunesCheckbox.userInteractionEnabled = YES;
+        self.changingTunesLevel = NO;
+    }
+}
+
+- (void)tunePlayerFinishedPlaying:(NSNotification *)notification
+{
+    if (!self.changingTunesLevel) {
+        return;
+    }
+    
+    NSDictionary *userInfo = notification.userInfo;
+    if ([userInfo[@"tuneID"] intValue] == UPTuneIDDemo) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+            [tunePlayer stop];
+            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, -1, 0, 0 }];
+        });
     }
 }
 
