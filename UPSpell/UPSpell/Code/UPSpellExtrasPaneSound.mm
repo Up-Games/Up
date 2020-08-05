@@ -89,7 +89,7 @@ using Role = UP::SpellLayout::Role;
     self.soundDescription.font = layout.settings_description_font();
     self.soundDescription.colorCategory = UPColorCategoryControlText;
     self.soundDescription.textAlignment = NSTextAlignmentCenter;
-    self.soundDescription.string = @"EFFECTS play in response to your actions and\nthe game timer. TUNES are in-game music.";
+    self.soundDescription.string = @"EFFECTS play in response to your actions and to\nthe game timer. TUNES are the in-game music.";
     [self addSubview:self.soundDescription];
 
     self.effectsCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
@@ -130,10 +130,14 @@ using Role = UP::SpellLayout::Role;
     [self.effectsCheckbox setSelected:settings.soundEffectsEnabled];
     [self.tunesCheckbox setSelected:settings.tunesEnabled];
 
-    [self.tunesCheckbox setSelected:settings.tunesEnabled];
+    self.effectsVolumeSlider.enabled = self.effectsCheckbox.enabled;
+    self.tunesVolumeSlider.enabled = self.tunesCheckbox.enabled;
 
     self.previousSoundEffectsLevel = settings.soundEffectsLevel;
+    [self.effectsVolumeSlider setMarkValue:self.previousSoundEffectsLevel];
+
     self.previousTunesLevel = settings.tunesLevel;
+    [self.tunesVolumeSlider setMarkValue:self.previousTunesLevel];
 
     NSBundle *bundle = [NSBundle mainBundle];
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
@@ -143,10 +147,14 @@ using Role = UP::SpellLayout::Role;
 - (void)effectsCheckboxTapped
 {
     BOOL selected = self.effectsCheckbox.selected;
-    
+    self.effectsVolumeSlider.enabled = selected;
+
     UPSpellSettings *settings = [UPSpellSettings instance];
     settings.soundEffectsEnabled = selected;
     
+    UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+    [tunePlayer stop];
+
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     if (selected) {
         [soundPlayer setVolumeFromLevel:self.previousSoundEffectsLevel];
@@ -161,9 +169,12 @@ using Role = UP::SpellLayout::Role;
 
 - (void)effectsSliderChanged
 {
-    UIGestureRecognizerState gestureState = self.tunesVolumeSlider.slideGesture.state;
+    UIGestureRecognizerState gestureState = self.effectsVolumeSlider.slideGesture.state;
 
     NSUInteger mark = self.effectsVolumeSlider.valueAsMark + 1;
+
+    UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+    [tunePlayer stop];
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer prepare];
@@ -180,12 +191,14 @@ using Role = UP::SpellLayout::Role;
         self.soundEffectsLevelChanged = YES;
         self.previousSoundEffectsLevel = mark;
         [soundPlayer setVolumeFromLevel:mark];
+        cancel(BandSettingsUpdateDelay);
         delay(BandSettingsUpdateDelay, 0.1, ^{
             [soundPlayer playSoundID:UPSoundIDTap];
         });
     }
 
     if (gestureState == UIGestureRecognizerStateEnded) {
+        cancel(BandSettingsUpdateDelay);
         delay(BandSettingsUpdateDelay, 0.1, ^{
             [soundPlayer playSoundID:UPSoundIDHappy1];
         });
@@ -204,7 +217,8 @@ using Role = UP::SpellLayout::Role;
 - (void)tunesCheckboxTapped
 {
     BOOL selected = self.tunesCheckbox.selected;
-    
+    self.tunesVolumeSlider.enabled = selected;
+
     UPSpellSettings *settings = [UPSpellSettings instance];
     settings.tunesEnabled = selected;
 
@@ -238,7 +252,7 @@ using Role = UP::SpellLayout::Role;
         self.tunesCheckbox.userInteractionEnabled = NO;
         self.previousTunesLevel = NO;
         if (![tunePlayer isPlayingTuneID:UPTuneIDDemo segment:UPTuneSegmentMain]) {
-            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, -1, 0, 0 }];
+            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, 0, 0 }];
         }
     }
     
@@ -251,7 +265,6 @@ using Role = UP::SpellLayout::Role;
     }
     
     if (gestureState == UIGestureRecognizerStateEnded) {
-        [tunePlayer stop];
         UPSpellSettings *settings = [UPSpellSettings instance];
         settings.tunesLevel = mark;
         LOG(General, "*** tunesLevel: %ld", mark);
@@ -276,7 +289,7 @@ using Role = UP::SpellLayout::Role;
         dispatch_async(dispatch_get_main_queue(), ^{
             UPTunePlayer *tunePlayer = [UPTunePlayer instance];
             [tunePlayer stop];
-            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, -1, 0, 0 }];
+            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, 0, 0 }];
         });
     }
 }

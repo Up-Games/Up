@@ -57,7 +57,9 @@ static CGFloat _ThemeHue = 222;
         case UPColorCategoryCanonical:
         case UPColorCategoryControlShapeFill:
         case UPColorCategoryControlShapeActiveFill:
+        case UPColorCategoryControlShapeInactiveFill:
         case UPColorCategoryControlShapeStroke:
+        case UPColorCategoryControlShapeInactiveStroke:
         case UPColorCategoryControlText:
         case UPColorCategoryControlTextInactive:
         case UPColorCategoryControlIndicator:
@@ -177,6 +179,17 @@ static CGFloat _ThemeHue = 222;
                     return UPColorCategoryClear;
             }
         }
+        case UPColorCategoryControlShapeInactiveFill: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryInactiveFill;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryClear;
+            }
+        }
         case UPColorCategoryControlShapeStroke: {
             switch (style) {
                 case UPThemeColorStyleDefault:
@@ -186,6 +199,17 @@ static CGFloat _ThemeHue = 222;
                 case UPThemeColorStyleLightStark:
                 case UPThemeColorStyleDarkStark:
                     return UPColorCategoryPrimaryStroke;
+            }
+        }
+        case UPColorCategoryControlShapeInactiveStroke: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryClear;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryInactiveStroke;
             }
         }
         case UPColorCategoryControlText:
