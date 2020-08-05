@@ -2134,6 +2134,9 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     else if (score == dossier.highScore) {
         result = @"TIED HIGH SCORE!";
     }
+    else if (score + 20 >= dossier.highScore) {
+        result = [NSString stringWithFormat:@"CLOSE! ONLY %d LESS THAN YOUR HIGH SCORE (%d)", dossier.highScore - score, dossier.highScore];
+    }
 
     return result;
 }
