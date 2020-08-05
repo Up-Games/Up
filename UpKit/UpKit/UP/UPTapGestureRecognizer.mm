@@ -6,8 +6,6 @@
 #import <UpKit/UPAssertions.h>
 #import <UpKit/UPTapGestureRecognizer.h>
 
-#import "UPTapGestureRecognizer.h"
-
 @interface UPTapGestureRecognizer ()
 @property (nonatomic, readwrite) BOOL touchInside;
 @end
@@ -57,16 +55,6 @@
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     self.state = UIGestureRecognizerStateCancelled;
-}
-
-- (void)handlePreemption
-{
-    if (!self.isEnabled || !self.touchInside) {
-        self.state = UIGestureRecognizerStateFailed;
-    }
-    else {
-        self.state = UIGestureRecognizerStateEnded;
-    }
 }
 
 @end

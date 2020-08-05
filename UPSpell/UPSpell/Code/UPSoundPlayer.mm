@@ -162,6 +162,7 @@
             self.volume = 1.0;
             break;
     }
+    [self playSoundID:UPSoundIDNone];
 }
 
 #pragma mark - Internal

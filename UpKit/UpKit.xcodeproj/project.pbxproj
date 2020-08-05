@@ -30,6 +30,8 @@
 		5D54078624845488003F193D /* UPBand.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D54078524845488003F193D /* UPBand.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D6261A624C1FE4100D19EEF /* NSFileManager+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D6261A424C1FE4100D19EEF /* NSFileManager+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D6261A724C1FE4100D19EEF /* NSFileManager+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6261A524C1FE4100D19EEF /* NSFileManager+UP.mm */; };
+		5D6FB58D24DB00C900CDC293 /* UPSlideGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D6FB58B24DB00C900CDC293 /* UPSlideGestureRecognizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D6FB58E24DB00C900CDC293 /* UPSlideGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB58C24DB00C900CDC293 /* UPSlideGestureRecognizer.mm */; };
 		5DA8E0372475962A008D3015 /* UPUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E035247595B8008D3015 /* UPUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E03A2475C796008D3015 /* UPAssertions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E0382475C796008D3015 /* UPAssertions.mm */; };
 		5DA8E03B2475C796008D3015 /* UPAssertions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E0392475C796008D3015 /* UPAssertions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -155,6 +157,8 @@
 		5D54078524845488003F193D /* UPBand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPBand.h; sourceTree = "<group>"; };
 		5D6261A424C1FE4100D19EEF /* NSFileManager+UP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+UP.h"; sourceTree = "<group>"; };
 		5D6261A524C1FE4100D19EEF /* NSFileManager+UP.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSFileManager+UP.mm"; sourceTree = "<group>"; };
+		5D6FB58B24DB00C900CDC293 /* UPSlideGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSlideGestureRecognizer.h; sourceTree = "<group>"; };
+		5D6FB58C24DB00C900CDC293 /* UPSlideGestureRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSlideGestureRecognizer.mm; sourceTree = "<group>"; };
 		5DA8E035247595B8008D3015 /* UPUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPUtility.h; sourceTree = "<group>"; };
 		5DA8E0382475C796008D3015 /* UPAssertions.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAssertions.mm; sourceTree = "<group>"; };
 		5DA8E0392475C796008D3015 /* UPAssertions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAssertions.h; sourceTree = "<group>"; };
@@ -415,6 +419,8 @@
 				5DA8E06D247D50AB008D3015 /* UPSerialNumber.h */,
 				5D4AE82B248F1FE600213904 /* UPSettings.h */,
 				5D4AE82C248F1FE600213904 /* UPSettings.mm */,
+				5D6FB58B24DB00C900CDC293 /* UPSlideGestureRecognizer.h */,
+				5D6FB58C24DB00C900CDC293 /* UPSlideGestureRecognizer.mm */,
 				5DA8E03E2475E14D008D3015 /* UPStackTrace.cpp */,
 				5DA8E03D2475E14D008D3015 /* UPStackTrace.h */,
 				5DEBE02C245716F900016047 /* UPStringTools.h */,
@@ -490,6 +496,7 @@
 				5DFE6219245364C700D9CA0B /* UpKit.h in Headers */,
 				5DD71D442457731700F3F9E2 /* UPLayoutRule.h in Headers */,
 				5D6261A624C1FE4100D19EEF /* NSFileManager+UP.h in Headers */,
+				5D6FB58D24DB00C900CDC293 /* UPSlideGestureRecognizer.h in Headers */,
 				5DBADB7324678F4000D9D1FF /* UPGameKey.h in Headers */,
 				5DA8E063247C063B008D3015 /* UPTicker.h in Headers */,
 				5DA8E06E247D50AB008D3015 /* UPSerialNumber.h in Headers */,
@@ -658,6 +665,7 @@
 				5D12E4AC24BCA91A00C73F64 /* UPPlacard.mm in Sources */,
 				5D6261A724C1FE4100D19EEF /* NSFileManager+UP.mm in Sources */,
 				5DBC20DC249BC33C002A6ADC /* UPNeedsUpdater.mm in Sources */,
+				5D6FB58E24DB00C900CDC293 /* UPSlideGestureRecognizer.mm in Sources */,
 				5DF8A8E82454892C00751E2E /* UPUnitFunction.mm in Sources */,
 				5D4AE82E248F1FE600213904 /* UPSettings.mm in Sources */,
 				5DA8E064247C063B008D3015 /* UPTicker.m in Sources */,

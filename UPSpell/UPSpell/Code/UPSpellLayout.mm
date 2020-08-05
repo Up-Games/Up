@@ -690,6 +690,12 @@ void SpellLayout::calculate_extras_locations()
     
     calculate_and_set_locations(Role::ExtrasRetryDescription, layout_relative_aspect_rect(CanonicalExtrasRetryDescriptionFrame));
     calculate_and_set_locations(Role::ExtrasRetryCheckbox, layout_relative_aspect_rect(CanonicalExtrasRetryCheckboxFrame));
+
+    calculate_and_set_locations(Role::ExtrasSoundDescription, layout_relative_aspect_rect(CanonicalExtrasSoundDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasSoundEffectsCheckbox, layout_relative_aspect_rect(CanonicalExtrasSoundEffectsCheckboxFrame));
+    calculate_and_set_locations(Role::ExtrasSoundEffectsSlider, layout_relative_aspect_rect(CanonicalExtrasSoundEffectsSliderFrame));
+    calculate_and_set_locations(Role::ExtrasSoundTunesCheckbox, layout_relative_aspect_rect(CanonicalExtrasSoundTunesCheckboxFrame));
+    calculate_and_set_locations(Role::ExtrasSoundTunesSlider, layout_relative_aspect_rect(CanonicalExtrasSoundTunesSliderFrame));
 }
 
 void SpellLayout::calculate_choice_locations()

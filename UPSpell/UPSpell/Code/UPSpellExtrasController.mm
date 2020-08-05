@@ -22,6 +22,7 @@
 #import "UPSpellExtrasController.h"
 #import "UPSpellExtrasPaneColors.h"
 #import "UPSpellExtrasPaneRetry.h"
+#import "UPSpellExtrasPaneSound.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
 #import "UPSpellNavigationController.h"
@@ -40,7 +41,8 @@
 @property (nonatomic, readwrite) UPAccessoryPane *selectedPane;
 
 @property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
-@property (nonatomic) UPSpellExtrasPaneRetry *repeatPane;
+@property (nonatomic) UPSpellExtrasPaneSound *soundPane;
+@property (nonatomic) UPSpellExtrasPaneRetry *retryPane;
 
 @property (nonatomic) NSArray<UPChoice *> *choices;
 @property (nonatomic) NSArray<UPAccessoryPane *> *panes;
@@ -113,17 +115,21 @@ using Location = UP::SpellLayout::Location;
     self.colorsPane = [UPSpellExtrasPaneColors pane];
     self.colorsPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
     [self.view addSubview:self.colorsPane];
-
-    self.repeatPane = [UPSpellExtrasPaneRetry pane];
-    self.repeatPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
-    [self.view addSubview:self.repeatPane];
+    
+    self.soundPane = [UPSpellExtrasPaneSound pane];
+    self.soundPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    [self.view addSubview:self.soundPane];
+    
+    self.retryPane = [UPSpellExtrasPaneRetry pane];
+    self.retryPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    [self.view addSubview:self.retryPane];
     
     self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
     
     self.panes = @[
         self.colorsPane,
-        [UPAccessoryPane pane],
-        self.repeatPane,
+        self.soundPane,
+        self.retryPane,
         [UPAccessoryPane pane],
     ];
     
