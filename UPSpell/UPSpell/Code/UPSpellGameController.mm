@@ -2167,25 +2167,23 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
 {
     ASSERT(self.mode == Mode::End);
     
-    id labelString = nil;
+    NSMutableString *labelString = [NSMutableString string];
     
-    if (!labelString) {
-        id noteString = [self gameNoteGameHighScore];
-        if (noteString) {
-            labelString = noteString;
-        }
-    }
-    if (!labelString) {
-        id noteString = [self gameNoteBestWordInGame];
-        if (noteString) {
-            labelString = noteString;
-        }
-    }
-    if (!labelString) {
-        labelString = [self gameNoteRandomWord];
+    NSString *highScoreString = [self gameNoteGameHighScore];
+    if (highScoreString) {
+        [labelString appendString:highScoreString];
     }
 
-    self.dialogGameNote.noteLabel.attributedString = labelString;
+    if (labelString.length == 0) {
+        NSString *bestWordString = [self gameNoteBestWordInGame];
+        if (bestWordString) {
+            [labelString appendString:bestWordString];
+        }
+    }
+
+    if (labelString.length == 0) {
+        [labelString appendString:[self gameNoteRandomWord]];
+    }
 
     NSArray *components = [labelString componentsSeparatedByString:@"\n"];
     if (components.count == 1) {
@@ -2233,7 +2231,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
         result = @"TIED HIGH SCORE!";
     }
     else if (score + 20 >= dossier.highScore) {
-        result = [NSString stringWithFormat:@"CLOSE! ONLY %d LESS THAN YOUR HIGH SCORE (%d)", dossier.highScore - score, dossier.highScore];
+        result = [NSString stringWithFormat:@"CLOSE! +%d FROM HIGH SCORE (%d)", dossier.highScore - score, dossier.highScore];
     }
 
     return result;
