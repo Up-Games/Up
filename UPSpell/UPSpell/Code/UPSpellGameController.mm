@@ -1955,7 +1955,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
             UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice2, Role::ChoiceItem2Center),
             UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice3, Role::ChoiceItem3Center),
         ];
-        start(bloop_in(BandModeUI, buttonInMoves, 0.45, ^(UIViewAnimatingPosition) {
+        start(bloop_in(BandModeUI, buttonInMoves, 0.5, ^(UIViewAnimatingPosition) {
             [self viewUnlock];
         }));
     });
@@ -2002,13 +2002,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     });
 
     [self updateSoundAndTunesSettings];
-
-    self.tuneNumber = [self pickNextTune];
-    [self configureTunesForTuneNumber:self.tuneNumber];
-    if (self.tunesEnabled) {
-        UPTunePlayer *tunePlayer = [UPTunePlayer instance];
-        [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 0.9, NO, 0, 0 }];
-    }
+//    [self playTuneIntro];
 
     void (^bottomHalf)(void) = ^{
         // change transform of game view
@@ -2038,6 +2032,8 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
         bottomHalf();
     }
     else {
+        [self playTuneIntro];
+
         // move extras and about buttons offscreen
         NSArray<UPViewMove *> *outGameOverMoves = @[
             UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Place::OffBottomNear),
@@ -2438,6 +2434,16 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     return tuneNumber;
 }
 
+- (void)playTuneIntro
+{
+    self.tuneNumber = [self pickNextTune];
+    [self configureTunesForTuneNumber:self.tuneNumber];
+    if (self.tunesEnabled) {
+        UPTunePlayer *tunePlayer = [UPTunePlayer instance];
+        [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 0.9, NO, 0, 0 }];
+    }
+}
+
 - (void)sequenceTuneWithDelay:(CFTimeInterval)delay gameTimeElapsed:(CFTimeInterval)gameTimeElapsed
 {
     CFTimeInterval effectiveGameTimeElapsed = UPClampT(CFTimeInterval, gameTimeElapsed, 0, UPGameTimerDefaultDuration);
@@ -2768,7 +2774,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         NSArray<UPViewMove *> *playMoves = @[
             UPViewMoveMake(self.dialogTopMenu.playButton, Role::DialogButtonTopCenter),
         ];
-        start(bloop_in(BandModeUI, playMoves, 0.6, ^(UIViewAnimatingPosition) {
+        start(bloop_in(BandModeUI, playMoves, 0.5, ^(UIViewAnimatingPosition) {
             self.dialogTopMenu.playButton.userInteractionEnabled = YES;
         }));
         self.dialogTopMenu.playButton.selected = NO;
@@ -2776,7 +2782,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             UPViewMoveMake(self.dialogTopMenu.extrasButton, Role::DialogButtonTopLeft),
             UPViewMoveMake(self.dialogTopMenu.aboutButton, Role::DialogButtonTopRight),
         ];
-        start(bloop_in(BandModeUI, buttonInMoves, 0.6, nil));
+        start(bloop_in(BandModeUI, buttonInMoves, 0.5, nil));
     });
 
     delay(BandModeDelay, 0.1, ^{
@@ -2813,33 +2819,36 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         }
     }
 
+    [self updateSoundAndTunesSettings];
+    [self playTuneIntro];
+
     delay(BandModeDelay, 0.1, ^{
         SpellLayout &layout = SpellLayout::instance();
         self.dialogTopMenu.extrasButton.center = layout.center_for(Role::DialogButtonTopLeft, Place::OffTopNear);
         self.dialogTopMenu.aboutButton.center = layout.center_for(Role::DialogButtonTopRight, Place::OffTopNear);
         
-        [UIView animateWithDuration:0.375 animations:^{
+        [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
             self.dialogPlayMenu.alpha = 0;
         } completion:^(BOOL finished) {
             self.dialogPlayMenu.alpha = 1;
         }];
 
         NSArray<UPViewMove *> *buttonOutMoves = @[
-            UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::ChoiceTitleCenter, Place::OffTopFar)),
-            UPViewMoveMake(self.dialogPlayMenu.backButton, Location(Role::ChoiceBackCenter, Place::OffTopFar)),
-            UPViewMoveMake(self.dialogPlayMenu.goButton, Location(Role::ChoiceGoButtonCenter, Place::OffBottomNear)),
-            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice1, Role::ChoiceItem1Center, Place::OffTopFar),
-            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice2, Role::ChoiceItem2Center, Place::OffTopFar),
-            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice3, Role::ChoiceItem3Center, Place::OffTopFar),
+            UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::ChoiceTitleCenter, Place::OffBottomFar)),
+            UPViewMoveMake(self.dialogPlayMenu.backButton, Location(Role::ChoiceBackCenter, Place::OffBottomFar)),
+            UPViewMoveMake(self.dialogPlayMenu.goButton, Location(Role::ChoiceGoButtonCenter, Place::OffBottomFar)),
+            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice1, Role::ChoiceItem1Center, Place::OffBottomFar),
+            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice2, Role::ChoiceItem2Center, Place::OffBottomFar),
+            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice3, Role::ChoiceItem3Center, Place::OffBottomFar),
         ];
         
-        start(bloop_out(BandModeUI, buttonOutMoves, 0.35, ^(UIViewAnimatingPosition) {
+        start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
             self.dialogTopMenu.playButton.userInteractionEnabled = YES;
             self.dialogTopMenu.playButton.selected = NO;
             self.dialogPlayMenu.goButton.highlightedLocked = NO;
             self.dialogPlayMenu.goButton.highlighted = NO;
         }));
-        delay(BandModeDelay, 0.175, ^{
+        delay(BandModeDelay, 0.55, ^{
             [self createNewGameModelIfNeeded];
             [self viewFillUpSpellTileViews];
             [self viewMakeReadyFromMode:Mode::PlayMenu completion:^{
@@ -2969,7 +2978,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewLock];
     [[UPSoundPlayer instance] prepare];
 
-    [UIView animateWithDuration:0.15 delay:0.15 options:0 animations:^{
+    [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
         self.dialogPause.alpha = 0.0;
     } completion:nil];
 
@@ -2981,9 +2990,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
     ];
 
-    start(bloop_out(BandModeUI, farMoves, 0.25, nil));
+    start(bloop_out(BandModeUI, farMoves, 0.5, nil));
 
-    start(bloop_out(BandModeUI, nearMoves, DefaultBloopDuration, ^(UIViewAnimatingPosition) {
+    start(bloop_out(BandModeUI, nearMoves, 0.5, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         
@@ -3032,7 +3041,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self.gameView.pauseControl setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     [self.gameView.pauseControl setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
-    [UIView animateWithDuration:0.15 delay:0.15 options:0 animations:^{
+    [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
         self.dialogPause.alpha = 0.0;
     } completion:nil];
     
@@ -3043,8 +3052,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
         UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
     ];
-    start(bloop_out(BandModeUI, farMoves, DefaultBloopDuration, nil));
-    start(bloop_out(BandModeUI, nearMoves, 0.35, ^(UIViewAnimatingPosition) {
+    start(bloop_out(BandModeUI, farMoves, 0.5, nil));
+    start(bloop_out(BandModeUI, nearMoves, 0.5, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         [self setMode:Mode::End];
