@@ -163,7 +163,7 @@ static constexpr CFTimeInterval GameStartDelay = 0.64;
 static constexpr CFTimeInterval DefaultBloopDuration = 0.2;
 static constexpr CFTimeInterval DefaultTileSlideDuration = 0.05;
 static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
-static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.4;
+static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.5;
 static constexpr CFTimeInterval GameOverOutroDuration = 5;
 static constexpr CFTimeInterval TapToTubInterval = 0.15;
 
@@ -3136,6 +3136,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }
 
     [self viewUpdateGameControls];
+    m_spell_model->move_word_tray_tiles_back_to_player_tray();
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::OVER));
 
     [self cancelActiveTouch];
@@ -3143,6 +3144,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewBloopTileViewsToPlayerTrayWithDuration:GameOverRespositionBloopDuration completion:nil];
     [UIView animateWithDuration:0.2 animations:^{
         self.gameView.wordTrayControl.transform = CGAffineTransformIdentity;
+        for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
+            tileView.transform = CGAffineTransformIdentity;
+        }
     }];
     [self viewPenaltyFinished];
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGameOver];
