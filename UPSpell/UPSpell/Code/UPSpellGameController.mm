@@ -1939,6 +1939,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     } completion:nil];
     
     
+    [self.dialogPlayMenu updateThemeColors];
     self.dialogPlayMenu.hidden = NO;
     self.dialogPlayMenu.alpha = 0.0;
     [UIView animateWithDuration:0.15 animations:^{
@@ -2758,16 +2759,16 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice2, Role::ChoiceItem2Center, Place::OffBottomFar),
         UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice3, Role::ChoiceItem3Center, Place::OffBottomFar),
     ];
-    start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
+    start(bloop_out(BandModeUI, buttonOutMoves, 0.6, ^(UIViewAnimatingPosition) {
         self.dialogPlayMenu.hidden = YES;
         self.dialogPlayMenu.alpha = 1.0;
     }));
 
-    delay(BandModeDelay, 0.1, ^{
+    delay(BandModeDelay, 0.25, ^{
         NSArray<UPViewMove *> *playMoves = @[
             UPViewMoveMake(self.dialogTopMenu.playButton, Role::DialogButtonTopCenter),
         ];
-        start(bloop_in(BandModeUI, playMoves, 0.5, ^(UIViewAnimatingPosition) {
+        start(bloop_in(BandModeUI, playMoves, 0.6, ^(UIViewAnimatingPosition) {
             self.dialogTopMenu.playButton.userInteractionEnabled = YES;
         }));
         self.dialogTopMenu.playButton.selected = NO;
@@ -2775,7 +2776,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             UPViewMoveMake(self.dialogTopMenu.extrasButton, Role::DialogButtonTopLeft),
             UPViewMoveMake(self.dialogTopMenu.aboutButton, Role::DialogButtonTopRight),
         ];
-        start(bloop_in(BandModeUI, buttonInMoves, 0.5, nil));
+        start(bloop_in(BandModeUI, buttonInMoves, 0.6, nil));
     });
 
     delay(BandModeDelay, 0.1, ^{
@@ -2785,12 +2786,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         start(slide(BandModeUI, slideMoves, 0.2, nil));
     });
     
-    [UIView animateWithDuration:0.25 delay:0.15 options:0 animations:^{
+    [UIView animateWithDuration:0.25 delay:0.45 options:0 animations:^{
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
     } completion:^(BOOL finished) {
         [self viewUnlock];
     }];
-    [UIView animateWithDuration:0.25 delay:0.1 options:0 animations:^{
+    [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
         self.dialogPlayMenu.alpha = 0.0;
     } completion:nil];
 
