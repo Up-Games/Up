@@ -1608,9 +1608,61 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     }
 }
 
+- (BOOL)viewIsUpSpellFilled
+{
+    TileIndex idx = 0;
+    TileIndex ok = 0;
+    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
+        TileModel model = TileModel(tileView.glyph, tileView.multiplier);
+        switch (idx) {
+            case 0:
+                if (model == TileModel(U'U')) {
+                    ok++;
+                }
+                break;
+            case 1:
+                if (model == TileModel(U'P')) {
+                    ok++;
+                }
+                break;
+            case 2:
+                if (model == TileModel(U'S')) {
+                    ok++;
+                }
+                break;
+            case 3:
+                if (model == TileModel(U'P')) {
+                    ok++;
+                }
+                break;
+            case 4:
+                if (model == TileModel(U'E')) {
+                    ok++;
+                }
+                break;
+            case 5:
+                if (model == TileModel(U'L')) {
+                    ok++;
+                }
+                break;
+            case 6:
+                if (model == TileModel(U'L')) {
+                    ok++;
+                }
+                break;
+        }
+        idx++;
+    }
+    return ok == TileCount;
+}
+
 - (void)viewFillUpSpellTileViews
 {
     ASSERT(m_spell_model->is_blank_filled());
+    
+    if ([self viewIsUpSpellFilled]) {
+        return;
+    }
     
     [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     

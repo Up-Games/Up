@@ -51,6 +51,16 @@ private:
     int m_multiplier = 1;
 };
 
+UP_STATIC_INLINE bool operator==(const TileModel &a, const TileModel &b)
+{
+    return a.glyph() == b.glyph() && a.multiplier() == b.multiplier();
+}
+
+UP_STATIC_INLINE bool operator!=(const TileModel &a, const TileModel &b)
+{
+    return !(a==b);
+}
+
 }  // namespace UP
 
 #endif  // __cplusplus
