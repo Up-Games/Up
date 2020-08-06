@@ -2058,14 +2058,12 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
     
-    delay(BandModeDelay, 0.1, ^{
-        [UIView animateWithDuration:0.2 animations:^{
+    CFTimeInterval alphaDelay = mode == Mode::End ? 0.35 : 0.1;
+    delay(BandModeDelay, alphaDelay, ^{
+        [UIView animateWithDuration:0.25 animations:^{
             [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonReady];
         }];
     });
-
-    [self updateSoundAndTunesSettings];
-//    [self playTuneIntro];
 
     void (^bottomHalf)(void) = ^{
         // change transform of game view
@@ -2095,6 +2093,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
         bottomHalf();
     }
     else {
+        [self updateSoundAndTunesSettings];
         [self playTuneIntro];
 
         // move extras and about buttons offscreen
@@ -2102,7 +2101,8 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
             UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Place::OffBottomNear),
             UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Place::OffBottomFar),
         ];
-        start(bloop_out(BandModeUI, outGameOverMoves, 0.2, nil));
+        start(bloop_out(BandModeUI, outGameOverMoves, 0.3, nil));
+       
         NSArray<UPViewMove *> *outMoves = @[
             UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft, Place::OffTopNear)),
             UPViewMoveMake(self.dialogTopMenu.aboutButton, Location(Role::DialogButtonTopRight, Place::OffTopNear)),
@@ -2895,6 +2895,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         } completion:^(BOOL finished) {
             self.dialogPlayMenu.alpha = 1;
         }];
+
+        [UIView animateWithDuration:0.3 delay:0.3 options:0 animations:^{
+            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonReady];
+        } completion:nil];
 
         NSArray<UPViewMove *> *buttonOutMoves = @[
             UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::ChoiceTitleCenter, Place::OffBottomFar)),
