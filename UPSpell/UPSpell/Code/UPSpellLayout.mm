@@ -162,6 +162,37 @@ Role role_for_score(int score)
     return Role::GameScoreGameOver1;
 }
 
+CGFloat SpellLayout::width_for_score(int score)
+{
+    NSString *string = @"0";
+    if (score >= 1000) {
+        string = @"0000";
+    }
+    else if (score >= 100) {
+        string = @"000";
+    }
+    else if (score >= 10) {
+        string = @"00";
+    }
+    NSAttributedString *richText = [[NSAttributedString alloc] initWithString:string attributes:@{
+        NSFontAttributeName: game_information_font() }
+    ];
+    CGPathRef path = CGPathCreateWithRect(CGRectMake(0, 0, CGFLOAT_MAX, CGFLOAT_MAX), NULL);
+    CGFloat width = 0.0;
+    CTFramesetterRef setter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)richText);
+    CTFrameRef frame = CTFramesetterCreateFrame(setter, CFRangeMake(0, string.length), path, NULL);
+    NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frame);
+    for (id item in lines) {
+        CTLineRef line = (__bridge CTLineRef)item;
+        width = UPMaxT(CGFloat, width, CTLineGetTypographicBounds(line, NULL, NULL, NULL));
+    }
+    CFRelease(frame);
+    CFRelease(setter);
+    CFRelease(path);
+    
+    return width;
+}
+
 CGRect SpellLayout::layout_centered_x_aspect_rect(CGRect rect) const
 {
     switch (aspect_mode()) {
@@ -873,7 +904,7 @@ CGRect SpellLayout::layout_game_over_score_frame(NSString *string) const
     
     // center right-aligned label
     CGPoint center = up_rect_center(canvas_frame());
-    CGRect labelFrame = game_score_frame();;
+    CGRect labelFrame = game_score_frame();
     labelFrame = up_rect_centered_x_in_rect(labelFrame, canvas_frame());
     labelFrame.origin.x = center.x - up_rect_width(labelFrame) + (width * 0.5);
     return up_pixel_rect(labelFrame, screen_scale());

@@ -88,6 +88,7 @@ using UP::BandWordScore;
 
 using UP::role_in_player_tray;
 using UP::role_in_word;
+using UP::role_for_score;
 using Location = UP::SpellLayout::Location;
 using Role = UP::SpellLayout::Role;
 using Place = UP::SpellLayout::Place;
@@ -131,6 +132,7 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) UPDialogTopMenu *dialogTopMenu;
 @property (nonatomic) NSInteger lockCount;
 @property (nonatomic) UPChoice *playMenuChoice;
+@property (nonatomic) int endGameScore;
 
 @property (nonatomic) UITouch *activeTouch;
 @property (nonatomic) UPControl *touchedControl;
@@ -1544,8 +1546,18 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
         }
         case UPSpellGameAlphaStateReasonOverToEnd: {
             CGFloat alpha = [UIColor themeModalBackgroundAlpha];
+            UIView *timerLabel = self.gameView.timerLabel;
+            UIView *gameScoreLabel = self.gameView.gameScoreLabel;
             for (UIView *view in self.gameView.subviews) {
-                view.alpha = alpha;
+                if (view == gameScoreLabel) {
+                    view.alpha = 1.0;
+                }
+                else if (view == timerLabel) {
+                    view.alpha = 0.0;
+                }
+                else {
+                    view.alpha = alpha;
+                }
             }
             break;
         }
@@ -1965,7 +1977,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     });
 }
 
-- (void)viewOrderInPlayMenu
+- (void)viewOrderInPlayMenuFromMode:(Mode)mode
 {
     [self viewLock];
     [self viewFillUpSpellTileViews];
@@ -1990,13 +2002,23 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
         choice.center = center;
     }
     
-    NSArray<UPViewMove *> *buttonOutMoves = @[
+    NSMutableArray<UPViewMove *> *buttonOutMoves = [NSMutableArray arrayWithArray:@[
         UPViewMoveMake(self.dialogTopMenu.extrasButton, Role::DialogButtonTopLeft, Place::OffLeftNear),
         UPViewMoveMake(self.dialogTopMenu.aboutButton, Role::DialogButtonTopRight, Place::OffRightNear),
         UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Place::OffBottomNear),
         UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Place::OffBottomFar),
-    ];
-    start(bloop_out(BandModeUI, buttonOutMoves, 0.4, nil));
+    ]];
+    if (mode == Mode::End) {
+        [buttonOutMoves addObject:UPViewMoveMake(self.gameView.gameScoreLabel, role_for_score(self.endGameScore), Place::OffBottomFar)];
+    }
+    start(bloop_out(BandModeUI, buttonOutMoves, 0.4, ^(UIViewAnimatingPosition) {
+        [self.gameTimer reset];
+        [self viewUpdateGameControls];
+        self->m_spell_model->reset_game_score();
+        [self viewUpdateGameControls];
+        self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
+        self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
+    }));
     [UIView animateWithDuration:0.4 animations:^{
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlayMenu];
     } completion:nil];
@@ -2008,8 +2030,8 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     [UIView animateWithDuration:0.15 animations:^{
         self.dialogPlayMenu.alpha = 1.0;
     }];
-    
-    delay(BandModeDelay, 0.35, ^{
+
+    delay(BandModeDelay, 0.4, ^{
         NSArray<UPViewMove *> *buttonInMoves = @[
             UPViewMoveMake(self.dialogTopMenu.playButton, Role::ChoiceTitleCenter),
             UPViewMoveMake(self.dialogPlayMenu.backButton, Role::ChoiceBackCenter),
@@ -2018,7 +2040,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
             UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice2, Role::ChoiceItem2Center),
             UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice3, Role::ChoiceItem3Center),
         ];
-        start(bloop_in(BandModeUI, buttonInMoves, 0.5, ^(UIViewAnimatingPosition) {
+        start(bloop_in(BandModeUI, buttonInMoves, 0.4, ^(UIViewAnimatingPosition) {
             [self viewUnlock];
         }));
     });
@@ -2041,6 +2063,8 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     self.dialogGameOver.hidden = YES;
     self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogGameNote, Place::OffBottomFar);
     self.dialogGameNote.hidden = YES;
+    self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
+    self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
 }
 
 - (void)viewMakeReadyFromMode:(Mode)mode completion:(void (^)(void))completion
@@ -2052,11 +2076,7 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     self.dialogTopMenu.playButton.highlightedLocked = YES;
     self.dialogTopMenu.playButton.highlighted = YES;
     
-    // reset game controls
-    m_spell_model->reset_game_score();
-    [self.gameTimer reset];
     [self viewOrderOutWordScoreLabel];
-    [self viewUpdateGameControls];
     
     CFTimeInterval alphaDelay = mode == Mode::End ? 0.35 : 0.1;
     delay(BandModeDelay, alphaDelay, ^{
@@ -2097,12 +2117,32 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
         [self playTuneIntro];
 
         // move extras and about buttons offscreen
-        NSArray<UPViewMove *> *outGameOverMoves = @[
+        
+        NSMutableArray<UPViewMove *> *outGameOverMoves = [NSMutableArray arrayWithArray:@[
             UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Place::OffBottomNear),
             UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Place::OffBottomFar),
-        ];
-        start(bloop_out(BandModeUI, outGameOverMoves, 0.3, nil));
-       
+        ]];
+        if (mode == Mode::End) {
+            [outGameOverMoves addObject:UPViewMoveMake(self.gameView.gameScoreLabel, role_for_score(self.endGameScore), Place::OffBottomFar)];
+        }
+
+        start(bloop_out(BandModeUI, outGameOverMoves, 0.3, ^(UIViewAnimatingPosition) {
+            [self.gameTimer reset];
+            [self viewUpdateGameControls];
+            self->m_spell_model->reset_game_score();
+            [self viewUpdateGameControls];
+            if (mode == Mode::End) {
+                SpellLayout &layout = SpellLayout::instance();
+                self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
+                self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
+                self.gameView.gameScoreLabel.alpha = 0;
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.gameView.timerLabel.alpha = [UIColor themeDisabledAlpha];
+                    self.gameView.gameScoreLabel.alpha = [UIColor themeDisabledAlpha];
+                } completion:nil];
+            }
+        }));
+
         NSArray<UPViewMove *> *outMoves = @[
             UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft, Place::OffTopNear)),
             UPViewMoveMake(self.dialogTopMenu.aboutButton, Location(Role::DialogButtonTopRight, Place::OffTopNear)),
@@ -2715,7 +2755,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromInitToPlayMenu
 {
-    [self viewOrderInPlayMenu];
+    [self viewOrderInPlayMenuFromMode:Mode::Init];
 }
 
 - (void)modeTransitionFromInitToReady
@@ -3197,13 +3237,23 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     delay(BandModeDelay, 1.0, ^{
         SpellLayout &layout = SpellLayout::instance();
         [UIView animateWithDuration:1.0 animations:^{
-            self.dialogGameOver.transform = layout.menu_game_view_transform();
+            // a hack to get the game score label into the right place
+            static constexpr CGFloat Scale = 1.5;
             self.gameView.transform = layout.menu_game_view_transform();
+            CGAffineTransform transform = CGAffineTransformMakeScale(Scale, Scale);
+            self.gameView.gameScoreLabel.transform = transform;
+            self.endGameScore = self->m_spell_model->game_score();
+            CGFloat width = layout.width_for_score(self.endGameScore) * Scale;
+            CGPoint canvasCenter = up_rect_center(layout.canvas_frame());
+            CGPoint labelCenter = self.gameView.gameScoreLabel.center;
+            CGRect labelFrame = self.gameView.gameScoreLabel.frame;
+            CGFloat labelX = canvasCenter.x - (up_rect_width(labelFrame) * 0.5) + (width * 0.5);
+            self.gameView.gameScoreLabel.center = CGPointMake(labelX, labelCenter.y);
+            
+            self.dialogGameOver.transform = layout.menu_game_view_transform();
             [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonOverToEnd];
         }];
-        self.gameView.timerLabel.alpha = 1.0;
-        self.gameView.gameScoreLabel.alpha = 1.0;
-
+        
         [self viewBloopOutWordScoreLabelWithDuration:GameOverInOutBloopDuration];
 
         [self viewBloopOutExistingTileViewsWithDuration:GameOverInOutBloopDuration tiles:incoming_tiles wordLength:incoming_word_length
@@ -3255,7 +3305,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 {
     [self createNewGameModelIfNeeded];
     [self viewFillUpSpellTileViews];
-    [self viewOrderInPlayMenu];
+    [self viewOrderInPlayMenuFromMode:Mode::End];
 }
 
 - (void)modeTransitionFromEndToReady

@@ -269,6 +269,8 @@ public:
 
     CGRect layout_relative_aspect_rect(CGRect) const;
 
+    CGFloat width_for_score(int score);
+
 private:
     
     SpellLayout() {}
