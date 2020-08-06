@@ -127,7 +127,7 @@ static NSString *save_file_path(NSString *name)
         NSString *saveFilePath = save_file_path(UPSpellDossierFileName);
         if (saveFilePath) {
             [data writeToFile:saveFilePath atomically:YES];
-            LOG(General, "savePersistentData: %@", saveFilePath);
+            //LOG(General, "savePersistentData: %@", saveFilePath);
         }
         else {
             NSLog(@"error writing persistent data: save file unavailable");

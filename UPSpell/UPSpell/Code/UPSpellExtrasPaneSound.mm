@@ -204,7 +204,6 @@ using Role = UP::SpellLayout::Role;
         });
         UPSpellSettings *settings = [UPSpellSettings instance];
         settings.soundEffectsLevel = mark;
-        LOG(General, "*** soundEffectsLevel: %ld", mark);
     }
 
     if (gestureState == UIGestureRecognizerStateEnded || gestureState == UIGestureRecognizerStateCancelled) {
@@ -267,7 +266,6 @@ using Role = UP::SpellLayout::Role;
     if (gestureState == UIGestureRecognizerStateEnded) {
         UPSpellSettings *settings = [UPSpellSettings instance];
         settings.tunesLevel = mark;
-        LOG(General, "*** tunesLevel: %ld", mark);
     }
 
     if (gestureState == UIGestureRecognizerStateEnded || gestureState == UIGestureRecognizerStateCancelled) {
