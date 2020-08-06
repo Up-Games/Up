@@ -155,8 +155,6 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) NSInteger tuneNumber;
 @property (nonatomic) CFTimeInterval tapSoundTimestamp;
 @property (nonatomic) BOOL soundEffectsEnabled;
-@property (nonatomic) BOOL tileTapsEnabled;
-@property (nonatomic) BOOL countdownClicksEnabled;
 @property (nonatomic) BOOL tunesEnabled;
 
 @end
@@ -2331,8 +2329,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 {
     UPSpellSettings *settings = [UPSpellSettings instance];
     self.soundEffectsEnabled = settings.soundEffectsEnabled;
-    self.tileTapsEnabled = settings.tileTapsEnabled;
-    self.countdownClicksEnabled = settings.countdownClicksEnabled;
 
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer setVolumeFromLevel:settings.soundEffectsLevel];
@@ -2351,24 +2347,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)playSoundIDIfEnabled:(UPSoundID)soundID
 {
-    BOOL play = YES;
-    switch (soundID) {
-        case UPSoundIDNone:
-        case UPSoundIDTap:
-        case UPSoundIDTub:
-            play = self.soundEffectsEnabled && self.tileTapsEnabled;
-            break;
-        case UPSoundIDHappy1:
-        case UPSoundIDHappy2:
-        case UPSoundIDHappy3:
-        case UPSoundIDHappy4:
-        case UPSoundIDSad1:
-        case UPSoundIDSad2:
-        case UPSoundIDWhoops:
-            play = self.soundEffectsEnabled;
-            break;
-    }
-    if (play) {
+    if (self.soundEffectsEnabled) {
         UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
         [soundPlayer playSoundID:soundID];
     }
@@ -2474,7 +2453,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, tuneBeginTime, tuneTimeOffset }];
     }
 
-    if (self.soundEffectsEnabled && self.countdownClicksEnabled) {
+    if (self.soundEffectsEnabled) {
         UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
         float volume = UPClampT(float, soundPlayer.volume * 1.2, 0, 1);
         if (UPGameTimerDefaultDuration - effectiveGameTimeElapsed > 1) {

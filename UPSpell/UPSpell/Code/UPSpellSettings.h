@@ -17,8 +17,6 @@
 @property (nonatomic) BOOL tunesEnabled;
 @property (nonatomic) NSUInteger tunesLevel;
 @property (nonatomic) BOOL soundEffectsEnabled;
-@property (nonatomic) BOOL tileTapsEnabled;
-@property (nonatomic) BOOL countdownClicksEnabled;
 @property (nonatomic) NSUInteger soundEffectsLevel;
 
 + (UPSpellSettings *)instance;

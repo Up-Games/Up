@@ -1,5 +1,5 @@
 //
-//  UPSpellSettings.m
+//  UPSpellSettings.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -18,8 +18,6 @@
 @dynamic tunesEnabled;
 @dynamic tunesLevel;
 @dynamic soundEffectsEnabled;
-@dynamic tileTapsEnabled;
-@dynamic countdownClicksEnabled;
 @dynamic soundEffectsLevel;
 
 + (UPSpellSettings *)instance
@@ -51,8 +49,6 @@
     self.tunesEnabled = YES;
     self.tunesLevel = 4;
     self.soundEffectsEnabled = YES;
-    self.tileTapsEnabled = YES;
-    self.countdownClicksEnabled = YES;
     self.soundEffectsLevel = 4;
 }
 

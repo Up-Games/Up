@@ -141,22 +141,22 @@
             break;
         case 1:
         default:
-            self.volume = 0.1;
+            self.volume = 0.05;
             break;
         case 2:
-            self.volume = 0.25;
+            self.volume = 0.2;
             break;
         case 3:
-            self.volume = 0.5;
+            self.volume = 0.4;
             break;
         case 4:
-            self.volume = 0.7;
+            self.volume = 0.6;
             break;
         case 5:
-            self.volume = 0.8;
+            self.volume = 0.72;
             break;
         case 6:
-            self.volume = 0.9;
+            self.volume = 0.85;
             break;
         case 7:
             self.volume = 1.0;
