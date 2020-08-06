@@ -1776,25 +1776,36 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
                                        completion:(void (^)(void))completion
 {
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
-    NSMutableSet *submittedTileViews = [NSMutableSet setWithArray:self.gameView.tileContainerView.subviews];
-    for (const auto &tile : tiles) {
-        if (tile.has_view()) {
-            UPTileView *tileView = tile.view();
-            if (tile.in_word_tray()) {
-                Role role = role_in_word(tile.position().index(), wordLength);
-                [moves addObject:UPViewMoveMake(tileView, role, Place::OffBottomNear)];
-            }
-            else {
-                [moves addObject:UPViewMoveMake(tileView, role_in_player_tray(tile.position()), Place::OffBottomNear)];
-            }
-            [submittedTileViews removeObject:tileView];
+    if ([self viewIsUpSpellFilled]) {
+        TileIndex idx = 0;
+        for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
+            TilePosition tile_position(TileTray::Player, idx);
+            [moves addObject:UPViewMoveMake(tileView, role_in_player_tray(tile_position), Place::OffBottomNear)];
+            idx++;
         }
     }
-    for (UPTileView *tileView in submittedTileViews) {
-        if (tileView.submitLocation.role() != Role::None) {
-            [moves addObject:UPViewMoveMake(tileView, tileView.submitLocation)];
+    else {
+        NSMutableSet *submittedTileViews = [NSMutableSet setWithArray:self.gameView.tileContainerView.subviews];
+        for (const auto &tile : tiles) {
+            if (tile.has_view()) {
+                UPTileView *tileView = tile.view();
+                if (tile.in_word_tray()) {
+                    Role role = role_in_word(tile.position().index(), wordLength);
+                    [moves addObject:UPViewMoveMake(tileView, role, Place::OffBottomNear)];
+                }
+                else {
+                    [moves addObject:UPViewMoveMake(tileView, role_in_player_tray(tile.position()), Place::OffBottomNear)];
+                }
+                [submittedTileViews removeObject:tileView];
+            }
+        }
+        for (UPTileView *tileView in submittedTileViews) {
+            if (tileView.submitLocation.role() != Role::None) {
+                [moves addObject:UPViewMoveMake(tileView, tileView.submitLocation)];
+            }
         }
     }
+    
     start(bloop_out(BandModeUI, moves, duration, ^(UIViewAnimatingPosition) {
         [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         if (completion) {
