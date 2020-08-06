@@ -274,6 +274,7 @@ void SpellLayout::calculate()
     calculate_word_score_bonus_font_metrics();
     calculate_ballot_control_metrics();
     calculate_stepper_control_metrics();
+    calculate_slider_control_metrics();
     calculate_choice_control_metrics();
     calculate_settings_description_font_metrics();
     calculate_game_controls_button_charge_outsets();
@@ -425,6 +426,12 @@ void SpellLayout::calculate_stepper_control_metrics()
     CGFloat width_offset = up_size_width(CanonicalStepperSize)  * layout_scale() * 0.4;
     CGFloat height_offset = up_size_height(CanonicalStepperSize) * layout_scale() * 0.4;
     set_stepper_control_charge_outsets(UPOutsetsMake(height_offset, width_offset, height_offset, width_offset));
+}
+
+void SpellLayout::calculate_slider_control_metrics()
+{
+    CGFloat height_offset = up_size_height(CanonicalStepperSize) * layout_scale() * 0.3;
+    set_slider_control_charge_outsets(UPOutsetsMake(height_offset, 0, height_offset, 0));
 }
 
 void SpellLayout::calculate_choice_control_metrics()

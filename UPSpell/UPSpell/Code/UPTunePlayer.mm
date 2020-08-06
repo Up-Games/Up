@@ -135,22 +135,22 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
             break;
         case 1:
         default:
-            self.volume = 0.125;
+            self.volume = 0.1;
             break;
         case 2:
             self.volume = 0.25;
             break;
         case 3:
-            self.volume = 0.375;
-            break;
-        case 4:
             self.volume = 0.5;
             break;
+        case 4:
+            self.volume = 0.6;
+            break;
         case 5:
-            self.volume = 0.6667;
+            self.volume = 0.725;
             break;
         case 6:
-            self.volume = 0.8333;
+            self.volume = 0.85;
             break;
         case 7:
             self.volume = 1.0;

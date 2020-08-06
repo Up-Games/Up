@@ -463,7 +463,11 @@ UIBezierPath *SoundSliderTrackStrokePath()
     self.discrete = discrete;
     self.marks = marks;
 
+    SpellLayout &layout = SpellLayout::instance();
+    
     self.canonicalSize = SpellLayout::CanonicalSliderSize;
+    self.chargeOutsets = layout.ballot_control_charge_outsets();
+
     self.slideGesture = [UPSlideGestureRecognizer gestureWithTarget:self action:@selector(handleSlide:)];
     [self addGestureRecognizer:self.slideGesture];
 

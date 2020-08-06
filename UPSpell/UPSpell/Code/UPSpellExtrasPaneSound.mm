@@ -134,10 +134,10 @@ using Role = UP::SpellLayout::Role;
     self.tunesVolumeSlider.enabled = self.tunesCheckbox.enabled;
 
     self.previousSoundEffectsLevel = settings.soundEffectsLevel;
-    [self.effectsVolumeSlider setMarkValue:self.previousSoundEffectsLevel];
+    [self.effectsVolumeSlider setMarkValue:self.previousSoundEffectsLevel - 1];
 
     self.previousTunesLevel = settings.tunesLevel;
-    [self.tunesVolumeSlider setMarkValue:self.previousTunesLevel];
+    [self.tunesVolumeSlider setMarkValue:self.previousTunesLevel - 1];
 
     NSBundle *bundle = [NSBundle mainBundle];
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];

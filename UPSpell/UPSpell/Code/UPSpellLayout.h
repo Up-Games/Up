@@ -245,6 +245,7 @@ public:
     UPOutsets game_controls_button_charge_outsets() const { return m_game_controls_button_charge_outsets; }
     UPOutsets ballot_control_charge_outsets() const { return m_ballot_control_charge_outsets; }
     UPOutsets stepper_control_charge_outsets() const { return m_stepper_control_charge_outsets; }
+    UPOutsets slider_control_charge_outsets() const { return m_slider_control_charge_outsets; }
     UPOutsets help_button_charge_outsets() const { return m_help_button_charge_outsets; }
 
     UIFont *text_button_font() const { return m_text_button_font; }
@@ -302,6 +303,7 @@ private:
     void set_ballot_control_label_left_margin(CGFloat f) { m_ballot_control_label_left_margin = f; }
     void set_ballot_control_charge_outsets(UPOutsets outsets) { m_ballot_control_charge_outsets = outsets; }
     void set_stepper_control_charge_outsets(UPOutsets outsets) { m_stepper_control_charge_outsets = outsets; }
+    void set_slider_control_charge_outsets(UPOutsets outsets) { m_slider_control_charge_outsets = outsets; }
     void set_choice_control_font(UIFont *font) { m_choice_control_font = font; }
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
@@ -330,6 +332,7 @@ private:
     void calculate_word_score_bonus_font_metrics();
     void calculate_ballot_control_metrics();
     void calculate_stepper_control_metrics();
+    void calculate_slider_control_metrics();
     void calculate_choice_control_metrics();
     void calculate_settings_description_font_metrics();
     void calculate_locations();
@@ -410,6 +413,7 @@ private:
     UPOutsets m_game_controls_button_charge_outsets = UPOutsetsZero;
     UPOutsets m_ballot_control_charge_outsets = UPOutsetsZero;
     UPOutsets m_stepper_control_charge_outsets = UPOutsetsZero;
+    UPOutsets m_slider_control_charge_outsets = UPOutsetsZero;
     UPOutsets m_help_button_charge_outsets = UPOutsetsZero;
 
     CGRect m_game_timer_frame = CGRectZero;
