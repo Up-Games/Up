@@ -330,6 +330,8 @@ static const int MilepostHue = 15;
     [self.hueWheel cancelAnimations];
     [UIColor setThemeColorHue:hue];
     [[UPSpellNavigationController instance] updateThemeColors];
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.themeColorHue = hue;
 }
 
 - (void)handleHueStepMore
@@ -340,6 +342,8 @@ static const int MilepostHue = 15;
     [self.hueWheel cancelAnimations];
     [UIColor setThemeColorHue:hue];
     [[UPSpellNavigationController instance] updateThemeColors];
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.themeColorHue = hue;
 }
 
 - (void)updateHueDescription
