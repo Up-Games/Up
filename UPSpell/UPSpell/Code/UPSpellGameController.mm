@@ -2927,19 +2927,19 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     delay(BandModeDelay, GameStartDelay, ^{
         [self.gameTimer start];
     });
-    
+
     UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear));
-    start(bloop_out(BandModeUI, @[readyMove], 0.25, nil));
+    start(bloop_out(BandModeUI, @[readyMove], 0.3, nil));
     [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
         self.dialogTopMenu.alpha = 0;
     } completion:^(BOOL finished) {
-        self.dialogTopMenu.alpha = 1;
+        self.dialogTopMenu.alpha = 1.0;
         self.dialogTopMenu.hidden = YES;
         self.dialogGameOver.alpha = 1.0;
         self.dialogGameOver.hidden = YES;
         self.dialogGameNote.alpha = 1.0;
         self.dialogGameNote.hidden = YES;
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:0.35 animations:^{
             [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
         } completion:nil];
         delay(BandModeDelay, 0.1, ^{
@@ -2977,14 +2977,14 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         UPViewMoveMake(self.dialogPause.quitButton, Role::DialogButtonAlternativeResponse),
         UPViewMoveMake(self.dialogPause.resumeButton, Role::DialogButtonDefaultResponse),
     ];
-    start(bloop_in(BandModeUI, farMoves, DefaultBloopDuration, ^(UIViewAnimatingPosition) {
+    start(bloop_in(BandModeUI, farMoves, 0.3, ^(UIViewAnimatingPosition) {
         [self viewUnlock];
     }));
     
     NSArray<UPViewMove *> *nearMoves = @[
         UPViewMoveMake(self.dialogPause.messagePathView, Role::DialogMessageCenteredInWordTray),
     ];
-    start(bloop_in(BandModeUI, nearMoves, 0.25, nil));
+    start(bloop_in(BandModeUI, nearMoves, 0.35, nil));
     
     self.dialogPause.hidden = NO;
     self.dialogPause.alpha = 0.0;
@@ -3042,9 +3042,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
     ];
 
-    start(bloop_out(BandModeUI, farMoves, 0.5, nil));
+    start(bloop_out(BandModeUI, farMoves, 0.35, nil));
 
-    start(bloop_out(BandModeUI, nearMoves, 0.5, ^(UIViewAnimatingPosition) {
+    start(bloop_out(BandModeUI, nearMoves, 0.3, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         
@@ -3104,8 +3104,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
         UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
     ];
-    start(bloop_out(BandModeUI, farMoves, 0.5, nil));
-    start(bloop_out(BandModeUI, nearMoves, 0.5, ^(UIViewAnimatingPosition) {
+    start(bloop_out(BandModeUI, farMoves, 0.35, nil));
+    start(bloop_out(BandModeUI, nearMoves, 0.3, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1.0;
         [self setMode:Mode::End];
