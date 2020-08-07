@@ -2211,8 +2211,8 @@ static UPSpellGameController *_Instance;
         });
     };
     
-    BOOL comingFromPlayMenu = mode == Mode::PlayMenu;
-    if (comingFromPlayMenu) {
+    BOOL comingFromPlayMenuOrShared = mode == Mode::PlayMenu || mode == Mode::Shared;
+    if (comingFromPlayMenuOrShared) {
         self.dialogGameOver.transform = CGAffineTransformIdentity;
         bottomHalf();
     }
@@ -2226,8 +2226,10 @@ static UPSpellGameController *_Instance;
             UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Place::OffBottomNear),
             UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Place::OffBottomFar),
         ]];
-        if (mode == Mode::End) {
-            [outGameOverMoves addObject:UPViewMoveMake(self.gameView.gameScoreLabel, role_for_score(self.endGameScore), Place::OffBottomFar)];
+        BOOL gameScoreLabelNeedsMove = mode == Mode::End && !CGAffineTransformIsIdentity(self.gameView.gameScoreLabel.transform);
+        if (gameScoreLabelNeedsMove) {
+            Role role = role_for_score(self.endGameScore);
+            [outGameOverMoves addObject:UPViewMoveMake(self.gameView.gameScoreLabel, role, Place::OffBottomFar)];
         }
 
         start(bloop_out(BandModeUI, outGameOverMoves, 0.3, ^(UIViewAnimatingPosition) {
@@ -2237,9 +2239,11 @@ static UPSpellGameController *_Instance;
             [self viewUpdateGameControls];
             if (mode == Mode::End) {
                 SpellLayout &layout = SpellLayout::instance();
-                self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
-                self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
-                self.gameView.gameScoreLabel.alpha = 0;
+                if (gameScoreLabelNeedsMove) {
+                    self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
+                    self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
+                    self.gameView.gameScoreLabel.alpha = 0;
+                }
                 [UIView animateWithDuration:0.25 animations:^{
                     self.gameView.timerLabel.alpha = [UIColor themeDisabledAlpha];
                     self.gameView.gameScoreLabel.alpha = [UIColor themeDisabledAlpha];
@@ -2478,19 +2482,18 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 #pragma mark - Shared game requests
 
-- (void)checkForSharedGameRequest
+- (void)setSharedGameRequest:(UPSharedGameRequest *)sharedGameRequest
 {
-    UPSceneDelegate *delegate = [UPSceneDelegate instance];
-    UPSharedGameRequest *sharedGameRequest = delegate.sharedGameRequest;
-    delegate.sharedGameRequest = nil;
-    
     BOOL requestValid = sharedGameRequest && sharedGameRequest.valid;
     BOOL modeValid = self.mode == Mode::Init || self.mode == Mode::Pause || self.mode == Mode::Shared;
 
+    LOG(General, "sharedGameRequest: %@", sharedGameRequest);
     if (requestValid && modeValid) {
-        LOG(General, "sharedGameRequest: %@", sharedGameRequest);
-        self.sharedGameRequest = sharedGameRequest;
+        _sharedGameRequest = sharedGameRequest;
         [self setMode:Mode::Shared];
+    }
+    else {
+        _sharedGameRequest = nil;
     }
 }
 
@@ -2503,7 +2506,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [nc addObserverForName:UIApplicationDidBecomeActiveNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
         [self removeInProgressGameFileLogErrors:NO];
-        [self checkForSharedGameRequest];
     }];
     
     [nc addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:NSOperationQueue.mainQueue
@@ -3052,18 +3054,17 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     start(bloop_out(BandModeUI, buttonOutMoves, 0.4, ^(UIViewAnimatingPosition) {
     }));
     
-    [UIView animateWithDuration:0.25 delay:0.15 options:0 animations:^{
-        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
-    } completion:^(BOOL finished) {
-        [self viewUnlock];
-    }];
     [UIView animateWithDuration:0.4 delay:0.0 options:0 animations:^{
         self.dialogShared.alpha = 0.0;
     } completion:^(BOOL finished) {
         self.dialogShared.hidden = YES;
         self.dialogShared.alpha = 1.0;
     }];
-    
+    [UIView animateWithDuration:0.25 delay:0.15 options:0 animations:^{
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
+    } completion:^(BOOL finished) {
+        [self viewUnlock];
+    }];
 }
 
 - (void)modeTransitionFromPlayMenuToReady
@@ -3129,7 +3130,51 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromSharedToReady
 {
-    //FIXME
+    ASSERT(m_spell_model->is_blank_filled());
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
+
+    self.dialogShared.goButton.highlightedLocked = YES;
+    self.dialogShared.goButton.highlighted = YES;
+
+    [self updateSoundAndTunesSettings];
+    [self playTuneIntro];
+    
+    delay(BandModeDelay, 0.1, ^{
+        SpellLayout &layout = SpellLayout::instance();
+        self.dialogTopMenu.extrasButton.center = layout.center_for(Role::DialogButtonTopLeft, Place::OffTopNear);
+        self.dialogTopMenu.aboutButton.center = layout.center_for(Role::DialogButtonTopRight, Place::OffTopNear);
+        
+        [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
+            self.dialogPlayMenu.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.dialogPlayMenu.alpha = 1;
+        }];
+        
+        [UIView animateWithDuration:0.3 delay:0.3 options:0 animations:^{
+            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonReady];
+        } completion:nil];
+        
+        NSArray<UPViewMove *> *buttonOutMoves = @[
+            UPViewMoveMake(self.dialogShared.promptLabel, Location(Role::DialogMessageVerticallyCentered, Place::OffBottomNear)),
+            UPViewMoveMake(self.dialogShared.cancelButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
+            UPViewMoveMake(self.dialogShared.goButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
+        ];
+        start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
+            self.dialogShared.goButton.highlightedLocked = NO;
+            self.dialogShared.goButton.highlighted = NO;
+        }));
+        
+        delay(BandModeDelay, 0.55, ^{
+            [self createNewGameModelIfNeeded];
+            [self viewFillUpSpellTileViews];
+            [self viewMakeReadyFromMode:Mode::Shared completion:^{
+                self.sharedGameRequest = nil;
+                [self viewBloopOutExistingTileViewsWithCompletion:nil];
+                [self setMode:Mode::Play];
+            }];
+        });
+    });
 }
 
 - (void)modeTransitionFromReadyToPlay

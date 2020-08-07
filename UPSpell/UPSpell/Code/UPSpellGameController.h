@@ -9,6 +9,7 @@
 #import "UPMode.h"
 
 @class UPSpellGameRetry;
+@class UPSharedGameRequest;
 
 @interface UPSpellGameController : UIViewController
 
@@ -17,6 +18,6 @@
 @property (nonatomic) UP::Mode mode;
 @property (nonatomic) UPSpellGameRetry *retry;
 
-- (void)checkForSharedGameRequest;
+- (void)setSharedGameRequest:(UPSharedGameRequest *)sharedGameRequest;
 
 @end

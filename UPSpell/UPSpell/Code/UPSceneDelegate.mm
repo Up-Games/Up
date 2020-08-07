@@ -42,21 +42,13 @@ static UPSceneDelegate *_Instance;
 
 - (void)parseSharedGameRequestFromURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
 {
-    if (URLContexts.count == 0) {
+    if (URLContexts.count != 1) {
         return;
     }
     
-    for (UIOpenURLContext *ctx in URLContexts) {
-        UPSharedGameRequest *req = [UPSharedGameRequest sharedGameRequestWithURL:ctx.URL];
-        if (req.valid) {
-            self.sharedGameRequest = req;
-            [[UPSpellGameController instance] checkForSharedGameRequest];
-            NSLog(@"*** sharedGameRequest: %@", self.sharedGameRequest);
-            break;
-        }
-    }
-    
-    
+    UIOpenURLContext *ctx = [URLContexts anyObject];
+    UPSharedGameRequest *sharedGameRequest = [UPSharedGameRequest sharedGameRequestWithURL:ctx.URL];
+    [[UPSpellGameController instance] setSharedGameRequest:sharedGameRequest];
 }
 
 @end
