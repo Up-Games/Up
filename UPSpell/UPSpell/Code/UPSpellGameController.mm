@@ -2184,7 +2184,7 @@ static UPSpellGameController *_Instance;
 
 - (void)viewImmediateTransitionToInit
 {
-    [self viewLock];
+    ASSERT(self.lockCount > 0);
     
     cancel(BandGameAll);
     cancel(BandModeAll);
@@ -2223,8 +2223,6 @@ static UPSpellGameController *_Instance;
     self.gameView.timerLabel.alpha = 1;
     
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
-    
-    [self ensureViewUnlocked];
 }
 
 - (void)viewMakeReadyFromMode:(Mode)mode completion:(void (^)(void))completion
@@ -3664,23 +3662,43 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionImmediateFromGameOverToInit
 {
+    [self viewLock];
+
+    if (m_spell_model->back_opcode() != Opcode::END) {
+        m_spell_model->apply(Action(0, Opcode::END));
+    }
+    self.taunt = nil;
+    [self removeInProgressGameFileLogErrors:NO];
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    [dossier updateWithModel:m_spell_model];
+    [dossier save];
+
     [self viewImmediateTransitionToInit];
+    [self ensureViewUnlocked];
 }
 
 - (void)modeTransitionImmediateFromQuitToInit
 {
     [self viewLock];
 
-    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
-    
-    [self viewImmediateTransitionToInit];
+    if (m_spell_model->back_opcode() != Opcode::END) {
+        m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
+    }
+    self.taunt = nil;
+    [self removeInProgressGameFileLogErrors:NO];
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    [dossier updateWithModel:m_spell_model];
+    [dossier save];
 
+    [self viewImmediateTransitionToInit];
     [self ensureViewUnlocked];
 }
 
 - (void)modeTransitionImmediateFromEndToInit
 {
+    [self viewLock];
     [self viewImmediateTransitionToInit];
+    [self ensureViewUnlocked];
 }
 
 @end
