@@ -33,6 +33,14 @@ public:
         return GameKey(Random::instance().uint32_less_than(Permutations));
     }
 
+    static bool is_well_formed(const std::string &str) {
+        return validate(str) == str;
+    }
+    
+    static bool is_well_formed(uint32_t value) {
+        return value < Permutations;
+    }
+    
     uint32_t value() const { return m_value; }
     std::string string() const { return m_string; }
 

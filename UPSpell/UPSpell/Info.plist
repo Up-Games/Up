@@ -6,70 +6,6 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundlePackageType</key>
-	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
-	<key>CFBundleVersion</key>
-	<string>1</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>MalloryNrrw-Bold.otf</string>
-		<string>MalloryCond-BlackItalic.otf</string>
-		<string>MalloryCond-Black.otf</string>
-		<string>MalloryCond-BoldItalic.otf</string>
-	</array>
-	<key>UIApplicationSceneManifest</key>
-	<dict>
-		<key>UIApplicationSupportsMultipleScenes</key>
-		<false/>
-		<key>UISceneConfigurations</key>
-		<dict>
-			<key>UIWindowSceneSessionRoleApplication</key>
-			<array>
-				<dict>
-					<key>UISceneConfigurationName</key>
-					<string>Default Configuration</string>
-					<key>UISceneDelegateClassName</key>
-					<string>UPSceneDelegate</string>
-					<key>UISceneStoryboardFile</key>
-					<string>Main</string>
-				</dict>
-			</array>
-		</dict>
-	</dict>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UIRequiresFullScreen</key>
-	<true/>
-	<key>UIStatusBarHidden</key>
-	<true/>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
 	<key>CFBundleIcons</key>
 	<dict>
 		<key>CFBundleAlternateIcons</key>
@@ -312,218 +248,20 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>up-games-icon-015-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-015-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-030-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-030-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-045-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-045-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-060-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-060-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-075-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-075-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-090-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-090-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-105-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-105-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-120-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-120-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-135-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-135-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-150-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-150-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-165-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-165-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-180-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-180-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-195-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-195-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-210-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-210-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-225-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-225-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-240-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-240-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-255-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-255-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-270-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-270-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-285-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-285-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-300-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-300-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-315-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-315-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-330-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-330-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>up-games-icon-345-76</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>up-games-icon-345-76</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
 			<key>up-games-icon-000-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-000-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-015-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-015-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -537,11 +275,29 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>up-games-icon-030-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-030-76</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>up-games-icon-030-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-030-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-045-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-045-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -555,11 +311,29 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>up-games-icon-060-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-060-76</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>up-games-icon-060-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-060-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-075-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-075-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -573,11 +347,29 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>up-games-icon-090-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-090-76</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>up-games-icon-090-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-090-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-105-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-105-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -591,11 +383,29 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>up-games-icon-120-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-120-76</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>up-games-icon-120-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-120-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-135-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-135-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -609,11 +419,29 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>up-games-icon-150-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-150-76</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>up-games-icon-150-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-150-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-165-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-165-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -627,11 +455,29 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>up-games-icon-180-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-180-76</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>up-games-icon-180-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-180-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-195-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-195-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -645,11 +491,29 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>up-games-icon-210-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-210-76</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>up-games-icon-210-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-210-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-225-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-225-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -663,11 +527,29 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>up-games-icon-240-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-240-76</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>up-games-icon-240-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-240-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-255-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-255-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -681,11 +563,29 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>up-games-icon-270-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-270-76</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>up-games-icon-270-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-270-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-285-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-285-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -699,11 +599,29 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>up-games-icon-300-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-300-76</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>up-games-icon-300-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-300-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-315-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-315-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -717,11 +635,29 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>up-games-icon-330-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-330-76</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>up-games-icon-330-83</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>up-games-icon-330-83</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>up-games-icon-345-76</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>up-games-icon-345-76</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -744,5 +680,84 @@
 			</array>
 		</dict>
 	</dict>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLIconFile</key>
+			<string>up-games-icon-225-76@2x</string>
+			<key>CFBundleURLName</key>
+			<string>games.up.spell</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>upspell</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>MalloryNrrw-Bold.otf</string>
+		<string>MalloryCond-BlackItalic.otf</string>
+		<string>MalloryCond-Black.otf</string>
+		<string>MalloryCond-BoldItalic.otf</string>
+	</array>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>UPSceneDelegate</string>
+					<key>UISceneStoryboardFile</key>
+					<string>Main</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
+	<key>UIStatusBarHidden</key>
+	<true/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
 </dict>
 </plist>

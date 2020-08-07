@@ -191,8 +191,8 @@ public:
     static inline constexpr CGRect CanonicalExtrasSoundTunesSliderFrame =  { 423, 276, up_size_width(CanonicalSliderSize), up_size_height(CanonicalSliderSize) };
     static inline constexpr CGRect CanonicalExtrasSoundDescriptionFrame = { 384, 368, 572, 300 };
 
-    static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 476, 340, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasRetryDescriptionFrame = { 384, 64, 572, 300 };
+    static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 476, 364, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasRetryDescriptionFrame = { 384, 88, 572, 300 };
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();

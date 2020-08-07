@@ -5,12 +5,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class UPSharedGameRequest;
+
 @interface UPSceneDelegate : UIResponder <UIWindowSceneDelegate>
 
 + (UPSceneDelegate *)instance;
 
-@property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, readonly) CGRect canvasFrame;
+
+@property (nonatomic) UIWindow *window;
+@property (nonatomic) UPSharedGameRequest *sharedGameRequest;
 
 @end
 

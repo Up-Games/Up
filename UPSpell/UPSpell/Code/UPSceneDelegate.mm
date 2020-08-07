@@ -6,6 +6,7 @@
 #import <UpKit/UpKit.h>
 
 #import "UPSceneDelegate.h"
+#import "UPSharedGameRequest.h"
 
 static UPSceneDelegate *_Instance;
 
@@ -28,26 +29,32 @@ static UPSceneDelegate *_Instance;
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions
 {
     _Instance = self;
+    NSLog(@"willConnectToSession: %@", connectionOptions);
+    [self parseSharedGameRequestFromURLContexts:connectionOptions.URLContexts];
 }
 
-- (void)sceneDidDisconnect:(UIScene *)scene
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
 {
+    NSLog(@"openURLContexts: %@", URLContexts);
+    [self parseSharedGameRequestFromURLContexts:URLContexts];
 }
 
-- (void)sceneDidBecomeActive:(UIScene *)scene
+- (void)parseSharedGameRequestFromURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
 {
-}
-
-- (void)sceneWillResignActive:(UIScene *)scene
-{
-}
-
-- (void)sceneWillEnterForeground:(UIScene *)scene
-{
-}
-
-- (void)sceneDidEnterBackground:(UIScene *)scene
-{
+    if (URLContexts.count == 0) {
+        return;
+    }
+    
+    for (UIOpenURLContext *ctx in URLContexts) {
+        UPSharedGameRequest *req = [UPSharedGameRequest sharedGameRequestWithURL:ctx.URL];
+        if (req.valid) {
+            self.sharedGameRequest = req;
+            NSLog(@"*** sharedGameRequest: %@", self.sharedGameRequest);
+            break;
+        }
+    }
+    
+    
 }
 
 @end

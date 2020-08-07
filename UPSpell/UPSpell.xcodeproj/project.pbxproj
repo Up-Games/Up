@@ -181,6 +181,7 @@
 		5D6FB59124DB151E00CDC293 /* UPSpellExtrasPaneSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB58F24DB151E00CDC293 /* UPSpellExtrasPaneSound.mm */; };
 		5D6FB59324DB205200CDC293 /* None.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D6FB59224DB205200CDC293 /* None.aac */; };
 		5D6FB59724DB3F7500CDC293 /* Demo-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D6FB59624DB3F7500CDC293 /* Demo-Tune.aac */; };
+		5D6FB59A24DD989100CDC293 /* UPSharedGameRequest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59924DD989100CDC293 /* UPSharedGameRequest.mm */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.mm */; };
 		5DA0A06624BCD4EA0029CE0E /* UPSpellGameRetry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA0A06524BCD4EA0029CE0E /* UPSpellGameRetry.mm */; };
 		5DA0A06924BD08590029CE0E /* UPDialogPlayMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA0A06824BD08590029CE0E /* UPDialogPlayMenu.mm */; };
@@ -428,6 +429,8 @@
 		5D6FB59024DB151E00CDC293 /* UPSpellExtrasPaneSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasPaneSound.h; sourceTree = "<group>"; };
 		5D6FB59224DB205200CDC293 /* None.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = None.aac; sourceTree = "<group>"; };
 		5D6FB59624DB3F7500CDC293 /* Demo-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Demo-Tune.aac"; sourceTree = "<group>"; };
+		5D6FB59824DD989100CDC293 /* UPSharedGameRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSharedGameRequest.h; sourceTree = "<group>"; };
+		5D6FB59924DD989100CDC293 /* UPSharedGameRequest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSharedGameRequest.mm; sourceTree = "<group>"; };
 		5D723114246B34C0006027A3 /* UPTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileView.h; sourceTree = "<group>"; };
 		5D72311F246B3917006027A3 /* UIFont+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UPSpell.h"; sourceTree = "<group>"; };
 		5D723120246B3996006027A3 /* UIFont+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIFont+UPSpell.mm"; sourceTree = "<group>"; };
@@ -688,6 +691,8 @@
 				5DBC20C12497B9AD002A6ADC /* UPMode.h */,
 				5DF9DF5D2466165700B2199D /* UPSceneDelegate.h */,
 				5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */,
+				5D6FB59824DD989100CDC293 /* UPSharedGameRequest.h */,
+				5D6FB59924DD989100CDC293 /* UPSharedGameRequest.mm */,
 				5D6FB58824DAFC2500CDC293 /* UPSlider.h */,
 				5D6FB58924DAFC2500CDC293 /* UPSlider.mm */,
 				5D5B53F024CDCACD00FD50D4 /* UPSoundPlayer.h */,
@@ -1051,6 +1056,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D12E49C24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.mm in Sources */,
+				5D6FB59A24DD989100CDC293 /* UPSharedGameRequest.mm in Sources */,
 				5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */,
 				5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */,
 				5D0FC22C24A2A5C300353563 /* UPSpellSettings.mm in Sources */,
@@ -1250,7 +1256,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = games.up.UPSpell;
+				PRODUCT_BUNDLE_IDENTIFIER = games.up.spell;
 				PRODUCT_NAME = "UP Spell";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1268,7 +1274,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = games.up.UPSpell;
+				PRODUCT_BUNDLE_IDENTIFIER = games.up.spell;
 				PRODUCT_NAME = "UP Spell";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
