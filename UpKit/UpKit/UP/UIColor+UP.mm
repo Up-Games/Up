@@ -60,6 +60,10 @@ static CGFloat _ThemeHue = 222;
         case UPColorCategoryControlShapeInactiveFill:
         case UPColorCategoryControlShapeStroke:
         case UPColorCategoryControlShapeInactiveStroke:
+        case UPColorCategoryControlAccentFill:
+        case UPColorCategoryControlAccentInactiveFill:
+        case UPColorCategoryControlAccentStroke:
+        case UPColorCategoryControlAccentInactiveStroke:
         case UPColorCategoryControlText:
         case UPColorCategoryControlTextInactive:
         case UPColorCategoryControlIndicator:
@@ -222,6 +226,50 @@ static CGFloat _ThemeHue = 222;
                 case UPThemeColorStyleLightStark:
                 case UPThemeColorStyleDarkStark:
                     return UPColorCategoryContent;
+            }
+        }
+        case UPColorCategoryControlAccentFill: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryPrimaryFill;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryClear;
+            }
+        }
+        case UPColorCategoryControlAccentInactiveFill: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryInactiveFill;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryClear;
+            }
+        }
+        case UPColorCategoryControlAccentStroke: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryClear;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryContent;
+            }
+        }
+        case UPColorCategoryControlAccentInactiveStroke: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryClear;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryInactiveStroke;
             }
         }
         case UPColorCategoryControlTextInactive: {
