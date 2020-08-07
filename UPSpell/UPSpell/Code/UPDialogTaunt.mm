@@ -1,5 +1,5 @@
 //
-//  UPDialogShared.mm
+//  UPDialogTaunt.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -12,7 +12,7 @@
 
 #import "UPControl+UPSpell.h"
 #import "UPDialogTaunt.h"
-#import "UPSharedGameRequest.h"
+#import "UPTaunt.h"
 #import "UPSpellLayout.h"
 #import "UPTextButton.h"
 #import "UPTextPaths.h"
@@ -43,9 +43,9 @@ using UP::SpellLayout;
     self = [super initWithFrame:layout.canvas_frame()];
 
     self.promptLabel = [UPLabel label];
-    self.promptLabel.font = layout.shared_dialog_prompt_font();
+    self.promptLabel.font = layout.taunt_font();
     self.promptLabel.textAlignment = NSTextAlignmentCenter;
-    self.promptLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageVerticallyCentered);
+    self.promptLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageTaunt);
     [self addSubview:self.promptLabel];
 
     self.cancelButton = [UPTextButton textButton];
@@ -65,9 +65,9 @@ using UP::SpellLayout;
     return self;
 }
 
-- (void)updatePromptWithSharedGameRequest:(UPSharedGameRequest *)sharedGameRequest
+- (void)updatePromptWithTaunt:(UPTaunt *)taunt
 {
-    self.promptLabel.string = [NSString stringWithFormat:@"PLAY A SHARED GAME?\nTHE SCORE TO BEAT IS %d.", sharedGameRequest.score];
+    self.promptLabel.string = [NSString stringWithFormat:@"YOU’VE BEEN TAUNTED!\nSCORE TO BEAT: %d", taunt.score];
 }
 
 #pragma mark - Theme colors

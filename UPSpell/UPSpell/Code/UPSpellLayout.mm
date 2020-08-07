@@ -308,6 +308,7 @@ void SpellLayout::calculate()
     calculate_slider_control_metrics();
     calculate_choice_control_metrics();
     calculate_settings_description_font_metrics();
+    calculate_taunt_font_metrics();
     calculate_game_controls_button_charge_outsets();
     calculate_help_button_charge_outsets();
     calculate_locations();
@@ -481,6 +482,13 @@ void SpellLayout::calculate_settings_description_font_metrics()
     CGFloat cap_height = CanonicalSettingsDescriptionFontCapHeight * layout_scale();
     UIFont *font = [UIFont settingsDescriptionFontWithCapHeight:cap_height];
     set_settings_description_font(font);
+}
+
+void SpellLayout::calculate_taunt_font_metrics()
+{
+    CGFloat cap_height = CanonicalTauntFontCapHeight * layout_scale();
+    UIFont *font = [UIFont tauntFontWithCapHeight:cap_height];
+    set_taunt_font(font);
 }
 
 void SpellLayout::calculate_word_tray_layout_frame()
@@ -667,7 +675,11 @@ void SpellLayout::calculate_dialog_locations()
     CGRect with_game_note_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
     with_game_note_message_frame.origin.y = up_rect_min_y(with_game_note_message_frame) - (up_rect_height(with_game_note_message_frame) * 0.4);
     calculate_and_set_locations(Role::DialogMessageWithGameNote, with_game_note_message_frame);
-    
+
+    CGRect taunt_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
+    taunt_message_frame.origin.y = up_rect_min_y(taunt_message_frame) - (up_rect_height(taunt_message_frame) * 0.2);
+    calculate_and_set_locations(Role::DialogMessageTaunt, taunt_message_frame);
+
     CGSize button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
     CGRect top_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogTopButtonsLayoutFrame);
     calculate_and_set_locations(Role::DialogButtonTopLeft, up_left_aligned_rect(button_size, top_buttons_layout_frame));

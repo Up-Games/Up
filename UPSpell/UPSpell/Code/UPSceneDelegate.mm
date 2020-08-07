@@ -6,7 +6,7 @@
 #import <UpKit/UpKit.h>
 
 #import "UPSceneDelegate.h"
-#import "UPSharedGameRequest.h"
+#import "UPTaunt.h"
 #import "UPSpellGameController.h"
 
 static UPSceneDelegate *_Instance;
@@ -47,8 +47,8 @@ static UPSceneDelegate *_Instance;
     }
     
     UIOpenURLContext *ctx = [URLContexts anyObject];
-    UPSharedGameRequest *sharedGameRequest = [UPSharedGameRequest sharedGameRequestWithURL:ctx.URL];
-    [[UPSpellGameController instance] setSharedGameRequest:sharedGameRequest];
+    UPTaunt *taunt = [UPTaunt tauntWithURL:ctx.URL];
+    [[UPSpellGameController instance] setTaunt:taunt];
 }
 
 @end

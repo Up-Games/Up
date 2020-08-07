@@ -19,7 +19,7 @@
 #import "UPDialogTopMenu.h"
 #import "UPDialogPause.h"
 #import "UPDialogPlayMenu.h"
-#import "UPDialogShared.h"
+#import "UPDialogTaunt.h"
 #import "UPSceneDelegate.h"
 #import "UPSoundPlayer.h"
 #import "UPSpellGameSummary.h"
@@ -32,7 +32,7 @@
 #import "UPTileView.h"
 #import "UPTilePaths.h"
 #import "UPTunePlayer.h"
-#import "UPSharedGameRequest.h"
+#import "UPTaunt.h"
 #import "UPSpellGameController.h"
 #import "UPSpellNavigationController.h"
 #import "UPViewMove+UPSpell.h"
@@ -132,12 +132,12 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) UPDialogGameNote *dialogGameNote;
 @property (nonatomic) UPDialogPause *dialogPause;
 @property (nonatomic) UPDialogPlayMenu *dialogPlayMenu;
-@property (nonatomic) UPDialogShared *dialogShared;
+@property (nonatomic) UPDialogTaunt *dialogTaunt;
 @property (nonatomic) UPDialogTopMenu *dialogTopMenu;
 @property (nonatomic) NSInteger lockCount;
 @property (nonatomic) UPChoice *playMenuChoice;
 @property (nonatomic) int endGameScore;
-@property (nonatomic) UPSharedGameRequest *sharedGameRequest;
+@property (nonatomic) UPTaunt *taunt;
 
 @property (nonatomic) UITouch *activeTouch;
 @property (nonatomic) UPControl *touchedControl;
@@ -227,12 +227,12 @@ static UPSpellGameController *_Instance;
     self.dialogPlayMenu.hidden = YES;
     self.dialogPlayMenu.frame = layout.screen_bounds();
 
-    self.dialogShared = [UPDialogShared instance];
-    [self.view addSubview:self.dialogShared];
-    [self.dialogShared.cancelButton setTarget:self action:@selector(dialogSharedCancelButtonTapped:)];
-    [self.dialogShared.goButton setTarget:self action:@selector(dialogSharedGoButtonTapped:)];
-    self.dialogShared.hidden = YES;
-    self.dialogShared.frame = layout.screen_bounds();
+    self.dialogTaunt = [UPDialogTaunt instance];
+    [self.view addSubview:self.dialogTaunt];
+    [self.dialogTaunt.cancelButton setTarget:self action:@selector(dialogTauntCancelButtonTapped:)];
+    [self.dialogTaunt.goButton setTarget:self action:@selector(dialogTauntGoButtonTapped:)];
+    self.dialogTaunt.hidden = YES;
+    self.dialogTaunt.frame = layout.screen_bounds();
 
     self.touchedTileView = nil;
     self.pickedTileView = nil;
@@ -728,15 +728,15 @@ static UPSpellGameController *_Instance;
     [self setMode:Mode::Ready];
 }
 
-- (void)dialogSharedCancelButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+- (void)dialogTauntCancelButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
-    ASSERT(self.mode == Mode::Shared);
+    ASSERT(self.mode == Mode::Taunt);
     [self setMode:Mode::Init];
 }
 
-- (void)dialogSharedGoButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+- (void)dialogTauntGoButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
-    ASSERT(self.mode == Mode::Shared);
+    ASSERT(self.mode == Mode::Taunt);
     [self setMode:Mode::Ready];
 }
 
@@ -2100,14 +2100,14 @@ static UPSpellGameController *_Instance;
     });
 }
 
-- (void)viewOrderInSharedFromMode:(Mode)mode
+- (void)viewOrderInTauntFromMode:(Mode)mode
 {
-    ASSERT(self.sharedGameRequest);
+    ASSERT(self.taunt);
     
     [self viewLock];
     
     // Clobber existing game
-    m_spell_model = std::make_shared<SpellModel>(GameKey(self.sharedGameRequest.gameKey.value));
+    m_spell_model = std::make_shared<SpellModel>(GameKey(self.taunt.gameKey.value));
     [self.gameTimer reset];
     [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
@@ -2128,13 +2128,13 @@ static UPSpellGameController *_Instance;
     }
 
     // Move the dialog in
-    [self.dialogShared updatePromptWithSharedGameRequest:self.sharedGameRequest];
-    [self.dialogShared updateThemeColors];
-    self.dialogShared.hidden = NO;
-    self.dialogShared.alpha = 1.0;
-    self.dialogShared.promptLabel.frame = layout.frame_for(Role::DialogMessageVerticallyCentered);
-    self.dialogShared.goButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse);
-    self.dialogShared.cancelButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse);
+    [self.dialogTaunt updatePromptWithTaunt:self.taunt];
+    [self.dialogTaunt updateThemeColors];
+    self.dialogTaunt.hidden = NO;
+    self.dialogTaunt.alpha = 1.0;
+    self.dialogTaunt.promptLabel.frame = layout.frame_for(Role::DialogMessageTaunt);
+    self.dialogTaunt.goButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse);
+    self.dialogTaunt.cancelButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse);
 
     // Fix up top menu
     self.dialogTopMenu.extrasButton.frame = layout.frame_for(Role::DialogButtonTopLeft);
@@ -2211,7 +2211,7 @@ static UPSpellGameController *_Instance;
         });
     };
     
-    BOOL comingFromPlayMenuOrShared = mode == Mode::PlayMenu || mode == Mode::Shared;
+    BOOL comingFromPlayMenuOrShared = mode == Mode::PlayMenu || mode == Mode::Taunt;
     if (comingFromPlayMenuOrShared) {
         self.dialogGameOver.transform = CGAffineTransformIdentity;
         bottomHalf();
@@ -2480,20 +2480,20 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }
 }
 
-#pragma mark - Shared game requests
+#pragma mark - Taunts
 
-- (void)setSharedGameRequest:(UPSharedGameRequest *)sharedGameRequest
+- (void)setTaunt:(UPTaunt *)taunt
 {
-    BOOL requestValid = sharedGameRequest && sharedGameRequest.valid;
-    BOOL modeValid = self.mode == Mode::Init || self.mode == Mode::Pause || self.mode == Mode::Shared;
+    BOOL requestValid = taunt && taunt.valid;
+    BOOL modeValid = self.mode == Mode::Init || self.mode == Mode::Pause || self.mode == Mode::Taunt;
 
-    LOG(General, "sharedGameRequest: %@", sharedGameRequest);
+    LOG(General, "taunt: %@", taunt);
     if (requestValid && modeValid) {
-        _sharedGameRequest = sharedGameRequest;
-        [self setMode:Mode::Shared];
+        _taunt = taunt;
+        [self setMode:Mode::Taunt];
     }
     else {
-        _sharedGameRequest = nil;
+        _taunt = nil;
     }
 }
 
@@ -2717,7 +2717,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Init,     Mode::About,    @selector(modeTransitionFromInitToAbout) },
         { Mode::Init,     Mode::Extras,   @selector(modeTransitionFromInitToExtras) },
         { Mode::Init,     Mode::PlayMenu, @selector(modeTransitionFromInitToPlayMenu) },
-        { Mode::Init,     Mode::Shared,   @selector(modeTransitionFromInitToShared) },
+        { Mode::Init,     Mode::Taunt,   @selector(modeTransitionFromInitToShared) },
         { Mode::Init,     Mode::Ready,    @selector(modeTransitionFromInitToReady) },
         { Mode::About,    Mode::Init,     @selector(modeTransitionFromAboutToInit) },
         { Mode::Extras,   Mode::Init,     @selector(modeTransitionFromExtrasToInit) },
@@ -2726,12 +2726,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Attract,  Mode::Ready,    @selector(modeTransitionFromAttractToReady) },
         { Mode::PlayMenu, Mode::Init,     @selector(modeTransitionFromPlayMenuToInit) },
         { Mode::PlayMenu, Mode::Ready,    @selector(modeTransitionFromPlayMenuToReady) },
-        { Mode::Shared,   Mode::Init,     @selector(modeTransitionFromSharedToInit) },
-        { Mode::Shared,   Mode::Ready,    @selector(modeTransitionFromSharedToReady) },
+        { Mode::Taunt,   Mode::Init,     @selector(modeTransitionFromSharedToInit) },
+        { Mode::Taunt,   Mode::Ready,    @selector(modeTransitionFromSharedToReady) },
         { Mode::Ready,    Mode::Play,     @selector(modeTransitionFromReadyToPlay) },
         { Mode::Play,     Mode::Pause,    @selector(modeTransitionFromPlayToPause) },
         { Mode::Play,     Mode::GameOver, @selector(modeTransitionFromPlayToGameOver) },
-        { Mode::Pause,    Mode::Shared,   @selector(modeTransitionFromPauseToShared) },
+        { Mode::Pause,    Mode::Taunt,   @selector(modeTransitionFromPauseToShared) },
         { Mode::Pause,    Mode::Play,     @selector(modeTransitionFromPauseToPlay) },
         { Mode::Pause,    Mode::Quit,     @selector(modeTransitionFromPauseToQuit) },
         { Mode::GameOver, Mode::End,      @selector(modeTransitionFromOverToEnd) },
@@ -2886,8 +2886,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromInitToShared
 {
-    ASSERT(self.sharedGameRequest);
-    [self viewOrderInSharedFromMode:Mode::Init];
+    ASSERT(self.taunt);
+    [self viewOrderInTauntFromMode:Mode::Init];
 }
 
 - (void)modeTransitionFromInitToReady
@@ -3042,23 +3042,23 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 {
     [self viewLock];
     
-    self.sharedGameRequest = nil;
+    self.taunt = nil;
     m_spell_model = nullptr;
     [self createNewGameModelIfNeeded];
     
     NSArray<UPViewMove *> *buttonOutMoves = @[
-        UPViewMoveMake(self.dialogShared.promptLabel, Location(Role::DialogMessageVerticallyCentered, Place::OffBottomNear)),
-        UPViewMoveMake(self.dialogShared.cancelButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
-        UPViewMoveMake(self.dialogShared.goButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
+        UPViewMoveMake(self.dialogTaunt.promptLabel, Location(Role::DialogMessageTaunt, Place::OffBottomNear)),
+        UPViewMoveMake(self.dialogTaunt.cancelButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
+        UPViewMoveMake(self.dialogTaunt.goButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
     ];
     start(bloop_out(BandModeUI, buttonOutMoves, 0.4, ^(UIViewAnimatingPosition) {
     }));
     
     [UIView animateWithDuration:0.4 delay:0.0 options:0 animations:^{
-        self.dialogShared.alpha = 0.0;
+        self.dialogTaunt.alpha = 0.0;
     } completion:^(BOOL finished) {
-        self.dialogShared.hidden = YES;
-        self.dialogShared.alpha = 1.0;
+        self.dialogTaunt.hidden = YES;
+        self.dialogTaunt.alpha = 1.0;
     }];
     [UIView animateWithDuration:0.25 delay:0.15 options:0 animations:^{
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
@@ -3134,8 +3134,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     ASSERT(self.lockCount == 0);
     [self viewLock];
 
-    self.dialogShared.goButton.highlightedLocked = YES;
-    self.dialogShared.goButton.highlighted = YES;
+    self.dialogTaunt.goButton.highlightedLocked = YES;
+    self.dialogTaunt.goButton.highlighted = YES;
 
     [self updateSoundAndTunesSettings];
     [self playTuneIntro];
@@ -3156,20 +3156,20 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         } completion:nil];
         
         NSArray<UPViewMove *> *buttonOutMoves = @[
-            UPViewMoveMake(self.dialogShared.promptLabel, Location(Role::DialogMessageVerticallyCentered, Place::OffBottomNear)),
-            UPViewMoveMake(self.dialogShared.cancelButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
-            UPViewMoveMake(self.dialogShared.goButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
+            UPViewMoveMake(self.dialogTaunt.promptLabel, Location(Role::DialogMessageTaunt, Place::OffBottomNear)),
+            UPViewMoveMake(self.dialogTaunt.cancelButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
+            UPViewMoveMake(self.dialogTaunt.goButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
         ];
         start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
-            self.dialogShared.goButton.highlightedLocked = NO;
-            self.dialogShared.goButton.highlighted = NO;
+            self.dialogTaunt.goButton.highlightedLocked = NO;
+            self.dialogTaunt.goButton.highlighted = NO;
         }));
         
         delay(BandModeDelay, 0.55, ^{
             [self createNewGameModelIfNeeded];
             [self viewFillUpSpellTileViews];
-            [self viewMakeReadyFromMode:Mode::Shared completion:^{
-                self.sharedGameRequest = nil;
+            [self viewMakeReadyFromMode:Mode::Taunt completion:^{
+                self.taunt = nil;
                 [self viewBloopOutExistingTileViewsWithCompletion:nil];
                 [self setMode:Mode::Play];
             }];
@@ -3332,7 +3332,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromPauseToShared
 {
-    [self viewOrderInSharedFromMode:Mode::Pause];
+    [self viewOrderInTauntFromMode:Mode::Pause];
 }
 
 - (void)modeTransitionFromPauseToQuit
@@ -3445,7 +3445,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewSetNoteLabelString];
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
 
-    self.sharedGameRequest = nil;
+    self.taunt = nil;
     [self removeInProgressGameFileLogErrors:NO];
 
     UPSpellDossier *dossier = [UPSpellDossier instance];
@@ -3545,7 +3545,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     size_t incoming_word_length = m_spell_model->word().length();
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     
-    self.sharedGameRequest = nil;
+    self.taunt = nil;
     [self removeInProgressGameFileLogErrors:NO];
     
     UPSpellDossier *dossier = [UPSpellDossier instance];

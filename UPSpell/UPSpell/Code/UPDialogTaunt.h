@@ -1,5 +1,5 @@
 //
-//  UPDialogShared.h
+//  UPDialogTaunt.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -7,18 +7,18 @@
 
 @class UPButton;
 @class UPLabel;
-@class UPSharedGameRequest;
+@class UPTaunt;
 
-@interface UPDialogShared : UIView
+@interface UPDialogTaunt : UIView
 
 @property (nonatomic, readonly) UPLabel *promptLabel;
 @property (nonatomic, readonly) UPButton *cancelButton;
 @property (nonatomic, readonly) UPButton *goButton;
 
-+ (UPDialogShared *)instance;
++ (UPDialogTaunt *)instance;
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
-- (void)updatePromptWithSharedGameRequest:(UPSharedGameRequest *)sharedGameRequest;
+- (void)updatePromptWithTaunt:(UPTaunt *)taunt;
 
 @end

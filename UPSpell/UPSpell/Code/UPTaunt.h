@@ -1,5 +1,5 @@
 //
-//  UPSharedGameRequest.h
+//  UPTaunt.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -7,15 +7,15 @@
 
 @class UPGameKey;
 
-@interface UPSharedGameRequest : NSObject
+@interface UPTaunt : NSObject
 
 @property (nonatomic, readonly) UPGameKey *gameKey;
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) NSURL *URL;
 @property (nonatomic, readonly) BOOL valid;
 
-+ (UPSharedGameRequest *)sharedGameRequestWithGameKey:(UPGameKey *)gameKey score:(int)score;
-+ (UPSharedGameRequest *)sharedGameRequestWithURL:(NSURL *)URL;
++ (UPTaunt *)tauntWithGameKey:(UPGameKey *)gameKey score:(int)score;
++ (UPTaunt *)tauntWithURL:(NSURL *)URL;
 
 - (instancetype)init NS_UNAVAILABLE;
 

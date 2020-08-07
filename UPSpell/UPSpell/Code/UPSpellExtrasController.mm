@@ -105,7 +105,7 @@ using Location = UP::SpellLayout::Location;
     [self.view addSubview:self.choice3];
     
     self.choice4 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice4.labelString = @"SHARE";
+    self.choice4.labelString = @"TAUNT";
     self.choice4.tag = 3;
     self.choice4.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice4.frame = layout.frame_for(Role::ChoiceItem4Left, Place::OffLeftNear);

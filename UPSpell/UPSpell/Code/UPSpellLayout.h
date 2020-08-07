@@ -48,7 +48,8 @@ public:
         GameTimer, GameScore,
         GameScoreGameOver1, GameScoreGameOver2, GameScoreGameOver3, GameScoreGameOver4,
         WordScore, WordScoreBonus,
-        DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessagePlay, DialogMessageWithGameNote, DialogGameNote,
+        DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessagePlay,
+        DialogMessageTaunt, DialogMessageWithGameNote, DialogGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
@@ -153,9 +154,9 @@ public:
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
 
     static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 369, 1000, 100 };
-    static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 27;
-    static inline constexpr CGFloat CanonicalGameNoteWordFontCapHeight = 27;
-    static inline constexpr CGFloat CanonicalGameNoteWordFontBaselineAdjustment = 6;
+    static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 30;
+    static inline constexpr CGFloat CanonicalGameNoteWordFontCapHeight = 30;
+    static inline constexpr CGFloat CanonicalGameNoteWordFontBaselineAdjustment = 8;
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
     static inline constexpr CGFloat CanonicalOffscreenNearFrameFactor = 1.2;
@@ -173,6 +174,7 @@ public:
     static inline constexpr CGRect CanonicalChoiceCenterGoFrame =  { 713, 376, up_size_width(CanonicalTextButtonSize), up_size_height(CanonicalTextButtonSize) };
     
     static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 20;
+    static inline constexpr CGFloat CanonicalTauntFontCapHeight = 38;
 
     static inline constexpr CGRect CanonicalExtrasColorsHueWheelFrame =    { 430,  36, up_size_width(CanonicalHueWheelSize), up_size_height(CanonicalHueWheelSize) };
     static inline constexpr CGRect CanonicalExtrasColorsHueStepMoreFrame = { 692,  98, 44, 44 };
@@ -249,7 +251,6 @@ public:
     UPOutsets help_button_charge_outsets() const { return m_help_button_charge_outsets; }
 
     UIFont *text_button_font() const { return m_text_button_font; }
-    UIFont *shared_dialog_prompt_font() const { return m_text_button_font; }
     UIFont *small_text_button_font() const { return m_small_text_button_font; }
     UIFont *game_information_font() const { return m_game_information_font; }
     UIFont *game_information_superscript_font() const { return m_game_information_superscript_font; }
@@ -260,6 +261,7 @@ public:
     UIFont *ballot_control_font() const { return m_ballot_control_font; }
     UIFont *choice_control_font() const { return m_choice_control_font; }
     UIFont *settings_description_font() const { return m_settings_description_font; }
+    UIFont *taunt_font() const { return m_taunt_font; }
 
     CGFloat ballot_control_label_left_margin() const { return m_ballot_control_label_left_margin; }
     CGFloat choice_control_label_left_margin() const { return m_choice_control_label_left_margin; }
@@ -311,6 +313,7 @@ private:
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
     void set_settings_description_font(UIFont *font) { m_settings_description_font = font; }
+    void set_taunt_font(UIFont *font) { m_taunt_font = font; }
     void set_game_controls_button_charge_outsets(UPOutsets outsets) { m_game_controls_button_charge_outsets = outsets; }
     void set_help_button_charge_outsets(UPOutsets outsets) { m_help_button_charge_outsets = outsets; }
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
@@ -338,6 +341,7 @@ private:
     void calculate_slider_control_metrics();
     void calculate_choice_control_metrics();
     void calculate_settings_description_font_metrics();
+    void calculate_taunt_font_metrics();
     void calculate_locations();
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
@@ -395,6 +399,7 @@ private:
     __strong UIFont *m_ballot_control_font;
     __strong UIFont *m_choice_control_font;
     __strong UIFont *m_settings_description_font;
+    __strong UIFont *m_taunt_font;
 
     CGFloat m_ballot_control_label_left_margin = 0.0;
     CGFloat m_choice_control_label_left_margin = 0.0;

@@ -18,6 +18,7 @@ NSString * const UPCheckboxControlFontName = @"MalloryCondensed-Black";
 NSString * const UPChoiceControlFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPRotorControlFontName = @"MalloryCondensed-Black";
 NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
+NSString * const UPTauntFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
 
 //
@@ -244,6 +245,30 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
     return [UIFont settingsDescriptionFontOfSize:pointSize];
+}
+
++ (UIFont *)tauntFontOfSize:(CGFloat)fontSize
+{
+    UIFont *font = [UIFont fontWithName:UPTauntFontName size:fontSize];
+    UIFontDescriptor *descriptor = [font fontDescriptor];
+    NSDictionary *attributes = @{
+        UIFontDescriptorFeatureSettingsAttribute: @[
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+                }
+        ]
+    };
+    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
+}
+
++ (UIFont *)tauntFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPTauntFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont tauntFontOfSize:pointSize];
 }
 
 + (UIFont *)dingbatsFontOfSize:(CGFloat)fontSize

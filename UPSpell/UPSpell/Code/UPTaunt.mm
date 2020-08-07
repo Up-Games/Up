@@ -1,5 +1,5 @@
 //
-//  UPSharedGameRequest.mm
+//  UPTaunt.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -8,26 +8,26 @@
 #import <UPKit/UPGameKey.h>
 #import <UPKit/UPStringTools.h>
 
-#import "UPSharedGameRequest.h"
+#import "UPTaunt.h"
 
 using UP::GameKey;
 using UP::cpp_str;
 
-@interface UPSharedGameRequest ()
+@interface UPTaunt ()
 @property (nonatomic, readwrite) UPGameKey *gameKey;
 @property (nonatomic, readwrite) int score;
 @property (nonatomic, readwrite) NSURL *URL;
 @property (nonatomic, readwrite) BOOL valid;
 @end
 
-@implementation UPSharedGameRequest
+@implementation UPTaunt
 
-+ (UPSharedGameRequest *)sharedGameRequestWithGameKey:(UPGameKey *)gameKey score:(int)score
++ (UPTaunt *)tauntWithGameKey:(UPGameKey *)gameKey score:(int)score
 {
     return [[self alloc] _initWithGameKey:gameKey score:score];
 }
 
-+ (UPSharedGameRequest *)sharedGameRequestWithURL:(NSURL *)URL
++ (UPTaunt *)tauntWithURL:(NSURL *)URL
 {
     return [[self alloc] _initWithURL:URL];
 }
@@ -108,7 +108,7 @@ using UP::cpp_str;
 - (NSString *)description
 {
     NSMutableString *result = [NSMutableString string];
-    [result appendString:@"<UPSharedGameRequest: "];
+    [result appendString:@"<UPTaunt: "];
     [result appendString:[NSString stringWithFormat:@"%p: ", self]];
     if (!self.valid) {
         [result appendString:@"invalid>"];
