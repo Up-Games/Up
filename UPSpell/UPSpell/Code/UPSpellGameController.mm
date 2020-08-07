@@ -19,6 +19,7 @@
 #import "UPDialogTopMenu.h"
 #import "UPDialogPause.h"
 #import "UPDialogPlayMenu.h"
+#import "UPDialogShared.h"
 #import "UPSceneDelegate.h"
 #import "UPSoundPlayer.h"
 #import "UPSpellGameSummary.h"
@@ -31,6 +32,7 @@
 #import "UPTileView.h"
 #import "UPTilePaths.h"
 #import "UPTunePlayer.h"
+#import "UPSharedGameRequest.h"
 #import "UPSpellGameController.h"
 #import "UPSpellNavigationController.h"
 #import "UPViewMove+UPSpell.h"
@@ -99,6 +101,7 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
     UPSpellGameAlphaStateReasonDefault,
     UPSpellGameAlphaStateReasonInit,
     UPSpellGameAlphaStateReasonPlayMenu,
+    UPSpellGameAlphaStateReasonShared,
     UPSpellGameAlphaStateReasonReady,
     UPSpellGameAlphaStateReasonPrePlay,
     UPSpellGameAlphaStateReasonPlay,
@@ -129,10 +132,12 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) UPDialogGameNote *dialogGameNote;
 @property (nonatomic) UPDialogPause *dialogPause;
 @property (nonatomic) UPDialogPlayMenu *dialogPlayMenu;
+@property (nonatomic) UPDialogShared *dialogShared;
 @property (nonatomic) UPDialogTopMenu *dialogTopMenu;
 @property (nonatomic) NSInteger lockCount;
 @property (nonatomic) UPChoice *playMenuChoice;
 @property (nonatomic) int endGameScore;
+@property (nonatomic) UPSharedGameRequest *sharedGameRequest;
 
 @property (nonatomic) UITouch *activeTouch;
 @property (nonatomic) UPControl *touchedControl;
@@ -169,11 +174,20 @@ static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.5;
 static constexpr CFTimeInterval GameOverOutroDuration = 5;
 static constexpr CFTimeInterval TapToTubInterval = 0.15;
 
+static UPSpellGameController *_Instance;
+
 @implementation UPSpellGameController
+
++ (UPSpellGameController *)instance
+{
+    return _Instance;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _Instance = self;
     
     SpellLayout &layout = SpellLayout::instance();
 
@@ -212,6 +226,13 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     [self.dialogPlayMenu.goButton setTarget:self action:@selector(playChoiceGoButtonTapped:)];
     self.dialogPlayMenu.hidden = YES;
     self.dialogPlayMenu.frame = layout.screen_bounds();
+
+    self.dialogShared = [UPDialogShared instance];
+    [self.view addSubview:self.dialogShared];
+    [self.dialogShared.cancelButton setTarget:self action:@selector(dialogSharedCancelButtonTapped:)];
+    [self.dialogShared.goButton setTarget:self action:@selector(dialogSharedGoButtonTapped:)];
+    self.dialogShared.hidden = YES;
+    self.dialogShared.frame = layout.screen_bounds();
 
     self.touchedTileView = nil;
     self.pickedTileView = nil;
@@ -704,6 +725,18 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
 - (void)playChoiceGoButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
     ASSERT(self.mode == Mode::PlayMenu);
+    [self setMode:Mode::Ready];
+}
+
+- (void)dialogSharedCancelButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+{
+    ASSERT(self.mode == Mode::Shared);
+    [self setMode:Mode::Init];
+}
+
+- (void)dialogSharedGoButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+{
+    ASSERT(self.mode == Mode::Shared);
     [self setMode:Mode::Ready];
 }
 
@@ -1438,7 +1471,17 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     ASSERT(self.lockCount > 0);
 
     switch (reason) {
-        case UPSpellGameAlphaStateReasonInit:
+        case UPSpellGameAlphaStateReasonInit: {
+            CGFloat alpha = [UIColor themeDisabledAlpha];
+            for (UIView *view in self.gameView.subviews) {
+                view.alpha = alpha;
+            }
+            for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.aboutButton ]) {
+                view.alpha = 1.0;
+            }
+            m_alpha_reason_stack.clear();
+            break;
+        }
         case UPSpellGameAlphaStateReasonOrderOutGameEnd:
         case UPSpellGameAlphaStateReasonReady:
         case UPSpellGameAlphaStateReasonQuitToEnd: {
@@ -1467,6 +1510,17 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
         case UPSpellGameAlphaStateReasonPlayMenu: {
             CGFloat alpha = 0.02;
             for (UIView *view in self.gameView.subviews) {
+                view.alpha = alpha;
+            }
+            m_alpha_reason_stack.clear();
+            break;
+        }
+        case UPSpellGameAlphaStateReasonShared: {
+            CGFloat alpha = 0.02;
+            for (UIView *view in self.gameView.subviews) {
+                view.alpha = alpha;
+            }
+            for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.aboutButton ]) {
                 view.alpha = alpha;
             }
             m_alpha_reason_stack.clear();
@@ -2046,6 +2100,56 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
     });
 }
 
+- (void)viewOrderInSharedFromMode:(Mode)mode
+{
+    ASSERT(self.sharedGameRequest);
+    
+    [self viewLock];
+    
+    // Clobber existing game
+    m_spell_model = std::make_shared<SpellModel>(GameKey(self.sharedGameRequest.gameKey.value));
+    [self.gameTimer reset];
+    [self viewOrderOutWordScoreLabel];
+    [self viewUpdateGameControls];
+    [self viewFillUpSpellTileViews];
+
+    SpellLayout &layout = SpellLayout::instance();
+
+    // Handle coming from Pause
+    if (mode == Mode::Pause) {
+        self.gameView.transform = layout.menu_game_view_transform();
+        self.dialogPause.messagePathView.frame = layout.frame_for(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear);
+        self.dialogPause.quitButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse, Place::OffBottomFar);
+        self.dialogPause.resumeButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Place::OffBottomFar);
+        self.dialogPause.alpha = 0.0;
+        self.dialogPause.hidden = YES;
+        self.gameView.pauseControl.highlightedLocked = NO;
+        self.gameView.pauseControl.highlighted = NO;
+    }
+
+    // Move the dialog in
+    [self.dialogShared updatePromptWithSharedGameRequest:self.sharedGameRequest];
+    [self.dialogShared updateThemeColors];
+    self.dialogShared.hidden = NO;
+    self.dialogShared.alpha = 1.0;
+    self.dialogShared.promptLabel.frame = layout.frame_for(Role::DialogMessageVerticallyCentered);
+    self.dialogShared.goButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse);
+    self.dialogShared.cancelButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse);
+
+    // Fix up top menu
+    self.dialogTopMenu.extrasButton.frame = layout.frame_for(Role::DialogButtonTopLeft);
+    self.dialogTopMenu.playButton.frame = layout.frame_for(Role::DialogButtonTopCenter);
+    self.dialogTopMenu.aboutButton.frame = layout.frame_for(Role::DialogButtonTopRight);
+    self.dialogTopMenu.playButton.highlightedLocked = NO;
+    self.dialogTopMenu.playButton.highlighted = NO;
+    self.dialogTopMenu.hidden = NO;
+    self.dialogTopMenu.alpha = 1.0;
+
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonShared];
+
+    [self viewUnlock];
+}
+
 - (void)viewOrderOutGameEnd
 {
     ASSERT(self.lockCount > 0);
@@ -2274,7 +2378,6 @@ static constexpr CFTimeInterval TapToTubInterval = 0.15;
             game_key = GameKey(dossier.lastGameKey);
         }
         m_spell_model = std::make_shared<SpellModel>(game_key);
-//        LOG(General, "GameKey: %s", game_key.string().c_str());
     }
     else {
         if (m_spell_model && m_spell_model->back_opcode() == SpellModel::Opcode::START) {
@@ -2373,6 +2476,24 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }
 }
 
+#pragma mark - Shared game requests
+
+- (void)checkForSharedGameRequest
+{
+    UPSceneDelegate *delegate = [UPSceneDelegate instance];
+    UPSharedGameRequest *sharedGameRequest = delegate.sharedGameRequest;
+    delegate.sharedGameRequest = nil;
+    
+    BOOL requestValid = sharedGameRequest && sharedGameRequest.valid;
+    BOOL modeValid = self.mode == Mode::Init || self.mode == Mode::Pause || self.mode == Mode::Shared;
+
+    if (requestValid && modeValid) {
+        LOG(General, "sharedGameRequest: %@", sharedGameRequest);
+        self.sharedGameRequest = sharedGameRequest;
+        [self setMode:Mode::Shared];
+    }
+}
+
 #pragma mark - Lifecycle notifications
 
 - (void)configureLifecycleNotifications
@@ -2382,6 +2503,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [nc addObserverForName:UIApplicationDidBecomeActiveNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
         [self removeInProgressGameFileLogErrors:NO];
+        [self checkForSharedGameRequest];
     }];
     
     [nc addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:NSOperationQueue.mainQueue
@@ -2593,6 +2715,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Init,     Mode::About,    @selector(modeTransitionFromInitToAbout) },
         { Mode::Init,     Mode::Extras,   @selector(modeTransitionFromInitToExtras) },
         { Mode::Init,     Mode::PlayMenu, @selector(modeTransitionFromInitToPlayMenu) },
+        { Mode::Init,     Mode::Shared,   @selector(modeTransitionFromInitToShared) },
         { Mode::Init,     Mode::Ready,    @selector(modeTransitionFromInitToReady) },
         { Mode::About,    Mode::Init,     @selector(modeTransitionFromAboutToInit) },
         { Mode::Extras,   Mode::Init,     @selector(modeTransitionFromExtrasToInit) },
@@ -2601,9 +2724,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Attract,  Mode::Ready,    @selector(modeTransitionFromAttractToReady) },
         { Mode::PlayMenu, Mode::Init,     @selector(modeTransitionFromPlayMenuToInit) },
         { Mode::PlayMenu, Mode::Ready,    @selector(modeTransitionFromPlayMenuToReady) },
+        { Mode::Shared,   Mode::Init,     @selector(modeTransitionFromSharedToInit) },
+        { Mode::Shared,   Mode::Ready,    @selector(modeTransitionFromSharedToReady) },
         { Mode::Ready,    Mode::Play,     @selector(modeTransitionFromReadyToPlay) },
         { Mode::Play,     Mode::Pause,    @selector(modeTransitionFromPlayToPause) },
         { Mode::Play,     Mode::GameOver, @selector(modeTransitionFromPlayToGameOver) },
+        { Mode::Pause,    Mode::Shared,   @selector(modeTransitionFromPauseToShared) },
         { Mode::Pause,    Mode::Play,     @selector(modeTransitionFromPauseToPlay) },
         { Mode::Pause,    Mode::Quit,     @selector(modeTransitionFromPauseToQuit) },
         { Mode::GameOver, Mode::End,      @selector(modeTransitionFromOverToEnd) },
@@ -2756,6 +2882,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewOrderInPlayMenuFromMode:Mode::Init];
 }
 
+- (void)modeTransitionFromInitToShared
+{
+    ASSERT(self.sharedGameRequest);
+    [self viewOrderInSharedFromMode:Mode::Init];
+}
+
 - (void)modeTransitionFromInitToReady
 {
     ASSERT(m_spell_model->is_blank_filled());
@@ -2823,7 +2955,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     ASSERT(self.lockCount == 0);
     [self viewLock];
     [self viewOrderInAboutWithCompletion:^{
-        // FIXME: clean up after attract, return game view to start
+        // clean up after attract, return game view to start
         [self viewUnlock];
     }];
 }
@@ -2833,7 +2965,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     ASSERT(self.lockCount == 0);
     [self viewLock];
     [self viewOrderInExtrasWithCompletion:^{
-        // FIXME: clean up after attract, return game view to start
+        // clean up after attract, return game view to start
         [self viewUnlock];
     }];
 }
@@ -2904,6 +3036,36 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 }
 
+- (void)modeTransitionFromSharedToInit
+{
+    [self viewLock];
+    
+    self.sharedGameRequest = nil;
+    m_spell_model = nullptr;
+    [self createNewGameModelIfNeeded];
+    
+    NSArray<UPViewMove *> *buttonOutMoves = @[
+        UPViewMoveMake(self.dialogShared.promptLabel, Location(Role::DialogMessageVerticallyCentered, Place::OffBottomNear)),
+        UPViewMoveMake(self.dialogShared.cancelButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
+        UPViewMoveMake(self.dialogShared.goButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
+    ];
+    start(bloop_out(BandModeUI, buttonOutMoves, 0.4, ^(UIViewAnimatingPosition) {
+    }));
+    
+    [UIView animateWithDuration:0.25 delay:0.15 options:0 animations:^{
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
+    } completion:^(BOOL finished) {
+        [self viewUnlock];
+    }];
+    [UIView animateWithDuration:0.4 delay:0.0 options:0 animations:^{
+        self.dialogShared.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        self.dialogShared.hidden = YES;
+        self.dialogShared.alpha = 1.0;
+    }];
+    
+}
+
 - (void)modeTransitionFromPlayMenuToReady
 {
     ASSERT(m_spell_model->is_blank_filled());
@@ -2963,6 +3125,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             }];
         });
     });
+}
+
+- (void)modeTransitionFromSharedToReady
+{
+    //FIXME
 }
 
 - (void)modeTransitionFromReadyToPlay
@@ -3061,8 +3228,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPause];
     
     // special modal fixups for pause
-    self.gameView.pauseControl.highlightedLocked = YES;
-    self.gameView.pauseControl.highlighted = YES;
+//    self.gameView.pauseControl.highlightedLocked = YES;
+//    self.gameView.pauseControl.highlighted = YES;
     self.gameView.pauseControl.alpha = [UIColor themeModalActiveAlpha];
 
     SpellLayout &layout = SpellLayout::instance();
@@ -3116,6 +3283,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             [self viewUnlock];
         }];
     }));
+}
+
+- (void)modeTransitionFromPauseToShared
+{
+    [self viewOrderInSharedFromMode:Mode::Pause];
 }
 
 - (void)modeTransitionFromPauseToQuit
@@ -3228,6 +3400,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewSetNoteLabelString];
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
 
+    self.sharedGameRequest = nil;
+    [self removeInProgressGameFileLogErrors:NO];
+
     UPSpellDossier *dossier = [UPSpellDossier instance];
     [dossier updateWithModel:m_spell_model];
     [dossier save];
@@ -3325,7 +3500,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     size_t incoming_word_length = m_spell_model->word().length();
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     
+    self.sharedGameRequest = nil;
     [self removeInProgressGameFileLogErrors:NO];
+    
     UPSpellDossier *dossier = [UPSpellDossier instance];
     [dossier updateWithModel:m_spell_model];
     [dossier save];

@@ -249,6 +249,7 @@ public:
     UPOutsets help_button_charge_outsets() const { return m_help_button_charge_outsets; }
 
     UIFont *text_button_font() const { return m_text_button_font; }
+    UIFont *shared_dialog_prompt_font() const { return m_text_button_font; }
     UIFont *small_text_button_font() const { return m_small_text_button_font; }
     UIFont *game_information_font() const { return m_game_information_font; }
     UIFont *game_information_superscript_font() const { return m_game_information_superscript_font; }

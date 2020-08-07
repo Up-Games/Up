@@ -7,6 +7,7 @@
 
 #import "UPSceneDelegate.h"
 #import "UPSharedGameRequest.h"
+#import "UPSpellGameController.h"
 
 static UPSceneDelegate *_Instance;
 
@@ -49,6 +50,7 @@ static UPSceneDelegate *_Instance;
         UPSharedGameRequest *req = [UPSharedGameRequest sharedGameRequestWithURL:ctx.URL];
         if (req.valid) {
             self.sharedGameRequest = req;
+            [[UPSpellGameController instance] checkForSharedGameRequest];
             NSLog(@"*** sharedGameRequest: %@", self.sharedGameRequest);
             break;
         }

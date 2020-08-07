@@ -12,7 +12,11 @@
 
 @interface UPSpellGameController : UIViewController
 
++ (UPSpellGameController *)instance;
+
 @property (nonatomic) UP::Mode mode;
 @property (nonatomic) UPSpellGameRetry *retry;
+
+- (void)checkForSharedGameRequest;
 
 @end
