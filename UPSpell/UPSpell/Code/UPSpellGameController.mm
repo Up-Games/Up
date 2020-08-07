@@ -1477,7 +1477,7 @@ static UPSpellGameController *_Instance;
                 view.alpha = alpha;
             }
             for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.aboutButton ]) {
-                view.alpha = 1.0;
+                view.alpha = 1;
             }
             m_alpha_reason_stack.clear();
             break;
@@ -1531,7 +1531,7 @@ static UPSpellGameController *_Instance;
                 if (view == self.gameView.tileContainerView) {
                     continue;
                 }
-                view.alpha = 1.0;
+                view.alpha = 1;
             }
             self.gameView.tileContainerView.alpha = [UIColor themeDisabledAlpha];
             m_alpha_reason_stack.clear();
@@ -1548,7 +1548,7 @@ static UPSpellGameController *_Instance;
                             view.alpha = [UIColor themeDisabledAlpha];
                         }
                         else {
-                            view.alpha = 1.0;
+                            view.alpha = 1;
                         }
                     }
                 }
@@ -1559,13 +1559,13 @@ static UPSpellGameController *_Instance;
                             view.alpha = [UIColor themeDisabledAlpha];
                         }
                         else {
-                            view.alpha = 1.0;
+                            view.alpha = 1;
                         }
                     }
                 }
             }
             else {
-                CGFloat alpha = 1.0;
+                CGFloat alpha = 1;
                 for (UIView *view in self.gameView.subviews) {
                     view.alpha = alpha;
                 }
@@ -1604,10 +1604,10 @@ static UPSpellGameController *_Instance;
             UIView *gameScoreLabel = self.gameView.gameScoreLabel;
             for (UIView *view in self.gameView.subviews) {
                 if (view == gameScoreLabel) {
-                    view.alpha = 1.0;
+                    view.alpha = 1;
                 }
                 else if (view == timerLabel) {
-                    view.alpha = 0.0;
+                    view.alpha = 0;
                 }
                 else {
                     view.alpha = alpha;
@@ -1645,7 +1645,10 @@ static UPSpellGameController *_Instance;
 
 - (void)viewUnlock
 {
-    ASSERT(self.lockCount > 0);
+    if (self.lockCount == 0) {
+        return;
+    }
+
     self.lockCount = UPMaxT(NSInteger, self.lockCount - 1, 0);
     if (self.lockCount > 0) {
         return;
@@ -1658,6 +1661,14 @@ static UPSpellGameController *_Instance;
     }
     for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
         tileView.userInteractionEnabled = YES;
+    }
+}
+
+- (void)ensureViewUnlocked
+{
+    if (self.lockCount > 0) {
+        [self viewUnlock];
+        self.lockCount = 0;
     }
 }
 
@@ -2080,9 +2091,9 @@ static UPSpellGameController *_Instance;
     
     [self.dialogPlayMenu updateThemeColors];
     self.dialogPlayMenu.hidden = NO;
-    self.dialogPlayMenu.alpha = 0.0;
+    self.dialogPlayMenu.alpha = 0;
     [UIView animateWithDuration:0.15 animations:^{
-        self.dialogPlayMenu.alpha = 1.0;
+        self.dialogPlayMenu.alpha = 1;
     }];
 
     delay(BandModeDelay, 0.4, ^{
@@ -2121,7 +2132,7 @@ static UPSpellGameController *_Instance;
         self.dialogPause.messagePathView.frame = layout.frame_for(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear);
         self.dialogPause.quitButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse, Place::OffBottomFar);
         self.dialogPause.resumeButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Place::OffBottomFar);
-        self.dialogPause.alpha = 0.0;
+        self.dialogPause.alpha = 0;
         self.dialogPause.hidden = YES;
         self.gameView.pauseControl.highlightedLocked = NO;
         self.gameView.pauseControl.highlighted = NO;
@@ -2131,7 +2142,7 @@ static UPSpellGameController *_Instance;
     [self.dialogTaunt updatePromptWithTaunt:self.taunt];
     [self.dialogTaunt updateThemeColors];
     self.dialogTaunt.hidden = NO;
-    self.dialogTaunt.alpha = 1.0;
+    self.dialogTaunt.alpha = 1;
     self.dialogTaunt.promptLabel.frame = layout.frame_for(Role::DialogMessageTaunt);
     self.dialogTaunt.goButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse);
     self.dialogTaunt.cancelButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse);
@@ -2143,7 +2154,7 @@ static UPSpellGameController *_Instance;
     self.dialogTopMenu.playButton.highlightedLocked = NO;
     self.dialogTopMenu.playButton.highlighted = NO;
     self.dialogTopMenu.hidden = NO;
-    self.dialogTopMenu.alpha = 1.0;
+    self.dialogTopMenu.alpha = 1;
 
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonShared];
 
@@ -2169,6 +2180,51 @@ static UPSpellGameController *_Instance;
     self.dialogGameNote.hidden = YES;
     self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
     self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
+}
+
+- (void)viewImmediateTransitionToInit
+{
+    [self viewLock];
+    
+    cancel(BandGameAll);
+    cancel(BandModeAll);
+
+    self.taunt = nil;
+    [self removeInProgressGameFileLogErrors:NO];
+    
+    [self.gameTimer reset];
+    [self viewUpdateGameControls];
+    self->m_spell_model->reset_game_score();
+    [self viewUpdateGameControls];
+    [self viewFillUpSpellTileViews];
+    
+    SpellLayout &layout = SpellLayout::instance();
+    self.gameView.transform = layout.menu_game_view_transform();
+    
+    self.dialogTopMenu.hidden = NO;
+    self.dialogTopMenu.alpha = 1;
+    self.dialogTopMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft));
+    self.dialogTopMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter));
+    self.dialogTopMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight));
+    self.dialogTopMenu.playButton.highlightedLocked = NO;
+    self.dialogTopMenu.playButton.highlighted = NO;
+    
+    self.dialogGameOver.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Place::OffBottomNear);
+    self.dialogGameNote.noteLabel.frame = layout.frame_for(Role::DialogGameNote, Place::OffBottomFar);
+    
+    self.dialogGameOver.alpha = 1;
+    self.dialogGameOver.hidden = YES;
+    self.dialogGameNote.alpha = 1;
+    self.dialogGameNote.hidden = YES;
+    
+    self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
+    self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
+    self.gameView.gameScoreLabel.alpha = 1;
+    self.gameView.timerLabel.alpha = 1;
+    
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
+    
+    [self ensureViewUnlocked];
 }
 
 - (void)viewMakeReadyFromMode:(Mode)mode completion:(void (^)(void))completion
@@ -2522,8 +2578,27 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }];
     [nc addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
-        if (self.mode == Mode::Play) {
-            [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioDidEnterBackground];
+        switch (self.mode) {
+            case UP::Mode::None:
+            case UP::Mode::Init:
+            case UP::Mode::Attract:
+            case UP::Mode::PlayMenu:
+            case UP::Mode::Taunt:
+            case UP::Mode::Ready:
+            case UP::Mode::Pause:
+                break;
+            case UP::Mode::About:
+                break;
+            case UP::Mode::Extras:
+                break;
+            case UP::Mode::Play:
+                [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioDidEnterBackground];
+                break;
+            case UP::Mode::GameOver:
+            case UP::Mode::Quit:
+            case UP::Mode::End:
+                [self setMode:Mode::Init transitionScenario:UPModeTransitionScenarioDidEnterBackground];
+                break;
         }
         [self saveInProgressGameIfNecessary];
     }];
@@ -2726,8 +2801,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Attract,  Mode::Ready,    @selector(modeTransitionFromAttractToReady) },
         { Mode::PlayMenu, Mode::Init,     @selector(modeTransitionFromPlayMenuToInit) },
         { Mode::PlayMenu, Mode::Ready,    @selector(modeTransitionFromPlayMenuToReady) },
-        { Mode::Taunt,   Mode::Init,     @selector(modeTransitionFromSharedToInit) },
-        { Mode::Taunt,   Mode::Ready,    @selector(modeTransitionFromSharedToReady) },
+        { Mode::Taunt,    Mode::Init,     @selector(modeTransitionFromSharedToInit) },
+        { Mode::Taunt,    Mode::Ready,    @selector(modeTransitionFromSharedToReady) },
         { Mode::Ready,    Mode::Play,     @selector(modeTransitionFromReadyToPlay) },
         { Mode::Play,     Mode::Pause,    @selector(modeTransitionFromPlayToPause) },
         { Mode::Play,     Mode::GameOver, @selector(modeTransitionFromPlayToGameOver) },
@@ -2754,6 +2829,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
     m_did_enter_background_transition_table = {
         { Mode::Play,     Mode::Pause,    @selector(modeTransitionImmediateFromPlayToPause) },
+        { Mode::GameOver, Mode::Init,     @selector(modeTransitionImmediateFromGameOverToInit) },
+        { Mode::Quit,     Mode::Init,     @selector(modeTransitionImmediateFromQuitToInit) },
+        { Mode::End,      Mode::Init,     @selector(modeTransitionImmediateFromEndToInit) },
     };
 }
 
@@ -2842,15 +2920,15 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse);
     self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse);
     self.dialogPause.hidden = NO;
-    self.dialogPause.alpha = 1.0;
+    self.dialogPause.alpha = 1;
     
     self.dialogTopMenu.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear);
 
-    self.dialogTopMenu.alpha = 1.0;
+    self.dialogTopMenu.alpha = 1;
     self.dialogTopMenu.hidden = YES;
-    self.dialogGameOver.alpha = 1.0;
+    self.dialogGameOver.alpha = 1;
     self.dialogGameOver.hidden = YES;
-    self.dialogGameNote.alpha = 1.0;
+    self.dialogGameNote.alpha = 1;
     self.dialogGameNote.hidden = YES;
 
     [self viewUnlock];
@@ -3002,7 +3080,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     ];
     start(bloop_out(BandModeUI, buttonOutMoves, 0.6, ^(UIViewAnimatingPosition) {
         self.dialogPlayMenu.hidden = YES;
-        self.dialogPlayMenu.alpha = 1.0;
+        self.dialogPlayMenu.alpha = 1;
     }));
 
     delay(BandModeDelay, 0.25, ^{
@@ -3033,7 +3111,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self viewUnlock];
     }];
     [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
-        self.dialogPlayMenu.alpha = 0.0;
+        self.dialogPlayMenu.alpha = 0;
     } completion:nil];
 
 }
@@ -3055,10 +3133,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }));
     
     [UIView animateWithDuration:0.4 delay:0.0 options:0 animations:^{
-        self.dialogTaunt.alpha = 0.0;
+        self.dialogTaunt.alpha = 0;
     } completion:^(BOOL finished) {
         self.dialogTaunt.hidden = YES;
-        self.dialogTaunt.alpha = 1.0;
+        self.dialogTaunt.alpha = 1;
     }];
     [UIView animateWithDuration:0.25 delay:0.15 options:0 animations:^{
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
@@ -3198,11 +3276,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
         self.dialogTopMenu.alpha = 0;
     } completion:^(BOOL finished) {
-        self.dialogTopMenu.alpha = 1.0;
+        self.dialogTopMenu.alpha = 1;
         self.dialogTopMenu.hidden = YES;
-        self.dialogGameOver.alpha = 1.0;
+        self.dialogGameOver.alpha = 1;
         self.dialogGameOver.hidden = YES;
-        self.dialogGameNote.alpha = 1.0;
+        self.dialogGameNote.alpha = 1;
         self.dialogGameNote.hidden = YES;
         [UIView animateWithDuration:0.35 animations:^{
             [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
@@ -3252,9 +3330,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     start(bloop_in(BandModeUI, nearMoves, 0.35, nil));
     
     self.dialogPause.hidden = NO;
-    self.dialogPause.alpha = 0.0;
+    self.dialogPause.alpha = 0;
     [UIView animateWithDuration:0.15 animations:^{
-        self.dialogPause.alpha = 1.0;
+        self.dialogPause.alpha = 1;
     }];
 }
 
@@ -3273,8 +3351,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPause];
     
     // special modal fixups for pause
-//    self.gameView.pauseControl.highlightedLocked = YES;
-//    self.gameView.pauseControl.highlighted = YES;
+    self.gameView.pauseControl.highlightedLocked = YES;
+    self.gameView.pauseControl.highlighted = YES;
     self.gameView.pauseControl.alpha = [UIColor themeModalActiveAlpha];
 
     SpellLayout &layout = SpellLayout::instance();
@@ -3282,8 +3360,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse);
     self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse);
     self.dialogPause.hidden = NO;
-    self.dialogPause.alpha = 1.0;
-    [self viewUnlock];
+    self.dialogPause.alpha = 1;
+
+    [self ensureViewUnlocked];
 }
 
 - (void)modeTransitionFromPauseToPlay
@@ -3296,7 +3375,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [[UPSoundPlayer instance] prepare];
 
     [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
-        self.dialogPause.alpha = 0.0;
+        self.dialogPause.alpha = 0;
     } completion:nil];
 
     NSArray<UPViewMove *> *nearMoves = @[
@@ -3311,7 +3390,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
     start(bloop_out(BandModeUI, nearMoves, 0.3, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;
-        self.dialogPause.alpha = 1.0;
+        self.dialogPause.alpha = 1;
         
         [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
         delay(BandModeDelay, 0.3, ^{
@@ -3364,7 +3443,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self.gameView.pauseControl setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
     [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
-        self.dialogPause.alpha = 0.0;
+        self.dialogPause.alpha = 0;
     } completion:nil];
     
     NSArray<UPViewMove *> *nearMoves = @[
@@ -3377,7 +3456,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     start(bloop_out(BandModeUI, farMoves, 0.35, nil));
     start(bloop_out(BandModeUI, nearMoves, 0.3, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;
-        self.dialogPause.alpha = 1.0;
+        self.dialogPause.alpha = 1;
         [self setMode:Mode::End];
     }));
 }
@@ -3417,12 +3496,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear);
     self.dialogGameOver.center = layout.center_for(Location(Role::Screen));
     self.dialogGameOver.hidden = NO;
-    self.dialogGameOver.alpha = 0.0;
+    self.dialogGameOver.alpha = 0;
     self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogGameNote, Place::OffBottomNear);
     self.dialogGameNote.center = layout.center_for(Location(Role::Screen));
     self.dialogGameNote.hidden = NO;
     [UIView animateWithDuration:0.15 animations:^{
-        self.dialogGameOver.alpha = 1.0;
+        self.dialogGameOver.alpha = 1;
     }];
 
     NSArray<UPViewMove *> *moves = @[
@@ -3581,6 +3660,27 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             });
         }];
     });
+}
+
+- (void)modeTransitionImmediateFromGameOverToInit
+{
+    [self viewImmediateTransitionToInit];
+}
+
+- (void)modeTransitionImmediateFromQuitToInit
+{
+    [self viewLock];
+
+    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
+    
+    [self viewImmediateTransitionToInit];
+
+    [self ensureViewUnlocked];
+}
+
+- (void)modeTransitionImmediateFromEndToInit
+{
+    [self viewImmediateTransitionToInit];
 }
 
 @end

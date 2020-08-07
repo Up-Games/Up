@@ -30,13 +30,11 @@ static UPSceneDelegate *_Instance;
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions
 {
     _Instance = self;
-    NSLog(@"willConnectToSession: %@", connectionOptions);
     [self parseSharedGameRequestFromURLContexts:connectionOptions.URLContexts];
 }
 
 - (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
 {
-    NSLog(@"openURLContexts: %@", URLContexts);
     [self parseSharedGameRequestFromURLContexts:URLContexts];
 }
 
