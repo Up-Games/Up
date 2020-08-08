@@ -61,6 +61,9 @@ public:
         ExtrasStatsHeader, ExtrasStatsTable,
         ExtrasRetryCheckbox, ExtrasRetryDescription,
         ExtrasSoundEffectsCheckbox, ExtrasSoundEffectsSlider, ExtrasSoundTunesCheckbox, ExtrasSoundTunesSlider, ExtrasSoundDescription,
+        ExtrasTauntHighScoreValue, ExtrasTauntHighScoreDescription, ExtrasTauntHighScoreButton,
+        ExtrasTauntLastGameValue, ExtrasTauntLastGameDescription, ExtrasTauntLastGameButton,
+        ExtrasTauntDescription
     };
 
     enum class Place {
@@ -195,6 +198,17 @@ public:
 
     static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 476, 364, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasRetryDescriptionFrame = { 384, 88, 572, 300 };
+
+    static inline constexpr CGRect CanonicalExtrasTauntHighScoreButtonFrame =  { 478, 195, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGRect CanonicalExtrasTauntHighScoreValueFrame = { 462, 112, 173, 64 };
+    static inline constexpr CGRect CanonicalExtrasTauntHighScoreDescriptionFrame = { 462, 78, 173, 64 };
+    static inline constexpr CGRect CanonicalExtrasTauntLastGameButtonFrame =  { 721, 195, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGRect CanonicalExtrasTauntLastGameValueFrame = { 705, 112, 173, 64 };
+    static inline constexpr CGRect CanonicalExtrasTauntLastGameDescriptionFrame = { 705, 78, 173, 64 };
+    static inline constexpr CGRect CanonicalExtrasTauntDescriptionFrame = { 384, 300, 572, 300 };
+
+    static inline constexpr CGFloat CanonicalExtrasTauntScoreFontCapHeight = 20;
+    static inline constexpr CGFloat CanonicalExtrasTauntLabelFontCapHeight = 20;
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();

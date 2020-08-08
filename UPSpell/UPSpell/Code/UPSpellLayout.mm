@@ -746,6 +746,14 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasSoundEffectsSlider, layout_relative_aspect_rect(CanonicalExtrasSoundEffectsSliderFrame));
     calculate_and_set_locations(Role::ExtrasSoundTunesCheckbox, layout_relative_aspect_rect(CanonicalExtrasSoundTunesCheckboxFrame));
     calculate_and_set_locations(Role::ExtrasSoundTunesSlider, layout_relative_aspect_rect(CanonicalExtrasSoundTunesSliderFrame));
+
+    calculate_and_set_locations(Role::ExtrasTauntDescription, layout_relative_aspect_rect(CanonicalExtrasTauntDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasTauntHighScoreButton, layout_relative_aspect_rect(CanonicalExtrasTauntHighScoreButtonFrame));
+    calculate_and_set_locations(Role::ExtrasTauntHighScoreValue, layout_relative_aspect_rect(CanonicalExtrasTauntHighScoreValueFrame));
+    calculate_and_set_locations(Role::ExtrasTauntHighScoreDescription, layout_relative_aspect_rect(CanonicalExtrasTauntHighScoreDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasTauntLastGameButton, layout_relative_aspect_rect(CanonicalExtrasTauntLastGameButtonFrame));
+    calculate_and_set_locations(Role::ExtrasTauntLastGameValue, layout_relative_aspect_rect(CanonicalExtrasTauntLastGameValueFrame));
+    calculate_and_set_locations(Role::ExtrasTauntLastGameDescription, layout_relative_aspect_rect(CanonicalExtrasTauntLastGameDescriptionFrame));
 }
 
 void SpellLayout::calculate_choice_locations()

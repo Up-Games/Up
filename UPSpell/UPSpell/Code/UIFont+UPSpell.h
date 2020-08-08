@@ -39,6 +39,12 @@ extern NSString * const UPGameInformationFontName;
 + (UIFont *)tauntFontOfSize:(CGFloat)fontSize;
 + (UIFont *)tauntFontWithCapHeight:(CGFloat)capHeight;
 
++ (UIFont *)placardScoreFontOfSize:(CGFloat)fontSize;
++ (UIFont *)placardScoreFontWithCapHeight:(CGFloat)capHeight;
+
++ (UIFont *)placardLabelFontOfSize:(CGFloat)fontSize;
++ (UIFont *)placardLabelFontWithCapHeight:(CGFloat)capHeight;
+
 + (UIFont *)dingbatsFontOfSize:(CGFloat)fontSize;
 + (UIFont *)dingbatsFontWithCapHeight:(CGFloat)capHeight;
 

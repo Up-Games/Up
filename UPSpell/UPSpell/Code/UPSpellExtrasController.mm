@@ -23,6 +23,7 @@
 #import "UPSpellExtrasPaneColors.h"
 #import "UPSpellExtrasPaneRetry.h"
 #import "UPSpellExtrasPaneSound.h"
+#import "UPSpellExtrasPaneTaunt.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
 #import "UPSpellNavigationController.h"
@@ -43,6 +44,7 @@
 @property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
 @property (nonatomic) UPSpellExtrasPaneSound *soundPane;
 @property (nonatomic) UPSpellExtrasPaneRetry *retryPane;
+@property (nonatomic) UPSpellExtrasPaneTaunt *tauntPane;
 
 @property (nonatomic) NSArray<UPChoice *> *choices;
 @property (nonatomic) NSArray<UPAccessoryPane *> *panes;
@@ -124,13 +126,17 @@ using Location = UP::SpellLayout::Location;
     self.retryPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
     [self.view addSubview:self.retryPane];
     
+    self.tauntPane = [UPSpellExtrasPaneTaunt pane];
+    self.tauntPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    [self.view addSubview:self.tauntPane];
+    
     self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
     
     self.panes = @[
         self.colorsPane,
         self.soundPane,
         self.retryPane,
-        [UPAccessoryPane pane],
+        self.tauntPane,
     ];
     
     return self;

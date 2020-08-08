@@ -130,8 +130,8 @@ using Role = UP::SpellLayout::Role;
     [self.effectsCheckbox setSelected:settings.soundEffectsEnabled];
     [self.tunesCheckbox setSelected:settings.tunesEnabled];
 
-    self.effectsVolumeSlider.enabled = self.effectsCheckbox.enabled;
-    self.tunesVolumeSlider.enabled = self.tunesCheckbox.enabled;
+    self.effectsVolumeSlider.enabled = self.effectsCheckbox.selected;
+    self.tunesVolumeSlider.enabled = self.tunesCheckbox.selected;
 
     self.previousSoundEffectsLevel = settings.soundEffectsLevel;
     [self.effectsVolumeSlider setMarkValue:self.previousSoundEffectsLevel - 1];

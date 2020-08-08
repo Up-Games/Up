@@ -19,6 +19,8 @@ NSString * const UPChoiceControlFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPRotorControlFontName = @"MalloryCondensed-Black";
 NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
 NSString * const UPTauntFontName = @"MalloryCondensed-BlackItalic";
+NSString * const UPPlacardScoreFontName = @"MalloryCondensed-Black";
+NSString * const UPPlacardLabelFontName = @"MalloryCondensed-Black";
 NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
 
 //
@@ -269,6 +271,54 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
     return [UIFont tauntFontOfSize:pointSize];
+}
+
++ (UIFont *)placardScoreFontOfSize:(CGFloat)fontSize
+{
+    UIFont *font = [UIFont fontWithName:UPPlacardScoreFontName size:fontSize];
+    UIFontDescriptor *descriptor = [font fontDescriptor];
+    NSDictionary *attributes = @{
+        UIFontDescriptorFeatureSettingsAttribute: @[
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+                }
+        ]
+    };
+    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
+}
+
++ (UIFont *)placardScoreFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPPlacardScoreFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont placardScoreFontOfSize:pointSize];
+}
+
++ (UIFont *)placardLabelFontOfSize:(CGFloat)fontSize
+{
+    UIFont *font = [UIFont fontWithName:UPPlacardLabelFontName size:fontSize];
+    UIFontDescriptor *descriptor = [font fontDescriptor];
+    NSDictionary *attributes = @{
+        UIFontDescriptorFeatureSettingsAttribute: @[
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+                }
+        ]
+    };
+    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
+}
+
++ (UIFont *)placardLabelFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPPlacardLabelFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont placardLabelFontWithCapHeight:pointSize];
 }
 
 + (UIFont *)dingbatsFontOfSize:(CGFloat)fontSize
