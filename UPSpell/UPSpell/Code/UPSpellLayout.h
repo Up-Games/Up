@@ -178,6 +178,8 @@ public:
     
     static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 20;
     static inline constexpr CGFloat CanonicalTauntFontCapHeight = 38;
+    static inline constexpr CGFloat CanonicalPlacardValueFontCapHeight = 38;
+    static inline constexpr CGFloat CanonicalPlacardDescrptionFontCapHeight = 24;
 
     static inline constexpr CGRect CanonicalExtrasColorsHueWheelFrame =    { 430,  36, up_size_width(CanonicalHueWheelSize), up_size_height(CanonicalHueWheelSize) };
     static inline constexpr CGRect CanonicalExtrasColorsHueStepMoreFrame = { 692,  98, 44, 44 };
@@ -206,9 +208,6 @@ public:
     static inline constexpr CGRect CanonicalExtrasTauntLastGameValueFrame = { 705, 112, 173, 64 };
     static inline constexpr CGRect CanonicalExtrasTauntLastGameDescriptionFrame = { 705, 78, 173, 64 };
     static inline constexpr CGRect CanonicalExtrasTauntDescriptionFrame = { 384, 300, 572, 300 };
-
-    static inline constexpr CGFloat CanonicalExtrasTauntScoreFontCapHeight = 20;
-    static inline constexpr CGFloat CanonicalExtrasTauntLabelFontCapHeight = 20;
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
@@ -276,6 +275,8 @@ public:
     UIFont *choice_control_font() const { return m_choice_control_font; }
     UIFont *settings_description_font() const { return m_settings_description_font; }
     UIFont *taunt_font() const { return m_taunt_font; }
+    UIFont *placard_value_font() const { return m_placard_value_font; }
+    UIFont *placard_description_font() const { return m_placard_description_font; }
 
     CGFloat ballot_control_label_left_margin() const { return m_ballot_control_label_left_margin; }
     CGFloat choice_control_label_left_margin() const { return m_choice_control_label_left_margin; }
@@ -328,6 +329,8 @@ private:
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
     void set_settings_description_font(UIFont *font) { m_settings_description_font = font; }
     void set_taunt_font(UIFont *font) { m_taunt_font = font; }
+    void set_placard_value_font(UIFont *font) { m_placard_value_font = font; }
+    void set_placard_description_font(UIFont *font) { m_placard_description_font = font; }
     void set_game_controls_button_charge_outsets(UPOutsets outsets) { m_game_controls_button_charge_outsets = outsets; }
     void set_help_button_charge_outsets(UPOutsets outsets) { m_help_button_charge_outsets = outsets; }
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
@@ -356,6 +359,8 @@ private:
     void calculate_choice_control_metrics();
     void calculate_settings_description_font_metrics();
     void calculate_taunt_font_metrics();
+    void calculate_placard_value_font_metrics();
+    void calculate_placard_description_font_metrics();
     void calculate_locations();
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
@@ -414,6 +419,8 @@ private:
     __strong UIFont *m_choice_control_font;
     __strong UIFont *m_settings_description_font;
     __strong UIFont *m_taunt_font;
+    __strong UIFont *m_placard_value_font;
+    __strong UIFont *m_placard_description_font;
 
     CGFloat m_ballot_control_label_left_margin = 0.0;
     CGFloat m_choice_control_label_left_margin = 0.0;

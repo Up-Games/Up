@@ -94,13 +94,13 @@ using Role = UP::SpellLayout::Role;
     [self addSubview:self.tauntDescription];
 
     self.highScoreLabel = [UPLabel label];
-    self.highScoreLabel.font = [UIFont placardScoreFontOfSize:44];
+    self.highScoreLabel.font = layout.placard_value_font();
     self.highScoreLabel.textAlignment = NSTextAlignmentCenter;
     self.highScoreLabel.frame = layout.frame_for(Role::ExtrasTauntHighScoreValue);
     [self addSubview:self.highScoreLabel];
 
     self.highScoreDescriptionLabel = [UPLabel label];
-    self.highScoreDescriptionLabel.font = [UIFont placardLabelFontOfSize:26];
+    self.highScoreDescriptionLabel.font = layout.placard_description_font();
     self.highScoreDescriptionLabel.textAlignment = NSTextAlignmentCenter;
     self.highScoreDescriptionLabel.frame = layout.frame_for(Role::ExtrasTauntHighScoreDescription);
     self.highScoreDescriptionLabel.string = @"HIGH SCORE";
@@ -113,13 +113,13 @@ using Role = UP::SpellLayout::Role;
     [self addSubview:self.highScoreTauntButton];
     
     self.lastGameScoreLabel = [UPLabel label];
-    self.lastGameScoreLabel.font = [UIFont placardLabelFontOfSize:44];
+    self.lastGameScoreLabel.font = layout.placard_value_font();
     self.lastGameScoreLabel.textAlignment = NSTextAlignmentCenter;
     self.lastGameScoreLabel.frame = layout.frame_for(Role::ExtrasTauntLastGameValue);
     [self addSubview:self.lastGameScoreLabel];
 
     self.lastGameDescriptionLabel = [UPLabel label];
-    self.lastGameDescriptionLabel.font = [UIFont placardLabelFontOfSize:26];
+    self.lastGameDescriptionLabel.font = layout.placard_description_font();
     self.lastGameDescriptionLabel.textAlignment = NSTextAlignmentCenter;
     self.lastGameDescriptionLabel.frame = layout.frame_for(Role::ExtrasTauntLastGameDescription);
     self.lastGameDescriptionLabel.string = @"LAST GAME";

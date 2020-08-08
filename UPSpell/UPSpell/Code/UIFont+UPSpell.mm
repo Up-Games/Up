@@ -19,8 +19,8 @@ NSString * const UPChoiceControlFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPRotorControlFontName = @"MalloryCondensed-Black";
 NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
 NSString * const UPTauntFontName = @"MalloryCondensed-BlackItalic";
-NSString * const UPPlacardScoreFontName = @"MalloryCondensed-Black";
-NSString * const UPPlacardLabelFontName = @"MalloryCondensed-Black";
+NSString * const UPPlacardValueFontName = @"MalloryCondensed-Black";
+NSString * const UPPlacardDescriptionFontName = @"MalloryCondensed-Black";
 NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
 
 //
@@ -273,9 +273,9 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     return [UIFont tauntFontOfSize:pointSize];
 }
 
-+ (UIFont *)placardScoreFontOfSize:(CGFloat)fontSize
++ (UIFont *)placardValueFontOfSize:(CGFloat)fontSize
 {
-    UIFont *font = [UIFont fontWithName:UPPlacardScoreFontName size:fontSize];
+    UIFont *font = [UIFont fontWithName:UPPlacardValueFontName size:fontSize];
     UIFontDescriptor *descriptor = [font fontDescriptor];
     NSDictionary *attributes = @{
         UIFontDescriptorFeatureSettingsAttribute: @[
@@ -289,17 +289,17 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
 }
 
-+ (UIFont *)placardScoreFontWithCapHeight:(CGFloat)capHeight
++ (UIFont *)placardValueFontWithCapHeight:(CGFloat)capHeight
 {
-    UIFont *canonicalFont = [UIFont fontWithName:UPPlacardScoreFontName size:1];
+    UIFont *canonicalFont = [UIFont fontWithName:UPPlacardValueFontName size:1];
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
-    return [UIFont placardScoreFontOfSize:pointSize];
+    return [UIFont placardValueFontOfSize:pointSize];
 }
 
-+ (UIFont *)placardLabelFontOfSize:(CGFloat)fontSize
++ (UIFont *)placardDescriptionFontOfSize:(CGFloat)fontSize
 {
-    UIFont *font = [UIFont fontWithName:UPPlacardLabelFontName size:fontSize];
+    UIFont *font = [UIFont fontWithName:UPPlacardDescriptionFontName size:fontSize];
     UIFontDescriptor *descriptor = [font fontDescriptor];
     NSDictionary *attributes = @{
         UIFontDescriptorFeatureSettingsAttribute: @[
@@ -313,12 +313,12 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
 }
 
-+ (UIFont *)placardLabelFontWithCapHeight:(CGFloat)capHeight
++ (UIFont *)placardDescriptionFontWithCapHeight:(CGFloat)capHeight
 {
-    UIFont *canonicalFont = [UIFont fontWithName:UPPlacardLabelFontName size:1];
+    UIFont *canonicalFont = [UIFont fontWithName:UPPlacardDescriptionFontName size:1];
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
-    return [UIFont placardLabelFontWithCapHeight:pointSize];
+    return [UIFont placardDescriptionFontOfSize:pointSize];
 }
 
 + (UIFont *)dingbatsFontOfSize:(CGFloat)fontSize

@@ -309,6 +309,8 @@ void SpellLayout::calculate()
     calculate_choice_control_metrics();
     calculate_settings_description_font_metrics();
     calculate_taunt_font_metrics();
+    calculate_placard_value_font_metrics();
+    calculate_placard_description_font_metrics();
     calculate_game_controls_button_charge_outsets();
     calculate_help_button_charge_outsets();
     calculate_locations();
@@ -489,6 +491,20 @@ void SpellLayout::calculate_taunt_font_metrics()
     CGFloat cap_height = CanonicalTauntFontCapHeight * layout_scale();
     UIFont *font = [UIFont tauntFontWithCapHeight:cap_height];
     set_taunt_font(font);
+}
+
+void SpellLayout::calculate_placard_value_font_metrics()
+{
+    CGFloat cap_height = CanonicalPlacardValueFontCapHeight * layout_scale();
+    UIFont *font = [UIFont placardValueFontWithCapHeight:cap_height];
+    set_placard_value_font(font);
+}
+
+void SpellLayout::calculate_placard_description_font_metrics()
+{
+    CGFloat cap_height = CanonicalPlacardDescrptionFontCapHeight * layout_scale();
+    UIFont *font = [UIFont placardDescriptionFontWithCapHeight:cap_height];
+    set_placard_description_font(font);
 }
 
 void SpellLayout::calculate_word_tray_layout_frame()
