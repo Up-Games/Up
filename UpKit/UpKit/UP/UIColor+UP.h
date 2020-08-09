@@ -101,3 +101,19 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 @interface NSObject (UPThemeColors)
 - (void)updateThemeColors;
 @end
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern const int UPHueCount;
+extern const int UPHueMilepost;
+
+int up_previous_milestone_hue(int);
+int up_next_milestone_hue(int);
+NSString *up_theme_icon_name(void);
+
+#ifdef __cplusplus
+}  // extern "C"
+#endif
+

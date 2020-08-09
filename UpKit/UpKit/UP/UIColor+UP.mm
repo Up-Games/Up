@@ -5,7 +5,9 @@
 
 #import "UPAssertions.h"
 #import "UIColor+UP.h"
+#import "UIDevice+UP.h"
 #import "UPColor.h"
+#import "UPGeometry.h"
 #import "UPMath.h"
 
 using UP::RGBF;
@@ -458,3 +460,71 @@ static CGFloat _ThemeHue = 222;
 }
 
 @end
+
+// =========================================================================================================================================
+
+const int UPHueCount = 360;
+const int UPHueMilepost = 15;
+
+int up_previous_milestone_hue(int hue)
+{
+    int dv = hue % UPHueMilepost;
+    if (dv == 0) {
+        dv = UPHueMilepost;
+    }
+    hue -= dv;
+    if (hue < 0) {
+        hue = UPHueCount - UPHueMilepost;
+    }
+    return hue;
+}
+
+int up_next_milestone_hue(int hue)
+{
+    int dv = hue % UPHueMilepost;
+    if (dv == 0) {
+        hue += UPHueMilepost;
+    }
+    else {
+        hue += (UPHueMilepost - dv);
+    }
+    if (hue >= UPHueCount) {
+        hue = 0;
+    }
+    return hue;
+}
+
+NSString *up_theme_icon_name(void)
+{
+    CGFloat hue = [UIColor themeColorHue];
+    if (fmod(hue, UPHueMilepost) > 1) {
+        CGFloat hueMore = up_next_milestone_hue(hue);
+        CGFloat hueLess = up_previous_milestone_hue(hue);
+        CGFloat diffMore = up_angular_difference(hue, hueMore);
+        CGFloat diffLess = up_angular_difference(hue, hueLess);
+        if (diffMore < diffLess) {
+            hue = hueMore;
+        }
+        else {
+            hue = hueLess;
+        }
+        if (up_is_fuzzy_equal(hue, 360)) {
+            hue = 0;
+        }
+    }
+    UIDevice *device = [UIDevice currentDevice];
+    NSString *iconName = nil;
+    if ([device.model isEqualToString:@"iPhone"]) {
+        iconName = [NSString stringWithFormat:@"up-games-icon-%03d-60", (int)hue];
+    }
+    else if ([device.model isEqualToString:@"iPad"]) {
+        if ([device isiPadPro]) {
+            iconName = [NSString stringWithFormat:@"up-games-icon-%03d-83", (int)hue];
+        }
+        else {
+            iconName = [NSString stringWithFormat:@"up-games-icon-%03d-76", (int)hue];
+        }
+    }
+    LOG(General, "iconName: %@ : %@ : %@", iconName, device.model, [device fullModel]);
+    return iconName;
+}

@@ -62,7 +62,7 @@ using UP::cpp_str;
 
 - (void)_setURL
 {
-    NSString *string = [NSString stringWithFormat:@"upspell:///%@?s=%d", self.gameKey.string, self.score];
+    NSString *string = [NSString stringWithFormat:@"https://upgames.dev/t/?g=upspell&k=%@s=%d", self.gameKey.string, self.score];
     self.URL = [NSURL URLWithString:string];
 }
 
@@ -74,33 +74,67 @@ using UP::cpp_str;
     
     NSURLComponents *components = [NSURLComponents componentsWithURL:self.URL resolvingAgainstBaseURL:NO];
     NSArray<NSString *> *pathComponents = [components.path pathComponents];
-    if (pathComponents.count != 2 || ![pathComponents.firstObject isEqualToString:@"/"]) {
+    if (pathComponents.count != 3 ||
+        (![pathComponents[0] isEqualToString:@"/"] ||
+         ![pathComponents[1] isEqualToString:@"t"] ||
+         ![pathComponents[2] isEqualToString:@"/"])) {
         return;
     }
-    NSString *gameKeyString = [pathComponents lastObject];
-    if (!GameKey::is_well_formed(cpp_str(gameKeyString))) {
-        self.gameKey = [UPGameKey gameKeyWithValue:0];
-    }
-    else {
-        self.gameKey = [UPGameKey gameKeyWithString:gameKeyString];
-        validVotes++;
-    }
-    for (NSURLQueryItem *queryItem in components.queryItems) {
-        if ([queryItem.name isEqualToString:@"s"]) {
-            NSString *input = queryItem.value;
-            if (input.length > 0) {
-                NSScanner *scanner = [NSScanner scannerWithString:input];
+    
+    BOOL gotG = NO;
+    BOOL gotK = NO;
+    BOOL gotS = NO;
+    for (NSURLQueryItem *q in components.queryItems) {
+        if ([q.name isEqualToString:@"g"]) {
+            if (gotG) {
+                break;
+            }
+            gotG = YES;
+            if ([q.value isEqualToString:@"upspell"]) {
+                validVotes++;
+            }
+        }
+        else if ([q.name isEqualToString:@"k"]) {
+            if (gotK) {
+                break;
+            }
+            gotK = YES;
+            NSString *gameKeyString = q.value;
+            if (!GameKey::is_well_formed(cpp_str(gameKeyString))) {
+                self.gameKey = [UPGameKey gameKeyWithValue:0];
+                break;
+            }
+            else {
+                self.gameKey = [UPGameKey gameKeyWithString:gameKeyString];
+                validVotes++;
+            }
+        }
+        else if ([q.name isEqualToString:@"s"]) {
+            if (gotS) {
+                break;
+            }
+            gotS = YES;
+            NSString *scoreInput = q.value;
+            if (scoreInput.length == 0) {
+                break;
+            }
+            else {
+                NSScanner *scanner = [NSScanner scannerWithString:scoreInput];
                 NSCharacterSet *skips = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
                 NSString *scoreString = nil;
                 [scanner scanCharactersFromSet:skips intoString:&scoreString];
-                if (input.length == scoreString.length) {
+                if (scoreInput.length == scoreString.length) {
                     self.score = [scoreString intValue];
                     validVotes++;
+                }
+                else {
+                    break;
                 }
             }
         }
     }
-    if (validVotes == 2) {
+
+    if (validVotes == 3) {
         self.valid = YES;
     }
 }

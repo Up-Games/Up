@@ -38,6 +38,26 @@ static UPSceneDelegate *_Instance;
     [self parseSharedGameRequestFromURLContexts:URLContexts];
 }
 
+- (void)scene:(UIScene *)scene willContinueUserActivityWithType:(NSString *)userActivityType
+{
+    LOG(General, "willContinueUserActivityWithType: %@", userActivityType);
+    if ([userActivityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+        // go back to init screen
+    }
+}
+
+- (void)scene:(UIScene *)scene continueUserActivity:(NSUserActivity *)userActivity
+{
+    LOG(General, "continueUserActivity: %@", userActivity);
+    if (![userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+        return;
+    }
+    
+    NSURL *incomingURL = userActivity.webpageURL;
+    UPTaunt *taunt = [UPTaunt tauntWithURL:incomingURL];
+    [[UPSpellGameController instance] setTaunt:taunt];
+}
+
 - (void)parseSharedGameRequestFromURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
 {
     if (URLContexts.count != 1) {

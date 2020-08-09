@@ -185,6 +185,7 @@
 		5D6FB59D24DDC56100CDC293 /* UPDialogTaunt.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59C24DDC56100CDC293 /* UPDialogTaunt.mm */; };
 		5D6FB5A024DEF08800CDC293 /* UPSpellExtrasPaneTaunt.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59F24DEF08800CDC293 /* UPSpellExtrasPaneTaunt.mm */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.mm */; };
+		5D8D827224E03B08007B050C /* LinkPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D8D827124E03B08007B050C /* LinkPresentation.framework */; };
 		5DA0A06624BCD4EA0029CE0E /* UPSpellGameRetry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA0A06524BCD4EA0029CE0E /* UPSpellGameRetry.mm */; };
 		5DA0A06924BD08590029CE0E /* UPDialogPlayMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA0A06824BD08590029CE0E /* UPDialogPlayMenu.mm */; };
 		5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E0432476BF41008D3015 /* UPTileView.mm */; };
@@ -192,6 +193,7 @@
 		5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */; };
 		5DB9B1AC248705FA00A4AAA8 /* UPSpellGameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AB248705FA00A4AAA8 /* UPSpellGameView.mm */; };
 		5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */; };
+		5DF74C4024DF80B50000F43D /* UPActivityViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF74C3E24DF80B50000F43D /* UPActivityViewController.mm */; };
 		5DF9DF5C2466165700B2199D /* UPAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */; };
 		5DF9DF5F2466165700B2199D /* UPSceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */; };
 		5DF9DF622466165700B2199D /* UPSpellGameController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF612466165700B2199D /* UPSpellGameController.mm */; };
@@ -440,6 +442,9 @@
 		5D723114246B34C0006027A3 /* UPTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileView.h; sourceTree = "<group>"; };
 		5D72311F246B3917006027A3 /* UIFont+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UPSpell.h"; sourceTree = "<group>"; };
 		5D723120246B3996006027A3 /* UIFont+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIFont+UPSpell.mm"; sourceTree = "<group>"; };
+		5D8D826F24DF866D007B050C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		5D8D827124E03B08007B050C /* LinkPresentation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkPresentation.framework; path = System/Library/Frameworks/LinkPresentation.framework; sourceTree = SDKROOT; };
+		5D8D827324E06853007B050C /* UP Spell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "UP Spell.entitlements"; sourceTree = "<group>"; };
 		5DA0A06424BCD4EA0029CE0E /* UPSpellGameRetry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellGameRetry.h; sourceTree = "<group>"; };
 		5DA0A06524BCD4EA0029CE0E /* UPSpellGameRetry.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellGameRetry.mm; sourceTree = "<group>"; };
 		5DA0A06724BD08590029CE0E /* UPDialogPlayMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogPlayMenu.h; sourceTree = "<group>"; };
@@ -456,6 +461,8 @@
 		5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTilePaths.h; sourceTree = "<group>"; };
 		5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPTilePaths-private.mm"; sourceTree = "<group>"; };
 		5DC67DF424730207009BCDBB /* UPSpellMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellMacros.h; sourceTree = "<group>"; };
+		5DF74C3E24DF80B50000F43D /* UPActivityViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPActivityViewController.mm; sourceTree = "<group>"; };
+		5DF74C3F24DF80B50000F43D /* UPActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPActivityViewController.h; sourceTree = "<group>"; };
 		5DF9DF572466165700B2199D /* UP Spell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UP Spell.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF9DF5A2466165700B2199D /* UPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAppDelegate.h; sourceTree = "<group>"; };
 		5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAppDelegate.mm; sourceTree = "<group>"; };
@@ -479,6 +486,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D8D827224E03B08007B050C /* LinkPresentation.framework in Frameworks */,
 				5D5B53F424CDCB5000FD50D4 /* AVFoundation.framework in Frameworks */,
 				5DF9DF8C2466168500B2199D /* UpKit.framework in Frameworks */,
 			);
@@ -674,6 +682,8 @@
 				5D723120246B3996006027A3 /* UIFont+UPSpell.mm */,
 				5D0FC33124A65A6C00353563 /* UPAccessoryPane.h */,
 				5D0FC33224A65A6C00353563 /* UPAccessoryPane.mm */,
+				5DF74C3F24DF80B50000F43D /* UPActivityViewController.h */,
+				5DF74C3E24DF80B50000F43D /* UPActivityViewController.mm */,
 				5DF9DF5A2466165700B2199D /* UPAppDelegate.h */,
 				5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */,
 				5D0FC21B24A125D000353563 /* UPBallot.h */,
@@ -788,6 +798,7 @@
 		5DF9DF592466165700B2199D /* UPSpell */ = {
 			isa = PBXGroup;
 			children = (
+				5D8D827324E06853007B050C /* UP Spell.entitlements */,
 				5D723117246B3678006027A3 /* Code */,
 				5D723118246B3694006027A3 /* Fonts */,
 				5D0FC23C24A5770600353563 /* Icons */,
@@ -809,6 +820,8 @@
 		5DF9DF8A2466168500B2199D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5D8D827124E03B08007B050C /* LinkPresentation.framework */,
+				5D8D826F24DF866D007B050C /* MessageUI.framework */,
 				5D5B53F324CDCB5000FD50D4 /* AVFoundation.framework */,
 				5DF9DF8B2466168500B2199D /* UpKit.framework */,
 			);
@@ -1093,6 +1106,7 @@
 				5DA0A06924BD08590029CE0E /* UPDialogPlayMenu.mm in Sources */,
 				5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */,
 				5D0FC22724A278D300353563 /* UPStepper.mm in Sources */,
+				5DF74C4024DF80B50000F43D /* UPActivityViewController.mm in Sources */,
 				5D6FB5A024DEF08800CDC293 /* UPSpellExtrasPaneTaunt.mm in Sources */,
 				5D6261A324C0944600D19EEF /* UPSpellDossier.mm in Sources */,
 				5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */,
@@ -1260,6 +1274,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_ENTITLEMENTS = "UPSpell/UP Spell.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 784YP5V58W;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1268,7 +1283,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = games.up.spell;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.upgames.upspell;
 				PRODUCT_NAME = "UP Spell";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1279,6 +1294,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_ENTITLEMENTS = "UPSpell/UP Spell.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 784YP5V58W;
 				INFOPLIST_FILE = UPSpell/Info.plist;
@@ -1286,7 +1302,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = games.up.spell;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.upgames.upspell;
 				PRODUCT_NAME = "UP Spell";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -68,11 +68,20 @@ using Role = UP::SpellLayout::Role;
 using Place = UP::SpellLayout::Place;
 using Location = UP::SpellLayout::Location;
 
+static UPSpellExtrasController *_Instance;
+
 @implementation UPSpellExtrasController
+
++ (UPSpellExtrasController *)instance
+{
+    return _Instance;
+}
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    _Instance = self;
     
     SpellLayout &layout = SpellLayout::instance();
 

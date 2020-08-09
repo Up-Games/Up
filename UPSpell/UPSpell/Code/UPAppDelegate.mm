@@ -4,6 +4,8 @@
 //
 
 #import "UPAppDelegate.h"
+#import "UPSpellGameController.h"
+#import "UPTaunt.h"
 
 @interface UPAppDelegate ()
 @end

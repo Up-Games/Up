@@ -14,6 +14,9 @@
 @class UPStepper;
 
 @interface UPSpellExtrasController : UIViewController
+
++ (UPSpellExtrasController *)instance;
+
 @property (nonatomic, readonly) UPButton *backButton;
 @property (nonatomic, readonly) UPChoice *choice1;
 @property (nonatomic, readonly) UPChoice *choice2;

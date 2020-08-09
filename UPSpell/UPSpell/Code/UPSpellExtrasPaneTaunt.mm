@@ -3,6 +3,8 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
+#import <LinkPresentation/LinkPresentation.h>
+
 #import <UpKit/NSMutableAttributedString+UP.h>
 #import <UpKit/UIColor+UP.h>
 #import <UpKit/UPBand.h>
@@ -16,6 +18,7 @@
 #import <UpKit/UPTimeSpanning.h>
 
 #import "UIFont+UPSpell.h"
+#import "UPActivityViewController.h"
 #import "UPBallot.h"
 #import "UPControl+UPSpell.h"
 #import "UPDialogTopMenu.h"
@@ -60,14 +63,21 @@ using UP::TimeSpanning::start;
 
 using Role = UP::SpellLayout::Role;
 
-@interface UPSpellExtrasPaneTaunt ()
+typedef NS_ENUM(NSInteger, UPTauntType) {
+    UPTauntTypeNone,
+    UPTauntTypeHighScore,
+    UPTauntTypeLastGameScore,
+};
+
+@interface UPSpellExtrasPaneTaunt () <UIActivityItemSource>
 @property (nonatomic) UPLabel *highScoreLabel;
 @property (nonatomic) UPLabel *highScoreDescriptionLabel;
 @property (nonatomic) UPLabel *lastGameScoreLabel;
-@property (nonatomic) UPLabel *lastGameDescriptionLabel;
+@property (nonatomic) UPLabel *lastGameScoreDescriptionLabel;
 @property (nonatomic) UPTextButton *highScoreTauntButton;
-@property (nonatomic) UPTextButton *lastGameTauntButton;
+@property (nonatomic) UPTextButton *lastGameScoreTauntButton;
 @property (nonatomic) UPLabel *tauntDescription;
+@property (nonatomic) UPTauntType tauntType;
 @end
 
 @implementation UPSpellExtrasPaneTaunt
@@ -118,18 +128,18 @@ using Role = UP::SpellLayout::Role;
     self.lastGameScoreLabel.frame = layout.frame_for(Role::ExtrasTauntLastGameValue);
     [self addSubview:self.lastGameScoreLabel];
 
-    self.lastGameDescriptionLabel = [UPLabel label];
-    self.lastGameDescriptionLabel.font = layout.placard_description_font();
-    self.lastGameDescriptionLabel.textAlignment = NSTextAlignmentCenter;
-    self.lastGameDescriptionLabel.frame = layout.frame_for(Role::ExtrasTauntLastGameDescription);
-    self.lastGameDescriptionLabel.string = @"LAST GAME";
-    [self addSubview:self.lastGameDescriptionLabel];
+    self.lastGameScoreDescriptionLabel = [UPLabel label];
+    self.lastGameScoreDescriptionLabel.font = layout.placard_description_font();
+    self.lastGameScoreDescriptionLabel.textAlignment = NSTextAlignmentCenter;
+    self.lastGameScoreDescriptionLabel.frame = layout.frame_for(Role::ExtrasTauntLastGameDescription);
+    self.lastGameScoreDescriptionLabel.string = @"LAST GAME";
+    [self addSubview:self.lastGameScoreDescriptionLabel];
     
-    self.lastGameTauntButton = [UPTextButton smallTextButton];
-    [self.lastGameTauntButton setTarget:self action:@selector(lastGameTauntButtonTapped)];
-    self.lastGameTauntButton.labelString = @"TAUNT";
-    self.lastGameTauntButton.frame = layout.frame_for(Role::ExtrasTauntLastGameButton);
-    [self addSubview:self.lastGameTauntButton];
+    self.lastGameScoreTauntButton = [UPTextButton smallTextButton];
+    [self.lastGameScoreTauntButton setTarget:self action:@selector(lastGameTauntButtonTapped)];
+    self.lastGameScoreTauntButton.labelString = @"TAUNT";
+    self.lastGameScoreTauntButton.frame = layout.frame_for(Role::ExtrasTauntLastGameButton);
+    [self addSubview:self.lastGameScoreTauntButton];
 
     [self updateThemeColors];
 
@@ -148,7 +158,7 @@ using Role = UP::SpellLayout::Role;
         self.highScoreLabel.colorCategory = UPColorCategoryInformation;
         self.lastGameScoreLabel.colorCategory = UPColorCategoryInformation;
         self.highScoreTauntButton.enabled = YES;
-        self.lastGameTauntButton.enabled = YES;
+        self.lastGameScoreTauntButton.enabled = YES;
     }
     else {
         self.highScoreLabel.string = @"–";
@@ -156,7 +166,7 @@ using Role = UP::SpellLayout::Role;
         self.highScoreLabel.colorCategory = UPColorCategoryInactiveContent;
         self.lastGameScoreLabel.colorCategory = UPColorCategoryInactiveContent;
         self.highScoreTauntButton.enabled = NO;
-        self.lastGameTauntButton.enabled = NO;
+        self.lastGameScoreTauntButton.enabled = NO;
     }
     [self updateThemeColors];
 }
@@ -165,10 +175,93 @@ using Role = UP::SpellLayout::Role;
 
 - (void)highScoreTauntButtonTapped
 {
+    self.tauntType = UPTauntTypeHighScore;
+
+    UPSpellExtrasController *extrasController = [UPSpellExtrasController instance];
+
+    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithActivityItems:@[self]];
+    activityViewController.excludedActivityTypes = @[
+        UIActivityTypeAirDrop,
+        UIActivityTypePrint,
+        UIActivityTypeAssignToContact,
+        UIActivityTypeSaveToCameraRoll,
+        UIActivityTypeAddToReadingList,
+        UIActivityTypePostToFlickr,
+        UIActivityTypePostToVimeo,
+        UIActivityTypeMarkupAsPDF,
+        UIActivityTypeAddToReadingList,
+        UIActivityTypeOpenInIBooks
+    ];
+
+    [extrasController presentViewController:activityViewController animated:YES completion:^{
+//        self.tauntType = UPTauntTypeNone;
+    }];
 }
 
 - (void)lastGameTauntButtonTapped
 {
+}
+
+- (NSString *)tauntURLString
+{
+    return @"https://upgames.dev/t/?g=upspell&k=GBK-1782&s=163";
+}
+
+- (NSURL *)tauntURL
+{
+    return [NSURL URLWithString:[self tauntURLString]];
+}
+
+- (NSString *)tauntString
+{
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    int score = 0;
+    switch (self.tauntType) {
+        case UPTauntTypeNone:
+            break;
+        case UPTauntTypeHighScore:
+            score = dossier.highScore;
+            break;
+        case UPTauntTypeLastGameScore:
+            score = dossier.lastScore;
+            break;
+    }
+    
+    return [NSString stringWithFormat:@"I scored %d in Up Spell. Top that!", score];
+}
+
+- (NSString *)tauntStringWithURL
+{
+    return [NSString stringWithFormat:@"%@ %@", [self tauntString], [self tauntURLString]];
+}
+
+#pragma mark - UIActivityItemSource
+
+- (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController
+{
+    return [self tauntURL];
+
+}
+
+- (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(UIActivityType)activityType
+{
+    return [self tauntURL];
+}
+
+- (LPLinkMetadata *)activityViewControllerLinkMetadata:(UIActivityViewController *)activityViewController
+{
+    LPLinkMetadata *metadata = [[LPLinkMetadata alloc] init];
+    metadata.originalURL = [self tauntURL];
+    metadata.URL = [self tauntURL];
+    metadata.title = [self tauntString];
+    
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    NSString *iconName = [NSString stringWithFormat:@"%@@%dx", up_theme_icon_name(), (int)scale];
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSURL *iconURL = [bundle URLForResource:[iconName lastPathComponent] withExtension:@"png"];
+    metadata.iconProvider = [[NSItemProvider alloc] initWithContentsOfURL:iconURL];
+    
+    return metadata;
 }
 
 #pragma mark - Update theme colors

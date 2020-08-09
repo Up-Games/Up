@@ -4,7 +4,6 @@
 //
 
 #import <UpKit/UIColor+UP.h>
-#import <UpKit/UIDevice+UP.h>
 #import <UpKit/UPBand.h>
 #import <UpKit/UPTapGestureRecognizer.h>
 #import <UpKit/UPTimeSpanning.h>
@@ -60,9 +59,6 @@ using UP::TimeSpanning::start;
 
 using Role = UP::SpellLayout::Role;
 using Spot = UP::SpellLayout::Place;
-
-static const int HueCount = 360;
-static const int MilepostHue = 15;
 
 @implementation UPSpellExtrasPaneColors
 
@@ -294,38 +290,10 @@ static const int MilepostHue = 15;
     settings.themeColorHue = hue;
 }
 
-- (int)prevHueForHue:(int)hue
-{
-    int dv = hue % MilepostHue;
-    if (dv == 0) {
-        dv = MilepostHue;
-    }
-    hue -= dv;
-    if (hue < 0) {
-        hue = HueCount - MilepostHue;
-    }
-    return hue;
-}
-
-- (int)nextHueForHue:(int)hue
-{
-    int dv = hue % MilepostHue;
-    if (dv == 0) {
-        hue += MilepostHue;
-    }
-    else {
-        hue += (MilepostHue - dv);
-    }
-    if (hue >= HueCount) {
-        hue = 0;
-    }
-    return hue;
-}
-
 - (void)handleHueStepLess
 {
     CGFloat hue = [UIColor themeColorHue];
-    hue = [self prevHueForHue:hue];
+    hue = up_previous_milestone_hue(hue);
     self.hueWheel.hue = hue;
     [self.hueWheel cancelAnimations];
     [UIColor setThemeColorHue:hue];
@@ -337,7 +305,7 @@ static const int MilepostHue = 15;
 - (void)handleHueStepMore
 {
     CGFloat hue = [UIColor themeColorHue];
-    hue = [self nextHueForHue:hue];
+    hue = up_next_milestone_hue(hue);
     self.hueWheel.hue = hue;
     [self.hueWheel cancelAnimations];
     [UIColor setThemeColorHue:hue];
@@ -501,37 +469,8 @@ static const int MilepostHue = 15;
 
 - (void)iconButtonYepTapped
 {
-    CGFloat hue = [UIColor themeColorHue];
-    if (fmod(hue, MilepostHue) > 1) {
-        CGFloat hueMore = [self nextHueForHue:hue];
-        CGFloat hueLess = [self prevHueForHue:hue];
-        CGFloat diffMore = up_angular_difference(hue, hueMore);
-        CGFloat diffLess = up_angular_difference(hue, hueLess);
-        if (diffMore < diffLess) {
-            hue = hueMore;
-        }
-        else {
-            hue = hueLess;
-        }
-        if (up_is_fuzzy_equal(hue, 360)) {
-            hue = 0;
-        }
-    }
     UIApplication *app = [UIApplication sharedApplication];
-    UIDevice *device = [UIDevice currentDevice];
-    NSString *iconName = nil;
-    if ([device.model isEqualToString:@"iPhone"]) {
-        iconName = [NSString stringWithFormat:@"up-games-icon-%03d-60", (int)hue];
-    }
-    else if ([device.model isEqualToString:@"iPad"]) {
-        if ([device isiPadPro]) {
-            iconName = [NSString stringWithFormat:@"up-games-icon-%03d-83", (int)hue];
-        }
-        else {
-            iconName = [NSString stringWithFormat:@"up-games-icon-%03d-76", (int)hue];
-        }
-    }
-    LOG(General, "iconName: %@ : %@ : %@", iconName, device.model, [device fullModel]);
+    NSString *iconName = up_theme_icon_name();
     [app setAlternateIconName:iconName completionHandler:^(NSError *error) {
         [self hideIconEasterEgg];
         if (error) {
