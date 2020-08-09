@@ -22,6 +22,7 @@
 @property (nonatomic, readwrite) UPChoice *choice2;
 @property (nonatomic, readwrite) UPChoice *choice3;
 @property (nonatomic, readwrite) UPChoice *choice4;
+@property (nonatomic, readwrite) UPAccessoryPane *selectedPane;
 @end
 
 using UP::SpellLayout;

@@ -13,6 +13,7 @@
 
 - (void)presentExtrasController;
 - (void)presentAboutController;
+- (void)dismissPresentedControllerImmediateIfNecessary;
 
 @end
 

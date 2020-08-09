@@ -8,6 +8,7 @@
 #import "UPSceneDelegate.h"
 #import "UPTaunt.h"
 #import "UPSpellGameController.h"
+#import "UPSpellNavigationController.h"
 
 static UPSceneDelegate *_Instance;
 
@@ -42,7 +43,7 @@ static UPSceneDelegate *_Instance;
 {
     LOG(General, "willContinueUserActivityWithType: %@", userActivityType);
     if ([userActivityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
-        // go back to init screen
+        [[UPSpellNavigationController instance] dismissPresentedControllerImmediateIfNecessary];
     }
 }
 

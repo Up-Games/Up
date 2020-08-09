@@ -18,6 +18,7 @@
 @property (nonatomic) UP::Mode mode;
 @property (nonatomic) UPSpellGameRetry *retry;
 
+- (void)setMode:(UP::Mode)mode transitionScenario:(UPModeTransitionScenario)transitionScenario;
 - (void)setTaunt:(UPTaunt *)taunt;
 
 @end

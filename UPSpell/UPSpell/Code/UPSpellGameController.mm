@@ -22,9 +22,11 @@
 #import "UPDialogTaunt.h"
 #import "UPSceneDelegate.h"
 #import "UPSoundPlayer.h"
+#import "UPSpellGameController.h"
 #import "UPSpellGameSummary.h"
 #import "UPSpellGameView.h"
 #import "UPSpellLayout.h"
+#import "UPSpellNavigationController.h"
 #import "UPSpellDossier.h"
 #import "UPSpellSettings.h"
 #import "UPTextButton.h"
@@ -33,8 +35,6 @@
 #import "UPTilePaths.h"
 #import "UPTunePlayer.h"
 #import "UPTaunt.h"
-#import "UPSpellGameController.h"
-#import "UPSpellNavigationController.h"
 #import "UPViewMove+UPSpell.h"
 
 using Action = UP::SpellModel::Action;
@@ -2199,8 +2199,10 @@ static UPSpellGameController *_Instance;
     [self viewFillUpSpellTileViews];
     
     SpellLayout &layout = SpellLayout::instance();
+    self.gameView.transform = CGAffineTransformIdentity;
+    self.gameView.frame = layout.frame_for(Role::Screen);
     self.gameView.transform = layout.menu_game_view_transform();
-    
+
     self.dialogTopMenu.hidden = NO;
     self.dialogTopMenu.alpha = 1;
     self.dialogTopMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft));
@@ -2208,7 +2210,10 @@ static UPSpellGameController *_Instance;
     self.dialogTopMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight));
     self.dialogTopMenu.playButton.highlightedLocked = NO;
     self.dialogTopMenu.playButton.highlighted = NO;
-    
+    self.dialogTopMenu.extrasButton.userInteractionEnabled = YES;
+    self.dialogTopMenu.playButton.userInteractionEnabled = YES;
+    self.dialogTopMenu.aboutButton.userInteractionEnabled = YES;
+
     self.dialogGameOver.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Place::OffBottomNear);
     self.dialogGameNote.noteLabel.frame = layout.frame_for(Role::DialogGameNote, Place::OffBottomFar);
     
@@ -2790,7 +2795,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Init,     Mode::About,    @selector(modeTransitionFromInitToAbout) },
         { Mode::Init,     Mode::Extras,   @selector(modeTransitionFromInitToExtras) },
         { Mode::Init,     Mode::PlayMenu, @selector(modeTransitionFromInitToPlayMenu) },
-        { Mode::Init,     Mode::Taunt,   @selector(modeTransitionFromInitToShared) },
+        { Mode::Init,     Mode::Taunt,    @selector(modeTransitionFromInitToShared) },
         { Mode::Init,     Mode::Ready,    @selector(modeTransitionFromInitToReady) },
         { Mode::About,    Mode::Init,     @selector(modeTransitionFromAboutToInit) },
         { Mode::Extras,   Mode::Init,     @selector(modeTransitionFromExtrasToInit) },
@@ -2804,7 +2809,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Ready,    Mode::Play,     @selector(modeTransitionFromReadyToPlay) },
         { Mode::Play,     Mode::Pause,    @selector(modeTransitionFromPlayToPause) },
         { Mode::Play,     Mode::GameOver, @selector(modeTransitionFromPlayToGameOver) },
-        { Mode::Pause,    Mode::Taunt,   @selector(modeTransitionFromPauseToShared) },
+        { Mode::Pause,    Mode::Taunt,    @selector(modeTransitionFromPauseToShared) },
         { Mode::Pause,    Mode::Play,     @selector(modeTransitionFromPauseToPlay) },
         { Mode::Pause,    Mode::Quit,     @selector(modeTransitionFromPauseToQuit) },
         { Mode::GameOver, Mode::End,      @selector(modeTransitionFromOverToEnd) },
@@ -2819,7 +2824,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Play,     Mode::Pause,    @selector(modeTransitionImmediateFromPlayToPause) },
     };
 
-    m_will_enter_foreground_transition_table = {};
+    m_will_enter_foreground_transition_table = {
+        { Mode::About,    Mode::Init,      @selector(modeTransitionImmediateFromAboutToInit) },
+        { Mode::Extras,   Mode::Init,     @selector(modeTransitionImmediateFromExtrasToInit) },
+    };
 
     m_will_resign_active_transition_table = {
         { Mode::Play,     Mode::Pause,    @selector(modeTransitionImmediateFromPlayToPause) },
@@ -3026,6 +3034,22 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             [self viewUnlock];
         }));
     });
+}
+
+- (void)modeTransitionImmediateFromExtrasToInit
+{
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
+    [self viewImmediateTransitionToInit];
+    [self viewUnlock];
+}
+
+- (void)modeTransitionImmediateFromAboutToInit
+{
+    ASSERT(self.lockCount == 0);
+    [self viewLock];
+    [self viewImmediateTransitionToInit];
+    [self viewUnlock];
 }
 
 - (void)modeTransitionFromAttractToAbout

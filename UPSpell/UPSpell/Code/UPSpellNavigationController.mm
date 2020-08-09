@@ -8,6 +8,7 @@
 #import "UPAccessoryPane.h"
 #import "UPChoice.h"
 #import "UPDialogTopMenu.h"
+#import "UPMode.h"
 #import "UPSceneDelegate.h"
 #import "UPSpellNavigationController.h"
 #import "UPSpellAboutController.h"
@@ -168,6 +169,40 @@ using UP::TimeSpanning::start;
         self.gameController.retry = nil;
         [self.gameController setMode:Mode::Init];
     }];
+}
+
+- (void)dismissPresentedControllerImmediateIfNecessary
+{
+    Mode mode = self.gameController.mode;
+    if (mode != Mode::Extras && mode != Mode::About) {
+        return;
+    }
+    
+    [self.extrasController cancelAnimations];
+    [self dismissViewControllerAnimated:NO completion:nil];
+
+    NSArray<UPViewMove *> *moves = @[
+        UPViewMoveMake(self.extrasController.backButton, Role::ChoiceBackLeft, Spot::OffLeftNear),
+        UPViewMoveMake(self.extrasController.choice1, Role::ChoiceItem1Left, Spot::OffLeftNear),
+        UPViewMoveMake(self.extrasController.choice2, Role::ChoiceItem2Left, Spot::OffLeftNear),
+        UPViewMoveMake(self.extrasController.choice3, Role::ChoiceItem3Left, Spot::OffLeftNear),
+        UPViewMoveMake(self.extrasController.choice4, Role::ChoiceItem4Left, Spot::OffLeftNear),
+        UPViewMoveMake(self.extrasController.selectedPane, Role::Screen, Spot::OffBottomFar),
+        UPViewMoveMake(self.aboutController.backButton, Role::ChoiceBackRight, Spot::OffRightNear),
+        UPViewMoveMake(self.aboutController.choice1, Role::ChoiceItem1Right, Spot::OffRightNear),
+        UPViewMoveMake(self.aboutController.choice2, Role::ChoiceItem2Right, Spot::OffRightNear),
+        UPViewMoveMake(self.aboutController.choice3, Role::ChoiceItem3Right, Spot::OffRightNear),
+        UPViewMoveMake(self.aboutController.choice4, Role::ChoiceItem4Right, Spot::OffRightNear),
+        UPViewMoveMake(self.aboutController.selectedPane, Role::Screen, Spot::OffBottomFar),
+    ];
+    for (UPViewMove *move in moves) {
+        move.view.center = move.destination;
+    }
+    
+    self.gameController.retry = nil;
+    [self.gameController setMode:Mode::Init transitionScenario:UPModeTransitionScenarioWillEnterForeground];
+    self.dialogTopMenu.extrasButton.selected = NO;
+    self.dialogTopMenu.aboutButton.selected = NO;
 }
 
 // =========================================================================================================================================
@@ -354,11 +389,11 @@ using UP::TimeSpanning::start;
     transitionContext.containerView.frame = layout.frame_for(Role::Screen);
     
     NSArray <UPViewMove *> *moves = @[
-        UPViewMoveMake(aboutController.backButton, Role::ChoiceBackLeft, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choice1, Role::ChoiceItem1Left, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choice2, Role::ChoiceItem2Left, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choice3, Role::ChoiceItem3Left, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choice4, Role::ChoiceItem4Left, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.backButton, Role::ChoiceBackRight, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choice1, Role::ChoiceItem1Right, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choice2, Role::ChoiceItem2Right, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choice3, Role::ChoiceItem3Right, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.choice4, Role::ChoiceItem4Right, Spot::OffRightNear),
     ];
     start(bloop_out(BandModeUI, moves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
         [transitionContext completeTransition:YES];
