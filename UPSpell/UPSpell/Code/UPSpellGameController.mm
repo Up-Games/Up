@@ -3461,11 +3461,13 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
     [self viewLock];
     cancel(BandGameAll);
-    [self.gameTimer cancel];
+    [self cancelActiveTouch];
     [[UPSoundPlayer instance] stop];
     [[UPTunePlayer instance] stop];
+
+    m_spell_model->reset_game_score();
+    [self.gameTimer reset];
     [self viewUpdateGameControls];
-    [self cancelActiveTouch];
     [self viewUnhighlightTileViews];
     [self viewOrderOutWordScoreLabel];
 
