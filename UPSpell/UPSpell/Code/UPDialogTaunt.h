@@ -11,7 +11,8 @@
 
 @interface UPDialogTaunt : UIView
 
-@property (nonatomic, readonly) UPLabel *promptLabel;
+@property (nonatomic, readonly) UPLabel *tauntLabel;
+@property (nonatomic, readonly) UPLabel *scoreToBeatLabel;
 @property (nonatomic, readonly) UPButton *cancelButton;
 @property (nonatomic, readonly) UPButton *goButton;
 
@@ -19,6 +20,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
-- (void)updatePromptWithTaunt:(UPTaunt *)taunt;
+- (void)updateWithTaunt:(UPTaunt *)taunt;
 
 @end

@@ -308,7 +308,8 @@ void SpellLayout::calculate()
     calculate_slider_control_metrics();
     calculate_choice_control_metrics();
     calculate_settings_description_font_metrics();
-    calculate_taunt_font_metrics();
+    calculate_taunt_prompt_font_metrics();
+    calculate_taunt_score_to_beat_font_metrics();
     calculate_placard_value_font_metrics();
     calculate_placard_description_font_metrics();
     calculate_game_controls_button_charge_outsets();
@@ -486,11 +487,18 @@ void SpellLayout::calculate_settings_description_font_metrics()
     set_settings_description_font(font);
 }
 
-void SpellLayout::calculate_taunt_font_metrics()
+void SpellLayout::calculate_taunt_prompt_font_metrics()
 {
-    CGFloat cap_height = CanonicalTauntFontCapHeight * layout_scale();
+    CGFloat cap_height = CanonicalTauntPromptFontCapHeight * layout_scale();
     UIFont *font = [UIFont tauntFontWithCapHeight:cap_height];
-    set_taunt_font(font);
+    set_taunt_prompt_font(font);
+}
+
+void SpellLayout::calculate_taunt_score_to_beat_font_metrics()
+{
+    CGFloat cap_height = CanonicalTauntScoreToBeatFontCapHeight * layout_scale();
+    UIFont *font = [UIFont tauntFontWithCapHeight:cap_height];
+    set_taunt_score_to_beat_font(font);
 }
 
 void SpellLayout::calculate_placard_value_font_metrics()
@@ -692,9 +700,13 @@ void SpellLayout::calculate_dialog_locations()
     with_game_note_message_frame.origin.y = up_rect_min_y(with_game_note_message_frame) - (up_rect_height(with_game_note_message_frame) * 0.4);
     calculate_and_set_locations(Role::DialogMessageWithGameNote, with_game_note_message_frame);
 
-    CGRect taunt_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
-    taunt_message_frame.origin.y = up_rect_min_y(taunt_message_frame) - (up_rect_height(taunt_message_frame) * 0.2);
-    calculate_and_set_locations(Role::DialogMessageTaunt, taunt_message_frame);
+    CGRect taunt_prompt_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
+    taunt_prompt_message_frame.origin.y = up_rect_min_y(taunt_prompt_message_frame) - (up_rect_height(taunt_prompt_message_frame) * 0.375);
+    calculate_and_set_locations(Role::DialogMessageTauntPrompt, taunt_prompt_message_frame);
+
+    CGRect taunt_score_to_beat_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
+    taunt_score_to_beat_message_frame.origin.y = up_rect_min_y(taunt_score_to_beat_message_frame) + (up_rect_height(taunt_score_to_beat_message_frame) * 0.25);
+    calculate_and_set_locations(Role::DialogMessageTauntScoreToBeat, taunt_score_to_beat_message_frame);
 
     CGSize button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
     CGRect top_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogTopButtonsLayoutFrame);

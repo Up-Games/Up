@@ -20,7 +20,8 @@
 using UP::SpellLayout;
 
 @interface UPDialogTaunt ()
-@property (nonatomic, readwrite) UPLabel *promptLabel;
+@property (nonatomic, readwrite) UPLabel *tauntLabel;
+@property (nonatomic, readwrite) UPLabel *scoreToBeatLabel;
 @property (nonatomic, readwrite) UPButton *cancelButton;
 @property (nonatomic, readwrite) UPButton *goButton;
 @end
@@ -42,11 +43,18 @@ using UP::SpellLayout;
     SpellLayout &layout = SpellLayout::instance();
     self = [super initWithFrame:layout.canvas_frame()];
 
-    self.promptLabel = [UPLabel label];
-    self.promptLabel.font = layout.taunt_font();
-    self.promptLabel.textAlignment = NSTextAlignmentCenter;
-    self.promptLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageTaunt);
-    [self addSubview:self.promptLabel];
+    self.tauntLabel = [UPLabel label];
+    self.tauntLabel.string = @"TAUNT!";
+    self.tauntLabel.font = layout.taunt_prompt_font();
+    self.tauntLabel.textAlignment = NSTextAlignmentCenter;
+    self.tauntLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageTauntPrompt);
+    [self addSubview:self.tauntLabel];
+
+    self.scoreToBeatLabel = [UPLabel label];
+    self.scoreToBeatLabel.font = layout.taunt_score_to_beat_font();
+    self.scoreToBeatLabel.textAlignment = NSTextAlignmentCenter;
+    self.scoreToBeatLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageTauntScoreToBeat);
+    [self addSubview:self.scoreToBeatLabel];
 
     self.cancelButton = [UPTextButton textButton];
     self.cancelButton.labelString = @"CANCEL";
@@ -65,9 +73,10 @@ using UP::SpellLayout;
     return self;
 }
 
-- (void)updatePromptWithTaunt:(UPTaunt *)taunt
+- (void)updateWithTaunt:(UPTaunt *)taunt
 {
-    self.promptLabel.string = [NSString stringWithFormat:@"YOU’VE BEEN TAUNTED!\nSCORE TO BEAT: %d", taunt.score];
+//    self.tauntLabel.string = [NSString stringWithFormat:@"YOU’VE BEEN TAUNTED!\nSCORE TO BEAT: %d", taunt.score];
+    self.scoreToBeatLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", taunt.score];
 }
 
 #pragma mark - Theme colors
