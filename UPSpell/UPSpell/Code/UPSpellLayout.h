@@ -200,15 +200,15 @@ public:
     static inline constexpr CGRect CanonicalExtrasSoundTunesSliderFrame =  { 423, 276, up_size_width(CanonicalSliderSize), up_size_height(CanonicalSliderSize) };
     static inline constexpr CGRect CanonicalExtrasSoundDescriptionFrame = { 384, 368, 572, 300 };
 
-    static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 476, 364, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 545, 354, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasRetryDescriptionFrame = { 384, 88, 572, 300 };
 
-    static inline constexpr CGRect CanonicalExtrasTauntHighScoreButtonFrame =  { 478, 195, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
-    static inline constexpr CGRect CanonicalExtrasTauntHighScoreValueFrame = { 462, 112, 173, 64 };
-    static inline constexpr CGRect CanonicalExtrasTauntHighScoreDescriptionFrame = { 462, 78, 173, 64 };
-    static inline constexpr CGRect CanonicalExtrasTauntLastGameButtonFrame =  { 721, 195, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
-    static inline constexpr CGRect CanonicalExtrasTauntLastGameValueFrame = { 705, 112, 173, 64 };
-    static inline constexpr CGRect CanonicalExtrasTauntLastGameDescriptionFrame = { 705, 78, 173, 64 };
+    static inline constexpr CGRect CanonicalExtrasTauntHighScoreButtonFrame =  { 516.5, 90, up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
+    static inline constexpr CGRect CanonicalExtrasTauntHighScoreValueFrame = { 462, 198, 170, 64 };
+    static inline constexpr CGRect CanonicalExtrasTauntHighScoreDescriptionFrame = { 462, 160, 173, 64 };
+    static inline constexpr CGRect CanonicalExtrasTauntLastGameButtonFrame =  { 759.5, 90, up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
+    static inline constexpr CGRect CanonicalExtrasTauntLastGameValueFrame = { 705, 198, 170, 64 };
+    static inline constexpr CGRect CanonicalExtrasTauntLastGameDescriptionFrame = { 705, 160, 173, 64 };
     static inline constexpr CGRect CanonicalExtrasTauntDescriptionFrame = { 384, 300, 572, 300 };
 
     static SpellLayout &create_instance() {

@@ -74,8 +74,8 @@ typedef NS_ENUM(NSInteger, UPTauntType) {
 @property (nonatomic) UPLabel *highScoreDescriptionLabel;
 @property (nonatomic) UPLabel *lastGameScoreLabel;
 @property (nonatomic) UPLabel *lastGameScoreDescriptionLabel;
-@property (nonatomic) UPTextButton *highScoreTauntButton;
-@property (nonatomic) UPTextButton *lastGameScoreTauntButton;
+@property (nonatomic) UPButton *highScoreTauntButton;
+@property (nonatomic) UPButton *lastGameScoreTauntButton;
 @property (nonatomic) UPLabel *tauntDescription;
 @property (nonatomic) UPTauntType tauntType;
 @end
@@ -98,9 +98,10 @@ typedef NS_ENUM(NSInteger, UPTauntType) {
     self.tauntDescription.font = layout.settings_description_font();
     self.tauntDescription.colorCategory = UPColorCategoryControlText;
     self.tauntDescription.textAlignment = NSTextAlignmentCenter;
-    self.tauntDescription.string = @"TAUNT creates a link to a game with the same\n"
-        "letters as one of your previous games.\n"
-        "Challenge family and friends to beat your score.";
+    self.tauntDescription.string =
+       @"SHARE creates a link to a new game with the same\n"
+        "letter sequence as one of your previous games.\n"
+        "Challenge friends to top your score.";
     [self addSubview:self.tauntDescription];
 
     self.highScoreLabel = [UPLabel label];
@@ -116,9 +117,8 @@ typedef NS_ENUM(NSInteger, UPTauntType) {
     self.highScoreDescriptionLabel.string = @"HIGH SCORE";
     [self addSubview:self.highScoreDescriptionLabel];
 
-    self.highScoreTauntButton = [UPTextButton smallTextButton];
+    self.highScoreTauntButton = [UPButton roundShareButton];
     [self.highScoreTauntButton setTarget:self action:@selector(highScoreTauntButtonTapped)];
-    self.highScoreTauntButton.labelString = @"TAUNT";
     self.highScoreTauntButton.frame = layout.frame_for(Role::ExtrasTauntHighScoreButton);
     [self addSubview:self.highScoreTauntButton];
     
@@ -135,9 +135,8 @@ typedef NS_ENUM(NSInteger, UPTauntType) {
     self.lastGameScoreDescriptionLabel.string = @"LAST GAME";
     [self addSubview:self.lastGameScoreDescriptionLabel];
     
-    self.lastGameScoreTauntButton = [UPTextButton smallTextButton];
+    self.lastGameScoreTauntButton = [UPButton roundShareButton];
     [self.lastGameScoreTauntButton setTarget:self action:@selector(lastGameTauntButtonTapped)];
-    self.lastGameScoreTauntButton.labelString = @"TAUNT";
     self.lastGameScoreTauntButton.frame = layout.frame_for(Role::ExtrasTauntLastGameButton);
     [self addSubview:self.lastGameScoreTauntButton];
 
