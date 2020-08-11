@@ -3162,6 +3162,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         UPViewMoveMake(self.dialogTaunt.scoreToBeatLabel, Location(Role::DialogMessageTauntScoreToBeat, Place::OffBottomFar)),
         UPViewMoveMake(self.dialogTaunt.cancelButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
         UPViewMoveMake(self.dialogTaunt.goButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
+        UPViewMoveMake(self.dialogTaunt.helpButton, Location(Role::DialogHelpButton, Place::OffBottomFar)),
     ];
     start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
     }));
@@ -3271,6 +3272,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             UPViewMoveMake(self.dialogTaunt.scoreToBeatLabel, Location(Role::DialogMessageTauntScoreToBeat, Place::OffBottomFar)),
             UPViewMoveMake(self.dialogTaunt.cancelButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
             UPViewMoveMake(self.dialogTaunt.goButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
+            UPViewMoveMake(self.dialogTaunt.helpButton, Location(Role::DialogHelpButton, Place::OffBottomFar)),
         ];
         start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
             self.dialogTaunt.goButton.highlightedLocked = NO;

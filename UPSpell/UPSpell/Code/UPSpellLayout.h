@@ -51,7 +51,7 @@ public:
         DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessagePlay,
         DialogMessageTauntPrompt, DialogMessageTauntScoreToBeat, DialogMessageWithGameNote, DialogGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
-        DialogButtonDefaultResponse, DialogButtonAlternativeResponse,
+        DialogButtonDefaultResponse, DialogButtonAlternativeResponse, DialogHelpButton,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
         ChoiceBackRight, ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
         ChoiceBackCenter, ChoiceTitleCenter, ChoiceItem1Center, ChoiceItem2Center, ChoiceItem3Center, ChoiceGoButtonCenter, ChoiceItemTopCenter,
@@ -155,6 +155,7 @@ public:
     static inline constexpr CGRect CanonicalDialogTopButtonsLayoutFrame =      {  83,  26,  834,  76 };
     static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  76 };
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
+    static inline constexpr CGRect CanonicalDialogHelpButtonFrame = { 860, 400,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
     static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 369, 1000, 100 };
     static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 30;

@@ -717,6 +717,8 @@ void SpellLayout::calculate_dialog_locations()
     CGRect response_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogResponseButtonsLayoutFrame);
     calculate_and_set_locations(Role::DialogButtonDefaultResponse, up_right_aligned_rect(button_size, response_buttons_layout_frame));
     calculate_and_set_locations(Role::DialogButtonAlternativeResponse, up_left_aligned_rect(button_size, response_buttons_layout_frame));
+
+    calculate_and_set_locations(Role::DialogHelpButton, layout_relative_aspect_rect(CanonicalDialogHelpButtonFrame));
 }
 
 void SpellLayout::calculate_game_locations()

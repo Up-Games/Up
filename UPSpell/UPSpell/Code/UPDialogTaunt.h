@@ -15,6 +15,7 @@
 @property (nonatomic, readonly) UPLabel *scoreToBeatLabel;
 @property (nonatomic, readonly) UPButton *cancelButton;
 @property (nonatomic, readonly) UPButton *goButton;
+@property (nonatomic, readonly) UPButton *helpButton;
 
 + (UPDialogTaunt *)instance;
 

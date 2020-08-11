@@ -24,6 +24,7 @@ using UP::SpellLayout;
 @property (nonatomic, readwrite) UPLabel *scoreToBeatLabel;
 @property (nonatomic, readwrite) UPButton *cancelButton;
 @property (nonatomic, readwrite) UPButton *goButton;
+@property (nonatomic, readwrite) UPButton *helpButton;
 @end
 
 @implementation UPDialogTaunt
@@ -44,7 +45,7 @@ using UP::SpellLayout;
     self = [super initWithFrame:layout.canvas_frame()];
 
     self.tauntLabel = [UPLabel label];
-    self.tauntLabel.string = @"TAUNT!";
+    self.tauntLabel.string = @"UP SPELL TAUNT!";
     self.tauntLabel.font = layout.taunt_prompt_font();
     self.tauntLabel.textAlignment = NSTextAlignmentCenter;
     self.tauntLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageTauntPrompt);
@@ -67,6 +68,11 @@ using UP::SpellLayout;
     [self.goButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
     self.goButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonDefaultResponse);
     [self addSubview:self.goButton];
+
+    self.helpButton = [UPButton roundHelpButton];
+    [self.helpButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
+    self.helpButton.frame = layout.frame_for(SpellLayout::Role::DialogHelpButton);
+    [self addSubview:self.helpButton];
 
     [self updateThemeColors];
 
