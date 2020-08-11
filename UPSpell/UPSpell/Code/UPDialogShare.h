@@ -11,8 +11,10 @@
 
 @interface UPDialogShare : UIView
 
+@property (nonatomic, readonly) UPVectorLogoView *vectorLogoView;
+@property (nonatomic, readonly) UPLabel *wordMarkLabel;
 @property (nonatomic, readonly) UPLabel *shareLabel;
-@property (nonatomic, readonly) UPLabel *scoreToBeatLabel;
+@property (nonatomic, readonly) UPLabel *scoreToTopLabel;
 @property (nonatomic, readonly) UPButton *cancelButton;
 @property (nonatomic, readonly) UPButton *goButton;
 @property (nonatomic, readonly) UPButton *helpButton;

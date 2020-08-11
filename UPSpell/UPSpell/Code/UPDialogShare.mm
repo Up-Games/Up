@@ -22,8 +22,9 @@ using UP::SpellLayout;
 
 @interface UPDialogShare ()
 @property (nonatomic, readwrite) UPVectorLogoView *vectorLogoView;
+@property (nonatomic, readwrite) UPLabel *wordMarkLabel;
 @property (nonatomic, readwrite) UPLabel *shareLabel;
-@property (nonatomic, readwrite) UPLabel *scoreToBeatLabel;
+@property (nonatomic, readwrite) UPLabel *scoreToTopLabel;
 @property (nonatomic, readwrite) UPButton *cancelButton;
 @property (nonatomic, readwrite) UPButton *goButton;
 @property (nonatomic, readwrite) UPButton *helpButton;
@@ -46,23 +47,30 @@ using UP::SpellLayout;
     SpellLayout &layout = SpellLayout::instance();
     self = [super initWithFrame:layout.canvas_frame()];
 
-//    self.vectorLogoView = [UPVectorLogoView vectorLogoView];
-//    [self addSubview:self.vectorLogoView];
-//    self.vectorLogoView.frame = CGRectMake(0, 0, 160, 160);
-//    self.vectorLogoView.center = layout.center_for(SpellLayout::Role::DialogMessageSharePrompt);
+    self.vectorLogoView = [UPVectorLogoView vectorLogoView];
+    [self addSubview:self.vectorLogoView];
+    self.vectorLogoView.frame = CGRectMake(0, 0, 160, 160);
+    self.vectorLogoView.center = layout.center_for(SpellLayout::Role::ChallengeInterstitialLogo);
+
+    self.wordMarkLabel = [UPLabel label];
+    self.wordMarkLabel.string = @"UP SPELL";
+    self.wordMarkLabel.font = layout.word_mark_font();
+    self.wordMarkLabel.textAlignment = NSTextAlignmentCenter;
+    self.wordMarkLabel.frame = layout.frame_for(SpellLayout::Role::ChallengeInterstitialWordMark);
+    [self addSubview:self.wordMarkLabel];
     
     self.shareLabel = [UPLabel label];
-    self.shareLabel.string = @"UP SPELL TAUNT!";
+    self.shareLabel.string = @"CHALLENGE!";
     self.shareLabel.font = layout.share_prompt_font();
     self.shareLabel.textAlignment = NSTextAlignmentCenter;
     self.shareLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageSharePrompt);
     [self addSubview:self.shareLabel];
 
-    self.scoreToBeatLabel = [UPLabel label];
-    self.scoreToBeatLabel.font = layout.share_score_to_beat_font();
-    self.scoreToBeatLabel.textAlignment = NSTextAlignmentCenter;
-    self.scoreToBeatLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageShareScoreToBeat);
-    [self addSubview:self.scoreToBeatLabel];
+    self.scoreToTopLabel = [UPLabel label];
+    self.scoreToTopLabel.font = layout.share_score_to_beat_font();
+    self.scoreToTopLabel.textAlignment = NSTextAlignmentCenter;
+    self.scoreToTopLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageShareScoreToBeat);
+    [self addSubview:self.scoreToTopLabel];
 
     self.cancelButton = [UPTextButton textButton];
     self.cancelButton.labelString = @"CANCEL";
@@ -88,8 +96,7 @@ using UP::SpellLayout;
 
 - (void)updateWithShare:(UPShareRequest *)share
 {
-//    self.shareLabel.string = [NSString stringWithFormat:@"YOU’VE BEEN TAUNTED!\nSCORE TO BEAT: %d", share.score];
-    self.scoreToBeatLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", share.score];
+    self.scoreToTopLabel.string = [NSString stringWithFormat:@"SCORE TO TOP: %d", share.score];
 }
 
 #pragma mark - Theme colors

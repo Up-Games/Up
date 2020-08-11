@@ -63,7 +63,8 @@ public:
         ExtrasSoundEffectsCheckbox, ExtrasSoundEffectsSlider, ExtrasSoundTunesCheckbox, ExtrasSoundTunesSlider, ExtrasSoundDescription,
         ExtrasShareHighScoreValue, ExtrasShareHighScoreDescription, ExtrasShareHighScoreButton,
         ExtrasShareLastGameValue, ExtrasShareLastGameDescription, ExtrasShareLastGameButton,
-        ExtrasShareDescription
+        ExtrasShareDescription,
+        ChallengeInterstitialLogo, ChallengeInterstitialWordMark,
     };
 
     enum class Place {
@@ -211,6 +212,10 @@ public:
     static inline constexpr CGRect CanonicalExtrasShareLastGameDescriptionFrame = { 705, 160, 173, 64 };
     static inline constexpr CGRect CanonicalExtrasShareDescriptionFrame = { 384, 300, 572, 300 };
 
+    static inline constexpr CGRect CanonicalChallengeInterstitialLogoFrame = { 420, 130, 160, 160 };
+    static inline constexpr CGRect CanonicalChallengeInterstitialWordMarkFrame = { 200, 308, 600, 300 };
+    static inline constexpr CGFloat CanonicalWordMarkCapHeight = 35;
+
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
         return *g_instance;
@@ -280,6 +285,7 @@ public:
     UIFont *share_score_to_beat_font() const { return m_share_score_to_beat_font; }
     UIFont *placard_value_font() const { return m_placard_value_font; }
     UIFont *placard_description_font() const { return m_placard_description_font; }
+    UIFont *word_mark_font() const { return m_word_mark_font; }
 
     CGFloat ballot_control_label_left_margin() const { return m_ballot_control_label_left_margin; }
     CGFloat choice_control_label_left_margin() const { return m_choice_control_label_left_margin; }
@@ -335,6 +341,7 @@ private:
     void set_share_score_to_beat_font(UIFont *font) { m_share_score_to_beat_font = font; }
     void set_placard_value_font(UIFont *font) { m_placard_value_font = font; }
     void set_placard_description_font(UIFont *font) { m_placard_description_font = font; }
+    void set_word_mark_font(UIFont *font) { m_word_mark_font = font; }
     void set_game_controls_button_charge_outsets(UPOutsets outsets) { m_game_controls_button_charge_outsets = outsets; }
     void set_help_button_charge_outsets(UPOutsets outsets) { m_help_button_charge_outsets = outsets; }
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
@@ -366,6 +373,7 @@ private:
     void calculate_share_score_to_beat_font_metrics();
     void calculate_placard_value_font_metrics();
     void calculate_placard_description_font_metrics();
+    void calculate_word_mark_font_metrics();
     void calculate_locations();
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
@@ -427,6 +435,7 @@ private:
     __strong UIFont *m_share_score_to_beat_font;
     __strong UIFont *m_placard_value_font;
     __strong UIFont *m_placard_description_font;
+    __strong UIFont *m_word_mark_font;
 
     CGFloat m_ballot_control_label_left_margin = 0.0;
     CGFloat m_choice_control_label_left_margin = 0.0;

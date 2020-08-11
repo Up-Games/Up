@@ -312,6 +312,7 @@ void SpellLayout::calculate()
     calculate_share_score_to_beat_font_metrics();
     calculate_placard_value_font_metrics();
     calculate_placard_description_font_metrics();
+    calculate_word_mark_font_metrics();
     calculate_game_controls_button_charge_outsets();
     calculate_help_button_charge_outsets();
     calculate_locations();
@@ -513,6 +514,13 @@ void SpellLayout::calculate_placard_description_font_metrics()
     CGFloat cap_height = CanonicalPlacardDescrptionFontCapHeight * layout_scale();
     UIFont *font = [UIFont placardDescriptionFontWithCapHeight:cap_height];
     set_placard_description_font(font);
+}
+
+void SpellLayout::calculate_word_mark_font_metrics()
+{
+    CGFloat cap_height = CanonicalWordMarkCapHeight * layout_scale();
+    UIFont *font = [UIFont wordMarkFontWithCapHeight:cap_height];
+    set_word_mark_font(font);
 }
 
 void SpellLayout::calculate_word_tray_layout_frame()
@@ -719,6 +727,9 @@ void SpellLayout::calculate_dialog_locations()
     calculate_and_set_locations(Role::DialogButtonAlternativeResponse, up_left_aligned_rect(button_size, response_buttons_layout_frame));
 
     calculate_and_set_locations(Role::DialogHelpButton, layout_relative_aspect_rect(CanonicalDialogHelpButtonFrame));
+
+    calculate_and_set_locations(Role::ChallengeInterstitialLogo, layout_relative_aspect_rect(CanonicalChallengeInterstitialLogoFrame));
+    calculate_and_set_locations(Role::ChallengeInterstitialWordMark, layout_relative_aspect_rect(CanonicalChallengeInterstitialWordMarkFrame));
 }
 
 void SpellLayout::calculate_game_locations()
