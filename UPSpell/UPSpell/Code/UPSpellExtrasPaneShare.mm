@@ -160,8 +160,8 @@ typedef NS_ENUM(NSInteger, UPShareType) {
         self.lastGameScoreShareButton.enabled = YES;
     }
     else {
-        self.highScoreLabel.string = @"–";
-        self.lastGameScoreLabel.string = @"–";
+        self.highScoreLabel.string = @"-";
+        self.lastGameScoreLabel.string = @"-";
         self.highScoreLabel.colorCategory = UPColorCategoryInactiveContent;
         self.lastGameScoreLabel.colorCategory = UPColorCategoryInactiveContent;
         self.highScoreShareButton.enabled = NO;
@@ -175,9 +175,19 @@ typedef NS_ENUM(NSInteger, UPShareType) {
 - (void)highScoreShareButtonTapped
 {
     self.shareType = UPShareTypeHighScore;
+    [self presentShareSheet];
+}
 
+- (void)lastGameShareButtonTapped
+{
+    self.shareType = UPShareTypeLastGameScore;
+    [self presentShareSheet];
+}
+
+- (void)presentShareSheet
+{
     UPSpellExtrasController *extrasController = [UPSpellExtrasController instance];
-
+    
     UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithActivityItems:@[self]];
     activityViewController.excludedActivityTypes = @[
         UIActivityTypeAirDrop,
@@ -191,19 +201,28 @@ typedef NS_ENUM(NSInteger, UPShareType) {
         UIActivityTypeAddToReadingList,
         UIActivityTypeOpenInIBooks
     ];
-
-    [extrasController presentViewController:activityViewController animated:YES completion:^{
-//        self.shareType = UPShareTypeNone;
-    }];
-}
-
-- (void)lastGameShareButtonTapped
-{
+    
+    [extrasController presentViewController:activityViewController animated:YES completion:nil];
 }
 
 - (NSString *)shareURLString
 {
-    return @"https://upgames.dev/t/?g=upspell&k=GBK-1782&s=163";
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    UPGameKey *gameKey = nil;
+    int score = 0;
+    switch (self.shareType) {
+        case UPShareTypeNone:
+            break;
+        case UPShareTypeHighScore:
+            gameKey = [UPGameKey gameKeyWithValue:dossier.highGameKey];
+            score = dossier.highScore;
+            break;
+        case UPShareTypeLastGameScore:
+            gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKey];
+            score = dossier.lastScore;
+            break;
+    }
+    return [NSString stringWithFormat:@"https://upgames.dev/t/?g=upspell&k=%@&s=%d", gameKey.string, score];
 }
 
 - (NSURL *)shareURL
@@ -227,11 +246,6 @@ typedef NS_ENUM(NSInteger, UPShareType) {
     }
     
     return [NSString stringWithFormat:@"I scored %d in Up Spell. Top that!", score];
-}
-
-- (NSString *)shareStringWithURL
-{
-    return [NSString stringWithFormat:@"%@ %@", [self shareString], [self shareURLString]];
 }
 
 #pragma mark - UIActivityItemSource
