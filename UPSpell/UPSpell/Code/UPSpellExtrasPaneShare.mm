@@ -1,5 +1,5 @@
 //
-//  UPSpellExtrasPaneTaunt.mm
+//  UPSpellExtrasPaneShare.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -26,7 +26,7 @@
 #import "UPHueWheel.h"
 #import "UPSoundPlayer.h"
 #import "UPSlider.h"
-#import "UPSpellExtrasPaneTaunt.h"
+#import "UPSpellExtrasPaneShare.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellGameRetry.h"
 #import "UPSpellLayout.h"
@@ -63,26 +63,26 @@ using UP::TimeSpanning::start;
 
 using Role = UP::SpellLayout::Role;
 
-typedef NS_ENUM(NSInteger, UPTauntType) {
-    UPTauntTypeNone,
-    UPTauntTypeHighScore,
-    UPTauntTypeLastGameScore,
+typedef NS_ENUM(NSInteger, UPShareType) {
+    UPShareTypeNone,
+    UPShareTypeHighScore,
+    UPShareTypeLastGameScore,
 };
 
-@interface UPSpellExtrasPaneTaunt () <UIActivityItemSource>
+@interface UPSpellExtrasPaneShare () <UIActivityItemSource>
 @property (nonatomic) UPLabel *highScoreLabel;
 @property (nonatomic) UPLabel *highScoreDescriptionLabel;
 @property (nonatomic) UPLabel *lastGameScoreLabel;
 @property (nonatomic) UPLabel *lastGameScoreDescriptionLabel;
-@property (nonatomic) UPButton *highScoreTauntButton;
-@property (nonatomic) UPButton *lastGameScoreTauntButton;
-@property (nonatomic) UPLabel *tauntDescription;
-@property (nonatomic) UPTauntType tauntType;
+@property (nonatomic) UPButton *highScoreShareButton;
+@property (nonatomic) UPButton *lastGameScoreShareButton;
+@property (nonatomic) UPLabel *shareDescription;
+@property (nonatomic) UPShareType shareType;
 @end
 
-@implementation UPSpellExtrasPaneTaunt
+@implementation UPSpellExtrasPaneShare
 
-+ (UPSpellExtrasPaneTaunt *)pane
++ (UPSpellExtrasPaneShare *)pane
 {
     return [[self alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
 }
@@ -93,52 +93,52 @@ typedef NS_ENUM(NSInteger, UPTauntType) {
 
     SpellLayout &layout = SpellLayout::instance();
 
-    self.tauntDescription = [UPLabel label];
-    self.tauntDescription.frame = layout.frame_for(Role::ExtrasTauntDescription);
-    self.tauntDescription.font = layout.settings_description_font();
-    self.tauntDescription.colorCategory = UPColorCategoryControlText;
-    self.tauntDescription.textAlignment = NSTextAlignmentCenter;
-    self.tauntDescription.string =
-       @"SHARE creates a link to a new game with the same\n"
-        "letter sequence as one of your previous games.\n"
+    self.shareDescription = [UPLabel label];
+    self.shareDescription.frame = layout.frame_for(Role::ExtrasShareDescription);
+    self.shareDescription.font = layout.settings_description_font();
+    self.shareDescription.colorCategory = UPColorCategoryControlText;
+    self.shareDescription.textAlignment = NSTextAlignmentCenter;
+    self.shareDescription.string =
+       @"SHARE a link to a new game with the same\n"
+        "letters as one of your previous games.\n"
         "Challenge friends to top your score.";
-    [self addSubview:self.tauntDescription];
+    [self addSubview:self.shareDescription];
 
     self.highScoreLabel = [UPLabel label];
     self.highScoreLabel.font = layout.placard_value_font();
     self.highScoreLabel.textAlignment = NSTextAlignmentCenter;
-    self.highScoreLabel.frame = layout.frame_for(Role::ExtrasTauntHighScoreValue);
+    self.highScoreLabel.frame = layout.frame_for(Role::ExtrasShareHighScoreValue);
     [self addSubview:self.highScoreLabel];
 
     self.highScoreDescriptionLabel = [UPLabel label];
     self.highScoreDescriptionLabel.font = layout.placard_description_font();
     self.highScoreDescriptionLabel.textAlignment = NSTextAlignmentCenter;
-    self.highScoreDescriptionLabel.frame = layout.frame_for(Role::ExtrasTauntHighScoreDescription);
+    self.highScoreDescriptionLabel.frame = layout.frame_for(Role::ExtrasShareHighScoreDescription);
     self.highScoreDescriptionLabel.string = @"HIGH SCORE";
     [self addSubview:self.highScoreDescriptionLabel];
 
-    self.highScoreTauntButton = [UPButton roundShareButton];
-    [self.highScoreTauntButton setTarget:self action:@selector(highScoreTauntButtonTapped)];
-    self.highScoreTauntButton.frame = layout.frame_for(Role::ExtrasTauntHighScoreButton);
-    [self addSubview:self.highScoreTauntButton];
+    self.highScoreShareButton = [UPButton roundShareButton];
+    [self.highScoreShareButton setTarget:self action:@selector(highScoreShareButtonTapped)];
+    self.highScoreShareButton.frame = layout.frame_for(Role::ExtrasShareHighScoreButton);
+    [self addSubview:self.highScoreShareButton];
     
     self.lastGameScoreLabel = [UPLabel label];
     self.lastGameScoreLabel.font = layout.placard_value_font();
     self.lastGameScoreLabel.textAlignment = NSTextAlignmentCenter;
-    self.lastGameScoreLabel.frame = layout.frame_for(Role::ExtrasTauntLastGameValue);
+    self.lastGameScoreLabel.frame = layout.frame_for(Role::ExtrasShareLastGameValue);
     [self addSubview:self.lastGameScoreLabel];
 
     self.lastGameScoreDescriptionLabel = [UPLabel label];
     self.lastGameScoreDescriptionLabel.font = layout.placard_description_font();
     self.lastGameScoreDescriptionLabel.textAlignment = NSTextAlignmentCenter;
-    self.lastGameScoreDescriptionLabel.frame = layout.frame_for(Role::ExtrasTauntLastGameDescription);
+    self.lastGameScoreDescriptionLabel.frame = layout.frame_for(Role::ExtrasShareLastGameDescription);
     self.lastGameScoreDescriptionLabel.string = @"LAST GAME";
     [self addSubview:self.lastGameScoreDescriptionLabel];
     
-    self.lastGameScoreTauntButton = [UPButton roundShareButton];
-    [self.lastGameScoreTauntButton setTarget:self action:@selector(lastGameTauntButtonTapped)];
-    self.lastGameScoreTauntButton.frame = layout.frame_for(Role::ExtrasTauntLastGameButton);
-    [self addSubview:self.lastGameScoreTauntButton];
+    self.lastGameScoreShareButton = [UPButton roundShareButton];
+    [self.lastGameScoreShareButton setTarget:self action:@selector(lastGameShareButtonTapped)];
+    self.lastGameScoreShareButton.frame = layout.frame_for(Role::ExtrasShareLastGameButton);
+    [self addSubview:self.lastGameScoreShareButton];
 
     [self updateThemeColors];
 
@@ -156,25 +156,25 @@ typedef NS_ENUM(NSInteger, UPTauntType) {
         self.lastGameScoreLabel.string = [NSString stringWithFormat:@"%d", dossier.lastScore];
         self.highScoreLabel.colorCategory = UPColorCategoryInformation;
         self.lastGameScoreLabel.colorCategory = UPColorCategoryInformation;
-        self.highScoreTauntButton.enabled = YES;
-        self.lastGameScoreTauntButton.enabled = YES;
+        self.highScoreShareButton.enabled = YES;
+        self.lastGameScoreShareButton.enabled = YES;
     }
     else {
         self.highScoreLabel.string = @"–";
         self.lastGameScoreLabel.string = @"–";
         self.highScoreLabel.colorCategory = UPColorCategoryInactiveContent;
         self.lastGameScoreLabel.colorCategory = UPColorCategoryInactiveContent;
-        self.highScoreTauntButton.enabled = NO;
-        self.lastGameScoreTauntButton.enabled = NO;
+        self.highScoreShareButton.enabled = NO;
+        self.lastGameScoreShareButton.enabled = NO;
     }
     [self updateThemeColors];
 }
 
 #pragma mark - Target / Action
 
-- (void)highScoreTauntButtonTapped
+- (void)highScoreShareButtonTapped
 {
-    self.tauntType = UPTauntTypeHighScore;
+    self.shareType = UPShareTypeHighScore;
 
     UPSpellExtrasController *extrasController = [UPSpellExtrasController instance];
 
@@ -193,35 +193,35 @@ typedef NS_ENUM(NSInteger, UPTauntType) {
     ];
 
     [extrasController presentViewController:activityViewController animated:YES completion:^{
-//        self.tauntType = UPTauntTypeNone;
+//        self.shareType = UPShareTypeNone;
     }];
 }
 
-- (void)lastGameTauntButtonTapped
+- (void)lastGameShareButtonTapped
 {
 }
 
-- (NSString *)tauntURLString
+- (NSString *)shareURLString
 {
     return @"https://upgames.dev/t/?g=upspell&k=GBK-1782&s=163";
 }
 
-- (NSURL *)tauntURL
+- (NSURL *)shareURL
 {
-    return [NSURL URLWithString:[self tauntURLString]];
+    return [NSURL URLWithString:[self shareURLString]];
 }
 
-- (NSString *)tauntString
+- (NSString *)shareString
 {
     UPSpellDossier *dossier = [UPSpellDossier instance];
     int score = 0;
-    switch (self.tauntType) {
-        case UPTauntTypeNone:
+    switch (self.shareType) {
+        case UPShareTypeNone:
             break;
-        case UPTauntTypeHighScore:
+        case UPShareTypeHighScore:
             score = dossier.highScore;
             break;
-        case UPTauntTypeLastGameScore:
+        case UPShareTypeLastGameScore:
             score = dossier.lastScore;
             break;
     }
@@ -229,30 +229,30 @@ typedef NS_ENUM(NSInteger, UPTauntType) {
     return [NSString stringWithFormat:@"I scored %d in Up Spell. Top that!", score];
 }
 
-- (NSString *)tauntStringWithURL
+- (NSString *)shareStringWithURL
 {
-    return [NSString stringWithFormat:@"%@ %@", [self tauntString], [self tauntURLString]];
+    return [NSString stringWithFormat:@"%@ %@", [self shareString], [self shareURLString]];
 }
 
 #pragma mark - UIActivityItemSource
 
 - (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController
 {
-    return [self tauntURL];
+    return [self shareURL];
 
 }
 
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(UIActivityType)activityType
 {
-    return [self tauntURL];
+    return [self shareURL];
 }
 
 - (LPLinkMetadata *)activityViewControllerLinkMetadata:(UIActivityViewController *)activityViewController
 {
     LPLinkMetadata *metadata = [[LPLinkMetadata alloc] init];
-    metadata.originalURL = [self tauntURL];
-    metadata.URL = [self tauntURL];
-    metadata.title = [self tauntString];
+    metadata.originalURL = [self shareURL];
+    metadata.URL = [self shareURL];
+    metadata.title = [self shareString];
     
     CGFloat scale = [[UIScreen mainScreen] scale];
     NSString *iconName = [NSString stringWithFormat:@"%@@%dx", up_theme_icon_name(), (int)scale];

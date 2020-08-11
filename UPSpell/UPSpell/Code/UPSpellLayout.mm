@@ -308,8 +308,8 @@ void SpellLayout::calculate()
     calculate_slider_control_metrics();
     calculate_choice_control_metrics();
     calculate_settings_description_font_metrics();
-    calculate_taunt_prompt_font_metrics();
-    calculate_taunt_score_to_beat_font_metrics();
+    calculate_share_prompt_font_metrics();
+    calculate_share_score_to_beat_font_metrics();
     calculate_placard_value_font_metrics();
     calculate_placard_description_font_metrics();
     calculate_game_controls_button_charge_outsets();
@@ -487,18 +487,18 @@ void SpellLayout::calculate_settings_description_font_metrics()
     set_settings_description_font(font);
 }
 
-void SpellLayout::calculate_taunt_prompt_font_metrics()
+void SpellLayout::calculate_share_prompt_font_metrics()
 {
-    CGFloat cap_height = CanonicalTauntPromptFontCapHeight * layout_scale();
-    UIFont *font = [UIFont tauntFontWithCapHeight:cap_height];
-    set_taunt_prompt_font(font);
+    CGFloat cap_height = CanonicalSharePromptFontCapHeight * layout_scale();
+    UIFont *font = [UIFont shareFontWithCapHeight:cap_height];
+    set_share_prompt_font(font);
 }
 
-void SpellLayout::calculate_taunt_score_to_beat_font_metrics()
+void SpellLayout::calculate_share_score_to_beat_font_metrics()
 {
-    CGFloat cap_height = CanonicalTauntScoreToBeatFontCapHeight * layout_scale();
-    UIFont *font = [UIFont tauntFontWithCapHeight:cap_height];
-    set_taunt_score_to_beat_font(font);
+    CGFloat cap_height = CanonicalShareScoreToBeatFontCapHeight * layout_scale();
+    UIFont *font = [UIFont shareFontWithCapHeight:cap_height];
+    set_share_score_to_beat_font(font);
 }
 
 void SpellLayout::calculate_placard_value_font_metrics()
@@ -700,13 +700,13 @@ void SpellLayout::calculate_dialog_locations()
     with_game_note_message_frame.origin.y = up_rect_min_y(with_game_note_message_frame) - (up_rect_height(with_game_note_message_frame) * 0.4);
     calculate_and_set_locations(Role::DialogMessageWithGameNote, with_game_note_message_frame);
 
-    CGRect taunt_prompt_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
-    taunt_prompt_message_frame.origin.y = up_rect_min_y(taunt_prompt_message_frame) - (up_rect_height(taunt_prompt_message_frame) * 0.375);
-    calculate_and_set_locations(Role::DialogMessageTauntPrompt, taunt_prompt_message_frame);
+    CGRect share_prompt_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
+    share_prompt_message_frame.origin.y = up_rect_min_y(share_prompt_message_frame) - (up_rect_height(share_prompt_message_frame) * 0.375);
+    calculate_and_set_locations(Role::DialogMessageSharePrompt, share_prompt_message_frame);
 
-    CGRect taunt_score_to_beat_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
-    taunt_score_to_beat_message_frame.origin.y = up_rect_min_y(taunt_score_to_beat_message_frame) + (up_rect_height(taunt_score_to_beat_message_frame) * 0.25);
-    calculate_and_set_locations(Role::DialogMessageTauntScoreToBeat, taunt_score_to_beat_message_frame);
+    CGRect share_score_to_beat_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
+    share_score_to_beat_message_frame.origin.y = up_rect_min_y(share_score_to_beat_message_frame) + (up_rect_height(share_score_to_beat_message_frame) * 0.25);
+    calculate_and_set_locations(Role::DialogMessageShareScoreToBeat, share_score_to_beat_message_frame);
 
     CGSize button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
     CGRect top_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogTopButtonsLayoutFrame);
@@ -777,13 +777,13 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasSoundTunesCheckbox, layout_relative_aspect_rect(CanonicalExtrasSoundTunesCheckboxFrame));
     calculate_and_set_locations(Role::ExtrasSoundTunesSlider, layout_relative_aspect_rect(CanonicalExtrasSoundTunesSliderFrame));
 
-    calculate_and_set_locations(Role::ExtrasTauntDescription, layout_relative_aspect_rect(CanonicalExtrasTauntDescriptionFrame));
-    calculate_and_set_locations(Role::ExtrasTauntHighScoreButton, layout_relative_aspect_rect(CanonicalExtrasTauntHighScoreButtonFrame));
-    calculate_and_set_locations(Role::ExtrasTauntHighScoreValue, layout_relative_aspect_rect(CanonicalExtrasTauntHighScoreValueFrame));
-    calculate_and_set_locations(Role::ExtrasTauntHighScoreDescription, layout_relative_aspect_rect(CanonicalExtrasTauntHighScoreDescriptionFrame));
-    calculate_and_set_locations(Role::ExtrasTauntLastGameButton, layout_relative_aspect_rect(CanonicalExtrasTauntLastGameButtonFrame));
-    calculate_and_set_locations(Role::ExtrasTauntLastGameValue, layout_relative_aspect_rect(CanonicalExtrasTauntLastGameValueFrame));
-    calculate_and_set_locations(Role::ExtrasTauntLastGameDescription, layout_relative_aspect_rect(CanonicalExtrasTauntLastGameDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasShareDescription, layout_relative_aspect_rect(CanonicalExtrasShareDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasShareHighScoreButton, layout_relative_aspect_rect(CanonicalExtrasShareHighScoreButtonFrame));
+    calculate_and_set_locations(Role::ExtrasShareHighScoreValue, layout_relative_aspect_rect(CanonicalExtrasShareHighScoreValueFrame));
+    calculate_and_set_locations(Role::ExtrasShareHighScoreDescription, layout_relative_aspect_rect(CanonicalExtrasShareHighScoreDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasShareLastGameButton, layout_relative_aspect_rect(CanonicalExtrasShareLastGameButtonFrame));
+    calculate_and_set_locations(Role::ExtrasShareLastGameValue, layout_relative_aspect_rect(CanonicalExtrasShareLastGameValueFrame));
+    calculate_and_set_locations(Role::ExtrasShareLastGameDescription, layout_relative_aspect_rect(CanonicalExtrasShareLastGameDescriptionFrame));
 }
 
 void SpellLayout::calculate_choice_locations()

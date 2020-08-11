@@ -1,5 +1,5 @@
 //
-//  UPDialogTaunt.mm
+//  UPDialogShare.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -12,31 +12,31 @@
 #import <UpKit/UPVectorLogoView.h>
 
 #import "UPControl+UPSpell.h"
-#import "UPDialogTaunt.h"
-#import "UPTaunt.h"
+#import "UPDialogShare.h"
+#import "UPShareRequest.h"
 #import "UPSpellLayout.h"
 #import "UPTextButton.h"
 #import "UPTextPaths.h"
 
 using UP::SpellLayout;
 
-@interface UPDialogTaunt ()
+@interface UPDialogShare ()
 @property (nonatomic, readwrite) UPVectorLogoView *vectorLogoView;
-@property (nonatomic, readwrite) UPLabel *tauntLabel;
+@property (nonatomic, readwrite) UPLabel *shareLabel;
 @property (nonatomic, readwrite) UPLabel *scoreToBeatLabel;
 @property (nonatomic, readwrite) UPButton *cancelButton;
 @property (nonatomic, readwrite) UPButton *goButton;
 @property (nonatomic, readwrite) UPButton *helpButton;
 @end
 
-@implementation UPDialogTaunt
+@implementation UPDialogShare
 
-+ (UPDialogTaunt *)instance
++ (UPDialogShare *)instance
 {
     static dispatch_once_t onceToken;
-    static UPDialogTaunt *_Instance;
+    static UPDialogShare *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPDialogTaunt alloc] _init];
+        _Instance = [[UPDialogShare alloc] _init];
     });
     return _Instance;
 }
@@ -49,19 +49,19 @@ using UP::SpellLayout;
 //    self.vectorLogoView = [UPVectorLogoView vectorLogoView];
 //    [self addSubview:self.vectorLogoView];
 //    self.vectorLogoView.frame = CGRectMake(0, 0, 160, 160);
-//    self.vectorLogoView.center = layout.center_for(SpellLayout::Role::DialogMessageTauntPrompt);
+//    self.vectorLogoView.center = layout.center_for(SpellLayout::Role::DialogMessageSharePrompt);
     
-    self.tauntLabel = [UPLabel label];
-    self.tauntLabel.string = @"UP SPELL TAUNT!";
-    self.tauntLabel.font = layout.taunt_prompt_font();
-    self.tauntLabel.textAlignment = NSTextAlignmentCenter;
-    self.tauntLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageTauntPrompt);
-    [self addSubview:self.tauntLabel];
+    self.shareLabel = [UPLabel label];
+    self.shareLabel.string = @"UP SPELL TAUNT!";
+    self.shareLabel.font = layout.share_prompt_font();
+    self.shareLabel.textAlignment = NSTextAlignmentCenter;
+    self.shareLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageSharePrompt);
+    [self addSubview:self.shareLabel];
 
     self.scoreToBeatLabel = [UPLabel label];
-    self.scoreToBeatLabel.font = layout.taunt_score_to_beat_font();
+    self.scoreToBeatLabel.font = layout.share_score_to_beat_font();
     self.scoreToBeatLabel.textAlignment = NSTextAlignmentCenter;
-    self.scoreToBeatLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageTauntScoreToBeat);
+    self.scoreToBeatLabel.frame = layout.frame_for(SpellLayout::Role::DialogMessageShareScoreToBeat);
     [self addSubview:self.scoreToBeatLabel];
 
     self.cancelButton = [UPTextButton textButton];
@@ -86,10 +86,10 @@ using UP::SpellLayout;
     return self;
 }
 
-- (void)updateWithTaunt:(UPTaunt *)taunt
+- (void)updateWithShare:(UPShareRequest *)share
 {
-//    self.tauntLabel.string = [NSString stringWithFormat:@"YOU’VE BEEN TAUNTED!\nSCORE TO BEAT: %d", taunt.score];
-    self.scoreToBeatLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", taunt.score];
+//    self.shareLabel.string = [NSString stringWithFormat:@"YOU’VE BEEN TAUNTED!\nSCORE TO BEAT: %d", share.score];
+    self.scoreToBeatLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", share.score];
 }
 
 #pragma mark - Theme colors

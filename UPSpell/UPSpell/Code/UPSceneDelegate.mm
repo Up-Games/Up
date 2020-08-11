@@ -6,7 +6,7 @@
 #import <UpKit/UpKit.h>
 
 #import "UPSceneDelegate.h"
-#import "UPTaunt.h"
+#import "UPShareRequest.h"
 #import "UPSpellGameController.h"
 #import "UPSpellNavigationController.h"
 
@@ -55,8 +55,8 @@ static UPSceneDelegate *_Instance;
     }
     
     NSURL *incomingURL = userActivity.webpageURL;
-    UPTaunt *taunt = [UPTaunt tauntWithURL:incomingURL];
-    [[UPSpellGameController instance] setTaunt:taunt];
+    UPShareRequest *share = [UPShareRequest shareRequestWithURL:incomingURL];
+    [[UPSpellGameController instance] setShare:share];
 }
 
 - (void)parseSharedGameRequestFromURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
@@ -66,8 +66,8 @@ static UPSceneDelegate *_Instance;
     }
     
     UIOpenURLContext *ctx = [URLContexts anyObject];
-    UPTaunt *taunt = [UPTaunt tauntWithURL:ctx.URL];
-    [[UPSpellGameController instance] setTaunt:taunt];
+    UPShareRequest *share = [UPShareRequest shareRequestWithURL:ctx.URL];
+    [[UPSpellGameController instance] setShare:share];
 }
 
 @end

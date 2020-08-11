@@ -23,7 +23,7 @@
 #import "UPSpellExtrasPaneColors.h"
 #import "UPSpellExtrasPaneRetry.h"
 #import "UPSpellExtrasPaneSound.h"
-#import "UPSpellExtrasPaneTaunt.h"
+#import "UPSpellExtrasPaneShare.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
 #import "UPSpellNavigationController.h"
@@ -44,7 +44,7 @@
 @property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
 @property (nonatomic) UPSpellExtrasPaneSound *soundPane;
 @property (nonatomic) UPSpellExtrasPaneRetry *retryPane;
-@property (nonatomic) UPSpellExtrasPaneTaunt *tauntPane;
+@property (nonatomic) UPSpellExtrasPaneShare *sharePane;
 
 @property (nonatomic) NSArray<UPChoice *> *choices;
 @property (nonatomic) NSArray<UPAccessoryPane *> *panes;
@@ -116,7 +116,7 @@ static UPSpellExtrasController *_Instance;
     [self.view addSubview:self.choice3];
     
     self.choice4 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice4.labelString = @"TAUNT";
+    self.choice4.labelString = @"SHARE";
     self.choice4.tag = 3;
     self.choice4.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice4.frame = layout.frame_for(Role::ChoiceItem4Left, Place::OffLeftNear);
@@ -135,9 +135,9 @@ static UPSpellExtrasController *_Instance;
     self.retryPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
     [self.view addSubview:self.retryPane];
     
-    self.tauntPane = [UPSpellExtrasPaneTaunt pane];
-    self.tauntPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
-    [self.view addSubview:self.tauntPane];
+    self.sharePane = [UPSpellExtrasPaneShare pane];
+    self.sharePane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    [self.view addSubview:self.sharePane];
     
     self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
     
@@ -145,7 +145,7 @@ static UPSpellExtrasController *_Instance;
         self.colorsPane,
         self.soundPane,
         self.retryPane,
-        self.tauntPane,
+        self.sharePane,
     ];
     
     return self;

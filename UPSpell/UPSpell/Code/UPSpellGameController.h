@@ -9,7 +9,7 @@
 #import "UPMode.h"
 
 @class UPSpellGameRetry;
-@class UPTaunt;
+@class UPShareRequest;
 
 @interface UPSpellGameController : UIViewController
 
@@ -19,6 +19,6 @@
 @property (nonatomic) UPSpellGameRetry *retry;
 
 - (void)setMode:(UP::Mode)mode transitionScenario:(UPModeTransitionScenario)transitionScenario;
-- (void)setTaunt:(UPTaunt *)taunt;
+- (void)setShare:(UPShareRequest *)share;
 
 @end

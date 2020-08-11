@@ -49,7 +49,7 @@ public:
         GameScoreGameOver1, GameScoreGameOver2, GameScoreGameOver3, GameScoreGameOver4,
         WordScore, WordScoreBonus,
         DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessagePlay,
-        DialogMessageTauntPrompt, DialogMessageTauntScoreToBeat, DialogMessageWithGameNote, DialogGameNote,
+        DialogMessageSharePrompt, DialogMessageShareScoreToBeat, DialogMessageWithGameNote, DialogGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse, DialogHelpButton,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
@@ -61,9 +61,9 @@ public:
         ExtrasStatsHeader, ExtrasStatsTable,
         ExtrasRetryCheckbox, ExtrasRetryDescription,
         ExtrasSoundEffectsCheckbox, ExtrasSoundEffectsSlider, ExtrasSoundTunesCheckbox, ExtrasSoundTunesSlider, ExtrasSoundDescription,
-        ExtrasTauntHighScoreValue, ExtrasTauntHighScoreDescription, ExtrasTauntHighScoreButton,
-        ExtrasTauntLastGameValue, ExtrasTauntLastGameDescription, ExtrasTauntLastGameButton,
-        ExtrasTauntDescription
+        ExtrasShareHighScoreValue, ExtrasShareHighScoreDescription, ExtrasShareHighScoreButton,
+        ExtrasShareLastGameValue, ExtrasShareLastGameDescription, ExtrasShareLastGameButton,
+        ExtrasShareDescription
     };
 
     enum class Place {
@@ -178,8 +178,8 @@ public:
     static inline constexpr CGRect CanonicalChoiceCenterGoFrame =  { 713, 376, up_size_width(CanonicalTextButtonSize), up_size_height(CanonicalTextButtonSize) };
     
     static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 20;
-    static inline constexpr CGFloat CanonicalTauntPromptFontCapHeight = 60;
-    static inline constexpr CGFloat CanonicalTauntScoreToBeatFontCapHeight = 36;
+    static inline constexpr CGFloat CanonicalSharePromptFontCapHeight = 60;
+    static inline constexpr CGFloat CanonicalShareScoreToBeatFontCapHeight = 36;
     static inline constexpr CGFloat CanonicalPlacardValueFontCapHeight = 38;
     static inline constexpr CGFloat CanonicalPlacardDescrptionFontCapHeight = 24;
 
@@ -203,13 +203,13 @@ public:
     static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 545, 354, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasRetryDescriptionFrame = { 384, 88, 572, 300 };
 
-    static inline constexpr CGRect CanonicalExtrasTauntHighScoreButtonFrame =  { 516.5, 90, up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
-    static inline constexpr CGRect CanonicalExtrasTauntHighScoreValueFrame = { 462, 198, 170, 64 };
-    static inline constexpr CGRect CanonicalExtrasTauntHighScoreDescriptionFrame = { 462, 160, 173, 64 };
-    static inline constexpr CGRect CanonicalExtrasTauntLastGameButtonFrame =  { 759.5, 90, up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
-    static inline constexpr CGRect CanonicalExtrasTauntLastGameValueFrame = { 705, 198, 170, 64 };
-    static inline constexpr CGRect CanonicalExtrasTauntLastGameDescriptionFrame = { 705, 160, 173, 64 };
-    static inline constexpr CGRect CanonicalExtrasTauntDescriptionFrame = { 384, 300, 572, 300 };
+    static inline constexpr CGRect CanonicalExtrasShareHighScoreButtonFrame =  { 516.5, 90, up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
+    static inline constexpr CGRect CanonicalExtrasShareHighScoreValueFrame = { 462, 198, 170, 64 };
+    static inline constexpr CGRect CanonicalExtrasShareHighScoreDescriptionFrame = { 462, 160, 173, 64 };
+    static inline constexpr CGRect CanonicalExtrasShareLastGameButtonFrame =  { 759.5, 90, up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
+    static inline constexpr CGRect CanonicalExtrasShareLastGameValueFrame = { 705, 198, 170, 64 };
+    static inline constexpr CGRect CanonicalExtrasShareLastGameDescriptionFrame = { 705, 160, 173, 64 };
+    static inline constexpr CGRect CanonicalExtrasShareDescriptionFrame = { 384, 300, 572, 300 };
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
@@ -276,8 +276,8 @@ public:
     UIFont *ballot_control_font() const { return m_ballot_control_font; }
     UIFont *choice_control_font() const { return m_choice_control_font; }
     UIFont *settings_description_font() const { return m_settings_description_font; }
-    UIFont *taunt_prompt_font() const { return m_taunt_prompt_font; }
-    UIFont *taunt_score_to_beat_font() const { return m_taunt_score_to_beat_font; }
+    UIFont *share_prompt_font() const { return m_share_prompt_font; }
+    UIFont *share_score_to_beat_font() const { return m_share_score_to_beat_font; }
     UIFont *placard_value_font() const { return m_placard_value_font; }
     UIFont *placard_description_font() const { return m_placard_description_font; }
 
@@ -331,8 +331,8 @@ private:
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
     void set_settings_description_font(UIFont *font) { m_settings_description_font = font; }
-    void set_taunt_prompt_font(UIFont *font) { m_taunt_prompt_font = font; }
-    void set_taunt_score_to_beat_font(UIFont *font) { m_taunt_score_to_beat_font = font; }
+    void set_share_prompt_font(UIFont *font) { m_share_prompt_font = font; }
+    void set_share_score_to_beat_font(UIFont *font) { m_share_score_to_beat_font = font; }
     void set_placard_value_font(UIFont *font) { m_placard_value_font = font; }
     void set_placard_description_font(UIFont *font) { m_placard_description_font = font; }
     void set_game_controls_button_charge_outsets(UPOutsets outsets) { m_game_controls_button_charge_outsets = outsets; }
@@ -362,8 +362,8 @@ private:
     void calculate_slider_control_metrics();
     void calculate_choice_control_metrics();
     void calculate_settings_description_font_metrics();
-    void calculate_taunt_prompt_font_metrics();
-    void calculate_taunt_score_to_beat_font_metrics();
+    void calculate_share_prompt_font_metrics();
+    void calculate_share_score_to_beat_font_metrics();
     void calculate_placard_value_font_metrics();
     void calculate_placard_description_font_metrics();
     void calculate_locations();
@@ -423,8 +423,8 @@ private:
     __strong UIFont *m_ballot_control_font;
     __strong UIFont *m_choice_control_font;
     __strong UIFont *m_settings_description_font;
-    __strong UIFont *m_taunt_prompt_font;
-    __strong UIFont *m_taunt_score_to_beat_font;
+    __strong UIFont *m_share_prompt_font;
+    __strong UIFont *m_share_score_to_beat_font;
     __strong UIFont *m_placard_value_font;
     __strong UIFont *m_placard_description_font;
 

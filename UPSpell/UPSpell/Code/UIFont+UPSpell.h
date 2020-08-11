@@ -36,8 +36,8 @@ extern NSString * const UPGameInformationFontName;
 + (UIFont *)settingsDescriptionFontOfSize:(CGFloat)fontSize;
 + (UIFont *)settingsDescriptionFontWithCapHeight:(CGFloat)capHeight;
 
-+ (UIFont *)tauntFontOfSize:(CGFloat)fontSize;
-+ (UIFont *)tauntFontWithCapHeight:(CGFloat)capHeight;
++ (UIFont *)shareFontOfSize:(CGFloat)fontSize;
++ (UIFont *)shareFontWithCapHeight:(CGFloat)capHeight;
 
 + (UIFont *)placardValueFontOfSize:(CGFloat)fontSize;
 + (UIFont *)placardValueFontWithCapHeight:(CGFloat)capHeight;
