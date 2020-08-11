@@ -12,6 +12,11 @@
 static constexpr CGSize UPVectorLogoCanonicalSize = { 1024, 1024 };
 static constexpr CGSize UPVectorLogoCanonicalFillSize = { 874, 874 };
 
+static UIColor *UPVectorLogoBorderBackgroundColor()
+{
+    return [UIColor colorWithWhite:0.5 alpha:0.6];
+}
+
 static UIColor *UPVectorLogoBorderColor()
 {
     return [UIColor colorWithWhite:0.13 alpha:1.0];
@@ -137,6 +142,11 @@ static NSArray<UIColor *> *UPVectorLogoFillColors(int hue)
     }
 }
 
+static UIBezierPath *UPVectorLogoBorderBackgroundPath()
+{
+    return [UIBezierPath bezierPathWithOvalInRect: CGRectMake(44, 44, 936, 936)];
+}
+
 static UIBezierPath *UPVectorLogoBorderPath()
 {
     UIBezierPath* path = [UIBezierPath bezierPath];
@@ -223,6 +233,7 @@ static UIBezierPath *UPVectorLogoArrowPath()
 @interface UPVectorLogoView ()
 @property (nonatomic, readwrite) BOOL drawsBackground;
 @property (nonatomic) UPGradientView *gradientBackgroundView;
+@property (nonatomic) UPBezierPathView *borderBackgroundView;
 @property (nonatomic) UPBezierPathView *borderView;
 @property (nonatomic) UPGradientView *fillView;
 @property (nonatomic) UPBezierPathView *fillClipView;
@@ -257,7 +268,14 @@ static UIBezierPath *UPVectorLogoArrowPath()
         self.gradientBackgroundView = [UPGradientView gradientView];
         [self addSubview:self.gradientBackgroundView];
     }
-    
+    else {
+        self.borderBackgroundView = [UPBezierPathView bezierPathView];
+        self.borderBackgroundView.canonicalSize = UPVectorLogoCanonicalSize;
+        self.borderBackgroundView.path = UPVectorLogoBorderBackgroundPath();
+        self.borderBackgroundView.fillColor = UPVectorLogoBorderBackgroundColor();
+        [self addSubview:self.borderBackgroundView];
+    }
+
     self.borderView = [UPBezierPathView bezierPathView];
     self.borderView.canonicalSize = UPVectorLogoCanonicalSize;
     self.borderView.path = UPVectorLogoBorderPath();
@@ -301,6 +319,9 @@ static UIBezierPath *UPVectorLogoArrowPath()
         self.gradientBackgroundView.frame = bounds;
         self.gradientBackgroundView.startPoint = CGPointZero;
         self.gradientBackgroundView.endPoint = CGPointMake(0, up_rect_height(bounds));
+    }
+    else {
+        self.borderBackgroundView.frame = bounds;
     }
     self.borderView.frame = bounds;
     self.meatballView.frame = bounds;
