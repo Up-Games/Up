@@ -9,6 +9,7 @@
 #import <UpKit/UPControl.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPLabel.h>
+#import <UpKit/UPVectorLogoView.h>
 
 #import "UPControl+UPSpell.h"
 #import "UPDialogTaunt.h"
@@ -20,6 +21,7 @@
 using UP::SpellLayout;
 
 @interface UPDialogTaunt ()
+@property (nonatomic, readwrite) UPVectorLogoView *vectorLogoView;
 @property (nonatomic, readwrite) UPLabel *tauntLabel;
 @property (nonatomic, readwrite) UPLabel *scoreToBeatLabel;
 @property (nonatomic, readwrite) UPButton *cancelButton;
@@ -44,6 +46,11 @@ using UP::SpellLayout;
     SpellLayout &layout = SpellLayout::instance();
     self = [super initWithFrame:layout.canvas_frame()];
 
+//    self.vectorLogoView = [UPVectorLogoView vectorLogoView];
+//    [self addSubview:self.vectorLogoView];
+//    self.vectorLogoView.frame = CGRectMake(0, 0, 160, 160);
+//    self.vectorLogoView.center = layout.center_for(SpellLayout::Role::DialogMessageTauntPrompt);
+    
     self.tauntLabel = [UPLabel label];
     self.tauntLabel.string = @"UP SPELL TAUNT!";
     self.tauntLabel.font = layout.taunt_prompt_font();

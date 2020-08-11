@@ -293,7 +293,7 @@ using Spot = UP::SpellLayout::Place;
 - (void)handleHueStepLess
 {
     CGFloat hue = [UIColor themeColorHue];
-    hue = up_previous_milestone_hue(hue);
+    hue = up_previous_milepost_hue(hue);
     self.hueWheel.hue = hue;
     [self.hueWheel cancelAnimations];
     [UIColor setThemeColorHue:hue];
@@ -305,7 +305,7 @@ using Spot = UP::SpellLayout::Place;
 - (void)handleHueStepMore
 {
     CGFloat hue = [UIColor themeColorHue];
-    hue = up_next_milestone_hue(hue);
+    hue = up_next_milepost_hue(hue);
     self.hueWheel.hue = hue;
     [self.hueWheel cancelAnimations];
     [UIColor setThemeColorHue:hue];

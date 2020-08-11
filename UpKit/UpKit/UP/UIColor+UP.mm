@@ -466,7 +466,7 @@ static CGFloat _ThemeHue = 222;
 const int UPHueCount = 360;
 const int UPHueMilepost = 15;
 
-int up_previous_milestone_hue(int hue)
+int up_previous_milepost_hue(int hue)
 {
     int dv = hue % UPHueMilepost;
     if (dv == 0) {
@@ -479,7 +479,7 @@ int up_previous_milestone_hue(int hue)
     return hue;
 }
 
-int up_next_milestone_hue(int hue)
+int up_next_milepost_hue(int hue)
 {
     int dv = hue % UPHueMilepost;
     if (dv == 0) {
@@ -494,12 +494,31 @@ int up_next_milestone_hue(int hue)
     return hue;
 }
 
+int up_closest_milepost_hue(int hue)
+{
+    if (hue < 0 || hue > 360) {
+        return 0;
+    }
+    
+    if (hue % UPHueMilepost == 0) {
+        return hue;
+    }
+    
+    int prev = up_previous_milepost_hue(hue);
+    int next = up_next_milepost_hue(hue);
+
+    int d_prev = abs(prev - hue);
+    int d_next = abs(next - hue);
+
+    return d_prev <= d_next ? prev : next;
+}
+
 NSString *up_theme_icon_name(void)
 {
     CGFloat hue = [UIColor themeColorHue];
     if (fmod(hue, UPHueMilepost) > 1) {
-        CGFloat hueMore = up_next_milestone_hue(hue);
-        CGFloat hueLess = up_previous_milestone_hue(hue);
+        CGFloat hueMore = up_next_milepost_hue(hue);
+        CGFloat hueLess = up_previous_milepost_hue(hue);
         CGFloat diffMore = up_angular_difference(hue, hueMore);
         CGFloat diffLess = up_angular_difference(hue, hueLess);
         if (diffMore < diffLess) {

@@ -52,6 +52,10 @@
 		5DA8E06E247D50AB008D3015 /* UPSerialNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E06D247D50AB008D3015 /* UPSerialNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DB9B1AE2487360900A4AAA8 /* UPSerialNumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AD2487360900A4AAA8 /* UPSerialNumber.cpp */; };
 		5DB9B1B02487EA9800A4AAA8 /* UPRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AF2487EA9800A4AAA8 /* UPRandom.cpp */; };
+		5DBAD6D524E22B8800471ABF /* UPVectorLogoView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBAD6D324E22B8800471ABF /* UPVectorLogoView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DBAD6D624E22B8800471ABF /* UPVectorLogoView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAD6D424E22B8800471ABF /* UPVectorLogoView.mm */; };
+		5DBAD6D924E22DA900471ABF /* UPGradientView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBAD6D724E22DA900471ABF /* UPGradientView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DBAD6DA24E22DA900471ABF /* UPGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAD6D824E22DA900471ABF /* UPGradientView.m */; };
 		5DBADB7324678F4000D9D1FF /* UPGameKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7424678F4000D9D1FF /* UPGameKey.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameKey.mm */; };
 		5DBC20C5249ACD91002A6ADC /* UPGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBC20C3249ACD91002A6ADC /* UPGestureRecognizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -179,6 +183,10 @@
 		5DA8E06D247D50AB008D3015 /* UPSerialNumber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSerialNumber.h; sourceTree = "<group>"; };
 		5DB9B1AD2487360900A4AAA8 /* UPSerialNumber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPSerialNumber.cpp; sourceTree = "<group>"; };
 		5DB9B1AF2487EA9800A4AAA8 /* UPRandom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPRandom.cpp; sourceTree = "<group>"; };
+		5DBAD6D324E22B8800471ABF /* UPVectorLogoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPVectorLogoView.h; sourceTree = "<group>"; };
+		5DBAD6D424E22B8800471ABF /* UPVectorLogoView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPVectorLogoView.mm; sourceTree = "<group>"; };
+		5DBAD6D724E22DA900471ABF /* UPGradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGradientView.h; sourceTree = "<group>"; };
+		5DBAD6D824E22DA900471ABF /* UPGradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPGradientView.m; sourceTree = "<group>"; };
 		5DBADB7124678F4000D9D1FF /* UPGameKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameKey.h; sourceTree = "<group>"; };
 		5DBADB7224678F4000D9D1FF /* UPGameKey.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameKey.mm; sourceTree = "<group>"; };
 		5DBC20C3249ACD91002A6ADC /* UPGestureRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGestureRecognizer.h; sourceTree = "<group>"; };
@@ -398,6 +406,8 @@
 				5DD71D482457824A00F3F9E2 /* UPGeometry.mm */,
 				5DBC20C3249ACD91002A6ADC /* UPGestureRecognizer.h */,
 				5DBC20C4249ACD91002A6ADC /* UPGestureRecognizer.mm */,
+				5DBAD6D724E22DA900471ABF /* UPGradientView.h */,
+				5DBAD6D824E22DA900471ABF /* UPGradientView.m */,
 				5DFE620B245364C700D9CA0B /* UpKit.h */,
 				5DC618B2246EF6CC00090E7A /* UPLabel.h */,
 				5DC618B3246EF6CC00090E7A /* UPLabel.m */,
@@ -438,6 +448,8 @@
 				5DF8A8E52454892B00751E2E /* UPUnitFunction.h */,
 				5DF8A8E62454892C00751E2E /* UPUnitFunction.mm */,
 				5DA8E035247595B8008D3015 /* UPUtility.h */,
+				5DBAD6D324E22B8800471ABF /* UPVectorLogoView.h */,
+				5DBAD6D424E22B8800471ABF /* UPVectorLogoView.mm */,
 				5D3461322488760A009FB46D /* UPViewMove.h */,
 				5D3461332488760A009FB46D /* UPViewMove.mm */,
 			);
@@ -488,6 +500,7 @@
 				5DA8E03F2475E14D008D3015 /* UPStackTrace.h in Headers */,
 				5DBC20CC249AD86C002A6ADC /* UPTapGestureRecognizer.h in Headers */,
 				5DF9DF992466412B00B2199D /* UPRandom.h in Headers */,
+				5DBAD6D924E22DA900471ABF /* UPGradientView.h in Headers */,
 				5D12E4AB24BCA91A00C73F64 /* UPPlacard.h in Headers */,
 				5DFE62262453CFCD00D9CA0B /* UPConstants.h in Headers */,
 				5DC618BB246F045700090E7A /* UIFont+UP.h in Headers */,
@@ -503,6 +516,7 @@
 				5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */,
 				5DA8E06B247C76A8008D3015 /* UPTimeSpanning.h in Headers */,
 				5D4AE82D248F1FE600213904 /* UPSettings.h in Headers */,
+				5DBAD6D524E22B8800471ABF /* UPVectorLogoView.h in Headers */,
 				5DC67DFB247367D1009BCDBB /* UPGameTimerLabel.h in Headers */,
 				5DF8A8E72454892C00751E2E /* UPUnitFunction.h in Headers */,
 				5DA8E0372475962A008D3015 /* UPUtility.h in Headers */,
@@ -653,6 +667,7 @@
 				5DBC20D8249AEFF2002A6ADC /* UPButton.mm in Sources */,
 				5DEBE0212454F1D200016047 /* UIColor+UP.mm in Sources */,
 				5DBC20D4249AE3E8002A6ADC /* UPTouchGestureRecognizer.mm in Sources */,
+				5DBAD6D624E22B8800471ABF /* UPVectorLogoView.mm in Sources */,
 				5D5216F3246D87DF005A2E9F /* UPControl.mm in Sources */,
 				5D3461352488760A009FB46D /* UPViewMove.mm in Sources */,
 				5DA8E03A2475C796008D3015 /* UPAssertions.mm in Sources */,
@@ -660,6 +675,7 @@
 				5DD71D4A2457824A00F3F9E2 /* UPGeometry.mm in Sources */,
 				5D0FC33024A5865100353563 /* UIDevice+UP.m in Sources */,
 				5DC67DFC247367D1009BCDBB /* UPGameTimerLabel.m in Sources */,
+				5DBAD6DA24E22DA900471ABF /* UPGradientView.m in Sources */,
 				5DC618BC246F045700090E7A /* UIFont+UP.mm in Sources */,
 				5DA8E054247AC79F008D3015 /* UPAnimator.mm in Sources */,
 				5D12E4AC24BCA91A00C73F64 /* UPPlacard.mm in Sources */,

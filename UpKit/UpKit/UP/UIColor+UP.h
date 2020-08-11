@@ -5,6 +5,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import <UpKit/UPMacros.h>
+
 typedef NS_ENUM(NSInteger, UPThemeColorStyle) {
     UPThemeColorStyleDefault,
     UPThemeColorStyleLight,
@@ -106,11 +108,20 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 extern "C" {
 #endif
 
+UP_STATIC_INLINE UIColor *up_rgb(int r, int g, int b) {
+    return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+}
+
+UP_STATIC_INLINE UIColor *up_rgba(int r, int g, int b, CGFloat a) {
+    return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a];
+}
+
 extern const int UPHueCount;
 extern const int UPHueMilepost;
 
-int up_previous_milestone_hue(int);
-int up_next_milestone_hue(int);
+int up_previous_milepost_hue(int);
+int up_next_milepost_hue(int);
+int up_closest_milepost_hue(int);
 NSString *up_theme_icon_name(void);
 
 #ifdef __cplusplus

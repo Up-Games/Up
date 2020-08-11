@@ -27,6 +27,7 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPGameTimerLabel.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPGestureRecognizer.h>
+#import <UpKit/UPGradientView.h>
 #import <UpKit/UPLabel.h>
 #import <UpKit/UPLayoutRule.h>
 #import <UpKit/UPLexicon.h>
@@ -48,6 +49,7 @@ FOUNDATION_EXPORT const unsigned char UpKitVersionString[];
 #import <UpKit/UPTypes.h>
 #import <UpKit/UPUnitFunction.h>
 #import <UpKit/UPUtility.h>
+#import <UpKit/UPVectorLogoView.h>
 #import <UpKit/UPViewMove.h>
 
 #import <UpKit/NSFileManager+UP.h>
