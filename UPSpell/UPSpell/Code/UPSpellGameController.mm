@@ -2082,6 +2082,7 @@ static UPSpellGameController *_Instance;
         UPViewMoveMake(self.dialogTopMenu.aboutButton, Role::DialogButtonTopRight, Place::OffRightNear),
         UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Place::OffBottomNear),
         UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Place::OffBottomFar),
+        UPViewMoveMake(self.dialogGameNote.shareButton, Role::DialogHelpButton, Place::OffBottomFar),
     ]];
     if (mode == Mode::End) {
         [buttonOutMoves addObject:UPViewMoveMake(self.gameView.gameScoreLabel, role_for_score(self.endGameScore), Place::OffBottomFar)];
@@ -2188,6 +2189,7 @@ static UPSpellGameController *_Instance;
     self.dialogGameOver.transform = CGAffineTransformIdentity;
     self.dialogGameOver.hidden = YES;
     self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogGameNote, Place::OffBottomFar);
+    self.dialogGameNote.shareButton.center = layout.center_for(Role::DialogHelpButton, Place::OffBottomFar);
     self.dialogGameNote.hidden = YES;
     self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
     self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
@@ -2227,7 +2229,8 @@ static UPSpellGameController *_Instance;
 
     self.dialogGameOver.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Place::OffBottomNear);
     self.dialogGameNote.noteLabel.frame = layout.frame_for(Role::DialogGameNote, Place::OffBottomFar);
-    
+    self.dialogGameNote.shareButton.frame = layout.frame_for(Role::DialogHelpButton, Place::OffBottomFar);
+
     self.dialogGameOver.alpha = 1;
     self.dialogGameOver.hidden = YES;
     self.dialogGameNote.alpha = 1;
@@ -2295,6 +2298,7 @@ static UPSpellGameController *_Instance;
         NSMutableArray<UPViewMove *> *outGameOverMoves = [NSMutableArray arrayWithArray:@[
             UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Place::OffBottomNear),
             UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Place::OffBottomFar),
+            UPViewMoveMake(self.dialogGameNote.shareButton, Role::DialogHelpButton, Place::OffBottomFar),
         ]];
         BOOL gameScoreLabelNeedsMove = mode == Mode::End && !CGAffineTransformIsIdentity(self.gameView.gameScoreLabel.transform);
         if (gameScoreLabelNeedsMove) {
@@ -2408,8 +2412,8 @@ static UPSpellGameController *_Instance;
     else if (score == dossier.highScore) {
         result = @"TIED HIGH SCORE!";
     }
-    else if (score + 20 >= dossier.highScore) {
-        result = [NSString stringWithFormat:@"CLOSE! +%d FROM HIGH SCORE (%d)", dossier.highScore - score, dossier.highScore];
+    else if (score + 10 >= dossier.highScore || score >= dossier.highScore * 0.9) {
+        result = [NSString stringWithFormat:@"CLOSE TO HIGH SCORE: %d", dossier.highScore];
     }
 
     return result;
@@ -2426,7 +2430,7 @@ static UPSpellGameController *_Instance;
 
     const Word &word = words[0];
     NSString *wordString = ns_str(word.string());
-    return [NSString stringWithFormat:@"BEST WORD IN GAME: %@ +%d", wordString, word.total_score()];
+    return [NSString stringWithFormat:@"BEST WORD: %@ +%d", wordString, word.total_score()];
 }
 
 - (NSString *)gameNoteRandomWord
@@ -2435,7 +2439,7 @@ static UPSpellGameController *_Instance;
     
     Lexicon &lexicon = Lexicon::instance();
     std::u32string random_string = lexicon.random_key(Random::instance());
-    return [NSString stringWithFormat:@"RANDOM WORD FROM THE LEXICON: %@", ns_str(random_string)];
+    return [NSString stringWithFormat:@"RANDOM WORD: %@", ns_str(random_string)];
 }
 
 #pragma mark - Model management
@@ -3537,6 +3541,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.dialogGameOver.hidden = NO;
     self.dialogGameOver.alpha = 0;
     self.dialogGameNote.noteLabel.center = layout.center_for(Role::DialogGameNote, Place::OffBottomNear);
+    self.dialogGameNote.shareButton.center = layout.center_for(Role::DialogHelpButton, Place::OffBottomNear);
     self.dialogGameNote.center = layout.center_for(Location(Role::Screen));
     self.dialogGameNote.hidden = NO;
     [UIView animateWithDuration:0.15 animations:^{
@@ -3607,6 +3612,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
                 UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter)),
                 UPViewMoveMake(self.dialogTopMenu.aboutButton, Location(Role::DialogButtonTopRight)),
                 UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote),
+                UPViewMoveMake(self.dialogGameNote.shareButton, Role::DialogHelpButton),
             ];
             start(bloop_in(BandModeUI, buttonMoves, GameOverInOutBloopDuration, ^(UIViewAnimatingPosition) {
                 [self viewUnlock];

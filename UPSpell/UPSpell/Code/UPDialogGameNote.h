@@ -10,6 +10,7 @@
 @interface UPDialogGameNote : UIView
 
 @property (nonatomic, readonly) UPLabel *noteLabel;
+@property (nonatomic, readonly) UPButton *shareButton;
 
 + (UPDialogGameNote *)instance;
 

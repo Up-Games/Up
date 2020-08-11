@@ -155,10 +155,10 @@ public:
     static inline constexpr CGRect CanonicalDialogTopButtonsLayoutFrame =      {  83,  26,  834,  76 };
     static inline constexpr CGRect CanonicalDialogResponseButtonsLayoutFrame = { 257, 350,  480,  76 };
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
-    static inline constexpr CGRect CanonicalDialogHelpButtonFrame = { 860, 400,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
+    static inline constexpr CGRect CanonicalDialogHelpButtonFrame = { 853, 382,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
-    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 369, 1000, 100 };
-    static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 30;
+    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 384, 1000, 100 };
+    static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 28;
     static inline constexpr CGFloat CanonicalGameNoteWordFontCapHeight = 30;
     static inline constexpr CGFloat CanonicalGameNoteWordFontBaselineAdjustment = 8;
 

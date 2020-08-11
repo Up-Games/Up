@@ -18,6 +18,7 @@ using UP::SpellLayout;
 
 @interface UPDialogGameNote ()
 @property (nonatomic, readwrite) UPLabel *noteLabel;
+@property (nonatomic, readwrite) UPButton *shareButton;
 @end
 
 @implementation UPDialogGameNote
@@ -38,13 +39,16 @@ using UP::SpellLayout;
     self = [super initWithFrame:layout.canvas_frame()];
     
     self.noteLabel = [UPLabel label];
-    self.noteLabel.string = @"‘GRUBMITS’ WAS YOUR HIGHEST SCORING WORD (32)";
     self.noteLabel.font = layout.game_note_font();
     self.noteLabel.colorCategory = UPColorCategoryInformation;
     self.noteLabel.textAlignment = NSTextAlignmentCenter;
     self.noteLabel.frame = layout.frame_for(SpellLayout::Role::DialogGameNote);
     [self addSubview:self.noteLabel];
     
+    self.shareButton = [UPButton roundShareButton];
+    self.shareButton.frame = layout.frame_for(SpellLayout::Role::DialogHelpButton);
+    [self addSubview:self.shareButton];
+
     return self;
 }
 
