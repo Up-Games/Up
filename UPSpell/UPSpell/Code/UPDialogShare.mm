@@ -58,7 +58,6 @@ using Role = SpellLayout::Role;
     self.wordMarkLabel.font = layout.word_mark_font();
     self.wordMarkLabel.textAlignment = NSTextAlignmentCenter;
     self.wordMarkLabel.frame = layout.frame_for(Role::ChallengeInterstitialWordMark);
-    self.wordMarkLabel.colorCategory = UPColorCategoryCanonical;
     [self addSubview:self.wordMarkLabel];
     
     self.shareLabel = [UPLabel label];
@@ -98,7 +97,7 @@ using Role = SpellLayout::Role;
 
 - (void)updateWithShare:(UPShareRequest *)share
 {
-    self.scoreToTopLabel.string = [NSString stringWithFormat:@"SCORE TO TOP: %d", share.score];
+    self.scoreToTopLabel.string = [NSString stringWithFormat:@"TARGET SCORE: %d", share.score];
 }
 
 #pragma mark - Theme colors
