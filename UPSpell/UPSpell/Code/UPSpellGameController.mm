@@ -2241,7 +2241,7 @@ static UPSpellGameController *_Instance;
     self.dialogChallenge.cancelButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse, Place::OffBottomNear);
     self.dialogChallenge.helpButton.frame = layout.frame_for(Role::DialogHelpButton, Place::OffBottomNear);
 
-    delay(BandModeDelay, 1.5, ^{
+    delay(BandModeDelay, 1.1, ^{
         // Move the logo interstitial out
         NSArray<UPViewMove *> *logoMoves = @[
             UPViewMoveMake(self.dialogChallenge.vectorLogoView, Location(Role::ChallengeInterstitialLogo, Place::OffBottomFar)),
