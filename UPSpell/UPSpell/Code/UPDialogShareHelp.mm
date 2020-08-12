@@ -77,13 +77,7 @@ using Role = SpellLayout::Role;
 
 - (void)layoutSubviews
 {
-    SpellLayout &layout = SpellLayout::instance();
-    CGRect layoutFrame = layout.frame_for(Role::DialogHelpText);
-    layoutFrame.origin = CGPointZero;
-    NSAttributedString *attrString = self.helpLabel.attributedString;
-    CGSize attrStringSize = attrString.size;
-    CGRect attrStringFrame = CGRectMake(0, 0, up_size_width(attrStringSize), up_size_height(attrStringSize));
-    self.helpLabel.frame = up_rect_centered_x_in_rect(attrStringFrame, layoutFrame);
+    [self.helpLabel centerInSuperview];
 }
 
 #pragma mark - Theme colors
@@ -91,6 +85,7 @@ using Role = SpellLayout::Role;
 - (void)updateThemeColors
 {
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
+    [self.helpLabel updateThemeColors];
 }
 
 @end

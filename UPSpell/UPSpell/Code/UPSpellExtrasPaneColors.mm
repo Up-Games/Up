@@ -33,6 +33,7 @@
 @property (nonatomic, readwrite) UPHueWheel *hueWheel;
 @property (nonatomic, readwrite) UPStepper *hueStepLess;
 @property (nonatomic, readwrite) UPStepper *hueStepMore;
+@property (nonatomic) UIView *hueDescriptionContainer;
 @property (nonatomic) UPLabel *hueDescription;
 @property (nonatomic) UIView *exampleTilesContainer;
 @property (nonatomic) UPLabel *iconPrompt;
@@ -105,12 +106,14 @@ using Spot = UP::SpellLayout::Place;
     self.hueStepLess.frame = layout.frame_for(Role::ExtrasColorsHueStepLess);
     [self addSubview:self.hueStepLess];
     
+    self.hueDescriptionContainer = [[UIView alloc] initWithFrame:layout.frame_for(Role::ExtrasColorsDescription)];
+    [self addSubview:self.hueDescriptionContainer];
+    
     self.hueDescription = [UPLabel label];
-    self.hueDescription.frame = layout.frame_for(Role::ExtrasColorsDescription);
     self.hueDescription.font = layout.description_font();
     self.hueDescription.colorCategory = UPColorCategoryControlText;
-    self.hueDescription.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:self.hueDescription];
+    self.hueDescription.textAlignment = NSTextAlignmentLeft;
+    [self.hueDescriptionContainer addSubview:self.hueDescription];
     
     CGRect examplesFrame = CGRectMake(0, 0, SpellLayout::CanonicalTilesLayoutWidth, up_size_height(SpellLayout::CanonicalTileSize));
     self.exampleTilesContainer = [[UPContainerView alloc] initWithFrame:examplesFrame];
@@ -210,7 +213,8 @@ using Spot = UP::SpellLayout::Place;
     self.userInteractionEnabled = YES;
 
     SpellLayout &layout = SpellLayout::instance();
-    self.hueDescription.frame = layout.frame_for(Role::ExtrasColorsDescription);
+    self.hueDescriptionContainer.frame = layout.frame_for(Role::ExtrasColorsDescription);
+    [self.hueDescription centerInSuperview];
     self.exampleTilesContainer.center = layout.center_for(Role::ExtrasColorsExample);
     self.iconPrompt.frame = layout.frame_for(Role::ExtrasColorsIconPrompt, Spot::OffBottomFar);
     self.iconButtonNope.frame = layout.frame_for(Role::ExtrasColorsIconButtonNope, Spot::OffBottomFar);
@@ -316,6 +320,8 @@ using Spot = UP::SpellLayout::Place;
 
 - (void)updateHueDescription
 {
+    [self.hueDescription updateThemeColors];
+    
     NSMutableString *string = [NSMutableString string];
     if (self.quarkModeCheckbox.selected) {
         [string appendString:@"Slowly-changing colors "];
@@ -477,6 +483,13 @@ using Spot = UP::SpellLayout::Place;
             LOG(General, "setAlternateIconName error: %@", error);
         }
     }];
+}
+
+#pragma mark - Layout
+
+- (void)layoutSubviews
+{
+    [self.hueDescription centerInSuperview];
 }
 
 #pragma mark - Update theme colors

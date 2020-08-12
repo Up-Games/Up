@@ -21,4 +21,6 @@
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 - (instancetype)init;
 
+- (void)centerInSuperview;
+
 @end

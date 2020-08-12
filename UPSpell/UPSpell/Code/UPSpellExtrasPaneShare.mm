@@ -67,6 +67,7 @@ using Role = UP::SpellLayout::Role;
 @property (nonatomic) UPLabel *lastGameScoreDescriptionLabel;
 @property (nonatomic) UPButton *highScoreShareButton;
 @property (nonatomic) UPButton *lastGameScoreShareButton;
+@property (nonatomic) UIView *shareDescriptionContainer;
 @property (nonatomic) UPLabel *shareDescription;
 @property (nonatomic) UPLabel *highScoreEqualsLastGameDescription;
 @end
@@ -84,16 +85,15 @@ using Role = UP::SpellLayout::Role;
 
     SpellLayout &layout = SpellLayout::instance();
 
+    self.shareDescriptionContainer = [[UIView alloc] initWithFrame:layout.frame_for(Role::ExtrasShareDescription)];
+    [self addSubview:self.shareDescriptionContainer];
+
     self.shareDescription = [UPLabel label];
     self.shareDescription.frame = layout.frame_for(Role::ExtrasShareDescription);
     self.shareDescription.font = layout.description_font();
     self.shareDescription.colorCategory = UPColorCategoryControlText;
-    self.shareDescription.textAlignment = NSTextAlignmentCenter;
-    self.shareDescription.string =
-       @"SHARE a link to a new game with the same\n"
-        "letters as one of your previous games.\n"
-        "Challenge friends to top your score.";
-    [self addSubview:self.shareDescription];
+    self.shareDescription.textAlignment = NSTextAlignmentLeft;
+    [self.shareDescriptionContainer addSubview:self.shareDescription];
 
     self.highScoreLabel = [UPLabel label];
     self.highScoreLabel.colorCategory = UPColorCategoryControlText;
@@ -154,6 +154,7 @@ using Role = UP::SpellLayout::Role;
     self.userInteractionEnabled = YES;
 
     UPSpellDossier *dossier = [UPSpellDossier instance];
+    SpellLayout &layout = SpellLayout::instance();
 
     if (dossier.totalGamesPlayed > 0) {
         self.highScoreLabel.string = [NSString stringWithFormat:@"%d", dossier.highScore];
@@ -171,12 +172,12 @@ using Role = UP::SpellLayout::Role;
         "letters as one of your previous games.\n"
         "Challenge friends to top your score!";
         
-        SpellLayout &layout = SpellLayout::instance();
         if ([dossier lastGameIsHighScore]) {
             self.highScoreEqualsLastGameDescription.hidden = NO;
             CGRect frame = layout.frame_for(Role::ExtrasShareDescription);
             frame.origin.y += up_float_scaled(SpellLayout::CanonicalExtrasShareLastGameHighScoreEqualGap, layout.layout_scale());
-            self.shareDescription.frame = frame;
+            self.shareDescriptionContainer.frame = frame;
+            [self.shareDescription centerInSuperview];
 
             self.lastGameScoreShareButton.userInteractionEnabled = NO;
             CGFloat alpha = [UIColor themeDisabledAlpha];
@@ -186,9 +187,9 @@ using Role = UP::SpellLayout::Role;
         }
         else {
             self.highScoreEqualsLastGameDescription.hidden = YES;
-            self.shareDescription.frame = layout.frame_for(Role::ExtrasShareDescription);
+            self.shareDescriptionContainer.frame = layout.frame_for(Role::ExtrasShareDescription);
+            [self.shareDescription centerInSuperview];
         }
-        
     }
     else {
         self.highScoreLabel.string = @"–";
@@ -206,6 +207,8 @@ using Role = UP::SpellLayout::Role;
         @"Play some games, then return here to SHARE\n"
         "links to new games with the same letters.\n"
         "Challenge friends to top your score.";
+        self.shareDescriptionContainer.frame = layout.frame_for(Role::ExtrasShareDescription);
+        [self.shareDescription centerInSuperview];
     }
     [self updateThemeColors];
 }
@@ -229,11 +232,19 @@ using Role = UP::SpellLayout::Role;
     [extrasController presentViewController:activityViewController animated:YES completion:nil];
 }
 
+#pragma mark - Layout
+
+- (void)layoutSubviews
+{
+    [self.shareDescription centerInSuperview];
+}
+
 #pragma mark - Update theme colors
 
 - (void)updateThemeColors
 {
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
+    [self.shareDescription updateThemeColors];
 }
 
 @end

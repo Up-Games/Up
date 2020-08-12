@@ -64,6 +64,7 @@ using Role = UP::SpellLayout::Role;
 @property (nonatomic) UPSlider *effectsVolumeSlider;
 @property (nonatomic) UPBallot *tunesCheckbox;
 @property (nonatomic) UPSlider *tunesVolumeSlider;
+@property (nonatomic) UIView *soundDescriptionContainer;
 @property (nonatomic) UPLabel *soundDescription;
 @property (nonatomic) BOOL soundEffectsLevelChanged;
 @property (nonatomic) NSUInteger previousSoundEffectsLevel;
@@ -84,13 +85,16 @@ using Role = UP::SpellLayout::Role;
 
     SpellLayout &layout = SpellLayout::instance();
 
+    self.soundDescriptionContainer = [[UIView alloc] initWithFrame:layout.frame_for(Role::ExtrasSoundDescription)];
+    [self addSubview:self.soundDescriptionContainer];
+
     self.soundDescription = [UPLabel label];
     self.soundDescription.frame = layout.frame_for(Role::ExtrasSoundDescription);
     self.soundDescription.font = layout.description_font();
     self.soundDescription.colorCategory = UPColorCategoryControlText;
-    self.soundDescription.textAlignment = NSTextAlignmentCenter;
+    self.soundDescription.textAlignment = NSTextAlignmentLeft;
     self.soundDescription.string = @"EFFECTS play in response to your actions and to\nthe game timer. TUNES are the in-game music.";
-    [self addSubview:self.soundDescription];
+    [self.soundDescriptionContainer addSubview:self.soundDescription];
 
     self.effectsCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
     self.effectsCheckbox.labelString = @"EFFECTS";
@@ -292,13 +296,19 @@ using Role = UP::SpellLayout::Role;
     }
 }
 
-#pragma mark - Target / Action
+#pragma mark - Layout
+
+- (void)layoutSubviews
+{
+    [self.soundDescription centerInSuperview];
+}
 
 #pragma mark - Update theme colors
 
 - (void)updateThemeColors
 {
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
+    [self.soundDescription updateThemeColors];
 }
 
 @end

@@ -165,6 +165,19 @@
     }
 }
 
+- (void)centerInSuperview
+{
+    if (!self.superview) {
+        return;
+    }
+    
+    CGRect layoutFrame = self.superview.bounds;
+    NSAttributedString *attrString = self.attributedString;
+    CGSize attrStringSize = attrString.size;
+    CGRect attrStringFrame = CGRectMake(0, 0, up_size_width(attrStringSize), up_size_height(attrStringSize));
+    self.frame = up_rect_centered_x_in_rect(attrStringFrame, layoutFrame);
+}
+
 #pragma mark - Theme colors
 
 - (void)updateThemeColors
