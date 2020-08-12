@@ -13,7 +13,7 @@
 
 #import "UPControl+UPSpell.h"
 #import "UPDialogShare.h"
-#import "UPShareRequest.h"
+#import "UPChallenge.h"
 #import "UPSpellLayout.h"
 #import "UPTextButton.h"
 #import "UPTextPaths.h"
@@ -95,7 +95,7 @@ using Role = SpellLayout::Role;
     return self;
 }
 
-- (void)updateWithShare:(UPShareRequest *)share
+- (void)updateWithShare:(UPChallenge *)share
 {
     self.scorePromptLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", share.score];
 }

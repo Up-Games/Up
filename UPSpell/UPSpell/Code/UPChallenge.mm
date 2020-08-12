@@ -1,5 +1,5 @@
 //
-//  UPShare.mm
+//  UPChallenge.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -8,44 +8,23 @@
 #import <UPKit/UPGameKey.h>
 #import <UPKit/UPStringTools.h>
 
-#import "UPShareRequest.h"
+#import "UPChallenge.h"
 
 using UP::GameKey;
 using UP::cpp_str;
 
-@interface UPShareRequest ()
+@interface UPChallenge ()
 @property (nonatomic, readwrite) UPGameKey *gameKey;
 @property (nonatomic, readwrite) int score;
 @property (nonatomic, readwrite) NSURL *URL;
 @property (nonatomic, readwrite) BOOL valid;
 @end
 
-@implementation UPShareRequest
+@implementation UPChallenge
 
-+ (UPShareRequest *)shareRequestWithGameKey:(UPGameKey *)gameKey score:(int)score
-{
-    return [[self alloc] _initWithGameKey:gameKey score:score];
-}
-
-+ (UPShareRequest *)shareRequestWithURL:(NSURL *)URL
++ (UPChallenge *)challengeWithURL:(NSURL *)URL
 {
     return [[self alloc] _initWithURL:URL];
-}
-
-- (instancetype)_initWithGameKey:(UPGameKey *)gameKey score:(int)score
-{
-    self = [super init];
-    self.gameKey = gameKey;
-    self.score = score;
-    self.valid = NO;
-    if (self.gameKey) {
-        [self _setURL];
-        self.valid = YES;
-    }
-    else {
-        self.gameKey = [UPGameKey gameKeyWithValue:0];
-    }
-    return self;
 }
 
 - (instancetype)_initWithURL:(NSURL *)URL
@@ -58,12 +37,6 @@ using UP::cpp_str;
         self.valid = YES;
     }
     return self;
-}
-
-- (void)_setURL
-{
-    NSString *string = [NSString stringWithFormat:@"https://upgames.dev/t/?g=upspell&k=%@s=%d", self.gameKey.string, self.score];
-    self.URL = [NSURL URLWithString:string];
 }
 
 - (void)_setComponentsFromURL

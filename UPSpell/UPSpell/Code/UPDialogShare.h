@@ -7,7 +7,7 @@
 
 @class UPButton;
 @class UPLabel;
-@class UPShareRequest;
+@class UPChallenge;
 
 @interface UPDialogShare : UIView
 
@@ -23,6 +23,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
-- (void)updateWithShare:(UPShareRequest *)share;
+- (void)updateWithShare:(UPChallenge *)share;
 
 @end

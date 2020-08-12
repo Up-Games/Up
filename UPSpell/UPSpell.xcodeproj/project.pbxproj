@@ -61,7 +61,7 @@
 		5D6FB59124DB151E00CDC293 /* UPSpellExtrasPaneSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB58F24DB151E00CDC293 /* UPSpellExtrasPaneSound.mm */; };
 		5D6FB59324DB205200CDC293 /* None.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D6FB59224DB205200CDC293 /* None.aac */; };
 		5D6FB59724DB3F7500CDC293 /* Demo-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D6FB59624DB3F7500CDC293 /* Demo-Tune.aac */; };
-		5D6FB59A24DD989100CDC293 /* UPShareRequest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59924DD989100CDC293 /* UPShareRequest.mm */; };
+		5D6FB59A24DD989100CDC293 /* UPChallenge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59924DD989100CDC293 /* UPChallenge.mm */; };
 		5D6FB59D24DDC56100CDC293 /* UPDialogShare.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59C24DDC56100CDC293 /* UPDialogShare.mm */; };
 		5D6FB5A024DEF08800CDC293 /* UPSpellExtrasPaneShare.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59F24DEF08800CDC293 /* UPSpellExtrasPaneShare.mm */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.mm */; };
@@ -553,8 +553,8 @@
 		5D6FB59024DB151E00CDC293 /* UPSpellExtrasPaneSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasPaneSound.h; sourceTree = "<group>"; };
 		5D6FB59224DB205200CDC293 /* None.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = None.aac; sourceTree = "<group>"; };
 		5D6FB59624DB3F7500CDC293 /* Demo-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Demo-Tune.aac"; sourceTree = "<group>"; };
-		5D6FB59824DD989100CDC293 /* UPShareRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPShareRequest.h; sourceTree = "<group>"; };
-		5D6FB59924DD989100CDC293 /* UPShareRequest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPShareRequest.mm; sourceTree = "<group>"; };
+		5D6FB59824DD989100CDC293 /* UPChallenge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPChallenge.h; sourceTree = "<group>"; };
+		5D6FB59924DD989100CDC293 /* UPChallenge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPChallenge.mm; sourceTree = "<group>"; };
 		5D6FB59B24DDC56100CDC293 /* UPDialogShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogShare.h; sourceTree = "<group>"; };
 		5D6FB59C24DDC56100CDC293 /* UPDialogShare.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogShare.mm; sourceTree = "<group>"; };
 		5D6FB59E24DEF08800CDC293 /* UPSpellExtrasPaneShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasPaneShare.h; sourceTree = "<group>"; };
@@ -1042,6 +1042,8 @@
 				5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */,
 				5D0FC21B24A125D000353563 /* UPBallot.h */,
 				5D0FC21A24A125D000353563 /* UPBallot.mm */,
+				5D6FB59824DD989100CDC293 /* UPChallenge.h */,
+				5D6FB59924DD989100CDC293 /* UPChallenge.mm */,
 				5D0FC23224A50E3B00353563 /* UPChoice.h */,
 				5D0FC23124A50E3B00353563 /* UPChoice.mm */,
 				5D57D1FA246DB97700705395 /* UPControl+UPSpell.h */,
@@ -1063,8 +1065,6 @@
 				5DBC20C12497B9AD002A6ADC /* UPMode.h */,
 				5DF9DF5D2466165700B2199D /* UPSceneDelegate.h */,
 				5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */,
-				5D6FB59824DD989100CDC293 /* UPShareRequest.h */,
-				5D6FB59924DD989100CDC293 /* UPShareRequest.mm */,
 				5D6FB58824DAFC2500CDC293 /* UPSlider.h */,
 				5D6FB58924DAFC2500CDC293 /* UPSlider.mm */,
 				5D5B53F024CDCACD00FD50D4 /* UPSoundPlayer.h */,
@@ -2040,7 +2040,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D12E49C24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.mm in Sources */,
-				5D6FB59A24DD989100CDC293 /* UPShareRequest.mm in Sources */,
+				5D6FB59A24DD989100CDC293 /* UPChallenge.mm in Sources */,
 				5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */,
 				5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */,
 				5D0FC22C24A2A5C300353563 /* UPSpellSettings.mm in Sources */,

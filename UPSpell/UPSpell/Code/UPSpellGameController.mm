@@ -35,7 +35,7 @@
 #import "UPTileView.h"
 #import "UPTilePaths.h"
 #import "UPTunePlayer.h"
-#import "UPShareRequest.h"
+#import "UPChallenge.h"
 #import "UPViewMove+UPSpell.h"
 
 using Action = UP::SpellModel::Action;
@@ -138,7 +138,7 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) NSInteger lockCount;
 @property (nonatomic) UPChoice *playMenuChoice;
 @property (nonatomic) int endGameScore;
-@property (nonatomic) UPShareRequest *challenge;
+@property (nonatomic) UPChallenge *challenge;
 
 @property (nonatomic) UITouch *activeTouch;
 @property (nonatomic) UPControl *touchedControl;
@@ -732,13 +732,13 @@ static UPSpellGameController *_Instance;
 
 - (void)dialogShareCancelButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
-    ASSERT(self.mode == Mode::Share);
+    ASSERT(self.mode == Mode::Challenge);
     [self setMode:Mode::Init];
 }
 
 - (void)dialogShareGoButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
-    ASSERT(self.mode == Mode::Share);
+    ASSERT(self.mode == Mode::Challenge);
     [self setMode:Mode::Ready];
 }
 
@@ -2327,8 +2327,8 @@ static UPSpellGameController *_Instance;
         });
     };
     
-    BOOL comingFromPlayMenuOrShared = mode == Mode::PlayMenu || mode == Mode::Share;
-    if (comingFromPlayMenuOrShared) {
+    BOOL comingFromPlayMenuOrChallenge = mode == Mode::PlayMenu || mode == Mode::Challenge;
+    if (comingFromPlayMenuOrChallenge) {
         self.dialogGameOver.transform = CGAffineTransformIdentity;
         bottomHalf();
     }
@@ -2597,16 +2597,16 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }
 }
 
-#pragma mark - Share Requests
+#pragma mark - Challenges
 
-- (void)setChallenge:(UPShareRequest *)challenge
+- (void)setChallenge:(UPChallenge *)challenge
 {
     BOOL requestValid = challenge && challenge.valid;
-    BOOL modeValid = self.mode == Mode::Init || self.mode == Mode::Pause || self.mode == Mode::Share;
+    BOOL modeValid = self.mode == Mode::Init || self.mode == Mode::Pause || self.mode == Mode::Challenge;
 
     if (requestValid && modeValid) {
         _challenge = challenge;
-        [self setMode:Mode::Share];
+        [self setMode:Mode::Challenge];
     }
     else {
         _challenge = nil;
@@ -2653,7 +2653,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             case UP::Mode::Play:
                 [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioDidEnterBackground];
                 break;
-            case UP::Mode::Share:
+            case UP::Mode::Challenge:
             case UP::Mode::GameOver:
             case UP::Mode::Quit:
             case UP::Mode::End:
@@ -2846,56 +2846,56 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (void)configureModeTransitionTables
 {
     m_default_transition_table = {
-        { Mode::None,     Mode::Init,     @selector(modeTransitionFromNoneToInit) },
-        { Mode::None,     Mode::Pause,    @selector(modeTransitionFromNoneToPause) },
-        { Mode::Init,     Mode::Attract,  @selector(modeTransitionFromInitToAttract) },
-        { Mode::Init,     Mode::About,    @selector(modeTransitionFromInitToAbout) },
-        { Mode::Init,     Mode::Extras,   @selector(modeTransitionFromInitToExtras) },
-        { Mode::Init,     Mode::PlayMenu, @selector(modeTransitionFromInitToPlayMenu) },
-        { Mode::Init,     Mode::Share,    @selector(modeTransitionFromInitToShared) },
-        { Mode::Init,     Mode::Ready,    @selector(modeTransitionFromInitToReady) },
-        { Mode::About,    Mode::Init,     @selector(modeTransitionFromAboutToInit) },
-        { Mode::Extras,   Mode::Init,     @selector(modeTransitionFromExtrasToInit) },
-        { Mode::Attract,  Mode::About,    @selector(modeTransitionFromAttractToAbout) },
-        { Mode::Attract,  Mode::Extras,   @selector(modeTransitionFromAttractToExtras) },
-        { Mode::Attract,  Mode::Ready,    @selector(modeTransitionFromAttractToReady) },
-        { Mode::PlayMenu, Mode::Init,     @selector(modeTransitionFromPlayMenuToInit) },
-        { Mode::PlayMenu, Mode::Ready,    @selector(modeTransitionFromPlayMenuToReady) },
-        { Mode::Share,    Mode::Init,     @selector(modeTransitionFromShareToInit) },
-        { Mode::Share,    Mode::Ready,    @selector(modeTransitionFromShareToReady) },
-        { Mode::Ready,    Mode::Play,     @selector(modeTransitionFromReadyToPlay) },
-        { Mode::Play,     Mode::Pause,    @selector(modeTransitionFromPlayToPause) },
-        { Mode::Play,     Mode::GameOver, @selector(modeTransitionFromPlayToGameOver) },
-        { Mode::Pause,    Mode::Share,    @selector(modeTransitionFromPauseToShared) },
-        { Mode::Pause,    Mode::Play,     @selector(modeTransitionFromPauseToPlay) },
-        { Mode::Pause,    Mode::Quit,     @selector(modeTransitionFromPauseToQuit) },
-        { Mode::GameOver, Mode::End,      @selector(modeTransitionFromOverToEnd) },
-        { Mode::End,      Mode::About,    @selector(modeTransitionFromEndToAbout) },
-        { Mode::End,      Mode::Extras,   @selector(modeTransitionFromEndToExtras) },
-        { Mode::End,      Mode::PlayMenu, @selector(modeTransitionFromEndToPlayMenu) },
-        { Mode::End,      Mode::Ready,    @selector(modeTransitionFromEndToReady) },
-        { Mode::Quit,     Mode::End,      @selector(modeTransitionFromQuitToEnd) },
+        { Mode::None,      Mode::Init,      @selector(modeTransitionFromNoneToInit) },
+        { Mode::None,      Mode::Pause,     @selector(modeTransitionFromNoneToPause) },
+        { Mode::Init,      Mode::Attract,   @selector(modeTransitionFromInitToAttract) },
+        { Mode::Init,      Mode::About,     @selector(modeTransitionFromInitToAbout) },
+        { Mode::Init,      Mode::Extras,    @selector(modeTransitionFromInitToExtras) },
+        { Mode::Init,      Mode::PlayMenu,  @selector(modeTransitionFromInitToPlayMenu) },
+        { Mode::Init,      Mode::Challenge, @selector(modeTransitionFromInitToChallenge) },
+        { Mode::Init,      Mode::Ready,     @selector(modeTransitionFromInitToReady) },
+        { Mode::About,     Mode::Init,      @selector(modeTransitionFromAboutToInit) },
+        { Mode::Extras,    Mode::Init,      @selector(modeTransitionFromExtrasToInit) },
+        { Mode::Attract,   Mode::About,     @selector(modeTransitionFromAttractToAbout) },
+        { Mode::Attract,   Mode::Extras,    @selector(modeTransitionFromAttractToExtras) },
+        { Mode::Attract,   Mode::Ready,     @selector(modeTransitionFromAttractToReady) },
+        { Mode::PlayMenu,  Mode::Init,      @selector(modeTransitionFromPlayMenuToInit) },
+        { Mode::PlayMenu,  Mode::Ready,     @selector(modeTransitionFromPlayMenuToReady) },
+        { Mode::Challenge, Mode::Init,      @selector(modeTransitionFromChallengeToInit) },
+        { Mode::Challenge, Mode::Ready,     @selector(modeTransitionFromChallengeToReady) },
+        { Mode::Ready,     Mode::Play,      @selector(modeTransitionFromReadyToPlay) },
+        { Mode::Play,      Mode::Pause,     @selector(modeTransitionFromPlayToPause) },
+        { Mode::Play,      Mode::GameOver,  @selector(modeTransitionFromPlayToGameOver) },
+        { Mode::Pause,     Mode::Challenge, @selector(modeTransitionFromPauseToChallenge) },
+        { Mode::Pause,     Mode::Play,      @selector(modeTransitionFromPauseToPlay) },
+        { Mode::Pause,     Mode::Quit,      @selector(modeTransitionFromPauseToQuit) },
+        { Mode::GameOver,  Mode::End,       @selector(modeTransitionFromOverToEnd) },
+        { Mode::End,       Mode::About,     @selector(modeTransitionFromEndToAbout) },
+        { Mode::End,       Mode::Extras,    @selector(modeTransitionFromEndToExtras) },
+        { Mode::End,       Mode::PlayMenu,  @selector(modeTransitionFromEndToPlayMenu) },
+        { Mode::End,       Mode::Ready,     @selector(modeTransitionFromEndToReady) },
+        { Mode::Quit,      Mode::End,       @selector(modeTransitionFromQuitToEnd) },
     };
 
     m_did_become_active_transition_table = {
-        { Mode::Play,     Mode::Pause,    @selector(modeTransitionImmediateFromPlayToPause) },
+        { Mode::Play,     Mode::Pause,  @selector(modeTransitionImmediateFromPlayToPause) },
     };
 
     m_will_enter_foreground_transition_table = {
-        { Mode::About,    Mode::Init,      @selector(modeTransitionImmediateFromAboutToInit) },
-        { Mode::Extras,   Mode::Init,     @selector(modeTransitionImmediateFromExtrasToInit) },
+        { Mode::About,    Mode::Init,   @selector(modeTransitionImmediateFromAboutToInit) },
+        { Mode::Extras,   Mode::Init,   @selector(modeTransitionImmediateFromExtrasToInit) },
     };
 
     m_will_resign_active_transition_table = {
-        { Mode::Play,     Mode::Pause,    @selector(modeTransitionImmediateFromPlayToPause) },
+        { Mode::Play,     Mode::Pause,  @selector(modeTransitionImmediateFromPlayToPause) },
     };
 
     m_did_enter_background_transition_table = {
-        { Mode::Play,     Mode::Pause,    @selector(modeTransitionImmediateFromPlayToPause) },
-        { Mode::Share,    Mode::Init,    @selector(modeTransitionImmediateFromSharedToInit) },
-        { Mode::GameOver, Mode::Init,     @selector(modeTransitionImmediateFromGameOverToInit) },
-        { Mode::Quit,     Mode::Init,     @selector(modeTransitionImmediateFromQuitToInit) },
-        { Mode::End,      Mode::Init,     @selector(modeTransitionImmediateFromEndToInit) },
+        { Mode::Play,      Mode::Pause, @selector(modeTransitionImmediateFromPlayToPause) },
+        { Mode::Challenge, Mode::Init,  @selector(modeTransitionImmediateFromChallengeToInit) },
+        { Mode::GameOver,  Mode::Init,  @selector(modeTransitionImmediateFromGameOverToInit) },
+        { Mode::Quit,      Mode::Init,  @selector(modeTransitionImmediateFromQuitToInit) },
+        { Mode::End,       Mode::Init,  @selector(modeTransitionImmediateFromEndToInit) },
     };
 }
 
@@ -3026,7 +3026,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewOrderInPlayMenuFromMode:Mode::Init];
 }
 
-- (void)modeTransitionFromInitToShared
+- (void)modeTransitionFromInitToChallenge
 {
     ASSERT(self.challenge);
     [self viewOrderInShareFromMode:Mode::Init];
@@ -3094,7 +3094,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     });
 }
 
-- (void)modeTransitionImmediateFromSharedToInit
+- (void)modeTransitionImmediateFromChallengeToInit
 {
     [self viewLock];
     [self viewImmediateTransitionToInit];
@@ -3203,7 +3203,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 }
 
-- (void)modeTransitionFromShareToInit
+- (void)modeTransitionFromChallengeToInit
 {
     [self viewLock];
     
@@ -3295,7 +3295,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     });
 }
 
-- (void)modeTransitionFromShareToReady
+- (void)modeTransitionFromChallengeToReady
 {
     ASSERT(m_spell_model->is_blank_filled());
     ASSERT(self.lockCount == 0);
@@ -3338,7 +3338,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         delay(BandModeDelay, 0.55, ^{
             [self createNewGameModelIfNeeded];
             [self viewFillUpSpellTileViews];
-            [self viewMakeReadyFromMode:Mode::Share completion:^{
+            [self viewMakeReadyFromMode:Mode::Challenge completion:^{
                 [self viewBloopOutExistingTileViewsWithCompletion:nil];
                 [self setMode:Mode::Play];
             }];
@@ -3500,7 +3500,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }));
 }
 
-- (void)modeTransitionFromPauseToShared
+- (void)modeTransitionFromPauseToChallenge
 {
     [self viewOrderInShareFromMode:Mode::Pause];
 }

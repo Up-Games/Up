@@ -5,7 +5,6 @@
 
 #import "UPAppDelegate.h"
 #import "UPSpellGameController.h"
-#import "UPShareRequest.h"
 
 @interface UPAppDelegate ()
 @end

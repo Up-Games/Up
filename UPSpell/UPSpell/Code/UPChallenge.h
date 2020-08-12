@@ -7,15 +7,14 @@
 
 @class UPGameKey;
 
-@interface UPShareRequest : NSObject
+@interface UPChallenge : NSObject
 
 @property (nonatomic, readonly) UPGameKey *gameKey;
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) NSURL *URL;
 @property (nonatomic, readonly) BOOL valid;
 
-+ (UPShareRequest *)shareRequestWithGameKey:(UPGameKey *)gameKey score:(int)score;
-+ (UPShareRequest *)shareRequestWithURL:(NSURL *)URL;
++ (UPChallenge *)challengeWithURL:(NSURL *)URL;
 
 - (instancetype)init NS_UNAVAILABLE;
 

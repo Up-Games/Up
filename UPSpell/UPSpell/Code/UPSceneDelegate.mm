@@ -6,7 +6,7 @@
 #import <UpKit/UpKit.h>
 
 #import "UPSceneDelegate.h"
-#import "UPShareRequest.h"
+#import "UPChallenge.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellGameController.h"
 #import "UPSpellNavigationController.h"
@@ -69,7 +69,7 @@ static UPSceneDelegate *_Instance;
     }
     
     NSURL *incomingURL = userActivity.webpageURL;
-    UPShareRequest *share = [UPShareRequest shareRequestWithURL:incomingURL];
+    UPChallenge *share = [UPChallenge challengeWithURL:incomingURL];
     [[UPSpellGameController instance] setChallenge:share];
 }
 
@@ -80,7 +80,7 @@ static UPSceneDelegate *_Instance;
     }
     
     UIOpenURLContext *ctx = [URLContexts anyObject];
-    UPShareRequest *share = [UPShareRequest shareRequestWithURL:ctx.URL];
+    UPChallenge *share = [UPChallenge challengeWithURL:ctx.URL];
     [[UPSpellGameController instance] setChallenge:share];
 }
 
