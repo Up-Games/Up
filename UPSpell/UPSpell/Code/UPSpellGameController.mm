@@ -3373,7 +3373,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         start(bloop_in(BandModeUI, buttonInMoves, 0.5, nil));
     });
 
-    delay(BandModeDelay, 0.1, ^{
+    delay(BandModeDelay, 0.15, ^{
         NSArray<UPViewMove *> *slideMoves = @[
             UPViewMoveMake(self.dialogPlayMenu.backButton, Location(Role::ChoiceBackCenter, Place::OffTopNear)),
         ];
