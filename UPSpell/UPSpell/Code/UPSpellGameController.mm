@@ -834,7 +834,7 @@ static UPSpellGameController *_Instance;
     ASSERT(self.mode == Mode::End);
 
     UPSpellSettings *settings = [UPSpellSettings instance];
-    if (YES || settings.showShareHelp) {
+    if (settings.showShareHelp) {
         [self setMode:Mode::ShareHelp];
     }
     else {

@@ -170,7 +170,7 @@ using Role = UP::SpellLayout::Role;
         self.shareDescription.string =
         @"SHARE a link to a new game with the same\n"
         "letters as one of your previous games.\n"
-        "Challenge friends to top your score!";
+        "Challenge friends to beat your score!";
         
         if ([dossier lastGameIsHighScore]) {
             self.highScoreEqualsLastGameDescription.hidden = NO;
@@ -206,7 +206,7 @@ using Role = UP::SpellLayout::Role;
         self.shareDescription.string =
         @"Play some games, then return here to SHARE\n"
         "links to new games with the same letters.\n"
-        "Challenge friends to top your score.";
+        "Challenge friends to beat your score!";
         self.shareDescriptionContainer.frame = layout.frame_for(Role::ExtrasShareDescription);
         [self.shareDescription centerInSuperview];
     }
