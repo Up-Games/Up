@@ -19,6 +19,6 @@
 @property (nonatomic) UPSpellGameRetry *retry;
 
 - (void)setMode:(UP::Mode)mode transitionScenario:(UPModeTransitionScenario)transitionScenario;
-- (void)setShare:(UPShareRequest *)share;
+- (void)setChallenge:(UPShareRequest *)share;
 
 @end

@@ -56,7 +56,7 @@ static UPSceneDelegate *_Instance;
     
     NSURL *incomingURL = userActivity.webpageURL;
     UPShareRequest *share = [UPShareRequest shareRequestWithURL:incomingURL];
-    [[UPSpellGameController instance] setShare:share];
+    [[UPSpellGameController instance] setChallenge:share];
 }
 
 - (void)parseSharedGameRequestFromURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
@@ -67,7 +67,7 @@ static UPSceneDelegate *_Instance;
     
     UIOpenURLContext *ctx = [URLContexts anyObject];
     UPShareRequest *share = [UPShareRequest shareRequestWithURL:ctx.URL];
-    [[UPSpellGameController instance] setShare:share];
+    [[UPSpellGameController instance] setChallenge:share];
 }
 
 @end

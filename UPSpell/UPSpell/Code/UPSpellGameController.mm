@@ -137,7 +137,7 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) NSInteger lockCount;
 @property (nonatomic) UPChoice *playMenuChoice;
 @property (nonatomic) int endGameScore;
-@property (nonatomic) UPShareRequest *shareRequest;
+@property (nonatomic) UPShareRequest *challenge;
 
 @property (nonatomic) UITouch *activeTouch;
 @property (nonatomic) UPControl *touchedControl;
@@ -2124,12 +2124,12 @@ static UPSpellGameController *_Instance;
 
 - (void)viewOrderInShareFromMode:(Mode)mode
 {
-    ASSERT(self.shareRequest);
+    ASSERT(self.challenge);
     
     [self viewLock];
     
     // Clobber existing game
-    m_spell_model = std::make_shared<SpellModel>(GameKey(self.shareRequest.gameKey.value));
+    m_spell_model = std::make_shared<SpellModel>(GameKey(self.challenge.gameKey.value));
     [self.gameTimer reset];
     [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
@@ -2160,7 +2160,7 @@ static UPSpellGameController *_Instance;
     
     // Show the logo interstitial
     [self.dialogShare updateThemeColors];
-    [self.dialogShare updateWithShare:self.shareRequest];
+    [self.dialogShare updateWithShare:self.challenge];
     self.dialogShare.hidden = NO;
     self.dialogShare.alpha = 1;
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonShare];
@@ -2224,7 +2224,7 @@ static UPSpellGameController *_Instance;
     cancel(BandGameAll);
     cancel(BandModeAll);
 
-    self.shareRequest = nil;
+    self.challenge = nil;
     [self removeInProgressGameFileLogErrors:NO];
     
     [self.gameTimer reset];
@@ -2588,17 +2588,17 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 #pragma mark - Share Requests
 
-- (void)setShare:(UPShareRequest *)shareRequest
+- (void)setChallenge:(UPShareRequest *)challenge
 {
-    BOOL requestValid = shareRequest && shareRequest.valid;
+    BOOL requestValid = challenge && challenge.valid;
     BOOL modeValid = self.mode == Mode::Init || self.mode == Mode::Pause || self.mode == Mode::Share;
 
     if (requestValid && modeValid) {
-        _shareRequest = shareRequest;
+        _challenge = challenge;
         [self setMode:Mode::Share];
     }
     else {
-        _shareRequest = nil;
+        _challenge = nil;
     }
 }
 
@@ -3017,7 +3017,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromInitToShared
 {
-    ASSERT(self.shareRequest);
+    ASSERT(self.challenge);
     [self viewOrderInShareFromMode:Mode::Init];
 }
 
@@ -3196,7 +3196,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 {
     [self viewLock];
     
-    self.shareRequest = nil;
+    self.challenge = nil;
     m_spell_model = nullptr;
     [self createNewGameModelIfNeeded];
     
@@ -3607,7 +3607,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewSetNoteLabelString];
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
 
-    self.shareRequest = nil;
+    self.challenge = nil;
     [self removeInProgressGameFileLogErrors:NO];
 
     UPSpellDossier *dossier = [UPSpellDossier instance];
@@ -3708,7 +3708,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     size_t incoming_word_length = m_spell_model->word().length();
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     
-    self.shareRequest = nil;
+    self.challenge = nil;
     [self removeInProgressGameFileLogErrors:NO];
     
     UPSpellDossier *dossier = [UPSpellDossier instance];
@@ -3753,7 +3753,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     if (m_spell_model->back_opcode() != Opcode::END) {
         m_spell_model->apply(Action(0, Opcode::END));
     }
-    self.shareRequest = nil;
+    self.challenge = nil;
     [self removeInProgressGameFileLogErrors:NO];
     UPSpellDossier *dossier = [UPSpellDossier instance];
     [dossier updateWithModel:m_spell_model];
@@ -3770,7 +3770,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     if (m_spell_model->back_opcode() != Opcode::END) {
         m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     }
-    self.shareRequest = nil;
+    self.challenge = nil;
     [self removeInProgressGameFileLogErrors:NO];
     UPSpellDossier *dossier = [UPSpellDossier instance];
     [dossier updateWithModel:m_spell_model];
