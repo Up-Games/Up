@@ -63,11 +63,11 @@
     switch (self.shareType) {
         case UPShareTypeDefault:
         case UPShareTypeLastGameScore:
-            gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKey];
+            gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
             score = dossier.lastScore;
             break;
         case UPShareTypeHighScore:
-            gameKey = [UPGameKey gameKeyWithValue:dossier.highGameKey];
+            gameKey = [UPGameKey gameKeyWithValue:dossier.highScoreGameKeyValue];
             score = dossier.highScore;
             break;
     }

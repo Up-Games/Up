@@ -68,6 +68,7 @@ using Role = UP::SpellLayout::Role;
 @property (nonatomic) UPButton *highScoreShareButton;
 @property (nonatomic) UPButton *lastGameScoreShareButton;
 @property (nonatomic) UPLabel *shareDescription;
+@property (nonatomic) UPLabel *highScoreEqualsLastGameDescription;
 @end
 
 @implementation UPSpellExtrasPaneShare
@@ -95,13 +96,14 @@ using Role = UP::SpellLayout::Role;
     [self addSubview:self.shareDescription];
 
     self.highScoreLabel = [UPLabel label];
-    self.highScoreLabel.colorCategory = UPColorCategoryInformation;
+    self.highScoreLabel.colorCategory = UPColorCategoryControlText;
     self.highScoreLabel.font = layout.placard_value_font();
     self.highScoreLabel.textAlignment = NSTextAlignmentCenter;
     self.highScoreLabel.frame = layout.frame_for(Role::ExtrasShareHighScoreValue);
     [self addSubview:self.highScoreLabel];
 
     self.highScoreDescriptionLabel = [UPLabel label];
+    self.highScoreDescriptionLabel.colorCategory = UPColorCategoryControlText;
     self.highScoreDescriptionLabel.font = layout.placard_description_font();
     self.highScoreDescriptionLabel.textAlignment = NSTextAlignmentCenter;
     self.highScoreDescriptionLabel.frame = layout.frame_for(Role::ExtrasShareHighScoreDescription);
@@ -114,13 +116,14 @@ using Role = UP::SpellLayout::Role;
     [self addSubview:self.highScoreShareButton];
 
     self.lastGameScoreLabel = [UPLabel label];
-    self.lastGameScoreLabel.colorCategory = UPColorCategoryInformation;
+    self.lastGameScoreLabel.colorCategory = UPColorCategoryControlText;
     self.lastGameScoreLabel.font = layout.placard_value_font();
     self.lastGameScoreLabel.textAlignment = NSTextAlignmentCenter;
     self.lastGameScoreLabel.frame = layout.frame_for(Role::ExtrasShareLastGameValue);
     [self addSubview:self.lastGameScoreLabel];
 
     self.lastGameScoreDescriptionLabel = [UPLabel label];
+    self.lastGameScoreDescriptionLabel.colorCategory = UPColorCategoryControlText;
     self.lastGameScoreDescriptionLabel.font = layout.placard_description_font();
     self.lastGameScoreDescriptionLabel.textAlignment = NSTextAlignmentCenter;
     self.lastGameScoreDescriptionLabel.frame = layout.frame_for(Role::ExtrasShareLastGameDescription);
@@ -132,6 +135,15 @@ using Role = UP::SpellLayout::Role;
     self.lastGameScoreShareButton.frame = layout.frame_for(Role::ExtrasShareLastGameButton);
     [self addSubview:self.lastGameScoreShareButton];
 
+    self.highScoreEqualsLastGameDescription = [UPLabel label];
+    self.highScoreEqualsLastGameDescription.colorCategory = UPColorCategoryControlText;
+    self.highScoreEqualsLastGameDescription.font = layout.settings_description_font();
+    self.highScoreEqualsLastGameDescription.textAlignment = NSTextAlignmentCenter;
+    self.highScoreEqualsLastGameDescription.frame = layout.frame_for(Role::ExtrasShareLastGameHighScoreEqualDescription);
+    self.highScoreEqualsLastGameDescription.string = @"NOTE: last game was your high score.";
+    [self addSubview:self.highScoreEqualsLastGameDescription];
+    self.highScoreEqualsLastGameDescription.hidden = YES;
+    
     [self updateThemeColors];
 
     return self;
@@ -158,6 +170,25 @@ using Role = UP::SpellLayout::Role;
         @"SHARE a link to a new game with the same\n"
         "letters as one of your previous games.\n"
         "Challenge friends to top your score.";
+        
+        SpellLayout &layout = SpellLayout::instance();
+        if ([dossier lastGameIsHighScore]) {
+            self.highScoreEqualsLastGameDescription.hidden = NO;
+            CGRect frame = layout.frame_for(Role::ExtrasShareDescription);
+            frame.origin.y += up_float_scaled(SpellLayout::CanonicalExtrasShareLastGameHighScoreEqualGap, layout.layout_scale());
+            self.shareDescription.frame = frame;
+
+            self.lastGameScoreShareButton.userInteractionEnabled = NO;
+            CGFloat alpha = [UIColor themeDisabledAlpha];
+            self.lastGameScoreLabel.alpha = alpha;
+            self.lastGameScoreDescriptionLabel.alpha = alpha;
+            self.lastGameScoreShareButton.alpha = alpha;
+        }
+        else {
+            self.highScoreEqualsLastGameDescription.hidden = YES;
+            self.shareDescription.frame = layout.frame_for(Role::ExtrasShareDescription);
+        }
+        
     }
     else {
         self.highScoreLabel.string = @"–";

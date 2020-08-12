@@ -63,7 +63,7 @@ public:
         ExtrasSoundEffectsCheckbox, ExtrasSoundEffectsSlider, ExtrasSoundTunesCheckbox, ExtrasSoundTunesSlider, ExtrasSoundDescription,
         ExtrasShareHighScoreValue, ExtrasShareHighScoreDescription, ExtrasShareHighScoreButton,
         ExtrasShareLastGameValue, ExtrasShareLastGameDescription, ExtrasShareLastGameButton,
-        ExtrasShareDescription,
+        ExtrasShareDescription, ExtrasShareLastGameHighScoreEqualDescription,
         ChallengeInterstitialLogo, ChallengeInterstitialWordMark, ChallengePrompt, ChallengeScore,
     };
 
@@ -210,6 +210,8 @@ public:
     static inline constexpr CGRect CanonicalExtrasShareLastGameValueFrame = { 705, 198, 170, 64 };
     static inline constexpr CGRect CanonicalExtrasShareLastGameDescriptionFrame = { 705, 160, 173, 64 };
     static inline constexpr CGRect CanonicalExtrasShareDescriptionFrame = { 384, 300, 572, 300 };
+    static inline constexpr CGRect CanonicalExtrasShareLastGameHighScoreEqualDescription = { 384, 270, 572, 300 };
+    static inline constexpr CGFloat CanonicalExtrasShareLastGameHighScoreEqualGap = 28;
 
     static inline constexpr CGRect CanonicalChallengeInterstitialLogoFrame = { 420, 132, 160, 160 };
     static inline constexpr CGRect CanonicalChallengeInterstitialWordMarkFrame = { 200, 292, 600, 300 };

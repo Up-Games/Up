@@ -139,7 +139,7 @@ using Role = SpellLayout::Role;
             [self.choice2 setDisabled:YES];
             self.choice2.userInteractionEnabled = NO;
         }
-        else if (dossier.highGameKey == dossier.lastGameKey) {
+        else if (dossier.highScoreGameKeyValue == dossier.lastGameKeyValue) {
             self.choice2.labelString = [NSString stringWithFormat:@"LAST GAME (%d) RETRIED HIGH SCORE", dossier.lastScore];
             if (self.choice2.selected) {
                 [self.choice2 setSelected:NO];

@@ -792,6 +792,7 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasShareLastGameButton, layout_relative_aspect_rect(CanonicalExtrasShareLastGameButtonFrame));
     calculate_and_set_locations(Role::ExtrasShareLastGameValue, layout_relative_aspect_rect(CanonicalExtrasShareLastGameValueFrame));
     calculate_and_set_locations(Role::ExtrasShareLastGameDescription, layout_relative_aspect_rect(CanonicalExtrasShareLastGameDescriptionFrame));
+    calculate_and_set_locations(Role::ExtrasShareLastGameHighScoreEqualDescription, layout_relative_aspect_rect(CanonicalExtrasShareLastGameHighScoreEqualDescription));
 }
 
 void SpellLayout::calculate_choice_locations()

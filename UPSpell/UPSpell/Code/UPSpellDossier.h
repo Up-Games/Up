@@ -12,9 +12,9 @@
 @property (class, readonly) BOOL supportsSecureCoding;
 
 @property (nonatomic) int highScore;
-@property (nonatomic) uint32_t highGameKey;
+@property (nonatomic) uint32_t highScoreGameKeyValue;
 @property (nonatomic) int lastScore;
-@property (nonatomic) uint32_t lastGameKey;
+@property (nonatomic) uint32_t lastGameKeyValue;
 
 @property (nonatomic) size_t totalGamesPlayed;
 @property (nonatomic) size_t totalGameScore;
@@ -25,5 +25,6 @@
 
 - (void)updateWithModel:(UP::SpellModelPtr)model;
 - (void)save;
+- (BOOL)lastGameIsHighScore;
 
 @end

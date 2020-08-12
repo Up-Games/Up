@@ -2490,10 +2490,10 @@ static UPSpellGameController *_Instance;
         UPSpellDossier *dossier = [UPSpellDossier instance];
         GameKey game_key;
         if (self.playMenuChoice.tag == UPDialogPlayMenuChoiceRetryHighScore) {
-            game_key = GameKey(dossier.highGameKey);
+            game_key = GameKey(dossier.highScoreGameKeyValue);
         }
         else if (self.playMenuChoice.tag == UPDialogPlayMenuChoiceRetryLastGame) {
-            game_key = GameKey(dossier.lastGameKey);
+            game_key = GameKey(dossier.lastGameKeyValue);
         }
         m_spell_model = std::make_shared<SpellModel>(game_key);
     }

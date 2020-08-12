@@ -33,9 +33,9 @@
     self = [super init];
 
     self.highScore = 0;
-    self.highGameKey = 0;
+    self.highScoreGameKeyValue = 0;
     self.lastScore = 0;
-    self.lastGameKey = 0;
+    self.lastGameKeyValue = 0;
     
     self.totalGamesPlayed = 0;
     self.totalGameScore = 0;
@@ -50,9 +50,9 @@
     self = [self init];
 
     UP_DECODE(coder, highScore, Int);
-    UP_DECODE(coder, highGameKey, Int32);
+    UP_DECODE(coder, highScoreGameKeyValue, Int32);
     UP_DECODE(coder, lastScore, Int);
-    UP_DECODE(coder, lastGameKey, Int32);
+    UP_DECODE(coder, lastGameKeyValue, Int32);
 
     UP_DECODE(coder, totalGamesPlayed, Integer);
     UP_DECODE(coder, totalGameScore, Integer);
@@ -65,9 +65,9 @@
 - (void)encodeWithCoder:(NSCoder *)coder
 {
     UP_ENCODE(coder, highScore, Int);
-    UP_ENCODE(coder, highGameKey, Int32);
+    UP_ENCODE(coder, highScoreGameKeyValue, Int32);
     UP_ENCODE(coder, lastScore, Int);
-    UP_ENCODE(coder, lastGameKey, Int32);
+    UP_ENCODE(coder, lastGameKeyValue, Int32);
     
     UP_ENCODE(coder, totalGamesPlayed, Integer);
     UP_ENCODE(coder, totalGameScore, Integer);
@@ -89,11 +89,11 @@
     
     if (data.highScore <= model->game_score() && model->game_score() > 0) {
         data.highScore = model->game_score();
-        data.highGameKey = model->game_key().value();
+        data.highScoreGameKeyValue = model->game_key().value();
     }
     
     data.lastScore = model->game_score();
-    data.lastGameKey = model->game_key().value();
+    data.lastGameKeyValue = model->game_key().value();
     
     data.totalGamesPlayed++;
     data.totalGameScore += model->game_score();
@@ -127,7 +127,6 @@ static NSString *save_file_path(NSString *name)
         NSString *saveFilePath = save_file_path(UPSpellDossierFileName);
         if (saveFilePath) {
             [data writeToFile:saveFilePath atomically:YES];
-            //LOG(General, "savePersistentData: %@", saveFilePath);
         }
         else {
             NSLog(@"error writing persistent data: save file unavailable");
@@ -156,6 +155,11 @@ static NSString *save_file_path(NSString *name)
         return nil;
     }
     return persistentData;
+}
+
+- (BOOL)lastGameIsHighScore
+{
+    return self.totalGamesPlayed > 0 && self.highScore == self.lastScore && self.highScoreGameKeyValue == self.lastGameKeyValue;
 }
 
 @end
