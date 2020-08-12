@@ -32,7 +32,17 @@ static UPSceneDelegate *_Instance;
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions
 {
     _Instance = self;
-    [self parseSharedGameRequestFromURLContexts:connectionOptions.URLContexts];
+    self.challenge = nil;
+    for (NSUserActivity *userActivity in connectionOptions.userActivities) {
+        if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+            [[UPSpellNavigationController instance] dismissPresentedControllerImmediateIfNecessary];
+            NSURL *incomingURL = userActivity.webpageURL;
+            UPChallenge *challenge = [UPChallenge challengeWithURL:incomingURL];
+            if (challenge.valid) {
+                self.challenge = challenge;
+            }
+        }
+    }
 }
 
 - (void)sceneDidEnterBackground:(UIScene *)scene
@@ -50,14 +60,8 @@ static UPSceneDelegate *_Instance;
     }
 }
 
-- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
-{
-    [self parseSharedGameRequestFromURLContexts:URLContexts];
-}
-
 - (void)scene:(UIScene *)scene willContinueUserActivityWithType:(NSString *)userActivityType
 {
-    LOG(General, "willContinueUserActivityWithType: %@", userActivityType);
     if ([userActivityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
         [[UPSpellNavigationController instance] dismissPresentedControllerImmediateIfNecessary];
     }
@@ -65,25 +69,15 @@ static UPSceneDelegate *_Instance;
 
 - (void)scene:(UIScene *)scene continueUserActivity:(NSUserActivity *)userActivity
 {
-    LOG(General, "continueUserActivity: %@", userActivity);
     if (![userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
         return;
     }
     
     NSURL *incomingURL = userActivity.webpageURL;
-    UPChallenge *share = [UPChallenge challengeWithURL:incomingURL];
-    [[UPSpellGameController instance] setChallenge:share];
-}
-
-- (void)parseSharedGameRequestFromURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
-{
-    if (URLContexts.count != 1) {
-        return;
+    UPChallenge *challenge = [UPChallenge challengeWithURL:incomingURL];
+    if (challenge.valid) {
+        [[UPSpellGameController instance] setChallenge:challenge];
     }
-    
-    UIOpenURLContext *ctx = [URLContexts anyObject];
-    UPChallenge *share = [UPChallenge challengeWithURL:ctx.URL];
-    [[UPSpellGameController instance] setChallenge:share];
 }
 
 @end

@@ -734,9 +734,9 @@ void SpellLayout::calculate_dialog_locations()
     calculate_and_set_locations(Role::ChallengeInterstitialLogo, layout_relative_aspect_rect(CanonicalChallengeInterstitialLogoFrame));
     calculate_and_set_locations(Role::ChallengeInterstitialWordMark, layout_relative_aspect_rect(CanonicalChallengeInterstitialWordMarkFrame));
 
-    calculate_and_set_locations(Role::DialogShareHelpTitle, layout_relative_aspect_rect(CanonicalDialogShareHelpTitleFrame));
-    calculate_and_set_locations(Role::DialogShareHelpText, layout_relative_aspect_rect(CanonicalDialogShareHelpTextFrame));
-    calculate_and_set_locations(Role::DialogShareHelpOKButton, layout_relative_aspect_rect(CanonicalDialogShareHelpOKButtonFrame));
+    calculate_and_set_locations(Role::DialogHelpTitle, layout_relative_aspect_rect(CanonicalDialogShareHelpTitleFrame));
+    calculate_and_set_locations(Role::DialogHelpText, layout_relative_aspect_rect(CanonicalDialogShareHelpTextFrame));
+    calculate_and_set_locations(Role::DialogHelpOKButton, layout_relative_aspect_rect(CanonicalDialogShareHelpOKButtonFrame));
 }
 
 void SpellLayout::calculate_game_locations()

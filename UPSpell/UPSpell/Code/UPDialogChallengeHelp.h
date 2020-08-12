@@ -1,5 +1,5 @@
 //
-//  UPDialogShareHelp.h
+//  UPDialogChallengeHelp.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -8,13 +8,13 @@
 @class UPButton;
 @class UPLabel;
 
-@interface UPDialogShareHelp : UIView
+@interface UPDialogChallengeHelp : UIView
 
 @property (nonatomic, readonly) UPLabel *titleLabel;
 @property (nonatomic, readonly) UIView *helpLabelContainer;
 @property (nonatomic, readonly) UPButton *okButton;
 
-+ (UPDialogShareHelp *)instance;
++ (UPDialogChallengeHelp *)instance;
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 

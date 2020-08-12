@@ -169,7 +169,7 @@ using Role = UP::SpellLayout::Role;
         self.shareDescription.string =
         @"SHARE a link to a new game with the same\n"
         "letters as one of your previous games.\n"
-        "Challenge friends to top your score.";
+        "Challenge friends to top your score!";
         
         SpellLayout &layout = SpellLayout::instance();
         if ([dossier lastGameIsHighScore]) {

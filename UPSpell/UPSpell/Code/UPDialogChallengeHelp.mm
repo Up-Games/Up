@@ -1,5 +1,5 @@
 //
-//  UPDialogShareHelp.mm
+//  UPDialogChallengeHelp.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -11,28 +11,28 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
-#import "UPDialogShareHelp.h"
+#import "UPDialogChallengeHelp.h"
 #import "UPSpellLayout.h"
 #import "UPTextButton.h"
 
 using UP::SpellLayout;
 using Role = SpellLayout::Role;
 
-@interface UPDialogShareHelp ()
+@interface UPDialogChallengeHelp ()
 @property (nonatomic, readwrite) UPLabel *titleLabel;
 @property (nonatomic, readwrite) UIView *helpLabelContainer;
 @property (nonatomic, readwrite) UPLabel *helpLabel;
 @property (nonatomic, readwrite) UPButton *okButton;
 @end
 
-@implementation UPDialogShareHelp
+@implementation UPDialogChallengeHelp
 
-+ (UPDialogShareHelp *)instance
++ (UPDialogChallengeHelp *)instance
 {
     static dispatch_once_t onceToken;
-    static UPDialogShareHelp *_Instance;
+    static UPDialogChallengeHelp *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPDialogShareHelp alloc] _init];
+        _Instance = [[UPDialogChallengeHelp alloc] _init];
     });
     return _Instance;
 }
@@ -43,7 +43,7 @@ using Role = SpellLayout::Role;
     self = [super initWithFrame:layout.canvas_frame()];
 
     self.titleLabel = [UPLabel label];
-    self.titleLabel.string = @"ABOUT SHARING";
+    self.titleLabel.string = @"ABOUT CHALLENGES";
     self.titleLabel.font = layout.dialog_title_font();
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.frame = layout.frame_for(Role::DialogHelpTitle);
@@ -54,9 +54,9 @@ using Role = SpellLayout::Role;
     [self addSubview:self.helpLabelContainer];
 
     self.helpLabel = [UPLabel label];
-    self.helpLabel.string = @"Sharing creates a link to a new game with the\n"
-                             "same letters as the game you just played.\n"
-                             "Challenge friends to top your score!";
+    self.helpLabel.string = @"A CHALLENGE is a new game with the same\n"
+                             "letters someone else already played.\n"
+                             "Try to beat their score!";
     self.helpLabel.font = layout.description_font();
     self.helpLabel.textAlignment = NSTextAlignmentLeft;
     self.helpLabel.frame = layout.frame_for(Role::DialogHelpText);
@@ -91,6 +91,7 @@ using Role = SpellLayout::Role;
 - (void)updateThemeColors
 {
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
+    [self.helpLabel updateThemeColors];
 }
 
 @end

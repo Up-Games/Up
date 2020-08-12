@@ -52,7 +52,7 @@ public:
         DialogMessageWithGameNote, DialogGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse, DialogHelpButton,
-        DialogShareHelpTitle, DialogShareHelpText, DialogShareHelpOKButton,
+        DialogHelpTitle, DialogHelpText, DialogHelpOKButton,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
         ChoiceBackRight, ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
         ChoiceBackCenter, ChoiceTitleCenter, ChoiceItem1Center, ChoiceItem2Center, ChoiceItem3Center, ChoiceGoButtonCenter, ChoiceItemTopCenter,
@@ -215,7 +215,7 @@ public:
     static inline constexpr CGFloat CanonicalExtrasShareLastGameHighScoreEqualGap = 28;
 
     static inline constexpr CGRect CanonicalDialogShareHelpTitleFrame = { 272, 142, 460, 200 };
-    static inline constexpr CGRect CanonicalDialogShareHelpTextFrame = { 261, 220, 478, 200 };
+    static inline constexpr CGRect CanonicalDialogShareHelpTextFrame = { 250, 220, 500, 200 };
     static inline constexpr CGRect CanonicalDialogShareHelpOKButtonFrame = { 429.5, 386, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
     static inline constexpr CGFloat CanonicalDialogTitleCapHeight = 35;
 
