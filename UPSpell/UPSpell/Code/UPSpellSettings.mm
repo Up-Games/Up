@@ -19,6 +19,7 @@
 @dynamic tunesLevel;
 @dynamic soundEffectsEnabled;
 @dynamic soundEffectsLevel;
+@dynamic showShareHelp;
 
 + (UPSpellSettings *)instance
 {
@@ -50,6 +51,7 @@
     self.tunesLevel = 4;
     self.soundEffectsEnabled = YES;
     self.soundEffectsLevel = 4;
+    self.showShareHelp = YES;
 }
 
 @end

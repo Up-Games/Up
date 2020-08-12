@@ -1,5 +1,5 @@
 //
-//  UPDialogShare.mm
+//  UPDialogChallenge.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -12,7 +12,7 @@
 #import <UpKit/UPVectorLogoView.h>
 
 #import "UPControl+UPSpell.h"
-#import "UPDialogShare.h"
+#import "UPDialogChallenge.h"
 #import "UPChallenge.h"
 #import "UPSpellLayout.h"
 #import "UPTextButton.h"
@@ -21,7 +21,7 @@
 using UP::SpellLayout;
 using Role = SpellLayout::Role;
 
-@interface UPDialogShare ()
+@interface UPDialogChallenge ()
 @property (nonatomic, readwrite) UPVectorLogoView *vectorLogoView;
 @property (nonatomic, readwrite) UPLabel *wordMarkLabel;
 @property (nonatomic, readwrite) UPLabel *challengePromptLabel;
@@ -31,14 +31,14 @@ using Role = SpellLayout::Role;
 @property (nonatomic, readwrite) UPButton *helpButton;
 @end
 
-@implementation UPDialogShare
+@implementation UPDialogChallenge
 
-+ (UPDialogShare *)instance
++ (UPDialogChallenge *)instance
 {
     static dispatch_once_t onceToken;
-    static UPDialogShare *_Instance;
+    static UPDialogChallenge *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPDialogShare alloc] _init];
+        _Instance = [[UPDialogChallenge alloc] _init];
     });
     return _Instance;
 }
@@ -95,9 +95,9 @@ using Role = SpellLayout::Role;
     return self;
 }
 
-- (void)updateWithShare:(UPChallenge *)share
+- (void)updateWithChallenge:(UPChallenge *)challenge
 {
-    self.scorePromptLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", share.score];
+    self.scorePromptLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", challenge.score];
 }
 
 #pragma mark - Theme colors

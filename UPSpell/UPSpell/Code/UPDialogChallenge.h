@@ -1,5 +1,5 @@
 //
-//  UPDialogShare.h
+//  UPDialogChallenge.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -9,7 +9,7 @@
 @class UPLabel;
 @class UPChallenge;
 
-@interface UPDialogShare : UIView
+@interface UPDialogChallenge : UIView
 
 @property (nonatomic, readonly) UPVectorLogoView *vectorLogoView;
 @property (nonatomic, readonly) UPLabel *wordMarkLabel;
@@ -19,10 +19,10 @@
 @property (nonatomic, readonly) UPButton *goButton;
 @property (nonatomic, readonly) UPButton *helpButton;
 
-+ (UPDialogShare *)instance;
++ (UPDialogChallenge *)instance;
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
-- (void)updateWithShare:(UPChallenge *)share;
+- (void)updateWithChallenge:(UPChallenge *)challenge;
 
 @end
