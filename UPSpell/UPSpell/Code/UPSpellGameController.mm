@@ -12,6 +12,7 @@
 #import <UpKit/UpKit.h>
 
 #import "UIFont+UPSpell.h"
+#import "UPActivityViewController.h"
 #import "UPControl+UPSpell.h"
 #import "UPChoice.h"
 #import "UPDialogGameNote.h"
@@ -208,6 +209,7 @@ static UPSpellGameController *_Instance;
     [self.view addSubview:self.dialogGameNote];
     self.dialogGameNote.hidden = YES;
     self.dialogGameNote.frame = layout.screen_bounds();
+    [self.dialogGameNote.shareButton setTarget:self action:@selector(gameOverShareButtonTapped)];
 
     self.dialogTopMenu = [UPDialogTopMenu instance];
     self.dialogTopMenu.hidden = YES;
@@ -792,6 +794,12 @@ static UPSpellGameController *_Instance;
         }
     }
     return pos;
+}
+
+- (void)gameOverShareButtonTapped
+{
+    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithShareType:UPShareTypeLastGameScore];
+    [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
 #pragma mark - Actions

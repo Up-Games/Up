@@ -3,8 +3,6 @@
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
-#import <LinkPresentation/LinkPresentation.h>
-
 #import <UpKit/NSMutableAttributedString+UP.h>
 #import <UpKit/UIColor+UP.h>
 #import <UpKit/UPBand.h>
@@ -23,7 +21,6 @@
 #import "UPControl+UPSpell.h"
 #import "UPDialogTopMenu.h"
 #import "UPSpellDossier.h"
-#import "UPHueWheel.h"
 #import "UPSoundPlayer.h"
 #import "UPSlider.h"
 #import "UPSpellExtrasPaneShare.h"
@@ -63,13 +60,7 @@ using UP::TimeSpanning::start;
 
 using Role = UP::SpellLayout::Role;
 
-typedef NS_ENUM(NSInteger, UPShareType) {
-    UPShareTypeNone,
-    UPShareTypeHighScore,
-    UPShareTypeLastGameScore,
-};
-
-@interface UPSpellExtrasPaneShare () <UIActivityItemSource>
+@interface UPSpellExtrasPaneShare ()
 @property (nonatomic) UPLabel *highScoreLabel;
 @property (nonatomic) UPLabel *highScoreDescriptionLabel;
 @property (nonatomic) UPLabel *lastGameScoreLabel;
@@ -77,7 +68,6 @@ typedef NS_ENUM(NSInteger, UPShareType) {
 @property (nonatomic) UPButton *highScoreShareButton;
 @property (nonatomic) UPButton *lastGameScoreShareButton;
 @property (nonatomic) UPLabel *shareDescription;
-@property (nonatomic) UPShareType shareType;
 @end
 
 @implementation UPSpellExtrasPaneShare
@@ -193,107 +183,19 @@ typedef NS_ENUM(NSInteger, UPShareType) {
 
 - (void)highScoreShareButtonTapped
 {
-    self.shareType = UPShareTypeHighScore;
-    [self presentShareSheet];
+    [self presentShareSheetForShareType:UPShareTypeHighScore];
 }
 
 - (void)lastGameShareButtonTapped
 {
-    self.shareType = UPShareTypeLastGameScore;
-    [self presentShareSheet];
+    [self presentShareSheetForShareType:UPShareTypeLastGameScore];
 }
 
-- (void)presentShareSheet
+- (void)presentShareSheetForShareType:(UPShareType)shareType
 {
     UPSpellExtrasController *extrasController = [UPSpellExtrasController instance];
-    
-    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithActivityItems:@[self]];
-    activityViewController.excludedActivityTypes = @[
-        UIActivityTypeAirDrop,
-        UIActivityTypePrint,
-        UIActivityTypeAssignToContact,
-        UIActivityTypeSaveToCameraRoll,
-        UIActivityTypeAddToReadingList,
-        UIActivityTypePostToFlickr,
-        UIActivityTypePostToVimeo,
-        UIActivityTypeMarkupAsPDF,
-        UIActivityTypeAddToReadingList,
-        UIActivityTypeOpenInIBooks
-    ];
-    
+    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithShareType:shareType];
     [extrasController presentViewController:activityViewController animated:YES completion:nil];
-}
-
-- (NSString *)shareURLString
-{
-    UPSpellDossier *dossier = [UPSpellDossier instance];
-    UPGameKey *gameKey = nil;
-    int score = 0;
-    switch (self.shareType) {
-        case UPShareTypeNone:
-            break;
-        case UPShareTypeHighScore:
-            gameKey = [UPGameKey gameKeyWithValue:dossier.highGameKey];
-            score = dossier.highScore;
-            break;
-        case UPShareTypeLastGameScore:
-            gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKey];
-            score = dossier.lastScore;
-            break;
-    }
-    return [NSString stringWithFormat:@"https://upgames.dev/t/?g=upspell&k=%@&s=%d", gameKey.string, score];
-}
-
-- (NSURL *)shareURL
-{
-    return [NSURL URLWithString:[self shareURLString]];
-}
-
-- (NSString *)shareString
-{
-    UPSpellDossier *dossier = [UPSpellDossier instance];
-    int score = 0;
-    switch (self.shareType) {
-        case UPShareTypeNone:
-            break;
-        case UPShareTypeHighScore:
-            score = dossier.highScore;
-            break;
-        case UPShareTypeLastGameScore:
-            score = dossier.lastScore;
-            break;
-    }
-    
-    return [NSString stringWithFormat:@"I scored %d in Up Spell. Top that!", score];
-}
-
-#pragma mark - UIActivityItemSource
-
-- (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController
-{
-    return [self shareURL];
-
-}
-
-- (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(UIActivityType)activityType
-{
-    return [self shareURL];
-}
-
-- (LPLinkMetadata *)activityViewControllerLinkMetadata:(UIActivityViewController *)activityViewController
-{
-    LPLinkMetadata *metadata = [[LPLinkMetadata alloc] init];
-    metadata.originalURL = [self shareURL];
-    metadata.URL = [self shareURL];
-    metadata.title = [self shareString];
-    
-    CGFloat scale = [[UIScreen mainScreen] scale];
-    NSString *iconName = [NSString stringWithFormat:@"%@@%dx", up_theme_icon_name(), (int)scale];
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSURL *iconURL = [bundle URLForResource:[iconName lastPathComponent] withExtension:@"png"];
-    metadata.iconProvider = [[NSItemProvider alloc] initWithContentsOfURL:iconURL];
-    
-    return metadata;
 }
 
 #pragma mark - Update theme colors

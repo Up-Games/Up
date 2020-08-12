@@ -5,8 +5,16 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, UPShareType) {
+    UPShareTypeDefault,
+    UPShareTypeLastGameScore,
+    UPShareTypeHighScore,
+};
+
 @interface UPActivityViewController : UIActivityViewController
 
-- (instancetype)initWithActivityItems:(NSArray *)activityItems;
+- (instancetype)initWithShareType:(UPShareType)shareType;
+
+- (instancetype)initWithActivityItems:(NSArray *)activityItems NS_UNAVAILABLE;
 
 @end
