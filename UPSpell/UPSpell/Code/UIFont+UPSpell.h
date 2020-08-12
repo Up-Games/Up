@@ -33,8 +33,11 @@ extern NSString * const UPGameInformationFontName;
 + (UIFont *)choiceControlFontOfSize:(CGFloat)fontSize;
 + (UIFont *)choiceControlFontWithCapHeight:(CGFloat)capHeight;
 
-+ (UIFont *)settingsDescriptionFontOfSize:(CGFloat)fontSize;
-+ (UIFont *)settingsDescriptionFontWithCapHeight:(CGFloat)capHeight;
++ (UIFont *)dialogTitleFontOfSize:(CGFloat)fontSize;
++ (UIFont *)dialogTitleFontWithCapHeight:(CGFloat)capHeight;
+
++ (UIFont *)descriptionFontOfSize:(CGFloat)fontSize;
++ (UIFont *)descriptionFontWithCapHeight:(CGFloat)capHeight;
 
 + (UIFont *)challengeFontOfSize:(CGFloat)fontSize;
 + (UIFont *)challengeFontWithCapHeight:(CGFloat)capHeight;

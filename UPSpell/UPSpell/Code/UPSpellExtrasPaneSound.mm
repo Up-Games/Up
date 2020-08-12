@@ -86,7 +86,7 @@ using Role = UP::SpellLayout::Role;
 
     self.soundDescription = [UPLabel label];
     self.soundDescription.frame = layout.frame_for(Role::ExtrasSoundDescription);
-    self.soundDescription.font = layout.settings_description_font();
+    self.soundDescription.font = layout.description_font();
     self.soundDescription.colorCategory = UPColorCategoryControlText;
     self.soundDescription.textAlignment = NSTextAlignmentCenter;
     self.soundDescription.string = @"EFFECTS play in response to your actions and to\nthe game timer. TUNES are the in-game music.";

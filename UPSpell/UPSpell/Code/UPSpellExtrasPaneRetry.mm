@@ -77,7 +77,7 @@ using Spot = UP::SpellLayout::Place;
 
     self.retryDescription = [UPLabel label];
     self.retryDescription.frame = layout.frame_for(Role::ExtrasRetryDescription);
-    self.retryDescription.font = layout.settings_description_font();
+    self.retryDescription.font = layout.description_font();
     self.retryDescription.colorCategory = UPColorCategoryControlText;
     self.retryDescription.textAlignment = NSTextAlignmentLeft;
     self.retryDescription.string =

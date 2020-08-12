@@ -107,7 +107,7 @@ using Spot = UP::SpellLayout::Place;
     
     self.hueDescription = [UPLabel label];
     self.hueDescription.frame = layout.frame_for(Role::ExtrasColorsDescription);
-    self.hueDescription.font = layout.settings_description_font();
+    self.hueDescription.font = layout.description_font();
     self.hueDescription.colorCategory = UPColorCategoryControlText;
     self.hueDescription.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.hueDescription];
@@ -155,7 +155,7 @@ using Spot = UP::SpellLayout::Place;
     self.iconPrompt = [UPLabel label];
     self.iconPrompt.string = @"Change the UP Spell app icon on your homescreen\nto match the hue on the wheel?";
     self.iconPrompt.frame = layout.frame_for(Role::ExtrasColorsIconPrompt);
-    self.iconPrompt.font = layout.settings_description_font();
+    self.iconPrompt.font = layout.description_font();
     self.iconPrompt.colorCategory = UPColorCategoryControlText;
     self.iconPrompt.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.iconPrompt];

@@ -432,6 +432,7 @@
 		5DBAD6D024E2297400471ABF /* up-games-icon-285-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DBAD56824E2297400471ABF /* up-games-icon-285-29.png */; };
 		5DBAD6D124E2297400471ABF /* up-games-icon-045-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DBAD56924E2297400471ABF /* up-games-icon-045-60@3x.png */; };
 		5DBAD6D224E2297400471ABF /* up-games-icon-135-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DBAD56A24E2297400471ABF /* up-games-icon-135-20.png */; };
+		5DBAD6E124E43FFF00471ABF /* UPDialogShareHelp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAD6E024E43FFF00471ABF /* UPDialogShareHelp.mm */; };
 		5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */; };
 		5DF74C4024DF80B50000F43D /* UPActivityViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF74C3E24DF80B50000F43D /* UPActivityViewController.mm */; };
 		5DF9DF5C2466165700B2199D /* UPAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */; };
@@ -936,6 +937,8 @@
 		5DBAD56824E2297400471ABF /* up-games-icon-285-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-games-icon-285-29.png"; sourceTree = "<group>"; };
 		5DBAD56924E2297400471ABF /* up-games-icon-045-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-games-icon-045-60@3x.png"; sourceTree = "<group>"; };
 		5DBAD56A24E2297400471ABF /* up-games-icon-135-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-games-icon-135-20.png"; sourceTree = "<group>"; };
+		5DBAD6DF24E43FFE00471ABF /* UPDialogShareHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogShareHelp.h; sourceTree = "<group>"; };
+		5DBAD6E024E43FFF00471ABF /* UPDialogShareHelp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogShareHelp.mm; sourceTree = "<group>"; };
 		5DBC20C12497B9AD002A6ADC /* UPMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPMode.h; sourceTree = "<group>"; };
 		5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTilePaths.mm; sourceTree = "<group>"; };
 		5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTilePaths.h; sourceTree = "<group>"; };
@@ -1058,6 +1061,8 @@
 				5D5EA1412485B49E006264D2 /* UPDialogPause.mm */,
 				5DA0A06724BD08590029CE0E /* UPDialogPlayMenu.h */,
 				5DA0A06824BD08590029CE0E /* UPDialogPlayMenu.mm */,
+				5DBAD6DF24E43FFE00471ABF /* UPDialogShareHelp.h */,
+				5DBAD6E024E43FFF00471ABF /* UPDialogShareHelp.mm */,
 				5D544C0F248805F5001FA8DF /* UPDialogTopMenu.h */,
 				5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */,
 				5D0FC21F24A168AC00353563 /* UPHueWheel.h */,
@@ -2062,6 +2067,7 @@
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
 				5D6FB59D24DDC56100CDC293 /* UPDialogChallenge.mm in Sources */,
 				5D0FC33624A65C0B00353563 /* UPSpellExtrasPaneColors.mm in Sources */,
+				5DBAD6E124E43FFF00471ABF /* UPDialogShareHelp.mm in Sources */,
 				5D0FC22124A168AC00353563 /* UPHueWheel.mm in Sources */,
 				5D6FB58A24DAFC2500CDC293 /* UPSlider.mm in Sources */,
 				5DA0A06924BD08590029CE0E /* UPDialogPlayMenu.mm in Sources */,

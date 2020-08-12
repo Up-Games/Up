@@ -52,6 +52,7 @@ public:
         DialogMessageWithGameNote, DialogGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse, DialogHelpButton,
+        DialogShareHelpTitle, DialogShareHelpText, DialogShareHelpOKButton,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
         ChoiceBackRight, ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
         ChoiceBackCenter, ChoiceTitleCenter, ChoiceItem1Center, ChoiceItem2Center, ChoiceItem3Center, ChoiceGoButtonCenter, ChoiceItemTopCenter,
@@ -213,6 +214,11 @@ public:
     static inline constexpr CGRect CanonicalExtrasShareLastGameHighScoreEqualDescription = { 384, 270, 572, 300 };
     static inline constexpr CGFloat CanonicalExtrasShareLastGameHighScoreEqualGap = 28;
 
+    static inline constexpr CGRect CanonicalDialogShareHelpTitleFrame = { 272, 142, 460, 200 };
+    static inline constexpr CGRect CanonicalDialogShareHelpTextFrame = { 261, 220, 478, 200 };
+    static inline constexpr CGRect CanonicalDialogShareHelpOKButtonFrame = { 429.5, 386, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGFloat CanonicalDialogTitleCapHeight = 35;
+
     static inline constexpr CGRect CanonicalChallengeInterstitialLogoFrame = { 420, 132, 160, 160 };
     static inline constexpr CGRect CanonicalChallengeInterstitialWordMarkFrame = { 200, 292, 600, 300 };
     static inline constexpr CGFloat CanonicalWordMarkCapHeight = 35;
@@ -286,7 +292,8 @@ public:
     UIFont *word_score_bonus_font() const { return m_word_score_bonus_font; }
     UIFont *ballot_control_font() const { return m_ballot_control_font; }
     UIFont *choice_control_font() const { return m_choice_control_font; }
-    UIFont *settings_description_font() const { return m_settings_description_font; }
+    UIFont *description_font() const { return m_description_font; }
+    UIFont *dialog_title_font() const { return m_dialog_title_font; }
     UIFont *challenge_prompt_font() const { return m_challenge_prompt_font; }
     UIFont *challenge_score_font_font() const { return m_challenge_score_font_font; }
     UIFont *placard_value_font() const { return m_placard_value_font; }
@@ -342,7 +349,8 @@ private:
     void set_choice_control_font(UIFont *font) { m_choice_control_font = font; }
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
-    void set_settings_description_font(UIFont *font) { m_settings_description_font = font; }
+    void set_description_font(UIFont *font) { m_description_font = font; }
+    void set_dialog_title_font(UIFont *font) { m_dialog_title_font = font; }
     void set_challenge_prompt_font(UIFont *font) { m_challenge_prompt_font = font; }
     void set_challenge_score_font_font(UIFont *font) { m_challenge_score_font_font = font; }
     void set_placard_value_font(UIFont *font) { m_placard_value_font = font; }
@@ -374,7 +382,8 @@ private:
     void calculate_stepper_control_metrics();
     void calculate_slider_control_metrics();
     void calculate_choice_control_metrics();
-    void calculate_settings_description_font_metrics();
+    void calculate_description_font_metrics();
+    void calculate_dialog_title_font_metrics();
     void calculate_challenge_prompt_font_metrics();
     void calculate_challenge_score_font_font_metrics();
     void calculate_placard_value_font_metrics();
@@ -436,7 +445,8 @@ private:
     __strong UIFont *m_word_score_bonus_font;
     __strong UIFont *m_ballot_control_font;
     __strong UIFont *m_choice_control_font;
-    __strong UIFont *m_settings_description_font;
+    __strong UIFont *m_description_font;
+    __strong UIFont *m_dialog_title_font;
     __strong UIFont *m_challenge_prompt_font;
     __strong UIFont *m_challenge_score_font_font;
     __strong UIFont *m_placard_value_font;

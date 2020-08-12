@@ -17,7 +17,8 @@ NSString * const UPWordScoreBonusFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPCheckboxControlFontName = @"MalloryCondensed-Black";
 NSString * const UPChoiceControlFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPRotorControlFontName = @"MalloryCondensed-Black";
-NSString * const UPSettingsDescriptionFontName = @"MalloryCondensed-BoldItalic";
+NSString * const UPDialogTitleFontName = @"MalloryCondensed-BlackItalic";
+NSString * const UPDescriptionFontName = @"MalloryCondensed-BoldItalic";
 NSString * const UPShareFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPPlacardValueFontName = @"MalloryCondensed-Black";
 NSString * const UPPlacardDescriptionFontName = @"MalloryCondensed-Black";
@@ -226,9 +227,22 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     return [UIFont choiceControlFontOfSize:pointSize];
 }
 
-+ (UIFont *)settingsDescriptionFontOfSize:(CGFloat)fontSize
++ (UIFont *)dialogTitleFontOfSize:(CGFloat)fontSize
 {
-    UIFont *font = [UIFont fontWithName:UPSettingsDescriptionFontName size:fontSize];
+    return [UIFont fontWithName:UPDialogTitleFontName size:fontSize];
+}
+
++ (UIFont *)dialogTitleFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPDialogTitleFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont dialogTitleFontOfSize:pointSize];
+}
+
++ (UIFont *)descriptionFontOfSize:(CGFloat)fontSize
+{
+    UIFont *font = [UIFont fontWithName:UPDescriptionFontName size:fontSize];
     UIFontDescriptor *descriptor = [font fontDescriptor];
     NSDictionary *attributes = @{
         UIFontDescriptorFeatureSettingsAttribute: @[
@@ -242,12 +256,12 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
 }
 
-+ (UIFont *)settingsDescriptionFontWithCapHeight:(CGFloat)capHeight
++ (UIFont *)descriptionFontWithCapHeight:(CGFloat)capHeight
 {
-    UIFont *canonicalFont = [UIFont fontWithName:UPSettingsDescriptionFontName size:1];
+    UIFont *canonicalFont = [UIFont fontWithName:UPDescriptionFontName size:1];
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
-    return [UIFont settingsDescriptionFontOfSize:pointSize];
+    return [UIFont descriptionFontOfSize:pointSize];
 }
 
 + (UIFont *)challengeFontOfSize:(CGFloat)fontSize

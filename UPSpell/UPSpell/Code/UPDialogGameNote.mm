@@ -47,6 +47,9 @@ using UP::SpellLayout;
     
     self.shareButton = [UPButton roundShareButton];
     self.shareButton.frame = layout.frame_for(SpellLayout::Role::GameShareButton);
+    self.shareButton.band = UP::BandModeUI;
+    [self.shareButton setFillColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.shareButton setStrokeColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     [self addSubview:self.shareButton];
 
     return self;
@@ -56,7 +59,7 @@ using UP::SpellLayout;
 
 - (void)updateThemeColors
 {
-    [self.noteLabel updateThemeColors];
+    [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
 }
 
 @end

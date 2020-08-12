@@ -86,7 +86,7 @@ using Role = UP::SpellLayout::Role;
 
     self.shareDescription = [UPLabel label];
     self.shareDescription.frame = layout.frame_for(Role::ExtrasShareDescription);
-    self.shareDescription.font = layout.settings_description_font();
+    self.shareDescription.font = layout.description_font();
     self.shareDescription.colorCategory = UPColorCategoryControlText;
     self.shareDescription.textAlignment = NSTextAlignmentCenter;
     self.shareDescription.string =
@@ -137,7 +137,7 @@ using Role = UP::SpellLayout::Role;
 
     self.highScoreEqualsLastGameDescription = [UPLabel label];
     self.highScoreEqualsLastGameDescription.colorCategory = UPColorCategoryControlText;
-    self.highScoreEqualsLastGameDescription.font = layout.settings_description_font();
+    self.highScoreEqualsLastGameDescription.font = layout.description_font();
     self.highScoreEqualsLastGameDescription.textAlignment = NSTextAlignmentCenter;
     self.highScoreEqualsLastGameDescription.frame = layout.frame_for(Role::ExtrasShareLastGameHighScoreEqualDescription);
     self.highScoreEqualsLastGameDescription.string = @"NOTE: last game was your high score.";

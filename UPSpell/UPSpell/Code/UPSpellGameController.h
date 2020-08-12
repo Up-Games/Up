@@ -20,5 +20,6 @@
 
 - (void)setMode:(UP::Mode)mode transitionScenario:(UPModeTransitionScenario)transitionScenario;
 - (void)setChallenge:(UPChallenge *)share;
+- (void)shareSheetDismissed;
 
 @end

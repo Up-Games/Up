@@ -44,7 +44,9 @@ static UPSceneDelegate *_Instance;
 
     UPSpellGameController *gameController = [UPSpellGameController instance];
     if ([gameController.presentedViewController isKindOfClass:[UIActivityViewController class]]) {
-        [gameController dismissViewControllerAnimated:NO completion:nil];
+        [gameController dismissViewControllerAnimated:NO completion:^{
+            [gameController shareSheetDismissed];
+        }];
     }
 }
 
