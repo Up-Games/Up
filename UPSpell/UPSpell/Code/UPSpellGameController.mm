@@ -1631,6 +1631,9 @@ static UPSpellGameController *_Instance;
                     view.alpha = alpha;
                 }
             }
+            for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.aboutButton ]) {
+                view.alpha = 1;
+            }
             break;
         }
     }
