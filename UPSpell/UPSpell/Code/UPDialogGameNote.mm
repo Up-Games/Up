@@ -46,7 +46,7 @@ using UP::SpellLayout;
     [self addSubview:self.noteLabel];
     
     self.shareButton = [UPButton roundShareButton];
-    self.shareButton.frame = layout.frame_for(SpellLayout::Role::DialogHelpButton);
+    self.shareButton.frame = layout.frame_for(SpellLayout::Role::GameShareButton);
     [self addSubview:self.shareButton];
 
     return self;

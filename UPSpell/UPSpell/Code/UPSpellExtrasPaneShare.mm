@@ -105,6 +105,7 @@ typedef NS_ENUM(NSInteger, UPShareType) {
     [self addSubview:self.shareDescription];
 
     self.highScoreLabel = [UPLabel label];
+    self.highScoreLabel.colorCategory = UPColorCategoryInformation;
     self.highScoreLabel.font = layout.placard_value_font();
     self.highScoreLabel.textAlignment = NSTextAlignmentCenter;
     self.highScoreLabel.frame = layout.frame_for(Role::ExtrasShareHighScoreValue);
@@ -121,8 +122,9 @@ typedef NS_ENUM(NSInteger, UPShareType) {
     [self.highScoreShareButton setTarget:self action:@selector(highScoreShareButtonTapped)];
     self.highScoreShareButton.frame = layout.frame_for(Role::ExtrasShareHighScoreButton);
     [self addSubview:self.highScoreShareButton];
-    
+
     self.lastGameScoreLabel = [UPLabel label];
+    self.lastGameScoreLabel.colorCategory = UPColorCategoryInformation;
     self.lastGameScoreLabel.font = layout.placard_value_font();
     self.lastGameScoreLabel.textAlignment = NSTextAlignmentCenter;
     self.lastGameScoreLabel.frame = layout.frame_for(Role::ExtrasShareLastGameValue);
@@ -154,18 +156,35 @@ typedef NS_ENUM(NSInteger, UPShareType) {
     if (dossier.totalGamesPlayed > 0) {
         self.highScoreLabel.string = [NSString stringWithFormat:@"%d", dossier.highScore];
         self.lastGameScoreLabel.string = [NSString stringWithFormat:@"%d", dossier.lastScore];
-        self.highScoreLabel.colorCategory = UPColorCategoryInformation;
-        self.lastGameScoreLabel.colorCategory = UPColorCategoryInformation;
-        self.highScoreShareButton.enabled = YES;
-        self.lastGameScoreShareButton.enabled = YES;
+        self.highScoreShareButton.userInteractionEnabled = YES;
+        self.lastGameScoreShareButton.userInteractionEnabled = YES;
+        self.highScoreLabel.alpha = 1;
+        self.highScoreDescriptionLabel.alpha = 1;
+        self.highScoreShareButton.alpha = 1;
+        self.lastGameScoreLabel.alpha = 1;
+        self.lastGameScoreDescriptionLabel.alpha = 1;
+        self.lastGameScoreShareButton.alpha = 1;
+        self.shareDescription.string =
+        @"SHARE a link to a new game with the same\n"
+        "letters as one of your previous games.\n"
+        "Challenge friends to top your score.";
     }
     else {
-        self.highScoreLabel.string = @"-";
-        self.lastGameScoreLabel.string = @"-";
-        self.highScoreLabel.colorCategory = UPColorCategoryInactiveContent;
-        self.lastGameScoreLabel.colorCategory = UPColorCategoryInactiveContent;
-        self.highScoreShareButton.enabled = NO;
-        self.lastGameScoreShareButton.enabled = NO;
+        self.highScoreLabel.string = @"–";
+        self.lastGameScoreLabel.string = @"–";
+        self.highScoreShareButton.userInteractionEnabled = NO;
+        self.lastGameScoreShareButton.userInteractionEnabled = NO;
+        CGFloat alpha = [UIColor themeDisabledAlpha];
+        self.highScoreLabel.alpha = alpha;
+        self.highScoreDescriptionLabel.alpha = alpha;
+        self.highScoreShareButton.alpha = alpha;
+        self.lastGameScoreLabel.alpha = alpha;
+        self.lastGameScoreDescriptionLabel.alpha = alpha;
+        self.lastGameScoreShareButton.alpha = alpha;
+        self.shareDescription.string =
+        @"Play some games, then return here to SHARE\n"
+        "links to new games with the same letters.\n"
+        "Challenge friends to top your score.";
     }
     [self updateThemeColors];
 }

@@ -24,8 +24,8 @@ using Role = SpellLayout::Role;
 @interface UPDialogShare ()
 @property (nonatomic, readwrite) UPVectorLogoView *vectorLogoView;
 @property (nonatomic, readwrite) UPLabel *wordMarkLabel;
-@property (nonatomic, readwrite) UPLabel *shareLabel;
-@property (nonatomic, readwrite) UPLabel *scoreToTopLabel;
+@property (nonatomic, readwrite) UPLabel *challengePromptLabel;
+@property (nonatomic, readwrite) UPLabel *scorePromptLabel;
 @property (nonatomic, readwrite) UPButton *cancelButton;
 @property (nonatomic, readwrite) UPButton *goButton;
 @property (nonatomic, readwrite) UPButton *helpButton;
@@ -60,18 +60,18 @@ using Role = SpellLayout::Role;
     self.wordMarkLabel.frame = layout.frame_for(Role::ChallengeInterstitialWordMark);
     [self addSubview:self.wordMarkLabel];
     
-    self.shareLabel = [UPLabel label];
-    self.shareLabel.string = @"CHALLENGE!";
-    self.shareLabel.font = layout.share_prompt_font();
-    self.shareLabel.textAlignment = NSTextAlignmentCenter;
-    self.shareLabel.frame = layout.frame_for(Role::DialogMessageSharePrompt);
-    [self addSubview:self.shareLabel];
+    self.challengePromptLabel = [UPLabel label];
+    self.challengePromptLabel.string = @"CHALLENGE!";
+    self.challengePromptLabel.font = layout.challenge_prompt_font();
+    self.challengePromptLabel.textAlignment = NSTextAlignmentCenter;
+    self.challengePromptLabel.frame = layout.frame_for(Role::ChallengePrompt);
+    [self addSubview:self.challengePromptLabel];
 
-    self.scoreToTopLabel = [UPLabel label];
-    self.scoreToTopLabel.font = layout.share_score_to_beat_font();
-    self.scoreToTopLabel.textAlignment = NSTextAlignmentCenter;
-    self.scoreToTopLabel.frame = layout.frame_for(Role::DialogMessageShareScoreToBeat);
-    [self addSubview:self.scoreToTopLabel];
+    self.scorePromptLabel = [UPLabel label];
+    self.scorePromptLabel.font = layout.challenge_score_font_font();
+    self.scorePromptLabel.textAlignment = NSTextAlignmentCenter;
+    self.scorePromptLabel.frame = layout.frame_for(Role::ChallengeScore);
+    [self addSubview:self.scorePromptLabel];
 
     self.cancelButton = [UPTextButton textButton];
     self.cancelButton.labelString = @"CANCEL";
@@ -97,7 +97,7 @@ using Role = SpellLayout::Role;
 
 - (void)updateWithShare:(UPShareRequest *)share
 {
-    self.scoreToTopLabel.string = [NSString stringWithFormat:@"TARGET SCORE: %d", share.score];
+    self.scorePromptLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", share.score];
 }
 
 #pragma mark - Theme colors

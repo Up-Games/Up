@@ -45,11 +45,11 @@ public:
         WordTile1of7, WordTile2of7, WordTile3of7, WordTile4of7, WordTile5of7, WordTile6of7, WordTile7of7,
         WordTray,
         ControlButtonLeft, ControlButtonRight,
-        GameTimer, GameScore,
+        GameTimer, GameScore, GameShareButton,
         GameScoreGameOver1, GameScoreGameOver2, GameScoreGameOver3, GameScoreGameOver4,
         WordScore, WordScoreBonus,
         DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessagePlay,
-        DialogMessageSharePrompt, DialogMessageShareScoreToBeat, DialogMessageWithGameNote, DialogGameNote,
+        DialogMessageWithGameNote, DialogGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse, DialogHelpButton,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
@@ -64,7 +64,7 @@ public:
         ExtrasShareHighScoreValue, ExtrasShareHighScoreDescription, ExtrasShareHighScoreButton,
         ExtrasShareLastGameValue, ExtrasShareLastGameDescription, ExtrasShareLastGameButton,
         ExtrasShareDescription,
-        ChallengeInterstitialLogo, ChallengeInterstitialWordMark,
+        ChallengeInterstitialLogo, ChallengeInterstitialWordMark, ChallengePrompt, ChallengeScore,
     };
 
     enum class Place {
@@ -162,6 +162,7 @@ public:
     static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 28;
     static inline constexpr CGFloat CanonicalGameNoteWordFontCapHeight = 30;
     static inline constexpr CGFloat CanonicalGameNoteWordFontBaselineAdjustment = 8;
+    static inline constexpr CGRect CanonicalGameShareButtonFrame = { 853, 382,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
     static inline constexpr CGFloat CanonicalOffscreenNearFrameFactor = 1.2;
@@ -179,8 +180,6 @@ public:
     static inline constexpr CGRect CanonicalChoiceCenterGoFrame =  { 713, 376, up_size_width(CanonicalTextButtonSize), up_size_height(CanonicalTextButtonSize) };
     
     static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 20;
-    static inline constexpr CGFloat CanonicalSharePromptFontCapHeight = 60;
-    static inline constexpr CGFloat CanonicalShareScoreToBeatFontCapHeight = 36;
     static inline constexpr CGFloat CanonicalPlacardValueFontCapHeight = 38;
     static inline constexpr CGFloat CanonicalPlacardDescrptionFontCapHeight = 24;
 
@@ -212,9 +211,14 @@ public:
     static inline constexpr CGRect CanonicalExtrasShareLastGameDescriptionFrame = { 705, 160, 173, 64 };
     static inline constexpr CGRect CanonicalExtrasShareDescriptionFrame = { 384, 300, 572, 300 };
 
-    static inline constexpr CGRect CanonicalChallengeInterstitialLogoFrame = { 420, 130, 160, 160 };
-    static inline constexpr CGRect CanonicalChallengeInterstitialWordMarkFrame = { 200, 308, 600, 300 };
+    static inline constexpr CGRect CanonicalChallengeInterstitialLogoFrame = { 420, 132, 160, 160 };
+    static inline constexpr CGRect CanonicalChallengeInterstitialWordMarkFrame = { 200, 292, 600, 300 };
     static inline constexpr CGFloat CanonicalWordMarkCapHeight = 35;
+
+    static inline constexpr CGRect CanonicalChallengePromptFrame = { 200, 112, 600, 300 };
+    static inline constexpr CGRect CanonicalChallengeScoreFrame = { 200, 228, 600, 300 };
+    static inline constexpr CGFloat CanonicalChallengePromptFontCapHeight = 62;
+    static inline constexpr CGFloat CanonicalChallengeScoreFontCapHeight = 35;
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
@@ -281,8 +285,8 @@ public:
     UIFont *ballot_control_font() const { return m_ballot_control_font; }
     UIFont *choice_control_font() const { return m_choice_control_font; }
     UIFont *settings_description_font() const { return m_settings_description_font; }
-    UIFont *share_prompt_font() const { return m_share_prompt_font; }
-    UIFont *share_score_to_beat_font() const { return m_share_score_to_beat_font; }
+    UIFont *challenge_prompt_font() const { return m_challenge_prompt_font; }
+    UIFont *challenge_score_font_font() const { return m_challenge_score_font_font; }
     UIFont *placard_value_font() const { return m_placard_value_font; }
     UIFont *placard_description_font() const { return m_placard_description_font; }
     UIFont *word_mark_font() const { return m_word_mark_font; }
@@ -337,8 +341,8 @@ private:
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
     void set_settings_description_font(UIFont *font) { m_settings_description_font = font; }
-    void set_share_prompt_font(UIFont *font) { m_share_prompt_font = font; }
-    void set_share_score_to_beat_font(UIFont *font) { m_share_score_to_beat_font = font; }
+    void set_challenge_prompt_font(UIFont *font) { m_challenge_prompt_font = font; }
+    void set_challenge_score_font_font(UIFont *font) { m_challenge_score_font_font = font; }
     void set_placard_value_font(UIFont *font) { m_placard_value_font = font; }
     void set_placard_description_font(UIFont *font) { m_placard_description_font = font; }
     void set_word_mark_font(UIFont *font) { m_word_mark_font = font; }
@@ -369,8 +373,8 @@ private:
     void calculate_slider_control_metrics();
     void calculate_choice_control_metrics();
     void calculate_settings_description_font_metrics();
-    void calculate_share_prompt_font_metrics();
-    void calculate_share_score_to_beat_font_metrics();
+    void calculate_challenge_prompt_font_metrics();
+    void calculate_challenge_score_font_font_metrics();
     void calculate_placard_value_font_metrics();
     void calculate_placard_description_font_metrics();
     void calculate_word_mark_font_metrics();
@@ -431,8 +435,8 @@ private:
     __strong UIFont *m_ballot_control_font;
     __strong UIFont *m_choice_control_font;
     __strong UIFont *m_settings_description_font;
-    __strong UIFont *m_share_prompt_font;
-    __strong UIFont *m_share_score_to_beat_font;
+    __strong UIFont *m_challenge_prompt_font;
+    __strong UIFont *m_challenge_score_font_font;
     __strong UIFont *m_placard_value_font;
     __strong UIFont *m_placard_description_font;
     __strong UIFont *m_word_mark_font;

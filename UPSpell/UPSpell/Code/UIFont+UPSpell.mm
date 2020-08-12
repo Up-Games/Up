@@ -250,7 +250,7 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     return [UIFont settingsDescriptionFontOfSize:pointSize];
 }
 
-+ (UIFont *)shareFontOfSize:(CGFloat)fontSize
++ (UIFont *)challengeFontOfSize:(CGFloat)fontSize
 {
     UIFont *font = [UIFont fontWithName:UPShareFontName size:fontSize];
     UIFontDescriptor *descriptor = [font fontDescriptor];
@@ -266,12 +266,12 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
 }
 
-+ (UIFont *)shareFontWithCapHeight:(CGFloat)capHeight
++ (UIFont *)challengeFontWithCapHeight:(CGFloat)capHeight
 {
     UIFont *canonicalFont = [UIFont fontWithName:UPShareFontName size:1];
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
-    return [UIFont shareFontOfSize:pointSize];
+    return [UIFont challengeFontOfSize:pointSize];
 }
 
 + (UIFont *)placardValueFontOfSize:(CGFloat)fontSize

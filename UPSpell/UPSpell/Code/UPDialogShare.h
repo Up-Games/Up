@@ -13,8 +13,8 @@
 
 @property (nonatomic, readonly) UPVectorLogoView *vectorLogoView;
 @property (nonatomic, readonly) UPLabel *wordMarkLabel;
-@property (nonatomic, readonly) UPLabel *shareLabel;
-@property (nonatomic, readonly) UPLabel *scoreToTopLabel;
+@property (nonatomic, readonly) UPLabel *challengePromptLabel;
+@property (nonatomic, readonly) UPLabel *scorePromptLabel;
 @property (nonatomic, readonly) UPButton *cancelButton;
 @property (nonatomic, readonly) UPButton *goButton;
 @property (nonatomic, readonly) UPButton *helpButton;

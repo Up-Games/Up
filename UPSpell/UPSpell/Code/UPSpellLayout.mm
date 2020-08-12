@@ -308,8 +308,8 @@ void SpellLayout::calculate()
     calculate_slider_control_metrics();
     calculate_choice_control_metrics();
     calculate_settings_description_font_metrics();
-    calculate_share_prompt_font_metrics();
-    calculate_share_score_to_beat_font_metrics();
+    calculate_challenge_prompt_font_metrics();
+    calculate_challenge_score_font_font_metrics();
     calculate_placard_value_font_metrics();
     calculate_placard_description_font_metrics();
     calculate_word_mark_font_metrics();
@@ -488,18 +488,18 @@ void SpellLayout::calculate_settings_description_font_metrics()
     set_settings_description_font(font);
 }
 
-void SpellLayout::calculate_share_prompt_font_metrics()
+void SpellLayout::calculate_challenge_prompt_font_metrics()
 {
-    CGFloat cap_height = CanonicalSharePromptFontCapHeight * layout_scale();
-    UIFont *font = [UIFont shareFontWithCapHeight:cap_height];
-    set_share_prompt_font(font);
+    CGFloat cap_height = CanonicalChallengePromptFontCapHeight * layout_scale();
+    UIFont *font = [UIFont challengeFontWithCapHeight:cap_height];
+    set_challenge_prompt_font(font);
 }
 
-void SpellLayout::calculate_share_score_to_beat_font_metrics()
+void SpellLayout::calculate_challenge_score_font_font_metrics()
 {
-    CGFloat cap_height = CanonicalShareScoreToBeatFontCapHeight * layout_scale();
-    UIFont *font = [UIFont shareFontWithCapHeight:cap_height];
-    set_share_score_to_beat_font(font);
+    CGFloat cap_height = CanonicalChallengeScoreFontCapHeight * layout_scale();
+    UIFont *font = [UIFont challengeFontWithCapHeight:cap_height];
+    set_challenge_score_font_font(font);
 }
 
 void SpellLayout::calculate_placard_value_font_metrics()
@@ -708,14 +708,6 @@ void SpellLayout::calculate_dialog_locations()
     with_game_note_message_frame.origin.y = up_rect_min_y(with_game_note_message_frame) - (up_rect_height(with_game_note_message_frame) * 0.4);
     calculate_and_set_locations(Role::DialogMessageWithGameNote, with_game_note_message_frame);
 
-    CGRect share_prompt_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
-    share_prompt_message_frame.origin.y = up_rect_min_y(share_prompt_message_frame) - (up_rect_height(share_prompt_message_frame) * 0.375);
-    calculate_and_set_locations(Role::DialogMessageSharePrompt, share_prompt_message_frame);
-
-    CGRect share_score_to_beat_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
-    share_score_to_beat_message_frame.origin.y = up_rect_min_y(share_score_to_beat_message_frame) + (up_rect_height(share_score_to_beat_message_frame) * 0.25);
-    calculate_and_set_locations(Role::DialogMessageShareScoreToBeat, share_score_to_beat_message_frame);
-
     CGSize button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
     CGRect top_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogTopButtonsLayoutFrame);
     calculate_and_set_locations(Role::DialogButtonTopLeft, up_left_aligned_rect(button_size, top_buttons_layout_frame));
@@ -728,6 +720,9 @@ void SpellLayout::calculate_dialog_locations()
 
     calculate_and_set_locations(Role::DialogHelpButton, layout_relative_aspect_rect(CanonicalDialogHelpButtonFrame));
 
+    calculate_and_set_locations(Role::ChallengePrompt, layout_relative_aspect_rect(CanonicalChallengePromptFrame));
+    calculate_and_set_locations(Role::ChallengeScore, layout_relative_aspect_rect(CanonicalChallengeScoreFrame));
+    calculate_and_set_locations(Role::ChallengeInterstitialLogo, layout_relative_aspect_rect(CanonicalChallengeInterstitialLogoFrame));
     calculate_and_set_locations(Role::ChallengeInterstitialLogo, layout_relative_aspect_rect(CanonicalChallengeInterstitialLogoFrame));
     calculate_and_set_locations(Role::ChallengeInterstitialWordMark, layout_relative_aspect_rect(CanonicalChallengeInterstitialWordMarkFrame));
 }
@@ -749,6 +744,8 @@ void SpellLayout::calculate_game_locations()
     calculate_and_set_locations(Role::GameScoreGameOver3, layout_game_over_score_frame(@"100"));
     calculate_and_set_locations(Role::GameScoreGameOver4, layout_game_over_score_frame(@"1000"));
 
+    calculate_and_set_locations(Role::GameShareButton, layout_relative_aspect_rect(CanonicalGameShareButtonFrame));
+    
     CGRect word_score_frame = up_rect_scaled(CanonicalWordScoreLayoutFrame, layout_scale());
     word_score_frame.size.height = word_score_font().lineHeight;
     word_score_frame = up_rect_centered_in_rect(word_score_frame, word_tray_layout_frame());
