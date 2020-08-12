@@ -33,24 +33,4 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
-//- (void)viewDidLoad
-//{
-//    [super viewDidLoad];
-//
-//    self.previewContainerView = [[UPContainerView alloc] initWithFrame:CGRectZero];
-//    self.previewContainerView.translatesAutoresizingMaskIntoConstraints = NO;
-//    [self.view addSubview:self.previewContainerView];
-//
-//    self.previewContainerView.backgroundColor = [UIColor testColor1];
-//}
-//
-//- (void)viewDidLayoutSubviews
-//{
-//    CGRect bounds = self.view.bounds;
-//
-////    UPLayoutRule *rule = [UPLayoutRule layoutRuleWithReferenceFrame:bounds hLayout:<#(UPLayoutHorizontal)#> vLayout:<#(UPLayoutVertical)#>];
-//
-//    self.previewContainerView.frame = bounds;
-//}
-
 @end

@@ -7,6 +7,7 @@
 
 #import "UPSceneDelegate.h"
 #import "UPShareRequest.h"
+#import "UPSpellExtrasController.h"
 #import "UPSpellGameController.h"
 #import "UPSpellNavigationController.h"
 
@@ -32,6 +33,19 @@ static UPSceneDelegate *_Instance;
 {
     _Instance = self;
     [self parseSharedGameRequestFromURLContexts:connectionOptions.URLContexts];
+}
+
+- (void)sceneDidEnterBackground:(UIScene *)scene
+{
+    UPSpellExtrasController *extrasController = [UPSpellExtrasController instance];
+    if (extrasController.presentedViewController) {
+        [extrasController dismissViewControllerAnimated:NO completion:nil];
+    }
+
+    UPSpellGameController *gameController = [UPSpellGameController instance];
+    if ([gameController.presentedViewController isKindOfClass:[UIActivityViewController class]]) {
+        [gameController dismissViewControllerAnimated:NO completion:nil];
+    }
 }
 
 - (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts

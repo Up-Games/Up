@@ -178,6 +178,9 @@ using UP::TimeSpanning::start;
         return;
     }
     
+    if (self.extrasController.presentedViewController) {
+        [self.extrasController dismissViewControllerAnimated:NO completion:nil];
+    }
     [self.extrasController cancelAnimations];
     [self dismissViewControllerAnimated:NO completion:nil];
 
