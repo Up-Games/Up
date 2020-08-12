@@ -2292,6 +2292,8 @@ static UPSpellGameController *_Instance;
 {
     [self viewLock];
 
+    [self.dialogShareHelp updateThemeColors];
+    
     self.dialogGameNote.shareButton.highlightedLocked = YES;
     self.dialogGameNote.shareButton.highlighted = YES;
 
