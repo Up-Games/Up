@@ -56,6 +56,8 @@
 		5DBAD6D624E22B8800471ABF /* UPVectorLogoView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAD6D424E22B8800471ABF /* UPVectorLogoView.mm */; };
 		5DBAD6D924E22DA900471ABF /* UPGradientView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBAD6D724E22DA900471ABF /* UPGradientView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBAD6DA24E22DA900471ABF /* UPGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAD6D824E22DA900471ABF /* UPGradientView.m */; };
+		5DBAD6DD24E4394D00471ABF /* NSArray+UP.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBAD6DB24E4394D00471ABF /* NSArray+UP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DBAD6DE24E4394D00471ABF /* NSArray+UP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAD6DC24E4394D00471ABF /* NSArray+UP.mm */; };
 		5DBADB7324678F4000D9D1FF /* UPGameKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBADB7124678F4000D9D1FF /* UPGameKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBADB7424678F4000D9D1FF /* UPGameKey.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBADB7224678F4000D9D1FF /* UPGameKey.mm */; };
 		5DBC20C5249ACD91002A6ADC /* UPGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBC20C3249ACD91002A6ADC /* UPGestureRecognizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -187,6 +189,8 @@
 		5DBAD6D424E22B8800471ABF /* UPVectorLogoView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPVectorLogoView.mm; sourceTree = "<group>"; };
 		5DBAD6D724E22DA900471ABF /* UPGradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGradientView.h; sourceTree = "<group>"; };
 		5DBAD6D824E22DA900471ABF /* UPGradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPGradientView.m; sourceTree = "<group>"; };
+		5DBAD6DB24E4394D00471ABF /* NSArray+UP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+UP.h"; sourceTree = "<group>"; };
+		5DBAD6DC24E4394D00471ABF /* NSArray+UP.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSArray+UP.mm"; sourceTree = "<group>"; };
 		5DBADB7124678F4000D9D1FF /* UPGameKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameKey.h; sourceTree = "<group>"; };
 		5DBADB7224678F4000D9D1FF /* UPGameKey.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameKey.mm; sourceTree = "<group>"; };
 		5DBC20C3249ACD91002A6ADC /* UPGestureRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGestureRecognizer.h; sourceTree = "<group>"; };
@@ -360,6 +364,8 @@
 		5DFE62232453CF4E00D9CA0B /* UP */ = {
 			isa = PBXGroup;
 			children = (
+				5DBAD6DB24E4394D00471ABF /* NSArray+UP.h */,
+				5DBAD6DC24E4394D00471ABF /* NSArray+UP.mm */,
 				5D6261A424C1FE4100D19EEF /* NSFileManager+UP.h */,
 				5D6261A524C1FE4100D19EEF /* NSFileManager+UP.mm */,
 				5D12E4A124B7B37900C73F64 /* NSMutableAttributedString+UP.h */,
@@ -513,6 +519,7 @@
 				5DBADB7324678F4000D9D1FF /* UPGameKey.h in Headers */,
 				5DA8E063247C063B008D3015 /* UPTicker.h in Headers */,
 				5DA8E06E247D50AB008D3015 /* UPSerialNumber.h in Headers */,
+				5DBAD6DD24E4394D00471ABF /* NSArray+UP.h in Headers */,
 				5DC618B4246EF6CC00090E7A /* UPLabel.h in Headers */,
 				5DA8E06B247C76A8008D3015 /* UPTimeSpanning.h in Headers */,
 				5D4AE82D248F1FE600213904 /* UPSettings.h in Headers */,
@@ -687,6 +694,7 @@
 				5DA8E064247C063B008D3015 /* UPTicker.m in Sources */,
 				5D12E4A424B7B37900C73F64 /* NSMutableAttributedString+UP.mm in Sources */,
 				5DF9DF432465B35700B2199D /* UPLexicon.mm in Sources */,
+				5DBAD6DE24E4394D00471ABF /* NSArray+UP.mm in Sources */,
 				5DCFD09E24AD4BC900CA5C24 /* UPGameTimer.m in Sources */,
 				5DA8E0402475E14D008D3015 /* UPStackTrace.cpp in Sources */,
 				5D2CAC86245B53F200B81332 /* NSValue+UP.m in Sources */,

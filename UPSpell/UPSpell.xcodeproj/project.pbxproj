@@ -943,7 +943,7 @@
 		5DC67DF424730207009BCDBB /* UPSpellMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellMacros.h; sourceTree = "<group>"; };
 		5DF74C3E24DF80B50000F43D /* UPActivityViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPActivityViewController.mm; sourceTree = "<group>"; };
 		5DF74C3F24DF80B50000F43D /* UPActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPActivityViewController.h; sourceTree = "<group>"; };
-		5DF9DF572466165700B2199D /* UP Spell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UP Spell.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DF9DF572466165700B2199D /* Up Spell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Up Spell.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF9DF5A2466165700B2199D /* UPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPAppDelegate.h; sourceTree = "<group>"; };
 		5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAppDelegate.mm; sourceTree = "<group>"; };
 		5DF9DF5D2466165700B2199D /* UPSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSceneDelegate.h; sourceTree = "<group>"; };
@@ -1512,7 +1512,7 @@
 		5DF9DF582466165700B2199D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5DF9DF572466165700B2199D /* UP Spell.app */,
+				5DF9DF572466165700B2199D /* Up Spell.app */,
 				5DF9DF722466165800B2199D /* UPSpellTests.xctest */,
 			);
 			name = Products;
@@ -1567,7 +1567,7 @@
 			);
 			name = UPSpell;
 			productName = UPSpell;
-			productReference = 5DF9DF572466165700B2199D /* UP Spell.app */;
+			productReference = 5DF9DF572466165700B2199D /* Up Spell.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5DF9DF712466165800B2199D /* UPSpellTests */ = {
@@ -2245,7 +2245,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dev.upgames.upspell;
-				PRODUCT_NAME = "UP Spell";
+				PRODUCT_NAME = "Up Spell";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2264,7 +2264,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dev.upgames.upspell;
-				PRODUCT_NAME = "UP Spell";
+				PRODUCT_NAME = "Up Spell";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

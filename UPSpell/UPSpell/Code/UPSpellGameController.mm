@@ -2133,7 +2133,7 @@ static UPSpellGameController *_Instance;
     });
 }
 
-- (void)viewOrderInShareFromMode:(Mode)mode
+- (void)viewOrderInChallengeFromMode:(Mode)mode
 {
     ASSERT(self.challenge);
     
@@ -2190,7 +2190,7 @@ static UPSpellGameController *_Instance;
             UPViewMoveMake(self.dialogShare.vectorLogoView, Location(Role::ChallengeInterstitialLogo, Place::OffBottomFar)),
             UPViewMoveMake(self.dialogShare.wordMarkLabel, Location(Role::ChallengeInterstitialWordMark, Place::OffBottomFar)),
         ];
-        start(bloop_out(BandModeUI, logoMoves, 0.5,  ^(UIViewAnimatingPosition) {
+        start(bloop_out(BandModeUI, logoMoves, 0.4,  ^(UIViewAnimatingPosition) {
             // Move the challenge dialog in
             NSArray<UPViewMove *> *shareMoves = @[
                 UPViewMoveMake(self.dialogShare.challengePromptLabel, Location(Role::ChallengePrompt)),
@@ -2199,7 +2199,7 @@ static UPSpellGameController *_Instance;
                 UPViewMoveMake(self.dialogShare.cancelButton, Location(Role::DialogButtonAlternativeResponse)),
                 UPViewMoveMake(self.dialogShare.helpButton, Location(Role::DialogHelpButton)),
             ];
-            start(bloop_in(BandModeUI, shareMoves, 0.5,  ^(UIViewAnimatingPosition) {
+            start(bloop_in(BandModeUI, shareMoves, 0.4,  ^(UIViewAnimatingPosition) {
                 [self viewUnlock];
             }));
         }));
@@ -2394,11 +2394,20 @@ static UPSpellGameController *_Instance;
     
     NSMutableString *labelString = [NSMutableString string];
     
-    NSString *highScoreString = [self gameNoteGameHighScore];
-    if (highScoreString) {
-        [labelString appendString:highScoreString];
+    if (labelString.length == 0) {
+        NSString *challengeString = [self gameNoteGameChallenge];
+        if (challengeString) {
+            [labelString appendString:challengeString];
+        }
     }
 
+    if (labelString.length == 0) {
+        NSString *highScoreString = [self gameNoteGameHighScore];
+        if (highScoreString) {
+            [labelString appendString:highScoreString];
+        }
+    }
+    
     if (labelString.length == 0) {
         NSString *bestWordString = [self gameNoteBestWordInGame];
         if (bestWordString) {
@@ -2435,7 +2444,37 @@ static UPSpellGameController *_Instance;
 
 }
 
-#pragma mark - Stats note strings
+#pragma mark - Game note strings
+
+- (NSString *)gameNoteGameChallenge
+{
+    ASSERT(self.mode == Mode::End);
+    
+    NSString *result = nil;
+    
+    if (!self.challenge) {
+        return result;
+    }
+    
+    int score = m_spell_model->game_score();
+
+    if (score + 10 >= self.challenge.score || score >= self.challenge.score * 0.9) {
+        result = [NSString stringWithFormat:@"NICE TRY! SCORE TO BEAT WAS %d", self.challenge.score];
+    }
+    else if (score < self.challenge.score) {
+        NSArray *tags = @[ @"SORRY!", @"NOPE!" ];
+        result = [NSString stringWithFormat:@"%@ SCORE TO BEAT WAS %d", [tags randomElement], self.challenge.score];
+    }
+    else if (score == self.challenge.score) {
+        result = [NSString stringWithFormat:@"TIED! SCORE TO BEAT WAS %d", self.challenge.score];
+    }
+    else {
+        NSArray *tags = @[ @"GREAT!", @"HOORAY!", @"YES!" ];
+        result = [NSString stringWithFormat:@"%@ SCORE TO BEAT WAS %d", [tags randomElement], self.challenge.score];
+    }
+
+    return result;
+}
 
 - (NSString *)gameNoteGameHighScore
 {
@@ -3029,7 +3068,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (void)modeTransitionFromInitToChallenge
 {
     ASSERT(self.challenge);
-    [self viewOrderInShareFromMode:Mode::Init];
+    [self viewOrderInChallengeFromMode:Mode::Init];
 }
 
 - (void)modeTransitionFromInitToReady
@@ -3502,7 +3541,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromPauseToChallenge
 {
-    [self viewOrderInShareFromMode:Mode::Pause];
+    [self viewOrderInChallengeFromMode:Mode::Pause];
 }
 
 - (void)modeTransitionFromPauseToQuit

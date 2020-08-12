@@ -81,11 +81,11 @@ using Spot = UP::SpellLayout::Place;
     self.retryDescription.colorCategory = UPColorCategoryControlText;
     self.retryDescription.textAlignment = NSTextAlignmentLeft;
     self.retryDescription.string =
-       @"RETRY repeats games, giving you a chance to improve\n"
-        "your score using the same letter sequence your last\n"
-        "game or your high score game.\n\n"
+       @"RETRY repeats the letter sequence from a previous\n"
+        "game, giving you a chance to improve your score.\n\n"
         "Enable to show the RETRY menu after tapping PLAY\n"
-        "on the main screen.";
+        "on the main screen, with options to retry your\n"
+        "high score game, your last game, or play a new game.\n";
     [self addSubview:self.retryDescription];
 
     self.retryCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
