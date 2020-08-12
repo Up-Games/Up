@@ -2220,6 +2220,9 @@ static UPSpellGameController *_Instance;
     self.dialogTopMenu.aboutButton.frame = layout.frame_for(Role::DialogButtonTopRight);
     self.dialogTopMenu.playButton.highlightedLocked = NO;
     self.dialogTopMenu.playButton.highlighted = NO;
+    self.dialogTopMenu.extrasButton.userInteractionEnabled = NO;
+    self.dialogTopMenu.playButton.userInteractionEnabled = NO;
+    self.dialogTopMenu.aboutButton.userInteractionEnabled = NO;
     self.dialogTopMenu.hidden = NO;
     self.dialogTopMenu.alpha = 1;
     
@@ -3404,6 +3407,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::GameShareButton, Place::OffBottomFar)),
     ];
     start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
+        self.dialogTopMenu.extrasButton.userInteractionEnabled = YES;
+        self.dialogTopMenu.playButton.userInteractionEnabled = YES;
+        self.dialogTopMenu.aboutButton.userInteractionEnabled = YES;
     }));
 
     [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
@@ -3518,6 +3524,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             self.dialogChallenge.goButton.highlighted = NO;
             self.dialogChallenge.hidden = YES;
             self.dialogChallenge.alpha = 1;
+            self.dialogTopMenu.extrasButton.userInteractionEnabled = YES;
+            self.dialogTopMenu.playButton.userInteractionEnabled = YES;
+            self.dialogTopMenu.aboutButton.userInteractionEnabled = YES;
         }));
         
         delay(BandModeDelay, 0.55, ^{
