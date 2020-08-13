@@ -300,7 +300,6 @@ void SpellLayout::calculate()
     calculate_game_information_font_metrics();
     calculate_game_information_superscript_font_metrics();
     calculate_game_note_font_metrics();
-    calculate_game_note_word_font_metrics();
     calculate_word_score_font_metrics();
     calculate_word_score_bonus_font_metrics();
     calculate_ballot_control_metrics();
@@ -418,15 +417,8 @@ void SpellLayout::calculate_game_note_font_metrics()
 {
     CGFloat cap_height = CanonicalGameNoteFontCapHeight * layout_scale();
     UIFont *font = [UIFont gameNoteFontWithCapHeight:cap_height];
+    font.baselineAdjustment = CanonicalGameNoteFontBaselineAdjustment * layout_scale();
     set_game_note_font(font);
-}
-
-void SpellLayout::calculate_game_note_word_font_metrics()
-{
-    CGFloat cap_height = CanonicalGameNoteWordFontCapHeight * layout_scale();
-    UIFont *font = [UIFont gameNoteWordFontWithCapHeight:cap_height];
-    font.baselineAdjustment = CanonicalGameNoteWordFontBaselineAdjustment * layout_scale();
-    set_game_note_word_font(font);
 }
 
 void SpellLayout::calculate_word_score_font_metrics()
@@ -706,15 +698,16 @@ void SpellLayout::calculate_word_tile_locations()
 void SpellLayout::calculate_dialog_locations()
 {
     calculate_and_set_locations(Role::DialogMessageCenteredInWordTray, word_tray_layout_frame());
-    calculate_and_set_locations(Role::DialogGameNote, layout_centered_x_aspect_rect(CanonicalGameNoteLayoutFrame));
 
     CGRect v_centered_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
     v_centered_message_frame.origin.y = up_rect_min_y(v_centered_message_frame) - (up_rect_height(v_centered_message_frame) * 0.12);
     calculate_and_set_locations(Role::DialogMessageVerticallyCentered, v_centered_message_frame);
 
-    CGRect with_game_note_message_frame = up_rect_centered_in_rect(word_tray_layout_frame(), screen_bounds());
-    with_game_note_message_frame.origin.y = up_rect_min_y(with_game_note_message_frame) - (up_rect_height(with_game_note_message_frame) * 0.4);
-    calculate_and_set_locations(Role::DialogMessageWithGameNote, with_game_note_message_frame);
+    calculate_and_set_locations(Role::DialogGameNote, layout_centered_x_aspect_rect(CanonicalGameNoteLayoutFrame));
+
+    CGRect challenge_game_note_frame = frame_for(Role::DialogGameNote);
+    challenge_game_note_frame.origin.y = up_rect_min_y(challenge_game_note_frame) - (up_rect_height(challenge_game_note_frame) * 0.275);
+    calculate_and_set_locations(Role::DialogChallengeGameNote, challenge_game_note_frame);
 
     CGSize button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
     CGRect top_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogTopButtonsLayoutFrame);

@@ -49,7 +49,7 @@ public:
         GameScoreGameOver1, GameScoreGameOver2, GameScoreGameOver3, GameScoreGameOver4,
         WordScore, WordScoreBonus,
         DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessagePlay,
-        DialogMessageWithGameNote, DialogGameNote,
+        DialogGameNote, DialogChallengeGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse, DialogHelpButton,
         DialogHelpTitle, DialogHelpText, DialogHelpOKButton,
@@ -161,8 +161,7 @@ public:
 
     static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 384, 1000, 100 };
     static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 28;
-    static inline constexpr CGFloat CanonicalGameNoteWordFontCapHeight = 30;
-    static inline constexpr CGFloat CanonicalGameNoteWordFontBaselineAdjustment = 8;
+    static inline constexpr CGFloat CanonicalGameNoteFontBaselineAdjustment = 4;
     static inline constexpr CGRect CanonicalGameShareButtonFrame = { 853, 382,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
@@ -287,7 +286,6 @@ public:
     UIFont *game_information_font() const { return m_game_information_font; }
     UIFont *game_information_superscript_font() const { return m_game_information_superscript_font; }
     UIFont *game_note_font() const { return m_game_note_font; }
-    UIFont *game_note_word_font() const { return m_game_note_word_font; }
     UIFont *word_score_font() const { return m_word_score_font; }
     UIFont *word_score_bonus_font() const { return m_word_score_bonus_font; }
     UIFont *ballot_control_font() const { return m_ballot_control_font; }
@@ -338,7 +336,6 @@ private:
     void set_game_information_font(UIFont *font) { m_game_information_font = font; }
     void set_game_information_superscript_font(UIFont *font) { m_game_information_superscript_font = font; }
     void set_game_note_font(UIFont *font) { m_game_note_font = font; }
-    void set_game_note_word_font(UIFont *font) { m_game_note_word_font = font; }
     void set_word_score_font(UIFont *font) { m_word_score_font = font; }
     void set_word_score_bonus_font(UIFont *font) { m_word_score_bonus_font = font; }
     void set_ballot_control_font(UIFont *font) { m_ballot_control_font = font; }
@@ -375,7 +372,6 @@ private:
     void calculate_game_information_font_metrics();
     void calculate_game_information_superscript_font_metrics();
     void calculate_game_note_font_metrics();
-    void calculate_game_note_word_font_metrics();
     void calculate_word_score_font_metrics();
     void calculate_word_score_bonus_font_metrics();
     void calculate_ballot_control_metrics();
@@ -440,7 +436,6 @@ private:
     __strong UIFont *m_game_information_font;
     __strong UIFont *m_game_information_superscript_font;
     __strong UIFont *m_game_note_font;
-    __strong UIFont *m_game_note_word_font;
     __strong UIFont *m_word_score_font;
     __strong UIFont *m_word_score_bonus_font;
     __strong UIFont *m_ballot_control_font;

@@ -2683,8 +2683,8 @@ static UPSpellGameController *_Instance;
         
         NSMutableAttributedString *bottomString = [[NSMutableAttributedString alloc] initWithString:components[1]];
         NSRange bottomRange = NSMakeRange(0, bottomString.length);
-        [bottomString addAttribute:NSFontAttributeName value:layout.game_note_word_font() range:bottomRange];
-        CGFloat baselineAdjustment = layout.game_note_word_font().baselineAdjustment;
+        [bottomString addAttribute:NSFontAttributeName value:layout.game_note_font() range:bottomRange];
+        CGFloat baselineAdjustment = layout.game_note_font().baselineAdjustment;
         [bottomString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baselineAdjustment) range:bottomRange];
         
         [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
@@ -2712,20 +2712,13 @@ static UPSpellGameController *_Instance;
     int score = m_spell_model->game_score();
     
     if (score < self.challenge.score) {
-        if (score + 10 >= self.challenge.score || score >= self.challenge.score * 0.95) {
-            result = [NSString stringWithFormat:@"NICE TRY! SCORE TO BEAT WAS %d", self.challenge.score];
-        }
-        else {
-            NSArray *tags = @[ @"SORRY!", @"NOPE!" ];
-            result = [NSString stringWithFormat:@"%@ SCORE TO BEAT WAS %d", [tags randomElement], self.challenge.score];
-        }
+        result = [NSString stringWithFormat:@"CHALLENGE LOST!\nSCORE TO BEAT WAS %d", self.challenge.score];
     }
     else if (score == self.challenge.score) {
-        result = [NSString stringWithFormat:@"TIED! SCORE TO BEAT WAS %d", self.challenge.score];
+        result = [NSString stringWithFormat:@"CHALLENGE TIED!\nSCORE TO BEAT WAS %d", self.challenge.score];
     }
     else {
-        NSArray *tags = @[ @"GREAT!", @"HOORAY!", @"YES!" ];
-        result = [NSString stringWithFormat:@"%@ SCORE TO BEAT WAS %d", [tags randomElement], self.challenge.score];
+        result = [NSString stringWithFormat:@"CHALLENGE WON!\nSCORE TO BEAT WAS %d", self.challenge.score];
     }
     
     return result;
@@ -3957,6 +3950,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewSetNoteLabelString];
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     
+    BOOL wasChallenge = (self.challenge != nil);
     self.challenge = nil;
     [self removeInProgressGameFileLogErrors:NO];
     
@@ -3996,11 +3990,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             self.dialogTopMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Place::OffTopNear));
             self.dialogTopMenu.playButton.highlightedLocked = NO;
             self.dialogTopMenu.playButton.highlighted = NO;
+            Role gameNoteRole = wasChallenge ? Role::DialogChallengeGameNote : Role::DialogGameNote;
             NSArray<UPViewMove *> *buttonMoves = @[
                 UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
                 UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter)),
                 UPViewMoveMake(self.dialogTopMenu.aboutButton, Location(Role::DialogButtonTopRight)),
-                UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote),
+                UPViewMoveMake(self.dialogGameNote.noteLabel, gameNoteRole),
                 UPViewMoveMake(self.dialogGameNote.shareButton, Role::GameShareButton),
             ];
             start(bloop_in(BandModeUI, buttonMoves, GameOverInOutBloopDuration, ^(UIViewAnimatingPosition) {
