@@ -230,7 +230,7 @@ using Spot = UP::SpellLayout::Place;
     self.showingIconEasterEgg = YES;
     
     NSArray <UPViewMove *> *outMoves = @[
-        UPViewMoveMake(self.hueDescription, Role::ExtrasColorsDescription, Spot::OffBottomFar),
+        UPViewMoveMake(self.hueDescriptionContainer, Role::ExtrasColorsDescription, Spot::OffBottomFar),
         UPViewMoveMake(self.exampleTilesContainer, Role::ExtrasColorsExample, Spot::OffBottomFar),
     ];
 
@@ -264,7 +264,7 @@ using Spot = UP::SpellLayout::Place;
     ];
     
     NSArray <UPViewMove *> *inMoves = @[
-        UPViewMoveMake(self.hueDescription, Role::ExtrasColorsDescription),
+        UPViewMoveMake(self.hueDescriptionContainer, Role::ExtrasColorsDescription),
         UPViewMoveMake(self.exampleTilesContainer, Role::ExtrasColorsExample),
     ];
     
