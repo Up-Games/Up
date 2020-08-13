@@ -9,6 +9,7 @@
 
 @property (nonatomic, weak, readonly) id target;
 @property (nonatomic, readonly) SEL action;
+@property (nonatomic) NSObject<UIGestureRecognizerDelegate> *gestureRecognizerDelegate;
 
 + (UPButton *)button;
 + (UPButton *)buttonWithTarget:(id)target action:(SEL)action;

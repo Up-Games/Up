@@ -9,6 +9,7 @@
 @interface UPButton ()
 @property (nonatomic, weak, readwrite) id target;
 @property (nonatomic, readwrite) SEL action;
+@property (nonatomic, readwrite) UPTapGestureRecognizer *gestureRecognizer;
 @end
 
 @implementation UPButton
@@ -28,7 +29,8 @@
     self = [super initWithFrame:CGRectZero];
     self.target = target;
     self.action = action;
-    [self addGestureRecognizer:[UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)]];
+    self.gestureRecognizer = [UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)];
+    [self addGestureRecognizer:self.gestureRecognizer];
     return self;
 }
 
@@ -36,6 +38,17 @@
 {
     self.target = target;
     self.action = action;
+}
+
+@dynamic gestureRecognizerDelegate;
+- (void)setGestureRecognizerDelegate:(NSObject<UIGestureRecognizerDelegate> *)gestureRecognizerDelegate
+{
+    self.gestureRecognizer.delegate = gestureRecognizerDelegate;
+}
+
+- (NSObject<UIGestureRecognizerDelegate> *)gestureRecognizerDelegate
+{
+    return self.gestureRecognizer.delegate;
 }
 
 - (void)handleTap:(UPTapGestureRecognizer *)gesture
