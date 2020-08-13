@@ -544,6 +544,6 @@ NSString *up_theme_icon_name(void)
             iconName = [NSString stringWithFormat:@"up-games-icon-%03d-76", (int)hue];
         }
     }
-    LOG(General, "iconName: %@ : %@ : %@", iconName, device.model, [device fullModel]);
+    //LOG(General, "iconName: %@ : %@ : %@", iconName, device.model, [device fullModel]);
     return iconName;
 }

@@ -8,12 +8,16 @@
 #import <UpKit/UIColor+UP.h>
 
 #import "UPActivityViewController.h"
+#import "UPChallenge.h"
 #import "UPSpellDossier.h"
 
 // =========================================================================================================================================
 
 @interface UPActivityViewItemSource : NSObject <UIActivityItemSource>
 @property (nonatomic) UPShareType shareType;
+@property (nonatomic) NSString *shareString;
+@property (nonatomic) NSString *shareURLString;
+@property (nonatomic) NSURL *shareURL;
 @end
 
 @implementation UPActivityViewItemSource
@@ -22,6 +26,9 @@
 {
     self = [super init];
     self.shareType = shareType;
+    self.shareString = [self _makeShareString];
+    self.shareURL = [self _makeShareURL];
+    self.shareURLString = [self _makeShareURLString];
     return self;
 }
 
@@ -55,7 +62,12 @@
     return metadata;
 }
 
-- (NSString *)shareURLString
+- (NSString *)_makeShareURLString
+{
+    return [self.shareURL absoluteString];
+}
+
+- (NSURL *)_makeShareURL
 {
     UPSpellDossier *dossier = [UPSpellDossier instance];
     UPGameKey *gameKey = nil;
@@ -71,15 +83,12 @@
             score = dossier.highScore;
             break;
     }
-    return [NSString stringWithFormat:@"https://upgames.dev/t/?g=upspell&k=%@&s=%d", gameKey.string, score];
+    
+    UPChallenge *challenge = [UPChallenge challengeWithGameKey:gameKey score:score];
+    return challenge.URL;
 }
 
-- (NSURL *)shareURL
-{
-    return [NSURL URLWithString:[self shareURLString]];
-}
-
-- (NSString *)shareString
+- (NSString *)_makeShareString
 {
     UPSpellDossier *dossier = [UPSpellDossier instance];
     int score = 0;
@@ -93,7 +102,6 @@
             score = dossier.highScore;
             break;
     }
-    
     return [NSString stringWithFormat:@"I scored %d in Up Spell. Top that!", score];
 }
 

@@ -31,6 +31,11 @@
     return [[UPGameKey alloc] initWithValue:value];
 }
 
++ (BOOL)isWellFormedGameKeyString:(NSString *)string;
+{
+    return UP::GameKey::is_well_formed(UP::cpp_str(string));
+}
+
 - (instancetype)init
 {
     self = [super init];

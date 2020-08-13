@@ -2957,6 +2957,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             case UP::Mode::None:
             case UP::Mode::Init:
             case UP::Mode::Attract:
+            case UP::Mode::About:
+            case UP::Mode::Extras:
             case UP::Mode::PlayMenu:
             case UP::Mode::Ready:
             case UP::Mode::Pause:
@@ -2964,8 +2966,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             case UP::Mode::Play:
                 [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioDidEnterBackground];
                 break;
-            case UP::Mode::About:
-            case UP::Mode::Extras:
             case UP::Mode::ShareHelp:
             case UP::Mode::Challenge:
             case UP::Mode::ChallengeHelp:

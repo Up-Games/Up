@@ -56,7 +56,7 @@ using Role = SpellLayout::Role;
     self.helpLabel = [UPLabel label];
     self.helpLabel.string = @"Sharing creates a link to a new game with the\n"
                              "same letters as the game you just played.\n"
-                             "Challenge friends to beat your score!";
+                             "Challenge friends to beat your score.";
     self.helpLabel.font = layout.description_font();
     self.helpLabel.textAlignment = NSTextAlignmentLeft;
     self.helpLabel.frame = layout.frame_for(Role::DialogHelpText);

@@ -44,6 +44,11 @@ public:
         return m_generator();
     }
 
+    uint8_t byte() {
+        std::uniform_int_distribution<uint8_t> dis(0, std::numeric_limits<uint8_t>::max() - 1);
+        return dis(m_generator);
+    }
+    
     uint32_t uint32_less_than(uint32_t bound) {
         std::uniform_int_distribution<uint32_t> dis(0, bound - 1);
         return dis(m_generator);

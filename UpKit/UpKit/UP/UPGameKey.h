@@ -167,6 +167,8 @@ UP_STATIC_INLINE bool operator!=(const GameKey &a, const GameKey &b) { return !(
 + (UPGameKey *)gameKeyWithString:(NSString *)string;
 + (UPGameKey *)gameKeyWithValue:(uint32_t)value;
 
++ (BOOL)isWellFormedGameKeyString:(NSString *)string;
+
 - (instancetype)initWithString:(NSString *)string;
 - (instancetype)initWithValue:(uint32_t)value;
 
