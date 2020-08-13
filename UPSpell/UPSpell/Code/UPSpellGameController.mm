@@ -2692,12 +2692,14 @@ static UPSpellGameController *_Instance;
     
     int score = m_spell_model->game_score();
 
-    if (score + 10 >= self.challenge.score || score >= self.challenge.score * 0.9) {
-        result = [NSString stringWithFormat:@"NICE TRY! SCORE TO BEAT WAS %d", self.challenge.score];
-    }
-    else if (score < self.challenge.score) {
-        NSArray *tags = @[ @"SORRY!", @"NOPE!" ];
-        result = [NSString stringWithFormat:@"%@ SCORE TO BEAT WAS %d", [tags randomElement], self.challenge.score];
+    if (score < self.challenge.score) {
+        if (score + 10 >= self.challenge.score || score >= self.challenge.score * 0.95) {
+            result = [NSString stringWithFormat:@"NICE TRY! SCORE TO BEAT WAS %d", self.challenge.score];
+        }
+        else {
+            NSArray *tags = @[ @"SORRY!", @"NOPE!" ];
+            result = [NSString stringWithFormat:@"%@ SCORE TO BEAT WAS %d", [tags randomElement], self.challenge.score];
+        }
     }
     else if (score == self.challenge.score) {
         result = [NSString stringWithFormat:@"TIED! SCORE TO BEAT WAS %d", self.challenge.score];
@@ -2728,7 +2730,7 @@ static UPSpellGameController *_Instance;
     else if (score == dossier.highScore) {
         result = @"TIED HIGH SCORE!";
     }
-    else if (score + 10 >= dossier.highScore || score >= dossier.highScore * 0.9) {
+    else if (score + 10 >= dossier.highScore || score >= dossier.highScore * 0.95) {
         result = [NSString stringWithFormat:@"CLOSE TO HIGH SCORE: %d", dossier.highScore];
     }
 
@@ -2938,12 +2940,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             case UP::Mode::PlayMenu:
             case UP::Mode::Ready:
             case UP::Mode::Pause:
-            case UP::Mode::About:
-            case UP::Mode::Extras:
                 break;
             case UP::Mode::Play:
                 [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioDidEnterBackground];
                 break;
+            case UP::Mode::About:
+            case UP::Mode::Extras:
             case UP::Mode::ShareHelp:
             case UP::Mode::Challenge:
             case UP::Mode::ChallengeHelp:
@@ -2964,15 +2966,15 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     NSBundle *bundle = [NSBundle mainBundle];
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer setFilePath:[bundle pathForResource:@"None" ofType:@"aac"] forSoundID:UPSoundIDNone volume:1.0 playerCount:8];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Tap" ofType:@"aac"] forSoundID:UPSoundIDTap volume:0.6 playerCount:10];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Tub" ofType:@"aac"] forSoundID:UPSoundIDTub volume:0.6 playerCount:12];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-1" ofType:@"aac"] forSoundID:UPSoundIDHappy1 volume:0.8 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-2" ofType:@"aac"] forSoundID:UPSoundIDHappy2 volume:0.8 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-3" ofType:@"aac"] forSoundID:UPSoundIDHappy3 volume:0.8 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-4" ofType:@"aac"] forSoundID:UPSoundIDHappy4 volume:0.8 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-1" ofType:@"aac"] forSoundID:UPSoundIDSad1 volume:0.8 playerCount:2];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-2" ofType:@"aac"] forSoundID:UPSoundIDSad2 volume:0.8 playerCount:2];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Whoops" ofType:@"aac"] forSoundID:UPSoundIDWhoops volume:0.8 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Tap" ofType:@"aac"] forSoundID:UPSoundIDTap volume:0.45 playerCount:10];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Tub" ofType:@"aac"] forSoundID:UPSoundIDTub volume:0.45 playerCount:12];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-1" ofType:@"aac"] forSoundID:UPSoundIDHappy1 volume:0.6 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-2" ofType:@"aac"] forSoundID:UPSoundIDHappy2 volume:0.6 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-3" ofType:@"aac"] forSoundID:UPSoundIDHappy3 volume:0.6 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-4" ofType:@"aac"] forSoundID:UPSoundIDHappy4 volume:0.6 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-1" ofType:@"aac"] forSoundID:UPSoundIDSad1 volume:0.6 playerCount:2];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-2" ofType:@"aac"] forSoundID:UPSoundIDSad2 volume:0.6 playerCount:2];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Whoops" ofType:@"aac"] forSoundID:UPSoundIDWhoops volume:0.5 playerCount:3];
 }
 
 - (void)updateSoundAndTunesSettings
