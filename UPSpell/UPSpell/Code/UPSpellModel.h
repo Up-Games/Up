@@ -236,7 +236,7 @@ public:
 
     SpellModel() { apply_start(Action(Opcode::START)); }
 
-    SpellModel(const GameKey &game_key, int challenge_score = 0) :
+    SpellModel(const GameKey &game_key, int challenge_score = NotAChallengeScore) :
         m_game_key(game_key), m_challenge_score(challenge_score), m_tile_sequence(game_key) {
             apply(Action(Opcode::START));
         }
