@@ -36,6 +36,7 @@
     self.highScoreGameKeyValue = 0;
     self.lastScore = 0;
     self.lastGameKeyValue = 0;
+    self.lastGameWasChallenge = NO;
     
     self.totalGamesPlayed = 0;
     self.totalGameScore = 0;
@@ -53,6 +54,7 @@
     UP_DECODE(coder, highScoreGameKeyValue, Int32);
     UP_DECODE(coder, lastScore, Int);
     UP_DECODE(coder, lastGameKeyValue, Int32);
+    UP_DECODE(coder, lastGameWasChallenge, Bool);
 
     UP_DECODE(coder, totalGamesPlayed, Integer);
     UP_DECODE(coder, totalGameScore, Integer);
@@ -68,7 +70,8 @@
     UP_ENCODE(coder, highScoreGameKeyValue, Int32);
     UP_ENCODE(coder, lastScore, Int);
     UP_ENCODE(coder, lastGameKeyValue, Int32);
-    
+    UP_ENCODE(coder, lastGameWasChallenge, Bool);
+
     UP_ENCODE(coder, totalGamesPlayed, Integer);
     UP_ENCODE(coder, totalGameScore, Integer);
     UP_ENCODE(coder, totalWordsSubmitted, Integer);

@@ -56,7 +56,7 @@ using Role = SpellLayout::Role;
     self.helpLabel = [UPLabel label];
     self.helpLabel.string = @"A CHALLENGE is a new game with the same\n"
                              "letters someone else has already played.\n"
-                             "Try to beat their score!";
+                             "Try to beat their score.";
     self.helpLabel.font = layout.description_font();
     self.helpLabel.textAlignment = NSTextAlignmentLeft;
     self.helpLabel.frame = layout.frame_for(Role::DialogHelpText);

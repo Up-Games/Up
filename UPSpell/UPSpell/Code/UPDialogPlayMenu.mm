@@ -80,7 +80,6 @@ using Role = SpellLayout::Role;
     [self addSubview:self.choice1];
     
     self.choice2 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice2.labelString = @"RETRY LAST GAME (165)";
     self.choice2.variableWidth = YES;
     self.choice2.tag = UPDialogPlayMenuChoiceRetryLastGame;
     self.choice2.canonicalSize = SpellLayout::CanonicalChoiceSize;

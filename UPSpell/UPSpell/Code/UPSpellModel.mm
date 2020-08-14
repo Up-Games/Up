@@ -1269,6 +1269,7 @@ UP_STATIC_INLINE SpellModel::State make_state(_UPSpellModelState *state)
 
 static NSString * const UPSpellModelStatesArchiveKey = @"STATES";
 static NSString * const UPSpellGameKeyValueArchiveKey = @"GAMEKEY_VALUE";
+static NSString * const UPSpellChallengeScoreArchiveKey = @"CHALLENGE_SCORE";
 
 @interface UPSpellModel ()
 {
@@ -1309,6 +1310,8 @@ static NSString * const UPSpellGameKeyValueArchiveKey = @"GAMEKEY_VALUE";
     uint32_t game_key_value = [coder decodeInt32ForKey:UPSpellGameKeyValueArchiveKey];
     GameKey game_key = GameKey(game_key_value);
     
+    int challenge_score = [coder decodeIntForKey:UPSpellChallengeScoreArchiveKey];
+    
     if ([coder containsValueForKey:UPSpellModelStatesArchiveKey]) {
         std::vector<SpellModel::State> states;
         NSSet *allowedClasses = [NSSet setWithArray:@[ [_UPSpellModelState class], [NSArray class] ]];
@@ -1316,10 +1319,10 @@ static NSString * const UPSpellGameKeyValueArchiveKey = @"GAMEKEY_VALUE";
         for (_UPSpellModelState *decodedState : decodedStates) {
             states.push_back(make_state(decodedState));
         }
-        m_inner = std::make_shared<SpellModel>(game_key, states);
+        m_inner = std::make_shared<SpellModel>(game_key, challenge_score, states);
     }
     else {
-        m_inner = std::make_shared<SpellModel>(game_key);
+        m_inner = std::make_shared<SpellModel>(game_key, challenge_score);
     }
     
     return self;
@@ -1329,6 +1332,8 @@ static NSString * const UPSpellGameKeyValueArchiveKey = @"GAMEKEY_VALUE";
 {
     uint32_t game_key_value = m_inner->game_key().value();
     [coder encodeInt32:game_key_value forKey:UPSpellGameKeyValueArchiveKey];
+
+    [coder encodeInt:m_inner->challenge_score() forKey:UPSpellChallengeScoreArchiveKey];
 
     if (!m_inner->is_game_completed()) {
         NSMutableArray<_UPSpellModelState *> *states = [NSMutableArray array];

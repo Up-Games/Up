@@ -727,7 +727,7 @@ static UPSpellGameController *_Instance;
     if (self.gameView.wordTrayControl.active) {
         [self applyActionSubmit];
     }
-    else if (m_spell_model->word().length() == 0) {
+    else if (!m_spell_model || m_spell_model->word().length() == 0) {
         // Don't penalize. In the case it's a stray tap, let the player off the hook.
         // FIXME: beep
     }
@@ -1197,7 +1197,7 @@ static UPSpellGameController *_Instance;
 - (void)viewUpdateGameControls
 {
     // word tray
-    if (self.mode == Mode::Attract || self.mode == Mode::Play || self.mode == Mode::Pause) {
+    if (m_spell_model && (self.mode == Mode::Attract || self.mode == Mode::Play || self.mode == Mode::Pause)) {
         Opcode back = m_spell_model->back_opcode();
         BOOL active = m_spell_model->word().in_lexicon() && back != Opcode::HOVER && back != Opcode::NOVER;
         self.gameView.wordTrayControl.active = active;
@@ -1208,7 +1208,7 @@ static UPSpellGameController *_Instance;
     [self.gameView.wordTrayControl setNeedsUpdate];
     
     // clear button
-    if (m_spell_model->word().length()) {
+    if (m_spell_model && m_spell_model->word().length()) {
         [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
     }
     else {
@@ -1216,7 +1216,12 @@ static UPSpellGameController *_Instance;
     }
     [self.gameView.clearControl setNeedsUpdate];
     
-    self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", m_spell_model->game_score()];
+    // score
+    int score = 0;
+    if (m_spell_model && m_spell_model->back_opcode() != Opcode::QUIT) {
+        score = m_spell_model->game_score();
+    }
+    self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", score];
 }
 
 - (void)viewSlideWordTrayViewsIntoPosition
@@ -1875,8 +1880,6 @@ static UPSpellGameController *_Instance;
 
 - (void)viewFillUpSpellTileViews
 {
-    ASSERT(m_spell_model->is_blank_filled());
-    
     if ([self viewIsUpSpellFilled]) {
         return;
     }
@@ -1884,8 +1887,7 @@ static UPSpellGameController *_Instance;
     [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     SpellLayout &layout = SpellLayout::instance();
-    TileIndex idx = 0;
-    for (auto &tile : m_spell_model->tiles()) {
+    for (TileIndex idx = 0; idx < TileCount; idx++) {
         TileModel model;
         switch (idx) {
             case 0:
@@ -1911,37 +1913,16 @@ static UPSpellGameController *_Instance;
                 break;
         }
         UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
-        tile.set_view(tileView);
         tileView.band = BandGameUI;
         tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, idx)));
         [self.gameView.tileContainerView addSubview:tileView];
-        idx++;
-    }
-}
-
-- (void)viewFillBlankTileViews
-{
-    ASSERT(m_spell_model->is_blank_filled());
-    
-    [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-    SpellLayout &layout = SpellLayout::instance();
-    TileIndex idx = 0;
-    for (auto &tile : m_spell_model->tiles()) {
-        if (tile.has_view<false>()) {
-            const TileModel &model = tile.model();
-            UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
-            tile.set_view(tileView);
-            tileView.band = BandGameUI;
-            tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, idx)));
-            [self.gameView.tileContainerView addSubview:tileView];
-        }
-        idx++;
     }
 }
 
 - (void)viewRestoreInProgressGame
 {
+    ASSERT(m_spell_model);
+    
     [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     SpellLayout &layout = SpellLayout::instance();
@@ -1984,7 +1965,9 @@ static UPSpellGameController *_Instance;
 
 - (void)viewBloopOutExistingTileViewsWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
 {
-    [self viewBloopOutExistingTileViewsWithDuration:duration tiles:m_spell_model->tiles() wordLength:m_spell_model->word().length() completion:completion];
+    TileArray tileArray = m_spell_model ? m_spell_model->tiles() : TileArray();
+    size_t wordLength = m_spell_model ? m_spell_model->word().length() : 0;
+    [self viewBloopOutExistingTileViewsWithDuration:duration tiles:tileArray wordLength:wordLength completion:completion];
 }
 
 - (void)viewBloopOutExistingTileViewsWithDuration:(CFTimeInterval)duration
@@ -2038,22 +2021,18 @@ static UPSpellGameController *_Instance;
 
 - (void)viewBloopInBlankTileViewsWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
 {
-    ASSERT(m_spell_model->is_blank_filled());
-    ASSERT(m_spell_model->is_player_tray_filled());
+    [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     SpellLayout &layout = SpellLayout::instance();
     NSMutableArray<UPViewMove *> *tileInMoves = [NSMutableArray array];
-    TileIndex idx = 0;
-    for (auto &tile : m_spell_model->tiles()) {
-        const TileModel &model = tile.model();
+    for (TileIndex idx = 0; idx < TileCount; idx++) {
+        TileModel model;
         UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
-        tile.set_view(tileView);
         tileView.band = BandModeUI;
-        Role role = role_in_player_tray(tile.position());
+        Role role = role_in_player_tray(TilePosition(TileTray::Player, idx));
         tileView.frame = layout.frame_for(Location(role, Place::OffBottomNear));
         [self.gameView.tileContainerView addSubview:tileView];
         [tileInMoves addObject:UPViewMoveMake(tileView, Location(role, Place::Default))];
-        idx++;
     }
     start(bloop_in(BandModeUI, tileInMoves, duration, ^(UIViewAnimatingPosition) {
         if (completion) {
@@ -2064,17 +2043,13 @@ static UPSpellGameController *_Instance;
 
 - (void)viewBloopInUpSpellTileViewsWithDuration:(CFTimeInterval)duration completion:(void (^)(void))completion
 {
-    ASSERT(m_spell_model->is_blank_filled());
-    ASSERT(m_spell_model->is_player_tray_filled());
-    
     [self viewFillUpSpellTileViews];
     
     SpellLayout &layout = SpellLayout::instance();
     NSMutableArray<UPViewMove *> *tileInMoves = [NSMutableArray array];
     TileIndex idx = 0;
-    for (auto &tile : m_spell_model->tiles()) {
-        UPTileView *tileView = tile.view();
-        Role role = role_in_player_tray(tile.position());
+    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
+        Role role = role_in_player_tray(TilePosition(TileTray::Player, idx));
         tileView.frame = layout.frame_for(Location(role, Place::OffBottomNear));
         [tileInMoves addObject:UPViewMoveMake(tileView, Location(role, Place::Default))];
         idx++;
@@ -2215,13 +2190,14 @@ static UPSpellGameController *_Instance;
         UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Place::OffBottomFar),
         UPViewMoveMake(self.dialogGameNote.shareButton, Role::GameShareButton, Place::OffBottomFar),
     ]];
-    if (mode == Mode::End) {
-        [buttonOutMoves addObject:UPViewMoveMake(self.gameView.gameScoreLabel, role_for_score(self.endGameScore), Place::OffBottomFar)];
+    BOOL gameScoreLabelNeedsMove = mode == Mode::End && !CGAffineTransformIsIdentity(self.gameView.gameScoreLabel.transform);
+    if (gameScoreLabelNeedsMove) {
+        Role role = role_for_score(self.endGameScore);
+        [buttonOutMoves addObject:UPViewMoveMake(self.gameView.gameScoreLabel, role, Place::OffBottomFar)];
     }
     start(bloop_out(BandModeUI, buttonOutMoves, 0.4, ^(UIViewAnimatingPosition) {
         [self.gameTimer reset];
-        [self viewUpdateGameControls];
-        self->m_spell_model->reset_game_score();
+        [self clearGameModel];
         [self viewUpdateGameControls];
         self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
         self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
@@ -2260,8 +2236,8 @@ static UPSpellGameController *_Instance;
     [self viewLock];
     
     // Clobber existing game
-    m_spell_model = std::make_shared<SpellModel>(GameKey(self.challenge.gameKey.value));
     [self.gameTimer reset];
+    [self clearGameModel];
     [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
     [self viewFillUpSpellTileViews];
@@ -2332,7 +2308,7 @@ static UPSpellGameController *_Instance;
     ASSERT(self.lockCount > 0);
     
     // reset game controls
-    m_spell_model->reset_game_score();
+    [self clearGameModel];
     [self.gameTimer reset];
     [self viewOrderOutWordScoreLabel];
     [self viewUpdateGameControls];
@@ -2476,12 +2452,11 @@ static UPSpellGameController *_Instance;
     cancel(BandGameAll);
     cancel(BandModeAll);
     
-    self.challenge = nil;
     [self removeInProgressGameFileLogErrors:NO];
     
     [self.gameTimer reset];
     [self viewUpdateGameControls];
-    self->m_spell_model->reset_game_score();
+    m_spell_model = std::make_shared<SpellModel>();
     [self viewUpdateGameControls];
     [self viewFillUpSpellTileViews];
     
@@ -2542,7 +2517,7 @@ static UPSpellGameController *_Instance;
 
 - (void)viewMakeReadyFromMode:(Mode)mode completion:(void (^)(void))completion
 {
-    ASSERT(m_spell_model->is_blank_filled());
+    ASSERT(!m_spell_model);
     ASSERT(self.lockCount > 0);
     
     // lock play button in highlighted state
@@ -2604,8 +2579,7 @@ static UPSpellGameController *_Instance;
         
         start(bloop_out(BandModeUI, outGameOverMoves, 0.3, ^(UIViewAnimatingPosition) {
             [self.gameTimer reset];
-            [self viewUpdateGameControls];
-            self->m_spell_model->reset_game_score();
+            [self clearGameModel];
             [self viewUpdateGameControls];
             if (mode == Mode::End) {
                 SpellLayout &layout = SpellLayout::instance();
@@ -2774,9 +2748,17 @@ static UPSpellGameController *_Instance;
 
 #pragma mark - Model management
 
-- (void)createNewGameModelIfNeeded
+- (void)createGameModelIfNeeded
 {
-    if (self.playMenuChoice && self.playMenuChoice.tag != UPDialogPlayMenuChoiceNewGame) {
+    if (m_spell_model) {
+        return;
+    }
+    
+    if (self.challenge) {
+        m_spell_model = std::make_shared<SpellModel>(GameKey(self.challenge.gameKey.value), self.challenge.score);
+        self.challenge = nil;
+    }
+    else if (self.playMenuChoice && self.playMenuChoice.tag != UPDialogPlayMenuChoiceNewGame) {
         UPSpellDossier *dossier = [UPSpellDossier instance];
         GameKey game_key;
         if (self.playMenuChoice.tag == UPDialogPlayMenuChoiceRetryHighScore) {
@@ -2788,11 +2770,13 @@ static UPSpellGameController *_Instance;
         m_spell_model = std::make_shared<SpellModel>(game_key);
     }
     else {
-        if (m_spell_model && m_spell_model->back_opcode() == SpellModel::Opcode::START) {
-            return;
-        }
         m_spell_model = std::make_shared<SpellModel>(GameKey::random());
     }
+}
+
+- (void)clearGameModel
+{
+    m_spell_model = nullptr;
 }
 
 #pragma mark - Archiving persistent data and in-progress game
@@ -2801,6 +2785,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)saveInProgressGameIfNecessary
 {
+    if (!m_spell_model) {
+        return;
+    }
+    
     if (m_spell_model->back_opcode() == Opcode::START || m_spell_model->back_opcode() == Opcode::END) {
         [self removeInProgressGameFileLogErrors:NO];
         return;
@@ -3255,8 +3243,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromNoneToInit
 {
-    [self createNewGameModelIfNeeded];
-    
     SpellLayout &layout = SpellLayout::instance();
     
     self.dialogTopMenu.transform = CGAffineTransformIdentity;
@@ -3348,12 +3334,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromInitToReady
 {
-    ASSERT(m_spell_model->is_blank_filled());
+    ASSERT(!m_spell_model);
     ASSERT(self.lockCount == 0);
     [self viewLock];
-    [self createNewGameModelIfNeeded];
     [self viewMakeReadyFromMode:Mode::Init completion:^{
         [self viewBloopOutExistingTileViewsWithCompletion:nil];
+        [self createGameModelIfNeeded];
         [self setMode:Mode::Play];
     }];
 }
@@ -3473,16 +3459,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromAttractToReady
 {
-    [self viewBloopOutExistingTileViewsWithCompletion:^{
-        [self createNewGameModelIfNeeded];
-        [self viewBloopInBlankTileViewsWithCompletion:^{
-            [self viewLock];
-            [self viewMakeReadyFromMode:Mode::Attract completion:^{
-                [self viewBloopOutExistingTileViewsWithCompletion:nil];
-                [self setMode:Mode::Play];
-            }];
-        }];
-    }];
 }
 
 - (void)modeTransitionFromPlayMenuToInit
@@ -3541,9 +3517,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 {
     [self viewLock];
     
+    [self clearGameModel];
     self.challenge = nil;
-    m_spell_model = nullptr;
-    [self createNewGameModelIfNeeded];
     
     NSArray<UPViewMove *> *buttonOutMoves = @[
         UPViewMoveMake(self.dialogChallenge.challengePromptLabel, Location(Role::ChallengePrompt, Place::OffBottomNear)),
@@ -3569,7 +3544,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromPlayMenuToReady
 {
-    ASSERT(m_spell_model->is_blank_filled());
+    ASSERT(!m_spell_model);
     ASSERT(self.lockCount == 0);
     [self viewLock];
     
@@ -3616,11 +3591,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             self.dialogPlayMenu.goButton.highlighted = NO;
         }));
         delay(BandModeDelay, 0.55, ^{
-            [self createNewGameModelIfNeeded];
             [self viewFillUpSpellTileViews];
             [self viewMakeReadyFromMode:Mode::PlayMenu completion:^{
-                self.playMenuChoice = nil;
                 [self viewBloopOutExistingTileViewsWithCompletion:nil];
+                [self createGameModelIfNeeded];
+                self.playMenuChoice = nil;
                 [self setMode:Mode::Play];
             }];
         });
@@ -3629,7 +3604,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromChallengeToReady
 {
-    ASSERT(m_spell_model->is_blank_filled());
+    ASSERT(!m_spell_model);
     ASSERT(self.lockCount == 0);
     [self viewLock];
     
@@ -3668,10 +3643,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         }));
         
         delay(BandModeDelay, 0.55, ^{
-            [self createNewGameModelIfNeeded];
             [self viewFillUpSpellTileViews];
             [self viewMakeReadyFromMode:Mode::Challenge completion:^{
                 [self viewBloopOutExistingTileViewsWithCompletion:nil];
+                [self createGameModelIfNeeded];
                 [self setMode:Mode::Play];
             }];
         });
@@ -3853,7 +3828,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [[UPSoundPlayer instance] stop];
     [[UPTunePlayer instance] stop];
     
-    m_spell_model->reset_game_score();
     [self.gameTimer reset];
     [self viewUpdateGameControls];
     [self viewUnhighlightTileViews];
@@ -3950,14 +3924,15 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewSetNoteLabelString];
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     
-    BOOL wasChallenge = (self.challenge != nil);
-    self.challenge = nil;
+    BOOL wasChallenge = m_spell_model->is_challenge();
     [self removeInProgressGameFileLogErrors:NO];
     
     UPSpellDossier *dossier = [UPSpellDossier instance];
     [dossier updateWithModel:m_spell_model];
     [dossier save];
-    
+    self.endGameScore = self->m_spell_model->game_score();
+    [self clearGameModel];
+
     delay(BandModeDelay, 1.0, ^{
         SpellLayout &layout = SpellLayout::instance();
         [UIView animateWithDuration:1.0 animations:^{
@@ -3966,7 +3941,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             self.gameView.transform = layout.menu_game_view_transform();
             CGAffineTransform transform = CGAffineTransformMakeScale(Scale, Scale);
             self.gameView.gameScoreLabel.transform = transform;
-            self.endGameScore = self->m_spell_model->game_score();
             CGFloat width = layout.width_for_score(self.endGameScore) * Scale;
             CGPoint canvasCenter = up_rect_center(layout.canvas_frame());
             CGPoint labelCenter = self.gameView.gameScoreLabel.center;
@@ -4029,18 +4003,19 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromEndToPlayMenu
 {
-    [self createNewGameModelIfNeeded];
+    [self clearGameModel];
     [self viewFillUpSpellTileViews];
     [self viewOrderInPlayMenuFromMode:Mode::End];
 }
 
 - (void)modeTransitionFromEndToReady
 {
-    [self createNewGameModelIfNeeded];
+    ASSERT(!m_spell_model);
     [self viewLock];
     [self viewFillUpSpellTileViews];
     [self viewMakeReadyFromMode:Mode::End completion:^{
         [self viewBloopOutExistingTileViewsWithCompletion:nil];
+        [self createGameModelIfNeeded];
         [self setMode:Mode::Play];
     }];
 }
@@ -4065,12 +4040,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     size_t incoming_word_length = m_spell_model->word().length();
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     
-    self.challenge = nil;
     [self removeInProgressGameFileLogErrors:NO];
     
     UPSpellDossier *dossier = [UPSpellDossier instance];
     [dossier updateWithModel:m_spell_model];
     [dossier save];
+    [self clearGameModel];
     
     delay(BandModeDelay, 0.35, ^{
         [self viewDumpAllTilesFromCurrentPosition:incoming_tiles wordLength:incoming_word_length];
@@ -4110,7 +4085,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     if (m_spell_model->back_opcode() != Opcode::END) {
         m_spell_model->apply(Action(0, Opcode::END));
     }
-    self.challenge = nil;
     [self removeInProgressGameFileLogErrors:NO];
     UPSpellDossier *dossier = [UPSpellDossier instance];
     [dossier updateWithModel:m_spell_model];
@@ -4127,7 +4101,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     if (m_spell_model->back_opcode() != Opcode::END) {
         m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     }
-    self.challenge = nil;
     [self removeInProgressGameFileLogErrors:NO];
     UPSpellDossier *dossier = [UPSpellDossier instance];
     [dossier updateWithModel:m_spell_model];

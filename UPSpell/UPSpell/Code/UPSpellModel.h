@@ -232,9 +232,17 @@ public:
         int m_outgoing_game_score = 0;
     };
 
+    static constexpr int NotAChallengeScore = -1;
+
     SpellModel() { apply_start(Action(Opcode::START)); }
-    SpellModel(const GameKey &game_key) : m_game_key(game_key), m_tile_sequence(game_key) { apply(Action(Opcode::START)); }
-    SpellModel(const GameKey &game_key, std::vector<State> &states) : m_game_key(game_key), m_tile_sequence(game_key) {
+
+    SpellModel(const GameKey &game_key, int challenge_score = 0) :
+        m_game_key(game_key), m_challenge_score(challenge_score), m_tile_sequence(game_key) {
+            apply(Action(Opcode::START));
+        }
+
+    SpellModel(const GameKey &game_key, int challenge_score, std::vector<State> &states) :
+        m_game_key(game_key), m_challenge_score(challenge_score), m_tile_sequence(game_key) {
         ASSERT(states.size());
         ASSERT(states.front().action().opcode() == Opcode::START);
         for (const auto &state : states) {
@@ -243,6 +251,9 @@ public:
     }
 
     GameKey game_key() const { return m_game_key; }
+
+    bool is_challenge() const { return m_challenge_score > NotAChallengeScore; }
+    int challenge_score() const { return m_challenge_score; }
     
     const TileArray &tiles() const { return m_tiles; }
     TileArray &tiles() { return m_tiles; }
@@ -273,7 +284,6 @@ public:
     const Word &word() const { return m_word; }
 
     int game_score() const { return m_game_score; }
-    void reset_game_score() { m_game_score = 0; }
 
     const State &apply(const Action &action);
 
@@ -331,6 +341,7 @@ private:
     std::vector<State> m_states;
     Word m_word;
     int m_game_score = 0;
+    int m_challenge_score = 0;
     std::vector<Word> m_game_submitted_words;
 };
 
