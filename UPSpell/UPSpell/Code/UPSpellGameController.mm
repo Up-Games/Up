@@ -2799,7 +2799,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (void)saveInProgressGameIfNecessary
 {
     if (!m_spell_model) {
-        LOG(General, "not saving game: no model");
         return;
     }
     
@@ -3766,8 +3765,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionImmediateFromReadyToInit
 {
-    cancel_all();
-
     [self viewLock];
     [self viewImmediateTransitionToInit];
     [self viewEnsureUnlocked];
@@ -3867,7 +3864,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [[UPSoundPlayer instance] stop];
     [[UPTunePlayer instance] stop];
     
-    [self.gameTimer reset];
+    [self.gameTimer resetTo:0];
     [self viewUpdateGameControls];
     [self viewUnhighlightTileViews];
     [self viewOrderOutWordScoreLabel];
@@ -4102,6 +4099,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             self.dialogTopMenu.playButton.highlightedLocked = NO;
             self.dialogTopMenu.playButton.highlighted = NO;
             delay(BandModeDelay, 0.1, ^{
+                [self.gameTimer reset];
+                [self viewUpdateGameControls];
                 NSArray<UPViewMove *> *menuButtonMoves = @[
                     UPViewMoveMake(self.dialogTopMenu.extrasButton, Role::DialogButtonTopLeft),
                     UPViewMoveMake(self.dialogTopMenu.playButton, Role::DialogButtonTopCenter),
