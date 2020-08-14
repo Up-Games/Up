@@ -27,7 +27,7 @@ using Role = SpellLayout::Role;
 @property (nonatomic, readwrite) UPLabel *challengePromptLabel;
 @property (nonatomic, readwrite) UPLabel *scorePromptLabel;
 @property (nonatomic, readwrite) UPButton *cancelButton;
-@property (nonatomic, readwrite) UPButton *goButton;
+@property (nonatomic, readwrite) UPButton *confirmButton;
 @property (nonatomic, readwrite) UPButton *helpButton;
 @end
 
@@ -79,11 +79,11 @@ using Role = SpellLayout::Role;
     self.cancelButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse);
     [self addSubview:self.cancelButton];
 
-    self.goButton = [UPTextButton textButton];
-    self.goButton.labelString = @"PLAY";
-    [self.goButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
-    self.goButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse);
-    [self addSubview:self.goButton];
+    self.confirmButton = [UPTextButton textButton];
+    self.confirmButton.labelString = @"PLAY";
+    [self.confirmButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
+    self.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse);
+    [self addSubview:self.confirmButton];
 
     self.helpButton = [UPButton roundHelpButton];
     [self.helpButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
@@ -97,7 +97,18 @@ using Role = SpellLayout::Role;
 
 - (void)updateWithChallenge:(UPChallenge *)challenge
 {
-    self.scorePromptLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", challenge.score];
+    if (challenge.valid) {
+        self.challengePromptLabel.string = @"CHALLENGE!";
+        self.scorePromptLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", challenge.score];
+        self.cancelButton.labelString = @"CANCEL";
+        self.confirmButton.hidden = NO;
+    }
+    else {
+        self.challengePromptLabel.string = @"OOPS!";
+        self.scorePromptLabel.string = @"CHALLENGE LINK IS BAD. SORRY!";
+        self.cancelButton.labelString = @"OK";
+        self.confirmButton.hidden = YES;
+    }
 }
 
 #pragma mark - Theme colors

@@ -16,7 +16,7 @@
 @property (nonatomic, readonly) UPLabel *challengePromptLabel;
 @property (nonatomic, readonly) UPLabel *scorePromptLabel;
 @property (nonatomic, readonly) UPButton *cancelButton;
-@property (nonatomic, readonly) UPButton *goButton;
+@property (nonatomic, readonly) UPButton *confirmButton;
 @property (nonatomic, readonly) UPButton *helpButton;
 
 + (UPDialogChallenge *)instance;

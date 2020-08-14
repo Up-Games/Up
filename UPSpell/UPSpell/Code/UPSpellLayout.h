@@ -51,8 +51,8 @@ public:
         DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessagePlay,
         DialogGameNote, DialogChallengeGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
-        DialogButtonDefaultResponse, DialogButtonAlternativeResponse, DialogHelpButton,
-        DialogHelpTitle, DialogHelpText, DialogHelpOKButton,
+        DialogButtonDefaultResponse, DialogButtonAlternativeResponse, DialogButtonCenterResponse,
+        DialogHelpButton, DialogHelpTitle, DialogHelpText, DialogHelpOKButton,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
         ChoiceBackRight, ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
         ChoiceBackCenter, ChoiceTitleCenter, ChoiceItem1Center, ChoiceItem2Center, ChoiceItem3Center, ChoiceGoButtonCenter, ChoiceItemTopCenter,
@@ -223,7 +223,7 @@ public:
     static inline constexpr CGFloat CanonicalWordMarkCapHeight = 35;
 
     static inline constexpr CGRect CanonicalChallengePromptFrame = { 200, 112, 600, 300 };
-    static inline constexpr CGRect CanonicalChallengeScoreFrame = { 200, 228, 600, 300 };
+    static inline constexpr CGRect CanonicalChallengeScoreFrame = { 100, 228, 800, 300 };
     static inline constexpr CGFloat CanonicalChallengePromptFontCapHeight = 62;
     static inline constexpr CGFloat CanonicalChallengeScoreFontCapHeight = 35;
 

@@ -37,10 +37,7 @@ static UPSceneDelegate *_Instance;
         if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
             [[UPSpellNavigationController instance] dismissPresentedControllerImmediateIfNecessary];
             NSURL *incomingURL = userActivity.webpageURL;
-            UPChallenge *challenge = [UPChallenge challengeWithURL:incomingURL];
-            if (challenge.valid) {
-                self.challenge = challenge;
-            }
+            self.challenge = [UPChallenge challengeWithURL:incomingURL];
         }
     }
 }
@@ -75,9 +72,7 @@ static UPSceneDelegate *_Instance;
     
     NSURL *incomingURL = userActivity.webpageURL;
     UPChallenge *challenge = [UPChallenge challengeWithURL:incomingURL];
-    if (challenge.valid) {
-        [[UPSpellGameController instance] setChallenge:challenge];
-    }
+    [[UPSpellGameController instance] setChallenge:challenge];
 }
 
 @end
