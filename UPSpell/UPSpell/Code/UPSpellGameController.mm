@@ -1491,6 +1491,25 @@ static UPSpellGameController *_Instance;
     }
 }
 
+- (void)viewFillPlayerTrayImmediate
+{
+    [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+
+    SpellLayout &layout = SpellLayout::instance();
+    TileIndex idx = 0;
+    for (auto &tile : m_spell_model->tiles()) {
+        if (tile.has_view<false>()) {
+            const TileModel &model = tile.model();
+            UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
+            tile.set_view(tileView);
+            tileView.band = UP::BandGameUIColor;
+            tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, idx)));
+            [self.gameView.tileContainerView addSubview:tileView];
+        }
+        idx++;
+    }
+}
+
 - (void)viewFillPlayerTray
 {
     [self viewFillPlayerTrayWithCompletion:nil];
@@ -2439,8 +2458,7 @@ static UPSpellGameController *_Instance;
 {
     ASSERT(self.lockCount > 0);
     
-    cancel(BandGameAll);
-    cancel(BandModeAll);
+    cancel_all();
     
     [self removeInProgressGameFileLogErrors:NO];
     
@@ -2455,8 +2473,7 @@ static UPSpellGameController *_Instance;
     self.gameView.frame = layout.frame_for(Role::Screen);
     self.gameView.transform = layout.menu_game_view_transform();
     
-    self.dialogTopMenu.hidden = NO;
-    self.dialogTopMenu.alpha = 1;
+    self.dialogTopMenu.messagePathView.frame = layout.frame_for(Location(Role::DialogMessageVerticallyCentered, Place::OffBottomNear));
     self.dialogTopMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft));
     self.dialogTopMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter));
     self.dialogTopMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight));
@@ -2486,6 +2503,9 @@ static UPSpellGameController *_Instance;
     self.dialogChallengeHelp.helpLabelContainer.frame = layout.frame_for(Role::DialogHelpText, Place::OffBottomFar);
     self.dialogChallengeHelp.okButton.frame = layout.frame_for(Role::DialogHelpOKButton, Place::OffBottomNear);
     
+    self.dialogTopMenu.alpha = 1;
+    self.dialogTopMenu.hidden = NO;
+
     self.dialogGameOver.alpha = 1;
     self.dialogGameOver.hidden = YES;
     self.dialogGameNote.alpha = 1;
@@ -2503,6 +2523,8 @@ static UPSpellGameController *_Instance;
     self.gameView.timerLabel.alpha = 1;
     
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
+    
+    [self clearGameModel];
 }
 
 - (void)viewMakeReadyFromMode:(Mode)mode completion:(void (^)(void))completion
@@ -2777,6 +2799,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (void)saveInProgressGameIfNecessary
 {
     if (!m_spell_model) {
+        LOG(General, "not saving game: no model");
         return;
     }
     
@@ -2787,6 +2810,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         m_spell_model->back_opcode() == Opcode::END ||
         self.gameTimer.remainingTime == 0 ||
         self.gameTimer.remainingTime == UPGameTimerDefaultDuration) {
+        LOG(General, "not saving game");
         [self removeInProgressGameFileLogErrors:NO];
         return;
     }
@@ -2928,6 +2952,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     [nc addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:NSOperationQueue.mainQueue
                 usingBlock:^(NSNotification *note) {
+        if (self.mode == Mode::Ready) {
+            [self setMode:Mode::Init transitionScenario:UPModeTransitionScenarioWillResignActive];
+        }
         if (self.mode == Mode::Play) {
             [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioWillResignActive];
         }
@@ -2942,12 +2969,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             case UP::Mode::About:
             case UP::Mode::Extras:
             case UP::Mode::PlayMenu:
-            case UP::Mode::Ready:
             case UP::Mode::Pause:
                 break;
             case UP::Mode::Play:
                 [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioDidEnterBackground];
                 break;
+            case UP::Mode::Ready:
             case UP::Mode::ShareHelp:
             case UP::Mode::Challenge:
             case UP::Mode::ChallengeHelp:
@@ -2957,7 +2984,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
                 [self setMode:Mode::Init transitionScenario:UPModeTransitionScenarioDidEnterBackground];
                 break;
         }
-        [self saveInProgressGameIfNecessary];
     }];
 }
 
@@ -3188,6 +3214,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     };
     
     m_will_resign_active_transition_table = {
+        { Mode::Ready,    Mode::Init,   @selector(modeTransitionImmediateFromReadyToInit) },
         { Mode::Play,     Mode::Pause,  @selector(modeTransitionImmediateFromPlayToPause) },
     };
     
@@ -3735,6 +3762,15 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [UIView animateWithDuration:0.15 animations:^{
         self.dialogPause.alpha = 1;
     }];
+}
+
+- (void)modeTransitionImmediateFromReadyToInit
+{
+    cancel_all();
+
+    [self viewLock];
+    [self viewImmediateTransitionToInit];
+    [self viewEnsureUnlocked];
 }
 
 - (void)modeTransitionImmediateFromPlayToPause

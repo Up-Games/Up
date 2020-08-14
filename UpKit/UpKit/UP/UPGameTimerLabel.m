@@ -6,6 +6,7 @@
 #import <CoreText/CoreText.h>
 
 #import "UPGameTimerLabel.h"
+#import "UPMath.h"
 
 static NSString * const _StringDummy = @"X:XXX";
 static const NSUInteger _StringLength = 5;
@@ -47,13 +48,14 @@ static const NSUInteger _StringLength = 5;
     t -= (secondsTens * 10);
     NSInteger secondsOnes = t;
     NSInteger secondsTenths = fractional_part * 10;
-    self.autoHidesSecondsInTenths = !gameTimerIsRunning || integer_part > 4;
-    self.effectiveHidesSecondsInTenths = (self.hidesSecondsInTenths || self.autoHidesSecondsInTenths);
+    self.autoHidesSecondsInTenths = (secondsOnes == 0 && secondsTenths == 0) || integer_part > 4;
+    self.effectiveHidesSecondsInTenths = self.autoHidesSecondsInTenths;
     
     if (self.formattedTimeString.length != 0 &&
         minutes == self.previousMinutes &&
         secondsTens == self.previousSecondsTens &&
         secondsOnes == self.previousSecondsOnes &&
+        self.effectiveHidesSecondsInTenths == self.previousEffectiveHidesSecondsInTenths &&
         self.effectiveHidesSecondsInTenths) {
         return;
     }

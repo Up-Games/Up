@@ -209,11 +209,12 @@ void cancel(NSArray<UIView *> *views, uint32_t type)
 
 void cancel_all()
 {
+    NSMutableArray<UPTimeSpanning> *array = [NSMutableArray<UPTimeSpanning> array];
     for (const auto &it : *g_map) {
-        NSObject<UPTimeSpanning> *obj = it.second;
-        [obj cancel];
+        [array addObject:it.second];
     }
     g_map->clear();
+    [array makeObjectsPerformSelector:@selector(cancel)];
 }
 
 void pause(NSObject<UPTimeSpanning> *obj)

@@ -999,6 +999,8 @@ using UP::TileTray;
 using UP::TileIndex;
 using UP::valid;
 
+using Opcode = SpellModel::Opcode;
+
 // =========================================================================================================================================
 
 @interface _UPTilePosition : NSObject <NSSecureCoding>
@@ -1156,7 +1158,7 @@ UP_STATIC_INLINE Tile make_tile(_UPTile *tile)
 
 @interface _UPSpellModelAction : NSObject <NSSecureCoding>
 @property (class, readonly) BOOL supportsSecureCoding;
-@property (nonatomic) SpellModel::Opcode opcode;
+@property (nonatomic) Opcode opcode;
 @property (nonatomic) CFTimeInterval timestamp;
 @property (nonatomic) _UPTilePosition *position1;
 @property (nonatomic) _UPTilePosition *position2;
@@ -1183,11 +1185,51 @@ UP_STATIC_INLINE Tile make_tile(_UPTile *tile)
     self.position1 = [coder decodeObjectOfClass:[_UPTilePosition class] forKey:NSStringFromSelector(@selector(position1))];
     self.position2 = [coder decodeObjectOfClass:[_UPTilePosition class] forKey:NSStringFromSelector(@selector(position2))];
     
-    if (SpellModel::valid_opcode<false>(self.opcode) || SpellModel::valid_timestamp<false>(self.timestamp) ||
-        !self.position1  || !self.position2) {
+    if (SpellModel::valid_opcode<false>(self.opcode) || SpellModel::valid_timestamp<false>(self.timestamp)) {
         return nil;
     }
-    
+    switch (self.opcode) {
+        // zero positions
+        case Opcode::NOP:
+        case Opcode::START:
+        case Opcode::PLAY:
+        case Opcode::NOVER:
+        case Opcode::DROP:
+        case Opcode::SUBMIT:
+        case Opcode::REJECT:
+        case Opcode::CLEAR:
+        case Opcode::DUMP:
+        case Opcode::PAUSE:
+        case Opcode::OVER:
+        case Opcode::QUIT:
+        case Opcode::END: {
+            if ((self.position1 && valid(make_tile_position(self.position1))) ||
+                (self.position2 && valid(make_tile_position(self.position2)))) {
+                return nil;
+            }
+            break;
+        }
+        // one position
+        case Opcode::REMOVE:
+        case Opcode::PICK:
+        case Opcode::HOVER: {
+            if ((!self.position1 || valid<false>(make_tile_position(self.position1))) ||
+                (self.position2 && valid(make_tile_position(self.position2)))) {
+                return nil;
+            }
+            break;
+        }
+        // two positions
+        case Opcode::ADD:
+        case Opcode::MOVE: {
+            if ((!self.position1 || valid<false>(make_tile_position(self.position1))) ||
+                (!self.position2 || valid<false>(make_tile_position(self.position2)))) {
+                return nil;
+            }
+            break;
+        }
+    }
+
     return self;
 }
 

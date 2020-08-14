@@ -10,7 +10,6 @@
 @property (nonatomic) UIFont *superscriptFont;
 @property (nonatomic) CGFloat superscriptBaselineAdjustment;
 @property (nonatomic) CGFloat superscriptKerning;
-@property (nonatomic) BOOL hidesSecondsInTenths;
 
 + (UPGameTimerLabel *)label;
 
