@@ -2676,23 +2676,24 @@ static UPSpellGameController *_Instance;
 - (NSString *)gameNoteGameChallenge
 {
     ASSERT(self.mode == Mode::End);
+    ASSERT(m_spell_model);
     
     NSString *result = nil;
     
-    if (!self.challenge) {
+    if (m_spell_model->is_challenge<false>()) {
         return result;
     }
     
     int score = m_spell_model->game_score();
     
-    if (score < self.challenge.score) {
-        result = [NSString stringWithFormat:@"CHALLENGE LOST!\nSCORE TO BEAT WAS %d", self.challenge.score];
+    if (score < m_spell_model->challenge_score()) {
+        result = [NSString stringWithFormat:@"CHALLENGE LOST!\nSCORE TO BEAT WAS %d", m_spell_model->challenge_score()];
     }
-    else if (score == self.challenge.score) {
-        result = [NSString stringWithFormat:@"CHALLENGE TIED!\nSCORE TO BEAT WAS %d", self.challenge.score];
+    else if (score == m_spell_model->challenge_score()) {
+        result = [NSString stringWithFormat:@"CHALLENGE TIED!\nSCORE TO BEAT WAS %d", m_spell_model->challenge_score()];
     }
     else {
-        result = [NSString stringWithFormat:@"CHALLENGE WON!\nSCORE TO BEAT WAS %d", self.challenge.score];
+        result = [NSString stringWithFormat:@"CHALLENGE WON!\nSCORE TO BEAT WAS %d", m_spell_model->challenge_score()];
     }
     
     return result;

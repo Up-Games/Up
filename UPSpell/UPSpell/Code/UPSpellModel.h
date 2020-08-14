@@ -252,7 +252,7 @@ public:
 
     GameKey game_key() const { return m_game_key; }
 
-    bool is_challenge() const { return m_challenge_score > NotAChallengeScore; }
+    template <bool B = true> bool is_challenge() const { return (m_challenge_score > NotAChallengeScore) == B; }
     int challenge_score() const { return m_challenge_score; }
     
     const TileArray &tiles() const { return m_tiles; }
