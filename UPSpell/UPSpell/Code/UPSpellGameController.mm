@@ -622,26 +622,11 @@ static UPSpellGameController *_Instance;
     SpellLayout &layout = SpellLayout::instance();
     CGPoint v = self.activeTouchVelocity;
     BOOL pannedFar = self.activeTouchFurthestPanDistance >= 25;
-    BOOL putBack = self.activeTouchCurrentPanDistance < 10;
-    BOOL movingUp = v.y < -50;
     CGFloat movingDownVelocity = UPMaxT(CGFloat, v.y, 0.0);
-    BOOL tileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), tileView.center);
     CGPoint projectedDownCenter = CGPointMake(tileView.center.x, tileView.center.y + (movingDownVelocity * 0.15));
     BOOL projectedTileInsideWordTray = CGRectContainsPoint(layout.word_tray_layout_frame(), projectedDownCenter);
     CFTimeInterval now = CACurrentMediaTime();
     CFTimeInterval elapsed = now - self.activeTouchStartTimestamp;
-    LOG(Gestures, "pan ended: f: %.2f ; c: %.2f ; v: %.2f", self.activeTouchFurthestPanDistance, self.activeTouchCurrentPanDistance, v.y);
-    LOG(Gestures, "   center:     %@", NSStringFromCGPoint(tileView.center));
-    LOG(Gestures, "   projected:  %@", NSStringFromCGPoint(projectedDownCenter));
-    LOG(Gestures, "   panned far: %s", pannedFar ? "Y" : "N");
-    LOG(Gestures, "   put back:   %s", putBack ? "Y" : "N");
-    LOG(Gestures, "   moving up:  %s", movingUp ? "Y" : "N");
-    LOG(Gestures, "   ever up:    %s", self.activeTouchPanEverMovedUp ? "Y" : "N");
-    LOG(Gestures, "   inside [c]: %s", tileInsideWordTray ? "Y" : "N");
-    LOG(Gestures, "   inside [p]: %s", projectedTileInsideWordTray ? "Y" : "N");
-    LOG(Gestures, "   move:       %s", projectedTileInsideWordTray ? "Y" : "N");
-    LOG(Gestures, "   add:        %s", ((!pannedFar && putBack) || movingUp || !self.activeTouchPanEverMovedUp) ? "Y" : "N");
-    LOG(Gestures, "   elapsed:    %.3f", elapsed);
     Tile &tile = m_spell_model->find_tile(tileView);
     if (self.pickedTilePosition.in_player_tray()) {
         if (elapsed <= 0.5 || !pannedFar || projectedTileInsideWordTray) {
@@ -2795,18 +2780,26 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         return;
     }
     
-    if (m_spell_model->back_opcode() == Opcode::START || m_spell_model->back_opcode() == Opcode::END) {
+    if (m_spell_model->states().size() == 0 ||
+        m_spell_model->back_opcode() == Opcode::START ||
+        m_spell_model->back_opcode() == Opcode::QUIT ||
+        m_spell_model->back_opcode() == Opcode::OVER ||
+        m_spell_model->back_opcode() == Opcode::END ||
+        self.gameTimer.remainingTime == 0 ||
+        self.gameTimer.remainingTime == UPGameTimerDefaultDuration) {
         [self removeInProgressGameFileLogErrors:NO];
         return;
     }
     
-    m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::PAUSE));
+    if (m_spell_model->back_opcode() != Opcode::PAUSE) {
+        m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::PAUSE));
+    }
     
     UPSpellModel *model = [UPSpellModel spellModelWithInner:m_spell_model];
     NSError *error;
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model requiringSecureCoding:YES error:&error];
     if (error) {
-        LOG(General, "error writing in-progress game data data: %@", error);
+        LOG(General, "error writing in-progress game: %@", error);
     }
     else {
         NSString *saveFilePath = [[NSFileManager defaultManager] documentsDirectoryPathWithFileName:UPSpellInProgressGameFileName];
@@ -2815,7 +2808,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             LOG(General, "saveInProgressGameIfNecessary: %@", saveFilePath);
         }
         else {
-            LOG(General, "error writing in-progress game data: save file unavailable, %@", saveFilePath);
+            LOG(General, "error writing in-progress game: save file unavailable, %@", saveFilePath);
         }
     }
 }
@@ -2825,21 +2818,25 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     SpellModelPtr result = nullptr;
     NSError *error;
     
-    BOOL restored = NO;
     NSString *saveFilePath = [[NSFileManager defaultManager] documentsDirectoryPathWithFileName:UPSpellInProgressGameFileName];
     if (saveFilePath) {
-        //LOG(General, "restoreInProgressGameIfExists: %@", saveFilePath);
+        LOG(General, "restoreInProgressGameIfExists: %@", saveFilePath);
         NSData *data = [NSData dataWithContentsOfFile:saveFilePath];
+        
+        // Remove file before trying to read it.
+        // That way, if there's some unexpected (and therefore unhandled) error that could possibly cause a crash,
+        // the program won't crash again on relaunch.
+        [self removeInProgressGameFileLogErrors:NO];
+
         if (data) {
             UPSpellModel *model = [NSKeyedUnarchiver unarchivedObjectOfClass:[UPSpellModel class] fromData:data error:&error];
-            if (error) {
-                LOG(General, "error reading in-progress game data: %@ : %@", saveFilePath, error);
+            if (!model || error) {
+                LOG(General, "error reading in-progress game data: %@ : %@ : %@", saveFilePath, model, error);
             }
             else if (model.inner->back_opcode() != Opcode::PAUSE) {
                 LOG(General, "in-progress game doesn't end with PAUSE: %@ : %@", saveFilePath, error);
             }
             else {
-                restored = YES;
                 result = model.inner;
                 
                 // restore tune and prepare sound engine
@@ -2856,9 +2853,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             }
         }
     }
-    
-    [self removeInProgressGameFileLogErrors:restored];
-    
+
     return result;
 }
 
@@ -2976,9 +2971,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [soundPlayer setFilePath:[bundle pathForResource:@"Tap" ofType:@"aac"] forSoundID:UPSoundIDTap volume:0.45 playerCount:10];
     [soundPlayer setFilePath:[bundle pathForResource:@"Tub" ofType:@"aac"] forSoundID:UPSoundIDTub volume:0.45 playerCount:12];
     [soundPlayer setFilePath:[bundle pathForResource:@"Happy-1" ofType:@"aac"] forSoundID:UPSoundIDHappy1 volume:0.6 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-2" ofType:@"aac"] forSoundID:UPSoundIDHappy2 volume:0.6 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-3" ofType:@"aac"] forSoundID:UPSoundIDHappy3 volume:0.6 playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-4" ofType:@"aac"] forSoundID:UPSoundIDHappy4 volume:0.6 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-2" ofType:@"aac"] forSoundID:UPSoundIDHappy2 volume:0.75 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-3" ofType:@"aac"] forSoundID:UPSoundIDHappy3 volume:0.75 playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-4" ofType:@"aac"] forSoundID:UPSoundIDHappy4 volume:0.75 playerCount:3];
     [soundPlayer setFilePath:[bundle pathForResource:@"Sad-1" ofType:@"aac"] forSoundID:UPSoundIDSad1 volume:0.6 playerCount:2];
     [soundPlayer setFilePath:[bundle pathForResource:@"Sad-2" ofType:@"aac"] forSoundID:UPSoundIDSad2 volume:0.6 playerCount:2];
     [soundPlayer setFilePath:[bundle pathForResource:@"Whoops" ofType:@"aac"] forSoundID:UPSoundIDWhoops volume:0.5 playerCount:3];

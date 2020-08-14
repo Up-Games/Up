@@ -12,7 +12,6 @@
 #import "UPTileModel.h"
 
 @class UPTileView;
-struct sqlite3;
 
 #import <array>
 #import <limits>
@@ -41,6 +40,9 @@ bool valid_end(TileIndex idx) { return (idx <= TileCount) == B; }
 // =========================================================================================================================================
 
 enum class TileTray { None, Player, Word };
+
+template <bool B = true>
+bool valid(TileTray tray) { return (tray == TileTray::Player || tray == TileTray::Word) == B; }
 
 class TilePosition {
 public:
@@ -185,6 +187,9 @@ public:
         QUIT,   // quit the game early
         END,    // the end state after game over or quit
     };
+
+    template <bool B = true> static bool valid_opcode(Opcode opcode) { return (opcode >= Opcode::START && opcode <= Opcode::END) == B; }
+    template <bool B = true> static bool valid_timestamp(CFTimeInterval timestamp) { return (timestamp >= 0 && timestamp <= 120) == B; }
 
     static constexpr int SevenLetterWordBonus = 12;
     static constexpr int SixLetterWordBonus = 6;
@@ -357,7 +362,6 @@ using SpellModelPtr = std::shared_ptr<class SpellModel>;
 @property (class, readonly) BOOL supportsSecureCoding;
 @property (nonatomic, readonly) UP::SpellModelPtr inner;
 
-+ (UPSpellModel *)spellModel;
 + (UPSpellModel *)spellModelWithInner:(UP::SpellModelPtr)inner;
 
 @end

@@ -107,11 +107,11 @@ const Tile &SpellModel::find_tile(const TilePosition &pos) const
                     return m_tiles[idx];
                 }
             }
-            ASSERT_NOT_REACHED();
-            static Tile tile;
-            return tile;
         }
     }
+    ASSERT_NOT_REACHED();
+    static Tile tile;
+    return tile;
 }
 
 Tile &SpellModel::find_tile(const TilePosition &pos)
@@ -132,11 +132,11 @@ Tile &SpellModel::find_tile(const TilePosition &pos)
                     return m_tiles[idx];
                 }
             }
-            ASSERT_NOT_REACHED();
-            static Tile tile;
-            return tile;
         }
     }
+    ASSERT_NOT_REACHED();
+    static Tile tile;
+    return tile;
 }
 
 UPTileView *SpellModel::find_view(const TilePosition &pos)
@@ -176,10 +176,10 @@ TileIndex SpellModel::player_tray_index(const TilePosition &pos)
                     return it - m_tiles.begin();
                 }
             }
-            ASSERT_NOT_REACHED();
-            return NotATileIndex;
         }
     }
+    ASSERT_NOT_REACHED();
+    return NotATileIndex;
 }
 
 void SpellModel::move_word_tray_tiles_back_to_player_tray()
@@ -997,6 +997,7 @@ using UP::TileModel;
 using UP::TilePosition;
 using UP::TileTray;
 using UP::TileIndex;
+using UP::valid;
 
 // =========================================================================================================================================
 
@@ -1023,6 +1024,10 @@ using UP::TileIndex;
     self.tray = static_cast<TileTray>([coder decodeInt32ForKey:NSStringFromSelector(@selector(tray))]);
     self.index = static_cast<TileIndex>([coder decodeInt64ForKey:NSStringFromSelector(@selector(index))]);
     
+    if (valid<false>(self.tray) || valid<false>(self.index)) {
+        return nil;
+    }
+
     return self;
 }
 
@@ -1069,7 +1074,11 @@ UP_STATIC_INLINE TilePosition make_tile_position(_UPTilePosition *tilePosition)
 
     self.glyph = static_cast<char32_t>([coder decodeInt32ForKey:NSStringFromSelector(@selector(glyph))]);
     self.multiplier = [coder decodeIntForKey:NSStringFromSelector(@selector(multiplier))];
-    
+
+    if (TileModel::valid_glyph<false>(self.glyph) || TileModel::valid_multiplier<false>(self.multiplier)) {
+        return nil;
+    }
+
     return self;
 }
 
@@ -1116,6 +1125,10 @@ UP_STATIC_INLINE TileModel make_tile_model(_UPTileModel *model)
     
     self.model = [coder decodeObjectOfClass:[_UPTileModel class] forKey:NSStringFromSelector(@selector(model))];
     self.position = [coder decodeObjectOfClass:[_UPTilePosition class] forKey:NSStringFromSelector(@selector(position))];
+    
+    if (!self.model || !self.position) {
+        return nil;
+    }
     
     return self;
 }
@@ -1169,6 +1182,11 @@ UP_STATIC_INLINE Tile make_tile(_UPTile *tile)
     self.timestamp = [coder decodeDoubleForKey:NSStringFromSelector(@selector(timestamp))];
     self.position1 = [coder decodeObjectOfClass:[_UPTilePosition class] forKey:NSStringFromSelector(@selector(position1))];
     self.position2 = [coder decodeObjectOfClass:[_UPTilePosition class] forKey:NSStringFromSelector(@selector(position2))];
+    
+    if (SpellModel::valid_opcode<false>(self.opcode) || SpellModel::valid_timestamp<false>(self.timestamp) ||
+        !self.position1  || !self.position2) {
+        return nil;
+    }
     
     return self;
 }
@@ -1279,28 +1297,16 @@ static NSString * const UPSpellChallengeScoreArchiveKey = @"CHALLENGE_SCORE";
 
 @implementation UPSpellModel
 
-+ (UPSpellModel *)spellModel
-{
-    return [[self alloc] initWithInner:nullptr];
-}
-
 + (UPSpellModel *)spellModelWithInner:(SpellModelPtr)inner
 {
     return [[self alloc] initWithInner:inner];
 }
 
-- (instancetype)init
-{
-    self = [super init];
-    m_inner = std::make_shared<SpellModel>(GameKey::random());
-    return self;
-}
-
 - (instancetype)initWithInner:(SpellModelPtr)inner
 {
-    self = [self init];
+    self = [super init];
     m_inner = inner;
-    return self;
+    return m_inner ? self : nil;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder
@@ -1317,15 +1323,21 @@ static NSString * const UPSpellChallengeScoreArchiveKey = @"CHALLENGE_SCORE";
         NSSet *allowedClasses = [NSSet setWithArray:@[ [_UPSpellModelState class], [NSArray class] ]];
         NSArray<_UPSpellModelState *> *decodedStates = [coder decodeObjectOfClasses:allowedClasses forKey:UPSpellModelStatesArchiveKey];
         for (_UPSpellModelState *decodedState : decodedStates) {
+            if (!decodedState.action || !decodedState.tiles || decodedState.tiles.count == 0) {
+                states.clear();
+                break;
+            }
             states.push_back(make_state(decodedState));
         }
-        m_inner = std::make_shared<SpellModel>(game_key, challenge_score, states);
+        if (states.size() > 0 && states.front().action().opcode() == UP::SpellModel::Opcode::START) {
+            m_inner = std::make_shared<SpellModel>(game_key, challenge_score, states);
+        }
     }
     else {
         m_inner = std::make_shared<SpellModel>(game_key, challenge_score);
     }
-    
-    return self;
+
+    return m_inner ? self : nil;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder

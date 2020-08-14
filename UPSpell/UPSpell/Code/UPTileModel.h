@@ -7,6 +7,7 @@
 
 #ifdef __cplusplus
 
+#import <UpKit/UPAssertions.h>
 #import <UpKit/UPMacros.h>
 #import <UpKit/UPTypes.h>
 
@@ -34,7 +35,10 @@ public:
     }
 
     constexpr TileModel() {}
-    TileModel(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {}
+    TileModel(char32_t glyph, int multiplier = 1) : m_glyph(glyph), m_multiplier(multiplier) {
+        ASSERT(valid_glyph(m_glyph));
+        ASSERT(valid_multiplier(m_multiplier));
+    }
 
     static TileModel sentinel() { return TileModel(SentinelGlyph, 0); }
     static TileModel blank() { return TileModel(BlankGlyph, 0); }
@@ -45,6 +49,14 @@ public:
 
     template <bool B = true> bool is_sentinel() const { return (glyph() == SentinelGlyph) == B; }
     template <bool B = true> bool is_blank() const { return (glyph() == BlankGlyph) == B; }
+
+    template <bool B = true> static bool valid_glyph(char32_t glyph) {
+        return ((glyph >= U'A' && glyph <= U'Z') || glyph == SentinelGlyph || glyph == BlankGlyph) == B;
+    }
+    
+    template <bool B = true> static bool valid_multiplier(int multiplier) {
+        return (multiplier == 0 || multiplier == 1 || multiplier == 2) == B;
+    }
 
 private:
     char32_t m_glyph = 0;

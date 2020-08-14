@@ -560,11 +560,6 @@ void SpellLayout::calculate_player_tray_tile_frames()
         m_player_tray_tile_centers[idx] = up_pixel_point(up_rect_center(frame), screen_scale());
         x += up_size_width(size) + gap;
     }
-    int idx = 0;
-    for (const auto &r : player_tray_tile_frames()) {
-        LOG(Layout, "   tile tray frame [%d]: %@", idx, NSStringFromCGRect(r));
-        idx++;
-    }
 }
 
 void SpellLayout::calculate_word_tray_tile_frames()
@@ -651,12 +646,6 @@ void SpellLayout::calculate_word_tray_tile_frames()
     std::fill(even_centers.begin() + 2, even_centers.end(), CGPointZero);
     m_word_tray_tile_frames[1] = even_rects;
     m_word_tray_tile_centers[1] = even_centers;
-    
-    int idx = 0;
-    for (const auto &r : word_tray_tile_frames(2)) {
-        LOG(Layout, "word_tray_tile_frame [%d]:  %@", idx, NSStringFromCGRect(r));
-        idx++;
-    }
 }
 
 void SpellLayout::calculate_locations()

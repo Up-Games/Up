@@ -149,10 +149,10 @@ void cancel(NSArray<UIView *> *views)
         NSObject<UPTimeSpanning> *obj = it->second;
         if ([obj isKindOfClass:[UPAnimator class]] && [views isEqualToArray:((UPAnimator *)obj).views]) {
             NSObject<UPTimeSpanning> *ref = obj;
-            uint32_t serial_number = obj.serialNumber;
             it = g_map->erase(it);
             [obj cancel];
 #if !LOG_DISABLED
+            uint32_t serial_number = obj.serialNumber;
             LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
 #endif
             ref = nil;
@@ -169,10 +169,10 @@ void cancel(UP::Band band)
         NSObject<UPTimeSpanning> *obj = it->second;
         if (band_match(band, obj.band)) {
             NSObject<UPTimeSpanning> *ref = obj;
-            uint32_t serial_number = obj.serialNumber;
             it = g_map->erase(it);
             [obj cancel];
 #if !LOG_DISABLED
+            uint32_t serial_number = obj.serialNumber;
             LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
 #endif
             ref = nil;
@@ -193,10 +193,10 @@ void cancel(NSArray<UIView *> *views, uint32_t type)
         UPAnimator *animator = (UPAnimator *)obj;
         if ((animator.type & type) && [views isEqualToArray:animator.views]) {
             NSObject<UPTimeSpanning> *ref = obj;
-            uint32_t serial_number = obj.serialNumber;
             it = g_map->erase(it);
             [obj cancel];
 #if !LOG_DISABLED
+            uint32_t serial_number = obj.serialNumber;
             LOG(Leaks, "rem: %d (%ld)", serial_number, g_map->size());
 #endif
             ref = nil;
