@@ -1415,6 +1415,7 @@ static UPSpellGameController *_Instance;
     }
     
     self.gameView.wordScoreLabel.attributedString = attrString;
+    self.gameView.wordScoreLabel.alpha = 1;
 }
 
 - (void)viewBloopOutWordScoreLabelWithDuration:(CFTimeInterval)duration
@@ -1432,6 +1433,19 @@ static UPSpellGameController *_Instance;
 {
     self.gameView.wordScoreLabel.hidden = YES;
     self.showingWordScoreLabel = NO;
+}
+
+- (void)viewFadeOutWordScoreLabelIfNeeded
+{
+    if (self.showingWordScoreLabel) {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.gameView.wordScoreLabel.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.gameView.wordScoreLabel.alpha = 1;
+            self.gameView.wordScoreLabel.hidden = YES;
+            self.showingWordScoreLabel = NO;
+        }];
+    }
 }
 
 - (void)viewMoveTileToClosestOpenPlayerTrayPosition:(Tile &)tile
@@ -3915,6 +3929,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self cancelActiveTouch];
     [self viewUnhighlightTileViews];
     [self viewBloopTileViewsToPlayerTrayWithDuration:GameOverRespositionBloopDuration completion:nil];
+    [self viewFadeOutWordScoreLabelIfNeeded];
     [UIView animateWithDuration:0.2 animations:^{
         self.gameView.wordTrayControl.transform = CGAffineTransformIdentity;
         for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
