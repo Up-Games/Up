@@ -121,6 +121,7 @@ extern const int UPHueMilepost;
 
 int up_previous_milepost_hue(int);
 int up_next_milepost_hue(int);
+int up_theme_milepost_hue(void);
 int up_closest_milepost_hue(int);
 NSString *up_theme_icon_name(void);
 

@@ -494,6 +494,11 @@ int up_next_milepost_hue(int hue)
     return hue;
 }
 
+int up_theme_milepost_hue(void)
+{
+    return up_closest_milepost_hue([UIColor themeColorHue]);
+}
+
 int up_closest_milepost_hue(int hue)
 {
     if (hue < 0 || hue > 360) {
@@ -504,44 +509,39 @@ int up_closest_milepost_hue(int hue)
         return hue;
     }
     
-    int prev = up_previous_milepost_hue(hue);
-    int next = up_next_milepost_hue(hue);
+    int hueLess = up_previous_milepost_hue(hue);
+    int hueMore = up_next_milepost_hue(hue);
 
-    int d_prev = abs(prev - hue);
-    int d_next = abs(next - hue);
+    int result = hue;
+    CGFloat diffMore = up_angular_difference(hue, hueMore);
+    CGFloat diffLess = up_angular_difference(hue, hueLess);
+    if (diffMore < diffLess) {
+        result = hueMore;
+    }
+    else {
+        result = hueLess;
+    }
+    if (up_is_fuzzy_equal(hue, 360)) {
+        result = 0;
+    }
 
-    return d_prev <= d_next ? prev : next;
+    return result;
 }
 
 NSString *up_theme_icon_name(void)
 {
-    CGFloat hue = [UIColor themeColorHue];
-    if (fmod(hue, UPHueMilepost) > 1) {
-        CGFloat hueMore = up_next_milepost_hue(hue);
-        CGFloat hueLess = up_previous_milepost_hue(hue);
-        CGFloat diffMore = up_angular_difference(hue, hueMore);
-        CGFloat diffLess = up_angular_difference(hue, hueLess);
-        if (diffMore < diffLess) {
-            hue = hueMore;
-        }
-        else {
-            hue = hueLess;
-        }
-        if (up_is_fuzzy_equal(hue, 360)) {
-            hue = 0;
-        }
-    }
+    int hue = up_theme_milepost_hue();
     UIDevice *device = [UIDevice currentDevice];
     NSString *iconName = nil;
     if ([device.model isEqualToString:@"iPhone"]) {
-        iconName = [NSString stringWithFormat:@"up-games-icon-%03d-60", (int)hue];
+        iconName = [NSString stringWithFormat:@"up-games-icon-%03d-60", hue];
     }
     else if ([device.model isEqualToString:@"iPad"]) {
         if ([device isiPadPro]) {
-            iconName = [NSString stringWithFormat:@"up-games-icon-%03d-83", (int)hue];
+            iconName = [NSString stringWithFormat:@"up-games-icon-%03d-83", hue];
         }
         else {
-            iconName = [NSString stringWithFormat:@"up-games-icon-%03d-76", (int)hue];
+            iconName = [NSString stringWithFormat:@"up-games-icon-%03d-76", hue];
         }
     }
     //LOG(General, "iconName: %@ : %@ : %@", iconName, device.model, [device fullModel]);

@@ -178,7 +178,8 @@ UP_STATIC_INLINE CGFloat up_radians_to_degrees(CGFloat radians)
 }
 
 UP_STATIC_INLINE CGFloat up_angular_difference(CGFloat a, CGFloat b) {
-    return 360.0 - fabs(360.0 - fabs(a - b));
+    CGFloat d = fabs(360.0 - fabs(a - b));
+    return d > 180 ? 360.0 - d : d;
 }
 
 UP_STATIC_INLINE CGFloat up_radian_difference(CGFloat a, CGFloat b) {
