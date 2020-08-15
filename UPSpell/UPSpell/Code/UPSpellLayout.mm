@@ -695,7 +695,7 @@ void SpellLayout::calculate_dialog_locations()
     calculate_and_set_locations(Role::DialogGameNote, layout_centered_x_aspect_rect(CanonicalGameNoteLayoutFrame));
 
     CGRect challenge_game_note_frame = frame_for(Role::DialogGameNote);
-    challenge_game_note_frame.origin.y = up_rect_min_y(challenge_game_note_frame) - (up_rect_height(challenge_game_note_frame) * 0.275);
+    challenge_game_note_frame.origin.y = up_rect_min_y(challenge_game_note_frame) - (up_rect_height(challenge_game_note_frame) * 0.25);
     calculate_and_set_locations(Role::DialogChallengeGameNote, challenge_game_note_frame);
 
     CGSize button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());

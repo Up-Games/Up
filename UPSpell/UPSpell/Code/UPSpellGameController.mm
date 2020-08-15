@@ -2475,7 +2475,10 @@ static UPSpellGameController *_Instance;
     cancel_all();
     
     [self removeInProgressGameFileLogErrors:NO];
-    
+
+    [[UPSoundPlayer instance] stop];
+    [[UPTunePlayer instance] stop];
+
     [self.gameTimer reset];
     [self viewUpdateGameControls];
     m_spell_model = std::make_shared<SpellModel>();
@@ -2571,13 +2574,12 @@ static UPSpellGameController *_Instance;
                 self.dialogTopMenu.messagePathView.alpha = 1;
             }];
             UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray));
-            start(bloop_in(BandModeUI, @[readyMove], 0.3,  ^(UIViewAnimatingPosition) {
-                delay(BandModeDelay, 1.0, ^{
-                    if (completion) {
-                        completion();
-                    }
-                });
-            }));
+            start(bloop_in(BandModeUI, @[readyMove], 0.3,  nil));
+        });
+        delay(BandModeDelay, 1.75, ^{
+            if (completion) {
+                completion();
+            }
         });
     };
     

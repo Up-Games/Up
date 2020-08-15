@@ -159,9 +159,9 @@ public:
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
     static inline constexpr CGRect CanonicalDialogHelpButtonFrame = { 853, 382,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
-    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 384, 1000, 100 };
-    static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 28;
-    static inline constexpr CGFloat CanonicalGameNoteFontBaselineAdjustment = 4;
+    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 384, 1000, 116 };
+    static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 32;
+    static inline constexpr CGFloat CanonicalGameNoteFontBaselineAdjustment = 6;
     static inline constexpr CGRect CanonicalGameShareButtonFrame = { 853, 382,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
