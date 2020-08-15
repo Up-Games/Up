@@ -307,6 +307,7 @@ static CGFloat _ThemeHue = 222;
         case UPThemeColorStyleLightStark:
             return 0.5;
         case UPThemeColorStyleDark:
+            return 0.7;
         case UPThemeColorStyleDarkStark:
             return 0.62;
     }
@@ -326,7 +327,7 @@ static CGFloat _ThemeHue = 222;
             return 0.03;
         case UPThemeColorStyleDark:
         case UPThemeColorStyleDarkStark:
-            return 0.03;
+            return 0.08;
     }
 }
 

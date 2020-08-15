@@ -132,7 +132,7 @@ static UIBezierPath *HuePointerPath()
         CGContextAddLineToPoint(ctx, x1, y1);
         CGContextAddLineToPoint(ctx, x2, y2);
         CGContextClosePath(ctx);
-        UIColor *color = [UIColor colorizedGray:0.7 hue:i saturation:0.9];
+        UIColor *color = [UIColor colorizedGray:0.7 hue:i saturation:0.8];
         CGFloat r, g, b, a;
         [color getRed:&r green:&g blue:&b alpha:&a];
         CGContextSetRGBFillColor(ctx, r, g, b, a);

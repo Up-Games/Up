@@ -344,7 +344,7 @@ static ViewController *_Instance;
                 PrimaryStrokeKey : [ColorChip clearChipWithName:PrimaryStrokeKey],
                 InactiveStrokeKey : [ColorChip chipWithName:InactiveStrokeKey hue:0 gray:0.56 saturation:0.3 targetLightness:53],
                 ActiveStrokeKey : [ColorChip chipWithName:ActiveStrokeKey hue:0 gray:0.77 saturation:0.77 targetLightness:71],
-                HighlightedStrokeKey : [ColorChip chipWithName:HighlightedStrokeKey hue:0 gray:1.0 saturation:1.0],
+                HighlightedStrokeKey : [ColorChip clearChipWithName:HighlightedStrokeKey],
                 SecondaryStrokeKey : [ColorChip clearChipWithName:SecondaryStrokeKey],
                 SecondaryInactiveStrokeKey : [ColorChip chipWithName:SecondaryInactiveStrokeKey hue:0 gray:0.56 saturation:0.3 targetLightness:53],
                 SecondaryActiveStrokeKey : [ColorChip chipWithName:SecondaryActiveStrokeKey hue:0 gray:0.77 saturation:0.77 targetLightness:71],
