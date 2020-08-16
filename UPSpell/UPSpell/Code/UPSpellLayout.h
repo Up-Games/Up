@@ -184,10 +184,10 @@ public:
     static inline constexpr CGFloat CanonicalPlacardDescrptionFontCapHeight = 24;
 
     static inline constexpr CGRect CanonicalExtrasColorsThemeRotorFrame =  { 470,  30, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
-    static inline constexpr CGRect CanonicalExtrasColorsDescriptionFrame = { 384, 280, 572, 76 };
+    static inline constexpr CGRect CanonicalExtrasColorsDescriptionFrame = { 384, 282, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsExampleFrame =     { 400, 386, 540, 66 };
-    static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =  { 384, 278, 572, 76 };
-    static inline constexpr CGRect CanonicalExtrasColorsIconLayoutFrame =  { 460, 381, 440, 76 };
+    static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =       { 384, 282, 572, 76 };
+    static inline constexpr CGRect CanonicalExtrasColorsIconButtonLayoutFrame = { 460, 381, 440, 76 };
 
     static inline constexpr CGRect CanonicalExtrasSoundEffectsCheckboxFrame =  { 400, 64, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasSoundEffectsSliderFrame =  { 423, 124, up_size_width(CanonicalSliderSize), up_size_height(CanonicalSliderSize) };

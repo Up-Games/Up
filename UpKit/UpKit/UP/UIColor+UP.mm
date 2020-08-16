@@ -31,46 +31,29 @@ static CGFloat _ThemeHue = 225;
 {
     _Theme = theme;
     switch (_Theme) {
-        case UPThemeRedLight:
-            [self setThemeColorHue:0];
+        case UPThemeBlueLight:
+            [self setThemeColorHue:225];
             [self setThemeColorStyle:UPThemeColorStyleLight];
             break;
         case UPThemeGreenLight:
             [self setThemeColorHue:120];
             [self setThemeColorStyle:UPThemeColorStyleLight];
             break;
-        case UPThemeDefault:
-        case UPThemeBlueLight:
+        case UPThemeRedLight:
+            [self setThemeColorHue:0];
+            [self setThemeColorStyle:UPThemeColorStyleLight];
+            break;
+        case UPThemeBlueDark:
             [self setThemeColorHue:225];
-            [self setThemeColorStyle:UPThemeColorStyleLight];
-            break;
-        case UPThemePurpleLight:
-            [self setThemeColorHue:285];
-            [self setThemeColorStyle:UPThemeColorStyleLight];
-            break;
-        case UPThemeOrangeDark:
-            [self setThemeColorHue:30];
             [self setThemeColorStyle:UPThemeColorStyleDark];
             break;
         case UPThemeGreenDark:
             [self setThemeColorHue:120];
             [self setThemeColorStyle:UPThemeColorStyleDark];
             break;
-        case UPThemeBlueDark:
-            [self setThemeColorHue:225];
-            [self setThemeColorStyle:UPThemeColorStyleDark];
-            break;
         case UPThemePurpleDark:
             [self setThemeColorHue:285];
             [self setThemeColorStyle:UPThemeColorStyleDark];
-            break;
-        case UPThemeRedLightStark:
-            [self setThemeColorHue:0];
-            [self setThemeColorStyle:UPThemeColorStyleLightStark];
-            break;
-        case UPThemeGreenLightStark:
-            [self setThemeColorHue:120];
-            [self setThemeColorStyle:UPThemeColorStyleLightStark];
             break;
         case UPThemeBlueLightStark:
             [self setThemeColorHue:225];
@@ -80,20 +63,20 @@ static CGFloat _ThemeHue = 225;
             [self setThemeColorHue:285];
             [self setThemeColorStyle:UPThemeColorStyleLightStark];
             break;
-        case UPThemeYellowDarkStark:
-            [self setThemeColorHue:45];
-            [self setThemeColorStyle:UPThemeColorStyleDarkStark];
+        case UPThemeRedLightStark:
+            [self setThemeColorHue:0];
+            [self setThemeColorStyle:UPThemeColorStyleLightStark];
             break;
         case UPThemeGreenDarkStark:
             [self setThemeColorHue:120];
             [self setThemeColorStyle:UPThemeColorStyleDarkStark];
             break;
-        case UPThemeBlueDarkStark:
-            [self setThemeColorHue:225];
-            [self setThemeColorStyle:UPThemeColorStyleDarkStark];
-            break;
         case UPThemePurpleDarkStark:
             [self setThemeColorHue:285];
+            [self setThemeColorStyle:UPThemeColorStyleDarkStark];
+            break;
+        case UPThemeYellowDarkStark:
+            [self setThemeColorHue:45];
             [self setThemeColorStyle:UPThemeColorStyleDarkStark];
             break;
     }

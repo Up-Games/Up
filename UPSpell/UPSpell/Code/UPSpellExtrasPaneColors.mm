@@ -66,24 +66,20 @@ using Spot = UP::SpellLayout::Place;
     self = [super initWithFrame:frame];
 
     SpellLayout &layout = SpellLayout::instance();
-    
+
     self.themeRotor = [UPRotor rotorWithElements:@[
-        @"RED/LIGHT",
-        @"GREEN/LIGHT",
         @"BLUE/LIGHT",
-        @"PURPLE/LIGHT",
-        @"ORANGE/DARK",
-        @"GREEN/DARK",
+        @"GREEN/LIGHT",
+        @"RED/LIGHT",
         @"BLUE/DARK",
+        @"GREEN/DARK",
         @"PURPLE/DARK",
-        @"RED/LIGHT/STARK",
-        @"GREEN/LIGHT/STARK",
         @"BLUE/LIGHT/STARK",
         @"PURPLE/LIGHT/STARK",
-        @"YELLOW/DARK/STARK",
+        @"RED/LIGHT/STARK",
         @"GREEN/DARK/STARK",
-        @"BLUE/DARK/STARK",
         @"PURPLE/DARK/STARK",
+        @"YELLOW/DARK/STARK",
     ]];
     
     self.themeRotor.frame = layout.frame_for(Role::ExtrasColorsThemeRotor);
@@ -140,7 +136,7 @@ using Spot = UP::SpellLayout::Place;
     self.exampleTilesContainer.center = layout.center_for(Role::ExtrasColorsExample);
 
     self.iconPrompt = [UPLabel label];
-    self.iconPrompt.string = @"Change the UP Spell app icon on your homescreen\nto match theme color?";
+    self.iconPrompt.string = @"Change the Up Spell app icon on your\nhomescreen to match theme color?";
     self.iconPrompt.frame = layout.frame_for(Role::ExtrasColorsIconPrompt);
     self.iconPrompt.font = layout.description_font();
     self.iconPrompt.colorCategory = UPColorCategoryControlText;
@@ -173,14 +169,7 @@ using Spot = UP::SpellLayout::Place;
 
     SpellLayout &layout = SpellLayout::instance();
     
-    UPTheme theme = [UIColor theme];
-    NSUInteger rotorIndex = 0;
-    if (theme == UPThemeDefault) {
-        rotorIndex = UPThemeBlueLight - 1;
-    }
-    else {
-        rotorIndex = theme - 1;
-    }
+    NSUInteger rotorIndex = [UIColor theme];
     [self.themeRotor selectIndex:rotorIndex];
     
      self.hueDescriptionContainer.frame = layout.frame_for(Role::ExtrasColorsDescription);
@@ -259,25 +248,18 @@ using Spot = UP::SpellLayout::Place;
             break;
         case UPThemeGreenLight:
         case UPThemeGreenDark:
-        case UPThemeGreenLightStark:
         case UPThemeGreenDarkStark:
             colorString = @"GREEN";
             break;
-        case UPThemeDefault:
         case UPThemeBlueLight:
         case UPThemeBlueDark:
         case UPThemeBlueLightStark:
-        case UPThemeBlueDarkStark:
             colorString = @"BLUE";
             break;
-        case UPThemePurpleLight:
         case UPThemePurpleDark:
         case UPThemePurpleLightStark:
         case UPThemePurpleDarkStark:
             colorString = @"PURPLE";
-            break;
-        case UPThemeOrangeDark:
-            colorString = @"ORANGE";
             break;
         case UPThemeYellowDarkStark:
             colorString = @"YELLOW";
@@ -303,6 +285,8 @@ using Spot = UP::SpellLayout::Place;
         [string appendString:@"on a light background."];
     }
     self.hueDescription.string = string;
+    
+    [self setNeedsLayout];
 }
 
 - (void)handleTappedTile:(UPTapGestureRecognizer *)gesture
@@ -346,7 +330,7 @@ using Spot = UP::SpellLayout::Place;
 - (void)themeRotorChanged
 {
     NSUInteger index = self.themeRotor.selectedIndex;
-    UPTheme theme = (UPTheme)(index + 1);
+    UPTheme theme = (UPTheme)index;
 
     cancel(BandSettingsUpdateDelay);
 

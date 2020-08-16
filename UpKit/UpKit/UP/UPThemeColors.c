@@ -20,9 +20,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969400, 0.877600, 0.877600, 1.000000 }, // InactiveFill
    { 0.939120, 0.756480, 0.756480, 1.000000 }, // ActiveFill
    { 1.000000, 0.500000, 0.500000, 1.000000 }, // HighlightedFill
-   { 0.935000, 0.865000, 0.865000, 1.000000 }, // SecondaryActiveFill
+   { 0.890735, 0.773065, 0.773065, 1.000000 }, // SecondaryActiveFill
    { 0.969060, 0.935740, 0.935740, 1.000000 }, // SecondaryInactiveFill
-   { 0.935000, 0.865000, 0.865000, 1.000000 }, // SecondaryActiveFill
+   { 0.890735, 0.773065, 0.773065, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.600000, 0.600000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -30,8 +30,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908805, 0.810595, 0.810595, 1.000000 }, // SecondaryInactiveStroke
-   { 0.720000, 0.000000, 0.000000, 1.000000 }, // SecondaryActiveStroke
-   { 0.717400, 0.000000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.737100, 0.081900, 0.081900, 1.000000 }, // SecondaryActiveStroke
+   { 0.881600, 0.000000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -43,9 +43,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969077, 0.877855, 0.876309, 1.000000 }, // InactiveFill
    { 0.938363, 0.756533, 0.753451, 1.000000 }, // ActiveFill
    { 1.000000, 0.498566, 0.490067, 1.000000 }, // HighlightedFill
-   { 0.902149, 0.798527, 0.796771, 1.000000 }, // SecondaryActiveFill
+   { 0.889838, 0.773179, 0.771202, 1.000000 }, // SecondaryActiveFill
    { 0.968926, 0.936019, 0.935461, 1.000000 }, // SecondaryInactiveFill
-   { 0.902149, 0.798527, 0.796771, 1.000000 }, // SecondaryActiveFill
+   { 0.889838, 0.773179, 0.771202, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.620328, 0.613893, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -53,8 +53,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908047, 0.810670, 0.809020, 1.000000 }, // SecondaryInactiveStroke
-   { 0.995437, 0.331378, 0.320123, 1.000000 }, // SecondaryActiveStroke
-   { 0.715253, 0.011921, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.732384, 0.092226, 0.081376, 1.000000 }, // SecondaryActiveStroke
+   { 0.879787, 0.014663, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -66,9 +66,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968755, 0.878143, 0.875019, 1.000000 }, // InactiveFill
    { 0.937645, 0.756817, 0.750581, 1.000000 }, // ActiveFill
    { 1.000000, 0.498622, 0.481333, 1.000000 }, // HighlightedFill
-   { 0.901473, 0.798904, 0.795367, 1.000000 }, // SecondaryActiveFill
+   { 0.889006, 0.773458, 0.769474, 1.000000 }, // SecondaryActiveFill
    { 0.968726, 0.936170, 0.935047, 1.000000 }, // SecondaryInactiveFill
-   { 0.901473, 0.798904, 0.795367, 1.000000 }, // SecondaryActiveFill
+   { 0.889006, 0.773458, 0.769474, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.621054, 0.607987, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -76,8 +76,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907353, 0.810906, 0.807580, 1.000000 }, // SecondaryInactiveStroke
-   { 0.990743, 0.337503, 0.314977, 1.000000 }, // SecondaryActiveStroke
-   { 0.713107, 0.023770, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.728928, 0.102590, 0.080992, 1.000000 }, // SecondaryActiveStroke
+   { 0.877773, 0.029259, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -89,9 +89,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968392, 0.878309, 0.873568, 1.000000 }, // InactiveFill
    { 0.936888, 0.757019, 0.747552, 1.000000 }, // ActiveFill
    { 1.000000, 0.499540, 0.473200, 1.000000 }, // HighlightedFill
-   { 0.900732, 0.799173, 0.793828, 1.000000 }, // SecondaryActiveFill
+   { 0.888174, 0.773767, 0.767746, 1.000000 }, // SecondaryActiveFill
    { 0.968527, 0.936328, 0.934633, 1.000000 }, // SecondaryInactiveFill
-   { 0.900732, 0.799173, 0.793828, 1.000000 }, // SecondaryActiveFill
+   { 0.888174, 0.773767, 0.767746, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.621596, 0.601680, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -99,8 +99,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906660, 0.811166, 0.806140, 1.000000 }, // SecondaryInactiveStroke
-   { 0.985914, 0.343574, 0.309766, 1.000000 }, // SecondaryActiveStroke
-   { 0.711160, 0.035558, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.725112, 0.112795, 0.080568, 1.000000 }, // SecondaryActiveStroke
+   { 0.875760, 0.043788, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -112,9 +112,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968069, 0.878663, 0.872277, 1.000000 }, // InactiveFill
    { 0.936171, 0.757449, 0.744683, 1.000000 }, // ActiveFill
    { 1.000000, 0.500356, 0.464667, 1.000000 }, // HighlightedFill
-   { 0.900056, 0.799599, 0.792424, 1.000000 }, // SecondaryActiveFill
+   { 0.887407, 0.774237, 0.766153, 1.000000 }, // SecondaryActiveFill
    { 0.968328, 0.936493, 0.934219, 1.000000 }, // SecondaryInactiveFill
-   { 0.900056, 0.799599, 0.792424, 1.000000 }, // SecondaryActiveFill
+   { 0.887407, 0.774237, 0.766153, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.622162, 0.595173, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -122,8 +122,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906032, 0.811581, 0.804835, 1.000000 }, // SecondaryInactiveStroke
-   { 0.980945, 0.349592, 0.304495, 1.000000 }, // SecondaryActiveStroke
-   { 0.708813, 0.047254, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.720936, 0.122826, 0.080104, 1.000000 }, // SecondaryActiveStroke
+   { 0.873347, 0.058223, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -135,9 +135,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967707, 0.878900, 0.870827, 1.000000 }, // InactiveFill
    { 0.935453, 0.757950, 0.741813, 1.000000 }, // ActiveFill
    { 1.000000, 0.501089, 0.455733, 1.000000 }, // HighlightedFill
-   { 0.899380, 0.800050, 0.791020, 1.000000 }, // SecondaryActiveFill
+   { 0.886575, 0.774604, 0.764425, 1.000000 }, // SecondaryActiveFill
    { 0.968128, 0.936665, 0.933805, 1.000000 }, // SecondaryInactiveFill
-   { 0.899380, 0.800050, 0.791020, 1.000000 }, // SecondaryActiveFill
+   { 0.886575, 0.774604, 0.764425, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.622944, 0.588667, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -145,8 +145,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905338, 0.811890, 0.803395, 1.000000 }, // SecondaryInactiveStroke
-   { 0.975840, 0.355733, 0.299360, 1.000000 }, // SecondaryActiveStroke
-   { 0.706267, 0.058856, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.716580, 0.132700, 0.079620, 1.000000 }, // SecondaryActiveStroke
+   { 0.870533, 0.072544, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -158,9 +158,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967344, 0.879173, 0.869376, 1.000000 }, // InactiveFill
    { 0.934736, 0.758523, 0.738944, 1.000000 }, // ActiveFill
    { 1.000000, 0.501940, 0.446600, 1.000000 }, // HighlightedFill
-   { 0.898639, 0.800397, 0.789481, 1.000000 }, // SecondaryActiveFill
+   { 0.885743, 0.775002, 0.762697, 1.000000 }, // SecondaryActiveFill
    { 0.967929, 0.936845, 0.933391, 1.000000 }, // SecondaryInactiveFill
-   { 0.898639, 0.800397, 0.789481, 1.000000 }, // SecondaryActiveFill
+   { 0.885743, 0.775002, 0.762697, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.623584, 0.581760, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -168,8 +168,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.904645, 0.812224, 0.801955, 1.000000 }, // SecondaryInactiveStroke
-   { 0.970582, 0.361638, 0.293978, 1.000000 }, // SecondaryActiveStroke
-   { 0.703520, 0.070352, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.711864, 0.142373, 0.079096, 1.000000 }, // SecondaryActiveStroke
+   { 0.867320, 0.086732, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -181,9 +181,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.966981, 0.879482, 0.867925, 1.000000 }, // InactiveFill
    { 0.933979, 0.759022, 0.735915, 1.000000 }, // ActiveFill
    { 1.000000, 0.502742, 0.437067, 1.000000 }, // HighlightedFill
-   { 0.897898, 0.800770, 0.787942, 1.000000 }, // SecondaryActiveFill
+   { 0.884976, 0.775556, 0.761104, 1.000000 }, // SecondaryActiveFill
    { 0.967730, 0.937031, 0.932977, 1.000000 }, // SecondaryInactiveFill
-   { 0.897898, 0.800770, 0.787942, 1.000000 }, // SecondaryActiveFill
+   { 0.884976, 0.775556, 0.761104, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.624100, 0.574453, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -191,8 +191,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.903952, 0.812583, 0.800515, 1.000000 }, // SecondaryInactiveStroke
-   { 0.965183, 0.367656, 0.288737, 1.000000 }, // SecondaryActiveStroke
-   { 0.700173, 0.081687, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.706968, 0.151867, 0.078552, 1.000000 }, // SecondaryActiveStroke
+   { 0.863707, 0.100766, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -204,9 +204,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.966579, 0.879683, 0.866315, 1.000000 }, // InactiveFill
    { 0.933221, 0.759597, 0.732885, 1.000000 }, // ActiveFill
    { 1.000000, 0.503516, 0.427133, 1.000000 }, // HighlightedFill
-   { 0.897157, 0.801170, 0.786403, 1.000000 }, // SecondaryActiveFill
+   { 0.884144, 0.776012, 0.759376, 1.000000 }, // SecondaryActiveFill
    { 0.967530, 0.937225, 0.932563, 1.000000 }, // SecondaryInactiveFill
-   { 0.897157, 0.801170, 0.786403, 1.000000 }, // SecondaryActiveFill
+   { 0.884144, 0.776012, 0.759376, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.624860, 0.567147, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -214,8 +214,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.903258, 0.812966, 0.799075, 1.000000 }, // SecondaryInactiveStroke
-   { 0.959631, 0.373607, 0.283449, 1.000000 }, // SecondaryActiveStroke
-   { 0.696627, 0.092884, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.701712, 0.161134, 0.077968, 1.000000 }, // SecondaryActiveStroke
+   { 0.859493, 0.114599, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -227,9 +227,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.966216, 0.880067, 0.864864, 1.000000 }, // InactiveFill
    { 0.932464, 0.760247, 0.729856, 1.000000 }, // ActiveFill
    { 1.000000, 0.504280, 0.416800, 1.000000 }, // HighlightedFill
-   { 0.896416, 0.801597, 0.784864, 1.000000 }, // SecondaryActiveFill
+   { 0.883247, 0.776373, 0.757513, 1.000000 }, // SecondaryActiveFill
    { 0.967266, 0.937302, 0.932014, 1.000000 }, // SecondaryInactiveFill
-   { 0.896416, 0.801597, 0.784864, 1.000000 }, // SecondaryActiveFill
+   { 0.883247, 0.776373, 0.757513, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.625524, 0.559440, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -237,8 +237,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.902565, 0.813375, 0.797635, 1.000000 }, // SecondaryInactiveStroke
-   { 0.953934, 0.379650, 0.278306, 1.000000 }, // SecondaryActiveStroke
-   { 0.692480, 0.103872, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.696276, 0.170201, 0.077364, 1.000000 }, // SecondaryActiveStroke
+   { 0.855080, 0.128262, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -250,9 +250,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.965813, 0.880347, 0.863253, 1.000000 }, // InactiveFill
    { 0.931667, 0.760833, 0.726667, 1.000000 }, // ActiveFill
    { 1.000000, 0.505222, 0.406267, 1.000000 }, // HighlightedFill
-   { 0.895675, 0.802050, 0.783325, 1.000000 }, // SecondaryActiveFill
+   { 0.882415, 0.776890, 0.755785, 1.000000 }, // SecondaryActiveFill
    { 0.967067, 0.937511, 0.931600, 1.000000 }, // SecondaryInactiveFill
-   { 0.895675, 0.802050, 0.783325, 1.000000 }, // SecondaryActiveFill
+   { 0.882415, 0.776890, 0.755785, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.626111, 0.551333, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -260,8 +260,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.901872, 0.813808, 0.796195, 1.000000 }, // SecondaryInactiveStroke
-   { 0.948080, 0.385613, 0.273120, 1.000000 }, // SecondaryActiveStroke
-   { 0.688133, 0.114689, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.690660, 0.179060, 0.076740, 1.000000 }, // SecondaryActiveStroke
+   { 0.849867, 0.141644, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -273,9 +273,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.965451, 0.880805, 0.861803, 1.000000 }, // InactiveFill
    { 0.930869, 0.761499, 0.723477, 1.000000 }, // ActiveFill
    { 1.000000, 0.506026, 0.395133, 1.000000 }, // HighlightedFill
-   { 0.894869, 0.802408, 0.781651, 1.000000 }, // SecondaryActiveFill
+   { 0.881583, 0.777437, 0.754057, 1.000000 }, // SecondaryActiveFill
    { 0.966867, 0.937728, 0.931186, 1.000000 }, // SecondaryInactiveFill
-   { 0.894869, 0.802408, 0.781651, 1.000000 }, // SecondaryActiveFill
+   { 0.881583, 0.777437, 0.754057, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.626968, 0.543227, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -283,8 +283,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.901178, 0.814266, 0.794755, 1.000000 }, // SecondaryInactiveStroke
-   { 0.942064, 0.391494, 0.267896, 1.000000 }, // SecondaryActiveStroke
-   { 0.683387, 0.125288, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.684864, 0.187703, 0.076096, 1.000000 }, // SecondaryActiveStroke
+   { 0.844453, 0.154816, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -296,9 +296,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.965088, 0.881299, 0.860352, 1.000000 }, // InactiveFill
    { 0.930072, 0.762245, 0.720288, 1.000000 }, // ActiveFill
    { 1.000000, 0.506880, 0.383600, 1.000000 }, // HighlightedFill
-   { 0.894128, 0.802915, 0.780112, 1.000000 }, // SecondaryActiveFill
+   { 0.880751, 0.778013, 0.752329, 1.000000 }, // SecondaryActiveFill
    { 0.966603, 0.937830, 0.930637, 1.000000 }, // SecondaryInactiveFill
-   { 0.894128, 0.802915, 0.780112, 1.000000 }, // SecondaryActiveFill
+   { 0.880751, 0.778013, 0.752329, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.627616, 0.534520, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -306,8 +306,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.900420, 0.814628, 0.793180, 1.000000 }, // SecondaryInactiveStroke
-   { 0.935898, 0.397437, 0.262822, 1.000000 }, // SecondaryActiveStroke
-   { 0.678440, 0.135688, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.678708, 0.196071, 0.075412, 1.000000 }, // SecondaryActiveStroke
+   { 0.838440, 0.167688, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -319,9 +319,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.964685, 0.881696, 0.858741, 1.000000 }, // InactiveFill
    { 0.929315, 0.763204, 0.717259, 1.000000 }, // ActiveFill
    { 1.000000, 0.507649, 0.371467, 1.000000 }, // HighlightedFill
-   { 0.893322, 0.803330, 0.778438, 1.000000 }, // SecondaryActiveFill
+   { 0.879854, 0.778500, 0.750466, 1.000000 }, // SecondaryActiveFill
    { 0.966404, 0.938062, 0.930223, 1.000000 }, // SecondaryInactiveFill
-   { 0.893322, 0.803330, 0.778438, 1.000000 }, // SecondaryActiveFill
+   { 0.879854, 0.778500, 0.750466, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.628397, 0.525613, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -329,8 +329,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.899727, 0.815137, 0.791740, 1.000000 }, // SecondaryInactiveStroke
-   { 0.929564, 0.403283, 0.257716, 1.000000 }, // SecondaryActiveStroke
-   { 0.672893, 0.145794, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.672372, 0.204202, 0.074708, 1.000000 }, // SecondaryActiveStroke
+   { 0.832227, 0.180316, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -342,9 +342,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.964283, 0.882133, 0.857131, 1.000000 }, // InactiveFill
    { 0.928517, 0.764107, 0.714069, 1.000000 }, // ActiveFill
    { 1.000000, 0.508516, 0.358933, 1.000000 }, // HighlightedFill
-   { 0.892516, 0.803773, 0.776764, 1.000000 }, // SecondaryActiveFill
+   { 0.879022, 0.779138, 0.748738, 1.000000 }, // SecondaryActiveFill
    { 0.966204, 0.938301, 0.929809, 1.000000 }, // SecondaryInactiveFill
-   { 0.892516, 0.803773, 0.776764, 1.000000 }, // SecondaryActiveFill
+   { 0.879022, 0.779138, 0.748738, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.629015, 0.516107, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -352,8 +352,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.899033, 0.815671, 0.790300, 1.000000 }, // SecondaryInactiveStroke
-   { 0.923060, 0.409025, 0.252580, 1.000000 }, // SecondaryActiveStroke
-   { 0.667347, 0.155714, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.666216, 0.212202, 0.074024, 1.000000 }, // SecondaryActiveStroke
+   { 0.825413, 0.192596, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -365,9 +365,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.963960, 0.882870, 0.855840, 1.000000 }, // InactiveFill
    { 0.927760, 0.765220, 0.711040, 1.000000 }, // ActiveFill
    { 1.000000, 0.511000, 0.348000, 1.000000 }, // HighlightedFill
-   { 0.891710, 0.804245, 0.775090, 1.000000 }, // SecondaryActiveFill
+   { 0.878255, 0.779923, 0.747145, 1.000000 }, // SecondaryActiveFill
    { 0.966070, 0.938665, 0.929530, 1.000000 }, // SecondaryInactiveFill
-   { 0.891710, 0.804245, 0.775090, 1.000000 }, // SecondaryActiveFill
+   { 0.878255, 0.779923, 0.747145, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.631300, 0.508400, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -375,8 +375,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.898405, 0.816347, 0.788995, 1.000000 }, // SecondaryInactiveStroke
-   { 0.916640, 0.416480, 0.249760, 1.000000 }, // SecondaryActiveStroke
-   { 0.661200, 0.165300, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.660960, 0.220320, 0.073440, 1.000000 }, // SecondaryActiveStroke
+   { 0.818400, 0.204600, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -388,9 +388,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.963403, 0.882889, 0.853611, 1.000000 }, // InactiveFill
    { 0.926677, 0.765367, 0.706709, 1.000000 }, // ActiveFill
    { 1.000000, 0.510153, 0.332027, 1.000000 }, // HighlightedFill
-   { 0.890705, 0.804389, 0.773002, 1.000000 }, // SecondaryActiveFill
+   { 0.877137, 0.780107, 0.744823, 1.000000 }, // SecondaryActiveFill
    { 0.965710, 0.938630, 0.928783, 1.000000 }, // SecondaryInactiveFill
-   { 0.890705, 0.804389, 0.773002, 1.000000 }, // SecondaryActiveFill
+   { 0.877137, 0.780107, 0.744823, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.630596, 0.496267, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -398,8 +398,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.897456, 0.816473, 0.787024, 1.000000 }, // SecondaryInactiveStroke
-   { 0.915145, 0.417331, 0.236308, 1.000000 }, // SecondaryActiveStroke
-   { 0.655107, 0.174695, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.653700, 0.227584, 0.072633, 1.000000 }, // SecondaryActiveStroke
+   { 0.810960, 0.216256, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -411,9 +411,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.962885, 0.883089, 0.851541, 1.000000 }, // InactiveFill
    { 0.925555, 0.765497, 0.702219, 1.000000 }, // ActiveFill
    { 1.000000, 0.510985, 0.317653, 1.000000 }, // HighlightedFill
-   { 0.889764, 0.804685, 0.771049, 1.000000 }, // SecondaryActiveFill
+   { 0.876149, 0.780561, 0.742771, 1.000000 }, // SecondaryActiveFill
    { 0.965416, 0.938724, 0.928171, 1.000000 }, // SecondaryInactiveFill
-   { 0.889764, 0.804685, 0.771049, 1.000000 }, // SecondaryActiveFill
+   { 0.876149, 0.780561, 0.742771, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.631299, 0.485533, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -421,8 +421,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.896572, 0.816747, 0.785188, 1.000000 }, // SecondaryInactiveStroke
-   { 0.913671, 0.418716, 0.223036, 1.000000 }, // SecondaryActiveStroke
-   { 0.648613, 0.183774, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.646620, 0.234699, 0.071847, 1.000000 }, // SecondaryActiveStroke
+   { 0.803120, 0.227551, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -434,9 +434,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.962328, 0.883217, 0.849312, 1.000000 }, // InactiveFill
    { 0.924592, 0.766235, 0.698368, 1.000000 }, // ActiveFill
    { 1.000000, 0.511876, 0.302680, 1.000000 }, // HighlightedFill
-   { 0.888889, 0.805128, 0.769231, 1.000000 }, // SecondaryActiveFill
+   { 0.875096, 0.780938, 0.740584, 1.000000 }, // SecondaryActiveFill
    { 0.965121, 0.938828, 0.927559, 1.000000 }, // SecondaryInactiveFill
-   { 0.888889, 0.805128, 0.769231, 1.000000 }, // SecondaryActiveFill
+   { 0.875096, 0.780938, 0.740584, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.632220, 0.474600, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -444,8 +444,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.895753, 0.817167, 0.783487, 1.000000 }, // SecondaryInactiveStroke
-   { 0.912176, 0.420362, 0.209584, 1.000000 }, // SecondaryActiveStroke
-   { 0.641720, 0.192516, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.639720, 0.241672, 0.071080, 1.000000 }, // SecondaryActiveStroke
+   { 0.795080, 0.238524, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -457,9 +457,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.961771, 0.883401, 0.847083, 1.000000 }, // InactiveFill
    { 0.923589, 0.766947, 0.694357, 1.000000 }, // ActiveFill
    { 1.000000, 0.512720, 0.286907, 1.000000 }, // HighlightedFill
-   { 0.887949, 0.805490, 0.767278, 1.000000 }, // SecondaryActiveFill
+   { 0.874108, 0.781464, 0.738532, 1.000000 }, // SecondaryActiveFill
    { 0.964826, 0.938942, 0.926947, 1.000000 }, // SecondaryInactiveFill
-   { 0.887949, 0.805490, 0.767278, 1.000000 }, // SecondaryActiveFill
+   { 0.874108, 0.781464, 0.738532, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.632959, 0.462867, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -467,8 +467,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.894869, 0.817503, 0.781651, 1.000000 }, // SecondaryInactiveStroke
-   { 0.910681, 0.422406, 0.196132, 1.000000 }, // SecondaryActiveStroke
-   { 0.634827, 0.201028, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.632640, 0.248370, 0.070293, 1.000000 }, // SecondaryActiveStroke
+   { 0.786840, 0.249166, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -480,9 +480,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.961213, 0.883640, 0.844853, 1.000000 }, // InactiveFill
    { 0.922547, 0.767640, 0.690187, 1.000000 }, // ActiveFill
    { 1.000000, 0.513422, 0.270133, 1.000000 }, // HighlightedFill
-   { 0.887008, 0.805886, 0.765325, 1.000000 }, // SecondaryActiveFill
+   { 0.873055, 0.781915, 0.736345, 1.000000 }, // SecondaryActiveFill
    { 0.964532, 0.939067, 0.926335, 1.000000 }, // SecondaryInactiveFill
-   { 0.887008, 0.805886, 0.765325, 1.000000 }, // SecondaryActiveFill
+   { 0.873055, 0.781915, 0.736345, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.633822, 0.450733, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -490,8 +490,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.893985, 0.817872, 0.779815, 1.000000 }, // SecondaryInactiveStroke
-   { 0.909167, 0.424722, 0.182500, 1.000000 }, // SecondaryActiveStroke
-   { 0.627733, 0.209244, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.625560, 0.254858, 0.069507, 1.000000 }, // SecondaryActiveStroke
+   { 0.778200, 0.259400, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -503,9 +503,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.960656, 0.883935, 0.842624, 1.000000 }, // InactiveFill
    { 0.921504, 0.768437, 0.686016, 1.000000 }, // ActiveFill
    { 1.000000, 0.514294, 0.252760, 1.000000 }, // HighlightedFill
-   { 0.886133, 0.806426, 0.763507, 1.000000 }, // SecondaryActiveFill
+   { 0.872002, 0.782403, 0.734158, 1.000000 }, // SecondaryActiveFill
    { 0.964237, 0.939203, 0.925723, 1.000000 }, // SecondaryInactiveFill
-   { 0.886133, 0.806426, 0.763507, 1.000000 }, // SecondaryActiveFill
+   { 0.872002, 0.782403, 0.734158, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.634570, 0.437800, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -513,8 +513,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.893166, 0.818382, 0.778114, 1.000000 }, // SecondaryInactiveStroke
-   { 0.907632, 0.427318, 0.168688, 1.000000 }, // SecondaryActiveStroke
-   { 0.620440, 0.217154, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.618480, 0.261136, 0.068720, 1.000000 }, // SecondaryActiveStroke
+   { 0.769560, 0.269346, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -526,9 +526,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.960139, 0.884402, 0.840555, 1.000000 }, // InactiveFill
    { 0.920421, 0.769222, 0.681685, 1.000000 }, // ActiveFill
    { 1.000000, 0.514985, 0.234187, 1.000000 }, // HighlightedFill
-   { 0.885193, 0.806888, 0.761554, 1.000000 }, // SecondaryActiveFill
+   { 0.870949, 0.782930, 0.731971, 1.000000 }, // SecondaryActiveFill
    { 0.963942, 0.939349, 0.925111, 1.000000 }, // SecondaryInactiveFill
-   { 0.885193, 0.806888, 0.761554, 1.000000 }, // SecondaryActiveFill
+   { 0.870949, 0.782930, 0.731971, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.635369, 0.424267, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -536,8 +536,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.892282, 0.818813, 0.776278, 1.000000 }, // SecondaryInactiveStroke
-   { 0.905917, 0.429232, 0.153256, 1.000000 }, // SecondaryActiveStroke
-   { 0.613147, 0.224820, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.611400, 0.267204, 0.067933, 1.000000 }, // SecondaryActiveStroke
+   { 0.760520, 0.278857, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -549,9 +549,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.959581, 0.884807, 0.838325, 1.000000 }, // InactiveFill
    { 0.919299, 0.770001, 0.677195, 1.000000 }, // ActiveFill
    { 1.000000, 0.515678, 0.214613, 1.000000 }, // HighlightedFill
-   { 0.884252, 0.807384, 0.759601, 1.000000 }, // SecondaryActiveFill
+   { 0.869896, 0.783494, 0.729784, 1.000000 }, // SecondaryActiveFill
    { 0.963648, 0.939506, 0.924499, 1.000000 }, // SecondaryInactiveFill
-   { 0.884252, 0.807384, 0.759601, 1.000000 }, // SecondaryActiveFill
+   { 0.869896, 0.783494, 0.729784, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.636249, 0.410133, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -559,8 +559,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.891398, 0.819275, 0.774442, 1.000000 }, // SecondaryInactiveStroke
-   { 0.904103, 0.431009, 0.136924, 1.000000 }, // SecondaryActiveStroke
-   { 0.605653, 0.232167, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.604140, 0.272982, 0.067127, 1.000000 }, // SecondaryActiveStroke
+   { 0.751480, 0.288067, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -572,9 +572,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.958984, 0.885155, 0.835936, 1.000000 }, // InactiveFill
    { 0.918176, 0.770893, 0.672704, 1.000000 }, // ActiveFill
    { 1.000000, 0.516424, 0.194040, 1.000000 }, // HighlightedFill
-   { 0.883312, 0.807914, 0.757648, 1.000000 }, // SecondaryActiveFill
+   { 0.868843, 0.784095, 0.727597, 1.000000 }, // SecondaryActiveFill
    { 0.963353, 0.939673, 0.923887, 1.000000 }, // SecondaryInactiveFill
-   { 0.883312, 0.807914, 0.757648, 1.000000 }, // SecondaryActiveFill
+   { 0.868843, 0.784095, 0.727597, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.637120, 0.395200, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -582,8 +582,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.890514, 0.819769, 0.772606, 1.000000 }, // SecondaryInactiveStroke
-   { 0.902228, 0.432922, 0.120052, 1.000000 }, // SecondaryActiveStroke
-   { 0.597960, 0.239184, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.597060, 0.278628, 0.066340, 1.000000 }, // SecondaryActiveStroke
+   { 0.742240, 0.296896, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -595,9 +595,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.958427, 0.885673, 0.833707, 1.000000 }, // InactiveFill
    { 0.916973, 0.771677, 0.667893, 1.000000 }, // ActiveFill
    { 1.000000, 0.517039, 0.172067, 1.000000 }, // HighlightedFill
-   { 0.882307, 0.808371, 0.755560, 1.000000 }, // SecondaryActiveFill
+   { 0.867790, 0.784735, 0.725410, 1.000000 }, // SecondaryActiveFill
    { 0.963058, 0.939851, 0.923275, 1.000000 }, // SecondaryInactiveFill
-   { 0.882307, 0.808371, 0.755560, 1.000000 }, // SecondaryActiveFill
+   { 0.867790, 0.784735, 0.725410, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.637906, 0.379267, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -605,8 +605,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.889565, 0.820189, 0.770635, 1.000000 }, // SecondaryInactiveStroke
-   { 0.900273, 0.434882, 0.102460, 1.000000 }, // SecondaryActiveStroke
-   { 0.590467, 0.246028, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.589980, 0.284064, 0.065553, 1.000000 }, // SecondaryActiveStroke
+   { 0.733000, 0.305417, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -618,9 +618,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.957869, 0.886247, 0.831477, 1.000000 }, // InactiveFill
    { 0.915771, 0.772581, 0.663083, 1.000000 }, // ActiveFill
    { 1.000000, 0.517593, 0.148693, 1.000000 }, // HighlightedFill
-   { 0.881366, 0.808969, 0.753607, 1.000000 }, // SecondaryActiveFill
+   { 0.866737, 0.785412, 0.723223, 1.000000 }, // SecondaryActiveFill
    { 0.962764, 0.940040, 0.922663, 1.000000 }, // SecondaryInactiveFill
-   { 0.881366, 0.808969, 0.753607, 1.000000 }, // SecondaryActiveFill
+   { 0.866737, 0.785412, 0.723223, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.638769, 0.362533, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -628,8 +628,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.888681, 0.820748, 0.768799, 1.000000 }, // SecondaryInactiveStroke
-   { 0.890628, 0.442015, 0.098959, 1.000000 }, // SecondaryActiveStroke
-   { 0.582773, 0.252535, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.582900, 0.289291, 0.064767, 1.000000 }, // SecondaryActiveStroke
+   { 0.723560, 0.313543, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -641,9 +641,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.957312, 0.886877, 0.829248, 1.000000 }, // InactiveFill
    { 0.914488, 0.773393, 0.657952, 1.000000 }, // ActiveFill
    { 1.000000, 0.518156, 0.123920, 1.000000 }, // HighlightedFill
-   { 0.880426, 0.809601, 0.751654, 1.000000 }, // SecondaryActiveFill
+   { 0.865619, 0.786024, 0.720901, 1.000000 }, // SecondaryActiveFill
    { 0.962469, 0.940239, 0.922051, 1.000000 }, // SecondaryInactiveFill
-   { 0.880426, 0.809601, 0.751654, 1.000000 }, // SecondaryActiveFill
+   { 0.865619, 0.786024, 0.720901, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.639640, 0.344800, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -651,8 +651,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.887797, 0.821338, 0.766963, 1.000000 }, // SecondaryInactiveStroke
-   { 0.879876, 0.449714, 0.097764, 1.000000 }, // SecondaryActiveStroke
-   { 0.574880, 0.258696, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.575820, 0.294308, 0.063980, 1.000000 }, // SecondaryActiveStroke
+   { 0.714120, 0.321354, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -664,9 +664,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.956715, 0.887458, 0.826859, 1.000000 }, // InactiveFill
    { 0.913205, 0.774334, 0.652821, 1.000000 }, // ActiveFill
    { 1.000000, 0.518692, 0.097547, 1.000000 }, // HighlightedFill
-   { 0.879421, 0.810165, 0.749566, 1.000000 }, // SecondaryActiveFill
+   { 0.864501, 0.786676, 0.718579, 1.000000 }, // SecondaryActiveFill
    { 0.962174, 0.940449, 0.921439, 1.000000 }, // SecondaryInactiveFill
-   { 0.879421, 0.810165, 0.749566, 1.000000 }, // SecondaryActiveFill
+   { 0.864501, 0.786676, 0.718579, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.640462, 0.325867, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -674,8 +674,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.886848, 0.821858, 0.764992, 1.000000 }, // SecondaryInactiveStroke
-   { 0.869304, 0.457190, 0.096589, 1.000000 }, // SecondaryActiveStroke
-   { 0.567187, 0.264687, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.568740, 0.299115, 0.063193, 1.000000 }, // SecondaryActiveStroke
+   { 0.704680, 0.328851, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -687,9 +687,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.956117, 0.888099, 0.824469, 1.000000 }, // InactiveFill
    { 0.912043, 0.775709, 0.648171, 1.000000 }, // ActiveFill
    { 1.000000, 0.519073, 0.069173, 1.000000 }, // HighlightedFill
-   { 0.878480, 0.810866, 0.747613, 1.000000 }, // SecondaryActiveFill
+   { 0.863448, 0.787469, 0.716392, 1.000000 }, // SecondaryActiveFill
    { 0.961880, 0.940669, 0.920827, 1.000000 }, // SecondaryInactiveFill
-   { 0.878480, 0.810866, 0.747613, 1.000000 }, // SecondaryActiveFill
+   { 0.863448, 0.787469, 0.716392, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.641399, 0.305933, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -697,8 +697,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.885964, 0.822513, 0.763156, 1.000000 }, // SecondaryInactiveStroke
-   { 0.858552, 0.464254, 0.095395, 1.000000 }, // SecondaryActiveStroke
-   { 0.559493, 0.270422, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.561660, 0.303712, 0.062407, 1.000000 }, // SecondaryActiveStroke
+   { 0.695240, 0.336033, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -710,9 +710,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.955600, 0.889000, 0.822400, 1.000000 }, // InactiveFill
    { 0.910920, 0.777300, 0.643680, 1.000000 }, // ActiveFill
    { 1.000000, 0.521200, 0.042400, 1.000000 }, // HighlightedFill
-   { 0.877605, 0.811700, 0.745795, 1.000000 }, // SecondaryActiveFill
+   { 0.862460, 0.788400, 0.714340, 1.000000 }, // SecondaryActiveFill
    { 0.961650, 0.941000, 0.920350, 1.000000 }, // SecondaryInactiveFill
-   { 0.877605, 0.811700, 0.745795, 1.000000 }, // SecondaryActiveFill
+   { 0.862460, 0.788400, 0.714340, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.643700, 0.287400, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -720,8 +720,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.885145, 0.823300, 0.761455, 1.000000 }, // SecondaryInactiveStroke
-   { 0.847980, 0.471100, 0.094220, 1.000000 }, // SecondaryActiveStroke
-   { 0.551800, 0.275900, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.554760, 0.308200, 0.061640, 1.000000 }, // SecondaryActiveStroke
+   { 0.685800, 0.342900, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -733,9 +733,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.954683, 0.888973, 0.818731, 1.000000 }, // InactiveFill
    { 0.909091, 0.777272, 0.636363, 1.000000 }, // ActiveFill
    { 1.000000, 0.521423, 0.009840, 1.000000 }, // HighlightedFill
-   { 0.876301, 0.811914, 0.743086, 1.000000 }, // SecondaryActiveFill
+   { 0.861000, 0.788648, 0.711307, 1.000000 }, // SecondaryActiveFill
    { 0.961199, 0.941003, 0.919414, 1.000000 }, // SecondaryInactiveFill
-   { 0.876301, 0.811914, 0.743086, 1.000000 }, // SecondaryActiveFill
+   { 0.861000, 0.788648, 0.711307, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.643661, 0.262747, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -743,8 +743,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.883919, 0.823497, 0.758908, 1.000000 }, // SecondaryInactiveStroke
-   { 0.837528, 0.477701, 0.093059, 1.000000 }, // SecondaryActiveStroke
-   { 0.544693, 0.281425, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.547800, 0.312449, 0.060867, 1.000000 }, // SecondaryActiveStroke
+   { 0.677013, 0.349790, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -756,9 +756,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.953805, 0.889133, 0.815221, 1.000000 }, // InactiveFill
    { 0.907581, 0.778195, 0.630325, 1.000000 }, // ActiveFill
    { 0.990280, 0.528149, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.875126, 0.812369, 0.740647, 1.000000 }, // SecondaryActiveFill
+   { 0.859669, 0.789144, 0.708544, 1.000000 }, // SecondaryActiveFill
    { 0.960814, 0.941120, 0.918613, 1.000000 }, // SecondaryInactiveFill
-   { 0.875126, 0.812369, 0.740647, 1.000000 }, // SecondaryActiveFill
+   { 0.859669, 0.789144, 0.708544, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.644444, 0.238093, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -766,8 +766,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.882822, 0.823933, 0.756631, 1.000000 }, // SecondaryInactiveStroke
-   { 0.827076, 0.483993, 0.091897, 1.000000 }, // SecondaryActiveStroke
-   { 0.537387, 0.286606, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.540840, 0.316492, 0.060093, 1.000000 }, // SecondaryActiveStroke
+   { 0.668027, 0.356281, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -779,9 +779,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.952928, 0.889381, 0.811712, 1.000000 }, // InactiveFill
    { 0.906032, 0.779175, 0.624128, 1.000000 }, // ActiveFill
    { 0.976520, 0.537086, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.873887, 0.812771, 0.738073, 1.000000 }, // SecondaryActiveFill
+   { 0.858339, 0.789688, 0.705781, 1.000000 }, // SecondaryActiveFill
    { 0.960428, 0.941251, 0.917812, 1.000000 }, // SecondaryInactiveFill
-   { 0.873887, 0.812771, 0.738073, 1.000000 }, // SecondaryActiveFill
+   { 0.858339, 0.789688, 0.705781, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.645958, 0.213240, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -789,8 +789,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.881661, 0.824312, 0.754219, 1.000000 }, // SecondaryInactiveStroke
-   { 0.816804, 0.490082, 0.090756, 1.000000 }, // SecondaryActiveStroke
-   { 0.530080, 0.291544, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.534060, 0.320436, 0.059340, 1.000000 }, // SecondaryActiveStroke
+   { 0.658840, 0.362362, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -802,9 +802,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.952131, 0.889901, 0.808523, 1.000000 }, // InactiveFill
    { 0.904443, 0.780218, 0.617771, 1.000000 }, // ActiveFill
    { 0.962960, 0.545677, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.872713, 0.813312, 0.735634, 1.000000 }, // SecondaryActiveFill
+   { 0.856944, 0.790184, 0.702883, 1.000000 }, // SecondaryActiveFill
    { 0.960042, 0.941395, 0.917011, 1.000000 }, // SecondaryInactiveFill
-   { 0.872713, 0.813312, 0.735634, 1.000000 }, // SecondaryActiveFill
+   { 0.856944, 0.790184, 0.702883, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.646741, 0.184787, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -812,8 +812,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.880565, 0.824828, 0.751942, 1.000000 }, // SecondaryInactiveStroke
-   { 0.806532, 0.495868, 0.089615, 1.000000 }, // SecondaryActiveStroke
-   { 0.522573, 0.296125, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.527280, 0.324180, 0.058587, 1.000000 }, // SecondaryActiveStroke
+   { 0.649653, 0.368137, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -825,9 +825,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.951333, 0.890500, 0.805333, 1.000000 }, // InactiveFill
    { 0.902813, 0.781330, 0.611253, 1.000000 }, // ActiveFill
    { 0.949600, 0.553933, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.871473, 0.813801, 0.733060, 1.000000 }, // SecondaryActiveFill
+   { 0.855548, 0.790730, 0.699985, 1.000000 }, // SecondaryActiveFill
    { 0.959657, 0.941554, 0.916210, 1.000000 }, // SecondaryInactiveFill
-   { 0.871473, 0.813801, 0.733060, 1.000000 }, // SecondaryActiveFill
+   { 0.855548, 0.790730, 0.699985, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.647389, 0.153733, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -835,8 +835,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.879403, 0.825289, 0.749530, 1.000000 }, // SecondaryInactiveStroke
-   { 0.796440, 0.501462, 0.088493, 1.000000 }, // SecondaryActiveStroke
-   { 0.515067, 0.300456, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.520500, 0.327722, 0.057833, 1.000000 }, // SecondaryActiveStroke
+   { 0.640467, 0.373606, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -848,9 +848,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.950456, 0.891003, 0.801824, 1.000000 }, // InactiveFill
    { 0.901104, 0.782429, 0.604416, 1.000000 }, // ActiveFill
    { 0.936240, 0.561744, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.870234, 0.814335, 0.730486, 1.000000 }, // SecondaryActiveFill
+   { 0.854153, 0.791327, 0.697087, 1.000000 }, // SecondaryActiveFill
    { 0.959271, 0.941726, 0.915409, 1.000000 }, // SecondaryInactiveFill
-   { 0.870234, 0.814335, 0.730486, 1.000000 }, // SecondaryActiveFill
+   { 0.854153, 0.791327, 0.697087, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.647952, 0.119880, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -858,8 +858,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.878242, 0.825792, 0.747118, 1.000000 }, // SecondaryInactiveStroke
-   { 0.786348, 0.506758, 0.087372, 1.000000 }, // SecondaryActiveStroke
-   { 0.507760, 0.304656, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.513900, 0.331180, 0.057100, 1.000000 }, // SecondaryActiveStroke
+   { 0.631280, 0.378768, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -871,9 +871,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.949579, 0.891594, 0.798315, 1.000000 }, // InactiveFill
    { 0.899315, 0.783527, 0.597259, 1.000000 }, // ActiveFill
    { 0.923080, 0.569233, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.868995, 0.814913, 0.727912, 1.000000 }, // SecondaryActiveFill
+   { 0.852758, 0.791973, 0.694189, 1.000000 }, // SecondaryActiveFill
    { 0.958885, 0.941912, 0.914608, 1.000000 }, // SecondaryInactiveFill
-   { 0.868995, 0.814913, 0.727912, 1.000000 }, // SecondaryActiveFill
+   { 0.852758, 0.791973, 0.694189, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.648417, 0.082827, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -881,8 +881,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.877081, 0.826337, 0.744706, 1.000000 }, // SecondaryInactiveStroke
-   { 0.776436, 0.511873, 0.086271, 1.000000 }, // SecondaryActiveStroke
-   { 0.500453, 0.308613, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.507480, 0.334561, 0.056387, 1.000000 }, // SecondaryActiveStroke
+   { 0.622293, 0.383748, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -894,9 +894,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.948701, 0.892273, 0.794805, 1.000000 }, // InactiveFill
    { 0.897485, 0.784719, 0.589941, 1.000000 }, // ActiveFill
    { 0.910120, 0.576409, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.867755, 0.815536, 0.725338, 1.000000 }, // SecondaryActiveFill
+   { 0.851362, 0.792670, 0.691291, 1.000000 }, // SecondaryActiveFill
    { 0.958500, 0.942112, 0.913807, 1.000000 }, // SecondaryInactiveFill
-   { 0.867755, 0.815536, 0.725338, 1.000000 }, // SecondaryActiveFill
+   { 0.851362, 0.792670, 0.691291, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.648724, 0.041973, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -904,8 +904,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.875919, 0.826923, 0.742294, 1.000000 }, // SecondaryInactiveStroke
-   { 0.766704, 0.516815, 0.085189, 1.000000 }, // SecondaryActiveStroke
-   { 0.493347, 0.312453, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.501060, 0.337752, 0.055673, 1.000000 }, // SecondaryActiveStroke
+   { 0.613507, 0.388554, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -917,9 +917,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.947744, 0.892875, 0.790976, 1.000000 }, // InactiveFill
    { 0.895576, 0.785931, 0.582304, 1.000000 }, // ActiveFill
    { 0.897160, 0.583154, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.866516, 0.816203, 0.722764, 1.000000 }, // SecondaryActiveFill
+   { 0.849967, 0.793416, 0.688393, 1.000000 }, // SecondaryActiveFill
    { 0.958114, 0.942326, 0.913006, 1.000000 }, // SecondaryInactiveFill
-   { 0.866516, 0.816203, 0.722764, 1.000000 }, // SecondaryActiveFill
+   { 0.849967, 0.793416, 0.688393, 1.000000 }, // SecondaryActiveFill
    { 0.999120, 0.649428, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -927,8 +927,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.874758, 0.827551, 0.739882, 1.000000 }, // SecondaryInactiveStroke
-   { 0.756972, 0.521470, 0.084108, 1.000000 }, // SecondaryActiveStroke
-   { 0.486240, 0.316056, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.494640, 0.340752, 0.054960, 1.000000 }, // SecondaryActiveStroke
+   { 0.604720, 0.393068, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -940,9 +940,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.946747, 0.893493, 0.786987, 1.000000 }, // InactiveFill
    { 0.893587, 0.787173, 0.574347, 1.000000 }, // ActiveFill
    { 0.884600, 0.589733, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.865277, 0.816914, 0.720190, 1.000000 }, // SecondaryActiveFill
+   { 0.848572, 0.794213, 0.685495, 1.000000 }, // SecondaryActiveFill
    { 0.957728, 0.942554, 0.912205, 1.000000 }, // SecondaryInactiveFill
-   { 0.865277, 0.816914, 0.720190, 1.000000 }, // SecondaryActiveFill
+   { 0.848572, 0.794213, 0.685495, 1.000000 }, // SecondaryActiveFill
    { 0.985067, 0.656711, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -950,8 +950,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.873597, 0.828221, 0.737470, 1.000000 }, // SecondaryInactiveStroke
-   { 0.747420, 0.525962, 0.083047, 1.000000 }, // SecondaryActiveStroke
-   { 0.479333, 0.319556, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.488400, 0.343689, 0.054267, 1.000000 }, // SecondaryActiveStroke
+   { 0.596133, 0.397422, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -963,9 +963,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.945749, 0.894211, 0.782997, 1.000000 }, // InactiveFill
    { 0.891517, 0.788459, 0.566069, 1.000000 }, // ActiveFill
    { 0.872040, 0.595894, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.864037, 0.817671, 0.717616, 1.000000 }, // SecondaryActiveFill
+   { 0.847176, 0.795060, 0.682597, 1.000000 }, // SecondaryActiveFill
    { 0.957343, 0.942795, 0.911404, 1.000000 }, // SecondaryInactiveFill
-   { 0.864037, 0.817671, 0.717616, 1.000000 }, // SecondaryActiveFill
+   { 0.847176, 0.795060, 0.682597, 1.000000 }, // SecondaryActiveFill
    { 0.971013, 0.663526, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -973,8 +973,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.872435, 0.828932, 0.735058, 1.000000 }, // SecondaryInactiveStroke
-   { 0.738048, 0.530301, 0.082005, 1.000000 }, // SecondaryActiveStroke
-   { 0.472427, 0.322825, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.482160, 0.346441, 0.053573, 1.000000 }, // SecondaryActiveStroke
+   { 0.587547, 0.401490, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -986,9 +986,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.944672, 0.894877, 0.778688, 1.000000 }, // InactiveFill
    { 0.889368, 0.789799, 0.557472, 1.000000 }, // ActiveFill
    { 0.859680, 0.601776, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.862733, 0.818385, 0.714907, 1.000000 }, // SecondaryActiveFill
+   { 0.845781, 0.795956, 0.679699, 1.000000 }, // SecondaryActiveFill
    { 0.956957, 0.943051, 0.910603, 1.000000 }, // SecondaryInactiveFill
-   { 0.862733, 0.818385, 0.714907, 1.000000 }, // SecondaryActiveFill
+   { 0.845781, 0.795956, 0.679699, 1.000000 }, // SecondaryActiveFill
    { 0.957360, 0.670152, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -996,8 +996,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.871209, 0.829600, 0.732511, 1.000000 }, // SecondaryInactiveStroke
-   { 0.728856, 0.534494, 0.080984, 1.000000 }, // SecondaryActiveStroke
-   { 0.465720, 0.326004, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.476100, 0.349140, 0.052900, 1.000000 }, // SecondaryActiveStroke
+   { 0.579360, 0.405552, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1009,9 +1009,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.943715, 0.895872, 0.774859, 1.000000 }, // InactiveFill
    { 0.887099, 0.791133, 0.548395, 1.000000 }, // ActiveFill
    { 0.847520, 0.607389, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.861494, 0.819231, 0.712333, 1.000000 }, // SecondaryActiveFill
+   { 0.844321, 0.796819, 0.676666, 1.000000 }, // SecondaryActiveFill
    { 0.956571, 0.943320, 0.909802, 1.000000 }, // SecondaryInactiveFill
-   { 0.861494, 0.819231, 0.712333, 1.000000 }, // SecondaryActiveFill
+   { 0.844321, 0.796819, 0.676666, 1.000000 }, // SecondaryActiveFill
    { 0.943907, 0.676466, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1019,8 +1019,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.870048, 0.830396, 0.730099, 1.000000 }, // SecondaryInactiveStroke
-   { 0.719844, 0.538550, 0.079983, 1.000000 }, // SecondaryActiveStroke
-   { 0.459013, 0.328960, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.470220, 0.351794, 0.052247, 1.000000 }, // SecondaryActiveStroke
+   { 0.570973, 0.409198, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1032,9 +1032,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.942757, 0.896963, 0.771029, 1.000000 }, // InactiveFill
    { 0.884789, 0.792621, 0.539157, 1.000000 }, // ActiveFill
    { 0.835560, 0.612744, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.860189, 0.820039, 0.709624, 1.000000 }, // SecondaryActiveFill
+   { 0.842860, 0.797733, 0.673633, 1.000000 }, // SecondaryActiveFill
    { 0.956186, 0.943603, 0.909001, 1.000000 }, // SecondaryInactiveFill
-   { 0.860189, 0.820039, 0.709624, 1.000000 }, // SecondaryActiveFill
+   { 0.842860, 0.797733, 0.673633, 1.000000 }, // SecondaryActiveFill
    { 0.930653, 0.682479, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1042,8 +1042,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.868821, 0.831149, 0.727552, 1.000000 }, // SecondaryInactiveStroke
-   { 0.710832, 0.542339, 0.078981, 1.000000 }, // SecondaryActiveStroke
-   { 0.452107, 0.331545, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.464340, 0.354274, 0.051593, 1.000000 }, // SecondaryActiveStroke
+   { 0.562587, 0.412564, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1055,9 +1055,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.941840, 0.898220, 0.767360, 1.000000 }, // InactiveFill
    { 0.882880, 0.795040, 0.531520, 1.000000 }, // ActiveFill
    { 0.824000, 0.618000, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.859015, 0.821058, 0.707185, 1.000000 }, // SecondaryActiveFill
+   { 0.841530, 0.798865, 0.670870, 1.000000 }, // SecondaryActiveFill
    { 0.955865, 0.943982, 0.908335, 1.000000 }, // SecondaryInactiveFill
-   { 0.859015, 0.821058, 0.707185, 1.000000 }, // SecondaryActiveFill
+   { 0.841530, 0.798865, 0.670870, 1.000000 }, // SecondaryActiveFill
    { 0.917600, 0.688200, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1065,8 +1065,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.867725, 0.832112, 0.725275, 1.000000 }, // SecondaryInactiveStroke
-   { 0.702000, 0.546000, 0.078000, 1.000000 }, // SecondaryActiveStroke
-   { 0.445200, 0.333900, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.458460, 0.356580, 0.050940, 1.000000 }, // SecondaryActiveStroke
+   { 0.554000, 0.415500, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1078,9 +1078,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.940064, 0.898109, 0.760256, 1.000000 }, // InactiveFill
    { 0.879675, 0.795447, 0.518699, 1.000000 }, // ActiveFill
    { 0.812507, 0.622922, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.857225, 0.821349, 0.703468, 1.000000 }, // SecondaryActiveFill
+   { 0.839589, 0.799280, 0.666838, 1.000000 }, // SecondaryActiveFill
    { 0.955267, 0.944026, 0.907093, 1.000000 }, // SecondaryInactiveFill
-   { 0.857225, 0.821349, 0.703468, 1.000000 }, // SecondaryActiveFill
+   { 0.839589, 0.799280, 0.666838, 1.000000 }, // SecondaryActiveFill
    { 0.904760, 0.693649, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1088,8 +1088,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.866048, 0.832388, 0.721792, 1.000000 }, // SecondaryInactiveStroke
-   { 0.693408, 0.549590, 0.077045, 1.000000 }, // SecondaryActiveStroke
-   { 0.439533, 0.336976, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.452712, 0.358816, 0.050301, 1.000000 }, // SecondaryActiveStroke
+   { 0.547000, 0.419367, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1101,9 +1101,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.938648, 0.898769, 0.754592, 1.000000 }, // InactiveFill
    { 0.876989, 0.797032, 0.507957, 1.000000 }, // ActiveFill
    { 0.801013, 0.627460, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.855566, 0.821864, 0.700021, 1.000000 }, // SecondaryActiveFill
+   { 0.837712, 0.799845, 0.662941, 1.000000 }, // SecondaryActiveFill
    { 0.954734, 0.944172, 0.905986, 1.000000 }, // SecondaryInactiveFill
-   { 0.855566, 0.821864, 0.700021, 1.000000 }, // SecondaryActiveFill
+   { 0.837712, 0.799845, 0.662941, 1.000000 }, // SecondaryActiveFill
    { 0.892120, 0.698827, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1111,8 +1111,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.864501, 0.832885, 0.718579, 1.000000 }, // SecondaryInactiveStroke
-   { 0.684816, 0.552926, 0.076091, 1.000000 }, // SecondaryActiveStroke
-   { 0.433667, 0.339706, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.447144, 0.361027, 0.049683, 1.000000 }, // SecondaryActiveStroke
+   { 0.539600, 0.422687, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1124,9 +1124,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.937272, 0.899635, 0.749088, 1.000000 }, // InactiveFill
    { 0.874104, 0.798566, 0.496416, 1.000000 }, // ActiveFill
    { 0.789920, 0.631936, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.853906, 0.822440, 0.696574, 1.000000 }, // SecondaryActiveFill
+   { 0.835771, 0.800399, 0.658909, 1.000000 }, // SecondaryActiveFill
    { 0.954201, 0.944337, 0.904879, 1.000000 }, // SecondaryInactiveFill
-   { 0.853906, 0.822440, 0.696574, 1.000000 }, // SecondaryActiveFill
+   { 0.835771, 0.800399, 0.658909, 1.000000 }, // SecondaryActiveFill
    { 0.879880, 0.703904, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1134,8 +1134,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.862954, 0.833436, 0.715366, 1.000000 }, // SecondaryInactiveStroke
-   { 0.676404, 0.556154, 0.075156, 1.000000 }, // SecondaryActiveStroke
-   { 0.427600, 0.342080, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.441756, 0.363222, 0.049084, 1.000000 }, // SecondaryActiveStroke
+   { 0.532200, 0.425760, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1147,9 +1147,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.935816, 0.900515, 0.743264, 1.000000 }, // InactiveFill
    { 0.871139, 0.800265, 0.484555, 1.000000 }, // ActiveFill
    { 0.779027, 0.636205, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.852181, 0.822997, 0.692992, 1.000000 }, // SecondaryActiveFill
+   { 0.833960, 0.801177, 0.655147, 1.000000 }, // SecondaryActiveFill
    { 0.953668, 0.944520, 0.903772, 1.000000 }, // SecondaryInactiveFill
-   { 0.852181, 0.822997, 0.692992, 1.000000 }, // SecondaryActiveFill
+   { 0.833960, 0.801177, 0.655147, 1.000000 }, // SecondaryActiveFill
    { 0.867640, 0.708573, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1157,8 +1157,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.861342, 0.833966, 0.712018, 1.000000 }, // SecondaryInactiveStroke
-   { 0.668172, 0.559285, 0.074241, 1.000000 }, // SecondaryActiveStroke
-   { 0.421733, 0.344416, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.436368, 0.365256, 0.048485, 1.000000 }, // SecondaryActiveStroke
+   { 0.524800, 0.428587, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1170,9 +1170,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.934320, 0.901480, 0.737280, 1.000000 }, // InactiveFill
    { 0.867973, 0.801960, 0.471893, 1.000000 }, // ActiveFill
    { 0.768333, 0.640278, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.850522, 0.823692, 0.689545, 1.000000 }, // SecondaryActiveFill
+   { 0.832148, 0.802021, 0.651385, 1.000000 }, // SecondaryActiveFill
    { 0.953135, 0.944723, 0.902665, 1.000000 }, // SecondaryInactiveFill
-   { 0.850522, 0.823692, 0.689545, 1.000000 }, // SecondaryActiveFill
+   { 0.832148, 0.802021, 0.651385, 1.000000 }, // SecondaryActiveFill
    { 0.855800, 0.713167, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1180,8 +1180,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.859730, 0.834553, 0.708670, 1.000000 }, // SecondaryInactiveStroke
-   { 0.660120, 0.562324, 0.073347, 1.000000 }, // SecondaryActiveStroke
-   { 0.415867, 0.346556, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.430980, 0.367131, 0.047887, 1.000000 }, // SecondaryActiveStroke
+   { 0.517600, 0.431333, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1193,9 +1193,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.932744, 0.902479, 0.730976, 1.000000 }, // InactiveFill
    { 0.864608, 0.803682, 0.458432, 1.000000 }, // ActiveFill
    { 0.758040, 0.644334, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.848862, 0.824447, 0.686098, 1.000000 }, // SecondaryActiveFill
+   { 0.830272, 0.802854, 0.647488, 1.000000 }, // SecondaryActiveFill
    { 0.952602, 0.944945, 0.901558, 1.000000 }, // SecondaryInactiveFill
-   { 0.848862, 0.824447, 0.686098, 1.000000 }, // SecondaryActiveFill
+   { 0.830272, 0.802854, 0.647488, 1.000000 }, // SecondaryActiveFill
    { 0.844160, 0.717536, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1203,8 +1203,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.858183, 0.835274, 0.705457, 1.000000 }, // SecondaryInactiveStroke
-   { 0.652068, 0.565126, 0.072452, 1.000000 }, // SecondaryActiveStroke
-   { 0.410200, 0.348670, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.425772, 0.369002, 0.047308, 1.000000 }, // SecondaryActiveStroke
+   { 0.510400, 0.433840, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1216,9 +1216,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.931048, 0.903467, 0.724192, 1.000000 }, // InactiveFill
    { 0.861083, 0.805516, 0.444331, 1.000000 }, // ActiveFill
    { 0.747747, 0.648047, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.847202, 0.825262, 0.682651, 1.000000 }, // SecondaryActiveFill
+   { 0.828396, 0.803755, 0.643591, 1.000000 }, // SecondaryActiveFill
    { 0.952069, 0.945187, 0.900451, 1.000000 }, // SecondaryInactiveFill
-   { 0.847202, 0.825262, 0.682651, 1.000000 }, // SecondaryActiveFill
+   { 0.828396, 0.803755, 0.643591, 1.000000 }, // SecondaryActiveFill
    { 0.832720, 0.721691, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1226,8 +1226,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.856636, 0.836050, 0.702244, 1.000000 }, // SecondaryInactiveStroke
-   { 0.644376, 0.568006, 0.071597, 1.000000 }, // SecondaryActiveStroke
-   { 0.404733, 0.350769, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.420744, 0.370878, 0.046749, 1.000000 }, // SecondaryActiveStroke
+   { 0.503600, 0.436453, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1239,9 +1239,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.929312, 0.904571, 0.717248, 1.000000 }, // InactiveFill
    { 0.857357, 0.807432, 0.429429, 1.000000 }, // ActiveFill
    { 0.737653, 0.651594, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.845478, 0.826063, 0.679069, 1.000000 }, // SecondaryActiveFill
+   { 0.826454, 0.804650, 0.639559, 1.000000 }, // SecondaryActiveFill
    { 0.951536, 0.945447, 0.899344, 1.000000 }, // SecondaryInactiveFill
-   { 0.845478, 0.826063, 0.679069, 1.000000 }, // SecondaryActiveFill
+   { 0.826454, 0.804650, 0.639559, 1.000000 }, // SecondaryActiveFill
    { 0.821480, 0.725641, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1249,8 +1249,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.855024, 0.836809, 0.698896, 1.000000 }, // SecondaryInactiveStroke
-   { 0.636684, 0.570658, 0.070743, 1.000000 }, // SecondaryActiveStroke
-   { 0.399267, 0.352686, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.415716, 0.372605, 0.046191, 1.000000 }, // SecondaryActiveStroke
+   { 0.496800, 0.438840, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1262,9 +1262,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.927456, 0.905693, 0.709824, 1.000000 }, // InactiveFill
    { 0.853392, 0.809410, 0.413568, 1.000000 }, // ActiveFill
    { 0.727760, 0.654984, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.843753, 0.826926, 0.675487, 1.000000 }, // SecondaryActiveFill
+   { 0.824448, 0.805542, 0.635392, 1.000000 }, // SecondaryActiveFill
    { 0.951003, 0.945726, 0.898237, 1.000000 }, // SecondaryInactiveFill
-   { 0.843753, 0.826926, 0.675487, 1.000000 }, // SecondaryActiveFill
+   { 0.824448, 0.805542, 0.635392, 1.000000 }, // SecondaryActiveFill
    { 0.810440, 0.729396, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1272,8 +1272,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.853347, 0.837554, 0.695413, 1.000000 }, // SecondaryInactiveStroke
-   { 0.629172, 0.573246, 0.069908, 1.000000 }, // SecondaryActiveStroke
-   { 0.393800, 0.354420, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.410688, 0.374182, 0.045632, 1.000000 }, // SecondaryActiveStroke
+   { 0.490000, 0.441000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1285,9 +1285,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.925480, 0.906850, 0.701920, 1.000000 }, // InactiveFill
    { 0.849147, 0.811433, 0.396587, 1.000000 }, // ActiveFill
    { 0.718067, 0.658228, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.841898, 0.827710, 0.671635, 1.000000 }, // SecondaryActiveFill
+   { 0.822442, 0.806507, 0.631225, 1.000000 }, // SecondaryActiveFill
    { 0.950470, 0.946025, 0.897130, 1.000000 }, // SecondaryInactiveFill
-   { 0.841898, 0.827710, 0.671635, 1.000000 }, // SecondaryActiveFill
+   { 0.822442, 0.806507, 0.631225, 1.000000 }, // SecondaryActiveFill
    { 0.799800, 0.733150, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1295,8 +1295,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.851670, 0.838358, 0.691930, 1.000000 }, // SecondaryInactiveStroke
-   { 0.621660, 0.575611, 0.069073, 1.000000 }, // SecondaryActiveStroke
-   { 0.388533, 0.356156, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.405840, 0.375778, 0.045093, 1.000000 }, // SecondaryActiveStroke
+   { 0.483600, 0.443300, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1308,9 +1308,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.923384, 0.908061, 0.693536, 1.000000 }, // InactiveFill
    { 0.844621, 0.813546, 0.378485, 1.000000 }, // ActiveFill
    { 0.708573, 0.661335, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.840109, 0.828629, 0.667918, 1.000000 }, // SecondaryActiveFill
+   { 0.820370, 0.807474, 0.626923, 1.000000 }, // SecondaryActiveFill
    { 0.949937, 0.946343, 0.896023, 1.000000 }, // SecondaryInactiveFill
-   { 0.840109, 0.828629, 0.667918, 1.000000 }, // SecondaryActiveFill
+   { 0.820370, 0.807474, 0.626923, 1.000000 }, // SecondaryActiveFill
    { 0.789160, 0.736549, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1318,8 +1318,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.850058, 0.839293, 0.688582, 1.000000 }, // SecondaryInactiveStroke
-   { 0.614508, 0.578093, 0.068279, 1.000000 }, // SecondaryActiveStroke
-   { 0.383467, 0.357902, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.401172, 0.377399, 0.044575, 1.000000 }, // SecondaryActiveStroke
+   { 0.477200, 0.445387, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1331,9 +1331,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.921208, 0.909389, 0.684832, 1.000000 }, // InactiveFill
    { 0.839816, 0.815788, 0.359264, 1.000000 }, // ActiveFill
    { 0.699280, 0.664316, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.838384, 0.829682, 0.664336, 1.000000 }, // SecondaryActiveFill
+   { 0.818299, 0.808515, 0.622621, 1.000000 }, // SecondaryActiveFill
    { 0.949404, 0.946680, 0.894916, 1.000000 }, // SecondaryInactiveFill
-   { 0.838384, 0.829682, 0.664336, 1.000000 }, // SecondaryActiveFill
+   { 0.818299, 0.808515, 0.622621, 1.000000 }, // SecondaryActiveFill
    { 0.778920, 0.739974, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1341,8 +1341,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.848446, 0.840285, 0.685234, 1.000000 }, // SecondaryInactiveStroke
-   { 0.607356, 0.580362, 0.067484, 1.000000 }, // SecondaryActiveStroke
-   { 0.378400, 0.359480, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.396504, 0.378882, 0.044056, 1.000000 }, // SecondaryActiveStroke
+   { 0.470800, 0.447260, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1354,9 +1354,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.918832, 0.910715, 0.675328, 1.000000 }, // InactiveFill
    { 0.834611, 0.818072, 0.338443, 1.000000 }, // ActiveFill
    { 0.690187, 0.667180, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.836659, 0.830796, 0.660754, 1.000000 }, // SecondaryActiveFill
+   { 0.816358, 0.809765, 0.618589, 1.000000 }, // SecondaryActiveFill
    { 0.948871, 0.947036, 0.893809, 1.000000 }, // SecondaryInactiveFill
-   { 0.836659, 0.830796, 0.660754, 1.000000 }, // SecondaryActiveFill
+   { 0.816358, 0.809765, 0.618589, 1.000000 }, // SecondaryActiveFill
    { 0.768680, 0.743057, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1364,8 +1364,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.846769, 0.841268, 0.681751, 1.000000 }, // SecondaryInactiveStroke
-   { 0.600204, 0.582420, 0.066689, 1.000000 }, // SecondaryActiveStroke
-   { 0.373533, 0.361082, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.391836, 0.380226, 0.043537, 1.000000 }, // SecondaryActiveStroke
+   { 0.464800, 0.449307, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1377,9 +1377,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.916456, 0.912279, 0.665824, 1.000000 }, // InactiveFill
    { 0.829045, 0.820498, 0.316181, 1.000000 }, // ActiveFill
    { 0.681293, 0.669938, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.834805, 0.831840, 0.656902, 1.000000 }, // SecondaryActiveFill
+   { 0.814286, 0.810953, 0.614287, 1.000000 }, // SecondaryActiveFill
    { 0.948338, 0.947411, 0.892702, 1.000000 }, // SecondaryInactiveFill
-   { 0.834805, 0.831840, 0.656902, 1.000000 }, // SecondaryActiveFill
+   { 0.814286, 0.810953, 0.614287, 1.000000 }, // SecondaryActiveFill
    { 0.758840, 0.746193, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1387,8 +1387,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.845092, 0.842312, 0.678268, 1.000000 }, // SecondaryInactiveStroke
-   { 0.593412, 0.584621, 0.065935, 1.000000 }, // SecondaryActiveStroke
-   { 0.368467, 0.362326, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.387348, 0.381610, 0.043039, 1.000000 }, // SecondaryActiveStroke
+   { 0.458600, 0.450957, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1400,9 +1400,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.914600, 0.914600, 0.658400, 1.000000 }, // InactiveFill
    { 0.824000, 0.824000, 0.296000, 1.000000 }, // ActiveFill
    { 0.672600, 0.672600, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.833145, 0.833145, 0.653455, 1.000000 }, // SecondaryActiveFill
+   { 0.812410, 0.812410, 0.610390, 1.000000 }, // SecondaryActiveFill
    { 0.947870, 0.947870, 0.891730, 1.000000 }, // SecondaryInactiveFill
-   { 0.833145, 0.833145, 0.653455, 1.000000 }, // SecondaryActiveFill
+   { 0.812410, 0.812410, 0.610390, 1.000000 }, // SecondaryActiveFill
    { 0.749000, 0.749000, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1410,8 +1410,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.843545, 0.843545, 0.675055, 1.000000 }, // SecondaryInactiveStroke
-   { 0.586620, 0.586620, 0.065180, 1.000000 }, // SecondaryActiveStroke
-   { 0.363200, 0.363200, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.383040, 0.383040, 0.042560, 1.000000 }, // SecondaryActiveStroke
+   { 0.452000, 0.452000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1423,9 +1423,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.911010, 0.915248, 0.660992, 1.000000 }, // InactiveFill
    { 0.816718, 0.825445, 0.301781, 1.000000 }, // ActiveFill
    { 0.663501, 0.674747, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.830662, 0.833648, 0.654499, 1.000000 }, // SecondaryActiveFill
+   { 0.809625, 0.812982, 0.611578, 1.000000 }, // SecondaryActiveFill
    { 0.947049, 0.947983, 0.891964, 1.000000 }, // SecondaryInactiveFill
-   { 0.830662, 0.833648, 0.654499, 1.000000 }, // SecondaryActiveFill
+   { 0.809625, 0.812982, 0.611578, 1.000000 }, // SecondaryActiveFill
    { 0.738903, 0.751427, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1433,8 +1433,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.841209, 0.844009, 0.676018, 1.000000 }, // SecondaryInactiveStroke
-   { 0.579573, 0.588288, 0.065365, 1.000000 }, // SecondaryActiveStroke
-   { 0.358602, 0.364680, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.378382, 0.384072, 0.042675, 1.000000 }, // SecondaryActiveStroke
+   { 0.446237, 0.453800, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1446,9 +1446,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.907530, 0.915936, 0.663744, 1.000000 }, // InactiveFill
    { 0.809712, 0.827011, 0.308043, 1.000000 }, // ActiveFill
    { 0.654524, 0.677093, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.828264, 0.834215, 0.655678, 1.000000 }, // SecondaryActiveFill
+   { 0.806928, 0.813619, 0.612901, 1.000000 }, // SecondaryActiveFill
    { 0.946299, 0.948160, 0.892333, 1.000000 }, // SecondaryInactiveFill
-   { 0.828264, 0.834215, 0.655678, 1.000000 }, // SecondaryActiveFill
+   { 0.806928, 0.813619, 0.612901, 1.000000 }, // SecondaryActiveFill
    { 0.729112, 0.754253, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1456,8 +1456,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.838957, 0.844537, 0.677116, 1.000000 }, // SecondaryInactiveStroke
-   { 0.572651, 0.590136, 0.065571, 1.000000 }, // SecondaryActiveStroke
-   { 0.353761, 0.365960, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.373868, 0.385284, 0.042809, 1.000000 }, // SecondaryActiveStroke
+   { 0.440220, 0.455400, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1469,9 +1469,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.904118, 0.916624, 0.666496, 1.000000 }, // InactiveFill
    { 0.802770, 0.828496, 0.313984, 1.000000 }, // ActiveFill
    { 0.645658, 0.679640, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.825887, 0.834783, 0.656857, 1.000000 }, // SecondaryActiveFill
+   { 0.804254, 0.814256, 0.614224, 1.000000 }, // SecondaryActiveFill
    { 0.945556, 0.948338, 0.892702, 1.000000 }, // SecondaryInactiveFill
-   { 0.825887, 0.834783, 0.656857, 1.000000 }, // SecondaryActiveFill
+   { 0.804254, 0.814256, 0.614224, 1.000000 }, // SecondaryActiveFill
    { 0.719226, 0.757080, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1479,8 +1479,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.836723, 0.845066, 0.678214, 1.000000 }, // SecondaryInactiveStroke
-   { 0.565846, 0.592164, 0.065796, 1.000000 }, // SecondaryActiveStroke
-   { 0.348878, 0.367240, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.369318, 0.386496, 0.042944, 1.000000 }, // SecondaryActiveStroke
+   { 0.434340, 0.457200, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1492,9 +1492,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900774, 0.917312, 0.669248, 1.000000 }, // InactiveFill
    { 0.795978, 0.829981, 0.319925, 1.000000 }, // ActiveFill
    { 0.636708, 0.682187, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.823530, 0.835351, 0.658036, 1.000000 }, // SecondaryActiveFill
+   { 0.801603, 0.814893, 0.615547, 1.000000 }, // SecondaryActiveFill
    { 0.944819, 0.948516, 0.893071, 1.000000 }, // SecondaryInactiveFill
-   { 0.823530, 0.835351, 0.658036, 1.000000 }, // SecondaryActiveFill
+   { 0.801603, 0.814893, 0.615547, 1.000000 }, // SecondaryActiveFill
    { 0.709060, 0.759707, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1502,8 +1502,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.834509, 0.845595, 0.679312, 1.000000 }, // SecondaryInactiveStroke
-   { 0.558811, 0.594012, 0.066001, 1.000000 }, // SecondaryActiveStroke
-   { 0.343952, 0.368520, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.364733, 0.387708, 0.043079, 1.000000 }, // SecondaryActiveStroke
+   { 0.428213, 0.458800, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1515,9 +1515,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897550, 0.918040, 0.672160, 1.000000 }, // InactiveFill
    { 0.789533, 0.831627, 0.326507, 1.000000 }, // ActiveFill
    { 0.627489, 0.684533, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.821193, 0.835918, 0.659215, 1.000000 }, // SecondaryActiveFill
+   { 0.798975, 0.815530, 0.616870, 1.000000 }, // SecondaryActiveFill
    { 0.944089, 0.948693, 0.893440, 1.000000 }, // SecondaryInactiveFill
-   { 0.821193, 0.835918, 0.659215, 1.000000 }, // SecondaryActiveFill
+   { 0.798975, 0.815530, 0.616870, 1.000000 }, // SecondaryActiveFill
    { 0.698806, 0.762333, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1525,8 +1525,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.832314, 0.846123, 0.680410, 1.000000 }, // SecondaryInactiveStroke
-   { 0.551722, 0.595860, 0.066207, 1.000000 }, // SecondaryActiveStroke
-   { 0.339167, 0.370000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.360111, 0.388920, 0.043213, 1.000000 }, // SecondaryActiveStroke
+   { 0.422217, 0.460600, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1538,9 +1538,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.894346, 0.918728, 0.674912, 1.000000 }, // InactiveFill
    { 0.783150, 0.833192, 0.332768, 1.000000 }, // ActiveFill
    { 0.618192, 0.686880, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.818877, 0.836486, 0.660394, 1.000000 }, // SecondaryActiveFill
+   { 0.796370, 0.816167, 0.618193, 1.000000 }, // SecondaryActiveFill
    { 0.943365, 0.948871, 0.893809, 1.000000 }, // SecondaryInactiveFill
-   { 0.818877, 0.836486, 0.660394, 1.000000 }, // SecondaryActiveFill
+   { 0.796370, 0.816167, 0.618193, 1.000000 }, // SecondaryActiveFill
    { 0.688464, 0.764960, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1548,8 +1548,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.830138, 0.846652, 0.681508, 1.000000 }, // SecondaryInactiveStroke
-   { 0.544742, 0.597888, 0.066432, 1.000000 }, // SecondaryActiveStroke
-   { 0.334152, 0.371280, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.355618, 0.390312, 0.043368, 1.000000 }, // SecondaryActiveStroke
+   { 0.415980, 0.462200, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1561,9 +1561,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.891212, 0.919416, 0.677664, 1.000000 }, // InactiveFill
    { 0.776868, 0.834717, 0.338869, 1.000000 }, // ActiveFill
    { 0.608817, 0.689227, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.816581, 0.837054, 0.661573, 1.000000 }, // SecondaryActiveFill
+   { 0.793787, 0.816804, 0.619516, 1.000000 }, // SecondaryActiveFill
    { 0.942647, 0.949049, 0.894178, 1.000000 }, // SecondaryInactiveFill
-   { 0.816581, 0.837054, 0.661573, 1.000000 }, // SecondaryActiveFill
+   { 0.793787, 0.816804, 0.619516, 1.000000 }, // SecondaryActiveFill
    { 0.678035, 0.767587, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1571,8 +1571,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.827980, 0.847181, 0.682606, 1.000000 }, // SecondaryInactiveStroke
-   { 0.537541, 0.599736, 0.066637, 1.000000 }, // SecondaryActiveStroke
-   { 0.329095, 0.372560, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.350922, 0.391524, 0.043503, 1.000000 }, // SecondaryActiveStroke
+   { 0.409690, 0.463800, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1584,9 +1584,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.888146, 0.920104, 0.680416, 1.000000 }, // InactiveFill
    { 0.770628, 0.836163, 0.344651, 1.000000 }, // ActiveFill
    { 0.599364, 0.691573, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.814305, 0.837621, 0.662752, 1.000000 }, // SecondaryActiveFill
+   { 0.791227, 0.817441, 0.620839, 1.000000 }, // SecondaryActiveFill
    { 0.941936, 0.949226, 0.894547, 1.000000 }, // SecondaryInactiveFill
-   { 0.814305, 0.837621, 0.662752, 1.000000 }, // SecondaryActiveFill
+   { 0.791227, 0.817441, 0.620839, 1.000000 }, // SecondaryActiveFill
    { 0.667518, 0.770213, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1594,8 +1594,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.825842, 0.847709, 0.683704, 1.000000 }, // SecondaryInactiveStroke
-   { 0.530285, 0.601584, 0.066843, 1.000000 }, // SecondaryActiveStroke
-   { 0.323995, 0.373840, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.346190, 0.392736, 0.043637, 1.000000 }, // SecondaryActiveStroke
+   { 0.403347, 0.465400, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1607,9 +1607,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.885148, 0.920792, 0.683168, 1.000000 }, // InactiveFill
    { 0.764532, 0.837608, 0.350432, 1.000000 }, // ActiveFill
    { 0.589832, 0.693920, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.812050, 0.838189, 0.663931, 1.000000 }, // SecondaryActiveFill
+   { 0.788691, 0.818078, 0.622162, 1.000000 }, // SecondaryActiveFill
    { 0.941231, 0.949404, 0.894916, 1.000000 }, // SecondaryInactiveFill
-   { 0.812050, 0.838189, 0.663931, 1.000000 }, // SecondaryActiveFill
+   { 0.788691, 0.818078, 0.622162, 1.000000 }, // SecondaryActiveFill
    { 0.656914, 0.772840, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1617,8 +1617,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.823723, 0.848238, 0.684802, 1.000000 }, // SecondaryInactiveStroke
-   { 0.522974, 0.603432, 0.067048, 1.000000 }, // SecondaryActiveStroke
-   { 0.318852, 0.375120, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.341422, 0.393948, 0.043772, 1.000000 }, // SecondaryActiveStroke
+   { 0.396950, 0.467000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1630,9 +1630,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.882220, 0.921480, 0.685920, 1.000000 }, // InactiveFill
    { 0.758520, 0.839013, 0.356053, 1.000000 }, // ActiveFill
    { 0.580222, 0.696267, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.809816, 0.838757, 0.665110, 1.000000 }, // SecondaryActiveFill
+   { 0.786177, 0.818715, 0.623485, 1.000000 }, // SecondaryActiveFill
    { 0.940532, 0.949582, 0.895285, 1.000000 }, // SecondaryInactiveFill
-   { 0.809816, 0.838757, 0.665110, 1.000000 }, // SecondaryActiveFill
+   { 0.786177, 0.818715, 0.623485, 1.000000 }, // SecondaryActiveFill
    { 0.646222, 0.775467, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1640,8 +1640,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.821622, 0.848767, 0.685900, 1.000000 }, // SecondaryInactiveStroke
-   { 0.515609, 0.605280, 0.067253, 1.000000 }, // SecondaryActiveStroke
-   { 0.313667, 0.376400, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.336464, 0.394980, 0.043887, 1.000000 }, // SecondaryActiveStroke
+   { 0.390333, 0.468400, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1653,9 +1653,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.879298, 0.922128, 0.688512, 1.000000 }, // InactiveFill
    { 0.752587, 0.840379, 0.361515, 1.000000 }, // ActiveFill
    { 0.570534, 0.698613, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.807601, 0.839324, 0.666289, 1.000000 }, // SecondaryActiveFill
+   { 0.783686, 0.819352, 0.624808, 1.000000 }, // SecondaryActiveFill
    { 0.939840, 0.949759, 0.895654, 1.000000 }, // SecondaryInactiveFill
-   { 0.807601, 0.839324, 0.666289, 1.000000 }, // SecondaryActiveFill
+   { 0.783686, 0.819352, 0.624808, 1.000000 }, // SecondaryActiveFill
    { 0.635443, 0.778093, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1663,8 +1663,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.819541, 0.849295, 0.686998, 1.000000 }, // SecondaryInactiveStroke
-   { 0.508038, 0.606948, 0.067439, 1.000000 }, // SecondaryActiveStroke
-   { 0.308439, 0.377680, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.331627, 0.396192, 0.044021, 1.000000 }, // SecondaryActiveStroke
+   { 0.383833, 0.470000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1676,9 +1676,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.876506, 0.922816, 0.691264, 1.000000 }, // InactiveFill
    { 0.746982, 0.841864, 0.367456, 1.000000 }, // ActiveFill
    { 0.560768, 0.700960, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.805407, 0.839892, 0.667468, 1.000000 }, // SecondaryActiveFill
+   { 0.781217, 0.819989, 0.626131, 1.000000 }, // SecondaryActiveFill
    { 0.939154, 0.949937, 0.896023, 1.000000 }, // SecondaryInactiveFill
-   { 0.805407, 0.839892, 0.667468, 1.000000 }, // SecondaryActiveFill
+   { 0.781217, 0.819989, 0.626131, 1.000000 }, // SecondaryActiveFill
    { 0.624576, 0.780720, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1686,8 +1686,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.817478, 0.849824, 0.688096, 1.000000 }, // SecondaryInactiveStroke
-   { 0.500566, 0.608796, 0.067644, 1.000000 }, // SecondaryActiveStroke
-   { 0.303008, 0.378760, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.326754, 0.397404, 0.044156, 1.000000 }, // SecondaryActiveStroke
+   { 0.377280, 0.471600, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1699,9 +1699,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.873782, 0.923504, 0.694016, 1.000000 }, // InactiveFill
    { 0.741460, 0.843309, 0.373237, 1.000000 }, // ActiveFill
    { 0.550767, 0.703107, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.803234, 0.840460, 0.668647, 1.000000 }, // SecondaryActiveFill
+   { 0.778772, 0.820626, 0.627454, 1.000000 }, // SecondaryActiveFill
    { 0.938475, 0.950115, 0.896392, 1.000000 }, // SecondaryInactiveFill
-   { 0.803234, 0.840460, 0.668647, 1.000000 }, // SecondaryActiveFill
+   { 0.778772, 0.820626, 0.627454, 1.000000 }, // SecondaryActiveFill
    { 0.613465, 0.783147, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1709,8 +1709,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.815435, 0.850353, 0.689194, 1.000000 }, // SecondaryInactiveStroke
-   { 0.492893, 0.610464, 0.067829, 1.000000 }, // SecondaryActiveStroke
-   { 0.297698, 0.380040, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.321846, 0.398616, 0.044291, 1.000000 }, // SecondaryActiveStroke
+   { 0.370517, 0.473000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1722,9 +1722,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.871126, 0.924192, 0.696768, 1.000000 }, // InactiveFill
    { 0.736083, 0.844755, 0.379019, 1.000000 }, // ActiveFill
    { 0.540694, 0.705253, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.801080, 0.841027, 0.669826, 1.000000 }, // SecondaryActiveFill
+   { 0.776350, 0.821263, 0.628777, 1.000000 }, // SecondaryActiveFill
    { 0.937802, 0.950292, 0.896761, 1.000000 }, // SecondaryInactiveFill
-   { 0.801080, 0.841027, 0.669826, 1.000000 }, // SecondaryActiveFill
+   { 0.776350, 0.821263, 0.628777, 1.000000 }, // SecondaryActiveFill
    { 0.602273, 0.785573, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1732,8 +1732,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.813410, 0.850881, 0.690292, 1.000000 }, // SecondaryInactiveStroke
-   { 0.485314, 0.612312, 0.068035, 1.000000 }, // SecondaryActiveStroke
-   { 0.292345, 0.381320, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.316901, 0.399828, 0.044425, 1.000000 }, // SecondaryActiveStroke
+   { 0.363860, 0.474600, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1745,9 +1745,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.868610, 0.924920, 0.699680, 1.000000 }, // InactiveFill
    { 0.730990, 0.846280, 0.385120, 1.000000 }, // ActiveFill
    { 0.530850, 0.707800, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.799030, 0.841660, 0.671140, 1.000000 }, // SecondaryActiveFill
+   { 0.774033, 0.821965, 0.630235, 1.000000 }, // SecondaryActiveFill
    { 0.937218, 0.950535, 0.897265, 1.000000 }, // SecondaryInactiveFill
-   { 0.799030, 0.841660, 0.671140, 1.000000 }, // SecondaryActiveFill
+   { 0.774033, 0.821965, 0.630235, 1.000000 }, // SecondaryActiveFill
    { 0.591300, 0.788400, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1755,8 +1755,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.811487, 0.851475, 0.691525, 1.000000 }, // SecondaryInactiveStroke
-   { 0.477820, 0.614340, 0.068260, 1.000000 }, // SecondaryActiveStroke
-   { 0.286800, 0.382400, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.312060, 0.401220, 0.044580, 1.000000 }, // SecondaryActiveStroke
+   { 0.357000, 0.476000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1768,9 +1768,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.865701, 0.925389, 0.701557, 1.000000 }, // InactiveFill
    { 0.725046, 0.847248, 0.388992, 1.000000 }, // ActiveFill
    { 0.520217, 0.709387, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.796729, 0.842080, 0.672013, 1.000000 }, // SecondaryActiveFill
+   { 0.771456, 0.822446, 0.631234, 1.000000 }, // SecondaryActiveFill
    { 0.936447, 0.950626, 0.897454, 1.000000 }, // SecondaryInactiveFill
-   { 0.796729, 0.842080, 0.672013, 1.000000 }, // SecondaryActiveFill
+   { 0.771456, 0.822446, 0.631234, 1.000000 }, // SecondaryActiveFill
    { 0.579451, 0.790160, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1778,8 +1778,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.809329, 0.851869, 0.692344, 1.000000 }, // SecondaryInactiveStroke
-   { 0.469707, 0.615636, 0.068404, 1.000000 }, // SecondaryActiveStroke
-   { 0.281307, 0.383600, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.306729, 0.402024, 0.044669, 1.000000 }, // SecondaryActiveStroke
+   { 0.350103, 0.477413, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1791,9 +1791,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.862913, 0.925899, 0.703595, 1.000000 }, // InactiveFill
    { 0.719274, 0.848256, 0.393024, 1.000000 }, // ActiveFill
    { 0.509961, 0.711573, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.794528, 0.842566, 0.673021, 1.000000 }, // SecondaryActiveFill
+   { 0.768982, 0.822992, 0.632368, 1.000000 }, // SecondaryActiveFill
    { 0.935764, 0.950782, 0.897778, 1.000000 }, // SecondaryInactiveFill
-   { 0.794528, 0.842566, 0.673021, 1.000000 }, // SecondaryActiveFill
+   { 0.768982, 0.822992, 0.632368, 1.000000 }, // SecondaryActiveFill
    { 0.567973, 0.792520, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1801,8 +1801,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.807270, 0.852329, 0.693298, 1.000000 }, // SecondaryInactiveStroke
-   { 0.461826, 0.617292, 0.068588, 1.000000 }, // SecondaryActiveStroke
-   { 0.275630, 0.384600, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.301510, 0.403008, 0.044779, 1.000000 }, // SecondaryActiveStroke
+   { 0.343159, 0.478827, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1814,9 +1814,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.860175, 0.926408, 0.705632, 1.000000 }, // InactiveFill
    { 0.713678, 0.849304, 0.397216, 1.000000 }, // ActiveFill
    { 0.499352, 0.713360, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.792344, 0.843051, 0.674029, 1.000000 }, // SecondaryActiveFill
+   { 0.766527, 0.823538, 0.633502, 1.000000 }, // SecondaryActiveFill
    { 0.935087, 0.950938, 0.898102, 1.000000 }, // SecondaryInactiveFill
-   { 0.792344, 0.843051, 0.674029, 1.000000 }, // SecondaryActiveFill
+   { 0.766527, 0.823538, 0.633502, 1.000000 }, // SecondaryActiveFill
    { 0.556136, 0.794480, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1824,8 +1824,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.805227, 0.852788, 0.694252, 1.000000 }, // SecondaryInactiveStroke
-   { 0.453763, 0.618768, 0.068752, 1.000000 }, // SecondaryActiveStroke
-   { 0.270060, 0.385800, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.296261, 0.403992, 0.044888, 1.000000 }, // SecondaryActiveStroke
+   { 0.336028, 0.480040, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1837,9 +1837,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.857489, 0.926917, 0.707669, 1.000000 }, // InactiveFill
    { 0.708186, 0.850352, 0.401408, 1.000000 }, // ActiveFill
    { 0.488684, 0.715147, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.790178, 0.843536, 0.675037, 1.000000 }, // SecondaryActiveFill
+   { 0.764092, 0.824084, 0.634636, 1.000000 }, // SecondaryActiveFill
    { 0.934416, 0.951094, 0.898426, 1.000000 }, // SecondaryInactiveFill
-   { 0.790178, 0.843536, 0.675037, 1.000000 }, // SecondaryActiveFill
+   { 0.764092, 0.824084, 0.634636, 1.000000 }, // SecondaryActiveFill
    { 0.544234, 0.796440, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1847,8 +1847,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.803201, 0.853247, 0.695206, 1.000000 }, // SecondaryInactiveStroke
-   { 0.445786, 0.620424, 0.068936, 1.000000 }, // SecondaryActiveStroke
-   { 0.264313, 0.386800, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.291112, 0.405156, 0.045017, 1.000000 }, // SecondaryActiveStroke
+   { 0.328993, 0.481453, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1860,9 +1860,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.854853, 0.927427, 0.709707, 1.000000 }, // InactiveFill
    { 0.702720, 0.851360, 0.405440, 1.000000 }, // ActiveFill
    { 0.477956, 0.716933, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.788029, 0.844022, 0.676045, 1.000000 }, // SecondaryActiveFill
+   { 0.761677, 0.824630, 0.635770, 1.000000 }, // SecondaryActiveFill
    { 0.933750, 0.951250, 0.898750, 1.000000 }, // SecondaryInactiveFill
-   { 0.788029, 0.844022, 0.676045, 1.000000 }, // SecondaryActiveFill
+   { 0.761677, 0.824630, 0.635770, 1.000000 }, // SecondaryActiveFill
    { 0.532267, 0.798400, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1870,8 +1870,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.801191, 0.853707, 0.696160, 1.000000 }, // SecondaryInactiveStroke
-   { 0.437633, 0.621900, 0.069100, 1.000000 }, // SecondaryActiveStroke
-   { 0.258667, 0.388000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.285802, 0.406140, 0.045127, 1.000000 }, // SecondaryActiveStroke
+   { 0.321778, 0.482667, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1883,9 +1883,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.852269, 0.927936, 0.711744, 1.000000 }, // InactiveFill
    { 0.697354, 0.852368, 0.409472, 1.000000 }, // ActiveFill
    { 0.467168, 0.718720, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.785898, 0.844507, 0.677053, 1.000000 }, // SecondaryActiveFill
+   { 0.759281, 0.825176, 0.636904, 1.000000 }, // SecondaryActiveFill
    { 0.933090, 0.951406, 0.899074, 1.000000 }, // SecondaryInactiveFill
-   { 0.785898, 0.844507, 0.677053, 1.000000 }, // SecondaryActiveFill
+   { 0.759281, 0.825176, 0.636904, 1.000000 }, // SecondaryActiveFill
    { 0.520364, 0.800560, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1893,8 +1893,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.799198, 0.854166, 0.697114, 1.000000 }, // SecondaryInactiveStroke
-   { 0.429437, 0.623376, 0.069264, 1.000000 }, // SecondaryActiveStroke
-   { 0.252850, 0.389000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.280463, 0.407124, 0.045236, 1.000000 }, // SecondaryActiveStroke
+   { 0.314652, 0.484080, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1906,9 +1906,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.849735, 0.928445, 0.713781, 1.000000 }, // InactiveFill
    { 0.692090, 0.853376, 0.413504, 1.000000 }, // ActiveFill
    { 0.456321, 0.720507, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.783784, 0.844992, 0.678061, 1.000000 }, // SecondaryActiveFill
+   { 0.756905, 0.825722, 0.638038, 1.000000 }, // SecondaryActiveFill
    { 0.932435, 0.951562, 0.899398, 1.000000 }, // SecondaryInactiveFill
-   { 0.783784, 0.844992, 0.678061, 1.000000 }, // SecondaryActiveFill
+   { 0.756905, 0.825722, 0.638038, 1.000000 }, // SecondaryActiveFill
    { 0.508263, 0.802520, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1916,8 +1916,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.797221, 0.854625, 0.698068, 1.000000 }, // SecondaryInactiveStroke
-   { 0.421197, 0.624852, 0.069428, 1.000000 }, // SecondaryActiveStroke
-   { 0.247000, 0.390000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.275095, 0.408108, 0.045345, 1.000000 }, // SecondaryActiveStroke
+   { 0.307352, 0.485293, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1929,9 +1929,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.847253, 0.928955, 0.715819, 1.000000 }, // InactiveFill
    { 0.686926, 0.854384, 0.417536, 1.000000 }, // ActiveFill
    { 0.445414, 0.722293, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.781688, 0.845478, 0.679069, 1.000000 }, // SecondaryActiveFill
+   { 0.754548, 0.826268, 0.639172, 1.000000 }, // SecondaryActiveFill
    { 0.931786, 0.951718, 0.899722, 1.000000 }, // SecondaryInactiveFill
-   { 0.781688, 0.845478, 0.679069, 1.000000 }, // SecondaryActiveFill
+   { 0.754548, 0.826268, 0.639172, 1.000000 }, // SecondaryActiveFill
    { 0.496096, 0.804480, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1939,8 +1939,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.795261, 0.855085, 0.699022, 1.000000 }, // SecondaryInactiveStroke
-   { 0.412913, 0.626328, 0.069592, 1.000000 }, // SecondaryActiveStroke
-   { 0.241117, 0.391000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.269698, 0.409092, 0.045455, 1.000000 }, // SecondaryActiveStroke
+   { 0.300012, 0.486507, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1952,9 +1952,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.844821, 0.929464, 0.717856, 1.000000 }, // InactiveFill
    { 0.681862, 0.855392, 0.421568, 1.000000 }, // ActiveFill
    { 0.434448, 0.724080, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.779609, 0.845963, 0.680077, 1.000000 }, // SecondaryActiveFill
+   { 0.752211, 0.826814, 0.640306, 1.000000 }, // SecondaryActiveFill
    { 0.931143, 0.951874, 0.900046, 1.000000 }, // SecondaryInactiveFill
-   { 0.779609, 0.845963, 0.680077, 1.000000 }, // SecondaryActiveFill
+   { 0.752211, 0.826814, 0.640306, 1.000000 }, // SecondaryActiveFill
    { 0.483864, 0.806440, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1962,8 +1962,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.793317, 0.855544, 0.699976, 1.000000 }, // SecondaryInactiveStroke
-   { 0.404585, 0.627804, 0.069756, 1.000000 }, // SecondaryActiveStroke
-   { 0.235200, 0.392000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.264271, 0.410076, 0.045564, 1.000000 }, // SecondaryActiveStroke
+   { 0.292632, 0.487720, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1975,9 +1975,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.842440, 0.929973, 0.719893, 1.000000 }, // InactiveFill
    { 0.676900, 0.856400, 0.425600, 1.000000 }, // ActiveFill
    { 0.423422, 0.725867, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.777547, 0.846448, 0.681085, 1.000000 }, // SecondaryActiveFill
+   { 0.749893, 0.827360, 0.641440, 1.000000 }, // SecondaryActiveFill
    { 0.930505, 0.952030, 0.900370, 1.000000 }, // SecondaryInactiveFill
-   { 0.777547, 0.846448, 0.681085, 1.000000 }, // SecondaryActiveFill
+   { 0.749893, 0.827360, 0.641440, 1.000000 }, // SecondaryActiveFill
    { 0.471567, 0.808400, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -1985,8 +1985,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.791389, 0.856003, 0.700930, 1.000000 }, // SecondaryInactiveStroke
-   { 0.396213, 0.629280, 0.069920, 1.000000 }, // SecondaryActiveStroke
-   { 0.229250, 0.393000, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.258816, 0.411060, 0.045673, 1.000000 }, // SecondaryActiveStroke
+   { 0.285211, 0.488933, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -1998,9 +1998,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.840110, 0.930483, 0.721931, 1.000000 }, // InactiveFill
    { 0.671946, 0.857368, 0.429472, 1.000000 }, // ActiveFill
    { 0.412337, 0.727653, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.775503, 0.846934, 0.682093, 1.000000 }, // SecondaryActiveFill
+   { 0.747595, 0.827906, 0.642574, 1.000000 }, // SecondaryActiveFill
    { 0.929873, 0.952186, 0.900694, 1.000000 }, // SecondaryInactiveFill
-   { 0.775503, 0.846934, 0.682093, 1.000000 }, // SecondaryActiveFill
+   { 0.747595, 0.827906, 0.642574, 1.000000 }, // SecondaryActiveFill
    { 0.459091, 0.810160, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2008,8 +2008,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.789479, 0.856463, 0.701884, 1.000000 }, // SecondaryInactiveStroke
-   { 0.387798, 0.630756, 0.070084, 1.000000 }, // SecondaryActiveStroke
-   { 0.223153, 0.393800, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.253331, 0.412044, 0.045783, 1.000000 }, // SecondaryActiveStroke
+   { 0.277636, 0.489947, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2021,9 +2021,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.837831, 0.930992, 0.723968, 1.000000 }, // InactiveFill
    { 0.667184, 0.858376, 0.433504, 1.000000 }, // ActiveFill
    { 0.401192, 0.729440, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.773476, 0.847419, 0.683101, 1.000000 }, // SecondaryActiveFill
+   { 0.745317, 0.828452, 0.643708, 1.000000 }, // SecondaryActiveFill
    { 0.929246, 0.952342, 0.901018, 1.000000 }, // SecondaryInactiveFill
-   { 0.773476, 0.847419, 0.683101, 1.000000 }, // SecondaryActiveFill
+   { 0.745317, 0.828452, 0.643708, 1.000000 }, // SecondaryActiveFill
    { 0.446666, 0.812120, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2031,8 +2031,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.787584, 0.856922, 0.702838, 1.000000 }, // SecondaryInactiveStroke
-   { 0.379231, 0.632052, 0.070228, 1.000000 }, // SecondaryActiveStroke
-   { 0.217140, 0.394800, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.247709, 0.412848, 0.045872, 1.000000 }, // SecondaryActiveStroke
+   { 0.270138, 0.491160, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2044,9 +2044,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.835603, 0.931501, 0.726005, 1.000000 }, // InactiveFill
    { 0.662426, 0.859344, 0.437376, 1.000000 }, // ActiveFill
    { 0.389881, 0.731027, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.771467, 0.847904, 0.684109, 1.000000 }, // SecondaryActiveFill
+   { 0.743059, 0.828998, 0.644842, 1.000000 }, // SecondaryActiveFill
    { 0.928625, 0.952498, 0.901342, 1.000000 }, // SecondaryInactiveFill
-   { 0.771467, 0.847904, 0.684109, 1.000000 }, // SecondaryActiveFill
+   { 0.743059, 0.828998, 0.644842, 1.000000 }, // SecondaryActiveFill
    { 0.434176, 0.814080, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2054,8 +2054,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.785706, 0.857381, 0.703792, 1.000000 }, // SecondaryInactiveStroke
-   { 0.370731, 0.633528, 0.070392, 1.000000 }, // SecondaryActiveStroke
-   { 0.210987, 0.395600, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.242168, 0.413832, 0.045981, 1.000000 }, // SecondaryActiveStroke
+   { 0.262492, 0.492173, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2067,9 +2067,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.833426, 0.932011, 0.728043, 1.000000 }, // InactiveFill
    { 0.657862, 0.860352, 0.441408, 1.000000 }, // ActiveFill
    { 0.378517, 0.732613, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.769475, 0.848390, 0.685117, 1.000000 }, // SecondaryActiveFill
+   { 0.740819, 0.829544, 0.645976, 1.000000 }, // SecondaryActiveFill
    { 0.928010, 0.952654, 0.901666, 1.000000 }, // SecondaryInactiveFill
-   { 0.769475, 0.848390, 0.685117, 1.000000 }, // SecondaryActiveFill
+   { 0.740819, 0.829544, 0.645976, 1.000000 }, // SecondaryActiveFill
    { 0.421517, 0.815840, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2077,8 +2077,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.783845, 0.857841, 0.704746, 1.000000 }, // SecondaryInactiveStroke
-   { 0.362085, 0.634824, 0.070536, 1.000000 }, // SecondaryActiveStroke
-   { 0.204910, 0.396600, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.236599, 0.414816, 0.046091, 1.000000 }, // SecondaryActiveStroke
+   { 0.254813, 0.493187, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2090,9 +2090,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.831400, 0.932560, 0.730240, 1.000000 }, // InactiveFill
    { 0.653500, 0.861400, 0.445600, 1.000000 }, // ActiveFill
    { 0.367300, 0.734600, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.767600, 0.848940, 0.686260, 1.000000 }, // SecondaryActiveFill
+   { 0.738700, 0.830155, 0.647245, 1.000000 }, // SecondaryActiveFill
    { 0.927500, 0.952875, 0.902125, 1.000000 }, // SecondaryInactiveFill
-   { 0.767600, 0.848940, 0.686260, 1.000000 }, // SecondaryActiveFill
+   { 0.738700, 0.830155, 0.647245, 1.000000 }, // SecondaryActiveFill
    { 0.408900, 0.817800, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2100,8 +2100,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.782100, 0.858365, 0.705835, 1.000000 }, // SecondaryInactiveStroke
-   { 0.353600, 0.636480, 0.070720, 1.000000 }, // SecondaryActiveStroke
-   { 0.198700, 0.397400, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.231100, 0.415980, 0.046220, 1.000000 }, // SecondaryActiveStroke
+   { 0.247100, 0.494200, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2113,9 +2113,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.828939, 0.932917, 0.731669, 1.000000 }, // InactiveFill
    { 0.648345, 0.862096, 0.448384, 1.000000 }, // ActiveFill
    { 0.355469, 0.735453, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.765448, 0.849300, 0.687007, 1.000000 }, // SecondaryActiveFill
+   { 0.736279, 0.830558, 0.648082, 1.000000 }, // SecondaryActiveFill
    { 0.926776, 0.952953, 0.902287, 1.000000 }, // SecondaryInactiveFill
-   { 0.765448, 0.849300, 0.687007, 1.000000 }, // SecondaryActiveFill
+   { 0.736279, 0.830558, 0.648082, 1.000000 }, // SecondaryActiveFill
    { 0.395831, 0.818960, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2123,8 +2123,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.780077, 0.858699, 0.706528, 1.000000 }, // SecondaryInactiveStroke
-   { 0.344605, 0.637284, 0.070809, 1.000000 }, // SecondaryActiveStroke
-   { 0.192476, 0.398227, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.225210, 0.416484, 0.046276, 1.000000 }, // SecondaryActiveStroke
+   { 0.239327, 0.495160, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2136,9 +2136,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.826618, 0.933315, 0.733259, 1.000000 }, // InactiveFill
    { 0.643363, 0.862832, 0.451328, 1.000000 }, // ActiveFill
    { 0.343796, 0.736707, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.763412, 0.849724, 0.687889, 1.000000 }, // SecondaryActiveFill
+   { 0.733974, 0.831026, 0.649054, 1.000000 }, // SecondaryActiveFill
    { 0.926156, 0.953096, 0.902584, 1.000000 }, // SecondaryInactiveFill
-   { 0.763412, 0.849724, 0.687889, 1.000000 }, // SecondaryActiveFill
+   { 0.733974, 0.831026, 0.649054, 1.000000 }, // SecondaryActiveFill
    { 0.382816, 0.820320, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2146,8 +2146,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.778169, 0.859097, 0.707356, 1.000000 }, // SecondaryInactiveStroke
-   { 0.335776, 0.638448, 0.070939, 1.000000 }, // SecondaryActiveStroke
-   { 0.186132, 0.398853, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.219399, 0.417168, 0.046352, 1.000000 }, // SecondaryActiveStroke
+   { 0.231523, 0.496120, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2159,9 +2159,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.824337, 0.933712, 0.734848, 1.000000 }, // InactiveFill
    { 0.638455, 0.863568, 0.454272, 1.000000 }, // ActiveFill
    { 0.332082, 0.737960, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.761391, 0.850149, 0.688771, 1.000000 }, // SecondaryActiveFill
+   { 0.731687, 0.831494, 0.650026, 1.000000 }, // SecondaryActiveFill
    { 0.925542, 0.953239, 0.902881, 1.000000 }, // SecondaryInactiveFill
-   { 0.761391, 0.850149, 0.688771, 1.000000 }, // SecondaryActiveFill
+   { 0.731687, 0.831494, 0.650026, 1.000000 }, // SecondaryActiveFill
    { 0.369666, 0.821480, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2169,8 +2169,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.776274, 0.859496, 0.708184, 1.000000 }, // SecondaryInactiveStroke
-   { 0.326913, 0.639612, 0.071068, 1.000000 }, // SecondaryActiveStroke
-   { 0.179856, 0.399680, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.213661, 0.418032, 0.046448, 1.000000 }, // SecondaryActiveStroke
+   { 0.223686, 0.497080, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2182,9 +2182,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.822095, 0.934109, 0.736437, 1.000000 }, // InactiveFill
    { 0.633729, 0.864344, 0.457376, 1.000000 }, // ActiveFill
    { 0.320239, 0.739013, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.759385, 0.850574, 0.689653, 1.000000 }, // SecondaryActiveFill
+   { 0.729416, 0.831962, 0.650998, 1.000000 }, // SecondaryActiveFill
    { 0.924933, 0.953382, 0.903178, 1.000000 }, // SecondaryInactiveFill
-   { 0.759385, 0.850574, 0.689653, 1.000000 }, // SecondaryActiveFill
+   { 0.729416, 0.831962, 0.650998, 1.000000 }, // SecondaryActiveFill
    { 0.356564, 0.822840, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2192,8 +2192,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.774395, 0.859895, 0.709012, 1.000000 }, // SecondaryInactiveStroke
-   { 0.317925, 0.640596, 0.071177, 1.000000 }, // SecondaryActiveStroke
-   { 0.173553, 0.400507, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.207807, 0.418716, 0.046524, 1.000000 }, // SecondaryActiveStroke
+   { 0.215817, 0.498040, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2205,9 +2205,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.819893, 0.934507, 0.738027, 1.000000 }, // InactiveFill
    { 0.628970, 0.865080, 0.460320, 1.000000 }, // ActiveFill
    { 0.308361, 0.740067, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.757395, 0.850998, 0.690535, 1.000000 }, // SecondaryActiveFill
+   { 0.727162, 0.832430, 0.651970, 1.000000 }, // SecondaryActiveFill
    { 0.924329, 0.953525, 0.903475, 1.000000 }, // SecondaryInactiveFill
-   { 0.757395, 0.850998, 0.690535, 1.000000 }, // SecondaryActiveFill
+   { 0.727162, 0.832430, 0.651970, 1.000000 }, // SecondaryActiveFill
    { 0.343333, 0.824000, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2215,8 +2215,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.772529, 0.860293, 0.709840, 1.000000 }, // SecondaryInactiveStroke
-   { 0.308909, 0.641580, 0.071287, 1.000000 }, // SecondaryActiveStroke
-   { 0.167139, 0.401133, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.201933, 0.419400, 0.046600, 1.000000 }, // SecondaryActiveStroke
+   { 0.207833, 0.498800, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2228,9 +2228,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.817731, 0.934904, 0.739616, 1.000000 }, // InactiveFill
    { 0.624285, 0.865816, 0.463264, 1.000000 }, // ActiveFill
    { 0.296448, 0.741120, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.755419, 0.851423, 0.691417, 1.000000 }, // SecondaryActiveFill
+   { 0.724924, 0.832898, 0.652942, 1.000000 }, // SecondaryActiveFill
    { 0.923730, 0.953668, 0.903772, 1.000000 }, // SecondaryInactiveFill
-   { 0.755419, 0.851423, 0.691417, 1.000000 }, // SecondaryActiveFill
+   { 0.724924, 0.832898, 0.652942, 1.000000 }, // SecondaryActiveFill
    { 0.330144, 0.825360, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2238,8 +2238,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.770678, 0.860692, 0.710668, 1.000000 }, // SecondaryInactiveStroke
-   { 0.299863, 0.642564, 0.071396, 1.000000 }, // SecondaryActiveStroke
-   { 0.160704, 0.401760, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.196123, 0.420264, 0.046696, 1.000000 }, // SecondaryActiveStroke
+   { 0.199904, 0.499760, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2251,9 +2251,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.815609, 0.935301, 0.741205, 1.000000 }, // InactiveFill
    { 0.619673, 0.866552, 0.466208, 1.000000 }, // ActiveFill
    { 0.284576, 0.742373, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.753459, 0.851848, 0.692299, 1.000000 }, // SecondaryActiveFill
+   { 0.722704, 0.833366, 0.653914, 1.000000 }, // SecondaryActiveFill
    { 0.923137, 0.953811, 0.904069, 1.000000 }, // SecondaryInactiveFill
-   { 0.753459, 0.851848, 0.692299, 1.000000 }, // SecondaryActiveFill
+   { 0.722704, 0.833366, 0.653914, 1.000000 }, // SecondaryActiveFill
    { 0.316833, 0.826520, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2261,8 +2261,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.768841, 0.861091, 0.711496, 1.000000 }, // SecondaryInactiveStroke
-   { 0.290788, 0.643548, 0.071505, 1.000000 }, // SecondaryActiveStroke
-   { 0.154248, 0.402387, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.190206, 0.420948, 0.046772, 1.000000 }, // SecondaryActiveStroke
+   { 0.191866, 0.500520, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2274,9 +2274,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.813526, 0.935699, 0.742795, 1.000000 }, // InactiveFill
    { 0.615135, 0.867288, 0.469152, 1.000000 }, // ActiveFill
    { 0.272590, 0.743427, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.751514, 0.852272, 0.693181, 1.000000 }, // SecondaryActiveFill
+   { 0.720500, 0.833834, 0.654886, 1.000000 }, // SecondaryActiveFill
    { 0.922548, 0.953954, 0.904366, 1.000000 }, // SecondaryInactiveFill
-   { 0.751514, 0.852272, 0.693181, 1.000000 }, // SecondaryActiveFill
+   { 0.720500, 0.833834, 0.654886, 1.000000 }, // SecondaryActiveFill
    { 0.303483, 0.827680, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2284,8 +2284,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.767018, 0.861489, 0.712324, 1.000000 }, // SecondaryInactiveStroke
-   { 0.281684, 0.644532, 0.071615, 1.000000 }, // SecondaryActiveStroke
-   { 0.147845, 0.403213, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.184269, 0.421632, 0.046848, 1.000000 }, // SecondaryActiveStroke
+   { 0.183803, 0.501280, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2297,9 +2297,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.811483, 0.936096, 0.744384, 1.000000 }, // InactiveFill
    { 0.610671, 0.868024, 0.472096, 1.000000 }, // ActiveFill
    { 0.260498, 0.744280, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.749585, 0.852697, 0.694063, 1.000000 }, // SecondaryActiveFill
+   { 0.718313, 0.834302, 0.655858, 1.000000 }, // SecondaryActiveFill
    { 0.921965, 0.954097, 0.904663, 1.000000 }, // SecondaryInactiveFill
-   { 0.749585, 0.852697, 0.694063, 1.000000 }, // SecondaryActiveFill
+   { 0.718313, 0.834302, 0.655858, 1.000000 }, // SecondaryActiveFill
    { 0.290094, 0.828840, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2307,8 +2307,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.765210, 0.861888, 0.713152, 1.000000 }, // SecondaryInactiveStroke
-   { 0.272551, 0.645516, 0.071724, 1.000000 }, // SecondaryActiveStroke
-   { 0.141274, 0.403640, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.178311, 0.422316, 0.046924, 1.000000 }, // SecondaryActiveStroke
+   { 0.175644, 0.501840, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2320,9 +2320,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.809480, 0.936493, 0.745973, 1.000000 }, // InactiveFill
    { 0.606280, 0.868760, 0.475040, 1.000000 }, // ActiveFill
    { 0.248444, 0.745333, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.747671, 0.853122, 0.694945, 1.000000 }, // SecondaryActiveFill
+   { 0.716143, 0.834770, 0.656830, 1.000000 }, // SecondaryActiveFill
    { 0.921387, 0.954240, 0.904960, 1.000000 }, // SecondaryInactiveFill
-   { 0.747671, 0.853122, 0.694945, 1.000000 }, // SecondaryActiveFill
+   { 0.716143, 0.834770, 0.656830, 1.000000 }, // SecondaryActiveFill
    { 0.276600, 0.829800, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2330,8 +2330,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.763416, 0.862287, 0.713980, 1.000000 }, // SecondaryInactiveStroke
-   { 0.263389, 0.646500, 0.071833, 1.000000 }, // SecondaryActiveStroke
-   { 0.134756, 0.404267, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.172260, 0.422820, 0.046980, 1.000000 }, // SecondaryActiveStroke
+   { 0.167533, 0.502600, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2343,9 +2343,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.807517, 0.936891, 0.747563, 1.000000 }, // InactiveFill
    { 0.601963, 0.869496, 0.477984, 1.000000 }, // ActiveFill
    { 0.236356, 0.746387, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.745771, 0.853546, 0.695827, 1.000000 }, // SecondaryActiveFill
+   { 0.713990, 0.835238, 0.657802, 1.000000 }, // SecondaryActiveFill
    { 0.920814, 0.954383, 0.905257, 1.000000 }, // SecondaryInactiveFill
-   { 0.745771, 0.853546, 0.695827, 1.000000 }, // SecondaryActiveFill
+   { 0.713990, 0.835238, 0.657802, 1.000000 }, // SecondaryActiveFill
    { 0.263074, 0.830760, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2353,8 +2353,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.761636, 0.862685, 0.714808, 1.000000 }, // SecondaryInactiveStroke
-   { 0.254197, 0.647484, 0.071943, 1.000000 }, // SecondaryActiveStroke
-   { 0.128216, 0.404893, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.166265, 0.423504, 0.047056, 1.000000 }, // SecondaryActiveStroke
+   { 0.159397, 0.503360, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2366,9 +2366,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.805593, 0.937288, 0.749152, 1.000000 }, // InactiveFill
    { 0.597595, 0.870192, 0.480768, 1.000000 }, // ActiveFill
    { 0.224232, 0.747440, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.743888, 0.853971, 0.696709, 1.000000 }, // SecondaryActiveFill
+   { 0.711854, 0.835706, 0.658774, 1.000000 }, // SecondaryActiveFill
    { 0.920246, 0.954526, 0.905554, 1.000000 }, // SecondaryInactiveFill
-   { 0.743888, 0.853971, 0.696709, 1.000000 }, // SecondaryActiveFill
+   { 0.711854, 0.835706, 0.658774, 1.000000 }, // SecondaryActiveFill
    { 0.249576, 0.831920, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2376,8 +2376,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.759870, 0.863084, 0.715636, 1.000000 }, // SecondaryInactiveStroke
-   { 0.244977, 0.648468, 0.072052, 1.000000 }, // SecondaryActiveStroke
-   { 0.121596, 0.405320, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.160249, 0.424188, 0.047132, 1.000000 }, // SecondaryActiveStroke
+   { 0.151176, 0.503920, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2389,9 +2389,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.803709, 0.937685, 0.750741, 1.000000 }, // InactiveFill
    { 0.593423, 0.870928, 0.483712, 1.000000 }, // ActiveFill
    { 0.212016, 0.748293, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.742019, 0.854396, 0.697591, 1.000000 }, // SecondaryActiveFill
+   { 0.709734, 0.836174, 0.659746, 1.000000 }, // SecondaryActiveFill
    { 0.919683, 0.954669, 0.905851, 1.000000 }, // SecondaryInactiveFill
-   { 0.742019, 0.854396, 0.697591, 1.000000 }, // SecondaryActiveFill
+   { 0.709734, 0.836174, 0.659746, 1.000000 }, // SecondaryActiveFill
    { 0.236039, 0.833080, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2399,8 +2399,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.758119, 0.863483, 0.716464, 1.000000 }, // SecondaryInactiveStroke
-   { 0.235662, 0.649272, 0.072141, 1.000000 }, // SecondaryActiveStroke
-   { 0.115018, 0.405947, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.154147, 0.424692, 0.047188, 1.000000 }, // SecondaryActiveStroke
+   { 0.142936, 0.504480, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2412,9 +2412,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.801865, 0.938083, 0.752331, 1.000000 }, // InactiveFill
    { 0.589325, 0.871664, 0.486656, 1.000000 }, // ActiveFill
    { 0.199772, 0.749147, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.740166, 0.854820, 0.698473, 1.000000 }, // SecondaryActiveFill
+   { 0.707631, 0.836642, 0.660718, 1.000000 }, // SecondaryActiveFill
    { 0.919125, 0.954812, 0.906148, 1.000000 }, // SecondaryInactiveFill
-   { 0.740166, 0.854820, 0.698473, 1.000000 }, // SecondaryActiveFill
+   { 0.707631, 0.836642, 0.660718, 1.000000 }, // SecondaryActiveFill
    { 0.222411, 0.834040, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2422,8 +2422,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.756382, 0.863881, 0.717292, 1.000000 }, // SecondaryInactiveStroke
-   { 0.226323, 0.650076, 0.072231, 1.000000 }, // SecondaryActiveStroke
-   { 0.108366, 0.406373, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.148094, 0.425376, 0.047264, 1.000000 }, // SecondaryActiveStroke
+   { 0.134677, 0.505040, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2435,9 +2435,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.800190, 0.938520, 0.754080, 1.000000 }, // InactiveFill
    { 0.585430, 0.872440, 0.489760, 1.000000 }, // ActiveFill
    { 0.187600, 0.750400, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.738445, 0.855310, 0.699490, 1.000000 }, // SecondaryActiveFill
+   { 0.705663, 0.837175, 0.661825, 1.000000 }, // SecondaryActiveFill
    { 0.918690, 0.955020, 0.906580, 1.000000 }, // SecondaryInactiveFill
-   { 0.738445, 0.855310, 0.699490, 1.000000 }, // SecondaryActiveFill
+   { 0.705663, 0.837175, 0.661825, 1.000000 }, // SecondaryActiveFill
    { 0.208800, 0.835200, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2445,8 +2445,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.754777, 0.864345, 0.718255, 1.000000 }, // SecondaryInactiveStroke
-   { 0.217080, 0.651240, 0.072360, 1.000000 }, // SecondaryActiveStroke
-   { 0.101700, 0.406800, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.142080, 0.426240, 0.047360, 1.000000 }, // SecondaryActiveStroke
+   { 0.126400, 0.505600, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2458,9 +2458,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.798049, 0.938803, 0.755211, 1.000000 }, // InactiveFill
    { 0.580786, 0.872965, 0.491861, 1.000000 }, // ActiveFill
    { 0.175212, 0.750907, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.736607, 0.855726, 0.700354, 1.000000 }, // SecondaryActiveFill
+   { 0.703373, 0.837522, 0.662545, 1.000000 }, // SecondaryActiveFill
    { 0.917993, 0.955081, 0.906706, 1.000000 }, // SecondaryInactiveFill
-   { 0.736607, 0.855726, 0.700354, 1.000000 }, // SecondaryActiveFill
+   { 0.703373, 0.837522, 0.662545, 1.000000 }, // SecondaryActiveFill
    { 0.195048, 0.835920, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2468,8 +2468,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.752912, 0.864657, 0.718903, 1.000000 }, // SecondaryInactiveStroke
-   { 0.207344, 0.650964, 0.072329, 1.000000 }, // SecondaryActiveStroke
-   { 0.097270, 0.407876, 0.002737, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.135823, 0.426420, 0.047380, 1.000000 }, // SecondaryActiveStroke
+   { 0.118092, 0.506107, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2481,9 +2481,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.796070, 0.939125, 0.756501, 1.000000 }, // InactiveFill
    { 0.576328, 0.873531, 0.494123, 1.000000 }, // ActiveFill
    { 0.162850, 0.751613, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.734665, 0.856077, 0.701083, 1.000000 }, // SecondaryActiveFill
+   { 0.701216, 0.837933, 0.663400, 1.000000 }, // SecondaryActiveFill
    { 0.917419, 0.955206, 0.906967, 1.000000 }, // SecondaryInactiveFill
-   { 0.734665, 0.856077, 0.701083, 1.000000 }, // SecondaryActiveFill
+   { 0.701216, 0.837933, 0.663400, 1.000000 }, // SecondaryActiveFill
    { 0.181272, 0.836640, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2491,8 +2491,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.751178, 0.865034, 0.719686, 1.000000 }, // SecondaryInactiveStroke
-   { 0.197944, 0.651768, 0.072419, 1.000000 }, // SecondaryActiveStroke
-   { 0.092744, 0.408112, 0.005515, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.129615, 0.426780, 0.047420, 1.000000 }, // SecondaryActiveStroke
+   { 0.109723, 0.506413, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2504,9 +2504,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.794123, 0.939448, 0.757792, 1.000000 }, // InactiveFill
    { 0.571926, 0.874096, 0.496384, 1.000000 }, // ActiveFill
    { 0.150424, 0.752120, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.732856, 0.856493, 0.701947, 1.000000 }, // SecondaryActiveFill
+   { 0.699073, 0.838345, 0.664255, 1.000000 }, // SecondaryActiveFill
    { 0.916849, 0.955332, 0.907228, 1.000000 }, // SecondaryInactiveFill
-   { 0.732856, 0.856493, 0.701947, 1.000000 }, // SecondaryActiveFill
+   { 0.699073, 0.838345, 0.664255, 1.000000 }, // SecondaryActiveFill
    { 0.167432, 0.837160, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2514,8 +2514,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.749457, 0.865411, 0.720469, 1.000000 }, // SecondaryInactiveStroke
-   { 0.188469, 0.652392, 0.072488, 1.000000 }, // SecondaryActiveStroke
-   { 0.088370, 0.408503, 0.008337, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.123448, 0.427320, 0.047480, 1.000000 }, // SecondaryActiveStroke
+   { 0.101384, 0.506920, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2527,9 +2527,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.792209, 0.939771, 0.759083, 1.000000 }, // InactiveFill
    { 0.567582, 0.874661, 0.498645, 1.000000 }, // ActiveFill
    { 0.137982, 0.752627, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.730940, 0.856844, 0.702676, 1.000000 }, // SecondaryActiveFill
+   { 0.696945, 0.838757, 0.665110, 1.000000 }, // SecondaryActiveFill
    { 0.916283, 0.955458, 0.907489, 1.000000 }, // SecondaryInactiveFill
-   { 0.730940, 0.856844, 0.702676, 1.000000 }, // SecondaryActiveFill
+   { 0.696945, 0.838757, 0.665110, 1.000000 }, // SecondaryActiveFill
    { 0.153611, 0.837880, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2537,8 +2537,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.747750, 0.865788, 0.721252, 1.000000 }, // SecondaryInactiveStroke
-   { 0.178975, 0.653016, 0.072557, 1.000000 }, // SecondaryActiveStroke
-   { 0.084064, 0.408657, 0.011196, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.117216, 0.427680, 0.047520, 1.000000 }, // SecondaryActiveStroke
+   { 0.093028, 0.507427, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2550,9 +2550,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.790327, 0.940093, 0.760373, 1.000000 }, // InactiveFill
    { 0.563293, 0.875227, 0.500907, 1.000000 }, // ActiveFill
    { 0.125522, 0.753133, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.729160, 0.857260, 0.703540, 1.000000 }, // SecondaryActiveFill
+   { 0.694832, 0.839168, 0.665965, 1.000000 }, // SecondaryActiveFill
    { 0.915722, 0.955583, 0.907750, 1.000000 }, // SecondaryInactiveFill
-   { 0.729160, 0.857260, 0.703540, 1.000000 }, // SecondaryActiveFill
+   { 0.694832, 0.839168, 0.665965, 1.000000 }, // SecondaryActiveFill
    { 0.139733, 0.838400, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2560,8 +2560,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.746057, 0.866165, 0.722035, 1.000000 }, // SecondaryInactiveStroke
-   { 0.169462, 0.653640, 0.072627, 1.000000 }, // SecondaryActiveStroke
-   { 0.079875, 0.408771, 0.014096, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.110973, 0.428040, 0.047560, 1.000000 }, // SecondaryActiveStroke
+   { 0.084622, 0.507733, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2573,9 +2573,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.788477, 0.940416, 0.761664, 1.000000 }, // InactiveFill
    { 0.559062, 0.875792, 0.503168, 1.000000 }, // ActiveFill
    { 0.113046, 0.753640, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.727270, 0.857611, 0.704269, 1.000000 }, // SecondaryActiveFill
+   { 0.692734, 0.839580, 0.666820, 1.000000 }, // SecondaryActiveFill
    { 0.915166, 0.955709, 0.908011, 1.000000 }, // SecondaryInactiveFill
-   { 0.727270, 0.857611, 0.704269, 1.000000 }, // SecondaryActiveFill
+   { 0.692734, 0.839580, 0.666820, 1.000000 }, // SecondaryActiveFill
    { 0.125808, 0.838720, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2583,8 +2583,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.744377, 0.866542, 0.722818, 1.000000 }, // SecondaryInactiveStroke
-   { 0.159887, 0.654084, 0.072676, 1.000000 }, // SecondaryActiveStroke
-   { 0.075842, 0.409037, 0.017043, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.104764, 0.428580, 0.047620, 1.000000 }, // SecondaryActiveStroke
+   { 0.076206, 0.508040, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2596,9 +2596,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.786659, 0.940739, 0.762955, 1.000000 }, // InactiveFill
    { 0.554886, 0.876357, 0.505429, 1.000000 }, // ActiveFill
    { 0.100526, 0.753947, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.725519, 0.858027, 0.705133, 1.000000 }, // SecondaryActiveFill
+   { 0.690651, 0.839992, 0.667675, 1.000000 }, // SecondaryActiveFill
    { 0.914614, 0.955835, 0.908272, 1.000000 }, // SecondaryInactiveFill
-   { 0.725519, 0.858027, 0.705133, 1.000000 }, // SecondaryActiveFill
+   { 0.690651, 0.839992, 0.667675, 1.000000 }, // SecondaryActiveFill
    { 0.111899, 0.839240, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2606,8 +2606,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.742710, 0.866919, 0.723601, 1.000000 }, // SecondaryInactiveStroke
-   { 0.150340, 0.654708, 0.072745, 1.000000 }, // SecondaryActiveStroke
-   { 0.071930, 0.409260, 0.020034, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.098497, 0.428940, 0.047660, 1.000000 }, // SecondaryActiveStroke
+   { 0.067780, 0.508347, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2619,9 +2619,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.784874, 0.941061, 0.764245, 1.000000 }, // InactiveFill
    { 0.550768, 0.876923, 0.507691, 1.000000 }, // ActiveFill
    { 0.087996, 0.754253, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.723656, 0.858378, 0.705862, 1.000000 }, // SecondaryActiveFill
+   { 0.688582, 0.840403, 0.668530, 1.000000 }, // SecondaryActiveFill
    { 0.914066, 0.955960, 0.908533, 1.000000 }, // SecondaryInactiveFill
-   { 0.723656, 0.858378, 0.705862, 1.000000 }, // SecondaryActiveFill
+   { 0.688582, 0.840403, 0.668530, 1.000000 }, // SecondaryActiveFill
    { 0.097949, 0.839560, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2629,8 +2629,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.741057, 0.867296, 0.724384, 1.000000 }, // SecondaryInactiveStroke
-   { 0.140736, 0.655152, 0.072795, 1.000000 }, // SecondaryActiveStroke
-   { 0.068112, 0.409250, 0.023056, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.092220, 0.429300, 0.047700, 1.000000 }, // SecondaryActiveStroke
+   { 0.059343, 0.508653, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2642,9 +2642,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.783121, 0.941384, 0.765536, 1.000000 }, // InactiveFill
    { 0.546706, 0.877488, 0.509952, 1.000000 }, // ActiveFill
    { 0.075456, 0.754560, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.721805, 0.858729, 0.706591, 1.000000 }, // SecondaryActiveFill
+   { 0.686528, 0.840815, 0.669385, 1.000000 }, // SecondaryActiveFill
    { 0.913523, 0.956086, 0.908794, 1.000000 }, // SecondaryInactiveFill
-   { 0.721805, 0.858729, 0.706591, 1.000000 }, // SecondaryActiveFill
+   { 0.686528, 0.840815, 0.669385, 1.000000 }, // SecondaryActiveFill
    { 0.083988, 0.839880, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2652,8 +2652,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.739290, 0.867608, 0.725032, 1.000000 }, // SecondaryInactiveStroke
-   { 0.131119, 0.655596, 0.072844, 1.000000 }, // SecondaryActiveStroke
-   { 0.064457, 0.409389, 0.026131, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.085932, 0.429660, 0.047740, 1.000000 }, // SecondaryActiveStroke
+   { 0.050896, 0.508960, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2665,9 +2665,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.781400, 0.941707, 0.766827, 1.000000 }, // InactiveFill
    { 0.542700, 0.878053, 0.512213, 1.000000 }, // ActiveFill
    { 0.062906, 0.754867, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.720096, 0.859145, 0.707455, 1.000000 }, // SecondaryActiveFill
+   { 0.684489, 0.841227, 0.670240, 1.000000 }, // SecondaryActiveFill
    { 0.912985, 0.956212, 0.909055, 1.000000 }, // SecondaryInactiveFill
-   { 0.720096, 0.859145, 0.707455, 1.000000 }, // SecondaryActiveFill
+   { 0.684489, 0.841227, 0.670240, 1.000000 }, // SecondaryActiveFill
    { 0.070017, 0.840200, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2675,8 +2675,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.737663, 0.867985, 0.725815, 1.000000 }, // SecondaryInactiveStroke
-   { 0.121489, 0.656040, 0.072893, 1.000000 }, // SecondaryActiveStroke
-   { 0.060935, 0.409484, 0.029249, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.079600, 0.429840, 0.047760, 1.000000 }, // SecondaryActiveStroke
+   { 0.042422, 0.509067, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2688,9 +2688,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.779712, 0.942029, 0.768117, 1.000000 }, // InactiveFill
    { 0.538751, 0.878619, 0.514475, 1.000000 }, // ActiveFill
    { 0.050345, 0.755173, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.718271, 0.859496, 0.708184, 1.000000 }, // SecondaryActiveFill
+   { 0.682465, 0.841638, 0.671095, 1.000000 }, // SecondaryActiveFill
    { 0.912451, 0.956337, 0.909316, 1.000000 }, // SecondaryInactiveFill
-   { 0.718271, 0.859496, 0.708184, 1.000000 }, // SecondaryActiveFill
+   { 0.682465, 0.841638, 0.671095, 1.000000 }, // SecondaryActiveFill
    { 0.056035, 0.840520, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2698,8 +2698,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.735919, 0.868297, 0.726463, 1.000000 }, // SecondaryInactiveStroke
-   { 0.111845, 0.656484, 0.072943, 1.000000 }, // SecondaryActiveStroke
-   { 0.057577, 0.409723, 0.032424, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.073293, 0.430200, 0.047800, 1.000000 }, // SecondaryActiveStroke
+   { 0.033958, 0.509373, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2711,9 +2711,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.778055, 0.942352, 0.769408, 1.000000 }, // InactiveFill
    { 0.534858, 0.879184, 0.516736, 1.000000 }, // ActiveFill
    { 0.037764, 0.755280, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.716460, 0.859847, 0.708913, 1.000000 }, // SecondaryActiveFill
+   { 0.680455, 0.842050, 0.671950, 1.000000 }, // SecondaryActiveFill
    { 0.911921, 0.956463, 0.909577, 1.000000 }, // SecondaryInactiveFill
-   { 0.716460, 0.859847, 0.708913, 1.000000 }, // SecondaryActiveFill
+   { 0.680455, 0.842050, 0.671950, 1.000000 }, // SecondaryActiveFill
    { 0.042032, 0.840640, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2721,8 +2721,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.734317, 0.868674, 0.727246, 1.000000 }, // SecondaryInactiveStroke
-   { 0.102161, 0.656748, 0.072972, 1.000000 }, // SecondaryActiveStroke
-   { 0.054334, 0.409731, 0.035629, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.066976, 0.430560, 0.047840, 1.000000 }, // SecondaryActiveStroke
+   { 0.025474, 0.509480, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2734,9 +2734,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.776431, 0.942675, 0.770699, 1.000000 }, // InactiveFill
    { 0.531022, 0.879749, 0.518997, 1.000000 }, // ActiveFill
    { 0.025186, 0.755587, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.714661, 0.860198, 0.709642, 1.000000 }, // SecondaryActiveFill
+   { 0.678460, 0.842462, 0.672805, 1.000000 }, // SecondaryActiveFill
    { 0.911396, 0.956589, 0.909838, 1.000000 }, // SecondaryInactiveFill
-   { 0.714661, 0.860198, 0.709642, 1.000000 }, // SecondaryActiveFill
+   { 0.678460, 0.842462, 0.672805, 1.000000 }, // SecondaryActiveFill
    { 0.028025, 0.840760, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2744,8 +2744,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.732597, 0.868986, 0.727894, 1.000000 }, // SecondaryInactiveStroke
-   { 0.092468, 0.657012, 0.073001, 1.000000 }, // SecondaryActiveStroke
-   { 0.051260, 0.409880, 0.038894, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.060623, 0.430740, 0.047860, 1.000000 }, // SecondaryActiveStroke
+   { 0.016993, 0.509787, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2757,9 +2757,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.774840, 0.942997, 0.771989, 1.000000 }, // InactiveFill
    { 0.527243, 0.880315, 0.521259, 1.000000 }, // ActiveFill
    { 0.012595, 0.755693, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.712874, 0.860549, 0.710371, 1.000000 }, // SecondaryActiveFill
+   { 0.676480, 0.842873, 0.673660, 1.000000 }, // SecondaryActiveFill
    { 0.910876, 0.956714, 0.910099, 1.000000 }, // SecondaryInactiveFill
-   { 0.712874, 0.860549, 0.710371, 1.000000 }, // SecondaryActiveFill
+   { 0.676480, 0.842873, 0.673660, 1.000000 }, // SecondaryActiveFill
    { 0.014018, 0.841080, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2767,8 +2767,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.731022, 0.869363, 0.728677, 1.000000 }, // SecondaryInactiveStroke
-   { 0.082791, 0.657456, 0.073051, 1.000000 }, // SecondaryActiveStroke
-   { 0.048334, 0.409983, 0.042204, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.054287, 0.431100, 0.047900, 1.000000 }, // SecondaryActiveStroke
+   { 0.008502, 0.510093, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2780,9 +2780,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.773440, 0.943360, 0.773440, 1.000000 }, // InactiveFill
    { 0.523680, 0.880920, 0.523680, 1.000000 }, // ActiveFill
    { 0.000000, 0.800000, 0.000000, 1.000000 }, // HighlightedFill
-   { 0.838000, 0.922000, 0.838000, 1.000000 }, // SecondaryActiveFill
+   { 0.674650, 0.843350, 0.674650, 1.000000 }, // SecondaryActiveFill
    { 0.910495, 0.956905, 0.910495, 1.000000 }, // SecondaryInactiveFill
-   { 0.838000, 0.922000, 0.838000, 1.000000 }, // SecondaryActiveFill
+   { 0.674650, 0.843350, 0.674650, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.900000, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2790,8 +2790,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.730000, 0.870000, 0.730000, 1.000000 }, // SecondaryInactiveStroke
-   { 0.050000, 0.450000, 0.050000, 1.000000 }, // SecondaryActiveStroke
-   { 0.050000, 0.450000, 0.050000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047960, 0.431640, 0.047960, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.510200, 0.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2803,9 +2803,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.772864, 0.943216, 0.775703, 1.000000 }, // InactiveFill
    { 0.522763, 0.880691, 0.528728, 1.000000 }, // ActiveFill
    { 0.000000, 0.755933, 0.012599, 1.000000 }, // HighlightedFill
-   { 0.710884, 0.860796, 0.713383, 1.000000 }, // SecondaryActiveFill
+   { 0.674227, 0.843146, 0.677042, 1.000000 }, // SecondaryActiveFill
    { 0.910270, 0.956797, 0.911045, 1.000000 }, // SecondaryInactiveFill
-   { 0.710884, 0.860796, 0.713383, 1.000000 }, // SecondaryActiveFill
+   { 0.674227, 0.843146, 0.677042, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.841147, 0.014019, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2813,8 +2813,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.729037, 0.869536, 0.731379, 1.000000 }, // SecondaryInactiveStroke
-   { 0.073067, 0.657600, 0.082809, 1.000000 }, // SecondaryActiveStroke
-   { 0.042222, 0.410152, 0.048354, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047927, 0.431340, 0.054317, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.510293, 0.008505, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2826,9 +2826,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.772448, 0.943112, 0.778137, 1.000000 }, // InactiveFill
    { 0.522005, 0.880501, 0.533955, 1.000000 }, // ActiveFill
    { 0.000000, 0.755867, 0.025196, 1.000000 }, // HighlightedFill
-   { 0.710668, 0.860692, 0.715669, 1.000000 }, // SecondaryActiveFill
+   { 0.673939, 0.843008, 0.679575, 1.000000 }, // SecondaryActiveFill
    { 0.910180, 0.956753, 0.911732, 1.000000 }, // SecondaryInactiveFill
-   { 0.710668, 0.860692, 0.715669, 1.000000 }, // SecondaryActiveFill
+   { 0.673939, 0.843008, 0.679575, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.841093, 0.028036, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2836,8 +2836,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.728884, 0.869463, 0.733570, 1.000000 }, // SecondaryInactiveStroke
-   { 0.073053, 0.657480, 0.092534, 1.000000 }, // SecondaryActiveStroke
-   { 0.038926, 0.410221, 0.051303, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047913, 0.431220, 0.060690, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.510187, 0.017006, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2849,9 +2849,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.772032, 0.943008, 0.780581, 1.000000 }, // InactiveFill
    { 0.521248, 0.880312, 0.539201, 1.000000 }, // ActiveFill
    { 0.000000, 0.755800, 0.037790, 1.000000 }, // HighlightedFill
-   { 0.710317, 0.860523, 0.717827, 1.000000 }, // SecondaryActiveFill
+   { 0.673651, 0.842869, 0.682112, 1.000000 }, // SecondaryActiveFill
    { 0.910090, 0.956710, 0.912421, 1.000000 }, // SecondaryInactiveFill
-   { 0.710317, 0.860523, 0.717827, 1.000000 }, // SecondaryActiveFill
+   { 0.673651, 0.842869, 0.682112, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.841040, 0.042052, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2859,8 +2859,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.728596, 0.869324, 0.735632, 1.000000 }, // SecondaryInactiveStroke
-   { 0.073040, 0.657360, 0.102256, 1.000000 }, // SecondaryActiveStroke
-   { 0.035674, 0.410246, 0.054402, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047900, 0.431100, 0.067060, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.510080, 0.025504, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2872,9 +2872,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.771616, 0.942904, 0.783035, 1.000000 }, // InactiveFill
    { 0.520491, 0.880123, 0.544466, 1.000000 }, // ActiveFill
    { 0.000000, 0.755733, 0.050382, 1.000000 }, // HighlightedFill
-   { 0.710101, 0.860419, 0.720122, 1.000000 }, // SecondaryActiveFill
+   { 0.673363, 0.842730, 0.684654, 1.000000 }, // SecondaryActiveFill
    { 0.910000, 0.956667, 0.913111, 1.000000 }, // SecondaryInactiveFill
-   { 0.710101, 0.860419, 0.720122, 1.000000 }, // SecondaryActiveFill
+   { 0.673363, 0.842730, 0.684654, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.840987, 0.056066, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2882,8 +2882,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.728308, 0.869185, 0.737700, 1.000000 }, // SecondaryInactiveStroke
-   { 0.073027, 0.657240, 0.111974, 1.000000 }, // SecondaryActiveStroke
-   { 0.032464, 0.410229, 0.057649, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047887, 0.430980, 0.073426, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.509973, 0.033998, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2895,9 +2895,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.771200, 0.942800, 0.785500, 1.000000 }, // InactiveFill
    { 0.519733, 0.879933, 0.549750, 1.000000 }, // ActiveFill
    { 0.000000, 0.755467, 0.062956, 1.000000 }, // HighlightedFill
-   { 0.709885, 0.860315, 0.722421, 1.000000 }, // SecondaryActiveFill
+   { 0.673075, 0.842592, 0.687201, 1.000000 }, // SecondaryActiveFill
    { 0.909910, 0.956623, 0.913803, 1.000000 }, // SecondaryInactiveFill
-   { 0.709885, 0.860315, 0.722421, 1.000000 }, // SecondaryActiveFill
+   { 0.673075, 0.842592, 0.687201, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.840933, 0.070078, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2905,8 +2905,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.728155, 0.869112, 0.739901, 1.000000 }, // SecondaryInactiveStroke
-   { 0.073013, 0.657120, 0.121689, 1.000000 }, // SecondaryActiveStroke
-   { 0.029311, 0.410356, 0.061065, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047873, 0.430860, 0.079789, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.509867, 0.042489, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2918,9 +2918,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.770784, 0.942696, 0.787975, 1.000000 }, // InactiveFill
    { 0.518976, 0.879744, 0.555053, 1.000000 }, // ActiveFill
    { 0.000000, 0.755400, 0.075540, 1.000000 }, // HighlightedFill
-   { 0.709669, 0.860211, 0.724723, 1.000000 }, // SecondaryActiveFill
+   { 0.672787, 0.842453, 0.689754, 1.000000 }, // SecondaryActiveFill
    { 0.909820, 0.956580, 0.914496, 1.000000 }, // SecondaryInactiveFill
-   { 0.709669, 0.860211, 0.724723, 1.000000 }, // SecondaryActiveFill
+   { 0.672787, 0.842453, 0.689754, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.840680, 0.084068, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2928,8 +2928,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.727867, 0.868973, 0.741978, 1.000000 }, // SecondaryInactiveStroke
-   { 0.073000, 0.657000, 0.131400, 1.000000 }, // SecondaryActiveStroke
-   { 0.026198, 0.410442, 0.064623, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047860, 0.430740, 0.086148, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.509760, 0.050976, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2941,9 +2941,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.770368, 0.942592, 0.790461, 1.000000 }, // InactiveFill
    { 0.518219, 0.879555, 0.560375, 1.000000 }, // ActiveFill
    { 0.000000, 0.755333, 0.088122, 1.000000 }, // HighlightedFill
-   { 0.709318, 0.860042, 0.726902, 1.000000 }, // SecondaryActiveFill
+   { 0.672499, 0.842314, 0.692311, 1.000000 }, // SecondaryActiveFill
    { 0.909730, 0.956537, 0.915191, 1.000000 }, // SecondaryInactiveFill
-   { 0.709318, 0.860042, 0.726902, 1.000000 }, // SecondaryActiveFill
+   { 0.672499, 0.842314, 0.692311, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.840627, 0.098073, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2951,8 +2951,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.727579, 0.868834, 0.744059, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072987, 0.656880, 0.141108, 1.000000 }, // SecondaryActiveStroke
-   { 0.023115, 0.410298, 0.068287, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047847, 0.430620, 0.092504, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.509653, 0.059460, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2964,9 +2964,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.769952, 0.942488, 0.792957, 1.000000 }, // InactiveFill
    { 0.517461, 0.879365, 0.565715, 1.000000 }, // ActiveFill
    { 0.000000, 0.755267, 0.100702, 1.000000 }, // HighlightedFill
-   { 0.709102, 0.859938, 0.729213, 1.000000 }, // SecondaryActiveFill
+   { 0.672211, 0.842176, 0.694873, 1.000000 }, // SecondaryActiveFill
    { 0.909640, 0.956493, 0.915887, 1.000000 }, // SecondaryInactiveFill
-   { 0.709102, 0.859938, 0.729213, 1.000000 }, // SecondaryActiveFill
+   { 0.672211, 0.842176, 0.694873, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.840573, 0.112076, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2974,8 +2974,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.727426, 0.868761, 0.746271, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072953, 0.656580, 0.150770, 1.000000 }, // SecondaryActiveStroke
-   { 0.020094, 0.410493, 0.072147, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047833, 0.430500, 0.098856, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.509547, 0.067940, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -2987,9 +2987,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.769536, 0.942384, 0.795463, 1.000000 }, // InactiveFill
    { 0.516704, 0.879176, 0.571075, 1.000000 }, // ActiveFill
    { 0.000000, 0.755200, 0.113280, 1.000000 }, // HighlightedFill
-   { 0.708886, 0.859834, 0.731528, 1.000000 }, // SecondaryActiveFill
+   { 0.671923, 0.842037, 0.697440, 1.000000 }, // SecondaryActiveFill
    { 0.909550, 0.956450, 0.916585, 1.000000 }, // SecondaryInactiveFill
-   { 0.708886, 0.859834, 0.731528, 1.000000 }, // SecondaryActiveFill
+   { 0.671923, 0.842037, 0.697440, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.840320, 0.126048, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -2997,8 +2997,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.727138, 0.868622, 0.748361, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072940, 0.656460, 0.160468, 1.000000 }, // SecondaryActiveStroke
-   { 0.017102, 0.410458, 0.076106, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047820, 0.430380, 0.105204, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.509440, 0.076416, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3010,9 +3010,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.769120, 0.942280, 0.797980, 1.000000 }, // InactiveFill
    { 0.515947, 0.878987, 0.576453, 1.000000 }, // ActiveFill
    { 0.000000, 0.754933, 0.125822, 1.000000 }, // HighlightedFill
-   { 0.708535, 0.859665, 0.733723, 1.000000 }, // SecondaryActiveFill
+   { 0.671635, 0.841898, 0.700012, 1.000000 }, // SecondaryActiveFill
    { 0.909460, 0.956407, 0.917284, 1.000000 }, // SecondaryInactiveFill
-   { 0.708535, 0.859665, 0.733723, 1.000000 }, // SecondaryActiveFill
+   { 0.671635, 0.841898, 0.700012, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.840267, 0.140044, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3020,8 +3020,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.726850, 0.868483, 0.750456, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072927, 0.656340, 0.170162, 1.000000 }, // SecondaryActiveStroke
-   { 0.014151, 0.410382, 0.080190, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047807, 0.430260, 0.111549, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.509333, 0.084889, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3033,9 +3033,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.768704, 0.942176, 0.800507, 1.000000 }, // InactiveFill
    { 0.515189, 0.878797, 0.581851, 1.000000 }, // ActiveFill
    { 0.000000, 0.754867, 0.138392, 1.000000 }, // HighlightedFill
-   { 0.708319, 0.859561, 0.736047, 1.000000 }, // SecondaryActiveFill
+   { 0.671347, 0.841760, 0.702589, 1.000000 }, // SecondaryActiveFill
    { 0.909370, 0.956363, 0.917985, 1.000000 }, // SecondaryInactiveFill
-   { 0.708319, 0.859561, 0.736047, 1.000000 }, // SecondaryActiveFill
+   { 0.671347, 0.841760, 0.702589, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.840013, 0.154002, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3043,8 +3043,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.726697, 0.868410, 0.752678, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072893, 0.656040, 0.179804, 1.000000 }, // SecondaryActiveStroke
-   { 0.011246, 0.410461, 0.084435, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047793, 0.430140, 0.117890, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.509227, 0.093358, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3056,9 +3056,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.768288, 0.942072, 0.803045, 1.000000 }, // InactiveFill
    { 0.514432, 0.878608, 0.587267, 1.000000 }, // ActiveFill
    { 0.000000, 0.754600, 0.150920, 1.000000 }, // HighlightedFill
-   { 0.708103, 0.859457, 0.738374, 1.000000 }, // SecondaryActiveFill
+   { 0.671059, 0.841621, 0.705171, 1.000000 }, // SecondaryActiveFill
    { 0.909280, 0.956320, 0.918688, 1.000000 }, // SecondaryInactiveFill
-   { 0.708103, 0.859457, 0.738374, 1.000000 }, // SecondaryActiveFill
+   { 0.671059, 0.841621, 0.705171, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.839760, 0.167952, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3066,8 +3066,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.726409, 0.868271, 0.754781, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072880, 0.655920, 0.189488, 1.000000 }, // SecondaryActiveStroke
-   { 0.008378, 0.410502, 0.088803, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047780, 0.430020, 0.124228, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.509120, 0.101824, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3079,9 +3079,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.767872, 0.941968, 0.805593, 1.000000 }, // InactiveFill
    { 0.513675, 0.878419, 0.592703, 1.000000 }, // ActiveFill
    { 0.000000, 0.754333, 0.163439, 1.000000 }, // HighlightedFill
-   { 0.707752, 0.859288, 0.740585, 1.000000 }, // SecondaryActiveFill
+   { 0.670771, 0.841482, 0.707758, 1.000000 }, // SecondaryActiveFill
    { 0.909190, 0.956277, 0.919392, 1.000000 }, // SecondaryInactiveFill
-   { 0.707752, 0.859288, 0.740585, 1.000000 }, // SecondaryActiveFill
+   { 0.670771, 0.841482, 0.707758, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.839707, 0.181936, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3089,8 +3089,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.726121, 0.868132, 0.756890, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072847, 0.655620, 0.199114, 1.000000 }, // SecondaryActiveStroke
-   { 0.005547, 0.410506, 0.093288, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047767, 0.429900, 0.130562, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.509013, 0.110286, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3102,9 +3102,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.767456, 0.941864, 0.808151, 1.000000 }, // InactiveFill
    { 0.512917, 0.878229, 0.598157, 1.000000 }, // ActiveFill
    { 0.000000, 0.754267, 0.175996, 1.000000 }, // HighlightedFill
-   { 0.707536, 0.859184, 0.742921, 1.000000 }, // SecondaryActiveFill
+   { 0.670483, 0.841344, 0.710350, 1.000000 }, // SecondaryActiveFill
    { 0.909100, 0.956233, 0.920098, 1.000000 }, // SecondaryInactiveFill
-   { 0.707536, 0.859184, 0.742921, 1.000000 }, // SecondaryActiveFill
+   { 0.670483, 0.841344, 0.710350, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.839453, 0.195872, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3112,8 +3112,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.725833, 0.867994, 0.759004, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072813, 0.655320, 0.208732, 1.000000 }, // SecondaryActiveStroke
-   { 0.002755, 0.410472, 0.097889, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047753, 0.429780, 0.136893, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.508907, 0.118745, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3125,9 +3125,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.767200, 0.941800, 0.810850, 1.000000 }, // InactiveFill
    { 0.512320, 0.878080, 0.603760, 1.000000 }, // ActiveFill
    { 0.000000, 0.754000, 0.188500, 1.000000 }, // HighlightedFill
-   { 0.707185, 0.859015, 0.745143, 1.000000 }, // SecondaryActiveFill
+   { 0.670330, 0.841270, 0.713065, 1.000000 }, // SecondaryActiveFill
    { 0.909145, 0.956255, 0.920922, 1.000000 }, // SecondaryInactiveFill
-   { 0.707185, 0.859015, 0.745143, 1.000000 }, // SecondaryActiveFill
+   { 0.670330, 0.841270, 0.713065, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.839200, 0.209800, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3135,8 +3135,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.725680, 0.867920, 0.761240, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072900, 0.656100, 0.218700, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.409600, 0.102400, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047760, 0.429840, 0.143280, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.508600, 0.127150, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3148,9 +3148,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.766560, 0.941640, 0.813248, 1.000000 }, // InactiveFill
    { 0.511211, 0.877803, 0.608969, 1.000000 }, // ActiveFill
    { 0.000000, 0.753427, 0.200914, 1.000000 }, // HighlightedFill
-   { 0.706771, 0.858816, 0.747316, 1.000000 }, // SecondaryActiveFill
+   { 0.669880, 0.841053, 0.715526, 1.000000 }, // SecondaryActiveFill
    { 0.908920, 0.956147, 0.921514, 1.000000 }, // SecondaryInactiveFill
-   { 0.706771, 0.858816, 0.747316, 1.000000 }, // SecondaryActiveFill
+   { 0.669880, 0.841053, 0.715526, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.838587, 0.223623, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3158,8 +3158,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.725275, 0.867725, 0.763262, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072841, 0.655572, 0.228236, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.409573, 0.109220, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047713, 0.429420, 0.149502, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.508533, 0.135609, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3171,9 +3171,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.766080, 0.941520, 0.815788, 1.000000 }, // InactiveFill
    { 0.510261, 0.877565, 0.614331, 1.000000 }, // ActiveFill
    { 0.000000, 0.753053, 0.213365, 1.000000 }, // HighlightedFill
-   { 0.706492, 0.858681, 0.749612, 1.000000 }, // SecondaryActiveFill
+   { 0.669565, 0.840902, 0.718110, 1.000000 }, // SecondaryActiveFill
    { 0.908830, 0.956103, 0.922224, 1.000000 }, // SecondaryInactiveFill
-   { 0.706492, 0.858681, 0.749612, 1.000000 }, // SecondaryActiveFill
+   { 0.669565, 0.840902, 0.718110, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.838173, 0.237482, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3181,8 +3181,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.725005, 0.867595, 0.765406, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072803, 0.655224, 0.237822, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.409347, 0.115982, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047687, 0.429180, 0.155776, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.508267, 0.144009, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3194,9 +3194,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.765600, 0.941400, 0.818340, 1.000000 }, // InactiveFill
    { 0.509312, 0.877328, 0.619717, 1.000000 }, // ActiveFill
    { 0.000000, 0.752680, 0.225804, 1.000000 }, // HighlightedFill
-   { 0.706213, 0.858547, 0.751913, 1.000000 }, // SecondaryActiveFill
+   { 0.669250, 0.840750, 0.720700, 1.000000 }, // SecondaryActiveFill
    { 0.908740, 0.956060, 0.922936, 1.000000 }, // SecondaryInactiveFill
-   { 0.706213, 0.858547, 0.751913, 1.000000 }, // SecondaryActiveFill
+   { 0.669250, 0.840750, 0.720700, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.837760, 0.251328, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3204,8 +3204,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.724735, 0.867465, 0.767554, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072764, 0.654876, 0.247398, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.409120, 0.122736, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047660, 0.428940, 0.162044, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.508000, 0.152400, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3217,9 +3217,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.765120, 0.941280, 0.820904, 1.000000 }, // InactiveFill
    { 0.508363, 0.877091, 0.625127, 1.000000 }, // ActiveFill
    { 0.000000, 0.752507, 0.238294, 1.000000 }, // HighlightedFill
-   { 0.705934, 0.858413, 0.754219, 1.000000 }, // SecondaryActiveFill
+   { 0.668935, 0.840598, 0.723295, 1.000000 }, // SecondaryActiveFill
    { 0.908650, 0.956017, 0.923649, 1.000000 }, // SecondaryInactiveFill
-   { 0.705934, 0.858413, 0.754219, 1.000000 }, // SecondaryActiveFill
+   { 0.668935, 0.840598, 0.723295, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.837547, 0.265223, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3227,8 +3227,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.724465, 0.867335, 0.769707, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072725, 0.654528, 0.256963, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.408893, 0.129483, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047633, 0.428700, 0.168304, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.507733, 0.160782, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3240,9 +3240,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.764640, 0.941160, 0.823480, 1.000000 }, // InactiveFill
    { 0.507413, 0.876853, 0.630560, 1.000000 }, // ActiveFill
    { 0.000000, 0.752133, 0.250711, 1.000000 }, // HighlightedFill
-   { 0.705655, 0.858278, 0.756529, 1.000000 }, // SecondaryActiveFill
+   { 0.668620, 0.840447, 0.725896, 1.000000 }, // SecondaryActiveFill
    { 0.908560, 0.955973, 0.924364, 1.000000 }, // SecondaryInactiveFill
-   { 0.705655, 0.858278, 0.756529, 1.000000 }, // SecondaryActiveFill
+   { 0.668620, 0.840447, 0.725896, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.837133, 0.279044, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3250,8 +3250,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.724195, 0.867205, 0.771865, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072687, 0.654180, 0.266518, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.408667, 0.136222, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047607, 0.428460, 0.174558, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.507467, 0.169156, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3263,9 +3263,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.764160, 0.941040, 0.826068, 1.000000 }, // InactiveFill
    { 0.506464, 0.876616, 0.636017, 1.000000 }, // ActiveFill
    { 0.000000, 0.751760, 0.263116, 1.000000 }, // HighlightedFill
-   { 0.705376, 0.858144, 0.758845, 1.000000 }, // SecondaryActiveFill
+   { 0.668305, 0.840295, 0.728502, 1.000000 }, // SecondaryActiveFill
    { 0.908470, 0.955930, 0.925081, 1.000000 }, // SecondaryInactiveFill
-   { 0.705376, 0.858144, 0.758845, 1.000000 }, // SecondaryActiveFill
+   { 0.668305, 0.840295, 0.728502, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.836720, 0.292852, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3273,8 +3273,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.723925, 0.867075, 0.774028, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072668, 0.654012, 0.276138, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.408440, 0.142954, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047580, 0.428220, 0.180804, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.507400, 0.177590, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3286,9 +3286,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.763680, 0.940920, 0.828668, 1.000000 }, // InactiveFill
    { 0.505515, 0.876379, 0.641498, 1.000000 }, // ActiveFill
    { 0.000000, 0.751387, 0.275508, 1.000000 }, // HighlightedFill
-   { 0.705097, 0.858010, 0.761165, 1.000000 }, // SecondaryActiveFill
+   { 0.667990, 0.840143, 0.731113, 1.000000 }, // SecondaryActiveFill
    { 0.908380, 0.955887, 0.925799, 1.000000 }, // SecondaryInactiveFill
-   { 0.705097, 0.858010, 0.761165, 1.000000 }, // SecondaryActiveFill
+   { 0.667990, 0.840143, 0.731113, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.836307, 0.306646, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3296,8 +3296,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.723655, 0.866945, 0.776195, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072629, 0.653664, 0.285675, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.408413, 0.149752, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047553, 0.427980, 0.187043, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.507133, 0.185949, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3309,9 +3309,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.763200, 0.940800, 0.831280, 1.000000 }, // InactiveFill
    { 0.504565, 0.876141, 0.647003, 1.000000 }, // ActiveFill
    { 0.000000, 0.751013, 0.287888, 1.000000 }, // HighlightedFill
-   { 0.704818, 0.857875, 0.763490, 1.000000 }, // SecondaryActiveFill
+   { 0.667675, 0.839992, 0.733730, 1.000000 }, // SecondaryActiveFill
    { 0.908290, 0.955843, 0.926519, 1.000000 }, // SecondaryInactiveFill
-   { 0.704818, 0.857875, 0.763490, 1.000000 }, // SecondaryActiveFill
+   { 0.667675, 0.839992, 0.733730, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.835893, 0.320426, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3319,8 +3319,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.723385, 0.866815, 0.778367, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072591, 0.653316, 0.295202, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.408187, 0.156472, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047527, 0.427740, 0.193275, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.506867, 0.194299, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3332,9 +3332,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.762720, 0.940680, 0.833904, 1.000000 }, // InactiveFill
    { 0.503616, 0.875904, 0.652531, 1.000000 }, // ActiveFill
    { 0.000000, 0.750640, 0.300256, 1.000000 }, // HighlightedFill
-   { 0.704539, 0.857741, 0.765820, 1.000000 }, // SecondaryActiveFill
+   { 0.667360, 0.839840, 0.736352, 1.000000 }, // SecondaryActiveFill
    { 0.908200, 0.955800, 0.927240, 1.000000 }, // SecondaryInactiveFill
-   { 0.704539, 0.857741, 0.765820, 1.000000 }, // SecondaryActiveFill
+   { 0.667360, 0.839840, 0.736352, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.835480, 0.334192, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3342,8 +3342,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.723115, 0.866685, 0.780543, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072552, 0.652968, 0.304718, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.407960, 0.163184, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047500, 0.427500, 0.199500, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.506600, 0.202640, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3355,9 +3355,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.762240, 0.940560, 0.836540, 1.000000 }, // InactiveFill
    { 0.502667, 0.875667, 0.658083, 1.000000 }, // ActiveFill
    { 0.000000, 0.750267, 0.312611, 1.000000 }, // HighlightedFill
-   { 0.704260, 0.857607, 0.768154, 1.000000 }, // SecondaryActiveFill
+   { 0.667045, 0.839688, 0.738980, 1.000000 }, // SecondaryActiveFill
    { 0.908110, 0.955757, 0.927963, 1.000000 }, // SecondaryInactiveFill
-   { 0.704260, 0.857607, 0.768154, 1.000000 }, // SecondaryActiveFill
+   { 0.667045, 0.839688, 0.738980, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.835067, 0.347944, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3365,8 +3365,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.722845, 0.866555, 0.782724, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072493, 0.652440, 0.314138, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.407533, 0.169806, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047473, 0.427260, 0.205718, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.506333, 0.210972, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3378,9 +3378,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.761760, 0.940440, 0.839188, 1.000000 }, // InactiveFill
    { 0.501717, 0.875429, 0.663659, 1.000000 }, // ActiveFill
    { 0.000000, 0.749893, 0.324954, 1.000000 }, // HighlightedFill
-   { 0.703981, 0.857472, 0.770494, 1.000000 }, // SecondaryActiveFill
+   { 0.666730, 0.839537, 0.741613, 1.000000 }, // SecondaryActiveFill
    { 0.908020, 0.955713, 0.928687, 1.000000 }, // SecondaryInactiveFill
-   { 0.703981, 0.857472, 0.770494, 1.000000 }, // SecondaryActiveFill
+   { 0.666730, 0.839537, 0.741613, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.834653, 0.361683, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3388,8 +3388,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.722575, 0.866425, 0.784910, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072455, 0.652092, 0.323631, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.407307, 0.176500, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047447, 0.427020, 0.211928, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.505867, 0.219209, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3401,9 +3401,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.761280, 0.940320, 0.841848, 1.000000 }, // InactiveFill
    { 0.500768, 0.875192, 0.669259, 1.000000 }, // ActiveFill
    { 0.000000, 0.749320, 0.337194, 1.000000 }, // HighlightedFill
-   { 0.703702, 0.857338, 0.772838, 1.000000 }, // SecondaryActiveFill
+   { 0.666415, 0.839385, 0.744252, 1.000000 }, // SecondaryActiveFill
    { 0.907930, 0.955670, 0.929413, 1.000000 }, // SecondaryInactiveFill
-   { 0.703702, 0.857338, 0.772838, 1.000000 }, // SecondaryActiveFill
+   { 0.666415, 0.839385, 0.744252, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.834240, 0.375408, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3411,8 +3411,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.722305, 0.866295, 0.787101, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072416, 0.651744, 0.333114, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.407080, 0.183186, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047420, 0.426780, 0.218132, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.505600, 0.227520, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3424,9 +3424,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.760800, 0.940200, 0.844520, 1.000000 }, // InactiveFill
    { 0.499819, 0.874955, 0.674882, 1.000000 }, // ActiveFill
    { 0.000000, 0.748947, 0.349508, 1.000000 }, // HighlightedFill
-   { 0.703423, 0.857204, 0.775187, 1.000000 }, // SecondaryActiveFill
+   { 0.666100, 0.839233, 0.746896, 1.000000 }, // SecondaryActiveFill
    { 0.907840, 0.955627, 0.930140, 1.000000 }, // SecondaryInactiveFill
-   { 0.703423, 0.857204, 0.775187, 1.000000 }, // SecondaryActiveFill
+   { 0.666100, 0.839233, 0.746896, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.833627, 0.389026, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3434,8 +3434,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.722035, 0.866165, 0.789296, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072377, 0.651396, 0.342586, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.406853, 0.189865, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047393, 0.426540, 0.224328, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.505333, 0.235822, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3447,9 +3447,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.760320, 0.940080, 0.847204, 1.000000 }, // InactiveFill
    { 0.498869, 0.874717, 0.680529, 1.000000 }, // ActiveFill
    { 0.000000, 0.748573, 0.361810, 1.000000 }, // HighlightedFill
-   { 0.703144, 0.857069, 0.777541, 1.000000 }, // SecondaryActiveFill
+   { 0.665785, 0.839082, 0.749545, 1.000000 }, // SecondaryActiveFill
    { 0.907750, 0.955583, 0.930869, 1.000000 }, // SecondaryInactiveFill
-   { 0.703144, 0.857069, 0.777541, 1.000000 }, // SecondaryActiveFill
+   { 0.665785, 0.839082, 0.749545, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.833213, 0.402720, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3457,8 +3457,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.721765, 0.866035, 0.791495, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072339, 0.651048, 0.352048, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.406627, 0.196536, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047367, 0.426300, 0.230518, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.505067, 0.244116, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3470,9 +3470,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.760000, 0.940000, 0.850000, 1.000000 }, // InactiveFill
    { 0.498080, 0.874520, 0.686300, 1.000000 }, // ActiveFill
    { 0.000000, 0.748400, 0.374200, 1.000000 }, // HighlightedFill
-   { 0.703000, 0.857000, 0.780000, 1.000000 }, // SecondaryActiveFill
+   { 0.665605, 0.838995, 0.752300, 1.000000 }, // SecondaryActiveFill
    { 0.907795, 0.955605, 0.931700, 1.000000 }, // SecondaryInactiveFill
-   { 0.703000, 0.857000, 0.780000, 1.000000 }, // SecondaryActiveFill
+   { 0.665605, 0.838995, 0.752300, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.833000, 0.416500, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3480,8 +3480,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.721630, 0.865970, 0.793800, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072320, 0.650880, 0.361600, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.406200, 0.203100, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047360, 0.426240, 0.236800, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.504600, 0.252300, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3493,9 +3493,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.759307, 0.939827, 0.852575, 1.000000 }, // InactiveFill
    { 0.496747, 0.874187, 0.691757, 1.000000 }, // ActiveFill
    { 0.000000, 0.747533, 0.386226, 1.000000 }, // HighlightedFill
-   { 0.702559, 0.856788, 0.782244, 1.000000 }, // SecondaryActiveFill
+   { 0.665128, 0.838765, 0.754841, 1.000000 }, // SecondaryActiveFill
    { 0.907561, 0.955492, 0.932326, 1.000000 }, // SecondaryInactiveFill
-   { 0.702559, 0.856788, 0.782244, 1.000000 }, // SecondaryActiveFill
+   { 0.665128, 0.838765, 0.754841, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.832067, 0.429901, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3503,8 +3503,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.721207, 0.865766, 0.795896, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072239, 0.650148, 0.370825, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.406027, 0.209780, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047299, 0.425688, 0.242800, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.504347, 0.260579, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3516,9 +3516,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.758773, 0.939693, 0.855264, 1.000000 }, // InactiveFill
    { 0.495573, 0.873893, 0.697344, 1.000000 }, // ActiveFill
    { 0.000000, 0.746867, 0.398329, 1.000000 }, // HighlightedFill
-   { 0.702253, 0.856640, 0.784593, 1.000000 }, // SecondaryActiveFill
+   { 0.664786, 0.838601, 0.757487, 1.000000 }, // SecondaryActiveFill
    { 0.907462, 0.955445, 0.933053, 1.000000 }, // SecondaryInactiveFill
-   { 0.702253, 0.856640, 0.784593, 1.000000 }, // SecondaryActiveFill
+   { 0.664786, 0.838601, 0.757487, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.831333, 0.443378, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3526,8 +3526,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.720919, 0.865628, 0.798097, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072177, 0.649596, 0.380134, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.405653, 0.216348, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047257, 0.425316, 0.248889, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.503893, 0.268743, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3539,9 +3539,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.758240, 0.939560, 0.857966, 1.000000 }, // InactiveFill
    { 0.494400, 0.873600, 0.702960, 1.000000 }, // ActiveFill
    { 0.000000, 0.746400, 0.410520, 1.000000 }, // HighlightedFill
-   { 0.701947, 0.856493, 0.786947, 1.000000 }, // SecondaryActiveFill
+   { 0.664444, 0.838436, 0.760140, 1.000000 }, // SecondaryActiveFill
    { 0.907363, 0.955397, 0.933782, 1.000000 }, // SecondaryInactiveFill
-   { 0.701947, 0.856493, 0.786947, 1.000000 }, // SecondaryActiveFill
+   { 0.664444, 0.838436, 0.760140, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.830800, 0.456940, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3549,8 +3549,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.720631, 0.865489, 0.800303, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072116, 0.649044, 0.389426, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.405280, 0.222904, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047216, 0.424944, 0.254966, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.503440, 0.276892, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3562,9 +3562,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.757707, 0.939427, 0.860681, 1.000000 }, // InactiveFill
    { 0.493227, 0.873307, 0.708605, 1.000000 }, // ActiveFill
    { 0.000000, 0.745733, 0.422582, 1.000000 }, // HighlightedFill
-   { 0.701641, 0.856346, 0.789307, 1.000000 }, // SecondaryActiveFill
+   { 0.664102, 0.838271, 0.762798, 1.000000 }, // SecondaryActiveFill
    { 0.907264, 0.955349, 0.934512, 1.000000 }, // SecondaryInactiveFill
-   { 0.701641, 0.856346, 0.789307, 1.000000 }, // SecondaryActiveFill
+   { 0.664102, 0.838271, 0.762798, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.830067, 0.470371, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3572,8 +3572,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.720343, 0.865350, 0.802514, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072055, 0.648492, 0.398702, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.404907, 0.229447, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047175, 0.424572, 0.261033, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.502987, 0.285026, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3585,9 +3585,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.757173, 0.939293, 0.863410, 1.000000 }, // InactiveFill
    { 0.492053, 0.873013, 0.714280, 1.000000 }, // ActiveFill
    { 0.000000, 0.745067, 0.434622, 1.000000 }, // HighlightedFill
-   { 0.701335, 0.856198, 0.791672, 1.000000 }, // SecondaryActiveFill
+   { 0.663760, 0.838107, 0.765462, 1.000000 }, // SecondaryActiveFill
    { 0.907165, 0.955302, 0.935245, 1.000000 }, // SecondaryInactiveFill
-   { 0.701335, 0.856198, 0.791672, 1.000000 }, // SecondaryActiveFill
+   { 0.663760, 0.838107, 0.765462, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.829333, 0.483778, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3595,8 +3595,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.720055, 0.865212, 0.804730, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071993, 0.647940, 0.407962, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.404733, 0.236094, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047133, 0.424200, 0.267089, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.502733, 0.293261, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3608,9 +3608,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.756640, 0.939160, 0.866152, 1.000000 }, // InactiveFill
    { 0.490880, 0.872720, 0.719984, 1.000000 }, // ActiveFill
    { 0.000000, 0.744400, 0.446640, 1.000000 }, // HighlightedFill
-   { 0.701029, 0.856051, 0.794042, 1.000000 }, // SecondaryActiveFill
+   { 0.663418, 0.837942, 0.768132, 1.000000 }, // SecondaryActiveFill
    { 0.907066, 0.955254, 0.935979, 1.000000 }, // SecondaryInactiveFill
-   { 0.701029, 0.856051, 0.794042, 1.000000 }, // SecondaryActiveFill
+   { 0.663418, 0.837942, 0.768132, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.828800, 0.497280, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3618,8 +3618,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.719767, 0.865073, 0.806951, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071932, 0.647388, 0.417206, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.404360, 0.242616, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047092, 0.423828, 0.273134, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.502280, 0.301368, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3631,9 +3631,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.756107, 0.939027, 0.868907, 1.000000 }, // InactiveFill
    { 0.489707, 0.872427, 0.725717, 1.000000 }, // ActiveFill
    { 0.000000, 0.743933, 0.458759, 1.000000 }, // HighlightedFill
-   { 0.700723, 0.855904, 0.796418, 1.000000 }, // SecondaryActiveFill
+   { 0.663076, 0.837777, 0.770809, 1.000000 }, // SecondaryActiveFill
    { 0.906967, 0.955206, 0.936715, 1.000000 }, // SecondaryInactiveFill
-   { 0.700723, 0.855904, 0.796418, 1.000000 }, // SecondaryActiveFill
+   { 0.663076, 0.837777, 0.770809, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.828067, 0.510641, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3641,8 +3641,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.719479, 0.864934, 0.809176, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071871, 0.646836, 0.426433, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.403987, 0.249125, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047051, 0.423456, 0.279167, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.501827, 0.309460, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3654,9 +3654,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.755573, 0.938893, 0.871676, 1.000000 }, // InactiveFill
    { 0.488533, 0.872133, 0.731480, 1.000000 }, // ActiveFill
    { 0.000000, 0.743267, 0.470736, 1.000000 }, // HighlightedFill
-   { 0.700417, 0.855756, 0.798799, 1.000000 }, // SecondaryActiveFill
+   { 0.662734, 0.837613, 0.773491, 1.000000 }, // SecondaryActiveFill
    { 0.906868, 0.955159, 0.937452, 1.000000 }, // SecondaryInactiveFill
-   { 0.700417, 0.855756, 0.798799, 1.000000 }, // SecondaryActiveFill
+   { 0.662734, 0.837613, 0.773491, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.827333, 0.523978, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3664,8 +3664,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.719191, 0.864796, 0.811407, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071809, 0.646284, 0.435643, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.403613, 0.255622, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047009, 0.423084, 0.285190, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.501373, 0.317536, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3677,9 +3677,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.755040, 0.938760, 0.874458, 1.000000 }, // InactiveFill
    { 0.487360, 0.871840, 0.737272, 1.000000 }, // ActiveFill
    { 0.000000, 0.742600, 0.482690, 1.000000 }, // HighlightedFill
-   { 0.700111, 0.855609, 0.801185, 1.000000 }, // SecondaryActiveFill
+   { 0.662392, 0.837448, 0.776178, 1.000000 }, // SecondaryActiveFill
    { 0.906769, 0.955111, 0.938191, 1.000000 }, // SecondaryInactiveFill
-   { 0.700111, 0.855609, 0.801185, 1.000000 }, // SecondaryActiveFill
+   { 0.662392, 0.837448, 0.776178, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.826600, 0.537290, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3687,8 +3687,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.718903, 0.864657, 0.813643, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071748, 0.645732, 0.444838, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.403240, 0.262106, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046968, 0.422712, 0.291202, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.500920, 0.325598, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3700,9 +3700,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.754507, 0.938627, 0.877253, 1.000000 }, // InactiveFill
    { 0.486187, 0.871547, 0.743093, 1.000000 }, // ActiveFill
    { 0.000000, 0.741733, 0.494489, 1.000000 }, // HighlightedFill
-   { 0.699805, 0.855462, 0.803576, 1.000000 }, // SecondaryActiveFill
+   { 0.662050, 0.837283, 0.778872, 1.000000 }, // SecondaryActiveFill
    { 0.906670, 0.955063, 0.938932, 1.000000 }, // SecondaryInactiveFill
-   { 0.699805, 0.855462, 0.803576, 1.000000 }, // SecondaryActiveFill
+   { 0.662050, 0.837283, 0.778872, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.825667, 0.550444, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3710,8 +3710,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.718615, 0.864518, 0.815884, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071687, 0.645180, 0.454016, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.402867, 0.268578, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046927, 0.422340, 0.297202, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.500467, 0.333644, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3723,9 +3723,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.753973, 0.938493, 0.880062, 1.000000 }, // InactiveFill
    { 0.485013, 0.871253, 0.748944, 1.000000 }, // ActiveFill
    { 0.000000, 0.741067, 0.506396, 1.000000 }, // HighlightedFill
-   { 0.699499, 0.855314, 0.805973, 1.000000 }, // SecondaryActiveFill
+   { 0.661708, 0.837119, 0.781572, 1.000000 }, // SecondaryActiveFill
    { 0.906571, 0.955016, 0.939675, 1.000000 }, // SecondaryInactiveFill
-   { 0.699499, 0.855314, 0.805973, 1.000000 }, // SecondaryActiveFill
+   { 0.661708, 0.837119, 0.781572, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.824933, 0.563704, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3733,8 +3733,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.718327, 0.864380, 0.818130, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071625, 0.644628, 0.463177, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.402293, 0.274900, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046885, 0.421968, 0.303192, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.499813, 0.341539, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3746,9 +3746,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.753440, 0.938360, 0.882884, 1.000000 }, // InactiveFill
    { 0.483840, 0.870960, 0.754824, 1.000000 }, // ActiveFill
    { 0.000000, 0.740400, 0.518280, 1.000000 }, // HighlightedFill
-   { 0.699193, 0.855167, 0.808375, 1.000000 }, // SecondaryActiveFill
+   { 0.661366, 0.836954, 0.784278, 1.000000 }, // SecondaryActiveFill
    { 0.906472, 0.954968, 0.940419, 1.000000 }, // SecondaryInactiveFill
-   { 0.699193, 0.855167, 0.808375, 1.000000 }, // SecondaryActiveFill
+   { 0.661366, 0.836954, 0.784278, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.824200, 0.576940, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3756,8 +3756,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.718039, 0.864241, 0.820380, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071564, 0.644076, 0.472322, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.401920, 0.281344, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046844, 0.421596, 0.309170, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.499360, 0.349552, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3769,9 +3769,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.752907, 0.938227, 0.885719, 1.000000 }, // InactiveFill
    { 0.482667, 0.870667, 0.760733, 1.000000 }, // ActiveFill
    { 0.000000, 0.739533, 0.529999, 1.000000 }, // HighlightedFill
-   { 0.698887, 0.855020, 0.810782, 1.000000 }, // SecondaryActiveFill
+   { 0.661024, 0.836789, 0.786989, 1.000000 }, // SecondaryActiveFill
    { 0.906373, 0.954920, 0.941165, 1.000000 }, // SecondaryInactiveFill
-   { 0.698887, 0.855020, 0.810782, 1.000000 }, // SecondaryActiveFill
+   { 0.661024, 0.836789, 0.786989, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.823267, 0.590008, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3779,8 +3779,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.717751, 0.864102, 0.822636, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071503, 0.643524, 0.481451, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.401547, 0.287775, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046803, 0.421224, 0.315138, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.498907, 0.357550, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3792,9 +3792,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.752373, 0.938093, 0.888568, 1.000000 }, // InactiveFill
    { 0.481493, 0.870373, 0.766672, 1.000000 }, // ActiveFill
    { 0.000000, 0.738867, 0.541836, 1.000000 }, // HighlightedFill
-   { 0.698581, 0.854872, 0.813195, 1.000000 }, // SecondaryActiveFill
+   { 0.660682, 0.836625, 0.789707, 1.000000 }, // SecondaryActiveFill
    { 0.906274, 0.954873, 0.941913, 1.000000 }, // SecondaryInactiveFill
-   { 0.698581, 0.854872, 0.813195, 1.000000 }, // SecondaryActiveFill
+   { 0.660682, 0.836625, 0.789707, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.822533, 0.603191, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3802,8 +3802,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.717463, 0.863964, 0.824897, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071441, 0.642972, 0.490564, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.401173, 0.294194, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046761, 0.420852, 0.321094, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.498453, 0.365532, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3815,9 +3815,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.752000, 0.938000, 0.891500, 1.000000 }, // InactiveFill
    { 0.480480, 0.870120, 0.772710, 1.000000 }, // ActiveFill
    { 0.000000, 0.738400, 0.553800, 1.000000 }, // HighlightedFill
-   { 0.698410, 0.854790, 0.815695, 1.000000 }, // SecondaryActiveFill
+   { 0.660475, 0.836525, 0.792513, 1.000000 }, // SecondaryActiveFill
    { 0.906310, 0.954890, 0.942745, 1.000000 }, // SecondaryInactiveFill
-   { 0.698410, 0.854790, 0.815695, 1.000000 }, // SecondaryActiveFill
+   { 0.660475, 0.836525, 0.792513, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.822000, 0.616500, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3825,8 +3825,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.717310, 0.863890, 0.827245, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071400, 0.642600, 0.499800, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.400600, 0.300450, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046740, 0.420660, 0.327180, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.497800, 0.373350, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3838,9 +3838,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.751232, 0.937808, 0.894274, 1.000000 }, // InactiveFill
    { 0.478837, 0.869709, 0.778506, 1.000000 }, // ActiveFill
    { 0.000000, 0.737240, 0.565217, 1.000000 }, // HighlightedFill
-   { 0.697933, 0.854560, 0.818014, 1.000000 }, // SecondaryActiveFill
+   { 0.659953, 0.836274, 0.795132, 1.000000 }, // SecondaryActiveFill
    { 0.906076, 0.954777, 0.943414, 1.000000 }, // SecondaryInactiveFill
-   { 0.697933, 0.854560, 0.818014, 1.000000 }, // SecondaryActiveFill
+   { 0.659953, 0.836274, 0.795132, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.820733, 0.629229, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3848,8 +3848,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.716860, 0.863673, 0.829417, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071296, 0.641664, 0.508578, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.400280, 0.306881, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046664, 0.419976, 0.332870, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.497347, 0.381299, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3861,9 +3861,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.750624, 0.937656, 0.897132, 1.000000 }, // InactiveFill
    { 0.477355, 0.869339, 0.784409, 1.000000 }, // ActiveFill
    { 0.000000, 0.736280, 0.576753, 1.000000 }, // HighlightedFill
-   { 0.697591, 0.854396, 0.820421, 1.000000 }, // SecondaryActiveFill
+   { 0.659566, 0.836087, 0.797841, 1.000000 }, // SecondaryActiveFill
    { 0.905977, 0.954730, 0.944167, 1.000000 }, // SecondaryInactiveFill
-   { 0.697591, 0.854396, 0.820421, 1.000000 }, // SecondaryActiveFill
+   { 0.659566, 0.836087, 0.797841, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.819667, 0.642072, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3871,8 +3871,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.716545, 0.863522, 0.831677, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071212, 0.640908, 0.517474, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.399760, 0.313145, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046608, 0.419472, 0.338685, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.496693, 0.389076, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3884,9 +3884,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.750016, 0.937504, 0.900006, 1.000000 }, // InactiveFill
    { 0.475872, 0.868968, 0.790349, 1.000000 }, // ActiveFill
    { 0.000000, 0.735520, 0.588416, 1.000000 }, // HighlightedFill
-   { 0.697249, 0.854231, 0.822835, 1.000000 }, // SecondaryActiveFill
+   { 0.659179, 0.835901, 0.800557, 1.000000 }, // SecondaryActiveFill
    { 0.905878, 0.954682, 0.944921, 1.000000 }, // SecondaryInactiveFill
-   { 0.697249, 0.854231, 0.822835, 1.000000 }, // SecondaryActiveFill
+   { 0.659179, 0.835901, 0.800557, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.818800, 0.655040, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3894,8 +3894,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.716230, 0.863370, 0.833942, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071128, 0.640152, 0.526347, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.399240, 0.319392, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046552, 0.418968, 0.344485, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.496040, 0.396832, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3907,9 +3907,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.749408, 0.937352, 0.902896, 1.000000 }, // InactiveFill
    { 0.474389, 0.868597, 0.796326, 1.000000 }, // ActiveFill
    { 0.000000, 0.734560, 0.599891, 1.000000 }, // HighlightedFill
-   { 0.696907, 0.854066, 0.825254, 1.000000 }, // SecondaryActiveFill
+   { 0.658792, 0.835715, 0.803279, 1.000000 }, // SecondaryActiveFill
    { 0.905779, 0.954634, 0.945678, 1.000000 }, // SecondaryInactiveFill
-   { 0.696907, 0.854066, 0.825254, 1.000000 }, // SecondaryActiveFill
+   { 0.658792, 0.835715, 0.803279, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.817733, 0.667816, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3917,8 +3917,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.715915, 0.863218, 0.836213, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071044, 0.639396, 0.535198, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.398720, 0.325621, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046496, 0.418464, 0.350270, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.495387, 0.404566, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3930,9 +3930,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.748800, 0.937200, 0.905800, 1.000000 }, // InactiveFill
    { 0.472907, 0.868227, 0.802340, 1.000000 }, // ActiveFill
    { 0.000000, 0.733600, 0.611333, 1.000000 }, // HighlightedFill
-   { 0.696565, 0.853902, 0.827679, 1.000000 }, // SecondaryActiveFill
+   { 0.658405, 0.835528, 0.806008, 1.000000 }, // SecondaryActiveFill
    { 0.905680, 0.954587, 0.946436, 1.000000 }, // SecondaryInactiveFill
-   { 0.696565, 0.853902, 0.827679, 1.000000 }, // SecondaryActiveFill
+   { 0.658405, 0.835528, 0.806008, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.816667, 0.680556, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3940,8 +3940,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.715600, 0.863067, 0.838489, 1.000000 }, // SecondaryInactiveStroke
-   { 0.070960, 0.638640, 0.544027, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.398200, 0.331833, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046440, 0.417960, 0.356040, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.494733, 0.412278, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3953,9 +3953,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.748192, 0.937048, 0.908720, 1.000000 }, // InactiveFill
    { 0.471424, 0.867856, 0.808391, 1.000000 }, // ActiveFill
    { 0.000000, 0.732640, 0.622744, 1.000000 }, // HighlightedFill
-   { 0.696223, 0.853737, 0.830110, 1.000000 }, // SecondaryActiveFill
+   { 0.658018, 0.835342, 0.808743, 1.000000 }, // SecondaryActiveFill
    { 0.905581, 0.954539, 0.947195, 1.000000 }, // SecondaryInactiveFill
-   { 0.696223, 0.853737, 0.830110, 1.000000 }, // SecondaryActiveFill
+   { 0.658018, 0.835342, 0.808743, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.815600, 0.693260, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3963,8 +3963,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.715285, 0.862915, 0.840771, 1.000000 }, // SecondaryInactiveStroke
-   { 0.070876, 0.637884, 0.552833, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.397680, 0.338028, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046384, 0.417456, 0.361795, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.494080, 0.419968, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3976,9 +3976,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.747584, 0.936896, 0.911654, 1.000000 }, // InactiveFill
    { 0.469941, 0.867485, 0.814479, 1.000000 }, // ActiveFill
    { 0.000000, 0.731880, 0.634296, 1.000000 }, // HighlightedFill
-   { 0.695881, 0.853572, 0.832547, 1.000000 }, // SecondaryActiveFill
+   { 0.657631, 0.835156, 0.811486, 1.000000 }, // SecondaryActiveFill
    { 0.905482, 0.954491, 0.947957, 1.000000 }, // SecondaryInactiveFill
-   { 0.695881, 0.853572, 0.832547, 1.000000 }, // SecondaryActiveFill
+   { 0.657631, 0.835156, 0.811486, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.814733, 0.706102, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -3986,8 +3986,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.714970, 0.862763, 0.843058, 1.000000 }, // SecondaryInactiveStroke
-   { 0.070792, 0.637128, 0.561617, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.397160, 0.344205, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046328, 0.416952, 0.367535, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.493627, 0.427810, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -3999,9 +3999,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.746976, 0.936744, 0.914604, 1.000000 }, // InactiveFill
    { 0.468459, 0.867115, 0.820605, 1.000000 }, // ActiveFill
    { 0.000000, 0.730920, 0.645646, 1.000000 }, // HighlightedFill
-   { 0.695539, 0.853408, 0.834990, 1.000000 }, // SecondaryActiveFill
+   { 0.657244, 0.834969, 0.814235, 1.000000 }, // SecondaryActiveFill
    { 0.905383, 0.954444, 0.948720, 1.000000 }, // SecondaryInactiveFill
-   { 0.695539, 0.853408, 0.834990, 1.000000 }, // SecondaryActiveFill
+   { 0.657244, 0.834969, 0.814235, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.813667, 0.718739, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4009,8 +4009,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.714655, 0.862612, 0.845350, 1.000000 }, // SecondaryInactiveStroke
-   { 0.070708, 0.636372, 0.570378, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.396640, 0.350365, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046272, 0.416448, 0.373261, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.492973, 0.435460, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4022,9 +4022,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.746368, 0.936592, 0.917570, 1.000000 }, // InactiveFill
    { 0.466976, 0.866744, 0.826767, 1.000000 }, // ActiveFill
    { 0.000000, 0.729760, 0.656784, 1.000000 }, // HighlightedFill
-   { 0.695197, 0.853243, 0.837438, 1.000000 }, // SecondaryActiveFill
+   { 0.656857, 0.834783, 0.816990, 1.000000 }, // SecondaryActiveFill
    { 0.905284, 0.954396, 0.949485, 1.000000 }, // SecondaryInactiveFill
-   { 0.695197, 0.853243, 0.837438, 1.000000 }, // SecondaryActiveFill
+   { 0.656857, 0.834783, 0.816990, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.812400, 0.731160, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4032,8 +4032,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.714340, 0.862460, 0.847648, 1.000000 }, // SecondaryInactiveStroke
-   { 0.070624, 0.635616, 0.579117, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.396120, 0.356508, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046216, 0.415944, 0.378971, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.492320, 0.443088, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4045,9 +4045,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.745760, 0.936440, 0.920550, 1.000000 }, // InactiveFill
    { 0.465493, 0.866373, 0.832967, 1.000000 }, // ActiveFill
    { 0.000000, 0.728800, 0.668067, 1.000000 }, // HighlightedFill
-   { 0.694855, 0.853078, 0.839893, 1.000000 }, // SecondaryActiveFill
+   { 0.656470, 0.834597, 0.819753, 1.000000 }, // SecondaryActiveFill
    { 0.905185, 0.954348, 0.950251, 1.000000 }, // SecondaryInactiveFill
-   { 0.694855, 0.853078, 0.839893, 1.000000 }, // SecondaryActiveFill
+   { 0.656470, 0.834597, 0.819753, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.811333, 0.743722, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4055,8 +4055,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.714025, 0.862308, 0.849951, 1.000000 }, // SecondaryInactiveStroke
-   { 0.070540, 0.634860, 0.587833, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.395600, 0.362633, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046160, 0.415440, 0.384667, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.491467, 0.450511, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4068,9 +4068,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.745152, 0.936288, 0.923546, 1.000000 }, // InactiveFill
    { 0.464011, 0.866003, 0.839203, 1.000000 }, // ActiveFill
    { 0.000000, 0.727840, 0.679317, 1.000000 }, // HighlightedFill
-   { 0.694513, 0.852914, 0.842354, 1.000000 }, // SecondaryActiveFill
+   { 0.656083, 0.834410, 0.822522, 1.000000 }, // SecondaryActiveFill
    { 0.905086, 0.954301, 0.951020, 1.000000 }, // SecondaryInactiveFill
-   { 0.694513, 0.852914, 0.842354, 1.000000 }, // SecondaryActiveFill
+   { 0.656083, 0.834410, 0.822522, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.810267, 0.756249, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4078,8 +4078,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.713710, 0.862157, 0.852260, 1.000000 }, // SecondaryInactiveStroke
-   { 0.070456, 0.634104, 0.596527, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.395080, 0.368741, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046104, 0.414936, 0.390347, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.490813, 0.458092, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4091,9 +4091,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.744544, 0.936136, 0.926556, 1.000000 }, // InactiveFill
    { 0.462528, 0.865632, 0.845477, 1.000000 }, // ActiveFill
    { 0.000000, 0.726880, 0.690536, 1.000000 }, // HighlightedFill
-   { 0.694171, 0.852749, 0.844820, 1.000000 }, // SecondaryActiveFill
+   { 0.655696, 0.834224, 0.825298, 1.000000 }, // SecondaryActiveFill
    { 0.904987, 0.954253, 0.951790, 1.000000 }, // SecondaryInactiveFill
-   { 0.694171, 0.852749, 0.844820, 1.000000 }, // SecondaryActiveFill
+   { 0.655696, 0.834224, 0.825298, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.809200, 0.768740, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4101,8 +4101,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.713395, 0.862005, 0.854575, 1.000000 }, // SecondaryInactiveStroke
-   { 0.070372, 0.633348, 0.605199, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.394560, 0.374832, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046048, 0.414432, 0.396013, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.490160, 0.465652, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4114,9 +4114,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.743936, 0.935984, 0.929582, 1.000000 }, // InactiveFill
    { 0.461045, 0.865261, 0.851787, 1.000000 }, // ActiveFill
    { 0.000000, 0.725720, 0.701529, 1.000000 }, // HighlightedFill
-   { 0.693829, 0.852584, 0.847293, 1.000000 }, // SecondaryActiveFill
+   { 0.655309, 0.834038, 0.828080, 1.000000 }, // SecondaryActiveFill
    { 0.904888, 0.954205, 0.952561, 1.000000 }, // SecondaryInactiveFill
-   { 0.693829, 0.852584, 0.847293, 1.000000 }, // SecondaryActiveFill
+   { 0.655309, 0.834038, 0.828080, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.807933, 0.781002, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4124,8 +4124,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.713080, 0.861853, 0.856894, 1.000000 }, // SecondaryInactiveStroke
-   { 0.070288, 0.632592, 0.613849, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.394040, 0.380905, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.045992, 0.413928, 0.401663, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.489507, 0.473190, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4137,9 +4137,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.743328, 0.935832, 0.932624, 1.000000 }, // InactiveFill
    { 0.459563, 0.864891, 0.858135, 1.000000 }, // ActiveFill
    { 0.000000, 0.724760, 0.712681, 1.000000 }, // HighlightedFill
-   { 0.693487, 0.852420, 0.849771, 1.000000 }, // SecondaryActiveFill
+   { 0.654922, 0.833851, 0.830869, 1.000000 }, // SecondaryActiveFill
    { 0.904789, 0.954158, 0.953335, 1.000000 }, // SecondaryInactiveFill
-   { 0.693487, 0.852420, 0.849771, 1.000000 }, // SecondaryActiveFill
+   { 0.654922, 0.833851, 0.830869, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.806867, 0.793419, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4147,8 +4147,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.712765, 0.861702, 0.859219, 1.000000 }, // SecondaryInactiveStroke
-   { 0.070204, 0.631836, 0.622476, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.393520, 0.386961, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.045936, 0.413424, 0.407299, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.488853, 0.480706, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4160,9 +4160,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.742880, 0.935720, 0.935720, 1.000000 }, // InactiveFill
    { 0.458240, 0.864560, 0.864560, 1.000000 }, // ActiveFill
    { 0.000000, 0.724000, 0.724000, 1.000000 }, // HighlightedFill
-   { 0.693280, 0.852320, 0.852320, 1.000000 }, // SecondaryActiveFill
+   { 0.654670, 0.833730, 0.833730, 1.000000 }, // SecondaryActiveFill
    { 0.904825, 0.954175, 0.954175, 1.000000 }, // SecondaryInactiveFill
-   { 0.693280, 0.852320, 0.852320, 1.000000 }, // SecondaryActiveFill
+   { 0.654670, 0.833730, 0.833730, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.806000, 0.806000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4170,8 +4170,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.712585, 0.861615, 0.861615, 1.000000 }, // SecondaryInactiveStroke
-   { 0.070140, 0.631260, 0.631260, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.392800, 0.392800, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.045900, 0.413100, 0.413100, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.488000, 0.488000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4183,9 +4183,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.747637, 0.933755, 0.936909, 1.000000 }, // InactiveFill
    { 0.471072, 0.861156, 0.867768, 1.000000 }, // ActiveFill
    { 0.000000, 0.722973, 0.735227, 1.000000 }, // HighlightedFill
-   { 0.696097, 0.851050, 0.853676, 1.000000 }, // SecondaryActiveFill
+   { 0.657883, 0.832320, 0.835277, 1.000000 }, // SecondaryActiveFill
    { 0.905563, 0.953714, 0.954530, 1.000000 }, // SecondaryInactiveFill
-   { 0.696097, 0.851050, 0.853676, 1.000000 }, // SecondaryActiveFill
+   { 0.657883, 0.832320, 0.835277, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.804799, 0.818440, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4193,8 +4193,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.715195, 0.860410, 0.862872, 1.000000 }, // SecondaryInactiveStroke
-   { 0.071093, 0.630361, 0.639840, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.393045, 0.399707, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.046535, 0.412607, 0.418812, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.488048, 0.496320, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4206,9 +4206,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.752555, 0.931953, 0.938139, 1.000000 }, // InactiveFill
    { 0.486144, 0.858690, 0.871536, 1.000000 }, // ActiveFill
    { 0.000000, 0.721765, 0.746653, 1.000000 }, // HighlightedFill
-   { 0.699184, 0.849963, 0.855163, 1.000000 }, // SecondaryActiveFill
+   { 0.661501, 0.831168, 0.837019, 1.000000 }, // SecondaryActiveFill
    { 0.906436, 0.953333, 0.954951, 1.000000 }, // SecondaryInactiveFill
-   { 0.699184, 0.849963, 0.855163, 1.000000 }, // SecondaryActiveFill
+   { 0.661501, 0.831168, 0.837019, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.803377, 0.831080, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4216,8 +4216,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.718075, 0.859386, 0.864258, 1.000000 }, // SecondaryInactiveStroke
-   { 0.072067, 0.629382, 0.648600, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.392286, 0.405813, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047169, 0.411946, 0.424524, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.487239, 0.504040, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4229,9 +4229,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.758272, 0.930503, 0.939568, 1.000000 }, // InactiveFill
    { 0.500096, 0.856278, 0.875024, 1.000000 }, // ActiveFill
    { 0.000000, 0.720556, 0.758480, 1.000000 }, // HighlightedFill
-   { 0.702271, 0.848930, 0.856649, 1.000000 }, // SecondaryActiveFill
+   { 0.664849, 0.829942, 0.838631, 1.000000 }, // SecondaryActiveFill
    { 0.907309, 0.952968, 0.955371, 1.000000 }, // SecondaryInactiveFill
-   { 0.702271, 0.848930, 0.856649, 1.000000 }, // SecondaryActiveFill
+   { 0.664849, 0.829942, 0.838631, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.801914, 0.844120, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4239,8 +4239,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.720955, 0.858411, 0.865645, 1.000000 }, // SecondaryInactiveStroke
-   { 0.073060, 0.628316, 0.657540, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.391704, 0.412320, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.047824, 0.411286, 0.430416, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.486362, 0.511960, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4252,9 +4252,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.763669, 0.929101, 0.940917, 1.000000 }, // InactiveFill
    { 0.513248, 0.853974, 0.878312, 1.000000 }, // ActiveFill
    { 0.000000, 0.719140, 0.770507, 1.000000 }, // HighlightedFill
-   { 0.705223, 0.847881, 0.858070, 1.000000 }, // SecondaryActiveFill
+   { 0.668197, 0.828773, 0.840243, 1.000000 }, // SecondaryActiveFill
    { 0.908182, 0.952617, 0.955791, 1.000000 }, // SecondaryInactiveFill
-   { 0.705223, 0.847881, 0.858070, 1.000000 }, // SecondaryActiveFill
+   { 0.668197, 0.828773, 0.840243, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.800576, 0.857760, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4262,8 +4262,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.723700, 0.857416, 0.866967, 1.000000 }, // SecondaryInactiveStroke
-   { 0.074093, 0.627324, 0.666840, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.390905, 0.418827, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.048499, 0.410622, 0.436488, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.485595, 0.520280, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4275,9 +4275,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.768907, 0.927783, 0.942227, 1.000000 }, // InactiveFill
    { 0.525440, 0.851700, 0.881360, 1.000000 }, // ActiveFill
    { 0.000000, 0.717689, 0.782933, 1.000000 }, // HighlightedFill
-   { 0.708175, 0.846882, 0.859492, 1.000000 }, // SecondaryActiveFill
+   { 0.671815, 0.827804, 0.841985, 1.000000 }, // SecondaryActiveFill
    { 0.909055, 0.952282, 0.956212, 1.000000 }, // SecondaryInactiveFill
-   { 0.708175, 0.846882, 0.859492, 1.000000 }, // SecondaryActiveFill
+   { 0.671815, 0.827804, 0.841985, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.798967, 0.871600, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4285,8 +4285,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.726445, 0.856468, 0.868288, 1.000000 }, // SecondaryInactiveStroke
-   { 0.075147, 0.626222, 0.676320, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.390256, 0.425733, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.049193, 0.409944, 0.442740, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.484550, 0.528600, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4298,9 +4298,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.773824, 0.926493, 0.943456, 1.000000 }, // InactiveFill
    { 0.536992, 0.849522, 0.884248, 1.000000 }, // ActiveFill
    { 0.000000, 0.716364, 0.795960, 1.000000 }, // HighlightedFill
-   { 0.711127, 0.845934, 0.860913, 1.000000 }, // SecondaryActiveFill
+   { 0.675298, 0.826826, 0.843662, 1.000000 }, // SecondaryActiveFill
    { 0.909928, 0.951962, 0.956632, 1.000000 }, // SecondaryInactiveFill
-   { 0.711127, 0.845934, 0.860913, 1.000000 }, // SecondaryActiveFill
+   { 0.675298, 0.826826, 0.843662, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.797256, 0.885840, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4308,8 +4308,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.729190, 0.855568, 0.869610, 1.000000 }, // SecondaryInactiveStroke
-   { 0.076240, 0.625168, 0.686160, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.389376, 0.432640, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.049888, 0.409082, 0.448992, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.483588, 0.537320, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4321,9 +4321,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.778581, 0.925271, 0.944645, 1.000000 }, // InactiveFill
    { 0.547904, 0.847418, 0.886976, 1.000000 }, // ActiveFill
    { 0.000000, 0.714782, 0.809187, 1.000000 }, // HighlightedFill
-   { 0.714214, 0.845111, 0.862399, 1.000000 }, // SecondaryActiveFill
+   { 0.678646, 0.825834, 0.845274, 1.000000 }, // SecondaryActiveFill
    { 0.910801, 0.951656, 0.957052, 1.000000 }, // SecondaryInactiveFill
-   { 0.714214, 0.845111, 0.862399, 1.000000 }, // SecondaryActiveFill
+   { 0.678646, 0.825834, 0.845274, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.795601, 0.900680, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4331,8 +4331,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.731935, 0.854715, 0.870932, 1.000000 }, // SecondaryInactiveStroke
-   { 0.077353, 0.623984, 0.696180, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.388620, 0.439947, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.050623, 0.408356, 0.455604, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.482512, 0.546240, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4344,9 +4344,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.783019, 0.924057, 0.945755, 1.000000 }, // InactiveFill
    { 0.558336, 0.845418, 0.889584, 1.000000 }, // ActiveFill
    { 0.000000, 0.713105, 0.822813, 1.000000 }, // HighlightedFill
-   { 0.717166, 0.844267, 0.863821, 1.000000 }, // SecondaryActiveFill
+   { 0.681994, 0.824900, 0.846886, 1.000000 }, // SecondaryActiveFill
    { 0.911674, 0.951366, 0.957473, 1.000000 }, // SecondaryInactiveFill
-   { 0.717166, 0.844267, 0.863821, 1.000000 }, // SecondaryActiveFill
+   { 0.681994, 0.824900, 0.846886, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.793797, 0.915920, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4354,8 +4354,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.734680, 0.853910, 0.872253, 1.000000 }, // SecondaryInactiveStroke
-   { 0.078487, 0.622661, 0.706380, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.387620, 0.447253, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.051377, 0.407594, 0.462396, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.481485, 0.555560, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4367,9 +4367,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.787456, 0.922953, 0.946864, 1.000000 }, // InactiveFill
    { 0.567968, 0.843388, 0.891992, 1.000000 }, // ActiveFill
    { 0.000000, 0.711314, 0.836840, 1.000000 }, // HighlightedFill
-   { 0.719983, 0.843398, 0.865177, 1.000000 }, // SecondaryActiveFill
+   { 0.685342, 0.824025, 0.848498, 1.000000 }, // SecondaryActiveFill
    { 0.912547, 0.951091, 0.957893, 1.000000 }, // SecondaryInactiveFill
-   { 0.719983, 0.843398, 0.865177, 1.000000 }, // SecondaryActiveFill
+   { 0.685342, 0.824025, 0.848498, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.791826, 0.931560, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4377,8 +4377,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.737425, 0.853153, 0.873575, 1.000000 }, // SecondaryInactiveStroke
-   { 0.079660, 0.621348, 0.716940, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.386716, 0.454960, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.052132, 0.406630, 0.469188, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.480318, 0.565080, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4390,9 +4390,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.791573, 0.921840, 0.947893, 1.000000 }, // InactiveFill
    { 0.577280, 0.841480, 0.894320, 1.000000 }, // ActiveFill
    { 0.000000, 0.709556, 0.851467, 1.000000 }, // HighlightedFill
-   { 0.722935, 0.842654, 0.866598, 1.000000 }, // SecondaryActiveFill
+   { 0.688555, 0.823130, 0.850045, 1.000000 }, // SecondaryActiveFill
    { 0.913420, 0.950831, 0.958313, 1.000000 }, // SecondaryInactiveFill
-   { 0.722935, 0.842654, 0.866598, 1.000000 }, // SecondaryActiveFill
+   { 0.688555, 0.823130, 0.850045, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.789833, 0.947800, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4400,8 +4400,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.740170, 0.852442, 0.874897, 1.000000 }, // SecondaryInactiveStroke
-   { 0.080873, 0.620029, 0.727860, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.385722, 0.462867, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.052927, 0.405771, 0.476340, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.479000, 0.574800, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4413,9 +4413,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.795531, 0.920768, 0.948883, 1.000000 }, // InactiveFill
    { 0.586112, 0.839618, 0.896528, 1.000000 }, // ActiveFill
    { 0.000000, 0.707636, 0.866493, 1.000000 }, // HighlightedFill
-   { 0.725887, 0.841962, 0.868020, 1.000000 }, // SecondaryActiveFill
+   { 0.691633, 0.822213, 0.851527, 1.000000 }, // SecondaryActiveFill
    { 0.914293, 0.950586, 0.958734, 1.000000 }, // SecondaryInactiveFill
-   { 0.725887, 0.841962, 0.868020, 1.000000 }, // SecondaryActiveFill
+   { 0.691633, 0.822213, 0.851527, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.787626, 0.964440, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4423,8 +4423,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.742915, 0.851779, 0.876218, 1.000000 }, // SecondaryInactiveStroke
-   { 0.082107, 0.618537, 0.738960, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.384628, 0.470973, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.053741, 0.404851, 0.483672, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.477848, 0.585120, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4436,9 +4436,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.799328, 0.919731, 0.949832, 1.000000 }, // InactiveFill
    { 0.594464, 0.837786, 0.898616, 1.000000 }, // ActiveFill
    { 0.000000, 0.705536, 0.881920, 1.000000 }, // HighlightedFill
-   { 0.728839, 0.841321, 0.869441, 1.000000 }, // SecondaryActiveFill
+   { 0.694981, 0.821507, 0.853139, 1.000000 }, // SecondaryActiveFill
    { 0.915166, 0.950356, 0.959154, 1.000000 }, // SecondaryInactiveFill
-   { 0.728839, 0.841321, 0.869441, 1.000000 }, // SecondaryActiveFill
+   { 0.694981, 0.821507, 0.853139, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.785344, 0.981680, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4446,8 +4446,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.745660, 0.851164, 0.877540, 1.000000 }, // SecondaryInactiveStroke
-   { 0.083380, 0.617012, 0.750420, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.383584, 0.479480, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.054576, 0.403862, 0.491184, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.476352, 0.595440, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4459,9 +4459,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.802965, 0.918723, 0.950741, 1.000000 }, // InactiveFill
    { 0.602496, 0.836030, 0.900624, 1.000000 }, // ActiveFill
    { 0.000000, 0.703392, 0.897947, 1.000000 }, // HighlightedFill
-   { 0.731656, 0.840650, 0.870797, 1.000000 }, // SecondaryActiveFill
+   { 0.698329, 0.820860, 0.854751, 1.000000 }, // SecondaryActiveFill
    { 0.916039, 0.950142, 0.959574, 1.000000 }, // SecondaryInactiveFill
-   { 0.731656, 0.840650, 0.870797, 1.000000 }, // SecondaryActiveFill
+   { 0.698329, 0.820860, 0.854751, 1.000000 }, // SecondaryActiveFill
    { 0.000000, 0.782957, 0.999520, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4469,8 +4469,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.748270, 0.850516, 0.878797, 1.000000 }, // SecondaryInactiveStroke
-   { 0.084693, 0.615438, 0.762240, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.382413, 0.488187, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.055431, 0.402796, 0.498876, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.474982, 0.606360, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4482,9 +4482,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.807403, 0.918146, 0.951851, 1.000000 }, // InactiveFill
    { 0.610208, 0.834338, 0.902552, 1.000000 }, // ActiveFill
    { 0.000000, 0.701020, 0.914373, 1.000000 }, // HighlightedFill
-   { 0.734473, 0.840028, 0.872154, 1.000000 }, // SecondaryActiveFill
+   { 0.701407, 0.820107, 0.856233, 1.000000 }, // SecondaryActiveFill
    { 0.916912, 0.949942, 0.959995, 1.000000 }, // SecondaryInactiveFill
-   { 0.734473, 0.840028, 0.872154, 1.000000 }, // SecondaryActiveFill
+   { 0.701407, 0.820107, 0.856233, 1.000000 }, // SecondaryActiveFill
    { 0.065360, 0.781917, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4492,8 +4492,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.750880, 0.849913, 0.880053, 1.000000 }, // SecondaryInactiveStroke
-   { 0.086047, 0.613800, 0.774420, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.381105, 0.497093, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.056325, 0.401787, 0.506928, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.473401, 0.617480, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4505,9 +4505,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.811840, 0.917680, 0.952960, 1.000000 }, // InactiveFill
    { 0.619520, 0.833540, 0.904880, 1.000000 }, // ActiveFill
    { 0.000000, 0.698550, 0.931400, 1.000000 }, // HighlightedFill
-   { 0.737560, 0.839620, 0.873640, 1.000000 }, // SecondaryActiveFill
+   { 0.704890, 0.819655, 0.857910, 1.000000 }, // SecondaryActiveFill
    { 0.917920, 0.949840, 0.960480, 1.000000 }, // SecondaryInactiveFill
-   { 0.737560, 0.839620, 0.873640, 1.000000 }, // SecondaryActiveFill
+   { 0.704890, 0.819655, 0.857910, 1.000000 }, // SecondaryActiveFill
    { 0.121600, 0.780400, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4515,8 +4515,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.753760, 0.849520, 0.881440, 1.000000 }, // SecondaryInactiveStroke
-   { 0.087440, 0.612080, 0.786960, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.379050, 0.505400, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.057220, 0.400540, 0.514980, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.470850, 0.627800, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4528,9 +4528,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.814251, 0.916413, 0.953563, 1.000000 }, // InactiveFill
    { 0.625099, 0.831294, 0.906275, 1.000000 }, // ActiveFill
    { 0.000000, 0.695894, 0.948947, 1.000000 }, // HighlightedFill
-   { 0.739576, 0.838601, 0.874611, 1.000000 }, // SecondaryActiveFill
+   { 0.707185, 0.818527, 0.859015, 1.000000 }, // SecondaryActiveFill
    { 0.918442, 0.949454, 0.960731, 1.000000 }, // SecondaryInactiveFill
-   { 0.739576, 0.838601, 0.874611, 1.000000 }, // SecondaryActiveFill
+   { 0.707185, 0.818527, 0.859015, 1.000000 }, // SecondaryActiveFill
    { 0.165120, 0.777365, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4538,8 +4538,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.755641, 0.848558, 0.882346, 1.000000 }, // SecondaryInactiveStroke
-   { 0.088855, 0.610135, 0.799692, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.378410, 0.516013, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.058156, 0.399338, 0.523404, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.470008, 0.640920, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4551,9 +4551,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.817141, 0.915428, 0.954285, 1.000000 }, // InactiveFill
    { 0.631317, 0.829484, 0.907829, 1.000000 }, // ActiveFill
    { 0.000000, 0.693084, 0.967093, 1.000000 }, // HighlightedFill
-   { 0.741727, 0.837703, 0.875646, 1.000000 }, // SecondaryActiveFill
+   { 0.709750, 0.817608, 0.860250, 1.000000 }, // SecondaryActiveFill
    { 0.919099, 0.949162, 0.961048, 1.000000 }, // SecondaryInactiveFill
-   { 0.741727, 0.837703, 0.875646, 1.000000 }, // SecondaryActiveFill
+   { 0.709750, 0.817608, 0.860250, 1.000000 }, // SecondaryActiveFill
    { 0.206640, 0.775215, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4561,8 +4561,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.757792, 0.847798, 0.883381, 1.000000 }, // SecondaryInactiveStroke
-   { 0.090329, 0.608218, 0.812964, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.376986, 0.526027, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.059132, 0.398155, 0.532188, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.468155, 0.653240, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4574,9 +4574,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.819712, 0.914363, 0.954928, 1.000000 }, // InactiveFill
    { 0.637696, 0.827906, 0.909424, 1.000000 }, // ActiveFill
    { 0.000000, 0.690088, 0.985840, 1.000000 }, // HighlightedFill
-   { 0.744013, 0.836927, 0.876747, 1.000000 }, // SecondaryActiveFill
+   { 0.712315, 0.816734, 0.861485, 1.000000 }, // SecondaryActiveFill
    { 0.919756, 0.948882, 0.961364, 1.000000 }, // SecondaryInactiveFill
-   { 0.744013, 0.836927, 0.876747, 1.000000 }, // SecondaryActiveFill
+   { 0.712315, 0.816734, 0.861485, 1.000000 }, // SecondaryActiveFill
    { 0.242760, 0.772828, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4584,8 +4584,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.759808, 0.846989, 0.884352, 1.000000 }, // SecondaryInactiveStroke
-   { 0.091844, 0.606170, 0.826596, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.375368, 0.536240, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.060108, 0.396713, 0.540972, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.466172, 0.665960, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4597,9 +4597,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.822283, 0.913363, 0.955571, 1.000000 }, // InactiveFill
    { 0.643915, 0.826408, 0.910979, 1.000000 }, // ActiveFill
    { 0.013787, 0.687699, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.746299, 0.836191, 0.877848, 1.000000 }, // SecondaryActiveFill
+   { 0.714745, 0.815817, 0.862655, 1.000000 }, // SecondaryActiveFill
    { 0.920413, 0.948612, 0.961680, 1.000000 }, // SecondaryInactiveFill
-   { 0.746299, 0.836191, 0.877848, 1.000000 }, // SecondaryActiveFill
+   { 0.714745, 0.815817, 0.862655, 1.000000 }, // SecondaryActiveFill
    { 0.274880, 0.770379, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4607,8 +4607,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.761959, 0.846302, 0.885388, 1.000000 }, // SecondaryInactiveStroke
-   { 0.093399, 0.603978, 0.840588, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.373683, 0.546853, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.061124, 0.395269, 0.550116, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.464038, 0.679080, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4620,9 +4620,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.825013, 0.912507, 0.956253, 1.000000 }, // InactiveFill
    { 0.649973, 0.824987, 0.912493, 1.000000 }, // ActiveFill
    { 0.060533, 0.686844, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.748450, 0.835406, 0.878883, 1.000000 }, // SecondaryActiveFill
+   { 0.717175, 0.814942, 0.863825, 1.000000 }, // SecondaryActiveFill
    { 0.921070, 0.948354, 0.961997, 1.000000 }, // SecondaryInactiveFill
-   { 0.748450, 0.835406, 0.878883, 1.000000 }, // SecondaryActiveFill
+   { 0.717175, 0.814942, 0.863825, 1.000000 }, // SecondaryActiveFill
    { 0.303600, 0.767867, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4630,8 +4630,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.763975, 0.845564, 0.886358, 1.000000 }, // SecondaryInactiveStroke
-   { 0.094993, 0.601624, 0.854940, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.371911, 0.557867, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.062180, 0.393807, 0.559620, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.461733, 0.692600, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4643,9 +4643,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.827744, 0.911719, 0.956936, 1.000000 }, // InactiveFill
    { 0.655712, 0.823552, 0.913928, 1.000000 }, // ActiveFill
    { 0.098480, 0.684468, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.750601, 0.834658, 0.879919, 1.000000 }, // SecondaryActiveFill
+   { 0.719605, 0.814109, 0.864995, 1.000000 }, // SecondaryActiveFill
    { 0.921727, 0.948108, 0.962313, 1.000000 }, // SecondaryInactiveFill
-   { 0.750601, 0.834658, 0.879919, 1.000000 }, // SecondaryActiveFill
+   { 0.719605, 0.814109, 0.864995, 1.000000 }, // SecondaryActiveFill
    { 0.329520, 0.765332, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4653,8 +4653,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.765991, 0.844861, 0.887329, 1.000000 }, // SecondaryInactiveStroke
-   { 0.096628, 0.599094, 0.869652, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.369902, 0.569080, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.063256, 0.392187, 0.569304, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.459368, 0.706720, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4666,9 +4666,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.830475, 0.910999, 0.957619, 1.000000 }, // InactiveFill
    { 0.661291, 0.822178, 0.915323, 1.000000 }, // ActiveFill
    { 0.135627, 0.683063, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.752752, 0.833947, 0.880955, 1.000000 }, // SecondaryActiveFill
+   { 0.722035, 0.813317, 0.866165, 1.000000 }, // SecondaryActiveFill
    { 0.922384, 0.947873, 0.962629, 1.000000 }, // SecondaryInactiveFill
-   { 0.752752, 0.833947, 0.880955, 1.000000 }, // SecondaryActiveFill
+   { 0.722035, 0.813317, 0.866165, 1.000000 }, // SecondaryActiveFill
    { 0.353040, 0.762781, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4676,8 +4676,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.768007, 0.844192, 0.888300, 1.000000 }, // SecondaryInactiveStroke
-   { 0.098323, 0.596491, 0.884904, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.367899, 0.580893, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.064372, 0.390523, 0.579348, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.456785, 0.721240, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4689,9 +4689,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.833045, 0.910262, 0.958261, 1.000000 }, // InactiveFill
    { 0.666549, 0.820770, 0.916637, 1.000000 }, // ActiveFill
    { 0.168773, 0.681363, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.754903, 0.833274, 0.881990, 1.000000 }, // SecondaryActiveFill
+   { 0.724465, 0.812568, 0.867335, 1.000000 }, // SecondaryActiveFill
    { 0.923041, 0.947649, 0.962946, 1.000000 }, // SecondaryInactiveFill
-   { 0.754903, 0.833274, 0.881990, 1.000000 }, // SecondaryActiveFill
+   { 0.724465, 0.812568, 0.867335, 1.000000 }, // SecondaryActiveFill
    { 0.374560, 0.760248, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4699,8 +4699,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.770023, 0.843559, 0.889270, 1.000000 }, // SecondaryInactiveStroke
-   { 0.101236, 0.593892, 0.900137, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.365626, 0.592907, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.065528, 0.388799, 0.589752, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.453965, 0.736160, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4712,9 +4712,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.835456, 0.909501, 0.958864, 1.000000 }, // InactiveFill
    { 0.671648, 0.819406, 0.917912, 1.000000 }, // ActiveFill
    { 0.198920, 0.679568, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.757054, 0.832637, 0.883026, 1.000000 }, // SecondaryActiveFill
+   { 0.726895, 0.811861, 0.868505, 1.000000 }, // SecondaryActiveFill
    { 0.923698, 0.947436, 0.963262, 1.000000 }, // SecondaryInactiveFill
-   { 0.757054, 0.832637, 0.883026, 1.000000 }, // SecondaryActiveFill
+   { 0.726895, 0.811861, 0.868505, 1.000000 }, // SecondaryActiveFill
    { 0.394480, 0.757792, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4722,8 +4722,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.772039, 0.842960, 0.890241, 1.000000 }, // SecondaryInactiveStroke
-   { 0.126208, 0.592230, 0.902912, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.363312, 0.605520, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.066704, 0.386883, 0.600336, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.451008, 0.751680, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4735,9 +4735,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.837867, 0.908800, 0.959467, 1.000000 }, // InactiveFill
    { 0.676747, 0.818170, 0.919187, 1.000000 }, // ActiveFill
    { 0.226267, 0.677611, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.759205, 0.832038, 0.884062, 1.000000 }, // SecondaryActiveFill
+   { 0.729325, 0.811196, 0.869675, 1.000000 }, // SecondaryActiveFill
    { 0.924355, 0.947235, 0.963578, 1.000000 }, // SecondaryInactiveFill
-   { 0.759205, 0.832038, 0.884062, 1.000000 }, // SecondaryActiveFill
+   { 0.729325, 0.811196, 0.869675, 1.000000 }, // SecondaryActiveFill
    { 0.412800, 0.755333, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4745,8 +4745,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.774055, 0.842396, 0.891212, 1.000000 }, // SecondaryInactiveStroke
-   { 0.149560, 0.590529, 0.905507, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.360811, 0.618533, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.067920, 0.384880, 0.611280, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.447883, 0.767800, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4758,9 +4758,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.840277, 0.908160, 0.960069, 1.000000 }, // InactiveFill
    { 0.681525, 0.816877, 0.920381, 1.000000 }, // ActiveFill
    { 0.251213, 0.675526, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.761356, 0.831476, 0.885097, 1.000000 }, // SecondaryActiveFill
+   { 0.731755, 0.810573, 0.870845, 1.000000 }, // SecondaryActiveFill
    { 0.925012, 0.947046, 0.963895, 1.000000 }, // SecondaryInactiveFill
-   { 0.761356, 0.831476, 0.885097, 1.000000 }, // SecondaryActiveFill
+   { 0.731755, 0.810573, 0.870845, 1.000000 }, // SecondaryActiveFill
    { 0.429920, 0.752965, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4768,8 +4768,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.776071, 0.841867, 0.892182, 1.000000 }, // SecondaryInactiveStroke
-   { 0.171292, 0.588715, 0.907921, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.358103, 0.631947, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.069176, 0.382774, 0.622584, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.444448, 0.784320, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4781,9 +4781,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.842848, 0.907673, 0.960712, 1.000000 }, // InactiveFill
    { 0.686144, 0.815610, 0.921536, 1.000000 }, // ActiveFill
    { 0.274160, 0.673372, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.763372, 0.830855, 0.886068, 1.000000 }, // SecondaryActiveFill
+   { 0.734185, 0.809992, 0.872015, 1.000000 }, // SecondaryActiveFill
    { 0.925669, 0.946867, 0.964211, 1.000000 }, // SecondaryInactiveFill
-   { 0.763372, 0.830855, 0.886068, 1.000000 }, // SecondaryActiveFill
+   { 0.734185, 0.809992, 0.872015, 1.000000 }, // SecondaryActiveFill
    { 0.445640, 0.750538, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4791,8 +4791,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.777952, 0.841277, 0.893088, 1.000000 }, // SecondaryInactiveStroke
-   { 0.191584, 0.586810, 0.910176, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.355168, 0.645760, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.070452, 0.380441, 0.634068, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.440792, 0.801440, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4804,9 +4804,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.845259, 0.907155, 0.961315, 1.000000 }, // InactiveFill
    { 0.690763, 0.814458, 0.922691, 1.000000 }, // ActiveFill
    { 0.295507, 0.671236, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.765388, 0.830268, 0.887039, 1.000000 }, // SecondaryActiveFill
+   { 0.736480, 0.809355, 0.873120, 1.000000 }, // SecondaryActiveFill
    { 0.926326, 0.946700, 0.964527, 1.000000 }, // SecondaryInactiveFill
-   { 0.765388, 0.830268, 0.887039, 1.000000 }, // SecondaryActiveFill
+   { 0.736480, 0.809355, 0.873120, 1.000000 }, // SecondaryActiveFill
    { 0.460560, 0.748261, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4814,8 +4814,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.779833, 0.840719, 0.893994, 1.000000 }, // SecondaryInactiveStroke
-   { 0.210616, 0.584842, 0.912291, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.352092, 0.660173, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.071788, 0.378083, 0.646092, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.436885, 0.819160, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4827,9 +4827,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.847669, 0.906698, 0.961917, 1.000000 }, // InactiveFill
    { 0.695541, 0.813519, 0.923885, 1.000000 }, // ActiveFill
    { 0.315253, 0.669039, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.767539, 0.829816, 0.888074, 1.000000 }, // SecondaryActiveFill
+   { 0.738775, 0.808758, 0.874225, 1.000000 }, // SecondaryActiveFill
    { 0.926983, 0.946544, 0.964844, 1.000000 }, // SecondaryInactiveFill
-   { 0.767539, 0.829816, 0.888074, 1.000000 }, // SecondaryActiveFill
+   { 0.738775, 0.808758, 0.874225, 1.000000 }, // SecondaryActiveFill
    { 0.474480, 0.745999, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4837,8 +4837,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.781849, 0.840292, 0.894964, 1.000000 }, // SecondaryInactiveStroke
-   { 0.228028, 0.582563, 0.914225, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.348743, 0.674987, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.073144, 0.375473, 0.658296, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.432698, 0.837480, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4850,9 +4850,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.850400, 0.906500, 0.962600, 1.000000 }, // InactiveFill
    { 0.700800, 0.813000, 0.925200, 1.000000 }, // ActiveFill
    { 0.335600, 0.667800, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.769825, 0.829500, 0.889175, 1.000000 }, // SecondaryActiveFill
+   { 0.741340, 0.808400, 0.875460, 1.000000 }, // SecondaryActiveFill
    { 0.927775, 0.946500, 0.965225, 1.000000 }, // SecondaryInactiveFill
-   { 0.769825, 0.829500, 0.889175, 1.000000 }, // SecondaryActiveFill
+   { 0.741340, 0.808400, 0.875460, 1.000000 }, // SecondaryActiveFill
    { 0.489400, 0.744700, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4860,8 +4860,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.784000, 0.840000, 0.896000, 1.000000 }, // SecondaryInactiveStroke
-   { 0.245440, 0.580800, 0.916160, 1.000000 }, // SecondaryActiveStroke
-   { 0.000000, 0.344300, 0.688600, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.074560, 0.372800, 0.671040, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.427300, 0.854600, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4873,9 +4873,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.851829, 0.905541, 0.962957, 1.000000 }, // InactiveFill
    { 0.704192, 0.811422, 0.926048, 1.000000 }, // ActiveFill
    { 0.350693, 0.664525, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.771715, 0.828927, 0.890085, 1.000000 }, // SecondaryActiveFill
+   { 0.743068, 0.807460, 0.876292, 1.000000 }, // SecondaryActiveFill
    { 0.928081, 0.946105, 0.965372, 1.000000 }, // SecondaryInactiveFill
-   { 0.771715, 0.828927, 0.890085, 1.000000 }, // SecondaryActiveFill
+   { 0.743068, 0.807460, 0.876292, 1.000000 }, // SecondaryActiveFill
    { 0.499773, 0.741550, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4883,8 +4883,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.785422, 0.839199, 0.896685, 1.000000 }, // SecondaryInactiveStroke
-   { 0.255330, 0.577472, 0.921830, 1.000000 }, // SecondaryActiveStroke
-   { 0.001177, 0.341414, 0.705116, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.076009, 0.369912, 0.684084, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.422988, 0.875147, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4896,9 +4896,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.853579, 0.904826, 0.963395, 1.000000 }, // InactiveFill
    { 0.707744, 0.810034, 0.926936, 1.000000 }, // ActiveFill
    { 0.366987, 0.662393, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.773470, 0.828285, 0.890930, 1.000000 }, // SecondaryActiveFill
+   { 0.744931, 0.806651, 0.877189, 1.000000 }, // SecondaryActiveFill
    { 0.928522, 0.945818, 0.965585, 1.000000 }, // SecondaryInactiveFill
-   { 0.773470, 0.828285, 0.890930, 1.000000 }, // SecondaryActiveFill
+   { 0.744931, 0.806651, 0.877189, 1.000000 }, // SecondaryActiveFill
    { 0.511547, 0.739492, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4906,8 +4906,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.786979, 0.838525, 0.897434, 1.000000 }, // SecondaryInactiveStroke
-   { 0.266831, 0.575138, 0.927489, 1.000000 }, // SecondaryActiveStroke
-   { 0.002409, 0.337461, 0.720377, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.077499, 0.366827, 0.697488, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.417990, 0.895693, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4919,9 +4919,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.855328, 0.904155, 0.963832, 1.000000 }, // InactiveFill
    { 0.711296, 0.808734, 0.927824, 1.000000 }, // ActiveFill
    { 0.382080, 0.660144, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.775225, 0.827673, 0.891775, 1.000000 }, // SecondaryActiveFill
+   { 0.746929, 0.805979, 0.878151, 1.000000 }, // SecondaryActiveFill
    { 0.928963, 0.945538, 0.965797, 1.000000 }, // SecondaryInactiveFill
-   { 0.775225, 0.827673, 0.891775, 1.000000 }, // SecondaryActiveFill
+   { 0.746929, 0.805979, 0.878151, 1.000000 }, // SecondaryActiveFill
    { 0.522520, 0.737386, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4929,8 +4929,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.788671, 0.837981, 0.898249, 1.000000 }, // SecondaryInactiveStroke
-   { 0.278138, 0.572800, 0.932942, 1.000000 }, // SecondaryActiveStroke
-   { 0.003698, 0.333226, 0.735982, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.079028, 0.363529, 0.711252, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.412398, 0.916440, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4942,9 +4942,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.856917, 0.903419, 0.964229, 1.000000 }, // InactiveFill
    { 0.715168, 0.807738, 0.928792, 1.000000 }, // ActiveFill
    { 0.396373, 0.657945, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.776980, 0.827091, 0.892620, 1.000000 }, // SecondaryActiveFill
+   { 0.748792, 0.805236, 0.879048, 1.000000 }, // SecondaryActiveFill
    { 0.929539, 0.945371, 0.966074, 1.000000 }, // SecondaryInactiveFill
-   { 0.776980, 0.827091, 0.892620, 1.000000 }, // SecondaryActiveFill
+   { 0.748792, 0.805236, 0.879048, 1.000000 }, // SecondaryActiveFill
    { 0.533093, 0.735420, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4952,8 +4952,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.790228, 0.837362, 0.898999, 1.000000 }, // SecondaryInactiveStroke
-   { 0.289061, 0.570345, 0.938179, 1.000000 }, // SecondaryActiveStroke
-   { 0.005046, 0.328695, 0.751927, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.080617, 0.360091, 0.725556, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.406201, 0.937387, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4965,9 +4965,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.858507, 0.902723, 0.964627, 1.000000 }, // InactiveFill
    { 0.718720, 0.806620, 0.929680, 1.000000 }, // ActiveFill
    { 0.409867, 0.655756, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.778735, 0.826539, 0.893465, 1.000000 }, // SecondaryActiveFill
+   { 0.750790, 0.804632, 0.880010, 1.000000 }, // SecondaryActiveFill
    { 0.929980, 0.945108, 0.966287, 1.000000 }, // SecondaryInactiveFill
-   { 0.778735, 0.826539, 0.893465, 1.000000 }, // SecondaryActiveFill
+   { 0.750790, 0.804632, 0.880010, 1.000000 }, // SecondaryActiveFill
    { 0.543067, 0.733456, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4975,8 +4975,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.791785, 0.836770, 0.899748, 1.000000 }, // SecondaryInactiveStroke
-   { 0.299960, 0.567993, 0.943240, 1.000000 }, // SecondaryActiveStroke
-   { 0.006456, 0.323854, 0.768211, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.082227, 0.356316, 0.740040, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.399306, 0.958333, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -4988,9 +4988,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.860096, 0.902067, 0.965024, 1.000000 }, // InactiveFill
    { 0.722272, 0.805590, 0.930568, 1.000000 }, // ActiveFill
    { 0.422760, 0.653656, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.780490, 0.826018, 0.894310, 1.000000 }, // SecondaryActiveFill
+   { 0.752653, 0.803955, 0.880907, 1.000000 }, // SecondaryActiveFill
    { 0.930421, 0.944852, 0.966499, 1.000000 }, // SecondaryInactiveFill
-   { 0.780490, 0.826018, 0.894310, 1.000000 }, // SecondaryActiveFill
+   { 0.752653, 0.803955, 0.880907, 1.000000 }, // SecondaryActiveFill
    { 0.552440, 0.731464, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -4998,8 +4998,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.793342, 0.836204, 0.900498, 1.000000 }, // SecondaryInactiveStroke
-   { 0.310461, 0.565516, 0.948099, 1.000000 }, // SecondaryActiveStroke
-   { 0.007928, 0.318690, 0.784832, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.083896, 0.352363, 0.755064, 1.000000 }, // SecondaryActiveStroke
+   { 0.000000, 0.391872, 0.979680, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5011,9 +5011,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.861845, 0.901565, 0.965461, 1.000000 }, // InactiveFill
    { 0.725824, 0.804650, 0.931456, 1.000000 }, // ActiveFill
    { 0.434853, 0.651493, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.782110, 0.825419, 0.895090, 1.000000 }, // SecondaryActiveFill
+   { 0.754516, 0.803310, 0.881804, 1.000000 }, // SecondaryActiveFill
    { 0.930997, 0.944712, 0.966776, 1.000000 }, // SecondaryInactiveFill
-   { 0.782110, 0.825419, 0.895090, 1.000000 }, // SecondaryActiveFill
+   { 0.754516, 0.803310, 0.881804, 1.000000 }, // SecondaryActiveFill
    { 0.561413, 0.729538, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5021,8 +5021,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.794899, 0.835666, 0.901248, 1.000000 }, // SecondaryInactiveStroke
-   { 0.320928, 0.563143, 0.952792, 1.000000 }, // SecondaryActiveStroke
-   { 0.009465, 0.313189, 0.801789, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.085605, 0.348128, 0.770448, 1.000000 }, // SecondaryActiveStroke
+   { 0.002627, 0.384953, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5034,9 +5034,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.863595, 0.901106, 0.965899, 1.000000 }, // InactiveFill
    { 0.729216, 0.803682, 0.932304, 1.000000 }, // ActiveFill
    { 0.446547, 0.649480, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.783730, 0.824848, 0.895870, 1.000000 }, // SecondaryActiveFill
+   { 0.756379, 0.802697, 0.882701, 1.000000 }, // SecondaryActiveFill
    { 0.931438, 0.944473, 0.966989, 1.000000 }, // SecondaryInactiveFill
-   { 0.783730, 0.824848, 0.895870, 1.000000 }, // SecondaryActiveFill
+   { 0.756379, 0.802697, 0.882701, 1.000000 }, // SecondaryActiveFill
    { 0.570187, 0.727785, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5044,8 +5044,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.796456, 0.835154, 0.901997, 1.000000 }, // SecondaryInactiveStroke
-   { 0.330983, 0.560632, 0.957297, 1.000000 }, // SecondaryActiveStroke
-   { 0.011069, 0.307339, 0.819078, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.087355, 0.343595, 0.786192, 1.000000 }, // SecondaryActiveStroke
+   { 0.027373, 0.384003, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5057,9 +5057,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.865184, 0.900573, 0.966296, 1.000000 }, // InactiveFill
    { 0.732448, 0.802680, 0.933112, 1.000000 }, // ActiveFill
    { 0.457440, 0.647336, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.785350, 0.824305, 0.896650, 1.000000 }, // SecondaryActiveFill
+   { 0.758242, 0.802117, 0.883598, 1.000000 }, // SecondaryActiveFill
    { 0.931879, 0.944242, 0.967201, 1.000000 }, // SecondaryInactiveFill
-   { 0.785350, 0.824305, 0.896650, 1.000000 }, // SecondaryActiveFill
+   { 0.758242, 0.802117, 0.883598, 1.000000 }, // SecondaryActiveFill
    { 0.578360, 0.725934, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5067,8 +5067,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.798013, 0.834670, 0.902747, 1.000000 }, // SecondaryInactiveStroke
-   { 0.340995, 0.558222, 0.961645, 1.000000 }, // SecondaryActiveStroke
-   { 0.012739, 0.301056, 0.836501, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.089124, 0.338671, 0.802116, 1.000000 }, // SecondaryActiveStroke
+   { 0.051120, 0.383228, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5080,9 +5080,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.866773, 0.900080, 0.966693, 1.000000 }, // InactiveFill
    { 0.735680, 0.801760, 0.933920, 1.000000 }, // ActiveFill
    { 0.467933, 0.645289, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.786970, 0.823790, 0.897430, 1.000000 }, // SecondaryActiveFill
+   { 0.760105, 0.801568, 0.884495, 1.000000 }, // SecondaryActiveFill
    { 0.932320, 0.944018, 0.967413, 1.000000 }, // SecondaryInactiveFill
-   { 0.786970, 0.823790, 0.897430, 1.000000 }, // SecondaryActiveFill
+   { 0.760105, 0.801568, 0.884495, 1.000000 }, // SecondaryActiveFill
    { 0.586133, 0.724089, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5090,8 +5090,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.799570, 0.834212, 0.903497, 1.000000 }, // SecondaryInactiveStroke
-   { 0.350770, 0.555790, 0.965830, 1.000000 }, // SecondaryActiveStroke
-   { 0.014476, 0.294336, 0.854058, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.090953, 0.333496, 0.818580, 1.000000 }, // SecondaryActiveStroke
+   { 0.073267, 0.382178, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5103,9 +5103,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.868363, 0.899627, 0.967091, 1.000000 }, // InactiveFill
    { 0.738752, 0.800798, 0.934688, 1.000000 }, // ActiveFill
    { 0.478027, 0.643318, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.788590, 0.823303, 0.898210, 1.000000 }, // SecondaryActiveFill
+   { 0.761833, 0.800939, 0.885327, 1.000000 }, // SecondaryActiveFill
    { 0.932761, 0.943801, 0.967626, 1.000000 }, // SecondaryInactiveFill
-   { 0.788590, 0.823303, 0.898210, 1.000000 }, // SecondaryActiveFill
+   { 0.761833, 0.800939, 0.885327, 1.000000 }, // SecondaryActiveFill
    { 0.593707, 0.722366, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5113,8 +5113,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.801127, 0.833781, 0.904246, 1.000000 }, // SecondaryInactiveStroke
-   { 0.360303, 0.553328, 0.969857, 1.000000 }, // SecondaryActiveStroke
-   { 0.016269, 0.286984, 0.871157, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.092823, 0.327973, 0.835404, 1.000000 }, // SecondaryActiveStroke
+   { 0.094013, 0.380909, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5126,9 +5126,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.869792, 0.899089, 0.967448, 1.000000 }, // InactiveFill
    { 0.741824, 0.799914, 0.935456, 1.000000 }, // ActiveFill
    { 0.487520, 0.641264, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.790075, 0.822730, 0.898925, 1.000000 }, // SecondaryActiveFill
+   { 0.763696, 0.800454, 0.886224, 1.000000 }, // SecondaryActiveFill
    { 0.933202, 0.943593, 0.967838, 1.000000 }, // SecondaryInactiveFill
-   { 0.790075, 0.822730, 0.898925, 1.000000 }, // SecondaryActiveFill
+   { 0.763696, 0.800454, 0.886224, 1.000000 }, // SecondaryActiveFill
    { 0.601080, 0.720756, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5136,8 +5136,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.802549, 0.833264, 0.904931, 1.000000 }, // SecondaryInactiveStroke
-   { 0.369587, 0.550831, 0.973733, 1.000000 }, // SecondaryActiveStroke
-   { 0.018118, 0.279023, 0.887802, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.094732, 0.322089, 0.852588, 1.000000 }, // SecondaryActiveStroke
+   { 0.113560, 0.379492, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5149,9 +5149,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.871381, 0.898713, 0.967845, 1.000000 }, // InactiveFill
    { 0.745056, 0.799232, 0.936264, 1.000000 }, // ActiveFill
    { 0.496813, 0.639383, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.791695, 0.822298, 0.899705, 1.000000 }, // SecondaryActiveFill
+   { 0.765424, 0.799886, 0.887056, 1.000000 }, // SecondaryActiveFill
    { 0.933643, 0.943392, 0.968050, 1.000000 }, // SecondaryInactiveFill
-   { 0.791695, 0.822298, 0.899705, 1.000000 }, // SecondaryActiveFill
+   { 0.765424, 0.799886, 0.887056, 1.000000 }, // SecondaryActiveFill
    { 0.608053, 0.719105, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5159,8 +5159,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.804106, 0.832885, 0.905681, 1.000000 }, // SecondaryInactiveStroke
-   { 0.378617, 0.548290, 0.977463, 1.000000 }, // SecondaryActiveStroke
-   { 0.020055, 0.270948, 0.905558, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.096661, 0.315760, 0.869952, 1.000000 }, // SecondaryActiveStroke
+   { 0.131907, 0.377866, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5172,9 +5172,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.872811, 0.898249, 0.968203, 1.000000 }, // InactiveFill
    { 0.748288, 0.798630, 0.937072, 1.000000 }, // ActiveFill
    { 0.506907, 0.638398, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.793180, 0.821777, 0.900420, 1.000000 }, // SecondaryActiveFill
+   { 0.767287, 0.799465, 0.887953, 1.000000 }, // SecondaryActiveFill
    { 0.934084, 0.943198, 0.968263, 1.000000 }, // SecondaryInactiveFill
-   { 0.793180, 0.821777, 0.900420, 1.000000 }, // SecondaryActiveFill
+   { 0.767287, 0.799465, 0.887953, 1.000000 }, // SecondaryActiveFill
    { 0.614627, 0.717393, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5182,8 +5182,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.805663, 0.832534, 0.906430, 1.000000 }, // SecondaryInactiveStroke
-   { 0.387581, 0.545842, 0.981059, 1.000000 }, // SecondaryActiveStroke
-   { 0.022062, 0.262431, 0.923445, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.098631, 0.309043, 0.887676, 1.000000 }, // SecondaryActiveStroke
+   { 0.149453, 0.376266, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5195,9 +5195,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.874240, 0.897820, 0.968560, 1.000000 }, // InactiveFill
    { 0.751680, 0.798240, 0.937920, 1.000000 }, // ActiveFill
    { 0.520000, 0.640000, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.865000, 0.882500, 0.935000, 1.000000 }, // SecondaryActiveFill
+   { 0.769285, 0.799193, 0.888915, 1.000000 }, // SecondaryActiveFill
    { 0.934390, 0.942895, 0.968410, 1.000000 }, // SecondaryInactiveFill
-   { 0.865000, 0.882500, 0.935000, 1.000000 }, // SecondaryActiveFill
+   { 0.769285, 0.799193, 0.888915, 1.000000 }, // SecondaryActiveFill
    { 0.600000, 0.700000, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5205,8 +5205,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.807355, 0.832327, 0.907245, 1.000000 }, // SecondaryInactiveStroke
-   { 0.024000, 0.252000, 0.936000, 1.000000 }, // SecondaryActiveStroke
-   { 0.024000, 0.252000, 0.936000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.104500, 0.303500, 0.900500, 1.000000 }, // SecondaryActiveStroke
+   { 0.165800, 0.374350, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5218,9 +5218,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.875584, 0.897357, 0.968896, 1.000000 }, // InactiveFill
    { 0.753813, 0.796896, 0.938453, 1.000000 }, // ActiveFill
    { 0.523427, 0.634627, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.796087, 0.820758, 0.901820, 1.000000 }, // SecondaryActiveFill
+   { 0.770635, 0.798385, 0.889565, 1.000000 }, // SecondaryActiveFill
    { 0.934948, 0.942818, 0.968679, 1.000000 }, // SecondaryInactiveFill
-   { 0.796087, 0.820758, 0.901820, 1.000000 }, // SecondaryActiveFill
+   { 0.770635, 0.798385, 0.889565, 1.000000 }, // SecondaryActiveFill
    { 0.627373, 0.714320, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5228,8 +5228,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.808453, 0.831628, 0.907774, 1.000000 }, // SecondaryInactiveStroke
-   { 0.407757, 0.541673, 0.981683, 1.000000 }, // SecondaryActiveStroke
-   { 0.022980, 0.242058, 0.961886, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.116872, 0.300039, 0.901875, 1.000000 }, // SecondaryActiveStroke
+   { 0.181400, 0.372407, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5241,9 +5241,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.876928, 0.896927, 0.969232, 1.000000 }, // InactiveFill
    { 0.756427, 0.796007, 0.939107, 1.000000 }, // ActiveFill
    { 0.531253, 0.632815, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.797509, 0.820258, 0.902504, 1.000000 }, // SecondaryActiveFill
+   { 0.772120, 0.797721, 0.890280, 1.000000 }, // SecondaryActiveFill
    { 0.935371, 0.942632, 0.968882, 1.000000 }, // SecondaryInactiveFill
-   { 0.797509, 0.820258, 0.902504, 1.000000 }, // SecondaryActiveFill
+   { 0.772120, 0.797721, 0.890280, 1.000000 }, // SecondaryActiveFill
    { 0.633347, 0.712788, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5251,8 +5251,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.809686, 0.831067, 0.908367, 1.000000 }, // SecondaryInactiveStroke
-   { 0.418568, 0.539976, 0.978912, 1.000000 }, // SecondaryActiveStroke
-   { 0.025906, 0.232286, 0.978427, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.130504, 0.297962, 0.903389, 1.000000 }, // SecondaryActiveStroke
+   { 0.196400, 0.370513, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5264,9 +5264,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.878272, 0.896531, 0.969568, 1.000000 }, // InactiveFill
    { 0.758720, 0.794912, 0.939680, 1.000000 }, // ActiveFill
    { 0.538080, 0.630464, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.798931, 0.819783, 0.903189, 1.000000 }, // SecondaryActiveFill
+   { 0.773740, 0.797204, 0.891060, 1.000000 }, // SecondaryActiveFill
    { 0.935794, 0.942452, 0.969086, 1.000000 }, // SecondaryInactiveFill
-   { 0.798931, 0.819783, 0.903189, 1.000000 }, // SecondaryActiveFill
+   { 0.773740, 0.797204, 0.891060, 1.000000 }, // SecondaryActiveFill
    { 0.639120, 0.711296, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5274,8 +5274,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.810919, 0.830527, 0.908961, 1.000000 }, // SecondaryInactiveStroke
-   { 0.428915, 0.538373, 0.976205, 1.000000 }, // SecondaryActiveStroke
-   { 0.042344, 0.229966, 0.980456, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.143416, 0.295698, 0.904824, 1.000000 }, // SecondaryActiveStroke
+   { 0.210400, 0.368320, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5287,9 +5287,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.879456, 0.896031, 0.969864, 1.000000 }, // InactiveFill
    { 0.761173, 0.794012, 0.940293, 1.000000 }, // ActiveFill
    { 0.544907, 0.628340, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.800353, 0.819332, 0.903874, 1.000000 }, // SecondaryActiveFill
+   { 0.775225, 0.796593, 0.891775, 1.000000 }, // SecondaryActiveFill
    { 0.936217, 0.942280, 0.969290, 1.000000 }, // SecondaryInactiveFill
-   { 0.800353, 0.819332, 0.903874, 1.000000 }, // SecondaryActiveFill
+   { 0.775225, 0.796593, 0.891775, 1.000000 }, // SecondaryActiveFill
    { 0.644693, 0.709833, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5297,8 +5297,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.812152, 0.830009, 0.909555, 1.000000 }, // SecondaryInactiveStroke
-   { 0.438613, 0.536684, 0.973547, 1.000000 }, // SecondaryActiveStroke
-   { 0.058254, 0.227683, 0.982412, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.155788, 0.293363, 0.906199, 1.000000 }, // SecondaryActiveStroke
+   { 0.224000, 0.366267, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5310,9 +5310,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.880800, 0.895700, 0.970200, 1.000000 }, // InactiveFill
    { 0.763627, 0.793173, 0.940907, 1.000000 }, // ActiveFill
    { 0.551733, 0.626444, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.801640, 0.818782, 0.904493, 1.000000 }, // SecondaryActiveFill
+   { 0.776710, 0.796007, 0.892490, 1.000000 }, // SecondaryActiveFill
    { 0.936640, 0.942116, 0.969493, 1.000000 }, // SecondaryInactiveFill
-   { 0.801640, 0.818782, 0.904493, 1.000000 }, // SecondaryActiveFill
+   { 0.776710, 0.796007, 0.892490, 1.000000 }, // SecondaryActiveFill
    { 0.650067, 0.708389, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5320,8 +5320,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.813385, 0.829512, 0.910148, 1.000000 }, // SecondaryInactiveStroke
-   { 0.447860, 0.535040, 0.970940, 1.000000 }, // SecondaryActiveStroke
-   { 0.073241, 0.225083, 0.984292, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.167620, 0.290936, 0.907513, 1.000000 }, // SecondaryActiveStroke
+   { 0.236800, 0.364000, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5333,9 +5333,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.881984, 0.895261, 0.970496, 1.000000 }, // InactiveFill
    { 0.766080, 0.792396, 0.941520, 1.000000 }, // ActiveFill
    { 0.558560, 0.624776, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.803062, 0.818379, 0.905178, 1.000000 }, // SecondaryActiveFill
+   { 0.778195, 0.795447, 0.893205, 1.000000 }, // SecondaryActiveFill
    { 0.937063, 0.941958, 0.969697, 1.000000 }, // SecondaryInactiveFill
-   { 0.803062, 0.818379, 0.905178, 1.000000 }, // SecondaryActiveFill
+   { 0.778195, 0.795447, 0.893205, 1.000000 }, // SecondaryActiveFill
    { 0.655440, 0.707124, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5343,8 +5343,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.814753, 0.829161, 0.910807, 1.000000 }, // SecondaryInactiveStroke
-   { 0.456852, 0.533582, 0.968388, 1.000000 }, // SecondaryActiveStroke
-   { 0.087496, 0.222287, 0.986104, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.179092, 0.288546, 0.908788, 1.000000 }, // SecondaryActiveStroke
+   { 0.249000, 0.361650, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5356,9 +5356,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.883168, 0.894851, 0.970792, 1.000000 }, // InactiveFill
    { 0.768533, 0.791680, 0.942133, 1.000000 }, // ActiveFill
    { 0.565187, 0.623162, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.804349, 0.817875, 0.905798, 1.000000 }, // SecondaryActiveFill
+   { 0.779680, 0.794912, 0.893920, 1.000000 }, // SecondaryActiveFill
    { 0.937486, 0.941808, 0.969901, 1.000000 }, // SecondaryInactiveFill
-   { 0.804349, 0.817875, 0.905798, 1.000000 }, // SecondaryActiveFill
+   { 0.779680, 0.794912, 0.893920, 1.000000 }, // SecondaryActiveFill
    { 0.660413, 0.705692, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5366,8 +5366,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.815986, 0.828708, 0.911401, 1.000000 }, // SecondaryInactiveStroke
-   { 0.465215, 0.531968, 0.965865, 1.000000 }, // SecondaryActiveStroke
-   { 0.101212, 0.219431, 0.987854, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.190024, 0.286021, 0.910003, 1.000000 }, // SecondaryActiveStroke
+   { 0.260800, 0.359360, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5379,9 +5379,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.884352, 0.894471, 0.971088, 1.000000 }, // InactiveFill
    { 0.770827, 0.790879, 0.942707, 1.000000 }, // ActiveFill
    { 0.571413, 0.621415, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.805636, 0.817394, 0.906417, 1.000000 }, // SecondaryActiveFill
+   { 0.781165, 0.794403, 0.894635, 1.000000 }, // SecondaryActiveFill
    { 0.937909, 0.941665, 0.970104, 1.000000 }, // SecondaryInactiveFill
-   { 0.805636, 0.817394, 0.906417, 1.000000 }, // SecondaryActiveFill
+   { 0.781165, 0.794403, 0.894635, 1.000000 }, // SecondaryActiveFill
    { 0.665387, 0.704425, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5389,8 +5389,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.817219, 0.828276, 0.911994, 1.000000 }, // SecondaryInactiveStroke
-   { 0.473333, 0.530506, 0.963387, 1.000000 }, // SecondaryActiveStroke
-   { 0.114387, 0.216489, 0.989546, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.200596, 0.283497, 0.911177, 1.000000 }, // SecondaryActiveStroke
+   { 0.272200, 0.357110, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5402,9 +5402,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.885536, 0.894121, 0.971384, 1.000000 }, // InactiveFill
    { 0.773120, 0.790136, 0.943280, 1.000000 }, // ActiveFill
    { 0.577440, 0.619696, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.806923, 0.816934, 0.907037, 1.000000 }, // SecondaryActiveFill
+   { 0.782650, 0.793920, 0.895350, 1.000000 }, // SecondaryActiveFill
    { 0.938332, 0.941530, 0.970308, 1.000000 }, // SecondaryInactiveFill
-   { 0.806923, 0.816934, 0.907037, 1.000000 }, // SecondaryActiveFill
+   { 0.782650, 0.793920, 0.895350, 1.000000 }, // SecondaryActiveFill
    { 0.669960, 0.702964, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5412,8 +5412,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.818452, 0.827866, 0.912588, 1.000000 }, // SecondaryInactiveStroke
-   { 0.481023, 0.529014, 0.960937, 1.000000 }, // SecondaryActiveStroke
-   { 0.127018, 0.213434, 0.991182, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.210808, 0.280958, 0.912312, 1.000000 }, // SecondaryActiveStroke
+   { 0.283000, 0.354700, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5425,9 +5425,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.886720, 0.893800, 0.971680, 1.000000 }, // InactiveFill
    { 0.775413, 0.789450, 0.943853, 1.000000 }, // ActiveFill
    { 0.583467, 0.618178, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.808210, 0.816497, 0.907657, 1.000000 }, // SecondaryActiveFill
+   { 0.784135, 0.793463, 0.896065, 1.000000 }, // SecondaryActiveFill
    { 0.938755, 0.941401, 0.970512, 1.000000 }, // SecondaryInactiveFill
-   { 0.808210, 0.816497, 0.907657, 1.000000 }, // SecondaryActiveFill
+   { 0.784135, 0.793463, 0.896065, 1.000000 }, // SecondaryActiveFill
    { 0.674533, 0.701656, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5435,8 +5435,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.819685, 0.827476, 0.913182, 1.000000 }, // SecondaryInactiveStroke
-   { 0.488290, 0.527475, 0.958510, 1.000000 }, // SecondaryActiveStroke
-   { 0.138903, 0.210058, 0.992764, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.220480, 0.278222, 0.913387, 1.000000 }, // SecondaryActiveStroke
+   { 0.293400, 0.352283, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5448,9 +5448,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.887744, 0.893357, 0.971936, 1.000000 }, // InactiveFill
    { 0.777547, 0.788669, 0.944387, 1.000000 }, // ActiveFill
    { 0.589093, 0.616487, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.809497, 0.816082, 0.908276, 1.000000 }, // SecondaryActiveFill
+   { 0.785620, 0.793031, 0.896780, 1.000000 }, // SecondaryActiveFill
    { 0.939178, 0.941280, 0.970715, 1.000000 }, // SecondaryInactiveFill
-   { 0.809497, 0.816082, 0.908276, 1.000000 }, // SecondaryActiveFill
+   { 0.785620, 0.793031, 0.896780, 1.000000 }, // SecondaryActiveFill
    { 0.679107, 0.700500, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5458,8 +5458,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.820783, 0.826978, 0.913710, 1.000000 }, // SecondaryInactiveStroke
-   { 0.495509, 0.526217, 0.956131, 1.000000 }, // SecondaryActiveStroke
-   { 0.150435, 0.206693, 0.994298, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.229972, 0.275603, 0.914441, 1.000000 }, // SecondaryActiveStroke
+   { 0.303400, 0.349840, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5471,9 +5471,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.888928, 0.893093, 0.972232, 1.000000 }, // InactiveFill
    { 0.779840, 0.788096, 0.944960, 1.000000 }, // ActiveFill
    { 0.594720, 0.614984, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.810784, 0.815690, 0.908896, 1.000000 }, // SecondaryActiveFill
+   { 0.786970, 0.792493, 0.897430, 1.000000 }, // SecondaryActiveFill
    { 0.939601, 0.941167, 0.970919, 1.000000 }, // SecondaryInactiveFill
-   { 0.810784, 0.815690, 0.908896, 1.000000 }, // SecondaryActiveFill
+   { 0.786970, 0.792493, 0.897430, 1.000000 }, // SecondaryActiveFill
    { 0.683480, 0.699306, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5481,8 +5481,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.822016, 0.826630, 0.914304, 1.000000 }, // SecondaryInactiveStroke
-   { 0.502130, 0.524711, 0.953750, 1.000000 }, // SecondaryActiveStroke
-   { 0.161414, 0.203133, 0.995786, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.239104, 0.272922, 0.915456, 1.000000 }, // SecondaryActiveStroke
+   { 0.313000, 0.347350, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5494,9 +5494,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.889952, 0.892703, 0.972488, 1.000000 }, // InactiveFill
    { 0.781973, 0.787424, 0.945493, 1.000000 }, // ActiveFill
    { 0.600147, 0.613475, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.811936, 0.815187, 0.909451, 1.000000 }, // SecondaryActiveFill
+   { 0.788455, 0.792111, 0.898145, 1.000000 }, // SecondaryActiveFill
    { 0.940024, 0.941061, 0.971123, 1.000000 }, // SecondaryInactiveFill
-   { 0.811936, 0.815187, 0.909451, 1.000000 }, // SecondaryActiveFill
+   { 0.788455, 0.792111, 0.898145, 1.000000 }, // SecondaryActiveFill
    { 0.687653, 0.698065, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5504,8 +5504,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.823249, 0.826304, 0.914898, 1.000000 }, // SecondaryInactiveStroke
-   { 0.508709, 0.523466, 0.951411, 1.000000 }, // SecondaryActiveStroke
-   { 0.172036, 0.199542, 0.997231, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.247876, 0.270161, 0.916431, 1.000000 }, // SecondaryActiveStroke
+   { 0.322200, 0.344793, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5517,9 +5517,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.890976, 0.892339, 0.972744, 1.000000 }, // InactiveFill
    { 0.783947, 0.786647, 0.945987, 1.000000 }, // ActiveFill
    { 0.605373, 0.611950, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.813223, 0.814837, 0.910070, 1.000000 }, // SecondaryActiveFill
+   { 0.789940, 0.791755, 0.898860, 1.000000 }, // SecondaryActiveFill
    { 0.940447, 0.940962, 0.971326, 1.000000 }, // SecondaryInactiveFill
-   { 0.813223, 0.814837, 0.910070, 1.000000 }, // SecondaryActiveFill
+   { 0.789940, 0.791755, 0.898860, 1.000000 }, // SecondaryActiveFill
    { 0.691627, 0.696766, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5527,8 +5527,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.824482, 0.825999, 0.915491, 1.000000 }, // SecondaryInactiveStroke
-   { 0.514884, 0.522120, 0.949076, 1.000000 }, // SecondaryActiveStroke
-   { 0.182298, 0.195904, 0.998635, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.256288, 0.267306, 0.917365, 1.000000 }, // SecondaryActiveStroke
+   { 0.331200, 0.342347, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5540,9 +5540,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.892000, 0.892000, 0.973000, 1.000000 }, // InactiveFill
    { 0.786080, 0.786080, 0.946520, 1.000000 }, // ActiveFill
    { 0.610400, 0.610400, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.813430, 0.813430, 0.910170, 1.000000 }, // SecondaryActiveFill
+   { 0.791560, 0.791560, 0.899640, 1.000000 }, // SecondaryActiveFill
    { 0.940735, 0.940735, 0.971465, 1.000000 }, // SecondaryInactiveFill
-   { 0.813430, 0.813430, 0.910170, 1.000000 }, // SecondaryActiveFill
+   { 0.791560, 0.791560, 0.899640, 1.000000 }, // SecondaryActiveFill
    { 0.695600, 0.695600, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5550,8 +5550,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.825850, 0.825850, 0.916150, 1.000000 }, // SecondaryInactiveStroke
-   { 0.520840, 0.520840, 0.946760, 1.000000 }, // SecondaryActiveStroke
-   { 0.192000, 0.192000, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.265780, 0.265780, 0.918420, 1.000000 }, // SecondaryActiveStroke
+   { 0.339800, 0.339800, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5563,9 +5563,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.893192, 0.891840, 0.972960, 1.000000 }, // InactiveFill
    { 0.788270, 0.785589, 0.946397, 1.000000 }, // ActiveFill
    { 0.615399, 0.608880, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.814801, 0.813187, 0.910053, 1.000000 }, // SecondaryActiveFill
+   { 0.792817, 0.791011, 0.899376, 1.000000 }, // SecondaryActiveFill
    { 0.941265, 0.940753, 0.971474, 1.000000 }, // SecondaryInactiveFill
-   { 0.814801, 0.813187, 0.910053, 1.000000 }, // SecondaryActiveFill
+   { 0.792817, 0.791011, 0.899376, 1.000000 }, // SecondaryActiveFill
    { 0.699585, 0.694493, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5573,8 +5573,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.826882, 0.825373, 0.915920, 1.000000 }, // SecondaryInactiveStroke
-   { 0.526449, 0.519328, 0.946592, 1.000000 }, // SecondaryActiveStroke
-   { 0.202333, 0.188813, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.273536, 0.262612, 0.918068, 1.000000 }, // SecondaryActiveStroke
+   { 0.348247, 0.337200, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5586,9 +5586,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.894232, 0.891520, 0.972880, 1.000000 }, // InactiveFill
    { 0.790315, 0.784939, 0.946235, 1.000000 }, // ActiveFill
    { 0.620448, 0.607360, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.816044, 0.812809, 0.909871, 1.000000 }, // SecondaryActiveFill
+   { 0.794216, 0.790597, 0.899176, 1.000000 }, // SecondaryActiveFill
    { 0.941662, 0.940636, 0.971417, 1.000000 }, // SecondaryInactiveFill
-   { 0.816044, 0.812809, 0.909871, 1.000000 }, // SecondaryActiveFill
+   { 0.794216, 0.790597, 0.899176, 1.000000 }, // SecondaryActiveFill
    { 0.703607, 0.693387, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5596,8 +5596,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.828055, 0.825031, 0.915756, 1.000000 }, // SecondaryInactiveStroke
-   { 0.531928, 0.517636, 0.946404, 1.000000 }, // SecondaryActiveStroke
-   { 0.212579, 0.185427, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.281386, 0.259444, 0.917716, 1.000000 }, // SecondaryActiveStroke
+   { 0.356780, 0.334600, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5609,9 +5609,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.895280, 0.891200, 0.972800, 1.000000 }, // InactiveFill
    { 0.792377, 0.784288, 0.946072, 1.000000 }, // ActiveFill
    { 0.625548, 0.605840, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.817294, 0.812431, 0.909689, 1.000000 }, // SecondaryActiveFill
+   { 0.795623, 0.790183, 0.898977, 1.000000 }, // SecondaryActiveFill
    { 0.942061, 0.940519, 0.971361, 1.000000 }, // SecondaryInactiveFill
-   { 0.817294, 0.812431, 0.909689, 1.000000 }, // SecondaryActiveFill
+   { 0.795623, 0.790183, 0.898977, 1.000000 }, // SecondaryActiveFill
    { 0.707476, 0.692080, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5619,8 +5619,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.829234, 0.824689, 0.915591, 1.000000 }, // SecondaryInactiveStroke
-   { 0.537458, 0.515944, 0.946216, 1.000000 }, // SecondaryActiveStroke
-   { 0.222748, 0.181840, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.289846, 0.256816, 0.917424, 1.000000 }, // SecondaryActiveStroke
+   { 0.365210, 0.331800, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5632,9 +5632,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.896336, 0.890880, 0.972720, 1.000000 }, // InactiveFill
    { 0.794456, 0.783637, 0.945909, 1.000000 }, // ActiveFill
    { 0.630699, 0.604320, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.818550, 0.812053, 0.909507, 1.000000 }, // SecondaryActiveFill
+   { 0.797036, 0.789769, 0.898778, 1.000000 }, // SecondaryActiveFill
    { 0.942462, 0.940402, 0.971305, 1.000000 }, // SecondaryInactiveFill
-   { 0.818550, 0.812053, 0.909507, 1.000000 }, // SecondaryActiveFill
+   { 0.797036, 0.789769, 0.898778, 1.000000 }, // SecondaryActiveFill
    { 0.711388, 0.690773, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5642,8 +5642,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.830419, 0.824347, 0.915426, 1.000000 }, // SecondaryInactiveStroke
-   { 0.543037, 0.514252, 0.946028, 1.000000 }, // SecondaryActiveStroke
-   { 0.232663, 0.177853, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.298215, 0.254008, 0.917112, 1.000000 }, // SecondaryActiveStroke
+   { 0.373733, 0.329000, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5655,9 +5655,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897400, 0.890560, 0.972640, 1.000000 }, // InactiveFill
    { 0.796550, 0.782987, 0.945747, 1.000000 }, // ActiveFill
    { 0.635717, 0.602600, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.819813, 0.811675, 0.909325, 1.000000 }, // SecondaryActiveFill
+   { 0.798457, 0.789355, 0.898578, 1.000000 }, // SecondaryActiveFill
    { 0.942865, 0.940285, 0.971248, 1.000000 }, // SecondaryInactiveFill
-   { 0.819813, 0.811675, 0.909325, 1.000000 }, // SecondaryActiveFill
+   { 0.798457, 0.789355, 0.898578, 1.000000 }, // SecondaryActiveFill
    { 0.715528, 0.689667, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5665,8 +5665,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.831610, 0.824005, 0.915262, 1.000000 }, // SecondaryInactiveStroke
-   { 0.548667, 0.512560, 0.945840, 1.000000 }, // SecondaryActiveStroke
-   { 0.242711, 0.173867, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.306667, 0.251200, 0.916800, 1.000000 }, // SecondaryActiveStroke
+   { 0.382167, 0.326000, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5678,9 +5678,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.898472, 0.890240, 0.972560, 1.000000 }, // InactiveFill
    { 0.798661, 0.782336, 0.945584, 1.000000 }, // ActiveFill
    { 0.640972, 0.601080, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.821082, 0.811297, 0.909143, 1.000000 }, // SecondaryActiveFill
+   { 0.799885, 0.788941, 0.898379, 1.000000 }, // SecondaryActiveFill
    { 0.943270, 0.940168, 0.971192, 1.000000 }, // SecondaryInactiveFill
-   { 0.821082, 0.811297, 0.909143, 1.000000 }, // SecondaryActiveFill
+   { 0.799885, 0.788941, 0.898379, 1.000000 }, // SecondaryActiveFill
    { 0.719524, 0.688360, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5688,8 +5688,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.832806, 0.823663, 0.915097, 1.000000 }, // SecondaryInactiveStroke
-   { 0.554182, 0.510688, 0.945632, 1.000000 }, // SecondaryActiveStroke
-   { 0.252532, 0.169480, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.314874, 0.248032, 0.916448, 1.000000 }, // SecondaryActiveStroke
+   { 0.390520, 0.322800, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5701,9 +5701,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.899552, 0.889920, 0.972480, 1.000000 }, // InactiveFill
    { 0.800788, 0.781685, 0.945421, 1.000000 }, // ActiveFill
    { 0.646101, 0.599360, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.822357, 0.810919, 0.908961, 1.000000 }, // SecondaryActiveFill
+   { 0.801320, 0.788527, 0.898180, 1.000000 }, // SecondaryActiveFill
    { 0.943678, 0.940051, 0.971136, 1.000000 }, // SecondaryInactiveFill
-   { 0.822357, 0.810919, 0.908961, 1.000000 }, // SecondaryActiveFill
+   { 0.801320, 0.788527, 0.898180, 1.000000 }, // SecondaryActiveFill
    { 0.723564, 0.687053, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5711,8 +5711,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.834009, 0.823321, 0.914932, 1.000000 }, // SecondaryInactiveStroke
-   { 0.559754, 0.508816, 0.945424, 1.000000 }, // SecondaryActiveStroke
-   { 0.262146, 0.164693, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.323174, 0.244864, 0.916096, 1.000000 }, // SecondaryActiveStroke
+   { 0.398980, 0.319600, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5724,9 +5724,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900640, 0.889600, 0.972400, 1.000000 }, // InactiveFill
    { 0.802931, 0.781035, 0.945259, 1.000000 }, // ActiveFill
    { 0.651288, 0.597640, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.823639, 0.810541, 0.908779, 1.000000 }, // SecondaryActiveFill
+   { 0.802762, 0.788113, 0.897980, 1.000000 }, // SecondaryActiveFill
    { 0.944087, 0.939934, 0.971079, 1.000000 }, // SecondaryInactiveFill
-   { 0.823639, 0.810541, 0.908779, 1.000000 }, // SecondaryActiveFill
+   { 0.802762, 0.788113, 0.897980, 1.000000 }, // SecondaryActiveFill
    { 0.727647, 0.685747, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5734,8 +5734,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.835217, 0.822979, 0.914768, 1.000000 }, // SecondaryInactiveStroke
-   { 0.565380, 0.506944, 0.945216, 1.000000 }, // SecondaryActiveStroke
-   { 0.271746, 0.159707, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.331569, 0.241696, 0.915744, 1.000000 }, // SecondaryActiveStroke
+   { 0.407373, 0.316200, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5747,9 +5747,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.901736, 0.889280, 0.972320, 1.000000 }, // InactiveFill
    { 0.805091, 0.780384, 0.945096, 1.000000 }, // ActiveFill
    { 0.656532, 0.595920, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.824928, 0.810163, 0.908597, 1.000000 }, // SecondaryActiveFill
+   { 0.804211, 0.787699, 0.897781, 1.000000 }, // SecondaryActiveFill
    { 0.944498, 0.939817, 0.971023, 1.000000 }, // SecondaryInactiveFill
-   { 0.824928, 0.810163, 0.908597, 1.000000 }, // SecondaryActiveFill
+   { 0.804211, 0.787699, 0.897781, 1.000000 }, // SecondaryActiveFill
    { 0.731774, 0.684440, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5757,8 +5757,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.836432, 0.822637, 0.914603, 1.000000 }, // SecondaryInactiveStroke
-   { 0.571062, 0.505072, 0.945008, 1.000000 }, // SecondaryActiveStroke
-   { 0.281342, 0.154520, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.339746, 0.238168, 0.915352, 1.000000 }, // SecondaryActiveStroke
+   { 0.415880, 0.312800, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5770,9 +5770,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.902840, 0.888960, 0.972240, 1.000000 }, // InactiveFill
    { 0.807267, 0.779733, 0.944933, 1.000000 }, // ActiveFill
    { 0.661667, 0.594000, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.826223, 0.809785, 0.908415, 1.000000 }, // SecondaryActiveFill
+   { 0.805668, 0.787285, 0.897582, 1.000000 }, // SecondaryActiveFill
    { 0.944911, 0.939700, 0.970967, 1.000000 }, // SecondaryInactiveFill
-   { 0.826223, 0.809785, 0.908415, 1.000000 }, // SecondaryActiveFill
+   { 0.805668, 0.787285, 0.897582, 1.000000 }, // SecondaryActiveFill
    { 0.735944, 0.683133, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5780,8 +5780,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.837652, 0.822295, 0.914438, 1.000000 }, // SecondaryInactiveStroke
-   { 0.576800, 0.503200, 0.944800, 1.000000 }, // SecondaryActiveStroke
-   { 0.290778, 0.148933, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.348027, 0.234640, 0.914960, 1.000000 }, // SecondaryActiveStroke
+   { 0.424333, 0.309200, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5793,9 +5793,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.903952, 0.888640, 0.972160, 1.000000 }, // InactiveFill
    { 0.809459, 0.779083, 0.944771, 1.000000 }, // ActiveFill
    { 0.667029, 0.592280, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.827525, 0.809407, 0.908233, 1.000000 }, // SecondaryActiveFill
+   { 0.807131, 0.786871, 0.897382, 1.000000 }, // SecondaryActiveFill
    { 0.945326, 0.939583, 0.970910, 1.000000 }, // SecondaryInactiveFill
-   { 0.827525, 0.809407, 0.908233, 1.000000 }, // SecondaryActiveFill
+   { 0.807131, 0.786871, 0.897382, 1.000000 }, // SecondaryActiveFill
    { 0.739995, 0.681627, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5803,8 +5803,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.838878, 0.821953, 0.914274, 1.000000 }, // SecondaryInactiveStroke
-   { 0.582442, 0.501148, 0.944572, 1.000000 }, // SecondaryActiveStroke
-   { 0.299910, 0.142747, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.356262, 0.230932, 0.914548, 1.000000 }, // SecondaryActiveStroke
+   { 0.432743, 0.305400, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5816,9 +5816,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.905072, 0.888320, 0.972080, 1.000000 }, // InactiveFill
    { 0.811667, 0.778432, 0.944608, 1.000000 }, // ActiveFill
    { 0.672288, 0.590360, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.828833, 0.809029, 0.908051, 1.000000 }, // SecondaryActiveFill
+   { 0.808602, 0.786457, 0.897183, 1.000000 }, // SecondaryActiveFill
    { 0.945744, 0.939466, 0.970854, 1.000000 }, // SecondaryInactiveFill
-   { 0.828833, 0.809029, 0.908051, 1.000000 }, // SecondaryActiveFill
+   { 0.808602, 0.786457, 0.897183, 1.000000 }, // SecondaryActiveFill
    { 0.744256, 0.680320, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5826,8 +5826,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.840111, 0.821611, 0.914109, 1.000000 }, // SecondaryInactiveStroke
-   { 0.588146, 0.499096, 0.944344, 1.000000 }, // SecondaryActiveStroke
-   { 0.309088, 0.136360, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.364458, 0.227044, 0.914116, 1.000000 }, // SecondaryActiveStroke
+   { 0.441120, 0.301400, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5839,9 +5839,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.906200, 0.888000, 0.972000, 1.000000 }, // InactiveFill
    { 0.813892, 0.777781, 0.944445, 1.000000 }, // ActiveFill
    { 0.677611, 0.588440, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.830148, 0.808651, 0.907869, 1.000000 }, // SecondaryActiveFill
+   { 0.810080, 0.786043, 0.896984, 1.000000 }, // SecondaryActiveFill
    { 0.946163, 0.939349, 0.970798, 1.000000 }, // SecondaryInactiveFill
-   { 0.830148, 0.808651, 0.907869, 1.000000 }, // SecondaryActiveFill
+   { 0.810080, 0.786043, 0.896984, 1.000000 }, // SecondaryActiveFill
    { 0.748404, 0.678813, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5849,8 +5849,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.841349, 0.821269, 0.913944, 1.000000 }, // SecondaryInactiveStroke
-   { 0.593910, 0.497044, 0.944116, 1.000000 }, // SecondaryActiveStroke
-   { 0.318166, 0.129573, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.372625, 0.222976, 0.913664, 1.000000 }, // SecondaryActiveStroke
+   { 0.449630, 0.297400, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5862,9 +5862,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.907336, 0.887680, 0.971920, 1.000000 }, // InactiveFill
    { 0.816133, 0.777131, 0.944283, 1.000000 }, // ActiveFill
    { 0.682999, 0.586520, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.831470, 0.808273, 0.907687, 1.000000 }, // SecondaryActiveFill
+   { 0.811565, 0.785629, 0.896784, 1.000000 }, // SecondaryActiveFill
    { 0.946584, 0.939232, 0.970741, 1.000000 }, // SecondaryInactiveFill
-   { 0.831470, 0.808273, 0.907687, 1.000000 }, // SecondaryActiveFill
+   { 0.811565, 0.785629, 0.896784, 1.000000 }, // SecondaryActiveFill
    { 0.752755, 0.677507, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5872,8 +5872,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.842593, 0.820927, 0.913780, 1.000000 }, // SecondaryInactiveStroke
-   { 0.599734, 0.494992, 0.943888, 1.000000 }, // SecondaryActiveStroke
-   { 0.327010, 0.122187, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.381055, 0.219088, 0.913232, 1.000000 }, // SecondaryActiveStroke
+   { 0.458120, 0.293200, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5885,9 +5885,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.908350, 0.887200, 0.971800, 1.000000 }, // InactiveFill
    { 0.818260, 0.776320, 0.944080, 1.000000 }, // ActiveFill
    { 0.688450, 0.584600, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.832680, 0.807760, 0.907440, 1.000000 }, // SecondaryActiveFill
+   { 0.813175, 0.785350, 0.896650, 1.000000 }, // SecondaryActiveFill
    { 0.946890, 0.938980, 0.970620, 1.000000 }, // SecondaryInactiveFill
-   { 0.832680, 0.807760, 0.907440, 1.000000 }, // SecondaryActiveFill
+   { 0.813175, 0.785350, 0.896650, 1.000000 }, // SecondaryActiveFill
    { 0.757000, 0.676000, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5895,8 +5895,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.843960, 0.820720, 0.913680, 1.000000 }, // SecondaryInactiveStroke
-   { 0.605480, 0.492760, 0.943640, 1.000000 }, // SecondaryActiveStroke
-   { 0.335650, 0.114200, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.389880, 0.215560, 0.912840, 1.000000 }, // SecondaryActiveStroke
+   { 0.466600, 0.288800, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5908,9 +5908,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.909606, 0.887008, 0.971752, 1.000000 }, // InactiveFill
    { 0.820587, 0.775733, 0.943933, 1.000000 }, // ActiveFill
    { 0.693926, 0.582627, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.834109, 0.807490, 0.907310, 1.000000 }, // SecondaryActiveFill
+   { 0.814518, 0.784756, 0.896364, 1.000000 }, // SecondaryActiveFill
    { 0.947425, 0.938989, 0.970624, 1.000000 }, // SecondaryInactiveFill
-   { 0.834109, 0.807490, 0.907310, 1.000000 }, // SecondaryActiveFill
+   { 0.814518, 0.784756, 0.896364, 1.000000 }, // SecondaryActiveFill
    { 0.761295, 0.674493, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5918,8 +5918,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.845067, 0.820207, 0.913433, 1.000000 }, // SecondaryInactiveStroke
-   { 0.611402, 0.490672, 0.943408, 1.000000 }, // SecondaryActiveStroke
-   { 0.344146, 0.105653, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.396850, 0.209464, 0.912163, 1.000000 }, // SecondaryActiveStroke
+   { 0.475041, 0.284147, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5931,9 +5931,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.910742, 0.886656, 0.971664, 1.000000 }, // InactiveFill
    { 0.822802, 0.774987, 0.943747, 1.000000 }, // ActiveFill
    { 0.699325, 0.580453, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.835427, 0.807085, 0.907115, 1.000000 }, // SecondaryActiveFill
+   { 0.815987, 0.784297, 0.896143, 1.000000 }, // SecondaryActiveFill
    { 0.947845, 0.938863, 0.970564, 1.000000 }, // SecondaryInactiveFill
-   { 0.835427, 0.807085, 0.907115, 1.000000 }, // SecondaryActiveFill
+   { 0.815987, 0.784297, 0.896143, 1.000000 }, // SecondaryActiveFill
    { 0.765640, 0.672987, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5941,8 +5941,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.846299, 0.819829, 0.913251, 1.000000 }, // SecondaryInactiveStroke
-   { 0.617250, 0.488404, 0.943156, 1.000000 }, // SecondaryActiveStroke
-   { 0.352353, 0.096307, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.404944, 0.204628, 0.911625, 1.000000 }, // SecondaryActiveStroke
+   { 0.483494, 0.279293, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5954,9 +5954,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.911886, 0.886304, 0.971576, 1.000000 }, // InactiveFill
    { 0.825036, 0.774240, 0.943560, 1.000000 }, // ActiveFill
    { 0.704936, 0.578480, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.836752, 0.806680, 0.906920, 1.000000 }, // SecondaryActiveFill
+   { 0.817463, 0.783838, 0.895922, 1.000000 }, // SecondaryActiveFill
    { 0.948267, 0.938737, 0.970503, 1.000000 }, // SecondaryInactiveFill
-   { 0.836752, 0.806680, 0.906920, 1.000000 }, // SecondaryActiveFill
+   { 0.817463, 0.783838, 0.895922, 1.000000 }, // SecondaryActiveFill
    { 0.770036, 0.671480, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5964,8 +5964,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.847536, 0.819451, 0.913069, 1.000000 }, // SecondaryInactiveStroke
-   { 0.623034, 0.485956, 0.942884, 1.000000 }, // SecondaryActiveStroke
-   { 0.360312, 0.086160, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.413049, 0.199612, 0.911068, 1.000000 }, // SecondaryActiveStroke
+   { 0.491968, 0.274240, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -5977,9 +5977,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.913038, 0.885952, 0.971488, 1.000000 }, // InactiveFill
    { 0.827289, 0.773493, 0.943373, 1.000000 }, // ActiveFill
    { 0.710476, 0.576307, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.838084, 0.806275, 0.906725, 1.000000 }, // SecondaryActiveFill
+   { 0.818948, 0.783379, 0.895701, 1.000000 }, // SecondaryActiveFill
    { 0.948691, 0.938611, 0.970442, 1.000000 }, // SecondaryInactiveFill
-   { 0.838084, 0.806275, 0.906725, 1.000000 }, // SecondaryActiveFill
+   { 0.818948, 0.783379, 0.895701, 1.000000 }, // SecondaryActiveFill
    { 0.774345, 0.669773, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -5987,8 +5987,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.848781, 0.819073, 0.912887, 1.000000 }, // SecondaryInactiveStroke
-   { 0.629020, 0.483688, 0.942632, 1.000000 }, // SecondaryActiveStroke
-   { 0.368062, 0.075213, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.421044, 0.194236, 0.910471, 1.000000 }, // SecondaryActiveStroke
+   { 0.500474, 0.268987, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6000,9 +6000,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.914200, 0.885600, 0.971400, 1.000000 }, // InactiveFill
    { 0.829680, 0.772907, 0.943227, 1.000000 }, // ActiveFill
    { 0.716089, 0.574133, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.839423, 0.805870, 0.906530, 1.000000 }, // SecondaryActiveFill
+   { 0.820440, 0.782920, 0.895480, 1.000000 }, // SecondaryActiveFill
    { 0.949117, 0.938485, 0.970382, 1.000000 }, // SecondaryInactiveFill
-   { 0.839423, 0.805870, 0.906530, 1.000000 }, // SecondaryActiveFill
+   { 0.820440, 0.782920, 0.895480, 1.000000 }, // SecondaryActiveFill
    { 0.778844, 0.668267, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6010,8 +6010,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.850032, 0.818695, 0.912705, 1.000000 }, // SecondaryInactiveStroke
-   { 0.634947, 0.481240, 0.942360, 1.000000 }, // SecondaryActiveStroke
-   { 0.375378, 0.063067, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.429071, 0.188680, 0.909853, 1.000000 }, // SecondaryActiveStroke
+   { 0.509022, 0.263533, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6023,9 +6023,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.915370, 0.885248, 0.971312, 1.000000 }, // InactiveFill
    { 0.831968, 0.772160, 0.943040, 1.000000 }, // ActiveFill
    { 0.721644, 0.571760, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.840770, 0.805465, 0.906335, 1.000000 }, // SecondaryActiveFill
+   { 0.821940, 0.782461, 0.895259, 1.000000 }, // SecondaryActiveFill
    { 0.949546, 0.938359, 0.970321, 1.000000 }, // SecondaryInactiveFill
-   { 0.840770, 0.805465, 0.906335, 1.000000 }, // SecondaryActiveFill
+   { 0.821940, 0.782461, 0.895259, 1.000000 }, // SecondaryActiveFill
    { 0.783264, 0.666560, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6033,8 +6033,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.851289, 0.818317, 0.912523, 1.000000 }, // SecondaryInactiveStroke
-   { 0.640946, 0.478792, 0.942088, 1.000000 }, // SecondaryActiveStroke
-   { 0.382058, 0.049320, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.437015, 0.182764, 0.909196, 1.000000 }, // SecondaryActiveStroke
+   { 0.517492, 0.257680, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6046,9 +6046,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.916550, 0.884896, 0.971224, 1.000000 }, // InactiveFill
    { 0.834275, 0.771413, 0.942853, 1.000000 }, // ActiveFill
    { 0.727405, 0.569587, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.842123, 0.805060, 0.906140, 1.000000 }, // SecondaryActiveFill
+   { 0.823449, 0.782002, 0.895038, 1.000000 }, // SecondaryActiveFill
    { 0.949976, 0.938233, 0.970260, 1.000000 }, // SecondaryInactiveFill
-   { 0.842123, 0.805060, 0.906140, 1.000000 }, // SecondaryActiveFill
+   { 0.823449, 0.782002, 0.895038, 1.000000 }, // SecondaryActiveFill
    { 0.787867, 0.665053, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6056,8 +6056,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.852553, 0.817939, 0.912341, 1.000000 }, // SecondaryInactiveStroke
-   { 0.646896, 0.476164, 0.941796, 1.000000 }, // SecondaryActiveStroke
-   { 0.388310, 0.034173, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.444892, 0.176488, 0.908499, 1.000000 }, // SecondaryActiveStroke
+   { 0.526030, 0.251627, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6069,9 +6069,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.917738, 0.884544, 0.971136, 1.000000 }, // InactiveFill
    { 0.836600, 0.770667, 0.942667, 1.000000 }, // ActiveFill
    { 0.733115, 0.567213, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.843483, 0.804655, 0.905945, 1.000000 }, // SecondaryActiveFill
+   { 0.824965, 0.781543, 0.894817, 1.000000 }, // SecondaryActiveFill
    { 0.950409, 0.938107, 0.970200, 1.000000 }, // SecondaryInactiveFill
-   { 0.843483, 0.804655, 0.905945, 1.000000 }, // SecondaryActiveFill
+   { 0.824965, 0.781543, 0.894817, 1.000000 }, // SecondaryActiveFill
    { 0.792397, 0.663347, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6079,8 +6079,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.853824, 0.817561, 0.912159, 1.000000 }, // SecondaryInactiveStroke
-   { 0.652924, 0.473536, 0.941504, 1.000000 }, // SecondaryActiveStroke
-   { 0.394450, 0.018027, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.452717, 0.169852, 0.907761, 1.000000 }, // SecondaryActiveStroke
+   { 0.534647, 0.245373, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6092,9 +6092,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.918934, 0.884192, 0.971048, 1.000000 }, // InactiveFill
    { 0.838944, 0.769920, 0.942480, 1.000000 }, // ActiveFill
    { 0.738904, 0.564840, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.844850, 0.804250, 0.905750, 1.000000 }, // SecondaryActiveFill
+   { 0.826489, 0.781084, 0.894596, 1.000000 }, // SecondaryActiveFill
    { 0.950844, 0.937981, 0.970139, 1.000000 }, // SecondaryInactiveFill
-   { 0.844850, 0.804250, 0.905750, 1.000000 }, // SecondaryActiveFill
+   { 0.826489, 0.781084, 0.894596, 1.000000 }, // SecondaryActiveFill
    { 0.796984, 0.661640, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6102,8 +6102,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.855101, 0.817183, 0.911977, 1.000000 }, // SecondaryInactiveStroke
-   { 0.659030, 0.470908, 0.941212, 1.000000 }, // SecondaryActiveStroke
-   { 0.402808, 0.004680, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.460623, 0.163036, 0.907004, 1.000000 }, // SecondaryActiveStroke
+   { 0.543112, 0.238520, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6115,9 +6115,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.920140, 0.883840, 0.970960, 1.000000 }, // InactiveFill
    { 0.841307, 0.769173, 0.942293, 1.000000 }, // ActiveFill
    { 0.744656, 0.562267, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.846224, 0.803845, 0.905555, 1.000000 }, // SecondaryActiveFill
+   { 0.828021, 0.780625, 0.894375, 1.000000 }, // SecondaryActiveFill
    { 0.951281, 0.937855, 0.970078, 1.000000 }, // SecondaryInactiveFill
-   { 0.846224, 0.803845, 0.905555, 1.000000 }, // SecondaryActiveFill
+   { 0.828021, 0.780625, 0.894375, 1.000000 }, // SecondaryActiveFill
    { 0.801511, 0.659733, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6125,8 +6125,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.856384, 0.816805, 0.911795, 1.000000 }, // SecondaryInactiveStroke
-   { 0.665100, 0.468100, 0.940900, 1.000000 }, // SecondaryActiveStroke
-   { 0.413306, 0.000000, 0.991933, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.468391, 0.155680, 0.906187, 1.000000 }, // SecondaryActiveStroke
+   { 0.551689, 0.231467, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6138,9 +6138,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.921354, 0.883488, 0.970872, 1.000000 }, // InactiveFill
    { 0.843580, 0.768267, 0.942067, 1.000000 }, // ActiveFill
    { 0.750493, 0.559693, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.847605, 0.803440, 0.905360, 1.000000 }, // SecondaryActiveFill
+   { 0.829561, 0.780166, 0.894154, 1.000000 }, // SecondaryActiveFill
    { 0.951721, 0.937729, 0.970018, 1.000000 }, // SecondaryInactiveFill
-   { 0.847605, 0.803440, 0.905360, 1.000000 }, // SecondaryActiveFill
+   { 0.829561, 0.780166, 0.894154, 1.000000 }, // SecondaryActiveFill
    { 0.806215, 0.658027, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6148,8 +6148,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.857674, 0.816427, 0.911613, 1.000000 }, // SecondaryInactiveStroke
-   { 0.671254, 0.465292, 0.940588, 1.000000 }, // SecondaryActiveStroke
-   { 0.424834, 0.000000, 0.980387, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.476156, 0.147964, 0.905329, 1.000000 }, // SecondaryActiveStroke
+   { 0.560274, 0.224013, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6161,9 +6161,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.922578, 0.883136, 0.970784, 1.000000 }, // InactiveFill
    { 0.845982, 0.767520, 0.941880, 1.000000 }, // ActiveFill
    { 0.756416, 0.557120, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.848994, 0.803035, 0.905165, 1.000000 }, // SecondaryActiveFill
+   { 0.831109, 0.779707, 0.893933, 1.000000 }, // SecondaryActiveFill
    { 0.952162, 0.937603, 0.969957, 1.000000 }, // SecondaryInactiveFill
-   { 0.848994, 0.803035, 0.905165, 1.000000 }, // SecondaryActiveFill
+   { 0.831109, 0.779707, 0.893933, 1.000000 }, // SecondaryActiveFill
    { 0.810866, 0.656120, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6171,8 +6171,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.858971, 0.816049, 0.911431, 1.000000 }, // SecondaryInactiveStroke
-   { 0.677490, 0.462484, 0.940276, 1.000000 }, // SecondaryActiveStroke
-   { 0.435708, 0.000000, 0.968240, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.483825, 0.139708, 0.904412, 1.000000 }, // SecondaryActiveStroke
+   { 0.568778, 0.215960, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6184,9 +6184,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.923810, 0.882784, 0.970696, 1.000000 }, // InactiveFill
    { 0.848403, 0.766773, 0.941693, 1.000000 }, // ActiveFill
    { 0.762425, 0.554547, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.850389, 0.802630, 0.904970, 1.000000 }, // SecondaryActiveFill
+   { 0.832665, 0.779248, 0.893712, 1.000000 }, // SecondaryActiveFill
    { 0.952606, 0.937477, 0.969896, 1.000000 }, // SecondaryInactiveFill
-   { 0.850389, 0.802630, 0.904970, 1.000000 }, // SecondaryActiveFill
+   { 0.832665, 0.779248, 0.893712, 1.000000 }, // SecondaryActiveFill
    { 0.815580, 0.654213, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6194,8 +6194,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.860274, 0.815671, 0.911249, 1.000000 }, // SecondaryInactiveStroke
-   { 0.683705, 0.459496, 0.939944, 1.000000 }, // SecondaryActiveStroke
-   { 0.446270, 0.000000, 0.956293, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.491317, 0.130732, 0.903415, 1.000000 }, // SecondaryActiveStroke
+   { 0.577444, 0.207707, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6207,9 +6207,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.925050, 0.882432, 0.970608, 1.000000 }, // InactiveFill
    { 0.850842, 0.766027, 0.941507, 1.000000 }, // ActiveFill
    { 0.768416, 0.551773, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.851791, 0.802225, 0.904775, 1.000000 }, // SecondaryActiveFill
+   { 0.834228, 0.778789, 0.893491, 1.000000 }, // SecondaryActiveFill
    { 0.953052, 0.937351, 0.969836, 1.000000 }, // SecondaryInactiveFill
-   { 0.851791, 0.802225, 0.904775, 1.000000 }, // SecondaryActiveFill
+   { 0.834228, 0.778789, 0.893491, 1.000000 }, // SecondaryActiveFill
    { 0.820358, 0.652307, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6217,8 +6217,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.861584, 0.815293, 0.911067, 1.000000 }, // SecondaryInactiveStroke
-   { 0.690008, 0.456508, 0.939612, 1.000000 }, // SecondaryActiveStroke
-   { 0.456434, 0.000000, 0.944347, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.498870, 0.121396, 0.902377, 1.000000 }, // SecondaryActiveStroke
+   { 0.585971, 0.198653, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6230,9 +6230,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.926200, 0.881920, 0.970480, 1.000000 }, // InactiveFill
    { 0.853200, 0.765120, 0.941280, 1.000000 }, // ActiveFill
    { 0.774500, 0.549000, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.853100, 0.801685, 0.904515, 1.000000 }, // SecondaryActiveFill
+   { 0.835900, 0.778465, 0.893335, 1.000000 }, // SecondaryActiveFill
    { 0.953400, 0.937090, 0.969710, 1.000000 }, // SecondaryInactiveFill
-   { 0.853100, 0.801685, 0.904515, 1.000000 }, // SecondaryActiveFill
+   { 0.835900, 0.778465, 0.893335, 1.000000 }, // SecondaryActiveFill
    { 0.825200, 0.650400, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6240,8 +6240,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.863000, 0.815050, 0.910950, 1.000000 }, // SecondaryInactiveStroke
-   { 0.696300, 0.453340, 0.939260, 1.000000 }, // SecondaryActiveStroke
-   { 0.466000, 0.000000, 0.932000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.507400, 0.113320, 0.901480, 1.000000 }, // SecondaryActiveStroke
+   { 0.594500, 0.189000, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6253,9 +6253,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.927519, 0.881664, 0.970416, 1.000000 }, // InactiveFill
    { 0.855744, 0.764480, 0.941120, 1.000000 }, // ActiveFill
    { 0.780986, 0.546867, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.855334, 0.802396, 0.904857, 1.000000 }, // SecondaryActiveFill
+   { 0.837347, 0.777826, 0.893027, 1.000000 }, // SecondaryActiveFill
    { 0.953944, 0.937090, 0.969710, 1.000000 }, // SecondaryInactiveFill
-   { 0.855334, 0.802396, 0.904857, 1.000000 }, // SecondaryActiveFill
+   { 0.837347, 0.777826, 0.893027, 1.000000 }, // SecondaryActiveFill
    { 0.830144, 0.648573, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6263,8 +6263,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.864190, 0.814492, 0.910681, 1.000000 }, // SecondaryInactiveStroke
-   { 0.703963, 0.448227, 0.943200, 1.000000 }, // SecondaryActiveStroke
-   { 0.476642, 0.000000, 0.922533, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.514651, 0.102436, 0.900271, 1.000000 }, // SecondaryActiveStroke
+   { 0.603016, 0.178653, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6276,9 +6276,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.928749, 0.881248, 0.970312, 1.000000 }, // InactiveFill
    { 0.858208, 0.763680, 0.940920, 1.000000 }, // ActiveFill
    { 0.787449, 0.544533, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.856677, 0.801892, 0.904615, 1.000000 }, // SecondaryActiveFill
+   { 0.838902, 0.777322, 0.892785, 1.000000 }, // SecondaryActiveFill
    { 0.954390, 0.936955, 0.969645, 1.000000 }, // SecondaryInactiveFill
-   { 0.856677, 0.801892, 0.904615, 1.000000 }, // SecondaryActiveFill
+   { 0.838902, 0.777322, 0.892785, 1.000000 }, // SecondaryActiveFill
    { 0.835055, 0.646547, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6286,8 +6286,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.865487, 0.814069, 0.910478, 1.000000 }, // SecondaryInactiveStroke
-   { 0.711929, 0.443098, 0.947155, 1.000000 }, // SecondaryActiveStroke
-   { 0.485689, 0.000000, 0.910667, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.522144, 0.099141, 0.892272, 1.000000 }, // SecondaryActiveStroke
+   { 0.611410, 0.167307, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6299,9 +6299,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.929989, 0.880832, 0.970208, 1.000000 }, // InactiveFill
    { 0.860692, 0.762880, 0.940720, 1.000000 }, // ActiveFill
    { 0.793630, 0.541400, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.858126, 0.801523, 0.904437, 1.000000 }, // SecondaryActiveFill
+   { 0.840466, 0.776818, 0.892542, 1.000000 }, // SecondaryActiveFill
    { 0.954838, 0.936820, 0.969580, 1.000000 }, // SecondaryInactiveFill
-   { 0.858126, 0.801523, 0.904437, 1.000000 }, // SecondaryActiveFill
+   { 0.840466, 0.776818, 0.892542, 1.000000 }, // SecondaryActiveFill
    { 0.840034, 0.644520, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6309,8 +6309,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.866791, 0.813646, 0.910274, 1.000000 }, // SecondaryInactiveStroke
-   { 0.719924, 0.437402, 0.951078, 1.000000 }, // SecondaryActiveStroke
-   { 0.494450, 0.000000, 0.899000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.529373, 0.098032, 0.882288, 1.000000 }, // SecondaryActiveStroke
+   { 0.619822, 0.155160, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6322,9 +6322,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.931239, 0.880416, 0.970104, 1.000000 }, // InactiveFill
    { 0.863196, 0.762080, 0.940520, 1.000000 }, // ActiveFill
    { 0.800002, 0.538467, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.859485, 0.801019, 0.904194, 1.000000 }, // SecondaryActiveFill
+   { 0.842039, 0.776314, 0.892299, 1.000000 }, // SecondaryActiveFill
    { 0.955289, 0.936685, 0.969515, 1.000000 }, // SecondaryInactiveFill
-   { 0.859485, 0.801019, 0.904194, 1.000000 }, // SecondaryActiveFill
+   { 0.842039, 0.776314, 0.892299, 1.000000 }, // SecondaryActiveFill
    { 0.845080, 0.642493, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6332,8 +6332,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.868103, 0.813223, 0.910070, 1.000000 }, // SecondaryInactiveStroke
-   { 0.728243, 0.431682, 0.955025, 1.000000 }, // SecondaryActiveStroke
-   { 0.502822, 0.000000, 0.887333, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.536305, 0.096923, 0.872304, 1.000000 }, // SecondaryActiveStroke
+   { 0.628119, 0.141813, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6345,9 +6345,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.932500, 0.880000, 0.970000, 1.000000 }, // InactiveFill
    { 0.865720, 0.761280, 0.940320, 1.000000 }, // ActiveFill
    { 0.806306, 0.535133, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.860947, 0.800650, 0.904017, 1.000000 }, // SecondaryActiveFill
+   { 0.843621, 0.775810, 0.892057, 1.000000 }, // SecondaryActiveFill
    { 0.955742, 0.936550, 0.969450, 1.000000 }, // SecondaryInactiveFill
-   { 0.860947, 0.800650, 0.904017, 1.000000 }, // SecondaryActiveFill
+   { 0.843621, 0.775810, 0.892057, 1.000000 }, // SecondaryActiveFill
    { 0.850194, 0.640467, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6355,8 +6355,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.869422, 0.812800, 0.909867, 1.000000 }, // SecondaryInactiveStroke
-   { 0.736717, 0.425564, 0.958969, 1.000000 }, // SecondaryActiveStroke
-   { 0.510922, 0.000000, 0.875867, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.543056, 0.095833, 0.862500, 1.000000 }, // SecondaryActiveStroke
+   { 0.636278, 0.127067, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6368,9 +6368,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.933771, 0.879584, 0.969896, 1.000000 }, // InactiveFill
    { 0.868264, 0.760480, 0.940120, 1.000000 }, // ActiveFill
    { 0.812800, 0.532000, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.862323, 0.800146, 0.903774, 1.000000 }, // SecondaryActiveFill
+   { 0.845211, 0.775306, 0.891814, 1.000000 }, // SecondaryActiveFill
    { 0.956197, 0.936415, 0.969385, 1.000000 }, // SecondaryInactiveFill
-   { 0.862323, 0.800146, 0.903774, 1.000000 }, // SecondaryActiveFill
+   { 0.845211, 0.775306, 0.891814, 1.000000 }, // SecondaryActiveFill
    { 0.855376, 0.638440, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6378,8 +6378,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.870749, 0.812377, 0.909663, 1.000000 }, // SecondaryInactiveStroke
-   { 0.745368, 0.419042, 0.962918, 1.000000 }, // SecondaryActiveStroke
-   { 0.518640, 0.000000, 0.864400, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.549515, 0.094744, 0.852696, 1.000000 }, // SecondaryActiveStroke
+   { 0.644288, 0.110720, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6391,9 +6391,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.935053, 0.879168, 0.969792, 1.000000 }, // InactiveFill
    { 0.870828, 0.759680, 0.939920, 1.000000 }, // ActiveFill
    { 0.819246, 0.528467, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.863799, 0.799777, 0.903596, 1.000000 }, // SecondaryActiveFill
+   { 0.846810, 0.774802, 0.891571, 1.000000 }, // SecondaryActiveFill
    { 0.956655, 0.936280, 0.969320, 1.000000 }, // SecondaryInactiveFill
-   { 0.863799, 0.799777, 0.903596, 1.000000 }, // SecondaryActiveFill
+   { 0.846810, 0.774802, 0.891571, 1.000000 }, // SecondaryActiveFill
    { 0.860548, 0.636213, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6401,8 +6401,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.872082, 0.811954, 0.909459, 1.000000 }, // SecondaryInactiveStroke
-   { 0.754296, 0.412297, 0.966890, 1.000000 }, // SecondaryActiveStroke
-   { 0.525976, 0.000000, 0.852933, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.555684, 0.093655, 0.842892, 1.000000 }, // SecondaryActiveStroke
+   { 0.651923, 0.091973, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6414,9 +6414,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.936345, 0.878752, 0.969688, 1.000000 }, // InactiveFill
    { 0.873412, 0.758880, 0.939720, 1.000000 }, // ActiveFill
    { 0.825882, 0.525133, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.865191, 0.799273, 0.903354, 1.000000 }, // SecondaryActiveFill
+   { 0.848417, 0.774298, 0.891329, 1.000000 }, // SecondaryActiveFill
    { 0.957115, 0.936145, 0.969255, 1.000000 }, // SecondaryInactiveFill
-   { 0.865191, 0.799273, 0.903354, 1.000000 }, // SecondaryActiveFill
+   { 0.848417, 0.774298, 0.891329, 1.000000 }, // SecondaryActiveFill
    { 0.865795, 0.633987, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6424,8 +6424,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.873423, 0.811531, 0.909256, 1.000000 }, // SecondaryInactiveStroke
-   { 0.763440, 0.405133, 0.970881, 1.000000 }, // SecondaryActiveStroke
-   { 0.533056, 0.000000, 0.841667, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.561806, 0.092605, 0.833448, 1.000000 }, // SecondaryActiveStroke
+   { 0.659083, 0.070227, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6437,9 +6437,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.937647, 0.878336, 0.969584, 1.000000 }, // InactiveFill
    { 0.876016, 0.758080, 0.939520, 1.000000 }, // ActiveFill
    { 0.832490, 0.521400, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.866681, 0.798904, 0.903176, 1.000000 }, // SecondaryActiveFill
+   { 0.850034, 0.773794, 0.891086, 1.000000 }, // SecondaryActiveFill
    { 0.957577, 0.936010, 0.969190, 1.000000 }, // SecondaryInactiveFill
-   { 0.866681, 0.798904, 0.903176, 1.000000 }, // SecondaryActiveFill
+   { 0.850034, 0.773794, 0.891086, 1.000000 }, // SecondaryActiveFill
    { 0.871186, 0.631960, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6447,8 +6447,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.874772, 0.811108, 0.909052, 1.000000 }, // SecondaryInactiveStroke
-   { 0.772823, 0.397542, 0.974898, 1.000000 }, // SecondaryActiveStroke
-   { 0.539760, 0.000000, 0.830400, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.567523, 0.091536, 0.823824, 1.000000 }, // SecondaryActiveStroke
+   { 0.665568, 0.044480, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6460,9 +6460,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.938960, 0.877920, 0.969480, 1.000000 }, // InactiveFill
    { 0.878560, 0.757120, 0.939280, 1.000000 }, // ActiveFill
    { 0.839289, 0.517867, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.868089, 0.798400, 0.902933, 1.000000 }, // SecondaryActiveFill
+   { 0.851659, 0.773290, 0.890843, 1.000000 }, // SecondaryActiveFill
    { 0.958042, 0.935875, 0.969125, 1.000000 }, // SecondaryInactiveFill
-   { 0.868089, 0.798400, 0.902933, 1.000000 }, // SecondaryActiveFill
+   { 0.851659, 0.773290, 0.890843, 1.000000 }, // SecondaryActiveFill
    { 0.876644, 0.629933, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6470,8 +6470,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.876127, 0.810685, 0.908848, 1.000000 }, // SecondaryInactiveStroke
-   { 0.782403, 0.389324, 0.978942, 1.000000 }, // SecondaryActiveStroke
-   { 0.546222, 0.000000, 0.819333, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.573082, 0.090487, 0.814380, 1.000000 }, // SecondaryActiveStroke
+   { 0.673044, 0.019133, 1.000000, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6483,9 +6483,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.940283, 0.877504, 0.969376, 1.000000 }, // InactiveFill
    { 0.881206, 0.756320, 0.939080, 1.000000 }, // ActiveFill
    { 0.846079, 0.513933, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.869506, 0.797896, 0.902691, 1.000000 }, // SecondaryActiveFill
+   { 0.853293, 0.772786, 0.890601, 1.000000 }, // SecondaryActiveFill
    { 0.958509, 0.935740, 0.969060, 1.000000 }, // SecondaryInactiveFill
-   { 0.869506, 0.797896, 0.902691, 1.000000 }, // SecondaryActiveFill
+   { 0.853293, 0.772786, 0.890601, 1.000000 }, // SecondaryActiveFill
    { 0.881980, 0.627307, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6493,8 +6493,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.877490, 0.810262, 0.908645, 1.000000 }, // SecondaryInactiveStroke
-   { 0.792281, 0.380662, 0.983032, 1.000000 }, // SecondaryActiveStroke
-   { 0.552316, 0.000000, 0.808267, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.578491, 0.089457, 0.805116, 1.000000 }, // SecondaryActiveStroke
+   { 0.679634, 0.000000, 0.994587, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6506,9 +6506,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.941617, 0.877088, 0.969272, 1.000000 }, // InactiveFill
    { 0.883872, 0.755520, 0.938880, 1.000000 }, // ActiveFill
    { 0.853000, 0.510000, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.871017, 0.797527, 0.902513, 1.000000 }, // SecondaryActiveFill
+   { 0.854935, 0.772282, 0.890358, 1.000000 }, // SecondaryActiveFill
    { 0.958978, 0.935605, 0.968995, 1.000000 }, // SecondaryInactiveFill
-   { 0.871017, 0.797527, 0.902513, 1.000000 }, // SecondaryActiveFill
+   { 0.854935, 0.772282, 0.890358, 1.000000 }, // SecondaryActiveFill
    { 0.887464, 0.624880, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6516,8 +6516,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.878860, 0.809839, 0.908441, 1.000000 }, // SecondaryInactiveStroke
-   { 0.802486, 0.371546, 0.987174, 1.000000 }, // SecondaryActiveStroke
-   { 0.558320, 0.000000, 0.797600, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.583625, 0.088428, 0.795852, 1.000000 }, // SecondaryActiveStroke
+   { 0.687008, 0.000000, 0.981440, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6529,9 +6529,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.942961, 0.876672, 0.969168, 1.000000 }, // InactiveFill
    { 0.886484, 0.754560, 0.938640, 1.000000 }, // ActiveFill
    { 0.859996, 0.505867, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.872450, 0.797023, 0.902270, 1.000000 }, // SecondaryActiveFill
+   { 0.856586, 0.771778, 0.890115, 1.000000 }, // SecondaryActiveFill
    { 0.959450, 0.935470, 0.968930, 1.000000 }, // SecondaryInactiveFill
-   { 0.872450, 0.797023, 0.902270, 1.000000 }, // SecondaryActiveFill
+   { 0.856586, 0.771778, 0.890115, 1.000000 }, // SecondaryActiveFill
    { 0.892972, 0.622253, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6539,8 +6539,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.880238, 0.809416, 0.908237, 1.000000 }, // SecondaryInactiveStroke
-   { 0.812930, 0.361574, 0.991373, 1.000000 }, // SecondaryActiveStroke
-   { 0.563969, 0.000000, 0.786933, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.588619, 0.087419, 0.786768, 1.000000 }, // SecondaryActiveStroke
+   { 0.693944, 0.000000, 0.968293, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6552,9 +6552,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.944315, 0.876256, 0.969064, 1.000000 }, // InactiveFill
    { 0.889192, 0.753760, 0.938440, 1.000000 }, // ActiveFill
    { 0.867129, 0.501733, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.873892, 0.796519, 0.902028, 1.000000 }, // SecondaryActiveFill
+   { 0.858246, 0.771274, 0.889873, 1.000000 }, // SecondaryActiveFill
    { 0.959924, 0.935335, 0.968865, 1.000000 }, // SecondaryInactiveFill
-   { 0.873892, 0.796519, 0.902028, 1.000000 }, // SecondaryActiveFill
+   { 0.858246, 0.771274, 0.889873, 1.000000 }, // SecondaryActiveFill
    { 0.898567, 0.619627, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6562,8 +6562,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.881623, 0.808993, 0.908034, 1.000000 }, // SecondaryInactiveStroke
-   { 0.823666, 0.350731, 0.995642, 1.000000 }, // SecondaryActiveStroke
-   { 0.569409, 0.000000, 0.776467, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.593344, 0.086409, 0.777684, 1.000000 }, // SecondaryActiveStroke
+   { 0.700588, 0.000000, 0.955347, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6575,9 +6575,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.945610, 0.875680, 0.968920, 1.000000 }, // InactiveFill
    { 0.891990, 0.753120, 0.938280, 1.000000 }, // ActiveFill
    { 0.880000, 0.520000, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.917500, 0.865000, 0.935000, 1.000000 }, // SecondaryActiveFill
+   { 0.859998, 0.770905, 0.889695, 1.000000 }, // SecondaryActiveFill
    { 0.960318, 0.935065, 0.968735, 1.000000 }, // SecondaryInactiveFill
-   { 0.917500, 0.865000, 0.935000, 1.000000 }, // SecondaryActiveFill
+   { 0.859998, 0.770905, 0.889695, 1.000000 }, // SecondaryActiveFill
    { 0.905000, 0.620000, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6585,8 +6585,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.883097, 0.808705, 0.907895, 1.000000 }, // SecondaryInactiveStroke
-   { 0.615000, 0.000000, 0.820000, 1.000000 }, // SecondaryActiveStroke
-   { 0.615000, 0.000000, 0.820000, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.598080, 0.085440, 0.768960, 1.000000 }, // SecondaryActiveStroke
+   { 0.705600, 0.000000, 0.940800, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6598,9 +6598,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.947033, 0.875371, 0.968843, 1.000000 }, // InactiveFill
    { 0.894559, 0.751904, 0.937976, 1.000000 }, // ActiveFill
    { 0.881622, 0.492667, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.876888, 0.795655, 0.901612, 1.000000 }, // SecondaryActiveFill
+   { 0.861549, 0.770194, 0.889353, 1.000000 }, // SecondaryActiveFill
    { 0.960873, 0.935056, 0.968731, 1.000000 }, // SecondaryInactiveFill
-   { 0.876888, 0.795655, 0.901612, 1.000000 }, // SecondaryActiveFill
+   { 0.861549, 0.770194, 0.889353, 1.000000 }, // SecondaryActiveFill
    { 0.909915, 0.613920, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6608,8 +6608,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.884393, 0.808111, 0.907609, 1.000000 }, // SecondaryInactiveStroke
-   { 0.841335, 0.334679, 0.995535, 1.000000 }, // SecondaryActiveStroke
-   { 0.579488, 0.000000, 0.755853, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.602481, 0.084460, 0.760140, 1.000000 }, // SecondaryActiveStroke
+   { 0.712622, 0.000000, 0.929507, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6621,9 +6621,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.948397, 0.874901, 0.968725, 1.000000 }, // InactiveFill
    { 0.897225, 0.750848, 0.937712, 1.000000 }, // ActiveFill
    { 0.889052, 0.487933, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.878360, 0.795160, 0.901373, 1.000000 }, // SecondaryActiveFill
+   { 0.863193, 0.769618, 0.889075, 1.000000 }, // SecondaryActiveFill
    { 0.961349, 0.934912, 0.968661, 1.000000 }, // SecondaryInactiveFill
-   { 0.878360, 0.795160, 0.901373, 1.000000 }, // SecondaryActiveFill
+   { 0.863193, 0.769618, 0.889075, 1.000000 }, // SecondaryActiveFill
    { 0.915725, 0.611040, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6631,8 +6631,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.885779, 0.807652, 0.907388, 1.000000 }, // SecondaryInactiveStroke
-   { 0.847804, 0.330277, 0.990950, 1.000000 }, // SecondaryActiveStroke
-   { 0.584137, 0.000000, 0.745707, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.606767, 0.083500, 0.751500, 1.000000 }, // SecondaryActiveStroke
+   { 0.718954, 0.000000, 0.917813, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6644,9 +6644,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.949773, 0.874432, 0.968608, 1.000000 }, // InactiveFill
    { 0.899917, 0.749792, 0.937448, 1.000000 }, // ActiveFill
    { 0.896600, 0.483000, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.879841, 0.794665, 0.901135, 1.000000 }, // SecondaryActiveFill
+   { 0.864847, 0.769042, 0.888798, 1.000000 }, // SecondaryActiveFill
    { 0.961827, 0.934768, 0.968592, 1.000000 }, // SecondaryInactiveFill
-   { 0.879841, 0.794665, 0.901135, 1.000000 }, // SecondaryActiveFill
+   { 0.864847, 0.769042, 0.888798, 1.000000 }, // SecondaryActiveFill
    { 0.921632, 0.608160, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6654,8 +6654,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.887172, 0.807193, 0.907167, 1.000000 }, // SecondaryInactiveStroke
-   { 0.854152, 0.325799, 0.986241, 1.000000 }, // SecondaryActiveStroke
-   { 0.588768, 0.000000, 0.735960, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.610796, 0.082540, 0.742860, 1.000000 }, // SecondaryActiveStroke
+   { 0.724576, 0.000000, 0.905720, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6667,9 +6667,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.951161, 0.873963, 0.968491, 1.000000 }, // InactiveFill
    { 0.902635, 0.748736, 0.937184, 1.000000 }, // ActiveFill
    { 0.904276, 0.477867, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.881330, 0.794170, 0.900897, 1.000000 }, // SecondaryActiveFill
+   { 0.866511, 0.768466, 0.888521, 1.000000 }, // SecondaryActiveFill
    { 0.962308, 0.934624, 0.968523, 1.000000 }, // SecondaryInactiveFill
-   { 0.881330, 0.794170, 0.900897, 1.000000 }, // SecondaryActiveFill
+   { 0.866511, 0.768466, 0.888521, 1.000000 }, // SecondaryActiveFill
    { 0.927451, 0.604280, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6677,8 +6677,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.888574, 0.806734, 0.906946, 1.000000 }, // SecondaryInactiveStroke
-   { 0.860416, 0.321444, 0.981409, 1.000000 }, // SecondaryActiveStroke
-   { 0.593074, 0.000000, 0.726213, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.614871, 0.081620, 0.734580, 1.000000 }, // SecondaryActiveStroke
+   { 0.729958, 0.000000, 0.893827, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6690,9 +6690,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.952560, 0.873493, 0.968373, 1.000000 }, // InactiveFill
    { 0.905380, 0.747680, 0.936920, 1.000000 }, // ActiveFill
    { 0.912089, 0.472533, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.882828, 0.793675, 0.900658, 1.000000 }, // SecondaryActiveFill
+   { 0.868184, 0.767890, 0.888243, 1.000000 }, // SecondaryActiveFill
    { 0.962791, 0.934480, 0.968453, 1.000000 }, // SecondaryInactiveFill
-   { 0.882828, 0.793675, 0.900658, 1.000000 }, // SecondaryActiveFill
+   { 0.868184, 0.767890, 0.888243, 1.000000 }, // SecondaryActiveFill
    { 0.933467, 0.600800, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6700,8 +6700,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.889983, 0.806275, 0.906725, 1.000000 }, // SecondaryInactiveStroke
-   { 0.866544, 0.317018, 0.976449, 1.000000 }, // SecondaryActiveStroke
-   { 0.597222, 0.000000, 0.716667, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.618700, 0.080700, 0.726300, 1.000000 }, // SecondaryActiveStroke
+   { 0.735111, 0.000000, 0.882133, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6713,9 +6713,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.953971, 0.873024, 0.968256, 1.000000 }, // InactiveFill
    { 0.908151, 0.746624, 0.936656, 1.000000 }, // ActiveFill
    { 0.920050, 0.467000, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.884334, 0.793180, 0.900420, 1.000000 }, // SecondaryActiveFill
+   { 0.869868, 0.767314, 0.887966, 1.000000 }, // SecondaryActiveFill
    { 0.963277, 0.934336, 0.968384, 1.000000 }, // SecondaryInactiveFill
-   { 0.884334, 0.793180, 0.900420, 1.000000 }, // SecondaryActiveFill
+   { 0.869868, 0.767314, 0.887966, 1.000000 }, // SecondaryActiveFill
    { 0.939538, 0.596920, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6723,8 +6723,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.891401, 0.805816, 0.906504, 1.000000 }, // SecondaryInactiveStroke
-   { 0.872566, 0.312717, 0.971363, 1.000000 }, // SecondaryActiveStroke
-   { 0.601222, 0.000000, 0.707320, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.622284, 0.079780, 0.718020, 1.000000 }, // SecondaryActiveStroke
+   { 0.739874, 0.000000, 0.870440, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6736,9 +6736,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.955394, 0.872555, 0.968139, 1.000000 }, // InactiveFill
    { 0.910949, 0.745568, 0.936392, 1.000000 }, // ActiveFill
    { 0.928142, 0.461067, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.885849, 0.792685, 0.900182, 1.000000 }, // SecondaryActiveFill
+   { 0.871562, 0.766738, 0.887689, 1.000000 }, // SecondaryActiveFill
    { 0.963765, 0.934192, 0.968315, 1.000000 }, // SecondaryInactiveFill
-   { 0.885849, 0.792685, 0.900182, 1.000000 }, // SecondaryActiveFill
+   { 0.871562, 0.766738, 0.887689, 1.000000 }, // SecondaryActiveFill
    { 0.945819, 0.593640, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6746,8 +6746,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.892826, 0.805357, 0.906283, 1.000000 }, // SecondaryInactiveStroke
-   { 0.878471, 0.308541, 0.966152, 1.000000 }, // SecondaryActiveStroke
-   { 0.604910, 0.000000, 0.697973, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.625940, 0.078900, 0.710100, 1.000000 }, // SecondaryActiveStroke
+   { 0.744594, 0.000000, 0.859147, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6759,9 +6759,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.956829, 0.872085, 0.968021, 1.000000 }, // InactiveFill
    { 0.913773, 0.744512, 0.936128, 1.000000 }, // ActiveFill
    { 0.936409, 0.454933, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.887372, 0.792190, 0.899943, 1.000000 }, // SecondaryActiveFill
+   { 0.873266, 0.766162, 0.887411, 1.000000 }, // SecondaryActiveFill
    { 0.964256, 0.934048, 0.968245, 1.000000 }, // SecondaryInactiveFill
-   { 0.887372, 0.792190, 0.899943, 1.000000 }, // SecondaryActiveFill
+   { 0.873266, 0.766162, 0.887411, 1.000000 }, // SecondaryActiveFill
    { 0.952185, 0.590160, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6769,8 +6769,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.894260, 0.804898, 0.906062, 1.000000 }, // SecondaryInactiveStroke
-   { 0.884213, 0.304301, 0.960806, 1.000000 }, // SecondaryActiveStroke
-   { 0.608640, 0.000000, 0.689027, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.629361, 0.078020, 0.702180, 1.000000 }, // SecondaryActiveStroke
+   { 0.749114, 0.000000, 0.848053, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6782,9 +6782,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.958275, 0.871616, 0.967904, 1.000000 }, // InactiveFill
    { 0.916623, 0.743456, 0.935864, 1.000000 }, // ActiveFill
    { 0.944840, 0.448400, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.888904, 0.791695, 0.899705, 1.000000 }, // SecondaryActiveFill
+   { 0.874979, 0.765586, 0.887134, 1.000000 }, // SecondaryActiveFill
    { 0.964749, 0.933904, 0.968176, 1.000000 }, // SecondaryInactiveFill
-   { 0.888904, 0.791695, 0.899705, 1.000000 }, // SecondaryActiveFill
+   { 0.874979, 0.765586, 0.887134, 1.000000 }, // SecondaryActiveFill
    { 0.958648, 0.586480, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6792,8 +6792,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.895701, 0.804439, 0.905841, 1.000000 }, // SecondaryInactiveStroke
-   { 0.889817, 0.300189, 0.955331, 1.000000 }, // SecondaryActiveStroke
-   { 0.612072, 0.000000, 0.680080, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.632712, 0.077160, 0.694440, 1.000000 }, // SecondaryActiveStroke
+   { 0.753444, 0.000000, 0.837160, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6805,9 +6805,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.959733, 0.871147, 0.967787, 1.000000 }, // InactiveFill
    { 0.919500, 0.742400, 0.935600, 1.000000 }, // ActiveFill
    { 0.953389, 0.440667, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.890444, 0.791200, 0.899467, 1.000000 }, // SecondaryActiveFill
+   { 0.876703, 0.765010, 0.886857, 1.000000 }, // SecondaryActiveFill
    { 0.965244, 0.933760, 0.968107, 1.000000 }, // SecondaryInactiveFill
-   { 0.890444, 0.791200, 0.899467, 1.000000 }, // SecondaryActiveFill
+   { 0.876703, 0.765010, 0.886857, 1.000000 }, // SecondaryActiveFill
    { 0.965233, 0.582800, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6815,8 +6815,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.897150, 0.803980, 0.905620, 1.000000 }, // SecondaryInactiveStroke
-   { 0.895269, 0.296204, 0.949729, 1.000000 }, // SecondaryActiveStroke
-   { 0.615572, 0.000000, 0.671533, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.635833, 0.076300, 0.686700, 1.000000 }, // SecondaryActiveStroke
+   { 0.757594, 0.000000, 0.826467, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6828,9 +6828,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.961203, 0.870677, 0.967669, 1.000000 }, // InactiveFill
    { 0.922403, 0.741344, 0.935336, 1.000000 }, // ActiveFill
    { 0.962196, 0.432933, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.891993, 0.790705, 0.899228, 1.000000 }, // SecondaryActiveFill
+   { 0.878436, 0.764434, 0.886579, 1.000000 }, // SecondaryActiveFill
    { 0.965743, 0.933616, 0.968037, 1.000000 }, // SecondaryInactiveFill
-   { 0.891993, 0.790705, 0.899228, 1.000000 }, // SecondaryActiveFill
+   { 0.878436, 0.764434, 0.886579, 1.000000 }, // SecondaryActiveFill
    { 0.971928, 0.578920, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6838,8 +6838,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.898607, 0.803521, 0.905399, 1.000000 }, // SecondaryInactiveStroke
-   { 0.900555, 0.292348, 0.943999, 1.000000 }, // SecondaryActiveStroke
-   { 0.618601, 0.000000, 0.662787, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.638895, 0.075460, 0.679140, 1.000000 }, // SecondaryActiveStroke
+   { 0.761575, 0.000000, 0.815973, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6851,9 +6851,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.962685, 0.870208, 0.967552, 1.000000 }, // InactiveFill
    { 0.925333, 0.740288, 0.935072, 1.000000 }, // ActiveFill
    { 0.971250, 0.425000, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.893551, 0.790210, 0.898990, 1.000000 }, // SecondaryActiveFill
+   { 0.880180, 0.763858, 0.886302, 1.000000 }, // SecondaryActiveFill
    { 0.966243, 0.933472, 0.967968, 1.000000 }, // SecondaryInactiveFill
-   { 0.893551, 0.790210, 0.898990, 1.000000 }, // SecondaryActiveFill
+   { 0.880180, 0.763858, 0.886302, 1.000000 }, // SecondaryActiveFill
    { 0.978742, 0.574840, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6861,8 +6861,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.900072, 0.803062, 0.905178, 1.000000 }, // SecondaryInactiveStroke
-   { 0.905665, 0.288619, 0.938141, 1.000000 }, // SecondaryActiveStroke
-   { 0.621718, 0.000000, 0.654440, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.641904, 0.074640, 0.671760, 1.000000 }, // SecondaryActiveStroke
+   { 0.765396, 0.000000, 0.805680, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6874,9 +6874,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.964178, 0.869739, 0.967435, 1.000000 }, // InactiveFill
    { 0.928289, 0.739232, 0.934808, 1.000000 }, // ActiveFill
    { 0.980569, 0.417067, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.895117, 0.789715, 0.898752, 1.000000 }, // SecondaryActiveFill
+   { 0.881933, 0.763282, 0.886025, 1.000000 }, // SecondaryActiveFill
    { 0.966746, 0.933328, 0.967899, 1.000000 }, // SecondaryInactiveFill
-   { 0.895117, 0.789715, 0.898752, 1.000000 }, // SecondaryActiveFill
+   { 0.881933, 0.763282, 0.886025, 1.000000 }, // SecondaryActiveFill
    { 0.985685, 0.570560, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6884,8 +6884,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.901545, 0.802603, 0.904957, 1.000000 }, // SecondaryInactiveStroke
-   { 0.910584, 0.285018, 0.932155, 1.000000 }, // SecondaryActiveStroke
-   { 0.624750, 0.000000, 0.646293, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.644695, 0.073820, 0.664380, 1.000000 }, // SecondaryActiveStroke
+   { 0.768874, 0.000000, 0.795387, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6897,9 +6897,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.965683, 0.869269, 0.967317, 1.000000 }, // InactiveFill
    { 0.931271, 0.738176, 0.934544, 1.000000 }, // ActiveFill
    { 0.990149, 0.408933, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.896692, 0.789220, 0.898513, 1.000000 }, // SecondaryActiveFill
+   { 0.883697, 0.762706, 0.885747, 1.000000 }, // SecondaryActiveFill
    { 0.967252, 0.933184, 0.967829, 1.000000 }, // SecondaryInactiveFill
-   { 0.896692, 0.789220, 0.898513, 1.000000 }, // SecondaryActiveFill
+   { 0.883697, 0.762706, 0.885747, 1.000000 }, // SecondaryActiveFill
    { 0.992771, 0.566280, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6907,8 +6907,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.903026, 0.802144, 0.904736, 1.000000 }, // SecondaryInactiveStroke
-   { 0.915321, 0.281727, 0.926060, 1.000000 }, // SecondaryActiveStroke
-   { 0.627511, 0.000000, 0.638147, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.647444, 0.073020, 0.657180, 1.000000 }, // SecondaryActiveStroke
+   { 0.772205, 0.000000, 0.785293, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6920,9 +6920,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967160, 0.868640, 0.967160, 1.000000 }, // InactiveFill
    { 0.934320, 0.737280, 0.934320, 1.000000 }, // ActiveFill
    { 1.000000, 0.401000, 1.000000, 1.000000 }, // HighlightedFill
-   { 0.898275, 0.788725, 0.898275, 1.000000 }, // SecondaryActiveFill
+   { 0.885535, 0.762265, 0.885535, 1.000000 }, // SecondaryActiveFill
    { 0.967695, 0.932905, 0.967695, 1.000000 }, // SecondaryInactiveFill
-   { 0.898275, 0.788725, 0.898275, 1.000000 }, // SecondaryActiveFill
+   { 0.885535, 0.762265, 0.885535, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.561800, 1.000000, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6930,8 +6930,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.904580, 0.801820, 0.904580, 1.000000 }, // SecondaryInactiveStroke
-   { 0.920120, 0.281080, 0.920120, 1.000000 }, // SecondaryActiveStroke
-   { 0.628800, 0.000000, 0.628800, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.650160, 0.072240, 0.650160, 1.000000 }, // SecondaryActiveStroke
+   { 0.774400, 0.000000, 0.774400, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6943,9 +6943,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967243, 0.868971, 0.965605, 1.000000 }, // InactiveFill
    { 0.934373, 0.737493, 0.931092, 1.000000 }, // ActiveFill
    { 1.000000, 0.403413, 0.990057, 1.000000 }, // HighlightedFill
-   { 0.898292, 0.788761, 0.896467, 1.000000 }, // SecondaryActiveFill
+   { 0.885565, 0.762328, 0.883511, 1.000000 }, // SecondaryActiveFill
    { 0.967782, 0.933085, 0.967203, 1.000000 }, // SecondaryInactiveFill
-   { 0.898292, 0.788761, 0.896467, 1.000000 }, // SecondaryActiveFill
+   { 0.885565, 0.762328, 0.883511, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.563360, 0.992723, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6953,8 +6953,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.904593, 0.801847, 0.902881, 1.000000 }, // SecondaryInactiveStroke
-   { 0.920445, 0.284008, 0.909838, 1.000000 }, // SecondaryActiveStroke
-   { 0.631467, 0.000000, 0.620942, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.652200, 0.072467, 0.642538, 1.000000 }, // SecondaryActiveStroke
+   { 0.777613, 0.000000, 0.764653, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6966,9 +6966,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967285, 0.869141, 0.964014, 1.000000 }, // InactiveFill
    { 0.934467, 0.737867, 0.927913, 1.000000 }, // ActiveFill
    { 1.000000, 0.406227, 0.980208, 1.000000 }, // HighlightedFill
-   { 0.898375, 0.788932, 0.894727, 1.000000 }, // SecondaryActiveFill
+   { 0.885661, 0.762526, 0.881556, 1.000000 }, // SecondaryActiveFill
    { 0.967803, 0.933130, 0.966648, 1.000000 }, // SecondaryInactiveFill
-   { 0.898375, 0.788932, 0.894727, 1.000000 }, // SecondaryActiveFill
+   { 0.885661, 0.762526, 0.881556, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.564920, 0.985497, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6976,8 +6976,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.904671, 0.802009, 0.901249, 1.000000 }, // SecondaryInactiveStroke
-   { 0.920811, 0.287296, 0.899694, 1.000000 }, // SecondaryActiveStroke
-   { 0.634133, 0.000000, 0.612996, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.654420, 0.072713, 0.635030, 1.000000 }, // SecondaryActiveStroke
+   { 0.780827, 0.000000, 0.754799, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -6989,9 +6989,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967328, 0.869312, 0.962427, 1.000000 }, // InactiveFill
    { 0.934560, 0.738240, 0.924744, 1.000000 }, // ActiveFill
    { 1.000000, 0.408840, 0.970442, 1.000000 }, // HighlightedFill
-   { 0.898457, 0.789103, 0.892989, 1.000000 }, // SecondaryActiveFill
+   { 0.885756, 0.762724, 0.879604, 1.000000 }, // SecondaryActiveFill
    { 0.967825, 0.933175, 0.966092, 1.000000 }, // SecondaryInactiveFill
-   { 0.898457, 0.789103, 0.892989, 1.000000 }, // SecondaryActiveFill
+   { 0.885756, 0.762724, 0.879604, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.566280, 0.978314, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -6999,8 +6999,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.904749, 0.802171, 0.899620, 1.000000 }, // SecondaryInactiveStroke
-   { 0.921176, 0.290584, 0.889646, 1.000000 }, // SecondaryActiveStroke
-   { 0.636800, 0.000000, 0.604960, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.656640, 0.072960, 0.627456, 1.000000 }, // SecondaryActiveStroke
+   { 0.784040, 0.000000, 0.744838, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7012,9 +7012,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967371, 0.869483, 0.960845, 1.000000 }, // InactiveFill
    { 0.934653, 0.738613, 0.921584, 1.000000 }, // ActiveFill
    { 1.000000, 0.411653, 0.960777, 1.000000 }, // HighlightedFill
-   { 0.898539, 0.789274, 0.891255, 1.000000 }, // SecondaryActiveFill
+   { 0.885851, 0.762922, 0.877656, 1.000000 }, // SecondaryActiveFill
    { 0.967847, 0.933220, 0.965538, 1.000000 }, // SecondaryInactiveFill
-   { 0.898539, 0.789274, 0.891255, 1.000000 }, // SecondaryActiveFill
+   { 0.885851, 0.762922, 0.877656, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.567840, 0.971189, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7022,8 +7022,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.904827, 0.802333, 0.897994, 1.000000 }, // SecondaryInactiveStroke
-   { 0.921521, 0.293692, 0.879666, 1.000000 }, // SecondaryActiveStroke
-   { 0.639267, 0.000000, 0.596649, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.658860, 0.073207, 0.619816, 1.000000 }, // SecondaryActiveStroke
+   { 0.787253, 0.000000, 0.734770, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7035,9 +7035,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967413, 0.869653, 0.959267, 1.000000 }, // InactiveFill
    { 0.934747, 0.738987, 0.918433, 1.000000 }, // ActiveFill
    { 1.000000, 0.414267, 0.951189, 1.000000 }, // HighlightedFill
-   { 0.898622, 0.789445, 0.889524, 1.000000 }, // SecondaryActiveFill
+   { 0.885947, 0.763120, 0.875711, 1.000000 }, // SecondaryActiveFill
    { 0.967868, 0.933265, 0.964985, 1.000000 }, // SecondaryInactiveFill
-   { 0.898622, 0.789445, 0.889524, 1.000000 }, // SecondaryActiveFill
+   { 0.885947, 0.763120, 0.875711, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.569200, 0.964100, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7045,8 +7045,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.904905, 0.802495, 0.896371, 1.000000 }, // SecondaryInactiveStroke
-   { 0.921887, 0.296980, 0.869811, 1.000000 }, // SecondaryActiveStroke
-   { 0.641933, 0.000000, 0.588439, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.661260, 0.073473, 0.612278, 1.000000 }, // SecondaryActiveStroke
+   { 0.790267, 0.000000, 0.724411, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7058,9 +7058,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967456, 0.869824, 0.957693, 1.000000 }, // InactiveFill
    { 0.934840, 0.739360, 0.915292, 1.000000 }, // ActiveFill
    { 1.000000, 0.416880, 0.941688, 1.000000 }, // HighlightedFill
-   { 0.898704, 0.789616, 0.887795, 1.000000 }, // SecondaryActiveFill
+   { 0.886042, 0.763318, 0.873770, 1.000000 }, // SecondaryActiveFill
    { 0.967890, 0.933310, 0.964432, 1.000000 }, // SecondaryInactiveFill
-   { 0.898704, 0.789616, 0.887795, 1.000000 }, // SecondaryActiveFill
+   { 0.886042, 0.763318, 0.873770, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.570560, 0.957056, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7068,8 +7068,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.904983, 0.802657, 0.894750, 1.000000 }, // SecondaryInactiveStroke
-   { 0.922252, 0.300268, 0.860054, 1.000000 }, // SecondaryActiveStroke
-   { 0.644400, 0.000000, 0.579960, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.663480, 0.073720, 0.604504, 1.000000 }, // SecondaryActiveStroke
+   { 0.793480, 0.000000, 0.714132, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7081,9 +7081,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967499, 0.869995, 0.956123, 1.000000 }, // InactiveFill
    { 0.934933, 0.739733, 0.912160, 1.000000 }, // ActiveFill
    { 1.000000, 0.419493, 0.932274, 1.000000 }, // HighlightedFill
-   { 0.898786, 0.789787, 0.886070, 1.000000 }, // SecondaryActiveFill
+   { 0.886137, 0.763516, 0.871832, 1.000000 }, // SecondaryActiveFill
    { 0.967912, 0.933355, 0.963880, 1.000000 }, // SecondaryInactiveFill
-   { 0.898786, 0.789787, 0.886070, 1.000000 }, // SecondaryActiveFill
+   { 0.886137, 0.763516, 0.871832, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.571920, 0.950057, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7091,8 +7091,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905061, 0.802819, 0.893133, 1.000000 }, // SecondaryInactiveStroke
-   { 0.922597, 0.303376, 0.850355, 1.000000 }, // SecondaryActiveStroke
-   { 0.646867, 0.000000, 0.571399, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.665700, 0.073967, 0.596664, 1.000000 }, // SecondaryActiveStroke
+   { 0.796493, 0.000000, 0.703569, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7104,9 +7104,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967541, 0.870165, 0.954558, 1.000000 }, // InactiveFill
    { 0.935027, 0.740107, 0.909037, 1.000000 }, // ActiveFill
    { 1.000000, 0.422107, 0.922948, 1.000000 }, // HighlightedFill
-   { 0.898869, 0.789958, 0.884347, 1.000000 }, // SecondaryActiveFill
+   { 0.886233, 0.763714, 0.869897, 1.000000 }, // SecondaryActiveFill
    { 0.967933, 0.933400, 0.963329, 1.000000 }, // SecondaryInactiveFill
-   { 0.898869, 0.789958, 0.884347, 1.000000 }, // SecondaryActiveFill
+   { 0.886233, 0.763714, 0.869897, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.573280, 0.943104, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7114,8 +7114,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905139, 0.802981, 0.891518, 1.000000 }, // SecondaryInactiveStroke
-   { 0.922943, 0.306484, 0.840748, 1.000000 }, // SecondaryActiveStroke
-   { 0.649333, 0.000000, 0.562756, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.667920, 0.074213, 0.588759, 1.000000 }, // SecondaryActiveStroke
+   { 0.799507, 0.000000, 0.692906, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7127,9 +7127,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967584, 0.870336, 0.952997, 1.000000 }, // InactiveFill
    { 0.935120, 0.740480, 0.905924, 1.000000 }, // ActiveFill
    { 1.000000, 0.424720, 0.913708, 1.000000 }, // HighlightedFill
-   { 0.898951, 0.790129, 0.882628, 1.000000 }, // SecondaryActiveFill
+   { 0.886328, 0.763912, 0.867966, 1.000000 }, // SecondaryActiveFill
    { 0.967955, 0.933445, 0.962778, 1.000000 }, // SecondaryInactiveFill
-   { 0.898951, 0.790129, 0.882628, 1.000000 }, // SecondaryActiveFill
+   { 0.886328, 0.763912, 0.867966, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.574640, 0.936196, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7137,8 +7137,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905217, 0.803143, 0.889906, 1.000000 }, // SecondaryInactiveStroke
-   { 0.923268, 0.309412, 0.831190, 1.000000 }, // SecondaryActiveStroke
-   { 0.651800, 0.000000, 0.554030, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.670140, 0.074460, 0.580788, 1.000000 }, // SecondaryActiveStroke
+   { 0.802520, 0.000000, 0.682142, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7150,9 +7150,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967627, 0.870507, 0.951440, 1.000000 }, // InactiveFill
    { 0.935213, 0.740853, 0.902820, 1.000000 }, // ActiveFill
    { 1.000000, 0.427333, 0.904556, 1.000000 }, // HighlightedFill
-   { 0.899033, 0.790300, 0.880911, 1.000000 }, // SecondaryActiveFill
+   { 0.886423, 0.764110, 0.866038, 1.000000 }, // SecondaryActiveFill
    { 0.967977, 0.933490, 0.962229, 1.000000 }, // SecondaryInactiveFill
-   { 0.899033, 0.790300, 0.880911, 1.000000 }, // SecondaryActiveFill
+   { 0.886423, 0.764110, 0.866038, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.576000, 0.929333, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7160,8 +7160,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905295, 0.803305, 0.888297, 1.000000 }, // SecondaryInactiveStroke
-   { 0.923593, 0.312340, 0.821718, 1.000000 }, // SecondaryActiveStroke
-   { 0.654267, 0.000000, 0.545222, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.672360, 0.074707, 0.572751, 1.000000 }, // SecondaryActiveStroke
+   { 0.805533, 0.000000, 0.671278, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7173,9 +7173,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967669, 0.870677, 0.949887, 1.000000 }, // InactiveFill
    { 0.935307, 0.741227, 0.899725, 1.000000 }, // ActiveFill
    { 1.000000, 0.429947, 0.895490, 1.000000 }, // HighlightedFill
-   { 0.899116, 0.790471, 0.879198, 1.000000 }, // SecondaryActiveFill
+   { 0.886519, 0.764308, 0.864113, 1.000000 }, // SecondaryActiveFill
    { 0.967998, 0.933535, 0.961680, 1.000000 }, // SecondaryInactiveFill
-   { 0.899116, 0.790471, 0.879198, 1.000000 }, // SecondaryActiveFill
+   { 0.886519, 0.764308, 0.864113, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.577360, 0.922516, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7183,8 +7183,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905373, 0.803467, 0.886690, 1.000000 }, // SecondaryInactiveStroke
-   { 0.923939, 0.315448, 0.812382, 1.000000 }, // SecondaryActiveStroke
-   { 0.656533, 0.000000, 0.536169, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.674400, 0.074933, 0.564498, 1.000000 }, // SecondaryActiveStroke
+   { 0.808347, 0.000000, 0.660150, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7196,9 +7196,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967712, 0.870848, 0.948339, 1.000000 }, // InactiveFill
    { 0.935400, 0.741600, 0.896640, 1.000000 }, // ActiveFill
    { 1.000000, 0.432360, 0.886472, 1.000000 }, // HighlightedFill
-   { 0.899198, 0.790642, 0.877487, 1.000000 }, // SecondaryActiveFill
+   { 0.886614, 0.764506, 0.862192, 1.000000 }, // SecondaryActiveFill
    { 0.968020, 0.933580, 0.961132, 1.000000 }, // SecondaryInactiveFill
-   { 0.899198, 0.790642, 0.877487, 1.000000 }, // SecondaryActiveFill
+   { 0.886614, 0.764506, 0.862192, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.578520, 0.915704, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7206,8 +7206,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905451, 0.803629, 0.885087, 1.000000 }, // SecondaryInactiveStroke
-   { 0.924284, 0.318556, 0.803138, 1.000000 }, // SecondaryActiveStroke
-   { 0.659000, 0.000000, 0.527200, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.676620, 0.075180, 0.556332, 1.000000 }, // SecondaryActiveStroke
+   { 0.811360, 0.000000, 0.649088, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7219,9 +7219,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967755, 0.871019, 0.946795, 1.000000 }, // InactiveFill
    { 0.935493, 0.741973, 0.893564, 1.000000 }, // ActiveFill
    { 1.000000, 0.434773, 0.877534, 1.000000 }, // HighlightedFill
-   { 0.899280, 0.790813, 0.875779, 1.000000 }, // SecondaryActiveFill
+   { 0.886709, 0.764704, 0.860275, 1.000000 }, // SecondaryActiveFill
    { 0.968042, 0.933625, 0.960585, 1.000000 }, // SecondaryInactiveFill
-   { 0.899280, 0.790813, 0.875779, 1.000000 }, // SecondaryActiveFill
+   { 0.886709, 0.764704, 0.860275, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.579680, 0.908931, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7229,8 +7229,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905529, 0.803791, 0.883486, 1.000000 }, // SecondaryInactiveStroke
-   { 0.924609, 0.321484, 0.793932, 1.000000 }, // SecondaryActiveStroke
-   { 0.661267, 0.000000, 0.517992, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.678840, 0.075427, 0.548100, 1.000000 }, // SecondaryActiveStroke
+   { 0.814173, 0.000000, 0.637769, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7242,9 +7242,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967797, 0.871189, 0.945256, 1.000000 }, // InactiveFill
    { 0.935587, 0.742347, 0.890497, 1.000000 }, // ActiveFill
    { 1.000000, 0.437387, 0.868724, 1.000000 }, // HighlightedFill
-   { 0.899363, 0.790984, 0.874074, 1.000000 }, // SecondaryActiveFill
+   { 0.886805, 0.764902, 0.858361, 1.000000 }, // SecondaryActiveFill
    { 0.968063, 0.933670, 0.960038, 1.000000 }, // SecondaryInactiveFill
-   { 0.899363, 0.790984, 0.874074, 1.000000 }, // SecondaryActiveFill
+   { 0.886805, 0.764902, 0.858361, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.581040, 0.902243, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7252,8 +7252,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905607, 0.803953, 0.881888, 1.000000 }, // SecondaryInactiveStroke
-   { 0.924935, 0.324412, 0.784813, 1.000000 }, // SecondaryActiveStroke
-   { 0.663533, 0.000000, 0.508709, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.681060, 0.075673, 0.539803, 1.000000 }, // SecondaryActiveStroke
+   { 0.816987, 0.000000, 0.626356, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7265,9 +7265,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967800, 0.871200, 0.943650, 1.000000 }, // InactiveFill
    { 0.935720, 0.742880, 0.887510, 1.000000 }, // ActiveFill
    { 1.000000, 0.440200, 0.860050, 1.000000 }, // HighlightedFill
-   { 0.899510, 0.791290, 0.872455, 1.000000 }, // SecondaryActiveFill
+   { 0.886965, 0.765235, 0.856533, 1.000000 }, // SecondaryActiveFill
    { 0.968020, 0.933580, 0.959410, 1.000000 }, // SecondaryInactiveFill
-   { 0.899510, 0.791290, 0.872455, 1.000000 }, // SecondaryActiveFill
+   { 0.886965, 0.765235, 0.856533, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.582200, 0.895550, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7275,8 +7275,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905750, 0.804250, 0.880375, 1.000000 }, // SecondaryInactiveStroke
-   { 0.925300, 0.327700, 0.775900, 1.000000 }, // SecondaryActiveStroke
-   { 0.665800, 0.000000, 0.499350, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.683460, 0.075940, 0.531580, 1.000000 }, // SecondaryActiveStroke
+   { 0.819600, 0.000000, 0.614700, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7288,9 +7288,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967877, 0.871509, 0.942179, 1.000000 }, // InactiveFill
    { 0.935765, 0.743061, 0.884378, 1.000000 }, // ActiveFill
    { 1.000000, 0.441747, 0.851132, 1.000000 }, // HighlightedFill
-   { 0.899523, 0.791317, 0.870668, 1.000000 }, // SecondaryActiveFill
+   { 0.886991, 0.765289, 0.854537, 1.000000 }, // SecondaryActiveFill
    { 0.968111, 0.933769, 0.958953, 1.000000 }, // SecondaryInactiveFill
-   { 0.899523, 0.791317, 0.870668, 1.000000 }, // SecondaryActiveFill
+   { 0.886991, 0.765289, 0.854537, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.583440, 0.888917, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7298,8 +7298,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905759, 0.804268, 0.878695, 1.000000 }, // SecondaryInactiveStroke
-   { 0.925503, 0.329524, 0.766575, 1.000000 }, // SecondaryActiveStroke
-   { 0.667893, 0.000000, 0.489788, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.685068, 0.076119, 0.522682, 1.000000 }, // SecondaryActiveStroke
+   { 0.822307, 0.000000, 0.603025, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7311,9 +7311,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967915, 0.871659, 0.940642, 1.000000 }, // InactiveFill
    { 0.935851, 0.743403, 0.881324, 1.000000 }, // ActiveFill
    { 1.000000, 0.443493, 0.842323, 1.000000 }, // HighlightedFill
-   { 0.899601, 0.791479, 0.868966, 1.000000 }, // SecondaryActiveFill
+   { 0.887082, 0.765478, 0.852628, 1.000000 }, // SecondaryActiveFill
    { 0.968137, 0.933823, 0.958415, 1.000000 }, // SecondaryInactiveFill
-   { 0.899601, 0.791479, 0.868966, 1.000000 }, // SecondaryActiveFill
+   { 0.887082, 0.765478, 0.852628, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.584480, 0.882269, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7321,8 +7321,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905832, 0.804421, 0.877099, 1.000000 }, // SecondaryInactiveStroke
-   { 0.925725, 0.331528, 0.757369, 1.000000 }, // SecondaryActiveStroke
-   { 0.670187, 0.000000, 0.480300, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.686856, 0.076317, 0.513870, 1.000000 }, // SecondaryActiveStroke
+   { 0.825013, 0.000000, 0.591260, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7334,9 +7334,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967952, 0.871808, 0.939109, 1.000000 }, // InactiveFill
    { 0.935936, 0.743744, 0.878278, 1.000000 }, // ActiveFill
    { 1.000000, 0.445240, 0.833572, 1.000000 }, // HighlightedFill
-   { 0.899679, 0.791641, 0.867268, 1.000000 }, // SecondaryActiveFill
+   { 0.887173, 0.765667, 0.850721, 1.000000 }, // SecondaryActiveFill
    { 0.968163, 0.933877, 0.957877, 1.000000 }, // SecondaryInactiveFill
-   { 0.899679, 0.791641, 0.867268, 1.000000 }, // SecondaryActiveFill
+   { 0.887173, 0.765667, 0.850721, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.585520, 0.875656, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7344,8 +7344,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905906, 0.804574, 0.875506, 1.000000 }, // SecondaryInactiveStroke
-   { 0.925968, 0.333712, 0.748291, 1.000000 }, // SecondaryActiveStroke
-   { 0.672280, 0.000000, 0.470596, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.688824, 0.076536, 0.505138, 1.000000 }, // SecondaryActiveStroke
+   { 0.827520, 0.000000, 0.579264, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7357,9 +7357,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.967989, 0.871957, 0.937579, 1.000000 }, // InactiveFill
    { 0.936021, 0.744085, 0.875242, 1.000000 }, // ActiveFill
    { 1.000000, 0.447187, 0.824942, 1.000000 }, // HighlightedFill
-   { 0.899757, 0.791803, 0.865572, 1.000000 }, // SecondaryActiveFill
+   { 0.887264, 0.765856, 0.848818, 1.000000 }, // SecondaryActiveFill
    { 0.968189, 0.933931, 0.957341, 1.000000 }, // SecondaryInactiveFill
-   { 0.899757, 0.791803, 0.865572, 1.000000 }, // SecondaryActiveFill
+   { 0.887264, 0.765856, 0.848818, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.586760, 0.869141, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7367,8 +7367,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.905980, 0.804727, 0.873916, 1.000000 }, // SecondaryInactiveStroke
-   { 0.926191, 0.335716, 0.739207, 1.000000 }, // SecondaryActiveStroke
-   { 0.674373, 0.000000, 0.460822, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.690612, 0.076735, 0.496218, 1.000000 }, // SecondaryActiveStroke
+   { 0.830027, 0.000000, 0.567185, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7380,9 +7380,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968027, 0.872107, 0.936053, 1.000000 }, // InactiveFill
    { 0.936107, 0.744427, 0.872213, 1.000000 }, // ActiveFill
    { 1.000000, 0.448933, 0.816311, 1.000000 }, // HighlightedFill
-   { 0.899835, 0.791965, 0.863878, 1.000000 }, // SecondaryActiveFill
+   { 0.887355, 0.766045, 0.846918, 1.000000 }, // SecondaryActiveFill
    { 0.968215, 0.933985, 0.956805, 1.000000 }, // SecondaryInactiveFill
-   { 0.899835, 0.791965, 0.863878, 1.000000 }, // SecondaryActiveFill
+   { 0.887355, 0.766045, 0.846918, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.587800, 0.862600, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7390,8 +7390,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906053, 0.804880, 0.872329, 1.000000 }, // SecondaryInactiveStroke
-   { 0.926433, 0.337900, 0.730256, 1.000000 }, // SecondaryActiveStroke
-   { 0.676267, 0.000000, 0.450844, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.692400, 0.076933, 0.487244, 1.000000 }, // SecondaryActiveStroke
+   { 0.832533, 0.000000, 0.555022, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7403,9 +7403,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968064, 0.872256, 0.934531, 1.000000 }, // InactiveFill
    { 0.936192, 0.744768, 0.869194, 1.000000 }, // ActiveFill
    { 1.000000, 0.450680, 0.807738, 1.000000 }, // HighlightedFill
-   { 0.899913, 0.792127, 0.862188, 1.000000 }, // SecondaryActiveFill
+   { 0.887446, 0.766234, 0.845022, 1.000000 }, // SecondaryActiveFill
    { 0.968241, 0.934039, 0.956270, 1.000000 }, // SecondaryInactiveFill
-   { 0.899913, 0.792127, 0.862188, 1.000000 }, // SecondaryActiveFill
+   { 0.887446, 0.766234, 0.845022, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.588840, 0.856094, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7413,8 +7413,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906127, 0.805033, 0.870744, 1.000000 }, // SecondaryInactiveStroke
-   { 0.926656, 0.339904, 0.721293, 1.000000 }, // SecondaryActiveStroke
-   { 0.678360, 0.000000, 0.440934, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.694368, 0.077152, 0.478342, 1.000000 }, // SecondaryActiveStroke
+   { 0.835040, 0.000000, 0.542776, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7426,9 +7426,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968101, 0.872405, 0.933013, 1.000000 }, // InactiveFill
    { 0.936277, 0.745109, 0.866182, 1.000000 }, // ActiveFill
    { 1.000000, 0.452427, 0.799223, 1.000000 }, // HighlightedFill
-   { 0.899991, 0.792289, 0.860500, 1.000000 }, // SecondaryActiveFill
+   { 0.887537, 0.766423, 0.843129, 1.000000 }, // SecondaryActiveFill
    { 0.968267, 0.934093, 0.955737, 1.000000 }, // SecondaryInactiveFill
-   { 0.899991, 0.792289, 0.860500, 1.000000 }, // SecondaryActiveFill
+   { 0.887537, 0.766423, 0.843129, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.589880, 0.849623, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7436,8 +7436,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906201, 0.805186, 0.869162, 1.000000 }, // SecondaryInactiveStroke
-   { 0.926879, 0.341908, 0.712389, 1.000000 }, // SecondaryActiveStroke
-   { 0.680253, 0.000000, 0.430827, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.696156, 0.077351, 0.469261, 1.000000 }, // SecondaryActiveStroke
+   { 0.837347, 0.000000, 0.530320, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7449,9 +7449,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968139, 0.872555, 0.931498, 1.000000 }, // InactiveFill
    { 0.936363, 0.745451, 0.863180, 1.000000 }, // ActiveFill
    { 1.000000, 0.454173, 0.790766, 1.000000 }, // HighlightedFill
-   { 0.900069, 0.792451, 0.858815, 1.000000 }, // SecondaryActiveFill
+   { 0.887628, 0.766612, 0.841239, 1.000000 }, // SecondaryActiveFill
    { 0.968293, 0.934147, 0.955204, 1.000000 }, // SecondaryInactiveFill
-   { 0.900069, 0.792451, 0.858815, 1.000000 }, // SecondaryActiveFill
+   { 0.887628, 0.766612, 0.841239, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.590920, 0.843186, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7459,8 +7459,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906274, 0.805339, 0.867582, 1.000000 }, // SecondaryInactiveStroke
-   { 0.927101, 0.343912, 0.703545, 1.000000 }, // SecondaryActiveStroke
-   { 0.682147, 0.000000, 0.420657, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.697944, 0.077549, 0.460126, 1.000000 }, // SecondaryActiveStroke
+   { 0.839653, 0.000000, 0.517786, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7472,9 +7472,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968176, 0.872704, 0.929987, 1.000000 }, // InactiveFill
    { 0.936448, 0.745792, 0.860186, 1.000000 }, // ActiveFill
    { 1.000000, 0.455920, 0.782368, 1.000000 }, // HighlightedFill
-   { 0.900147, 0.792613, 0.857133, 1.000000 }, // SecondaryActiveFill
+   { 0.887719, 0.766801, 0.839352, 1.000000 }, // SecondaryActiveFill
    { 0.968319, 0.934201, 0.954672, 1.000000 }, // SecondaryInactiveFill
-   { 0.900147, 0.792613, 0.857133, 1.000000 }, // SecondaryActiveFill
+   { 0.887719, 0.766801, 0.839352, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.591960, 0.836784, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7482,8 +7482,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906348, 0.805492, 0.866006, 1.000000 }, // SecondaryInactiveStroke
-   { 0.927324, 0.345916, 0.694761, 1.000000 }, // SecondaryActiveStroke
-   { 0.684040, 0.000000, 0.410424, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.699732, 0.077748, 0.450938, 1.000000 }, // SecondaryActiveStroke
+   { 0.841960, 0.000000, 0.505176, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7495,9 +7495,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968213, 0.872853, 0.928480, 1.000000 }, // InactiveFill
    { 0.936533, 0.746133, 0.857200, 1.000000 }, // ActiveFill
    { 1.000000, 0.457667, 0.774028, 1.000000 }, // HighlightedFill
-   { 0.900225, 0.792775, 0.855454, 1.000000 }, // SecondaryActiveFill
+   { 0.887810, 0.766990, 0.837468, 1.000000 }, // SecondaryActiveFill
    { 0.968345, 0.934255, 0.954141, 1.000000 }, // SecondaryInactiveFill
-   { 0.900225, 0.792775, 0.855454, 1.000000 }, // SecondaryActiveFill
+   { 0.887810, 0.766990, 0.837468, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.593000, 0.830417, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7505,8 +7505,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906422, 0.805645, 0.864431, 1.000000 }, // SecondaryInactiveStroke
-   { 0.927547, 0.347920, 0.686036, 1.000000 }, // SecondaryActiveStroke
-   { 0.685733, 0.000000, 0.400011, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.701340, 0.077927, 0.441584, 1.000000 }, // SecondaryActiveStroke
+   { 0.844067, 0.000000, 0.492372, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7518,9 +7518,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968251, 0.873003, 0.926977, 1.000000 }, // InactiveFill
    { 0.936619, 0.746475, 0.854223, 1.000000 }, // ActiveFill
    { 1.000000, 0.459413, 0.765746, 1.000000 }, // HighlightedFill
-   { 0.900303, 0.792937, 0.853778, 1.000000 }, // SecondaryActiveFill
+   { 0.887901, 0.767179, 0.835588, 1.000000 }, // SecondaryActiveFill
    { 0.968371, 0.934309, 0.953611, 1.000000 }, // SecondaryInactiveFill
-   { 0.900303, 0.792937, 0.853778, 1.000000 }, // SecondaryActiveFill
+   { 0.887901, 0.767179, 0.835588, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.594040, 0.824084, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7528,8 +7528,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906495, 0.805798, 0.862860, 1.000000 }, // SecondaryInactiveStroke
-   { 0.927749, 0.349744, 0.677280, 1.000000 }, // SecondaryActiveStroke
-   { 0.687627, 0.000000, 0.389655, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.703128, 0.078125, 0.432294, 1.000000 }, // SecondaryActiveStroke
+   { 0.846373, 0.000000, 0.479612, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7541,9 +7541,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968288, 0.873152, 0.925477, 1.000000 }, // InactiveFill
    { 0.936704, 0.746816, 0.851254, 1.000000 }, // ActiveFill
    { 1.000000, 0.461160, 0.757522, 1.000000 }, // HighlightedFill
-   { 0.900381, 0.793099, 0.852104, 1.000000 }, // SecondaryActiveFill
+   { 0.887992, 0.767368, 0.833711, 1.000000 }, // SecondaryActiveFill
    { 0.968397, 0.934363, 0.953082, 1.000000 }, // SecondaryInactiveFill
-   { 0.900381, 0.793099, 0.852104, 1.000000 }, // SecondaryActiveFill
+   { 0.887992, 0.767368, 0.833711, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.594880, 0.817696, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7551,8 +7551,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906569, 0.805951, 0.861291, 1.000000 }, // SecondaryInactiveStroke
-   { 0.927972, 0.351748, 0.668671, 1.000000 }, // SecondaryActiveStroke
-   { 0.689320, 0.000000, 0.379126, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.704916, 0.078324, 0.422950, 1.000000 }, // SecondaryActiveStroke
+   { 0.848280, 0.000000, 0.466554, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7564,9 +7564,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968325, 0.873301, 0.923981, 1.000000 }, // InactiveFill
    { 0.936789, 0.747157, 0.848294, 1.000000 }, // ActiveFill
    { 1.000000, 0.462707, 0.749263, 1.000000 }, // HighlightedFill
-   { 0.900459, 0.793261, 0.850433, 1.000000 }, // SecondaryActiveFill
+   { 0.888083, 0.767557, 0.831838, 1.000000 }, // SecondaryActiveFill
    { 0.968423, 0.934417, 0.952554, 1.000000 }, // SecondaryInactiveFill
-   { 0.900459, 0.793261, 0.850433, 1.000000 }, // SecondaryActiveFill
+   { 0.888083, 0.767557, 0.831838, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.595920, 0.811429, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7574,8 +7574,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906643, 0.806104, 0.859725, 1.000000 }, // SecondaryInactiveStroke
-   { 0.928175, 0.353572, 0.660027, 1.000000 }, // SecondaryActiveStroke
-   { 0.691013, 0.000000, 0.368540, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.706524, 0.078503, 0.413447, 1.000000 }, // SecondaryActiveStroke
+   { 0.850387, 0.000000, 0.453540, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7587,9 +7587,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968363, 0.873451, 0.922489, 1.000000 }, // InactiveFill
    { 0.936875, 0.747499, 0.845343, 1.000000 }, // ActiveFill
    { 1.000000, 0.464453, 0.741152, 1.000000 }, // HighlightedFill
-   { 0.900537, 0.793423, 0.848765, 1.000000 }, // SecondaryActiveFill
+   { 0.888174, 0.767746, 0.829967, 1.000000 }, // SecondaryActiveFill
    { 0.968449, 0.934471, 0.952026, 1.000000 }, // SecondaryInactiveFill
-   { 0.900537, 0.793423, 0.848765, 1.000000 }, // SecondaryActiveFill
+   { 0.888174, 0.767746, 0.829967, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.596960, 0.805197, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7597,8 +7597,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906716, 0.806257, 0.858161, 1.000000 }, // SecondaryInactiveStroke
-   { 0.928397, 0.355576, 0.651534, 1.000000 }, // SecondaryActiveStroke
-   { 0.692507, 0.000000, 0.357795, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.708312, 0.078701, 0.404000, 1.000000 }, // SecondaryActiveStroke
+   { 0.852293, 0.000000, 0.440352, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7610,9 +7610,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968360, 0.873440, 0.920900, 1.000000 }, // InactiveFill
    { 0.937000, 0.748000, 0.842500, 1.000000 }, // ActiveFill
    { 1.000000, 0.466400, 0.733200, 1.000000 }, // HighlightedFill
-   { 0.900680, 0.793720, 0.847200, 1.000000 }, // SecondaryActiveFill
+   { 0.888330, 0.768070, 0.828200, 1.000000 }, // SecondaryActiveFill
    { 0.968410, 0.934390, 0.951400, 1.000000 }, // SecondaryInactiveFill
-   { 0.900680, 0.793720, 0.847200, 1.000000 }, // SecondaryActiveFill
+   { 0.888330, 0.768070, 0.828200, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.597800, 0.798900, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7620,8 +7620,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906855, 0.806545, 0.856700, 1.000000 }, // SecondaryInactiveStroke
-   { 0.928640, 0.357760, 0.643200, 1.000000 }, // SecondaryActiveStroke
-   { 0.694200, 0.000000, 0.347100, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.710280, 0.078920, 0.394600, 1.000000 }, // SecondaryActiveStroke
+   { 0.854200, 0.000000, 0.427100, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7633,9 +7633,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968437, 0.873749, 0.919515, 1.000000 }, // InactiveFill
    { 0.937035, 0.748139, 0.839438, 1.000000 }, // ActiveFill
    { 1.000000, 0.467453, 0.724851, 1.000000 }, // HighlightedFill
-   { 0.900689, 0.793738, 0.845431, 1.000000 }, // SecondaryActiveFill
+   { 0.888347, 0.768106, 0.826223, 1.000000 }, // SecondaryActiveFill
    { 0.968497, 0.934570, 0.950968, 1.000000 }, // SecondaryInactiveFill
-   { 0.900689, 0.793738, 0.845431, 1.000000 }, // SecondaryActiveFill
+   { 0.888347, 0.768106, 0.826223, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.598813, 0.792720, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7643,8 +7643,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906855, 0.806545, 0.855028, 1.000000 }, // SecondaryInactiveStroke
-   { 0.928771, 0.358936, 0.634356, 1.000000 }, // SecondaryActiveStroke
-   { 0.695733, 0.000000, 0.336271, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.711300, 0.079033, 0.384629, 1.000000 }, // SecondaryActiveStroke
+   { 0.855973, 0.000000, 0.413720, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7656,9 +7656,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968475, 0.873899, 0.918034, 1.000000 }, // InactiveFill
    { 0.937109, 0.748437, 0.836484, 1.000000 }, // ActiveFill
    { 1.000000, 0.468707, 0.716644, 1.000000 }, // HighlightedFill
-   { 0.900762, 0.793891, 0.843764, 1.000000 }, // SecondaryActiveFill
+   { 0.888430, 0.768277, 0.824348, 1.000000 }, // SecondaryActiveFill
    { 0.968518, 0.934615, 0.950437, 1.000000 }, // SecondaryInactiveFill
-   { 0.900762, 0.793891, 0.843764, 1.000000 }, // SecondaryActiveFill
+   { 0.888430, 0.768277, 0.824348, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.599627, 0.786468, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7666,8 +7666,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906920, 0.806680, 0.853459, 1.000000 }, // SecondaryInactiveStroke
-   { 0.928921, 0.360292, 0.625652, 1.000000 }, // SecondaryActiveStroke
-   { 0.697067, 0.000000, 0.325298, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.712500, 0.079167, 0.374722, 1.000000 }, // SecondaryActiveStroke
+   { 0.857747, 0.000000, 0.400282, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7679,9 +7679,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968512, 0.874048, 0.916557, 1.000000 }, // InactiveFill
    { 0.937184, 0.748736, 0.833538, 1.000000 }, // ActiveFill
    { 1.000000, 0.469960, 0.708478, 1.000000 }, // HighlightedFill
-   { 0.900836, 0.794044, 0.842100, 1.000000 }, // SecondaryActiveFill
+   { 0.888512, 0.768448, 0.822477, 1.000000 }, // SecondaryActiveFill
    { 0.968540, 0.934660, 0.949906, 1.000000 }, // SecondaryInactiveFill
-   { 0.900836, 0.794044, 0.842100, 1.000000 }, // SecondaryActiveFill
+   { 0.888512, 0.768448, 0.822477, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.600440, 0.780242, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7689,8 +7689,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.906985, 0.806815, 0.851892, 1.000000 }, // SecondaryInactiveStroke
-   { 0.929072, 0.361648, 0.616989, 1.000000 }, // SecondaryActiveStroke
-   { 0.698400, 0.000000, 0.314280, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.713880, 0.079320, 0.364872, 1.000000 }, // SecondaryActiveStroke
+   { 0.859520, 0.000000, 0.386784, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7702,9 +7702,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968549, 0.874197, 0.915083, 1.000000 }, // InactiveFill
    { 0.937259, 0.749035, 0.830598, 1.000000 }, // ActiveFill
    { 1.000000, 0.471213, 0.700354, 1.000000 }, // HighlightedFill
-   { 0.900910, 0.794197, 0.840439, 1.000000 }, // SecondaryActiveFill
+   { 0.888594, 0.768619, 0.820608, 1.000000 }, // SecondaryActiveFill
    { 0.968562, 0.934705, 0.949376, 1.000000 }, // SecondaryInactiveFill
-   { 0.900910, 0.794197, 0.840439, 1.000000 }, // SecondaryActiveFill
+   { 0.888594, 0.768619, 0.820608, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.601253, 0.774044, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7712,8 +7712,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907050, 0.806950, 0.850327, 1.000000 }, // SecondaryInactiveStroke
-   { 0.929223, 0.363004, 0.608365, 1.000000 }, // SecondaryActiveStroke
-   { 0.699933, 0.000000, 0.303304, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.715080, 0.079453, 0.354892, 1.000000 }, // SecondaryActiveStroke
+   { 0.861093, 0.000000, 0.373140, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7725,9 +7725,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968587, 0.874347, 0.913613, 1.000000 }, // InactiveFill
    { 0.937333, 0.749333, 0.827667, 1.000000 }, // ActiveFill
    { 1.000000, 0.472667, 0.692389, 1.000000 }, // HighlightedFill
-   { 0.900983, 0.794350, 0.838781, 1.000000 }, // SecondaryActiveFill
+   { 0.888677, 0.768790, 0.818743, 1.000000 }, // SecondaryActiveFill
    { 0.968583, 0.934750, 0.948847, 1.000000 }, // SecondaryInactiveFill
-   { 0.900983, 0.794350, 0.838781, 1.000000 }, // SecondaryActiveFill
+   { 0.888677, 0.768790, 0.818743, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.602267, 0.767989, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7735,8 +7735,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907115, 0.807085, 0.848764, 1.000000 }, // SecondaryInactiveStroke
-   { 0.929393, 0.364540, 0.599896, 1.000000 }, // SecondaryActiveStroke
-   { 0.701067, 0.000000, 0.292111, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.716460, 0.079607, 0.344962, 1.000000 }, // SecondaryActiveStroke
+   { 0.862667, 0.000000, 0.359444, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7748,9 +7748,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968624, 0.874496, 0.912147, 1.000000 }, // InactiveFill
    { 0.937408, 0.749632, 0.824742, 1.000000 }, // ActiveFill
    { 1.000000, 0.473920, 0.684352, 1.000000 }, // HighlightedFill
-   { 0.901057, 0.794503, 0.837125, 1.000000 }, // SecondaryActiveFill
+   { 0.888759, 0.768961, 0.816880, 1.000000 }, // SecondaryActiveFill
    { 0.968605, 0.934795, 0.948319, 1.000000 }, // SecondaryInactiveFill
-   { 0.901057, 0.794503, 0.837125, 1.000000 }, // SecondaryActiveFill
+   { 0.888759, 0.768961, 0.816880, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.603080, 0.761848, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7758,8 +7758,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907180, 0.807220, 0.847204, 1.000000 }, // SecondaryInactiveStroke
-   { 0.929544, 0.365896, 0.591355, 1.000000 }, // SecondaryActiveStroke
-   { 0.702400, 0.000000, 0.280960, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.717660, 0.079740, 0.334908, 1.000000 }, // SecondaryActiveStroke
+   { 0.864240, 0.000000, 0.345696, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7771,9 +7771,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968661, 0.874645, 0.910685, 1.000000 }, // InactiveFill
    { 0.937483, 0.749931, 0.821826, 1.000000 }, // ActiveFill
    { 1.000000, 0.475173, 0.676357, 1.000000 }, // HighlightedFill
-   { 0.901131, 0.794656, 0.835471, 1.000000 }, // SecondaryActiveFill
+   { 0.888841, 0.769132, 0.815021, 1.000000 }, // SecondaryActiveFill
    { 0.968627, 0.934840, 0.947792, 1.000000 }, // SecondaryInactiveFill
-   { 0.901131, 0.794656, 0.835471, 1.000000 }, // SecondaryActiveFill
+   { 0.888841, 0.769132, 0.815021, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.603893, 0.755734, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7781,8 +7781,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907245, 0.807355, 0.845646, 1.000000 }, // SecondaryInactiveStroke
-   { 0.929695, 0.367252, 0.582855, 1.000000 }, // SecondaryActiveStroke
-   { 0.703533, 0.000000, 0.269688, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.718860, 0.079873, 0.324818, 1.000000 }, // SecondaryActiveStroke
+   { 0.865613, 0.000000, 0.331818, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7794,9 +7794,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968699, 0.874795, 0.909226, 1.000000 }, // InactiveFill
    { 0.937557, 0.750229, 0.818916, 1.000000 }, // ActiveFill
    { 1.000000, 0.476427, 0.668404, 1.000000 }, // HighlightedFill
-   { 0.901204, 0.794809, 0.833821, 1.000000 }, // SecondaryActiveFill
+   { 0.888924, 0.769303, 0.813164, 1.000000 }, // SecondaryActiveFill
    { 0.968648, 0.934885, 0.947265, 1.000000 }, // SecondaryInactiveFill
-   { 0.901204, 0.794809, 0.833821, 1.000000 }, // SecondaryActiveFill
+   { 0.888924, 0.769303, 0.813164, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.604707, 0.749648, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7804,8 +7804,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907310, 0.807490, 0.844091, 1.000000 }, // SecondaryInactiveStroke
-   { 0.929845, 0.368608, 0.574395, 1.000000 }, // SecondaryActiveStroke
-   { 0.704667, 0.000000, 0.258378, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.720060, 0.080007, 0.314693, 1.000000 }, // SecondaryActiveStroke
+   { 0.866987, 0.000000, 0.317895, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7817,9 +7817,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968736, 0.874944, 0.907771, 1.000000 }, // InactiveFill
    { 0.937632, 0.750528, 0.816014, 1.000000 }, // ActiveFill
    { 1.000000, 0.477680, 0.660492, 1.000000 }, // HighlightedFill
-   { 0.901278, 0.794962, 0.832173, 1.000000 }, // SecondaryActiveFill
+   { 0.889006, 0.769474, 0.811310, 1.000000 }, // SecondaryActiveFill
    { 0.968670, 0.934930, 0.946739, 1.000000 }, // SecondaryInactiveFill
-   { 0.901278, 0.794962, 0.832173, 1.000000 }, // SecondaryActiveFill
+   { 0.889006, 0.769474, 0.811310, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.605520, 0.743588, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7827,8 +7827,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907375, 0.807625, 0.842538, 1.000000 }, // SecondaryInactiveStroke
-   { 0.929996, 0.369964, 0.565975, 1.000000 }, // SecondaryActiveStroke
-   { 0.705800, 0.000000, 0.247030, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.721260, 0.080140, 0.304532, 1.000000 }, // SecondaryActiveStroke
+   { 0.868360, 0.000000, 0.303926, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7840,9 +7840,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968773, 0.875093, 0.906320, 1.000000 }, // InactiveFill
    { 0.937707, 0.750827, 0.813120, 1.000000 }, // ActiveFill
    { 1.000000, 0.478933, 0.652622, 1.000000 }, // HighlightedFill
-   { 0.901352, 0.795115, 0.830527, 1.000000 }, // SecondaryActiveFill
+   { 0.889088, 0.769645, 0.809459, 1.000000 }, // SecondaryActiveFill
    { 0.968692, 0.934975, 0.946214, 1.000000 }, // SecondaryInactiveFill
-   { 0.901352, 0.795115, 0.830527, 1.000000 }, // SecondaryActiveFill
+   { 0.889088, 0.769645, 0.809459, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.606333, 0.737556, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7850,8 +7850,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907440, 0.807760, 0.840987, 1.000000 }, // SecondaryInactiveStroke
-   { 0.930147, 0.371320, 0.557596, 1.000000 }, // SecondaryActiveStroke
-   { 0.706933, 0.000000, 0.235644, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.722460, 0.080273, 0.294336, 1.000000 }, // SecondaryActiveStroke
+   { 0.869533, 0.000000, 0.289844, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7863,9 +7863,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968811, 0.875243, 0.904873, 1.000000 }, // InactiveFill
    { 0.937781, 0.751125, 0.810233, 1.000000 }, // ActiveFill
    { 1.000000, 0.479987, 0.644658, 1.000000 }, // HighlightedFill
-   { 0.901425, 0.795268, 0.828885, 1.000000 }, // SecondaryActiveFill
+   { 0.889171, 0.769816, 0.807612, 1.000000 }, // SecondaryActiveFill
    { 0.968713, 0.935020, 0.945690, 1.000000 }, // SecondaryInactiveFill
-   { 0.901425, 0.795268, 0.828885, 1.000000 }, // SecondaryActiveFill
+   { 0.889171, 0.769816, 0.807612, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.607147, 0.731550, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7873,8 +7873,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907505, 0.807895, 0.839438, 1.000000 }, // SecondaryInactiveStroke
-   { 0.930297, 0.372676, 0.549256, 1.000000 }, // SecondaryActiveStroke
-   { 0.707867, 0.000000, 0.224158, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.723480, 0.080387, 0.284033, 1.000000 }, // SecondaryActiveStroke
+   { 0.870707, 0.000000, 0.275724, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7886,9 +7886,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968848, 0.875392, 0.903429, 1.000000 }, // InactiveFill
    { 0.937856, 0.751424, 0.807354, 1.000000 }, // ActiveFill
    { 1.000000, 0.481240, 0.636868, 1.000000 }, // HighlightedFill
-   { 0.901499, 0.795421, 0.827244, 1.000000 }, // SecondaryActiveFill
+   { 0.889253, 0.769987, 0.805767, 1.000000 }, // SecondaryActiveFill
    { 0.968735, 0.935065, 0.945166, 1.000000 }, // SecondaryInactiveFill
-   { 0.901499, 0.795421, 0.827244, 1.000000 }, // SecondaryActiveFill
+   { 0.889253, 0.769987, 0.805767, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.607760, 0.725432, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7896,8 +7896,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907570, 0.808030, 0.837892, 1.000000 }, // SecondaryInactiveStroke
-   { 0.930428, 0.373852, 0.540825, 1.000000 }, // SecondaryActiveStroke
-   { 0.708800, 0.000000, 0.212640, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.724680, 0.080520, 0.273768, 1.000000 }, // SecondaryActiveStroke
+   { 0.871880, 0.000000, 0.261564, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7909,9 +7909,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968885, 0.875541, 0.901989, 1.000000 }, // InactiveFill
    { 0.937931, 0.751723, 0.804482, 1.000000 }, // ActiveFill
    { 1.000000, 0.482493, 0.629120, 1.000000 }, // HighlightedFill
-   { 0.901573, 0.795574, 0.825607, 1.000000 }, // SecondaryActiveFill
+   { 0.889335, 0.770158, 0.803925, 1.000000 }, // SecondaryActiveFill
    { 0.968757, 0.935110, 0.944643, 1.000000 }, // SecondaryInactiveFill
-   { 0.901573, 0.795574, 0.825607, 1.000000 }, // SecondaryActiveFill
+   { 0.889335, 0.770158, 0.803925, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.608573, 0.719478, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7919,8 +7919,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907635, 0.808165, 0.836348, 1.000000 }, // SecondaryInactiveStroke
-   { 0.930579, 0.375208, 0.532563, 1.000000 }, // SecondaryActiveStroke
-   { 0.709733, 0.000000, 0.201091, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.725700, 0.080633, 0.263402, 1.000000 }, // SecondaryActiveStroke
+   { 0.872853, 0.000000, 0.247308, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7932,9 +7932,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968923, 0.875691, 0.900553, 1.000000 }, // InactiveFill
    { 0.938005, 0.752021, 0.801617, 1.000000 }, // ActiveFill
    { 1.000000, 0.483747, 0.621414, 1.000000 }, // HighlightedFill
-   { 0.901646, 0.795727, 0.823972, 1.000000 }, // SecondaryActiveFill
+   { 0.889418, 0.770329, 0.802086, 1.000000 }, // SecondaryActiveFill
    { 0.968778, 0.935155, 0.944121, 1.000000 }, // SecondaryInactiveFill
-   { 0.901646, 0.795727, 0.823972, 1.000000 }, // SecondaryActiveFill
+   { 0.889418, 0.770329, 0.802086, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.609387, 0.713550, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7942,8 +7942,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907700, 0.808300, 0.834807, 1.000000 }, // SecondaryInactiveStroke
-   { 0.930729, 0.376564, 0.524341, 1.000000 }, // SecondaryActiveStroke
-   { 0.710467, 0.000000, 0.189458, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.726900, 0.080767, 0.253069, 1.000000 }, // SecondaryActiveStroke
+   { 0.873827, 0.000000, 0.233020, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7955,9 +7955,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968920, 0.875680, 0.898990, 1.000000 }, // InactiveFill
    { 0.938120, 0.752480, 0.798890, 1.000000 }, // ActiveFill
    { 1.000000, 0.485200, 0.613900, 1.000000 }, // HighlightedFill
-   { 0.901785, 0.796015, 0.822458, 1.000000 }, // SecondaryActiveFill
+   { 0.889565, 0.770635, 0.800368, 1.000000 }, // SecondaryActiveFill
    { 0.968735, 0.935065, 0.943483, 1.000000 }, // SecondaryInactiveFill
-   { 0.901785, 0.796015, 0.822458, 1.000000 }, // SecondaryActiveFill
+   { 0.889565, 0.770635, 0.800368, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.610000, 0.707500, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7965,8 +7965,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907830, 0.808570, 0.833385, 1.000000 }, // SecondaryInactiveStroke
-   { 0.930900, 0.378100, 0.516300, 1.000000 }, // SecondaryActiveStroke
-   { 0.711200, 0.000000, 0.177800, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.728280, 0.080920, 0.242760, 1.000000 }, // SecondaryActiveStroke
+   { 0.874800, 0.000000, 0.218700, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -7978,9 +7978,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.968992, 0.875968, 0.897674, 1.000000 }, // InactiveFill
    { 0.938147, 0.752587, 0.795884, 1.000000 }, // ActiveFill
    { 1.000000, 0.485987, 0.605923, 1.000000 }, // HighlightedFill
-   { 0.901854, 0.796159, 0.820821, 1.000000 }, // SecondaryActiveFill
+   { 0.889578, 0.770662, 0.798409, 1.000000 }, // SecondaryActiveFill
    { 0.968822, 0.935245, 0.943080, 1.000000 }, // SecondaryInactiveFill
-   { 0.901854, 0.796159, 0.820821, 1.000000 }, // SecondaryActiveFill
+   { 0.889578, 0.770662, 0.798409, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.610733, 0.701562, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -7988,8 +7988,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907830, 0.808570, 0.831731, 1.000000 }, // SecondaryInactiveStroke
-   { 0.935482, 0.373252, 0.504439, 1.000000 }, // SecondaryActiveStroke
-   { 0.712013, 0.000000, 0.166136, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.728688, 0.080965, 0.232101, 1.000000 }, // SecondaryActiveStroke
+   { 0.875653, 0.000000, 0.204319, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8001,9 +8001,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969024, 0.876096, 0.896230, 1.000000 }, // InactiveFill
    { 0.938213, 0.752853, 0.793015, 1.000000 }, // ActiveFill
    { 1.000000, 0.486973, 0.598129, 1.000000 }, // HighlightedFill
-   { 0.901924, 0.796303, 0.819187, 1.000000 }, // SecondaryActiveFill
+   { 0.889656, 0.770824, 0.796571, 1.000000 }, // SecondaryActiveFill
    { 0.968843, 0.935290, 0.942560, 1.000000 }, // SecondaryInactiveFill
-   { 0.901924, 0.796303, 0.819187, 1.000000 }, // SecondaryActiveFill
+   { 0.889656, 0.770824, 0.796571, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.611467, 0.695649, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8011,8 +8011,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907895, 0.808705, 0.830196, 1.000000 }, // SecondaryInactiveStroke
-   { 0.940240, 0.370226, 0.493729, 1.000000 }, // SecondaryActiveStroke
-   { 0.712627, 0.000000, 0.154402, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.729276, 0.081031, 0.221484, 1.000000 }, // SecondaryActiveStroke
+   { 0.876307, 0.000000, 0.189866, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8024,9 +8024,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969056, 0.876224, 0.894790, 1.000000 }, // InactiveFill
    { 0.938280, 0.753120, 0.790152, 1.000000 }, // ActiveFill
    { 1.000000, 0.487960, 0.590368, 1.000000 }, // HighlightedFill
-   { 0.901993, 0.796447, 0.817556, 1.000000 }, // SecondaryActiveFill
+   { 0.889734, 0.770986, 0.794736, 1.000000 }, // SecondaryActiveFill
    { 0.968865, 0.935335, 0.942041, 1.000000 }, // SecondaryInactiveFill
-   { 0.901993, 0.796447, 0.817556, 1.000000 }, // SecondaryActiveFill
+   { 0.889734, 0.770986, 0.794736, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.612200, 0.689760, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8034,8 +8034,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.907960, 0.808840, 0.828664, 1.000000 }, // SecondaryInactiveStroke
-   { 0.944976, 0.367224, 0.482774, 1.000000 }, // SecondaryActiveStroke
-   { 0.713240, 0.000000, 0.142648, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.730044, 0.081116, 0.210902, 1.000000 }, // SecondaryActiveStroke
+   { 0.877160, 0.000000, 0.175432, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8047,9 +8047,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969088, 0.876352, 0.893354, 1.000000 }, // InactiveFill
    { 0.938347, 0.753387, 0.787296, 1.000000 }, // ActiveFill
    { 1.000000, 0.488947, 0.582640, 1.000000 }, // HighlightedFill
-   { 0.902062, 0.796591, 0.815927, 1.000000 }, // SecondaryActiveFill
+   { 0.889812, 0.771148, 0.792903, 1.000000 }, // SecondaryActiveFill
    { 0.968887, 0.935380, 0.941523, 1.000000 }, // SecondaryInactiveFill
-   { 0.902062, 0.796591, 0.815927, 1.000000 }, // SecondaryActiveFill
+   { 0.889812, 0.771148, 0.792903, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.612933, 0.683896, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8057,8 +8057,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908025, 0.808975, 0.827134, 1.000000 }, // SecondaryInactiveStroke
-   { 0.949674, 0.364060, 0.471422, 1.000000 }, // SecondaryActiveStroke
-   { 0.713853, 0.000000, 0.130873, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.730632, 0.081181, 0.200247, 1.000000 }, // SecondaryActiveStroke
+   { 0.877813, 0.000000, 0.160932, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8070,9 +8070,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969120, 0.876480, 0.891920, 1.000000 }, // InactiveFill
    { 0.938413, 0.753653, 0.784447, 1.000000 }, // ActiveFill
    { 1.000000, 0.489933, 0.574944, 1.000000 }, // HighlightedFill
-   { 0.902132, 0.796735, 0.814301, 1.000000 }, // SecondaryActiveFill
+   { 0.889890, 0.771310, 0.791073, 1.000000 }, // SecondaryActiveFill
    { 0.968908, 0.935425, 0.941006, 1.000000 }, // SecondaryInactiveFill
-   { 0.902132, 0.796735, 0.814301, 1.000000 }, // SecondaryActiveFill
+   { 0.889890, 0.771310, 0.791073, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.613467, 0.677889, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8080,8 +8080,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908090, 0.809110, 0.825607, 1.000000 }, // SecondaryInactiveStroke
-   { 0.954351, 0.360916, 0.459821, 1.000000 }, // SecondaryActiveStroke
-   { 0.714267, 0.000000, 0.119044, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.731400, 0.081267, 0.189622, 1.000000 }, // SecondaryActiveStroke
+   { 0.878267, 0.000000, 0.146378, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8093,9 +8093,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969152, 0.876608, 0.890490, 1.000000 }, // InactiveFill
    { 0.938480, 0.753920, 0.781604, 1.000000 }, // ActiveFill
    { 1.000000, 0.490920, 0.567282, 1.000000 }, // HighlightedFill
-   { 0.902201, 0.796879, 0.812677, 1.000000 }, // SecondaryActiveFill
+   { 0.889968, 0.771472, 0.789246, 1.000000 }, // SecondaryActiveFill
    { 0.968930, 0.935470, 0.940489, 1.000000 }, // SecondaryInactiveFill
-   { 0.902201, 0.796879, 0.812677, 1.000000 }, // SecondaryActiveFill
+   { 0.889968, 0.771472, 0.789246, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.614200, 0.672070, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8103,8 +8103,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908155, 0.809245, 0.824082, 1.000000 }, // SecondaryInactiveStroke
-   { 0.958996, 0.357604, 0.447813, 1.000000 }, // SecondaryActiveStroke
-   { 0.714880, 0.000000, 0.107232, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.731988, 0.081332, 0.178930, 1.000000 }, // SecondaryActiveStroke
+   { 0.878920, 0.000000, 0.131838, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8116,9 +8116,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969184, 0.876736, 0.889062, 1.000000 }, // InactiveFill
    { 0.938547, 0.754187, 0.778768, 1.000000 }, // ActiveFill
    { 1.000000, 0.491907, 0.559652, 1.000000 }, // HighlightedFill
-   { 0.902270, 0.797023, 0.811056, 1.000000 }, // SecondaryActiveFill
+   { 0.890046, 0.771634, 0.787422, 1.000000 }, // SecondaryActiveFill
    { 0.968952, 0.935515, 0.939973, 1.000000 }, // SecondaryInactiveFill
-   { 0.902270, 0.797023, 0.811056, 1.000000 }, // SecondaryActiveFill
+   { 0.890046, 0.771634, 0.787422, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.614933, 0.666276, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8126,8 +8126,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908220, 0.809380, 0.822559, 1.000000 }, // SecondaryInactiveStroke
-   { 0.963623, 0.354310, 0.435552, 1.000000 }, // SecondaryActiveStroke
-   { 0.715293, 0.000000, 0.095372, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.732576, 0.081397, 0.168221, 1.000000 }, // SecondaryActiveStroke
+   { 0.879373, 0.000000, 0.117250, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8139,9 +8139,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969216, 0.876864, 0.887638, 1.000000 }, // InactiveFill
    { 0.938613, 0.754453, 0.775939, 1.000000 }, // ActiveFill
    { 1.000000, 0.492893, 0.552056, 1.000000 }, // HighlightedFill
-   { 0.902340, 0.797167, 0.809437, 1.000000 }, // SecondaryActiveFill
+   { 0.890124, 0.771796, 0.785601, 1.000000 }, // SecondaryActiveFill
    { 0.968973, 0.935560, 0.939458, 1.000000 }, // SecondaryInactiveFill
-   { 0.902340, 0.797167, 0.809437, 1.000000 }, // SecondaryActiveFill
+   { 0.890124, 0.771796, 0.785601, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.615467, 0.660329, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8149,8 +8149,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908285, 0.809515, 0.821038, 1.000000 }, // SecondaryInactiveStroke
-   { 0.968232, 0.351034, 0.423041, 1.000000 }, // SecondaryActiveStroke
-   { 0.715707, 0.000000, 0.083499, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.733164, 0.081463, 0.157494, 1.000000 }, // SecondaryActiveStroke
+   { 0.879827, 0.000000, 0.102646, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8162,9 +8162,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969248, 0.876992, 0.886218, 1.000000 }, // InactiveFill
    { 0.938680, 0.754720, 0.773116, 1.000000 }, // ActiveFill
    { 1.000000, 0.493880, 0.544492, 1.000000 }, // HighlightedFill
-   { 0.902409, 0.797311, 0.807821, 1.000000 }, // SecondaryActiveFill
+   { 0.890202, 0.771958, 0.783782, 1.000000 }, // SecondaryActiveFill
    { 0.968995, 0.935605, 0.938944, 1.000000 }, // SecondaryInactiveFill
-   { 0.902409, 0.797311, 0.807821, 1.000000 }, // SecondaryActiveFill
+   { 0.890202, 0.771958, 0.783782, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.616200, 0.654580, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8172,8 +8172,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908350, 0.809650, 0.819520, 1.000000 }, // SecondaryInactiveStroke
-   { 0.972816, 0.347584, 0.410107, 1.000000 }, // SecondaryActiveStroke
-   { 0.715920, 0.000000, 0.071592, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.733752, 0.081528, 0.146750, 1.000000 }, // SecondaryActiveStroke
+   { 0.880280, 0.000000, 0.088028, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8185,9 +8185,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969280, 0.877120, 0.884800, 1.000000 }, // InactiveFill
    { 0.938747, 0.754987, 0.770300, 1.000000 }, // ActiveFill
    { 1.000000, 0.494667, 0.536778, 1.000000 }, // HighlightedFill
-   { 0.902478, 0.797455, 0.806207, 1.000000 }, // SecondaryActiveFill
+   { 0.890280, 0.772120, 0.781967, 1.000000 }, // SecondaryActiveFill
    { 0.969017, 0.935650, 0.938431, 1.000000 }, // SecondaryInactiveFill
-   { 0.902478, 0.797455, 0.806207, 1.000000 }, // SecondaryActiveFill
+   { 0.890280, 0.772120, 0.781967, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.616733, 0.648672, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8195,8 +8195,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908415, 0.809785, 0.818004, 1.000000 }, // SecondaryInactiveStroke
-   { 0.977384, 0.344149, 0.396919, 1.000000 }, // SecondaryActiveStroke
-   { 0.716333, 0.000000, 0.059694, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.734340, 0.081593, 0.135989, 1.000000 }, // SecondaryActiveStroke
+   { 0.880533, 0.000000, 0.073378, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8208,9 +8208,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969312, 0.877248, 0.883386, 1.000000 }, // InactiveFill
    { 0.938813, 0.755253, 0.767491, 1.000000 }, // ActiveFill
    { 1.000000, 0.495653, 0.529276, 1.000000 }, // HighlightedFill
-   { 0.902548, 0.797599, 0.804596, 1.000000 }, // SecondaryActiveFill
+   { 0.890358, 0.772282, 0.780154, 1.000000 }, // SecondaryActiveFill
    { 0.969038, 0.935695, 0.937918, 1.000000 }, // SecondaryInactiveFill
-   { 0.902548, 0.797599, 0.804596, 1.000000 }, // SecondaryActiveFill
+   { 0.890358, 0.772282, 0.780154, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.617467, 0.642969, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8218,8 +8218,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908480, 0.809920, 0.816491, 1.000000 }, // SecondaryInactiveStroke
-   { 0.981932, 0.340534, 0.383294, 1.000000 }, // SecondaryActiveStroke
-   { 0.716547, 0.000000, 0.047770, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.734748, 0.081639, 0.125179, 1.000000 }, // SecondaryActiveStroke
+   { 0.880787, 0.000000, 0.058719, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8231,9 +8231,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969344, 0.877376, 0.881974, 1.000000 }, // InactiveFill
    { 0.938880, 0.755520, 0.764688, 1.000000 }, // ActiveFill
    { 1.000000, 0.496440, 0.521618, 1.000000 }, // HighlightedFill
-   { 0.902617, 0.797743, 0.802987, 1.000000 }, // SecondaryActiveFill
+   { 0.890436, 0.772444, 0.778344, 1.000000 }, // SecondaryActiveFill
    { 0.969060, 0.935740, 0.937406, 1.000000 }, // SecondaryInactiveFill
-   { 0.902617, 0.797743, 0.802987, 1.000000 }, // SecondaryActiveFill
+   { 0.890436, 0.772444, 0.778344, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.618000, 0.637100, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8241,8 +8241,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908545, 0.810055, 0.814980, 1.000000 }, // SecondaryInactiveStroke
-   { 0.986468, 0.336932, 0.369409, 1.000000 }, // SecondaryActiveStroke
-   { 0.716760, 0.000000, 0.035838, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.735336, 0.081704, 0.114386, 1.000000 }, // SecondaryActiveStroke
+   { 0.881040, 0.000000, 0.044052, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8254,9 +8254,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969376, 0.877504, 0.880566, 1.000000 }, // InactiveFill
    { 0.938947, 0.755787, 0.761892, 1.000000 }, // ActiveFill
    { 1.000000, 0.497227, 0.513986, 1.000000 }, // HighlightedFill
-   { 0.902686, 0.797887, 0.801380, 1.000000 }, // SecondaryActiveFill
+   { 0.890514, 0.772606, 0.776536, 1.000000 }, // SecondaryActiveFill
    { 0.969082, 0.935785, 0.936895, 1.000000 }, // SecondaryInactiveFill
-   { 0.902686, 0.797887, 0.801380, 1.000000 }, // SecondaryActiveFill
+   { 0.890514, 0.772606, 0.776536, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.618733, 0.631442, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8264,8 +8264,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908610, 0.810190, 0.813471, 1.000000 }, // SecondaryInactiveStroke
-   { 0.990988, 0.333145, 0.355073, 1.000000 }, // SecondaryActiveStroke
-   { 0.716973, 0.000000, 0.023899, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.735744, 0.081749, 0.103549, 1.000000 }, // SecondaryActiveStroke
+   { 0.881293, 0.000000, 0.029376, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -8277,9 +8277,9 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.969408, 0.877632, 0.879162, 1.000000 }, // InactiveFill
    { 0.939013, 0.756053, 0.759103, 1.000000 }, // ActiveFill
    { 1.000000, 0.498013, 0.506380, 1.000000 }, // HighlightedFill
-   { 0.902691, 0.797896, 0.799643, 1.000000 }, // SecondaryActiveFill
+   { 0.890592, 0.772768, 0.774732, 1.000000 }, // SecondaryActiveFill
    { 0.969103, 0.935830, 0.936385, 1.000000 }, // SecondaryInactiveFill
-   { 0.902691, 0.797896, 0.799643, 1.000000 }, // SecondaryActiveFill
+   { 0.890592, 0.772768, 0.774732, 1.000000 }, // SecondaryActiveFill
    { 1.000000, 0.619267, 0.625612, 1.000000 }, // SecondaryHighlightedFill
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // PrimaryStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // InactiveStroke
@@ -8287,8 +8287,8 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // HighlightedStroke
    { 0.000000, 0.000000, 0.000000, 0.000000 }, // SecondaryStroke
    { 0.908675, 0.810325, 0.811964, 1.000000 }, // SecondaryInactiveStroke
-   { 0.995499, 0.329368, 0.340470, 1.000000 }, // SecondaryActiveStroke
-   { 0.717187, 0.000000, 0.011953, 1.000000 }, // SecondaryHighlightedStroke
+   { 0.736332, 0.081815, 0.092723, 1.000000 }, // SecondaryActiveStroke
+   { 0.881547, 0.000000, 0.014692, 1.000000 }, // SecondaryHighlightedStroke
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // Content
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // InactiveContent
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // ActiveContent
@@ -16603,7 +16603,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.890000, 0.710000, 0.710000, 1.000000 }, // ActiveContent
    { 0.999780, 0.999420, 0.999420, 1.000000 }, // HighlightedContent
    { 0.354375, 0.050625, 0.050625, 1.000000 }, // Information
-   { 0.990000, 0.970000, 0.970000, 1.000000 }, // Infinity
+   { 0.995400, 0.986200, 0.986200, 1.000000 }, // Infinity
 // Hue 1
    { 0.997271, 0.985869, 0.985675, 1.000000 }, // PrimaryFill
    { 0.987952, 0.952410, 0.951808, 1.000000 }, // InactiveFill
@@ -16626,7 +16626,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900230, 0.739691, 0.736970, 1.000000 }, // ActiveContent
    { 0.999831, 0.999560, 0.999555, 1.000000 }, // HighlightedContent
    { 0.352100, 0.055330, 0.050300, 1.000000 }, // Information
-   { 0.995350, 0.986205, 0.986050, 1.000000 }, // Infinity
+   { 0.995400, 0.986353, 0.986200, 1.000000 }, // Infinity
 // Hue 2
    { 0.997231, 0.985855, 0.985462, 1.000000 }, // PrimaryFill
    { 0.987824, 0.952514, 0.951296, 1.000000 }, // InactiveFill
@@ -16649,7 +16649,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.899350, 0.740140, 0.734650, 1.000000 }, // ActiveContent
    { 0.999828, 0.999555, 0.999546, 1.000000 }, // HighlightedContent
    { 0.349475, 0.059910, 0.049925, 1.000000 }, // Information
-   { 0.995300, 0.986213, 0.985900, 1.000000 }, // Infinity
+   { 0.995350, 0.986360, 0.986050, 1.000000 }, // Infinity
 // Hue 3
    { 0.997190, 0.985847, 0.985250, 1.000000 }, // PrimaryFill
    { 0.987696, 0.952630, 0.950784, 1.000000 }, // InactiveFill
@@ -16672,7 +16672,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.898525, 0.740778, 0.732475, 1.000000 }, // ActiveContent
    { 0.999824, 0.999550, 0.999536, 1.000000 }, // HighlightedContent
    { 0.346850, 0.064415, 0.049550, 1.000000 }, // Information
-   { 0.995250, 0.986225, 0.985750, 1.000000 }, // Infinity
+   { 0.995300, 0.986370, 0.985900, 1.000000 }, // Infinity
 // Hue 4
    { 0.997150, 0.985844, 0.985037, 1.000000 }, // PrimaryFill
    { 0.987568, 0.952758, 0.950272, 1.000000 }, // InactiveFill
@@ -16695,7 +16695,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897645, 0.741321, 0.730155, 1.000000 }, // ActiveContent
    { 0.999820, 0.999546, 0.999526, 1.000000 }, // HighlightedContent
    { 0.344050, 0.068810, 0.049150, 1.000000 }, // Information
-   { 0.995200, 0.986240, 0.985600, 1.000000 }, // Infinity
+   { 0.995250, 0.986383, 0.985750, 1.000000 }, // Infinity
 // Hue 5
    { 0.997109, 0.985848, 0.984824, 1.000000 }, // PrimaryFill
    { 0.987440, 0.952900, 0.949760, 1.000000 }, // InactiveFill
@@ -16718,7 +16718,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.896765, 0.741913, 0.727835, 1.000000 }, // ActiveContent
    { 0.999817, 0.999542, 0.999517, 1.000000 }, // HighlightedContent
    { 0.341250, 0.073125, 0.048750, 1.000000 }, // Information
-   { 0.995150, 0.986258, 0.985450, 1.000000 }, // Infinity
+   { 0.995200, 0.986400, 0.985600, 1.000000 }, // Infinity
 // Hue 6
    { 0.997069, 0.985857, 0.984611, 1.000000 }, // PrimaryFill
    { 0.987312, 0.953054, 0.949248, 1.000000 }, // InactiveFill
@@ -16741,7 +16741,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.895830, 0.742416, 0.725370, 1.000000 }, // ActiveContent
    { 0.999813, 0.999538, 0.999507, 1.000000 }, // HighlightedContent
    { 0.338275, 0.077320, 0.048325, 1.000000 }, // Information
-   { 0.995100, 0.986280, 0.985300, 1.000000 }, // Infinity
+   { 0.995150, 0.986420, 0.985450, 1.000000 }, // Infinity
 // Hue 7
    { 0.997028, 0.985872, 0.984398, 1.000000 }, // PrimaryFill
    { 0.987184, 0.953222, 0.948736, 1.000000 }, // InactiveFill
@@ -16764,7 +16764,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.894895, 0.742971, 0.722905, 1.000000 }, // ActiveContent
    { 0.999809, 0.999534, 0.999497, 1.000000 }, // HighlightedContent
    { 0.335125, 0.081388, 0.047875, 1.000000 }, // Information
-   { 0.995050, 0.986305, 0.985150, 1.000000 }, // Infinity
+   { 0.995100, 0.986443, 0.985300, 1.000000 }, // Infinity
 // Hue 8
    { 0.996988, 0.985893, 0.984186, 1.000000 }, // PrimaryFill
    { 0.987056, 0.953402, 0.948224, 1.000000 }, // InactiveFill
@@ -16787,7 +16787,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.893960, 0.743576, 0.720440, 1.000000 }, // ActiveContent
    { 0.999806, 0.999530, 0.999488, 1.000000 }, // HighlightedContent
    { 0.331975, 0.085365, 0.047425, 1.000000 }, // Information
-   { 0.995000, 0.986333, 0.985000, 1.000000 }, // Infinity
+   { 0.995050, 0.986470, 0.985150, 1.000000 }, // Infinity
 // Hue 9
    { 0.996947, 0.985919, 0.983973, 1.000000 }, // PrimaryFill
    { 0.986888, 0.953452, 0.947552, 1.000000 }, // InactiveFill
@@ -16810,7 +16810,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.893025, 0.744233, 0.717975, 1.000000 }, // ActiveContent
    { 0.999802, 0.999527, 0.999478, 1.000000 }, // HighlightedContent
    { 0.328825, 0.089253, 0.046975, 1.000000 }, // Information
-   { 0.994950, 0.986365, 0.984850, 1.000000 }, // Infinity
+   { 0.995000, 0.986500, 0.985000, 1.000000 }, // Infinity
 // Hue 10
    { 0.996907, 0.985951, 0.983760, 1.000000 }, // PrimaryFill
    { 0.986760, 0.953660, 0.947040, 1.000000 }, // InactiveFill
@@ -16833,7 +16833,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.892035, 0.744810, 0.715365, 1.000000 }, // ActiveContent
    { 0.999798, 0.999523, 0.999468, 1.000000 }, // HighlightedContent
    { 0.325500, 0.093000, 0.046500, 1.000000 }, // Information
-   { 0.994900, 0.986400, 0.984700, 1.000000 }, // Infinity
+   { 0.994950, 0.986533, 0.984850, 1.000000 }, // Infinity
 // Hue 11
    { 0.996866, 0.985989, 0.983547, 1.000000 }, // PrimaryFill
    { 0.986632, 0.953880, 0.946528, 1.000000 }, // InactiveFill
@@ -16856,7 +16856,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.891045, 0.745442, 0.712755, 1.000000 }, // ActiveContent
    { 0.999795, 0.999520, 0.999459, 1.000000 }, // HighlightedContent
    { 0.322175, 0.096653, 0.046025, 1.000000 }, // Information
-   { 0.994850, 0.986438, 0.984550, 1.000000 }, // Infinity
+   { 0.994900, 0.986570, 0.984700, 1.000000 }, // Infinity
 // Hue 12
    { 0.996826, 0.986033, 0.983334, 1.000000 }, // PrimaryFill
    { 0.986464, 0.953978, 0.945856, 1.000000 }, // InactiveFill
@@ -16879,7 +16879,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.890055, 0.746127, 0.710145, 1.000000 }, // ActiveContent
    { 0.999791, 0.999517, 0.999449, 1.000000 }, // HighlightedContent
    { 0.318850, 0.100210, 0.045550, 1.000000 }, // Information
-   { 0.994800, 0.986480, 0.984400, 1.000000 }, // Infinity
+   { 0.994850, 0.986610, 0.984550, 1.000000 }, // Infinity
 // Hue 13
    { 0.996785, 0.986082, 0.983122, 1.000000 }, // PrimaryFill
    { 0.986336, 0.954226, 0.945344, 1.000000 }, // InactiveFill
@@ -16902,7 +16902,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.889505, 0.747871, 0.708695, 1.000000 }, // ActiveContent
    { 0.999787, 0.999515, 0.999439, 1.000000 }, // HighlightedContent
    { 0.315875, 0.103788, 0.045125, 1.000000 }, // Information
-   { 0.994750, 0.986525, 0.984250, 1.000000 }, // Infinity
+   { 0.994800, 0.986653, 0.984400, 1.000000 }, // Infinity
 // Hue 14
    { 0.996745, 0.986137, 0.982909, 1.000000 }, // PrimaryFill
    { 0.986208, 0.954486, 0.944832, 1.000000 }, // InactiveFill
@@ -16925,7 +16925,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.888460, 0.748528, 0.705940, 1.000000 }, // ActiveContent
    { 0.999784, 0.999512, 0.999430, 1.000000 }, // HighlightedContent
    { 0.312725, 0.107220, 0.044675, 1.000000 }, // Information
-   { 0.994700, 0.986573, 0.984100, 1.000000 }, // Infinity
+   { 0.994750, 0.986700, 0.984250, 1.000000 }, // Infinity
 // Hue 15
    { 0.996672, 0.986064, 0.982528, 1.000000 }, // PrimaryFill
    { 0.986120, 0.954890, 0.944480, 1.000000 }, // InactiveFill
@@ -16948,7 +16948,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.890000, 0.755000, 0.710000, 1.000000 }, // ActiveContent
    { 0.999725, 0.999388, 0.999275, 1.000000 }, // HighlightedContent
    { 0.309750, 0.110625, 0.044250, 1.000000 }, // Information
-   { 0.990000, 0.975000, 0.970000, 1.000000 }, // Infinity
+   { 0.994650, 0.986625, 0.983950, 1.000000 }, // Infinity
 // Hue 16
    { 0.996646, 0.986194, 0.982394, 1.000000 }, // PrimaryFill
    { 0.985861, 0.954756, 0.943445, 1.000000 }, // InactiveFill
@@ -16971,7 +16971,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.886315, 0.749893, 0.700285, 1.000000 }, // ActiveContent
    { 0.999776, 0.999508, 0.999410, 1.000000 }, // HighlightedContent
    { 0.306110, 0.113698, 0.043730, 1.000000 }, // Information
-   { 0.994600, 0.986680, 0.983800, 1.000000 }, // Infinity
+   { 0.994630, 0.986754, 0.983890, 1.000000 }, // Infinity
 // Hue 17
    { 0.996589, 0.986199, 0.982091, 1.000000 }, // PrimaryFill
    { 0.985643, 0.954774, 0.942571, 1.000000 }, // InactiveFill
@@ -16994,7 +16994,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.885160, 0.750484, 0.697240, 1.000000 }, // ActiveContent
    { 0.999773, 0.999506, 0.999401, 1.000000 }, // HighlightedContent
    { 0.302645, 0.116735, 0.043235, 1.000000 }, // Information
-   { 0.994550, 0.986738, 0.983650, 1.000000 }, // Infinity
+   { 0.994560, 0.986763, 0.983680, 1.000000 }, // Infinity
 // Hue 18
    { 0.996531, 0.986212, 0.981789, 1.000000 }, // PrimaryFill
    { 0.985424, 0.954814, 0.941696, 1.000000 }, // InactiveFill
@@ -17017,7 +17017,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.884060, 0.751256, 0.694340, 1.000000 }, // ActiveContent
    { 0.999769, 0.999504, 0.999391, 1.000000 }, // HighlightedContent
    { 0.299180, 0.119672, 0.042740, 1.000000 }, // Information
-   { 0.994450, 0.986680, 0.983350, 1.000000 }, // Infinity
+   { 0.994490, 0.986776, 0.983470, 1.000000 }, // Infinity
 // Hue 19
    { 0.996474, 0.986232, 0.981486, 1.000000 }, // PrimaryFill
    { 0.985205, 0.954876, 0.940821, 1.000000 }, // InactiveFill
@@ -17040,7 +17040,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.882905, 0.751972, 0.691295, 1.000000 }, // ActiveContent
    { 0.999765, 0.999503, 0.999381, 1.000000 }, // HighlightedContent
    { 0.295715, 0.122511, 0.042245, 1.000000 }, // Information
-   { 0.994400, 0.986747, 0.983200, 1.000000 }, // Infinity
+   { 0.994420, 0.986794, 0.983260, 1.000000 }, // Infinity
 // Hue 20
    { 0.996448, 0.986384, 0.981352, 1.000000 }, // PrimaryFill
    { 0.984987, 0.954960, 0.939947, 1.000000 }, // InactiveFill
@@ -17086,7 +17086,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.880485, 0.753365, 0.684915, 1.000000 }, // ActiveContent
    { 0.999758, 0.999501, 0.999362, 1.000000 }, // HighlightedContent
    { 0.288610, 0.127813, 0.041230, 1.000000 }, // Information
-   { 0.994250, 0.986775, 0.982750, 1.000000 }, // Infinity
+   { 0.994280, 0.986844, 0.982840, 1.000000 }, // Infinity
 // Hue 22
    { 0.996333, 0.986462, 0.980747, 1.000000 }, // PrimaryFill
    { 0.984589, 0.955309, 0.938357, 1.000000 }, // InactiveFill
@@ -17109,7 +17109,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.879275, 0.754160, 0.681725, 1.000000 }, // ActiveContent
    { 0.999754, 0.999500, 0.999352, 1.000000 }, // HighlightedContent
    { 0.284970, 0.130272, 0.040710, 1.000000 }, // Information
-   { 0.994200, 0.986853, 0.982600, 1.000000 }, // Infinity
+   { 0.994210, 0.986876, 0.982630, 1.000000 }, // Infinity
 // Hue 23
    { 0.996275, 0.986513, 0.980445, 1.000000 }, // PrimaryFill
    { 0.984371, 0.955456, 0.937483, 1.000000 }, // InactiveFill
@@ -17132,7 +17132,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.878010, 0.754911, 0.678390, 1.000000 }, // ActiveContent
    { 0.999751, 0.999499, 0.999343, 1.000000 }, // HighlightedContent
    { 0.281505, 0.132710, 0.040215, 1.000000 }, // Information
-   { 0.994150, 0.986935, 0.982450, 1.000000 }, // Infinity
+   { 0.994140, 0.986913, 0.982420, 1.000000 }, // Infinity
 // Hue 24
    { 0.996218, 0.986573, 0.980142, 1.000000 }, // PrimaryFill
    { 0.984152, 0.955626, 0.936608, 1.000000 }, // InactiveFill
@@ -17155,7 +17155,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.876690, 0.755622, 0.674910, 1.000000 }, // ActiveContent
    { 0.999747, 0.999499, 0.999333, 1.000000 }, // HighlightedContent
    { 0.278040, 0.135048, 0.039720, 1.000000 }, // Information
-   { 0.994050, 0.986910, 0.982150, 1.000000 }, // Infinity
+   { 0.994070, 0.986954, 0.982210, 1.000000 }, // Infinity
 // Hue 25
    { 0.996128, 0.986529, 0.979672, 1.000000 }, // PrimaryFill
    { 0.983933, 0.955817, 0.935733, 1.000000 }, // InactiveFill
@@ -17201,7 +17201,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.873995, 0.757154, 0.667805, 1.000000 }, // ActiveContent
    { 0.999740, 0.999498, 0.999314, 1.000000 }, // HighlightedContent
    { 0.271110, 0.139428, 0.038730, 1.000000 }, // Information
-   { 0.993900, 0.986987, 0.981700, 1.000000 }, // Infinity
+   { 0.993930, 0.987051, 0.981790, 1.000000 }, // Infinity
 // Hue 27
    { 0.996013, 0.986693, 0.979067, 1.000000 }, // PrimaryFill
    { 0.983456, 0.956158, 0.933824, 1.000000 }, // InactiveFill
@@ -17224,7 +17224,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.872620, 0.757978, 0.664180, 1.000000 }, // ActiveContent
    { 0.999736, 0.999498, 0.999304, 1.000000 }, // HighlightedContent
    { 0.267820, 0.141562, 0.038260, 1.000000 }, // Information
-   { 0.993850, 0.987085, 0.981550, 1.000000 }, // Infinity
+   { 0.993860, 0.987106, 0.981580, 1.000000 }, // Infinity
 // Hue 28
    { 0.995955, 0.986787, 0.978765, 1.000000 }, // PrimaryFill
    { 0.983237, 0.956417, 0.932949, 1.000000 }, // InactiveFill
@@ -17247,7 +17247,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.871245, 0.758877, 0.660555, 1.000000 }, // ActiveContent
    { 0.999732, 0.999499, 0.999294, 1.000000 }, // HighlightedContent
    { 0.264355, 0.143507, 0.037765, 1.000000 }, // Information
-   { 0.993750, 0.987083, 0.981250, 1.000000 }, // Infinity
+   { 0.993790, 0.987166, 0.981370, 1.000000 }, // Infinity
 // Hue 29
    { 0.995898, 0.986889, 0.978462, 1.000000 }, // PrimaryFill
    { 0.983019, 0.956698, 0.932075, 1.000000 }, // InactiveFill
@@ -17270,7 +17270,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.869760, 0.759648, 0.656640, 1.000000 }, // ActiveContent
    { 0.999729, 0.999499, 0.999285, 1.000000 }, // HighlightedContent
    { 0.261065, 0.145451, 0.037295, 1.000000 }, // Information
-   { 0.993700, 0.987190, 0.981100, 1.000000 }, // Infinity
+   { 0.993720, 0.987231, 0.981160, 1.000000 }, // Infinity
 // Hue 30
    { 0.995808, 0.986900, 0.977992, 1.000000 }, // PrimaryFill
    { 0.982840, 0.957100, 0.931360, 1.000000 }, // InactiveFill
@@ -17293,7 +17293,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.890000, 0.800000, 0.710000, 1.000000 }, // ActiveContent
    { 0.999670, 0.999400, 0.999130, 1.000000 }, // HighlightedContent
    { 0.257775, 0.147300, 0.036825, 1.000000 }, // Information
-   { 0.990000, 0.980000, 0.970000, 1.000000 }, // Infinity
+   { 0.993600, 0.987200, 0.980800, 1.000000 }, // Infinity
 // Hue 31
    { 0.995735, 0.986975, 0.977611, 1.000000 }, // PrimaryFill
    { 0.982451, 0.957004, 0.929803, 1.000000 }, // InactiveFill
@@ -17592,7 +17592,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.845065, 0.773232, 0.591535, 1.000000 }, // ActiveContent
    { 0.999677, 0.999528, 0.999149, 1.000000 }, // HighlightedContent
    { 0.218855, 0.165705, 0.031265, 1.000000 }, // Information
-   { 0.992300, 0.987937, 0.976900, 1.000000 }, // Infinity
+   { 0.992350, 0.988015, 0.977050, 1.000000 }, // Infinity
 // Hue 44
    { 0.994377, 0.988003, 0.970477, 1.000000 }, // PrimaryFill
    { 0.977909, 0.960237, 0.911637, 1.000000 }, // InactiveFill
@@ -17615,7 +17615,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.842920, 0.774376, 0.585880, 1.000000 }, // ActiveContent
    { 0.999674, 0.999531, 0.999140, 1.000000 }, // HighlightedContent
    { 0.216265, 0.166833, 0.030895, 1.000000 }, // Information
-   { 0.992200, 0.988040, 0.976600, 1.000000 }, // Infinity
+   { 0.992250, 0.988117, 0.976750, 1.000000 }, // Infinity
 // Hue 45
    { 0.994240, 0.988120, 0.969760, 1.000000 }, // PrimaryFill
    { 0.977600, 0.960800, 0.910400, 1.000000 }, // InactiveFill
@@ -17638,7 +17638,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.890000, 0.845000, 0.710000, 1.000000 }, // ActiveContent
    { 0.999615, 0.999458, 0.998985, 1.000000 }, // HighlightedContent
    { 0.213675, 0.167888, 0.030525, 1.000000 }, // Information
-   { 0.990000, 0.985000, 0.970000, 1.000000 }, // Infinity
+   { 0.992100, 0.988150, 0.976300, 1.000000 }, // Infinity
 // Hue 46
    { 0.994101, 0.988252, 0.969032, 1.000000 }, // PrimaryFill
    { 0.976888, 0.960710, 0.907552, 1.000000 }, // InactiveFill
@@ -17661,7 +17661,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.838410, 0.776712, 0.573990, 1.000000 }, // ActiveContent
    { 0.999663, 0.999534, 0.999111, 1.000000 }, // HighlightedContent
    { 0.211050, 0.168840, 0.030150, 1.000000 }, // Information
-   { 0.991950, 0.988193, 0.975850, 1.000000 }, // Infinity
+   { 0.992010, 0.988281, 0.976030, 1.000000 }, // Infinity
 // Hue 47
    { 0.993931, 0.988342, 0.968136, 1.000000 }, // PrimaryFill
    { 0.976256, 0.960822, 0.905024, 1.000000 }, // InactiveFill
@@ -17684,7 +17684,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.835990, 0.777841, 0.567610, 1.000000 }, // ActiveContent
    { 0.999655, 0.999533, 0.999091, 1.000000 }, // HighlightedContent
    { 0.208425, 0.169718, 0.029775, 1.000000 }, // Information
-   { 0.991800, 0.988247, 0.975400, 1.000000 }, // Infinity
+   { 0.991870, 0.988347, 0.975610, 1.000000 }, // Infinity
 // Hue 48
    { 0.993760, 0.988456, 0.967240, 1.000000 }, // PrimaryFill
    { 0.975624, 0.960998, 0.902496, 1.000000 }, // InactiveFill
@@ -17707,7 +17707,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.833570, 0.779102, 0.561230, 1.000000 }, // ActiveContent
    { 0.999648, 0.999533, 0.999072, 1.000000 }, // HighlightedContent
    { 0.205975, 0.170665, 0.029425, 1.000000 }, // Information
-   { 0.991700, 0.988380, 0.975100, 1.000000 }, // Infinity
+   { 0.991730, 0.988422, 0.975190, 1.000000 }, // Infinity
 // Hue 49
    { 0.993589, 0.988594, 0.966344, 1.000000 }, // PrimaryFill
    { 0.974952, 0.961176, 0.899808, 1.000000 }, // InactiveFill
@@ -17730,7 +17730,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.831040, 0.780352, 0.554560, 1.000000 }, // ActiveContent
    { 0.999641, 0.999533, 0.999053, 1.000000 }, // HighlightedContent
    { 0.203525, 0.171543, 0.029075, 1.000000 }, // Information
-   { 0.991550, 0.988452, 0.974650, 1.000000 }, // Infinity
+   { 0.991590, 0.988506, 0.974770, 1.000000 }, // Infinity
 // Hue 50
    { 0.993419, 0.988757, 0.965448, 1.000000 }, // PrimaryFill
    { 0.974320, 0.961480, 0.897280, 1.000000 }, // InactiveFill
@@ -17753,7 +17753,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.828455, 0.781670, 0.547745, 1.000000 }, // ActiveContent
    { 0.999633, 0.999533, 0.999033, 1.000000 }, // HighlightedContent
    { 0.201250, 0.172500, 0.028750, 1.000000 }, // Information
-   { 0.991400, 0.988533, 0.974200, 1.000000 }, // Infinity
+   { 0.991450, 0.988600, 0.974350, 1.000000 }, // Infinity
 // Hue 51
    { 0.993248, 0.988944, 0.964552, 1.000000 }, // PrimaryFill
    { 0.973728, 0.961906, 0.894912, 1.000000 }, // InactiveFill
@@ -17776,7 +17776,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.825705, 0.782924, 0.540495, 1.000000 }, // ActiveContent
    { 0.999626, 0.999534, 0.999014, 1.000000 }, // HighlightedContent
    { 0.198800, 0.173240, 0.028400, 1.000000 }, // Information
-   { 0.991250, 0.988625, 0.973750, 1.000000 }, // Infinity
+   { 0.991310, 0.988703, 0.973930, 1.000000 }, // Infinity
 // Hue 52
    { 0.993077, 0.989154, 0.963656, 1.000000 }, // PrimaryFill
    { 0.973096, 0.962334, 0.892384, 1.000000 }, // InactiveFill
@@ -17799,7 +17799,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.822955, 0.784327, 0.533245, 1.000000 }, // ActiveContent
    { 0.999619, 0.999535, 0.998995, 1.000000 }, // HighlightedContent
    { 0.196525, 0.174065, 0.028075, 1.000000 }, // Information
-   { 0.991100, 0.988727, 0.973300, 1.000000 }, // Infinity
+   { 0.991170, 0.988815, 0.973510, 1.000000 }, // Infinity
 // Hue 53
    { 0.992907, 0.989390, 0.962760, 1.000000 }, // PrimaryFill
    { 0.972424, 0.962772, 0.889696, 1.000000 }, // InactiveFill
@@ -17822,7 +17822,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.820040, 0.785684, 0.525560, 1.000000 }, // ActiveContent
    { 0.999611, 0.999537, 0.998975, 1.000000 }, // HighlightedContent
    { 0.194250, 0.174825, 0.027750, 1.000000 }, // Information
-   { 0.990900, 0.988777, 0.972700, 1.000000 }, // Infinity
+   { 0.991030, 0.988937, 0.973090, 1.000000 }, // Infinity
 // Hue 54
    { 0.992736, 0.989649, 0.961864, 1.000000 }, // PrimaryFill
    { 0.971712, 0.963226, 0.886848, 1.000000 }, // InactiveFill
@@ -17845,7 +17845,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.817015, 0.787072, 0.517585, 1.000000 }, // ActiveContent
    { 0.999604, 0.999539, 0.998956, 1.000000 }, // HighlightedContent
    { 0.191975, 0.175520, 0.027425, 1.000000 }, // Information
-   { 0.990750, 0.988900, 0.972250, 1.000000 }, // Infinity
+   { 0.990890, 0.989068, 0.972670, 1.000000 }, // Infinity
 // Hue 55
    { 0.992565, 0.989932, 0.960968, 1.000000 }, // PrimaryFill
    { 0.971000, 0.963750, 0.884000, 1.000000 }, // InactiveFill
@@ -17868,7 +17868,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.813935, 0.788563, 0.509465, 1.000000 }, // ActiveContent
    { 0.999597, 0.999542, 0.998937, 1.000000 }, // HighlightedContent
    { 0.189875, 0.176313, 0.027125, 1.000000 }, // Information
-   { 0.990600, 0.989033, 0.971800, 1.000000 }, // Infinity
+   { 0.990750, 0.989208, 0.972250, 1.000000 }, // Infinity
 // Hue 56
    { 0.992395, 0.990240, 0.960072, 1.000000 }, // PrimaryFill
    { 0.970248, 0.964298, 0.880992, 1.000000 }, // InactiveFill
@@ -17891,7 +17891,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.810690, 0.790038, 0.500910, 1.000000 }, // ActiveContent
    { 0.999589, 0.999545, 0.998917, 1.000000 }, // HighlightedContent
    { 0.187775, 0.177045, 0.026825, 1.000000 }, // Information
-   { 0.990400, 0.989120, 0.971200, 1.000000 }, // Infinity
+   { 0.990610, 0.989358, 0.971830, 1.000000 }, // Infinity
 // Hue 57
    { 0.992192, 0.990533, 0.959008, 1.000000 }, // PrimaryFill
    { 0.969576, 0.965012, 0.878304, 1.000000 }, // InactiveFill
@@ -17914,7 +17914,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.807335, 0.791572, 0.492065, 1.000000 }, // ActiveContent
    { 0.999582, 0.999548, 0.998898, 1.000000 }, // HighlightedContent
    { 0.185675, 0.177718, 0.026525, 1.000000 }, // Information
-   { 0.990200, 0.989220, 0.970600, 1.000000 }, // Infinity
+   { 0.990470, 0.989517, 0.971410, 1.000000 }, // Infinity
 // Hue 58
    { 0.991989, 0.990855, 0.957944, 1.000000 }, // PrimaryFill
    { 0.968864, 0.965750, 0.875456, 1.000000 }, // InactiveFill
@@ -17937,7 +17937,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.803815, 0.793114, 0.482785, 1.000000 }, // ActiveContent
    { 0.999575, 0.999551, 0.998879, 1.000000 }, // HighlightedContent
    { 0.183575, 0.178330, 0.026225, 1.000000 }, // Information
-   { 0.990050, 0.989387, 0.970150, 1.000000 }, // Infinity
+   { 0.990330, 0.989685, 0.970990, 1.000000 }, // Infinity
 // Hue 59
    { 0.991819, 0.991239, 0.957048, 1.000000 }, // PrimaryFill
    { 0.968152, 0.966560, 0.872608, 1.000000 }, // InactiveFill
@@ -17960,7 +17960,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.800185, 0.794736, 0.473215, 1.000000 }, // ActiveContent
    { 0.999567, 0.999556, 0.998859, 1.000000 }, // HighlightedContent
    { 0.181475, 0.178883, 0.025925, 1.000000 }, // Information
-   { 0.990050, 0.989718, 0.970150, 1.000000 }, // Infinity
+   { 0.990190, 0.989863, 0.970570, 1.000000 }, // Infinity
 // Hue 60
    { 0.991680, 0.991680, 0.956320, 1.000000 }, // PrimaryFill
    { 0.967520, 0.967520, 0.870080, 1.000000 }, // InactiveFill
@@ -18006,7 +18006,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.791967, 0.797490, 0.466110, 1.000000 }, // ActiveContent
    { 0.999552, 0.999564, 0.998850, 1.000000 }, // HighlightedContent
    { 0.177365, 0.179935, 0.025705, 1.000000 }, // Information
-   { 0.989718, 0.990050, 0.970150, 1.000000 }, // Infinity
+   { 0.989701, 0.990033, 0.970100, 1.000000 }, // Infinity
 // Hue 62
    { 0.990655, 0.991814, 0.957026, 1.000000 }, // PrimaryFill
    { 0.964785, 0.967987, 0.871947, 1.000000 }, // InactiveFill
@@ -18029,7 +18029,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.787662, 0.798645, 0.469155, 1.000000 }, // ActiveContent
    { 0.999544, 0.999567, 0.998859, 1.000000 }, // HighlightedContent
    { 0.175338, 0.180495, 0.025785, 1.000000 }, // Information
-   { 0.989387, 0.990050, 0.970150, 1.000000 }, // Infinity
+   { 0.989458, 0.990117, 0.970350, 1.000000 }, // Infinity
 // Hue 63
    { 0.990176, 0.991898, 0.957462, 1.000000 }, // PrimaryFill
    { 0.963476, 0.968240, 0.872960, 1.000000 }, // InactiveFill
@@ -18052,7 +18052,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.783361, 0.799745, 0.472055, 1.000000 }, // ActiveContent
    { 0.999536, 0.999571, 0.998869, 1.000000 }, // HighlightedContent
    { 0.173296, 0.181055, 0.025865, 1.000000 }, // Information
-   { 0.989055, 0.990050, 0.970150, 1.000000 }, // Infinity
+   { 0.989165, 0.990150, 0.970450, 1.000000 }, // Infinity
 // Hue 64
    { 0.989709, 0.991981, 0.957899, 1.000000 }, // PrimaryFill
    { 0.962192, 0.968493, 0.873973, 1.000000 }, // InactiveFill
@@ -18075,7 +18075,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.779058, 0.800790, 0.474810, 1.000000 }, // ActiveContent
    { 0.999528, 0.999575, 0.998879, 1.000000 }, // HighlightedContent
    { 0.171237, 0.181615, 0.025945, 1.000000 }, // Information
-   { 0.988723, 0.990050, 0.970150, 1.000000 }, // Infinity
+   { 0.988874, 0.990183, 0.970550, 1.000000 }, // Infinity
 // Hue 65
    { 0.989253, 0.992064, 0.958336, 1.000000 }, // PrimaryFill
    { 0.960933, 0.968747, 0.874987, 1.000000 }, // InactiveFill
@@ -18098,7 +18098,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.774875, 0.801890, 0.477710, 1.000000 }, // ActiveContent
    { 0.999521, 0.999578, 0.998888, 1.000000 }, // HighlightedContent
    { 0.169163, 0.182175, 0.026025, 1.000000 }, // Information
-   { 0.988392, 0.990050, 0.970150, 1.000000 }, // Infinity
+   { 0.988586, 0.990217, 0.970650, 1.000000 }, // Infinity
 // Hue 66
    { 0.988810, 0.992147, 0.958773, 1.000000 }, // PrimaryFill
    { 0.959700, 0.969000, 0.876000, 1.000000 }, // InactiveFill
@@ -18121,7 +18121,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.770688, 0.802935, 0.480465, 1.000000 }, // ActiveContent
    { 0.999514, 0.999582, 0.998898, 1.000000 }, // HighlightedContent
    { 0.167072, 0.182735, 0.026105, 1.000000 }, // Information
-   { 0.988060, 0.990050, 0.970150, 1.000000 }, // Infinity
+   { 0.988300, 0.990250, 0.970750, 1.000000 }, // Infinity
 // Hue 67
    { 0.988378, 0.992230, 0.959210, 1.000000 }, // PrimaryFill
    { 0.958492, 0.969253, 0.877013, 1.000000 }, // InactiveFill
@@ -18144,7 +18144,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.766493, 0.803925, 0.483075, 1.000000 }, // ActiveContent
    { 0.999507, 0.999586, 0.998908, 1.000000 }, // HighlightedContent
    { 0.164966, 0.183295, 0.026185, 1.000000 }, // Information
-   { 0.987728, 0.990050, 0.970150, 1.000000 }, // Infinity
+   { 0.988016, 0.990283, 0.970850, 1.000000 }, // Infinity
 // Hue 68
    { 0.987958, 0.992314, 0.959646, 1.000000 }, // PrimaryFill
    { 0.957309, 0.969507, 0.878027, 1.000000 }, // InactiveFill
@@ -18167,7 +18167,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.762418, 0.804970, 0.485830, 1.000000 }, // ActiveContent
    { 0.999500, 0.999589, 0.998917, 1.000000 }, // HighlightedContent
    { 0.162843, 0.183855, 0.026265, 1.000000 }, // Information
-   { 0.987460, 0.990100, 0.970300, 1.000000 }, // Infinity
+   { 0.987734, 0.990317, 0.970950, 1.000000 }, // Infinity
 // Hue 69
    { 0.987550, 0.992397, 0.960083, 1.000000 }, // PrimaryFill
    { 0.956152, 0.969760, 0.879040, 1.000000 }, // InactiveFill
@@ -18190,7 +18190,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.758332, 0.805960, 0.488440, 1.000000 }, // ActiveContent
    { 0.999493, 0.999593, 0.998927, 1.000000 }, // HighlightedContent
    { 0.160705, 0.184415, 0.026345, 1.000000 }, // Information
-   { 0.987195, 0.990150, 0.970450, 1.000000 }, // Infinity
+   { 0.987455, 0.990350, 0.971050, 1.000000 }, // Infinity
 // Hue 70
    { 0.987153, 0.992480, 0.960520, 1.000000 }, // PrimaryFill
    { 0.955020, 0.970013, 0.880053, 1.000000 }, // InactiveFill
@@ -18213,7 +18213,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.754230, 0.806895, 0.490905, 1.000000 }, // ActiveContent
    { 0.999487, 0.999597, 0.998937, 1.000000 }, // HighlightedContent
    { 0.158550, 0.184975, 0.026425, 1.000000 }, // Information
-   { 0.986933, 0.990200, 0.970600, 1.000000 }, // Infinity
+   { 0.987178, 0.990383, 0.971150, 1.000000 }, // Infinity
 // Hue 71
    { 0.986769, 0.992563, 0.960957, 1.000000 }, // PrimaryFill
    { 0.953913, 0.970267, 0.881067, 1.000000 }, // InactiveFill
@@ -18236,7 +18236,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.750251, 0.807885, 0.493515, 1.000000 }, // ActiveContent
    { 0.999480, 0.999600, 0.998946, 1.000000 }, // HighlightedContent
    { 0.156380, 0.185535, 0.026505, 1.000000 }, // Information
-   { 0.986675, 0.990250, 0.970750, 1.000000 }, // Infinity
+   { 0.986903, 0.990417, 0.971250, 1.000000 }, // Infinity
 // Hue 72
    { 0.986396, 0.992646, 0.961394, 1.000000 }, // PrimaryFill
    { 0.952832, 0.970520, 0.882080, 1.000000 }, // InactiveFill
@@ -18259,7 +18259,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.746252, 0.808820, 0.495980, 1.000000 }, // ActiveContent
    { 0.999474, 0.999604, 0.998956, 1.000000 }, // HighlightedContent
    { 0.154193, 0.186095, 0.026585, 1.000000 }, // Information
-   { 0.986420, 0.990300, 0.970900, 1.000000 }, // Infinity
+   { 0.986630, 0.990450, 0.971350, 1.000000 }, // Infinity
 // Hue 73
    { 0.986035, 0.992730, 0.961830, 1.000000 }, // PrimaryFill
    { 0.951776, 0.970773, 0.883093, 1.000000 }, // InactiveFill
@@ -18282,7 +18282,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.742305, 0.809755, 0.498445, 1.000000 }, // ActiveContent
    { 0.999469, 0.999608, 0.998966, 1.000000 }, // HighlightedContent
    { 0.151991, 0.186655, 0.026665, 1.000000 }, // Information
-   { 0.986168, 0.990350, 0.971050, 1.000000 }, // Infinity
+   { 0.986359, 0.990483, 0.971450, 1.000000 }, // Infinity
 // Hue 74
    { 0.985686, 0.992813, 0.962267, 1.000000 }, // PrimaryFill
    { 0.950745, 0.971027, 0.884107, 1.000000 }, // InactiveFill
@@ -18305,7 +18305,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.738332, 0.810635, 0.500765, 1.000000 }, // ActiveContent
    { 0.999463, 0.999611, 0.998975, 1.000000 }, // HighlightedContent
    { 0.149772, 0.187215, 0.026745, 1.000000 }, // Information
-   { 0.985920, 0.990400, 0.971200, 1.000000 }, // Infinity
+   { 0.986091, 0.990517, 0.971550, 1.000000 }, // Infinity
 // Hue 75
    { 0.985414, 0.992928, 0.962872, 1.000000 }, // PrimaryFill
    { 0.949810, 0.971320, 0.885280, 1.000000 }, // InactiveFill
@@ -18328,7 +18328,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.845000, 0.890000, 0.710000, 1.000000 }, // ActiveContent
    { 0.999380, 0.999560, 0.998840, 1.000000 }, // HighlightedContent
    { 0.147675, 0.187950, 0.026850, 1.000000 }, // Information
-   { 0.985000, 0.990000, 0.970000, 1.000000 }, // Infinity
+   { 0.985750, 0.990500, 0.971500, 1.000000 }, // Infinity
 // Hue 76
    { 0.984936, 0.992939, 0.962928, 1.000000 }, // PrimaryFill
    { 0.948659, 0.971477, 0.885909, 1.000000 }, // InactiveFill
@@ -18351,7 +18351,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.730531, 0.812395, 0.505405, 1.000000 }, // ActiveContent
    { 0.999447, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.145224, 0.188253, 0.026893, 1.000000 }, // Information
-   { 0.985510, 0.990550, 0.971650, 1.000000 }, // Infinity
+   { 0.985582, 0.990597, 0.971790, 1.000000 }, // Infinity
 // Hue 77
    { 0.984530, 0.992981, 0.963152, 1.000000 }, // PrimaryFill
    { 0.947598, 0.971675, 0.886699, 1.000000 }, // InactiveFill
@@ -18374,7 +18374,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.726703, 0.813275, 0.507725, 1.000000 }, // ActiveContent
    { 0.999436, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.142897, 0.188732, 0.026962, 1.000000 }, // Information
-   { 0.985273, 0.990600, 0.971800, 1.000000 }, // Infinity
+   { 0.985341, 0.990643, 0.971930, 1.000000 }, // Infinity
 // Hue 78
    { 0.984130, 0.993024, 0.963376, 1.000000 }, // PrimaryFill
    { 0.946557, 0.971872, 0.887488, 1.000000 }, // InactiveFill
@@ -18397,7 +18397,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.722922, 0.814155, 0.510045, 1.000000 }, // ActiveContent
    { 0.999426, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.140556, 0.189210, 0.027030, 1.000000 }, // Information
-   { 0.985040, 0.990650, 0.971950, 1.000000 }, // Infinity
+   { 0.985104, 0.990690, 0.972070, 1.000000 }, // Infinity
 // Hue 79
    { 0.983736, 0.993067, 0.963600, 1.000000 }, // PrimaryFill
    { 0.945535, 0.972069, 0.888277, 1.000000 }, // InactiveFill
@@ -18420,7 +18420,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.719106, 0.814980, 0.512220, 1.000000 }, // ActiveContent
    { 0.999415, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.138202, 0.189688, 0.027098, 1.000000 }, // Information
-   { 0.984810, 0.990700, 0.972100, 1.000000 }, // Infinity
+   { 0.984870, 0.990737, 0.972210, 1.000000 }, // Infinity
 // Hue 80
    { 0.983348, 0.993109, 0.963824, 1.000000 }, // PrimaryFill
    { 0.944533, 0.972267, 0.889067, 1.000000 }, // InactiveFill
@@ -18443,7 +18443,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.715335, 0.815805, 0.514395, 1.000000 }, // ActiveContent
    { 0.999405, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.135833, 0.190167, 0.027167, 1.000000 }, // Information
-   { 0.984583, 0.990750, 0.972250, 1.000000 }, // Infinity
+   { 0.984639, 0.990783, 0.972350, 1.000000 }, // Infinity
 // Hue 81
    { 0.982966, 0.993152, 0.964048, 1.000000 }, // PrimaryFill
    { 0.943551, 0.972464, 0.889856, 1.000000 }, // InactiveFill
@@ -18466,7 +18466,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.711609, 0.816630, 0.516570, 1.000000 }, // ActiveContent
    { 0.999394, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.133452, 0.190645, 0.027235, 1.000000 }, // Information
-   { 0.984360, 0.990800, 0.972400, 1.000000 }, // Infinity
+   { 0.984411, 0.990830, 0.972490, 1.000000 }, // Infinity
 // Hue 82
    { 0.982590, 0.993195, 0.964272, 1.000000 }, // PrimaryFill
    { 0.942589, 0.972661, 0.890645, 1.000000 }, // InactiveFill
@@ -18489,7 +18489,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.707840, 0.817400, 0.518600, 1.000000 }, // ActiveContent
    { 0.999384, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.131056, 0.191123, 0.027303, 1.000000 }, // Information
-   { 0.984140, 0.990850, 0.972550, 1.000000 }, // Infinity
+   { 0.984186, 0.990877, 0.972630, 1.000000 }, // Infinity
 // Hue 83
    { 0.982220, 0.993237, 0.964496, 1.000000 }, // PrimaryFill
    { 0.941646, 0.972859, 0.891435, 1.000000 }, // InactiveFill
@@ -18512,7 +18512,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.704203, 0.818225, 0.520775, 1.000000 }, // ActiveContent
    { 0.999373, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.128647, 0.191602, 0.027372, 1.000000 }, // Information
-   { 0.983923, 0.990900, 0.972700, 1.000000 }, // Infinity
+   { 0.983965, 0.990923, 0.972770, 1.000000 }, // Infinity
 // Hue 84
    { 0.981856, 0.993280, 0.964720, 1.000000 }, // PrimaryFill
    { 0.940723, 0.973056, 0.892224, 1.000000 }, // InactiveFill
@@ -18535,7 +18535,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.700519, 0.818995, 0.522805, 1.000000 }, // ActiveContent
    { 0.999363, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.126224, 0.192080, 0.027440, 1.000000 }, // Information
-   { 0.983710, 0.990950, 0.972850, 1.000000 }, // Infinity
+   { 0.983746, 0.990970, 0.972910, 1.000000 }, // Infinity
 // Hue 85
    { 0.981498, 0.993323, 0.964944, 1.000000 }, // PrimaryFill
    { 0.939820, 0.973253, 0.893013, 1.000000 }, // InactiveFill
@@ -18558,7 +18558,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.696878, 0.819765, 0.524835, 1.000000 }, // ActiveContent
    { 0.999352, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.123788, 0.192558, 0.027508, 1.000000 }, // Information
-   { 0.983500, 0.991000, 0.973000, 1.000000 }, // Infinity
+   { 0.983531, 0.991017, 0.973050, 1.000000 }, // Infinity
 // Hue 86
    { 0.981146, 0.993365, 0.965168, 1.000000 }, // PrimaryFill
    { 0.938937, 0.973451, 0.893803, 1.000000 }, // InactiveFill
@@ -18581,7 +18581,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.693278, 0.820535, 0.526865, 1.000000 }, // ActiveContent
    { 0.999342, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.121337, 0.193037, 0.027577, 1.000000 }, // Information
-   { 0.983293, 0.991050, 0.973150, 1.000000 }, // Infinity
+   { 0.983318, 0.991063, 0.973190, 1.000000 }, // Infinity
 // Hue 87
    { 0.980801, 0.993408, 0.965392, 1.000000 }, // PrimaryFill
    { 0.938073, 0.973648, 0.894592, 1.000000 }, // InactiveFill
@@ -18604,7 +18604,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.689625, 0.821250, 0.528750, 1.000000 }, // ActiveContent
    { 0.999331, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.118874, 0.193515, 0.027645, 1.000000 }, // Information
-   { 0.983090, 0.991100, 0.973300, 1.000000 }, // Infinity
+   { 0.983109, 0.991110, 0.973330, 1.000000 }, // Infinity
 // Hue 88
    { 0.980461, 0.993451, 0.965616, 1.000000 }, // PrimaryFill
    { 0.937229, 0.973845, 0.895381, 1.000000 }, // InactiveFill
@@ -18627,7 +18627,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.686011, 0.821965, 0.530635, 1.000000 }, // ActiveContent
    { 0.999321, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.116396, 0.193993, 0.027713, 1.000000 }, // Information
-   { 0.982890, 0.991150, 0.973450, 1.000000 }, // Infinity
+   { 0.982903, 0.991157, 0.973470, 1.000000 }, // Infinity
 // Hue 89
    { 0.980225, 0.993525, 0.966008, 1.000000 }, // PrimaryFill
    { 0.936405, 0.974043, 0.896171, 1.000000 }, // InactiveFill
@@ -18650,7 +18650,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.682535, 0.822735, 0.532665, 1.000000 }, // ActiveContent
    { 0.999310, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.113905, 0.194472, 0.027782, 1.000000 }, // Information
-   { 0.982693, 0.991200, 0.973600, 1.000000 }, // Infinity
+   { 0.982700, 0.991203, 0.973610, 1.000000 }, // Infinity
 // Hue 90
    { 0.979900, 0.993568, 0.966232, 1.000000 }, // PrimaryFill
    { 0.935700, 0.974280, 0.897120, 1.000000 }, // InactiveFill
@@ -18673,7 +18673,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.800000, 0.890000, 0.710000, 1.000000 }, // ActiveContent
    { 0.999200, 0.999560, 0.998840, 1.000000 }, // HighlightedContent
    { 0.111500, 0.195125, 0.027875, 1.000000 }, // Information
-   { 0.980000, 0.990000, 0.970000, 1.000000 }, // Infinity
+   { 0.982400, 0.991200, 0.973600, 1.000000 }, // Infinity
 // Hue 91
    { 0.979533, 0.993596, 0.966378, 1.000000 }, // PrimaryFill
    { 0.934713, 0.974397, 0.897589, 1.000000 }, // InactiveFill
@@ -18696,7 +18696,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.675403, 0.824110, 0.536290, 1.000000 }, // ActiveContent
    { 0.999296, 0.999619, 0.998995, 1.000000 }, // HighlightedContent
    { 0.108817, 0.195312, 0.027902, 1.000000 }, // Information
-   { 0.982208, 0.991250, 0.973750, 1.000000 }, // Infinity
+   { 0.982296, 0.991293, 0.973880, 1.000000 }, // Infinity
 // Hue 92
    { 0.979170, 0.993623, 0.966523, 1.000000 }, // PrimaryFill
    { 0.933842, 0.974555, 0.898219, 1.000000 }, // InactiveFill
@@ -18719,7 +18719,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.671945, 0.824825, 0.538175, 1.000000 }, // ActiveContent
    { 0.999293, 0.999622, 0.999004, 1.000000 }, // HighlightedContent
    { 0.106223, 0.195673, 0.027953, 1.000000 }, // Information
-   { 0.982020, 0.991300, 0.973900, 1.000000 }, // Infinity
+   { 0.982096, 0.991337, 0.974010, 1.000000 }, // Infinity
 // Hue 93
    { 0.978811, 0.993651, 0.966669, 1.000000 }, // PrimaryFill
    { 0.932987, 0.974712, 0.898848, 1.000000 }, // InactiveFill
@@ -18742,7 +18742,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.668422, 0.825485, 0.539915, 1.000000 }, // ActiveContent
    { 0.999289, 0.999626, 0.999014, 1.000000 }, // HighlightedContent
    { 0.103619, 0.196035, 0.028005, 1.000000 }, // Information
-   { 0.981835, 0.991350, 0.974050, 1.000000 }, // Infinity
+   { 0.981898, 0.991380, 0.974140, 1.000000 }, // Infinity
 // Hue 94
    { 0.978456, 0.993679, 0.966814, 1.000000 }, // PrimaryFill
    { 0.932147, 0.974869, 0.899477, 1.000000 }, // InactiveFill
@@ -18765,7 +18765,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.665040, 0.826200, 0.541800, 1.000000 }, // ActiveContent
    { 0.999286, 0.999630, 0.999024, 1.000000 }, // HighlightedContent
    { 0.101004, 0.196397, 0.028057, 1.000000 }, // Information
-   { 0.981653, 0.991400, 0.974200, 1.000000 }, // Infinity
+   { 0.981703, 0.991423, 0.974270, 1.000000 }, // Infinity
 // Hue 95
    { 0.978216, 0.993739, 0.967128, 1.000000 }, // PrimaryFill
    { 0.931323, 0.975027, 0.900107, 1.000000 }, // InactiveFill
@@ -18788,7 +18788,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.661590, 0.826860, 0.543540, 1.000000 }, // ActiveContent
    { 0.999283, 0.999633, 0.999033, 1.000000 }, // HighlightedContent
    { 0.098379, 0.196758, 0.028108, 1.000000 }, // Information
-   { 0.981475, 0.991450, 0.974350, 1.000000 }, // Infinity
+   { 0.981511, 0.991467, 0.974400, 1.000000 }, // Infinity
 // Hue 96
    { 0.977871, 0.993766, 0.967274, 1.000000 }, // PrimaryFill
    { 0.930515, 0.975184, 0.900736, 1.000000 }, // InactiveFill
@@ -18811,7 +18811,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.658176, 0.827520, 0.545280, 1.000000 }, // ActiveContent
    { 0.999281, 0.999637, 0.999043, 1.000000 }, // HighlightedContent
    { 0.095744, 0.197120, 0.028160, 1.000000 }, // Information
-   { 0.981300, 0.991500, 0.974500, 1.000000 }, // Infinity
+   { 0.981322, 0.991510, 0.974530, 1.000000 }, // Infinity
 // Hue 97
    { 0.977530, 0.993794, 0.967419, 1.000000 }, // PrimaryFill
    { 0.929723, 0.975341, 0.901365, 1.000000 }, // InactiveFill
@@ -18834,7 +18834,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.654688, 0.828125, 0.546875, 1.000000 }, // ActiveContent
    { 0.999278, 0.999641, 0.999053, 1.000000 }, // HighlightedContent
    { 0.093099, 0.197482, 0.028212, 1.000000 }, // Information
-   { 0.981128, 0.991550, 0.974650, 1.000000 }, // Infinity
+   { 0.981136, 0.991553, 0.974660, 1.000000 }, // Infinity
 // Hue 98
    { 0.977192, 0.993822, 0.967565, 1.000000 }, // PrimaryFill
    { 0.928946, 0.975499, 0.901995, 1.000000 }, // InactiveFill
@@ -18857,7 +18857,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.651344, 0.828785, 0.548615, 1.000000 }, // ActiveContent
    { 0.999276, 0.999644, 0.999062, 1.000000 }, // HighlightedContent
    { 0.090443, 0.197843, 0.028263, 1.000000 }, // Information
-   { 0.980960, 0.991600, 0.974800, 1.000000 }, // Infinity
+   { 0.980952, 0.991597, 0.974790, 1.000000 }, // Infinity
 // Hue 99
    { 0.976859, 0.993850, 0.967710, 1.000000 }, // PrimaryFill
    { 0.928185, 0.975656, 0.902624, 1.000000 }, // InactiveFill
@@ -18880,7 +18880,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.647923, 0.829390, 0.550210, 1.000000 }, // ActiveContent
    { 0.999274, 0.999648, 0.999072, 1.000000 }, // HighlightedContent
    { 0.087777, 0.198205, 0.028315, 1.000000 }, // Information
-   { 0.980680, 0.991600, 0.974800, 1.000000 }, // Infinity
+   { 0.980772, 0.991640, 0.974920, 1.000000 }, // Infinity
 // Hue 100
    { 0.976530, 0.993877, 0.967856, 1.000000 }, // PrimaryFill
    { 0.927440, 0.975813, 0.903253, 1.000000 }, // InactiveFill
@@ -18903,7 +18903,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.644650, 0.830050, 0.551950, 1.000000 }, // ActiveContent
    { 0.999272, 0.999652, 0.999082, 1.000000 }, // HighlightedContent
    { 0.085100, 0.198567, 0.028367, 1.000000 }, // Information
-   { 0.980517, 0.991650, 0.974950, 1.000000 }, // Infinity
+   { 0.980594, 0.991683, 0.975050, 1.000000 }, // Infinity
 // Hue 101
    { 0.976204, 0.993905, 0.968002, 1.000000 }, // PrimaryFill
    { 0.926711, 0.975971, 0.903883, 1.000000 }, // InactiveFill
@@ -18926,7 +18926,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.641297, 0.830655, 0.553545, 1.000000 }, // ActiveContent
    { 0.999270, 0.999655, 0.999091, 1.000000 }, // HighlightedContent
    { 0.082413, 0.198928, 0.028418, 1.000000 }, // Information
-   { 0.980357, 0.991700, 0.975100, 1.000000 }, // Infinity
+   { 0.980420, 0.991727, 0.975180, 1.000000 }, // Infinity
 // Hue 102
    { 0.975883, 0.993933, 0.968147, 1.000000 }, // PrimaryFill
    { 0.925997, 0.976128, 0.904512, 1.000000 }, // InactiveFill
@@ -18949,7 +18949,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.637976, 0.831260, 0.555140, 1.000000 }, // ActiveContent
    { 0.999268, 0.999659, 0.999101, 1.000000 }, // HighlightedContent
    { 0.079716, 0.199290, 0.028470, 1.000000 }, // Information
-   { 0.980200, 0.991750, 0.975250, 1.000000 }, // Infinity
+   { 0.980248, 0.991770, 0.975310, 1.000000 }, // Infinity
 // Hue 103
    { 0.975565, 0.993961, 0.968293, 1.000000 }, // PrimaryFill
    { 0.925299, 0.976285, 0.905141, 1.000000 }, // InactiveFill
@@ -18972,7 +18972,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.634689, 0.831865, 0.556735, 1.000000 }, // ActiveContent
    { 0.999267, 0.999663, 0.999111, 1.000000 }, // HighlightedContent
    { 0.077009, 0.199652, 0.028522, 1.000000 }, // Information
-   { 0.980047, 0.991800, 0.975400, 1.000000 }, // Infinity
+   { 0.980079, 0.991813, 0.975440, 1.000000 }, // Infinity
 // Hue 104
    { 0.975252, 0.993988, 0.968438, 1.000000 }, // PrimaryFill
    { 0.924617, 0.976443, 0.905771, 1.000000 }, // InactiveFill
@@ -18995,7 +18995,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.631434, 0.832470, 0.558330, 1.000000 }, // ActiveContent
    { 0.999266, 0.999666, 0.999120, 1.000000 }, // HighlightedContent
    { 0.074291, 0.200013, 0.028573, 1.000000 }, // Information
-   { 0.979773, 0.991800, 0.975400, 1.000000 }, // Infinity
+   { 0.979913, 0.991857, 0.975570, 1.000000 }, // Infinity
 // Hue 105
    { 0.974808, 0.993984, 0.968416, 1.000000 }, // PrimaryFill
    { 0.924080, 0.976640, 0.906560, 1.000000 }, // InactiveFill
@@ -19018,7 +19018,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.755000, 0.890000, 0.710000, 1.000000 }, // ActiveContent
    { 0.999143, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.071625, 0.200550, 0.028650, 1.000000 }, // Information
-   { 0.975000, 0.990000, 0.970000, 1.000000 }, // Infinity
+   { 0.979625, 0.991850, 0.975550, 1.000000 }, // Infinity
 // Hue 106
    { 0.974691, 0.994057, 0.968797, 1.000000 }, // PrimaryFill
    { 0.923211, 0.976731, 0.906923, 1.000000 }, // InactiveFill
@@ -19041,7 +19041,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.624900, 0.833625, 0.561375, 1.000000 }, // ActiveContent
    { 0.999256, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.068784, 0.200620, 0.028660, 1.000000 }, // Information
-   { 0.979480, 0.991900, 0.975700, 1.000000 }, // Infinity
+   { 0.979573, 0.991937, 0.975810, 1.000000 }, // Infinity
 // Hue 107
    { 0.974445, 0.994097, 0.969010, 1.000000 }, // PrimaryFill
    { 0.922485, 0.976861, 0.907445, 1.000000 }, // InactiveFill
@@ -19064,7 +19064,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.621618, 0.834175, 0.562825, 1.000000 }, // ActiveContent
    { 0.999247, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.065999, 0.200865, 0.028695, 1.000000 }, // Information
-   { 0.979338, 0.991950, 0.975850, 1.000000 }, // Infinity
+   { 0.979398, 0.991973, 0.975920, 1.000000 }, // Infinity
 // Hue 108
    { 0.974205, 0.994138, 0.969222, 1.000000 }, // PrimaryFill
    { 0.921773, 0.976992, 0.907968, 1.000000 }, // InactiveFill
@@ -19087,7 +19087,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.618365, 0.834725, 0.564275, 1.000000 }, // ActiveContent
    { 0.999238, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.063206, 0.201110, 0.028730, 1.000000 }, // Information
-   { 0.979200, 0.992000, 0.976000, 1.000000 }, // Infinity
+   { 0.979226, 0.992010, 0.976030, 1.000000 }, // Infinity
 // Hue 109
    { 0.973971, 0.994178, 0.969435, 1.000000 }, // PrimaryFill
    { 0.921073, 0.977123, 0.908491, 1.000000 }, // InactiveFill
@@ -19110,7 +19110,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.615143, 0.835275, 0.565725, 1.000000 }, // ActiveContent
    { 0.999229, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.060407, 0.201355, 0.028765, 1.000000 }, // Information
-   { 0.978933, 0.992000, 0.976000, 1.000000 }, // Infinity
+   { 0.979056, 0.992047, 0.976140, 1.000000 }, // Infinity
 // Hue 110
    { 0.973743, 0.994219, 0.969648, 1.000000 }, // PrimaryFill
    { 0.920387, 0.977253, 0.909013, 1.000000 }, // InactiveFill
@@ -19133,7 +19133,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.611950, 0.835825, 0.567175, 1.000000 }, // ActiveContent
    { 0.999220, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.057600, 0.201600, 0.028800, 1.000000 }, // Information
-   { 0.978800, 0.992050, 0.976150, 1.000000 }, // Infinity
+   { 0.978889, 0.992083, 0.976250, 1.000000 }, // Infinity
 // Hue 111
    { 0.973521, 0.994259, 0.969861, 1.000000 }, // PrimaryFill
    { 0.919713, 0.977384, 0.909536, 1.000000 }, // InactiveFill
@@ -19156,7 +19156,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.608788, 0.836375, 0.568625, 1.000000 }, // ActiveContent
    { 0.999211, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.054787, 0.201845, 0.028835, 1.000000 }, // Information
-   { 0.978670, 0.992100, 0.976300, 1.000000 }, // Infinity
+   { 0.978724, 0.992120, 0.976360, 1.000000 }, // Infinity
 // Hue 112
    { 0.973304, 0.994300, 0.970074, 1.000000 }, // PrimaryFill
    { 0.919053, 0.977515, 0.910059, 1.000000 }, // InactiveFill
@@ -19179,7 +19179,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.605655, 0.836925, 0.570075, 1.000000 }, // ActiveContent
    { 0.999202, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.051966, 0.202090, 0.028870, 1.000000 }, // Information
-   { 0.978543, 0.992150, 0.976450, 1.000000 }, // Infinity
+   { 0.978562, 0.992157, 0.976470, 1.000000 }, // Infinity
 // Hue 113
    { 0.973093, 0.994340, 0.970286, 1.000000 }, // PrimaryFill
    { 0.918405, 0.977645, 0.910581, 1.000000 }, // InactiveFill
@@ -19202,7 +19202,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.602418, 0.837420, 0.571380, 1.000000 }, // ActiveContent
    { 0.999193, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.049139, 0.202335, 0.028905, 1.000000 }, // Information
-   { 0.978282, 0.992150, 0.976450, 1.000000 }, // Infinity
+   { 0.978402, 0.992193, 0.976580, 1.000000 }, // Infinity
 // Hue 114
    { 0.972887, 0.994381, 0.970499, 1.000000 }, // PrimaryFill
    { 0.917771, 0.977776, 0.911104, 1.000000 }, // InactiveFill
@@ -19225,7 +19225,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.599344, 0.837970, 0.572830, 1.000000 }, // ActiveContent
    { 0.999184, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.046304, 0.202580, 0.028940, 1.000000 }, // Information
-   { 0.978160, 0.992200, 0.976600, 1.000000 }, // Infinity
+   { 0.978244, 0.992230, 0.976690, 1.000000 }, // Infinity
 // Hue 115
    { 0.972688, 0.994421, 0.970712, 1.000000 }, // PrimaryFill
    { 0.917150, 0.977907, 0.911627, 1.000000 }, // InactiveFill
@@ -19248,7 +19248,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.596163, 0.838465, 0.574135, 1.000000 }, // ActiveContent
    { 0.999175, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.043463, 0.202825, 0.028975, 1.000000 }, // Information
-   { 0.978042, 0.992250, 0.976750, 1.000000 }, // Infinity
+   { 0.978089, 0.992267, 0.976800, 1.000000 }, // Infinity
 // Hue 116
    { 0.972494, 0.994462, 0.970925, 1.000000 }, // PrimaryFill
    { 0.916542, 0.978037, 0.912149, 1.000000 }, // InactiveFill
@@ -19271,7 +19271,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.593147, 0.839015, 0.575585, 1.000000 }, // ActiveContent
    { 0.999166, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.040614, 0.203070, 0.029010, 1.000000 }, // Information
-   { 0.977783, 0.992250, 0.976750, 1.000000 }, // Infinity
+   { 0.977936, 0.992303, 0.976910, 1.000000 }, // Infinity
 // Hue 117
    { 0.972306, 0.994502, 0.971138, 1.000000 }, // PrimaryFill
    { 0.915947, 0.978168, 0.912672, 1.000000 }, // InactiveFill
@@ -19294,7 +19294,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.590021, 0.839510, 0.576890, 1.000000 }, // ActiveContent
    { 0.999157, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.037759, 0.203315, 0.029045, 1.000000 }, // Information
-   { 0.977670, 0.992300, 0.976900, 1.000000 }, // Infinity
+   { 0.977786, 0.992340, 0.977020, 1.000000 }, // Infinity
 // Hue 118
    { 0.972123, 0.994543, 0.971350, 1.000000 }, // PrimaryFill
    { 0.915365, 0.978299, 0.913195, 1.000000 }, // InactiveFill
@@ -19317,7 +19317,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.586922, 0.840005, 0.578195, 1.000000 }, // ActiveContent
    { 0.999148, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.034896, 0.203560, 0.029080, 1.000000 }, // Information
-   { 0.977560, 0.992350, 0.977050, 1.000000 }, // Infinity
+   { 0.977638, 0.992377, 0.977130, 1.000000 }, // Infinity
 // Hue 119
    { 0.971947, 0.994583, 0.971563, 1.000000 }, // PrimaryFill
    { 0.914796, 0.978429, 0.913717, 1.000000 }, // InactiveFill
@@ -19340,7 +19340,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.583850, 0.840500, 0.579500, 1.000000 }, // ActiveContent
    { 0.999139, 0.999670, 0.999130, 1.000000 }, // HighlightedContent
    { 0.032027, 0.203805, 0.029115, 1.000000 }, // Information
-   { 0.977305, 0.992350, 0.977050, 1.000000 }, // Infinity
+   { 0.977493, 0.992413, 0.977240, 1.000000 }, // Infinity
 // Hue 120
    { 0.971608, 0.994592, 0.971608, 1.000000 }, // PrimaryFill
    { 0.914400, 0.978600, 0.914400, 1.000000 }, // InactiveFill
@@ -19363,7 +19363,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.710000, 0.890000, 0.710000, 1.000000 }, // ActiveContent
    { 0.998985, 0.999615, 0.998985, 1.000000 }, // HighlightedContent
    { 0.029175, 0.204225, 0.029175, 1.000000 }, // Information
-   { 0.970000, 0.990000, 0.970000, 1.000000 }, // Infinity
+   { 0.977200, 0.992400, 0.977200, 1.000000 }, // Infinity
 // Hue 121
    { 0.971709, 0.994611, 0.972091, 1.000000 }, // PrimaryFill
    { 0.914069, 0.978517, 0.915143, 1.000000 }, // InactiveFill
@@ -19386,7 +19386,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.580370, 0.840830, 0.584711, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999139, 1.000000 }, // HighlightedContent
    { 0.029138, 0.203968, 0.032052, 1.000000 }, // Information
-   { 0.977200, 0.992400, 0.977453, 1.000000 }, // Infinity
+   { 0.977320, 0.992440, 0.977572, 1.000000 }, // Infinity
 // Hue 122
    { 0.971642, 0.994598, 0.972407, 1.000000 }, // PrimaryFill
    { 0.913899, 0.978475, 0.916051, 1.000000 }, // InactiveFill
@@ -19409,7 +19409,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.579935, 0.840665, 0.588626, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999148, 1.000000 }, // HighlightedContent
    { 0.029127, 0.203887, 0.034952, 1.000000 }, // Information
-   { 0.977200, 0.992400, 0.977707, 1.000000 }, // Infinity
+   { 0.977290, 0.992430, 0.977795, 1.000000 }, // Infinity
 // Hue 123
    { 0.971574, 0.994586, 0.972725, 1.000000 }, // PrimaryFill
    { 0.913728, 0.978432, 0.916963, 1.000000 }, // InactiveFill
@@ -19432,7 +19432,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.579500, 0.840500, 0.592550, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999157, 1.000000 }, // HighlightedContent
    { 0.029115, 0.203805, 0.037850, 1.000000 }, // Information
-   { 0.977050, 0.992350, 0.977815, 1.000000 }, // Infinity
+   { 0.977260, 0.992420, 0.978018, 1.000000 }, // Infinity
 // Hue 124
    { 0.971507, 0.994573, 0.973045, 1.000000 }, // PrimaryFill
    { 0.913557, 0.978389, 0.917879, 1.000000 }, // InactiveFill
@@ -19455,7 +19455,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.578920, 0.840280, 0.596344, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999166, 1.000000 }, // HighlightedContent
    { 0.029103, 0.203723, 0.040745, 1.000000 }, // Information
-   { 0.977050, 0.992350, 0.978070, 1.000000 }, // Infinity
+   { 0.977230, 0.992410, 0.978242, 1.000000 }, // Infinity
 // Hue 125
    { 0.971440, 0.994560, 0.973367, 1.000000 }, // PrimaryFill
    { 0.913387, 0.978347, 0.918800, 1.000000 }, // InactiveFill
@@ -19478,7 +19478,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.578485, 0.840115, 0.600288, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999175, 1.000000 }, // HighlightedContent
    { 0.029092, 0.203642, 0.043638, 1.000000 }, // Information
-   { 0.977050, 0.992350, 0.978325, 1.000000 }, // Infinity
+   { 0.977200, 0.992400, 0.978467, 1.000000 }, // Infinity
 // Hue 126
    { 0.971373, 0.994547, 0.973690, 1.000000 }, // PrimaryFill
    { 0.913216, 0.978304, 0.919725, 1.000000 }, // InactiveFill
@@ -19501,7 +19501,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.578050, 0.839950, 0.604240, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999184, 1.000000 }, // HighlightedContent
    { 0.029080, 0.203560, 0.046528, 1.000000 }, // Information
-   { 0.977050, 0.992350, 0.978580, 1.000000 }, // Infinity
+   { 0.977170, 0.992390, 0.978692, 1.000000 }, // Infinity
 // Hue 127
    { 0.971306, 0.994534, 0.974016, 1.000000 }, // PrimaryFill
    { 0.913045, 0.978261, 0.920654, 1.000000 }, // InactiveFill
@@ -19524,7 +19524,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.577615, 0.839785, 0.608202, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999193, 1.000000 }, // HighlightedContent
    { 0.029068, 0.203478, 0.049416, 1.000000 }, // Information
-   { 0.977050, 0.992350, 0.978835, 1.000000 }, // Infinity
+   { 0.977140, 0.992380, 0.978918, 1.000000 }, // Infinity
 // Hue 128
    { 0.971238, 0.994522, 0.974343, 1.000000 }, // PrimaryFill
    { 0.912875, 0.978219, 0.921587, 1.000000 }, // InactiveFill
@@ -19547,7 +19547,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.577180, 0.839620, 0.612172, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999202, 1.000000 }, // HighlightedContent
    { 0.029057, 0.203397, 0.052302, 1.000000 }, // Information
-   { 0.976900, 0.992300, 0.978953, 1.000000 }, // Infinity
+   { 0.977110, 0.992370, 0.979145, 1.000000 }, // Infinity
 // Hue 129
    { 0.971171, 0.994509, 0.974672, 1.000000 }, // PrimaryFill
    { 0.912704, 0.978176, 0.922525, 1.000000 }, // InactiveFill
@@ -19570,7 +19570,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.576600, 0.839400, 0.616020, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999211, 1.000000 }, // HighlightedContent
    { 0.029045, 0.203315, 0.055186, 1.000000 }, // Information
-   { 0.976900, 0.992300, 0.979210, 1.000000 }, // Infinity
+   { 0.977080, 0.992360, 0.979372, 1.000000 }, // Infinity
 // Hue 130
    { 0.971104, 0.994496, 0.975003, 1.000000 }, // PrimaryFill
    { 0.912533, 0.978133, 0.923467, 1.000000 }, // InactiveFill
@@ -19593,7 +19593,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.576165, 0.839235, 0.620010, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999220, 1.000000 }, // HighlightedContent
    { 0.029033, 0.203233, 0.058067, 1.000000 }, // Information
-   { 0.976900, 0.992300, 0.979467, 1.000000 }, // Infinity
+   { 0.977050, 0.992350, 0.979600, 1.000000 }, // Infinity
 // Hue 131
    { 0.971037, 0.994483, 0.975335, 1.000000 }, // PrimaryFill
    { 0.912363, 0.978091, 0.924413, 1.000000 }, // InactiveFill
@@ -19616,7 +19616,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.575730, 0.839070, 0.624009, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999229, 1.000000 }, // HighlightedContent
    { 0.029022, 0.203152, 0.060946, 1.000000 }, // Information
-   { 0.976900, 0.992300, 0.979723, 1.000000 }, // Infinity
+   { 0.977020, 0.992340, 0.979829, 1.000000 }, // Infinity
 // Hue 132
    { 0.970970, 0.994470, 0.975670, 1.000000 }, // PrimaryFill
    { 0.912192, 0.978048, 0.925363, 1.000000 }, // InactiveFill
@@ -19639,7 +19639,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.575295, 0.838905, 0.628017, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999238, 1.000000 }, // HighlightedContent
    { 0.029010, 0.203070, 0.063822, 1.000000 }, // Information
-   { 0.976750, 0.992250, 0.979850, 1.000000 }, // Infinity
+   { 0.976990, 0.992330, 0.980058, 1.000000 }, // Infinity
 // Hue 133
    { 0.970902, 0.994458, 0.976006, 1.000000 }, // PrimaryFill
    { 0.912021, 0.978005, 0.926318, 1.000000 }, // InactiveFill
@@ -19662,7 +19662,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.574715, 0.838685, 0.631909, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999247, 1.000000 }, // HighlightedContent
    { 0.028998, 0.202988, 0.066696, 1.000000 }, // Information
-   { 0.976750, 0.992250, 0.980108, 1.000000 }, // Infinity
+   { 0.976960, 0.992320, 0.980288, 1.000000 }, // Infinity
 // Hue 134
    { 0.970835, 0.994445, 0.976344, 1.000000 }, // PrimaryFill
    { 0.911851, 0.977963, 0.927277, 1.000000 }, // InactiveFill
@@ -19685,7 +19685,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.574280, 0.838520, 0.635936, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999256, 1.000000 }, // HighlightedContent
    { 0.028987, 0.202907, 0.069568, 1.000000 }, // Information
-   { 0.976750, 0.992250, 0.980367, 1.000000 }, // Infinity
+   { 0.976930, 0.992310, 0.980519, 1.000000 }, // Infinity
 // Hue 135
    { 0.970600, 0.994400, 0.976550, 1.000000 }, // PrimaryFill
    { 0.911840, 0.977960, 0.928370, 1.000000 }, // InactiveFill
@@ -19708,7 +19708,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.710000, 0.890000, 0.755000, 1.000000 }, // ActiveContent
    { 0.998985, 0.999615, 0.999143, 1.000000 }, // HighlightedContent
    { 0.029000, 0.203000, 0.072500, 1.000000 }, // Information
-   { 0.970000, 0.990000, 0.975000, 1.000000 }, // Infinity
+   { 0.976750, 0.992250, 0.980625, 1.000000 }, // Infinity
 // Hue 136
    { 0.970690, 0.994417, 0.977017, 1.000000 }, // PrimaryFill
    { 0.911499, 0.977875, 0.929199, 1.000000 }, // InactiveFill
@@ -19731,7 +19731,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.573265, 0.838135, 0.643897, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999274, 1.000000 }, // HighlightedContent
    { 0.028957, 0.202697, 0.075287, 1.000000 }, // Information
-   { 0.976600, 0.992200, 0.980760, 1.000000 }, // Infinity
+   { 0.976860, 0.992287, 0.980974, 1.000000 }, // Infinity
 // Hue 137
    { 0.970611, 0.994402, 0.977352, 1.000000 }, // PrimaryFill
    { 0.911317, 0.977829, 0.930162, 1.000000 }, // InactiveFill
@@ -19754,7 +19754,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.572685, 0.837915, 0.647834, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999283, 1.000000 }, // HighlightedContent
    { 0.028938, 0.202568, 0.078134, 1.000000 }, // Information
-   { 0.976600, 0.992200, 0.981020, 1.000000 }, // Infinity
+   { 0.976820, 0.992273, 0.981198, 1.000000 }, // Infinity
 // Hue 138
    { 0.970533, 0.994387, 0.977689, 1.000000 }, // PrimaryFill
    { 0.911136, 0.977784, 0.931130, 1.000000 }, // InactiveFill
@@ -19777,7 +19777,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.572250, 0.837750, 0.651900, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999292, 1.000000 }, // HighlightedContent
    { 0.028920, 0.202440, 0.080976, 1.000000 }, // Information
-   { 0.976600, 0.992200, 0.981280, 1.000000 }, // Infinity
+   { 0.976780, 0.992260, 0.981424, 1.000000 }, // Infinity
 // Hue 139
    { 0.970454, 0.994372, 0.978028, 1.000000 }, // PrimaryFill
    { 0.910955, 0.977739, 0.932103, 1.000000 }, // InactiveFill
@@ -19800,7 +19800,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.571670, 0.837530, 0.655859, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999301, 1.000000 }, // HighlightedContent
    { 0.028902, 0.202312, 0.083815, 1.000000 }, // Information
-   { 0.976600, 0.992200, 0.981540, 1.000000 }, // Infinity
+   { 0.976740, 0.992247, 0.981650, 1.000000 }, // Infinity
 // Hue 140
    { 0.970376, 0.994357, 0.978370, 1.000000 }, // PrimaryFill
    { 0.910773, 0.977693, 0.933080, 1.000000 }, // InactiveFill
@@ -19823,7 +19823,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.571090, 0.837310, 0.659830, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999310, 1.000000 }, // HighlightedContent
    { 0.028883, 0.202183, 0.086650, 1.000000 }, // Information
-   { 0.976450, 0.992150, 0.981683, 1.000000 }, // Infinity
+   { 0.976700, 0.992233, 0.981878, 1.000000 }, // Infinity
 // Hue 141
    { 0.970298, 0.994342, 0.978713, 1.000000 }, // PrimaryFill
    { 0.910592, 0.977648, 0.934062, 1.000000 }, // InactiveFill
@@ -19846,7 +19846,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.570655, 0.837145, 0.663927, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999319, 1.000000 }, // HighlightedContent
    { 0.028865, 0.202055, 0.089482, 1.000000 }, // Information
-   { 0.976450, 0.992150, 0.981945, 1.000000 }, // Infinity
+   { 0.976660, 0.992220, 0.982106, 1.000000 }, // Infinity
 // Hue 142
    { 0.970219, 0.994327, 0.979059, 1.000000 }, // PrimaryFill
    { 0.910411, 0.977603, 0.935048, 1.000000 }, // InactiveFill
@@ -19869,7 +19869,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.570075, 0.836925, 0.667920, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999328, 1.000000 }, // HighlightedContent
    { 0.028847, 0.201927, 0.092309, 1.000000 }, // Information
-   { 0.976450, 0.992150, 0.982207, 1.000000 }, // Infinity
+   { 0.976620, 0.992207, 0.982335, 1.000000 }, // Infinity
 // Hue 143
    { 0.970141, 0.994313, 0.979407, 1.000000 }, // PrimaryFill
    { 0.910229, 0.977557, 0.936038, 1.000000 }, // InactiveFill
@@ -19892,7 +19892,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.569495, 0.836705, 0.671926, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999337, 1.000000 }, // HighlightedContent
    { 0.028828, 0.201798, 0.095134, 1.000000 }, // Information
-   { 0.976450, 0.992150, 0.982468, 1.000000 }, // Infinity
+   { 0.976580, 0.992193, 0.982565, 1.000000 }, // Infinity
 // Hue 144
    { 0.970062, 0.994298, 0.979757, 1.000000 }, // PrimaryFill
    { 0.910048, 0.977512, 0.937034, 1.000000 }, // InactiveFill
@@ -19915,7 +19915,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.569060, 0.836540, 0.676052, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999346, 1.000000 }, // HighlightedContent
    { 0.028810, 0.201670, 0.097954, 1.000000 }, // Information
-   { 0.976300, 0.992100, 0.982620, 1.000000 }, // Infinity
+   { 0.976540, 0.992180, 0.982796, 1.000000 }, // Infinity
 // Hue 145
    { 0.969984, 0.994283, 0.980108, 1.000000 }, // PrimaryFill
    { 0.909867, 0.977467, 0.938033, 1.000000 }, // InactiveFill
@@ -19938,7 +19938,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.568480, 0.836320, 0.680080, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999355, 1.000000 }, // HighlightedContent
    { 0.028792, 0.201542, 0.100771, 1.000000 }, // Information
-   { 0.976300, 0.992100, 0.982883, 1.000000 }, // Infinity
+   { 0.976500, 0.992167, 0.983028, 1.000000 }, // Infinity
 // Hue 146
    { 0.969906, 0.994268, 0.980463, 1.000000 }, // PrimaryFill
    { 0.909685, 0.977421, 0.939038, 1.000000 }, // InactiveFill
@@ -19961,7 +19961,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.567900, 0.836100, 0.684120, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999364, 1.000000 }, // HighlightedContent
    { 0.028773, 0.201413, 0.103584, 1.000000 }, // Information
-   { 0.976300, 0.992100, 0.983147, 1.000000 }, // Infinity
+   { 0.976460, 0.992153, 0.983260, 1.000000 }, // Infinity
 // Hue 147
    { 0.969827, 0.994253, 0.980819, 1.000000 }, // PrimaryFill
    { 0.909504, 0.977376, 0.940046, 1.000000 }, // InactiveFill
@@ -19984,7 +19984,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.567320, 0.835880, 0.688172, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999373, 1.000000 }, // HighlightedContent
    { 0.028755, 0.201285, 0.106394, 1.000000 }, // Information
-   { 0.976300, 0.992100, 0.983410, 1.000000 }, // Infinity
+   { 0.976420, 0.992140, 0.983494, 1.000000 }, // Infinity
 // Hue 148
    { 0.969749, 0.994238, 0.981177, 1.000000 }, // PrimaryFill
    { 0.909323, 0.977331, 0.941060, 1.000000 }, // InactiveFill
@@ -20007,7 +20007,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.566740, 0.835660, 0.692236, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999382, 1.000000 }, // HighlightedContent
    { 0.028737, 0.201157, 0.109199, 1.000000 }, // Information
-   { 0.976150, 0.992050, 0.983570, 1.000000 }, // Infinity
+   { 0.976380, 0.992127, 0.983728, 1.000000 }, // Infinity
 // Hue 149
    { 0.969670, 0.994223, 0.981537, 1.000000 }, // PrimaryFill
    { 0.909141, 0.977285, 0.942078, 1.000000 }, // InactiveFill
@@ -20030,7 +20030,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.566160, 0.835440, 0.696312, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999391, 1.000000 }, // HighlightedContent
    { 0.028718, 0.201028, 0.112002, 1.000000 }, // Information
-   { 0.976150, 0.992050, 0.983835, 1.000000 }, // Infinity
+   { 0.976340, 0.992113, 0.983964, 1.000000 }, // Infinity
 // Hue 150
    { 0.969424, 0.994176, 0.981800, 1.000000 }, // PrimaryFill
    { 0.909120, 0.977280, 0.943200, 1.000000 }, // InactiveFill
@@ -20053,7 +20053,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.710000, 0.890000, 0.800000, 1.000000 }, // ActiveContent
    { 0.998985, 0.999615, 0.999300, 1.000000 }, // HighlightedContent
    { 0.028725, 0.201075, 0.114900, 1.000000 }, // Information
-   { 0.970000, 0.990000, 0.980000, 1.000000 }, // Infinity
+   { 0.976150, 0.992050, 0.984100, 1.000000 }, // Infinity
 // Hue 151
    { 0.969514, 0.994193, 0.982265, 1.000000 }, // PrimaryFill
    { 0.908768, 0.977192, 0.944120, 1.000000 }, // InactiveFill
@@ -20076,7 +20076,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.565000, 0.835000, 0.704500, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999409, 1.000000 }, // HighlightedContent
    { 0.028673, 0.200713, 0.117561, 1.000000 }, // Information
-   { 0.976150, 0.992050, 0.984365, 1.000000 }, // Infinity
+   { 0.976260, 0.992087, 0.984437, 1.000000 }, // Infinity
 // Hue 152
    { 0.969435, 0.994178, 0.982631, 1.000000 }, // PrimaryFill
    { 0.908576, 0.977144, 0.945146, 1.000000 }, // InactiveFill
@@ -20099,7 +20099,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.564420, 0.834780, 0.708612, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999418, 1.000000 }, // HighlightedContent
    { 0.028647, 0.200527, 0.120316, 1.000000 }, // Information
-   { 0.976000, 0.992000, 0.984533, 1.000000 }, // Infinity
+   { 0.976220, 0.992073, 0.984675, 1.000000 }, // Infinity
 // Hue 153
    { 0.969357, 0.994163, 0.983000, 1.000000 }, // PrimaryFill
    { 0.908384, 0.977096, 0.946176, 1.000000 }, // InactiveFill
@@ -20122,7 +20122,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.563840, 0.834560, 0.712736, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999427, 1.000000 }, // HighlightedContent
    { 0.028620, 0.200340, 0.123066, 1.000000 }, // Information
-   { 0.976000, 0.992000, 0.984800, 1.000000 }, // Infinity
+   { 0.976180, 0.992060, 0.984914, 1.000000 }, // Infinity
 // Hue 154
    { 0.969278, 0.994148, 0.983371, 1.000000 }, // PrimaryFill
    { 0.908192, 0.977048, 0.947210, 1.000000 }, // InactiveFill
@@ -20145,7 +20145,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.563115, 0.834285, 0.716778, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999436, 1.000000 }, // HighlightedContent
    { 0.028593, 0.200153, 0.125811, 1.000000 }, // Information
-   { 0.976000, 0.992000, 0.985067, 1.000000 }, // Infinity
+   { 0.976140, 0.992047, 0.985154, 1.000000 }, // Infinity
 // Hue 155
    { 0.969200, 0.994133, 0.983744, 1.000000 }, // PrimaryFill
    { 0.908000, 0.977000, 0.948250, 1.000000 }, // InactiveFill
@@ -20168,7 +20168,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.562535, 0.834065, 0.720928, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999445, 1.000000 }, // HighlightedContent
    { 0.028567, 0.199967, 0.128550, 1.000000 }, // Information
-   { 0.976000, 0.992000, 0.985333, 1.000000 }, // Infinity
+   { 0.976100, 0.992033, 0.985394, 1.000000 }, // Infinity
 // Hue 156
    { 0.969122, 0.994118, 0.984120, 1.000000 }, // PrimaryFill
    { 0.907808, 0.976952, 0.949294, 1.000000 }, // InactiveFill
@@ -20191,7 +20191,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.561955, 0.833845, 0.725089, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999454, 1.000000 }, // HighlightedContent
    { 0.028540, 0.199780, 0.131284, 1.000000 }, // Information
-   { 0.975850, 0.991950, 0.985510, 1.000000 }, // Infinity
+   { 0.976060, 0.992020, 0.985636, 1.000000 }, // Infinity
 // Hue 157
    { 0.969043, 0.994103, 0.984497, 1.000000 }, // PrimaryFill
    { 0.907616, 0.976904, 0.950344, 1.000000 }, // InactiveFill
@@ -20214,7 +20214,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.561375, 0.833625, 0.729263, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999463, 1.000000 }, // HighlightedContent
    { 0.028513, 0.199593, 0.134013, 1.000000 }, // Information
-   { 0.975850, 0.991950, 0.985778, 1.000000 }, // Infinity
+   { 0.976020, 0.992007, 0.985878, 1.000000 }, // Infinity
 // Hue 158
    { 0.968965, 0.994089, 0.984877, 1.000000 }, // PrimaryFill
    { 0.907424, 0.976856, 0.951398, 1.000000 }, // InactiveFill
@@ -20237,7 +20237,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.560650, 0.833350, 0.733360, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999472, 1.000000 }, // HighlightedContent
    { 0.028487, 0.199407, 0.136736, 1.000000 }, // Information
-   { 0.975850, 0.991950, 0.986047, 1.000000 }, // Infinity
+   { 0.975980, 0.991993, 0.986122, 1.000000 }, // Infinity
 // Hue 159
    { 0.968886, 0.994074, 0.985258, 1.000000 }, // PrimaryFill
    { 0.907232, 0.976808, 0.952456, 1.000000 }, // InactiveFill
@@ -20260,7 +20260,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.560070, 0.833130, 0.737559, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999481, 1.000000 }, // HighlightedContent
    { 0.028460, 0.199220, 0.139454, 1.000000 }, // Information
-   { 0.975850, 0.991950, 0.986315, 1.000000 }, // Infinity
+   { 0.975940, 0.991980, 0.986366, 1.000000 }, // Infinity
 // Hue 160
    { 0.968808, 0.994059, 0.985642, 1.000000 }, // PrimaryFill
    { 0.907040, 0.976760, 0.953520, 1.000000 }, // InactiveFill
@@ -20283,7 +20283,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.559345, 0.832855, 0.741685, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999490, 1.000000 }, // HighlightedContent
    { 0.028433, 0.199033, 0.142167, 1.000000 }, // Information
-   { 0.975700, 0.991900, 0.986500, 1.000000 }, // Infinity
+   { 0.975900, 0.991967, 0.986611, 1.000000 }, // Infinity
 // Hue 161
    { 0.968730, 0.994044, 0.986028, 1.000000 }, // PrimaryFill
    { 0.906848, 0.976712, 0.954588, 1.000000 }, // InactiveFill
@@ -20306,7 +20306,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.558765, 0.832635, 0.745910, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999499, 1.000000 }, // HighlightedContent
    { 0.028407, 0.198847, 0.144874, 1.000000 }, // Information
-   { 0.975700, 0.991900, 0.986770, 1.000000 }, // Infinity
+   { 0.975860, 0.991953, 0.986857, 1.000000 }, // Infinity
 // Hue 162
    { 0.968651, 0.994029, 0.986416, 1.000000 }, // PrimaryFill
    { 0.906656, 0.976664, 0.955662, 1.000000 }, // InactiveFill
@@ -20329,7 +20329,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.558040, 0.832360, 0.750064, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999508, 1.000000 }, // HighlightedContent
    { 0.028380, 0.198660, 0.147576, 1.000000 }, // Information
-   { 0.975700, 0.991900, 0.987040, 1.000000 }, // Infinity
+   { 0.975820, 0.991940, 0.987104, 1.000000 }, // Infinity
 // Hue 163
    { 0.968573, 0.994014, 0.986806, 1.000000 }, // PrimaryFill
    { 0.906464, 0.976616, 0.956740, 1.000000 }, // InactiveFill
@@ -20352,7 +20352,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.557460, 0.832140, 0.754314, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999517, 1.000000 }, // HighlightedContent
    { 0.028353, 0.198473, 0.150273, 1.000000 }, // Information
-   { 0.975550, 0.991850, 0.987232, 1.000000 }, // Infinity
+   { 0.975780, 0.991927, 0.987352, 1.000000 }, // Infinity
 // Hue 164
    { 0.968494, 0.993999, 0.987198, 1.000000 }, // PrimaryFill
    { 0.906272, 0.976568, 0.957822, 1.000000 }, // InactiveFill
@@ -20375,7 +20375,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.556735, 0.831865, 0.758497, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999526, 1.000000 }, // HighlightedContent
    { 0.028327, 0.198287, 0.152964, 1.000000 }, // Information
-   { 0.975550, 0.991850, 0.987503, 1.000000 }, // Infinity
+   { 0.975740, 0.991913, 0.987600, 1.000000 }, // Infinity
 // Hue 165
    { 0.968248, 0.993952, 0.987526, 1.000000 }, // PrimaryFill
    { 0.906240, 0.976560, 0.958980, 1.000000 }, // InactiveFill
@@ -20398,7 +20398,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.710000, 0.890000, 0.845000, 1.000000 }, // ActiveContent
    { 0.998985, 0.999615, 0.999458, 1.000000 }, // HighlightedContent
    { 0.028325, 0.198275, 0.155788, 1.000000 }, // Information
-   { 0.970000, 0.990000, 0.985000, 1.000000 }, // Infinity
+   { 0.975550, 0.991850, 0.987775, 1.000000 }, // Infinity
 // Hue 166
    { 0.968326, 0.993967, 0.987984, 1.000000 }, // PrimaryFill
    { 0.905867, 0.976467, 0.959993, 1.000000 }, // InactiveFill
@@ -20421,7 +20421,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.555430, 0.831370, 0.766984, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999544, 1.000000 }, // HighlightedContent
    { 0.028267, 0.197867, 0.158293, 1.000000 }, // Information
-   { 0.975550, 0.991850, 0.988047, 1.000000 }, // Infinity
+   { 0.975660, 0.991887, 0.988100, 1.000000 }, // Infinity
 // Hue 167
    { 0.968237, 0.993950, 0.988379, 1.000000 }, // PrimaryFill
    { 0.905653, 0.976413, 0.961082, 1.000000 }, // InactiveFill
@@ -20444,7 +20444,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.554705, 0.831095, 0.771211, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999553, 1.000000 }, // HighlightedContent
    { 0.028233, 0.197633, 0.160930, 1.000000 }, // Information
-   { 0.975400, 0.991800, 0.988247, 1.000000 }, // Infinity
+   { 0.975620, 0.991873, 0.988352, 1.000000 }, // Infinity
 // Hue 168
    { 0.968147, 0.993933, 0.988776, 1.000000 }, // PrimaryFill
    { 0.905440, 0.976360, 0.962176, 1.000000 }, // InactiveFill
@@ -20467,7 +20467,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.553980, 0.830820, 0.775452, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999562, 1.000000 }, // HighlightedContent
    { 0.028200, 0.197400, 0.163560, 1.000000 }, // Information
-   { 0.975400, 0.991800, 0.988520, 1.000000 }, // Infinity
+   { 0.975580, 0.991860, 0.988604, 1.000000 }, // Infinity
 // Hue 169
    { 0.968058, 0.993916, 0.989175, 1.000000 }, // PrimaryFill
    { 0.905227, 0.976307, 0.963275, 1.000000 }, // InactiveFill
@@ -20490,7 +20490,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.553255, 0.830545, 0.779709, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999571, 1.000000 }, // HighlightedContent
    { 0.028167, 0.197167, 0.166183, 1.000000 }, // Information
-   { 0.975400, 0.991800, 0.988793, 1.000000 }, // Infinity
+   { 0.975540, 0.991847, 0.988857, 1.000000 }, // Infinity
 // Hue 170
    { 0.967968, 0.993899, 0.989577, 1.000000 }, // PrimaryFill
    { 0.905013, 0.976253, 0.964380, 1.000000 }, // InactiveFill
@@ -20513,7 +20513,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.552530, 0.830270, 0.783980, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999580, 1.000000 }, // HighlightedContent
    { 0.028133, 0.196933, 0.168800, 1.000000 }, // Information
-   { 0.975400, 0.991800, 0.989067, 1.000000 }, // Infinity
+   { 0.975500, 0.991833, 0.989111, 1.000000 }, // Infinity
 // Hue 171
    { 0.967878, 0.993882, 0.989981, 1.000000 }, // PrimaryFill
    { 0.904800, 0.976200, 0.965490, 1.000000 }, // InactiveFill
@@ -20536,7 +20536,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.551805, 0.829995, 0.788267, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999589, 1.000000 }, // HighlightedContent
    { 0.028100, 0.196700, 0.171410, 1.000000 }, // Information
-   { 0.975250, 0.991750, 0.989275, 1.000000 }, // Infinity
+   { 0.975460, 0.991820, 0.989366, 1.000000 }, // Infinity
 // Hue 172
    { 0.967789, 0.993865, 0.990388, 1.000000 }, // PrimaryFill
    { 0.904587, 0.976147, 0.966605, 1.000000 }, // InactiveFill
@@ -20559,7 +20559,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.551080, 0.829720, 0.792568, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999598, 1.000000 }, // HighlightedContent
    { 0.028067, 0.196467, 0.174013, 1.000000 }, // Information
-   { 0.975250, 0.991750, 0.989550, 1.000000 }, // Infinity
+   { 0.975420, 0.991807, 0.989622, 1.000000 }, // Infinity
 // Hue 173
    { 0.967699, 0.993847, 0.990797, 1.000000 }, // PrimaryFill
    { 0.904373, 0.976093, 0.967726, 1.000000 }, // InactiveFill
@@ -20582,7 +20582,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.550355, 0.829445, 0.796885, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999607, 1.000000 }, // HighlightedContent
    { 0.028033, 0.196233, 0.176610, 1.000000 }, // Information
-   { 0.975250, 0.991750, 0.989825, 1.000000 }, // Infinity
+   { 0.975380, 0.991793, 0.989878, 1.000000 }, // Infinity
 // Hue 174
    { 0.967610, 0.993830, 0.991208, 1.000000 }, // PrimaryFill
    { 0.904160, 0.976040, 0.968852, 1.000000 }, // InactiveFill
@@ -20605,7 +20605,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.549630, 0.829170, 0.801216, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999616, 1.000000 }, // HighlightedContent
    { 0.028000, 0.196000, 0.179200, 1.000000 }, // Information
-   { 0.975100, 0.991700, 0.990040, 1.000000 }, // Infinity
+   { 0.975340, 0.991780, 0.990136, 1.000000 }, // Infinity
 // Hue 175
    { 0.967520, 0.993813, 0.991622, 1.000000 }, // PrimaryFill
    { 0.903947, 0.975987, 0.969983, 1.000000 }, // InactiveFill
@@ -20628,7 +20628,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.548905, 0.828895, 0.805563, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999625, 1.000000 }, // HighlightedContent
    { 0.027967, 0.195767, 0.181783, 1.000000 }, // Information
-   { 0.975100, 0.991700, 0.990317, 1.000000 }, // Infinity
+   { 0.975300, 0.991767, 0.990394, 1.000000 }, // Infinity
 // Hue 176
    { 0.967430, 0.993796, 0.992039, 1.000000 }, // PrimaryFill
    { 0.903733, 0.975933, 0.971120, 1.000000 }, // InactiveFill
@@ -20651,7 +20651,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.548035, 0.828565, 0.809863, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999634, 1.000000 }, // HighlightedContent
    { 0.027933, 0.195533, 0.184360, 1.000000 }, // Information
-   { 0.975100, 0.991700, 0.990593, 1.000000 }, // Infinity
+   { 0.975260, 0.991753, 0.990654, 1.000000 }, // Infinity
 // Hue 177
    { 0.967341, 0.993779, 0.992457, 1.000000 }, // PrimaryFill
    { 0.903520, 0.975880, 0.972262, 1.000000 }, // InactiveFill
@@ -20674,7 +20674,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.547310, 0.828290, 0.814241, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999643, 1.000000 }, // HighlightedContent
    { 0.027900, 0.195300, 0.186930, 1.000000 }, // Information
-   { 0.975100, 0.991700, 0.990870, 1.000000 }, // Infinity
+   { 0.975220, 0.991740, 0.990914, 1.000000 }, // Infinity
 // Hue 178
    { 0.967251, 0.993762, 0.992878, 1.000000 }, // PrimaryFill
    { 0.903307, 0.975827, 0.973409, 1.000000 }, // InactiveFill
@@ -20697,7 +20697,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.546440, 0.827960, 0.818576, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999652, 1.000000 }, // HighlightedContent
    { 0.027867, 0.195067, 0.189493, 1.000000 }, // Information
-   { 0.974950, 0.991650, 0.991093, 1.000000 }, // Infinity
+   { 0.975180, 0.991727, 0.991175, 1.000000 }, // Infinity
 // Hue 179
    { 0.967162, 0.993745, 0.993302, 1.000000 }, // PrimaryFill
    { 0.903093, 0.975773, 0.974562, 1.000000 }, // InactiveFill
@@ -20720,7 +20720,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.545715, 0.827685, 0.822986, 1.000000 }, // ActiveContent
    { 0.999130, 0.999670, 0.999661, 1.000000 }, // HighlightedContent
    { 0.027833, 0.194833, 0.192050, 1.000000 }, // Information
-   { 0.974950, 0.991650, 0.991372, 1.000000 }, // Infinity
+   { 0.975140, 0.991713, 0.991437, 1.000000 }, // Infinity
 // Hue 180
    { 0.966904, 0.993696, 0.993696, 1.000000 }, // PrimaryFill
    { 0.903040, 0.975760, 0.975760, 1.000000 }, // InactiveFill
@@ -20743,7 +20743,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.710000, 0.890000, 0.890000, 1.000000 }, // ActiveContent
    { 0.998985, 0.999615, 0.999615, 1.000000 }, // HighlightedContent
    { 0.027825, 0.194775, 0.194775, 1.000000 }, // Information
-   { 0.970000, 0.990000, 0.990000, 1.000000 }, // Infinity
+   { 0.974950, 0.991650, 0.991650, 1.000000 }, // Infinity
 // Hue 181
    { 0.967878, 0.993448, 0.993882, 1.000000 }, // PrimaryFill
    { 0.904523, 0.974937, 0.976131, 1.000000 }, // InactiveFill
@@ -20766,7 +20766,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.552675, 0.825698, 0.830325, 1.000000 }, // ActiveContent
    { 0.999140, 0.999665, 0.999674, 1.000000 }, // HighlightedContent
    { 0.028187, 0.194488, 0.197307, 1.000000 }, // Information
-   { 0.975400, 0.991527, 0.991800, 1.000000 }, // Infinity
+   { 0.975440, 0.991540, 0.991813, 1.000000 }, // Infinity
 // Hue 182
    { 0.968685, 0.993190, 0.994035, 1.000000 }, // PrimaryFill
    { 0.906165, 0.974195, 0.976541, 1.000000 }, // InactiveFill
@@ -20789,7 +20789,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.560215, 0.824086, 0.833185, 1.000000 }, // ActiveContent
    { 0.999149, 0.999660, 0.999677, 1.000000 }, // HighlightedContent
    { 0.028573, 0.194299, 0.200013, 1.000000 }, // Information
-   { 0.975700, 0.991360, 0.991900, 1.000000 }, // Infinity
+   { 0.975780, 0.991388, 0.991927, 1.000000 }, // Infinity
 // Hue 183
    { 0.969491, 0.992954, 0.994189, 1.000000 }, // PrimaryFill
    { 0.907968, 0.973541, 0.976992, 1.000000 }, // InactiveFill
@@ -20812,7 +20812,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.567465, 0.822512, 0.835935, 1.000000 }, // ActiveContent
    { 0.999159, 0.999655, 0.999681, 1.000000 }, // HighlightedContent
    { 0.028935, 0.193865, 0.202545, 1.000000 }, // Information
-   { 0.976150, 0.991255, 0.992050, 1.000000 }, // Infinity
+   { 0.976120, 0.991244, 0.992040, 1.000000 }, // Infinity
 // Hue 184
    { 0.970298, 0.992739, 0.994342, 1.000000 }, // PrimaryFill
    { 0.909771, 0.972931, 0.977443, 1.000000 }, // InactiveFill
@@ -20835,7 +20835,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.574280, 0.820904, 0.838520, 1.000000 }, // ActiveContent
    { 0.999169, 0.999650, 0.999685, 1.000000 }, // HighlightedContent
    { 0.029347, 0.193688, 0.205427, 1.000000 }, // Information
-   { 0.976450, 0.991103, 0.992150, 1.000000 }, // Infinity
+   { 0.976460, 0.991107, 0.992153, 1.000000 }, // Infinity
 // Hue 185
    { 0.970936, 0.992503, 0.994464, 1.000000 }, // PrimaryFill
    { 0.911413, 0.972317, 0.977853, 1.000000 }, // InactiveFill
@@ -20858,7 +20858,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.581095, 0.819438, 0.841105, 1.000000 }, // ActiveContent
    { 0.999178, 0.999646, 0.999688, 1.000000 }, // HighlightedContent
    { 0.029733, 0.193267, 0.208133, 1.000000 }, // Information
-   { 0.976900, 0.991017, 0.992300, 1.000000 }, // Infinity
+   { 0.976800, 0.990978, 0.992267, 1.000000 }, // Infinity
 // Hue 186
    { 0.971574, 0.992284, 0.994586, 1.000000 }, // PrimaryFill
    { 0.913056, 0.971743, 0.978264, 1.000000 }, // InactiveFill
@@ -20881,7 +20881,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.587475, 0.817920, 0.843525, 1.000000 }, // ActiveContent
    { 0.999188, 0.999642, 0.999692, 1.000000 }, // HighlightedContent
    { 0.030145, 0.192928, 0.211015, 1.000000 }, // Information
-   { 0.977200, 0.990880, 0.992400, 1.000000 }, // Infinity
+   { 0.977290, 0.990916, 0.992430, 1.000000 }, // Infinity
 // Hue 187
    { 0.972213, 0.992083, 0.994707, 1.000000 }, // PrimaryFill
    { 0.914699, 0.971211, 0.978675, 1.000000 }, // InactiveFill
@@ -20904,7 +20904,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.593710, 0.816469, 0.845890, 1.000000 }, // ActiveContent
    { 0.999198, 0.999638, 0.999696, 1.000000 }, // HighlightedContent
    { 0.030557, 0.192507, 0.213897, 1.000000 }, // Information
-   { 0.977500, 0.990750, 0.992500, 1.000000 }, // Infinity
+   { 0.977630, 0.990803, 0.992543, 1.000000 }, // Infinity
 // Hue 188
    { 0.972851, 0.991898, 0.994829, 1.000000 }, // PrimaryFill
    { 0.916341, 0.970719, 0.979085, 1.000000 }, // InactiveFill
@@ -20927,7 +20927,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.599655, 0.815013, 0.848145, 1.000000 }, // ActiveContent
    { 0.999207, 0.999634, 0.999699, 1.000000 }, // HighlightedContent
    { 0.030993, 0.192159, 0.216953, 1.000000 }, // Information
-   { 0.977950, 0.990690, 0.992650, 1.000000 }, // Infinity
+   { 0.977970, 0.990698, 0.992657, 1.000000 }, // Infinity
 // Hue 189
    { 0.973490, 0.991731, 0.994950, 1.000000 }, // PrimaryFill
    { 0.917984, 0.970269, 0.979496, 1.000000 }, // InactiveFill
@@ -20950,7 +20950,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.605455, 0.813612, 0.850345, 1.000000 }, // ActiveContent
    { 0.999217, 0.999630, 0.999703, 1.000000 }, // HighlightedContent
    { 0.031455, 0.191876, 0.220185, 1.000000 }, // Information
-   { 0.978250, 0.990575, 0.992750, 1.000000 }, // Infinity
+   { 0.978160, 0.990536, 0.992720, 1.000000 }, // Infinity
 // Hue 190
    { 0.973960, 0.991527, 0.995040, 1.000000 }, // PrimaryFill
    { 0.919627, 0.969860, 0.979907, 1.000000 }, // InactiveFill
@@ -20973,7 +20973,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.611110, 0.812260, 0.852490, 1.000000 }, // ActiveContent
    { 0.999227, 0.999627, 0.999707, 1.000000 }, // HighlightedContent
    { 0.031892, 0.191350, 0.223242, 1.000000 }, // Information
-   { 0.978550, 0.990467, 0.992850, 1.000000 }, // Infinity
+   { 0.978500, 0.990444, 0.992833, 1.000000 }, // Infinity
 // Hue 191
    { 0.974598, 0.991392, 0.995162, 1.000000 }, // PrimaryFill
    { 0.921269, 0.969492, 0.980317, 1.000000 }, // InactiveFill
@@ -20996,7 +20996,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.616475, 0.810883, 0.854525, 1.000000 }, // ActiveContent
    { 0.999236, 0.999623, 0.999710, 1.000000 }, // HighlightedContent
    { 0.032353, 0.190885, 0.226473, 1.000000 }, // Information
-   { 0.978850, 0.990365, 0.992950, 1.000000 }, // Infinity
+   { 0.978840, 0.990360, 0.992947, 1.000000 }, // Infinity
 // Hue 192
    { 0.975069, 0.991215, 0.995251, 1.000000 }, // PrimaryFill
    { 0.922752, 0.969101, 0.980688, 1.000000 }, // InactiveFill
@@ -21019,7 +21019,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.621840, 0.809616, 0.856560, 1.000000 }, // ActiveContent
    { 0.999246, 0.999620, 0.999714, 1.000000 }, // HighlightedContent
    { 0.032840, 0.190472, 0.229880, 1.000000 }, // Information
-   { 0.979150, 0.990270, 0.993050, 1.000000 }, // Infinity
+   { 0.979180, 0.990284, 0.993060, 1.000000 }, // Infinity
 // Hue 193
    { 0.975539, 0.991050, 0.995341, 1.000000 }, // PrimaryFill
    { 0.924235, 0.968747, 0.981059, 1.000000 }, // InactiveFill
@@ -21042,7 +21042,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.626915, 0.808312, 0.858485, 1.000000 }, // ActiveContent
    { 0.999256, 0.999618, 0.999718, 1.000000 }, // HighlightedContent
    { 0.033352, 0.190105, 0.233462, 1.000000 }, // Information
-   { 0.979450, 0.990182, 0.993150, 1.000000 }, // Infinity
+   { 0.979520, 0.990215, 0.993173, 1.000000 }, // Infinity
 // Hue 194
    { 0.976010, 0.990899, 0.995430, 1.000000 }, // PrimaryFill
    { 0.925877, 0.968498, 0.981469, 1.000000 }, // InactiveFill
@@ -21065,7 +21065,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.631845, 0.807036, 0.860355, 1.000000 }, // ActiveContent
    { 0.999265, 0.999615, 0.999721, 1.000000 }, // HighlightedContent
    { 0.033838, 0.189495, 0.236868, 1.000000 }, // Information
-   { 0.979750, 0.990100, 0.993250, 1.000000 }, // Infinity
+   { 0.979860, 0.990154, 0.993287, 1.000000 }, // Infinity
 // Hue 195
    { 0.976480, 0.990760, 0.995520, 1.000000 }, // PrimaryFill
    { 0.927680, 0.968360, 0.981920, 1.000000 }, // InactiveFill
@@ -21088,7 +21088,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.710000, 0.845000, 0.890000, 1.000000 }, // ActiveContent
    { 0.999130, 0.999535, 0.999670, 1.000000 }, // HighlightedContent
    { 0.034375, 0.189063, 0.240625, 1.000000 }, // Information
-   { 0.970000, 0.985000, 0.990000, 1.000000 }, // Infinity
+   { 0.980050, 0.990025, 0.993350, 1.000000 }, // Infinity
 // Hue 196
    { 0.977006, 0.990657, 0.995620, 1.000000 }, // PrimaryFill
    { 0.928480, 0.967816, 0.982120, 1.000000 }, // InactiveFill
@@ -21111,7 +21111,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.641270, 0.804554, 0.863930, 1.000000 }, // ActiveContent
    { 0.999285, 0.999610, 0.999729, 1.000000 }, // HighlightedContent
    { 0.034910, 0.188514, 0.244370, 1.000000 }, // Information
-   { 0.980200, 0.989880, 0.993400, 1.000000 }, // Infinity
+   { 0.980420, 0.989992, 0.993473, 1.000000 }, // Infinity
 // Hue 197
    { 0.977365, 0.990497, 0.995689, 1.000000 }, // PrimaryFill
    { 0.929440, 0.967366, 0.982360, 1.000000 }, // InactiveFill
@@ -21134,7 +21134,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.645765, 0.803339, 0.865635, 1.000000 }, // ActiveContent
    { 0.999294, 0.999608, 0.999732, 1.000000 }, // HighlightedContent
    { 0.035445, 0.187859, 0.248115, 1.000000 }, // Information
-   { 0.980500, 0.989817, 0.993500, 1.000000 }, // Infinity
+   { 0.980640, 0.989890, 0.993547, 1.000000 }, // Infinity
 // Hue 198
    { 0.977891, 0.990420, 0.995789, 1.000000 }, // PrimaryFill
    { 0.930400, 0.966940, 0.982600, 1.000000 }, // InactiveFill
@@ -21157,7 +21157,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.650260, 0.802216, 0.867340, 1.000000 }, // ActiveContent
    { 0.999304, 0.999606, 0.999736, 1.000000 }, // HighlightedContent
    { 0.036030, 0.187356, 0.252210, 1.000000 }, // Information
-   { 0.980800, 0.989760, 0.993600, 1.000000 }, // Infinity
+   { 0.980860, 0.989792, 0.993620, 1.000000 }, // Infinity
 // Hue 199
    { 0.978250, 0.990281, 0.995857, 1.000000 }, // PrimaryFill
    { 0.931360, 0.966538, 0.982840, 1.000000 }, // InactiveFill
@@ -21180,7 +21180,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.654465, 0.801020, 0.868935, 1.000000 }, // ActiveContent
    { 0.999314, 0.999605, 0.999740, 1.000000 }, // HighlightedContent
    { 0.036615, 0.186737, 0.256305, 1.000000 }, // Information
-   { 0.980950, 0.989628, 0.993650, 1.000000 }, // Infinity
+   { 0.981080, 0.989699, 0.993693, 1.000000 }, // Infinity
 // Hue 200
    { 0.978608, 0.990153, 0.995925, 1.000000 }, // PrimaryFill
    { 0.932480, 0.966240, 0.983120, 1.000000 }, // InactiveFill
@@ -21203,7 +21203,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.658670, 0.799910, 0.870530, 1.000000 }, // ActiveContent
    { 0.999323, 0.999603, 0.999743, 1.000000 }, // HighlightedContent
    { 0.037200, 0.186000, 0.260400, 1.000000 }, // Information
-   { 0.981250, 0.989583, 0.993750, 1.000000 }, // Infinity
+   { 0.981300, 0.989611, 0.993767, 1.000000 }, // Infinity
 // Hue 201
    { 0.978966, 0.990034, 0.995994, 1.000000 }, // PrimaryFill
    { 0.933440, 0.965888, 0.983360, 1.000000 }, // InactiveFill
@@ -21226,7 +21226,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.662730, 0.798801, 0.872070, 1.000000 }, // ActiveContent
    { 0.999333, 0.999602, 0.999747, 1.000000 }, // HighlightedContent
    { 0.037835, 0.185392, 0.264845, 1.000000 }, // Information
-   { 0.981550, 0.989545, 0.993850, 1.000000 }, // Infinity
+   { 0.981520, 0.989528, 0.993840, 1.000000 }, // Infinity
 // Hue 202
    { 0.979325, 0.989925, 0.996062, 1.000000 }, // PrimaryFill
    { 0.934400, 0.965560, 0.983600, 1.000000 }, // InactiveFill
@@ -21249,7 +21249,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.666645, 0.797688, 0.873555, 1.000000 }, // ActiveContent
    { 0.999343, 0.999601, 0.999751, 1.000000 }, // HighlightedContent
    { 0.038470, 0.184656, 0.269290, 1.000000 }, // Information
-   { 0.981700, 0.989427, 0.993900, 1.000000 }, // Infinity
+   { 0.981740, 0.989450, 0.993913, 1.000000 }, // Infinity
 // Hue 203
    { 0.979683, 0.989825, 0.996130, 1.000000 }, // PrimaryFill
    { 0.935360, 0.965256, 0.983840, 1.000000 }, // InactiveFill
@@ -21272,7 +21272,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.670415, 0.796567, 0.874985, 1.000000 }, // ActiveContent
    { 0.999352, 0.999600, 0.999754, 1.000000 }, // HighlightedContent
    { 0.039105, 0.183794, 0.273735, 1.000000 }, // Information
-   { 0.982000, 0.989400, 0.994000, 1.000000 }, // Infinity
+   { 0.981960, 0.989376, 0.993987, 1.000000 }, // Infinity
 // Hue 204
    { 0.980042, 0.989736, 0.996198, 1.000000 }, // PrimaryFill
    { 0.936320, 0.964976, 0.984080, 1.000000 }, // InactiveFill
@@ -21295,7 +21295,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.674185, 0.795523, 0.876415, 1.000000 }, // ActiveContent
    { 0.999362, 0.999600, 0.999758, 1.000000 }, // HighlightedContent
    { 0.039790, 0.183034, 0.278530, 1.000000 }, // Information
-   { 0.982150, 0.989290, 0.994050, 1.000000 }, // Infinity
+   { 0.982180, 0.989308, 0.994060, 1.000000 }, // Infinity
 // Hue 205
    { 0.980400, 0.989656, 0.996267, 1.000000 }, // PrimaryFill
    { 0.937280, 0.964720, 0.984320, 1.000000 }, // InactiveFill
@@ -21318,7 +21318,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.677810, 0.794465, 0.877790, 1.000000 }, // ActiveContent
    { 0.999372, 0.999599, 0.999762, 1.000000 }, // HighlightedContent
    { 0.040475, 0.182138, 0.283325, 1.000000 }, // Information
-   { 0.982300, 0.989183, 0.994100, 1.000000 }, // Infinity
+   { 0.982400, 0.989244, 0.994133, 1.000000 }, // Infinity
 // Hue 206
    { 0.980590, 0.989494, 0.996303, 1.000000 }, // PrimaryFill
    { 0.938240, 0.964488, 0.984560, 1.000000 }, // InactiveFill
@@ -21341,7 +21341,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.681435, 0.793482, 0.879165, 1.000000 }, // ActiveContent
    { 0.999381, 0.999599, 0.999765, 1.000000 }, // HighlightedContent
    { 0.041210, 0.181324, 0.288470, 1.000000 }, // Information
-   { 0.982600, 0.989173, 0.994200, 1.000000 }, // Infinity
+   { 0.982620, 0.989186, 0.994207, 1.000000 }, // Infinity
 // Hue 207
    { 0.980949, 0.989431, 0.996371, 1.000000 }, // PrimaryFill
    { 0.939040, 0.964186, 0.984760, 1.000000 }, // InactiveFill
@@ -21364,7 +21364,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.684915, 0.792479, 0.880485, 1.000000 }, // ActiveContent
    { 0.999391, 0.999599, 0.999769, 1.000000 }, // HighlightedContent
    { 0.041945, 0.180364, 0.293615, 1.000000 }, // Information
-   { 0.982750, 0.989075, 0.994250, 1.000000 }, // Infinity
+   { 0.982840, 0.989132, 0.994280, 1.000000 }, // Infinity
 // Hue 208
    { 0.981307, 0.989378, 0.996439, 1.000000 }, // PrimaryFill
    { 0.940000, 0.964000, 0.985000, 1.000000 }, // InactiveFill
@@ -21387,7 +21387,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.688250, 0.791450, 0.881750, 1.000000 }, // ActiveContent
    { 0.999401, 0.999599, 0.999773, 1.000000 }, // HighlightedContent
    { 0.042705, 0.179361, 0.298935, 1.000000 }, // Information
-   { 0.982900, 0.988980, 0.994300, 1.000000 }, // Infinity
+   { 0.983060, 0.989083, 0.994353, 1.000000 }, // Infinity
 // Hue 209
    { 0.981666, 0.989334, 0.996508, 1.000000 }, // PrimaryFill
    { 0.940960, 0.963838, 0.985240, 1.000000 }, // InactiveFill
@@ -21410,7 +21410,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.691585, 0.790491, 0.883015, 1.000000 }, // ActiveContent
    { 0.999410, 0.999599, 0.999776, 1.000000 }, // HighlightedContent
    { 0.043490, 0.178309, 0.304430, 1.000000 }, // Information
-   { 0.983200, 0.988987, 0.994400, 1.000000 }, // Infinity
+   { 0.983280, 0.989039, 0.994427, 1.000000 }, // Infinity
 // Hue 210
    { 0.981856, 0.989200, 0.996544, 1.000000 }, // PrimaryFill
    { 0.942080, 0.963800, 0.985520, 1.000000 }, // InactiveFill
@@ -21433,7 +21433,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.710000, 0.800000, 0.890000, 1.000000 }, // ActiveContent
    { 0.999275, 0.999500, 0.999725, 1.000000 }, // HighlightedContent
    { 0.044275, 0.177100, 0.309925, 1.000000 }, // Information
-   { 0.970000, 0.980000, 0.990000, 1.000000 }, // Infinity
+   { 0.983350, 0.988900, 0.994450, 1.000000 }, // Infinity
 // Hue 211
    { 0.982237, 0.989187, 0.996617, 1.000000 }, // PrimaryFill
    { 0.942560, 0.963382, 0.985640, 1.000000 }, // InactiveFill
@@ -21456,7 +21456,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.697965, 0.788576, 0.885435, 1.000000 }, // ActiveContent
    { 0.999430, 0.999601, 0.999784, 1.000000 }, // HighlightedContent
    { 0.045122, 0.175975, 0.315852, 1.000000 }, // Information
-   { 0.983500, 0.988817, 0.994500, 1.000000 }, // Infinity
+   { 0.983660, 0.988925, 0.994553, 1.000000 }, // Infinity
 // Hue 212
    { 0.982450, 0.989080, 0.996657, 1.000000 }, // PrimaryFill
    { 0.943200, 0.963080, 0.985800, 1.000000 }, // InactiveFill
@@ -21479,7 +21479,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.701155, 0.787717, 0.886645, 1.000000 }, // ActiveContent
    { 0.999439, 0.999602, 0.999787, 1.000000 }, // HighlightedContent
    { 0.045968, 0.174680, 0.321778, 1.000000 }, // Information
-   { 0.983650, 0.988737, 0.994550, 1.000000 }, // Infinity
+   { 0.983820, 0.988854, 0.994607, 1.000000 }, // Infinity
 // Hue 213
    { 0.982662, 0.988978, 0.996698, 1.000000 }, // PrimaryFill
    { 0.943840, 0.962794, 0.985960, 1.000000 }, // InactiveFill
@@ -21502,7 +21502,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.704200, 0.786820, 0.887800, 1.000000 }, // ActiveContent
    { 0.999449, 0.999603, 0.999791, 1.000000 }, // HighlightedContent
    { 0.046840, 0.173308, 0.327880, 1.000000 }, // Information
-   { 0.983950, 0.988765, 0.994650, 1.000000 }, // Infinity
+   { 0.983980, 0.988786, 0.994660, 1.000000 }, // Infinity
 // Hue 214
    { 0.982875, 0.988882, 0.996738, 1.000000 }, // PrimaryFill
    { 0.944480, 0.962524, 0.986120, 1.000000 }, // InactiveFill
@@ -21525,7 +21525,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.707100, 0.785880, 0.888900, 1.000000 }, // ActiveContent
    { 0.999459, 0.999604, 0.999795, 1.000000 }, // HighlightedContent
    { 0.047762, 0.171942, 0.334332, 1.000000 }, // Information
-   { 0.984100, 0.988693, 0.994700, 1.000000 }, // Infinity
+   { 0.984140, 0.988722, 0.994713, 1.000000 }, // Infinity
 // Hue 215
    { 0.983088, 0.988792, 0.996779, 1.000000 }, // PrimaryFill
    { 0.945120, 0.962270, 0.986280, 1.000000 }, // InactiveFill
@@ -21548,7 +21548,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.709855, 0.784893, 0.889945, 1.000000 }, // ActiveContent
    { 0.999468, 0.999606, 0.999798, 1.000000 }, // HighlightedContent
    { 0.048683, 0.170392, 0.340783, 1.000000 }, // Information
-   { 0.984250, 0.988625, 0.994750, 1.000000 }, // Infinity
+   { 0.984300, 0.988661, 0.994767, 1.000000 }, // Infinity
 // Hue 216
    { 0.983301, 0.988708, 0.996819, 1.000000 }, // PrimaryFill
    { 0.945760, 0.962032, 0.986440, 1.000000 }, // InactiveFill
@@ -21571,7 +21571,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.711595, 0.783199, 0.890605, 1.000000 }, // ActiveContent
    { 0.999478, 0.999608, 0.999802, 1.000000 }, // HighlightedContent
    { 0.049630, 0.168742, 0.347410, 1.000000 }, // Information
-   { 0.984400, 0.988560, 0.994800, 1.000000 }, // Infinity
+   { 0.984460, 0.988604, 0.994820, 1.000000 }, // Infinity
 // Hue 217
    { 0.983514, 0.988630, 0.996860, 1.000000 }, // PrimaryFill
    { 0.946400, 0.961810, 0.986600, 1.000000 }, // InactiveFill
@@ -21594,7 +21594,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.714350, 0.782315, 0.891650, 1.000000 }, // ActiveContent
    { 0.999488, 0.999610, 0.999806, 1.000000 }, // HighlightedContent
    { 0.050627, 0.167068, 0.354387, 1.000000 }, // Information
-   { 0.984550, 0.988498, 0.994850, 1.000000 }, // Infinity
+   { 0.984620, 0.988550, 0.994873, 1.000000 }, // Infinity
 // Hue 218
    { 0.983726, 0.988557, 0.996900, 1.000000 }, // PrimaryFill
    { 0.947040, 0.961604, 0.986760, 1.000000 }, // InactiveFill
@@ -21617,7 +21617,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.717105, 0.781488, 0.892695, 1.000000 }, // ActiveContent
    { 0.999497, 0.999612, 0.999809, 1.000000 }, // HighlightedContent
    { 0.051648, 0.165275, 0.361538, 1.000000 }, // Information
-   { 0.984700, 0.988440, 0.994900, 1.000000 }, // Infinity
+   { 0.984780, 0.988500, 0.994927, 1.000000 }, // Infinity
 // Hue 219
    { 0.983939, 0.988490, 0.996941, 1.000000 }, // PrimaryFill
    { 0.947680, 0.961414, 0.986920, 1.000000 }, // InactiveFill
@@ -21640,7 +21640,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.719715, 0.780605, 0.893685, 1.000000 }, // ActiveContent
    { 0.999507, 0.999614, 0.999813, 1.000000 }, // HighlightedContent
    { 0.052670, 0.163277, 0.368690, 1.000000 }, // Information
-   { 0.984850, 0.988385, 0.994950, 1.000000 }, // Infinity
+   { 0.984940, 0.988454, 0.994980, 1.000000 }, // Infinity
 // Hue 220
    { 0.984152, 0.988428, 0.996981, 1.000000 }, // PrimaryFill
    { 0.948320, 0.961240, 0.987080, 1.000000 }, // InactiveFill
@@ -21663,7 +21663,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.722325, 0.779775, 0.894675, 1.000000 }, // ActiveContent
    { 0.999517, 0.999617, 0.999817, 1.000000 }, // HighlightedContent
    { 0.053742, 0.161225, 0.376192, 1.000000 }, // Information
-   { 0.985000, 0.988333, 0.995000, 1.000000 }, // Infinity
+   { 0.985100, 0.988411, 0.995033, 1.000000 }, // Infinity
 // Hue 221
    { 0.984365, 0.988373, 0.997022, 1.000000 }, // PrimaryFill
    { 0.948960, 0.961082, 0.987240, 1.000000 }, // InactiveFill
@@ -21686,7 +21686,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.724935, 0.779000, 0.895665, 1.000000 }, // ActiveContent
    { 0.999526, 0.999619, 0.999820, 1.000000 }, // HighlightedContent
    { 0.054838, 0.159031, 0.383868, 1.000000 }, // Information
-   { 0.985150, 0.988285, 0.995050, 1.000000 }, // Infinity
+   { 0.985260, 0.988372, 0.995087, 1.000000 }, // Infinity
 // Hue 222
    { 0.984578, 0.988323, 0.997062, 1.000000 }, // PrimaryFill
    { 0.949600, 0.960940, 0.987400, 1.000000 }, // InactiveFill
@@ -21709,7 +21709,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.727400, 0.778160, 0.896600, 1.000000 }, // ActiveContent
    { 0.999536, 0.999622, 0.999824, 1.000000 }, // HighlightedContent
    { 0.055960, 0.156688, 0.391720, 1.000000 }, // Information
-   { 0.985300, 0.988240, 0.995100, 1.000000 }, // Infinity
+   { 0.985420, 0.988336, 0.995140, 1.000000 }, // Infinity
 // Hue 223
    { 0.984790, 0.988279, 0.997103, 1.000000 }, // PrimaryFill
    { 0.950240, 0.960814, 0.987560, 1.000000 }, // InactiveFill
@@ -21732,7 +21732,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.729865, 0.777372, 0.897535, 1.000000 }, // ActiveContent
    { 0.999546, 0.999626, 0.999828, 1.000000 }, // HighlightedContent
    { 0.057107, 0.154188, 0.399747, 1.000000 }, // Information
-   { 0.985450, 0.988198, 0.995150, 1.000000 }, // Infinity
+   { 0.985580, 0.988304, 0.995193, 1.000000 }, // Infinity
 // Hue 224
    { 0.985003, 0.988241, 0.997143, 1.000000 }, // PrimaryFill
    { 0.950880, 0.960704, 0.987720, 1.000000 }, // InactiveFill
@@ -21755,7 +21755,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.732330, 0.776634, 0.898470, 1.000000 }, // ActiveContent
    { 0.999555, 0.999629, 0.999831, 1.000000 }, // HighlightedContent
    { 0.058203, 0.151329, 0.407423, 1.000000 }, // Information
-   { 0.985600, 0.988160, 0.995200, 1.000000 }, // Infinity
+   { 0.985740, 0.988275, 0.995247, 1.000000 }, // Infinity
 // Hue 225
    { 0.985048, 0.988074, 0.997152, 1.000000 }, // PrimaryFill
    { 0.951680, 0.960740, 0.987920, 1.000000 }, // InactiveFill
@@ -21778,7 +21778,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.710000, 0.755000, 0.890000, 1.000000 }, // ActiveContent
    { 0.999420, 0.999510, 0.999780, 1.000000 }, // HighlightedContent
    { 0.059225, 0.148063, 0.414575, 1.000000 }, // Information
-   { 0.970000, 0.975000, 0.990000, 1.000000 }, // Infinity
+   { 0.985750, 0.988125, 0.995250, 1.000000 }, // Infinity
 // Hue 226
    { 0.985373, 0.988136, 0.997214, 1.000000 }, // PrimaryFill
    { 0.951915, 0.960330, 0.987979, 1.000000 }, // InactiveFill
@@ -21801,7 +21801,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.736970, 0.775064, 0.900230, 1.000000 }, // ActiveContent
    { 0.999565, 0.999628, 0.999835, 1.000000 }, // HighlightedContent
    { 0.060495, 0.145188, 0.423465, 1.000000 }, // Information
-   { 0.985900, 0.988093, 0.995300, 1.000000 }, // Infinity
+   { 0.986020, 0.988195, 0.995340, 1.000000 }, // Infinity
 // Hue 227
    { 0.985530, 0.988068, 0.997244, 1.000000 }, // PrimaryFill
    { 0.952309, 0.960059, 0.988077, 1.000000 }, // InactiveFill
@@ -21824,7 +21824,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.739290, 0.774351, 0.901110, 1.000000 }, // ActiveContent
    { 0.999565, 0.999623, 0.999835, 1.000000 }, // HighlightedContent
    { 0.061740, 0.142002, 0.432180, 1.000000 }, // Information
-   { 0.986050, 0.988065, 0.995350, 1.000000 }, // Infinity
+   { 0.986140, 0.988142, 0.995380, 1.000000 }, // Infinity
 // Hue 228
    { 0.985686, 0.988004, 0.997274, 1.000000 }, // PrimaryFill
    { 0.952704, 0.959798, 0.988176, 1.000000 }, // InactiveFill
@@ -21847,7 +21847,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.741610, 0.773686, 0.901990, 1.000000 }, // ActiveContent
    { 0.999565, 0.999619, 0.999835, 1.000000 }, // HighlightedContent
    { 0.062985, 0.138567, 0.440895, 1.000000 }, // Information
-   { 0.986200, 0.988040, 0.995400, 1.000000 }, // Infinity
+   { 0.986260, 0.988092, 0.995420, 1.000000 }, // Infinity
 // Hue 229
    { 0.985843, 0.987944, 0.997303, 1.000000 }, // PrimaryFill
    { 0.953259, 0.959686, 0.988315, 1.000000 }, // InactiveFill
@@ -21870,7 +21870,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.743785, 0.772941, 0.902815, 1.000000 }, // ActiveContent
    { 0.999565, 0.999614, 0.999835, 1.000000 }, // HighlightedContent
    { 0.064230, 0.134883, 0.449610, 1.000000 }, // Information
-   { 0.986350, 0.988018, 0.995450, 1.000000 }, // Infinity
+   { 0.986380, 0.988045, 0.995460, 1.000000 }, // Infinity
 // Hue 230
    { 0.986000, 0.987889, 0.997333, 1.000000 }, // PrimaryFill
    { 0.953653, 0.959447, 0.988413, 1.000000 }, // InactiveFill
@@ -21893,7 +21893,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.745960, 0.772240, 0.903640, 1.000000 }, // ActiveContent
    { 0.999565, 0.999610, 0.999835, 1.000000 }, // HighlightedContent
    { 0.065500, 0.131000, 0.458500, 1.000000 }, // Information
-   { 0.986350, 0.987867, 0.995450, 1.000000 }, // Infinity
+   { 0.986500, 0.988000, 0.995500, 1.000000 }, // Infinity
 // Hue 231
    { 0.986157, 0.987838, 0.997363, 1.000000 }, // PrimaryFill
    { 0.954048, 0.959218, 0.988512, 1.000000 }, // InactiveFill
@@ -21916,7 +21916,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.747990, 0.771453, 0.904410, 1.000000 }, // ActiveContent
    { 0.999565, 0.999605, 0.999835, 1.000000 }, // HighlightedContent
    { 0.066770, 0.126863, 0.467390, 1.000000 }, // Information
-   { 0.986500, 0.987850, 0.995500, 1.000000 }, // Infinity
+   { 0.986620, 0.987958, 0.995540, 1.000000 }, // Infinity
 // Hue 232
    { 0.986314, 0.987791, 0.997393, 1.000000 }, // PrimaryFill
    { 0.954603, 0.959142, 0.988651, 1.000000 }, // InactiveFill
@@ -21939,7 +21939,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.750165, 0.770841, 0.905235, 1.000000 }, // ActiveContent
    { 0.999565, 0.999601, 0.999835, 1.000000 }, // HighlightedContent
    { 0.068065, 0.122517, 0.476455, 1.000000 }, // Information
-   { 0.986650, 0.987837, 0.995550, 1.000000 }, // Infinity
+   { 0.986740, 0.987919, 0.995580, 1.000000 }, // Infinity
 // Hue 233
    { 0.986470, 0.987748, 0.997423, 1.000000 }, // PrimaryFill
    { 0.954997, 0.958935, 0.988749, 1.000000 }, // InactiveFill
@@ -21962,7 +21962,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.752195, 0.770140, 0.906005, 1.000000 }, // ActiveContent
    { 0.999565, 0.999596, 0.999835, 1.000000 }, // HighlightedContent
    { 0.069360, 0.117912, 0.485520, 1.000000 }, // Information
-   { 0.986800, 0.987827, 0.995600, 1.000000 }, // Infinity
+   { 0.986860, 0.987882, 0.995620, 1.000000 }, // Infinity
 // Hue 234
    { 0.986627, 0.987710, 0.997453, 1.000000 }, // PrimaryFill
    { 0.955392, 0.958738, 0.988848, 1.000000 }, // InactiveFill
@@ -21985,7 +21985,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.754225, 0.769480, 0.906775, 1.000000 }, // ActiveContent
    { 0.999565, 0.999592, 0.999835, 1.000000 }, // HighlightedContent
    { 0.070655, 0.113048, 0.494585, 1.000000 }, // Information
-   { 0.986950, 0.987820, 0.995650, 1.000000 }, // Infinity
+   { 0.986980, 0.987848, 0.995660, 1.000000 }, // Infinity
 // Hue 235
    { 0.986784, 0.987676, 0.997483, 1.000000 }, // PrimaryFill
    { 0.955787, 0.958550, 0.988947, 1.000000 }, // InactiveFill
@@ -22008,7 +22008,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.756110, 0.768725, 0.907490, 1.000000 }, // ActiveContent
    { 0.999565, 0.999587, 0.999835, 1.000000 }, // HighlightedContent
    { 0.071925, 0.107888, 0.503475, 1.000000 }, // Information
-   { 0.986950, 0.987675, 0.995650, 1.000000 }, // Infinity
+   { 0.987100, 0.987817, 0.995700, 1.000000 }, // Infinity
 // Hue 236
    { 0.986941, 0.987646, 0.997513, 1.000000 }, // PrimaryFill
    { 0.956181, 0.958372, 0.989045, 1.000000 }, // InactiveFill
@@ -22031,7 +22031,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.758140, 0.768148, 0.908260, 1.000000 }, // ActiveContent
    { 0.999565, 0.999583, 0.999835, 1.000000 }, // HighlightedContent
    { 0.073195, 0.102473, 0.512365, 1.000000 }, // Information
-   { 0.987100, 0.987673, 0.995700, 1.000000 }, // Infinity
+   { 0.987220, 0.987788, 0.995740, 1.000000 }, // Infinity
 // Hue 237
    { 0.987098, 0.987620, 0.997542, 1.000000 }, // PrimaryFill
    { 0.956576, 0.958204, 0.989144, 1.000000 }, // InactiveFill
@@ -22054,7 +22054,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.760025, 0.767473, 0.908975, 1.000000 }, // ActiveContent
    { 0.999565, 0.999578, 0.999835, 1.000000 }, // HighlightedContent
    { 0.074415, 0.096740, 0.520905, 1.000000 }, // Information
-   { 0.987250, 0.987675, 0.995750, 1.000000 }, // Infinity
+   { 0.987340, 0.987762, 0.995780, 1.000000 }, // Infinity
 // Hue 238
    { 0.987254, 0.987598, 0.997572, 1.000000 }, // PrimaryFill
    { 0.956971, 0.958046, 0.989243, 1.000000 }, // InactiveFill
@@ -22077,7 +22077,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.761910, 0.766836, 0.909690, 1.000000 }, // ActiveContent
    { 0.999565, 0.999574, 0.999835, 1.000000 }, // HighlightedContent
    { 0.075610, 0.090732, 0.529270, 1.000000 }, // Information
-   { 0.987400, 0.987680, 0.995800, 1.000000 }, // Infinity
+   { 0.987460, 0.987739, 0.995820, 1.000000 }, // Infinity
 // Hue 239
    { 0.987411, 0.987581, 0.997602, 1.000000 }, // PrimaryFill
    { 0.957365, 0.957898, 0.989341, 1.000000 }, // InactiveFill
@@ -22100,7 +22100,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.763795, 0.766239, 0.910405, 1.000000 }, // ActiveContent
    { 0.999565, 0.999569, 0.999835, 1.000000 }, // HighlightedContent
    { 0.076780, 0.084458, 0.537460, 1.000000 }, // Information
-   { 0.987400, 0.987540, 0.995800, 1.000000 }, // Infinity
+   { 0.987580, 0.987718, 0.995860, 1.000000 }, // Infinity
 // Hue 240
    { 0.987400, 0.987400, 0.997600, 1.000000 }, // PrimaryFill
    { 0.957600, 0.957600, 0.989400, 1.000000 }, // InactiveFill
@@ -22123,7 +22123,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.710000, 0.710000, 0.890000, 1.000000 }, // ActiveContent
    { 0.999420, 0.999420, 0.999780, 1.000000 }, // HighlightedContent
    { 0.077900, 0.077900, 0.545300, 1.000000 }, // Information
-   { 0.970000, 0.970000, 0.990000, 1.000000 }, // Infinity
+   { 0.987550, 0.987550, 0.995850, 1.000000 }, // Infinity
 // Hue 241
    { 0.987692, 0.987523, 0.997623, 1.000000 }, // PrimaryFill
    { 0.958162, 0.957632, 0.989408, 1.000000 }, // InactiveFill
@@ -22146,7 +22146,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.767530, 0.765100, 0.910900, 1.000000 }, // ActiveContent
    { 0.999569, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.085331, 0.077573, 0.543013, 1.000000 }, // Information
-   { 0.987688, 0.987550, 0.995850, 1.000000 }, // Infinity
+   { 0.987807, 0.987670, 0.995890, 1.000000 }, // Infinity
 // Hue 242
    { 0.987816, 0.987478, 0.997615, 1.000000 }, // PrimaryFill
    { 0.958566, 0.957504, 0.989376, 1.000000 }, // InactiveFill
@@ -22169,7 +22169,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.769392, 0.764520, 0.910680, 1.000000 }, // ActiveContent
    { 0.999574, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.092636, 0.077197, 0.540377, 1.000000 }, // Information
-   { 0.987827, 0.987550, 0.995850, 1.000000 }, // Infinity
+   { 0.987915, 0.987640, 0.995880, 1.000000 }, // Infinity
 // Hue 243
    { 0.987942, 0.987434, 0.997606, 1.000000 }, // PrimaryFill
    { 0.958974, 0.957376, 0.989344, 1.000000 }, // InactiveFill
@@ -22192,7 +22192,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.771266, 0.763940, 0.910460, 1.000000 }, // ActiveContent
    { 0.999578, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.099866, 0.076820, 0.537740, 1.000000 }, // Information
-   { 0.987820, 0.987400, 0.995800, 1.000000 }, // Infinity
+   { 0.988023, 0.987610, 0.995870, 1.000000 }, // Infinity
 // Hue 244
    { 0.988069, 0.987389, 0.997598, 1.000000 }, // PrimaryFill
    { 0.959386, 0.957248, 0.989312, 1.000000 }, // InactiveFill
@@ -22215,7 +22215,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.773152, 0.763360, 0.910240, 1.000000 }, // ActiveContent
    { 0.999583, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.106986, 0.076418, 0.534928, 1.000000 }, // Information
-   { 0.987960, 0.987400, 0.995800, 1.000000 }, // Infinity
+   { 0.988132, 0.987580, 0.995860, 1.000000 }, // Infinity
 // Hue 245
    { 0.988198, 0.987344, 0.997589, 1.000000 }, // PrimaryFill
    { 0.959800, 0.957120, 0.989280, 1.000000 }, // InactiveFill
@@ -22238,7 +22238,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.775050, 0.762780, 0.910020, 1.000000 }, // ActiveContent
    { 0.999587, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.113987, 0.075992, 0.531942, 1.000000 }, // Information
-   { 0.988100, 0.987400, 0.995800, 1.000000 }, // Infinity
+   { 0.988242, 0.987550, 0.995850, 1.000000 }, // Infinity
 // Hue 246
    { 0.988327, 0.987299, 0.997581, 1.000000 }, // PrimaryFill
    { 0.960218, 0.956992, 0.989248, 1.000000 }, // InactiveFill
@@ -22261,7 +22261,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.776960, 0.762200, 0.909800, 1.000000 }, // ActiveContent
    { 0.999592, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.120864, 0.075540, 0.528780, 1.000000 }, // Information
-   { 0.988240, 0.987400, 0.995800, 1.000000 }, // Infinity
+   { 0.988352, 0.987520, 0.995840, 1.000000 }, // Infinity
 // Hue 247
    { 0.988458, 0.987254, 0.997572, 1.000000 }, // PrimaryFill
    { 0.960638, 0.956864, 0.989216, 1.000000 }, // InactiveFill
@@ -22284,7 +22284,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.779017, 0.761765, 0.909635, 1.000000 }, // ActiveContent
    { 0.999596, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.127650, 0.075088, 0.525618, 1.000000 }, // Information
-   { 0.988242, 0.987250, 0.995750, 1.000000 }, // Infinity
+   { 0.988463, 0.987490, 0.995830, 1.000000 }, // Infinity
 // Hue 248
    { 0.988590, 0.987210, 0.997564, 1.000000 }, // PrimaryFill
    { 0.961062, 0.956736, 0.989184, 1.000000 }, // InactiveFill
@@ -22307,7 +22307,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.780949, 0.761185, 0.909415, 1.000000 }, // ActiveContent
    { 0.999601, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.134256, 0.074587, 0.522107, 1.000000 }, // Information
-   { 0.988383, 0.987250, 0.995750, 1.000000 }, // Infinity
+   { 0.988575, 0.987460, 0.995820, 1.000000 }, // Infinity
 // Hue 249
    { 0.988723, 0.987165, 0.997555, 1.000000 }, // PrimaryFill
    { 0.961490, 0.956608, 0.989152, 1.000000 }, // InactiveFill
@@ -22330,7 +22330,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.782894, 0.760605, 0.909195, 1.000000 }, // ActiveContent
    { 0.999605, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.140761, 0.074085, 0.518595, 1.000000 }, // Information
-   { 0.988525, 0.987250, 0.995750, 1.000000 }, // Infinity
+   { 0.988687, 0.987430, 0.995810, 1.000000 }, // Infinity
 // Hue 250
    { 0.988858, 0.987120, 0.997547, 1.000000 }, // PrimaryFill
    { 0.961920, 0.956480, 0.989120, 1.000000 }, // InactiveFill
@@ -22353,7 +22353,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.784850, 0.760025, 0.908975, 1.000000 }, // ActiveContent
    { 0.999610, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.147167, 0.073583, 0.515083, 1.000000 }, // Information
-   { 0.988667, 0.987250, 0.995750, 1.000000 }, // Infinity
+   { 0.988800, 0.987400, 0.995800, 1.000000 }, // Infinity
 // Hue 251
    { 0.988993, 0.987075, 0.997538, 1.000000 }, // PrimaryFill
    { 0.962354, 0.956352, 0.989088, 1.000000 }, // InactiveFill
@@ -22376,7 +22376,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.786819, 0.759445, 0.908755, 1.000000 }, // ActiveContent
    { 0.999614, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.153366, 0.073032, 0.511222, 1.000000 }, // Information
-   { 0.988808, 0.987250, 0.995750, 1.000000 }, // Infinity
+   { 0.988914, 0.987370, 0.995790, 1.000000 }, // Infinity
 // Hue 252
    { 0.989130, 0.987030, 0.997530, 1.000000 }, // PrimaryFill
    { 0.962790, 0.956224, 0.989056, 1.000000 }, // InactiveFill
@@ -22399,7 +22399,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.788799, 0.758865, 0.908535, 1.000000 }, // ActiveContent
    { 0.999619, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.159456, 0.072480, 0.507360, 1.000000 }, // Information
-   { 0.988820, 0.987100, 0.995700, 1.000000 }, // Infinity
+   { 0.989028, 0.987340, 0.995780, 1.000000 }, // Infinity
 // Hue 253
    { 0.989268, 0.986986, 0.997521, 1.000000 }, // PrimaryFill
    { 0.963230, 0.956096, 0.989024, 1.000000 }, // InactiveFill
@@ -22422,7 +22422,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.790792, 0.758285, 0.908315, 1.000000 }, // ActiveContent
    { 0.999623, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.165435, 0.071928, 0.503498, 1.000000 }, // Information
-   { 0.988963, 0.987100, 0.995700, 1.000000 }, // Infinity
+   { 0.989143, 0.987310, 0.995770, 1.000000 }, // Infinity
 // Hue 254
    { 0.989408, 0.986941, 0.997513, 1.000000 }, // PrimaryFill
    { 0.963674, 0.955968, 0.988992, 1.000000 }, // InactiveFill
@@ -22445,7 +22445,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.792672, 0.757560, 0.908040, 1.000000 }, // ActiveContent
    { 0.999628, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.171244, 0.071352, 0.499462, 1.000000 }, // Information
-   { 0.989107, 0.987100, 0.995700, 1.000000 }, // Infinity
+   { 0.989259, 0.987280, 0.995760, 1.000000 }, // Infinity
 // Hue 255
    { 0.989414, 0.986728, 0.997472, 1.000000 }, // PrimaryFill
    { 0.963990, 0.955680, 0.988920, 1.000000 }, // InactiveFill
@@ -22468,7 +22468,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.755000, 0.710000, 0.890000, 1.000000 }, // ActiveContent
    { 0.999510, 0.999420, 0.999780, 1.000000 }, // HighlightedContent
    { 0.176875, 0.070750, 0.495250, 1.000000 }, // Information
-   { 0.975000, 0.970000, 0.990000, 1.000000 }, // Infinity
+   { 0.989250, 0.987100, 0.995700, 1.000000 }, // Infinity
 // Hue 256
    { 0.989690, 0.986851, 0.997495, 1.000000 }, // PrimaryFill
    { 0.964561, 0.955701, 0.988925, 1.000000 }, // InactiveFill
@@ -22491,7 +22491,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.796720, 0.756400, 0.907600, 1.000000 }, // ActiveContent
    { 0.999637, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.182429, 0.070165, 0.491155, 1.000000 }, // Information
-   { 0.989393, 0.987100, 0.995700, 1.000000 }, // Infinity
+   { 0.989484, 0.987210, 0.995737, 1.000000 }, // Infinity
 // Hue 257
    { 0.989833, 0.986806, 0.997487, 1.000000 }, // PrimaryFill
    { 0.965006, 0.955563, 0.988891, 1.000000 }, // InactiveFill
@@ -22514,7 +22514,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.798762, 0.755820, 0.907380, 1.000000 }, // ActiveContent
    { 0.999641, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.187798, 0.069555, 0.486885, 1.000000 }, // Information
-   { 0.989415, 0.986950, 0.995650, 1.000000 }, // Infinity
+   { 0.989593, 0.987170, 0.995723, 1.000000 }, // Infinity
 // Hue 258
    { 0.989977, 0.986762, 0.997478, 1.000000 }, // PrimaryFill
    { 0.965454, 0.955424, 0.988856, 1.000000 }, // InactiveFill
@@ -22537,7 +22537,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.800816, 0.755240, 0.907160, 1.000000 }, // ActiveContent
    { 0.999646, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.192976, 0.068920, 0.482440, 1.000000 }, // Information
-   { 0.989560, 0.986950, 0.995650, 1.000000 }, // Infinity
+   { 0.989704, 0.987130, 0.995710, 1.000000 }, // Infinity
 // Hue 259
    { 0.990122, 0.986717, 0.997470, 1.000000 }, // PrimaryFill
    { 0.965905, 0.955285, 0.988821, 1.000000 }, // InactiveFill
@@ -22560,7 +22560,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.802766, 0.754515, 0.906885, 1.000000 }, // ActiveContent
    { 0.999650, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.198099, 0.068310, 0.478170, 1.000000 }, // Information
-   { 0.989705, 0.986950, 0.995650, 1.000000 }, // Infinity
+   { 0.989815, 0.987090, 0.995697, 1.000000 }, // Infinity
 // Hue 260
    { 0.990268, 0.986672, 0.997461, 1.000000 }, // PrimaryFill
    { 0.966360, 0.955147, 0.988787, 1.000000 }, // InactiveFill
@@ -22583,7 +22583,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.804845, 0.753935, 0.906665, 1.000000 }, // ActiveContent
    { 0.999655, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.203025, 0.067675, 0.473725, 1.000000 }, // Information
-   { 0.989850, 0.986950, 0.995650, 1.000000 }, // Infinity
+   { 0.989928, 0.987050, 0.995683, 1.000000 }, // Infinity
 // Hue 261
    { 0.990416, 0.986627, 0.997453, 1.000000 }, // PrimaryFill
    { 0.966818, 0.955008, 0.988752, 1.000000 }, // InactiveFill
@@ -22606,7 +22606,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.806937, 0.753355, 0.906445, 1.000000 }, // ActiveContent
    { 0.999659, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.207824, 0.067040, 0.469280, 1.000000 }, // Information
-   { 0.989880, 0.986800, 0.995600, 1.000000 }, // Infinity
+   { 0.990041, 0.987010, 0.995670, 1.000000 }, // Infinity
 // Hue 262
    { 0.990565, 0.986582, 0.997444, 1.000000 }, // PrimaryFill
    { 0.967280, 0.954869, 0.988717, 1.000000 }, // InactiveFill
@@ -22629,7 +22629,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.808928, 0.752630, 0.906170, 1.000000 }, // ActiveContent
    { 0.999664, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.212496, 0.066405, 0.464835, 1.000000 }, // Information
-   { 0.990027, 0.986800, 0.995600, 1.000000 }, // Infinity
+   { 0.990155, 0.986970, 0.995657, 1.000000 }, // Infinity
 // Hue 263
    { 0.990715, 0.986538, 0.997436, 1.000000 }, // PrimaryFill
    { 0.967746, 0.954731, 0.988683, 1.000000 }, // InactiveFill
@@ -22652,7 +22652,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.811045, 0.752050, 0.905950, 1.000000 }, // ActiveContent
    { 0.999668, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.216958, 0.065745, 0.460215, 1.000000 }, // Information
-   { 0.990173, 0.986800, 0.995600, 1.000000 }, // Infinity
+   { 0.990270, 0.986930, 0.995643, 1.000000 }, // Infinity
 // Hue 264
    { 0.990867, 0.986493, 0.997427, 1.000000 }, // PrimaryFill
    { 0.968214, 0.954592, 0.988648, 1.000000 }, // InactiveFill
@@ -22675,7 +22675,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.813065, 0.751325, 0.905675, 1.000000 }, // ActiveContent
    { 0.999673, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.221374, 0.065110, 0.455770, 1.000000 }, // Information
-   { 0.990320, 0.986800, 0.995600, 1.000000 }, // Infinity
+   { 0.990386, 0.986890, 0.995630, 1.000000 }, // Infinity
 // Hue 265
    { 0.991019, 0.986448, 0.997419, 1.000000 }, // PrimaryFill
    { 0.968687, 0.954453, 0.988613, 1.000000 }, // InactiveFill
@@ -22698,7 +22698,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.815208, 0.750745, 0.905455, 1.000000 }, // ActiveContent
    { 0.999677, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.225575, 0.064450, 0.451150, 1.000000 }, // Information
-   { 0.990358, 0.986650, 0.995550, 1.000000 }, // Infinity
+   { 0.990503, 0.986850, 0.995617, 1.000000 }, // Infinity
 // Hue 266
    { 0.991173, 0.986403, 0.997410, 1.000000 }, // PrimaryFill
    { 0.969162, 0.954315, 0.988579, 1.000000 }, // InactiveFill
@@ -22721,7 +22721,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.817256, 0.750020, 0.905180, 1.000000 }, // ActiveContent
    { 0.999682, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.229734, 0.063815, 0.446705, 1.000000 }, // Information
-   { 0.990507, 0.986650, 0.995550, 1.000000 }, // Infinity
+   { 0.990620, 0.986810, 0.995603, 1.000000 }, // Infinity
 // Hue 267
    { 0.991328, 0.986358, 0.997402, 1.000000 }, // PrimaryFill
    { 0.969642, 0.954176, 0.988544, 1.000000 }, // InactiveFill
@@ -22744,7 +22744,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.819424, 0.749440, 0.904960, 1.000000 }, // ActiveContent
    { 0.999686, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.233674, 0.063155, 0.442085, 1.000000 }, // Information
-   { 0.990655, 0.986650, 0.995550, 1.000000 }, // Infinity
+   { 0.990739, 0.986770, 0.995590, 1.000000 }, // Infinity
 // Hue 268
    { 0.991484, 0.986314, 0.997393, 1.000000 }, // PrimaryFill
    { 0.970124, 0.954037, 0.988509, 1.000000 }, // InactiveFill
@@ -22767,7 +22767,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.821501, 0.748715, 0.904685, 1.000000 }, // ActiveContent
    { 0.999691, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.237576, 0.062520, 0.437640, 1.000000 }, // Information
-   { 0.990803, 0.986650, 0.995550, 1.000000 }, // Infinity
+   { 0.990858, 0.986730, 0.995577, 1.000000 }, // Infinity
 // Hue 269
    { 0.991641, 0.986269, 0.997385, 1.000000 }, // PrimaryFill
    { 0.970610, 0.953899, 0.988475, 1.000000 }, // InactiveFill
@@ -22790,7 +22790,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.823593, 0.747990, 0.904410, 1.000000 }, // ActiveContent
    { 0.999695, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.241352, 0.061885, 0.433195, 1.000000 }, // Information
-   { 0.990850, 0.986500, 0.995500, 1.000000 }, // Infinity
+   { 0.990979, 0.986690, 0.995563, 1.000000 }, // Infinity
 // Hue 270
    { 0.991700, 0.986056, 0.997344, 1.000000 }, // PrimaryFill
    { 0.971000, 0.953600, 0.988400, 1.000000 }, // InactiveFill
@@ -22813,7 +22813,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.800000, 0.710000, 0.890000, 1.000000 }, // ActiveContent
    { 0.999600, 0.999420, 0.999780, 1.000000 }, // HighlightedContent
    { 0.244900, 0.061225, 0.428575, 1.000000 }, // Information
-   { 0.980000, 0.970000, 0.990000, 1.000000 }, // Infinity
+   { 0.991000, 0.986500, 0.995500, 1.000000 }, // Infinity
 // Hue 271
    { 0.991960, 0.986179, 0.997367, 1.000000 }, // PrimaryFill
    { 0.971613, 0.953653, 0.988413, 1.000000 }, // InactiveFill
@@ -22836,7 +22836,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.827921, 0.746685, 0.903915, 1.000000 }, // ActiveContent
    { 0.999704, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.248638, 0.060643, 0.424503, 1.000000 }, // Information
-   { 0.991150, 0.986500, 0.995500, 1.000000 }, // Infinity
+   { 0.991222, 0.986610, 0.995537, 1.000000 }, // Infinity
 // Hue 272
    { 0.992121, 0.986134, 0.997359, 1.000000 }, // PrimaryFill
    { 0.972128, 0.953547, 0.988387, 1.000000 }, // InactiveFill
@@ -22859,7 +22859,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.830056, 0.745960, 0.903640, 1.000000 }, // ActiveContent
    { 0.999709, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.252154, 0.060037, 0.420257, 1.000000 }, // Information
-   { 0.991300, 0.986500, 0.995500, 1.000000 }, // Infinity
+   { 0.991345, 0.986570, 0.995523, 1.000000 }, // Infinity
 // Hue 273
    { 0.992283, 0.986090, 0.997350, 1.000000 }, // PrimaryFill
    { 0.972646, 0.953440, 0.988360, 1.000000 }, // InactiveFill
@@ -22882,7 +22882,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.832207, 0.745235, 0.903365, 1.000000 }, // ActiveContent
    { 0.999713, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.255549, 0.059430, 0.416010, 1.000000 }, // Information
-   { 0.991355, 0.986350, 0.995450, 1.000000 }, // Infinity
+   { 0.991469, 0.986530, 0.995510, 1.000000 }, // Infinity
 // Hue 274
    { 0.992446, 0.986045, 0.997342, 1.000000 }, // PrimaryFill
    { 0.973167, 0.953333, 0.988333, 1.000000 }, // InactiveFill
@@ -22905,7 +22905,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.834372, 0.744510, 0.903090, 1.000000 }, // ActiveContent
    { 0.999718, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.258713, 0.058798, 0.411588, 1.000000 }, // Information
-   { 0.991507, 0.986350, 0.995450, 1.000000 }, // Infinity
+   { 0.991594, 0.986490, 0.995497, 1.000000 }, // Infinity
 // Hue 275
    { 0.992611, 0.986000, 0.997333, 1.000000 }, // PrimaryFill
    { 0.973690, 0.953227, 0.988307, 1.000000 }, // InactiveFill
@@ -22928,7 +22928,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.836553, 0.743785, 0.902815, 1.000000 }, // ActiveContent
    { 0.999722, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.261863, 0.058192, 0.407342, 1.000000 }, // Information
-   { 0.991658, 0.986350, 0.995450, 1.000000 }, // Infinity
+   { 0.991719, 0.986450, 0.995483, 1.000000 }, // Infinity
 // Hue 276
    { 0.992777, 0.985955, 0.997325, 1.000000 }, // PrimaryFill
    { 0.974216, 0.953120, 0.988280, 1.000000 }, // InactiveFill
@@ -22951,7 +22951,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.838748, 0.743060, 0.902540, 1.000000 }, // ActiveContent
    { 0.999727, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.264776, 0.057560, 0.402920, 1.000000 }, // Information
-   { 0.991810, 0.986350, 0.995450, 1.000000 }, // Infinity
+   { 0.991846, 0.986410, 0.995470, 1.000000 }, // Infinity
 // Hue 277
    { 0.992944, 0.985910, 0.997316, 1.000000 }, // PrimaryFill
    { 0.974745, 0.953013, 0.988253, 1.000000 }, // InactiveFill
@@ -22974,7 +22974,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.840959, 0.742335, 0.902265, 1.000000 }, // ActiveContent
    { 0.999731, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.267681, 0.056953, 0.398673, 1.000000 }, // Information
-   { 0.991873, 0.986200, 0.995400, 1.000000 }, // Infinity
+   { 0.991973, 0.986370, 0.995457, 1.000000 }, // Infinity
 // Hue 278
    { 0.993112, 0.985866, 0.997308, 1.000000 }, // PrimaryFill
    { 0.975276, 0.952907, 0.988227, 1.000000 }, // InactiveFill
@@ -22997,7 +22997,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.843184, 0.741610, 0.901990, 1.000000 }, // ActiveContent
    { 0.999736, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.270464, 0.056347, 0.394427, 1.000000 }, // Information
-   { 0.992027, 0.986200, 0.995400, 1.000000 }, // Infinity
+   { 0.992102, 0.986330, 0.995443, 1.000000 }, // Infinity
 // Hue 279
    { 0.993282, 0.985821, 0.997299, 1.000000 }, // PrimaryFill
    { 0.975810, 0.952800, 0.988200, 1.000000 }, // InactiveFill
@@ -23020,7 +23020,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.845425, 0.740885, 0.901715, 1.000000 }, // ActiveContent
    { 0.999740, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.273126, 0.055740, 0.390180, 1.000000 }, // Information
-   { 0.992180, 0.986200, 0.995400, 1.000000 }, // Infinity
+   { 0.992231, 0.986290, 0.995430, 1.000000 }, // Infinity
 // Hue 280
    { 0.993452, 0.985776, 0.997291, 1.000000 }, // PrimaryFill
    { 0.976267, 0.952533, 0.988133, 1.000000 }, // InactiveFill
@@ -23043,7 +23043,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.847595, 0.740015, 0.901385, 1.000000 }, // ActiveContent
    { 0.999745, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.275667, 0.055133, 0.385933, 1.000000 }, // Information
-   { 0.992333, 0.986200, 0.995400, 1.000000 }, // Infinity
+   { 0.992361, 0.986250, 0.995417, 1.000000 }, // Infinity
 // Hue 281
    { 0.993624, 0.985731, 0.997282, 1.000000 }, // PrimaryFill
    { 0.976808, 0.952427, 0.988107, 1.000000 }, // InactiveFill
@@ -23066,7 +23066,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.849867, 0.739290, 0.901110, 1.000000 }, // ActiveContent
    { 0.999749, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.278213, 0.054552, 0.381862, 1.000000 }, // Information
-   { 0.992405, 0.986050, 0.995350, 1.000000 }, // Infinity
+   { 0.992492, 0.986210, 0.995403, 1.000000 }, // Infinity
 // Hue 282
    { 0.993797, 0.985686, 0.997274, 1.000000 }, // PrimaryFill
    { 0.977352, 0.952320, 0.988080, 1.000000 }, // InactiveFill
@@ -23089,7 +23089,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.852154, 0.738565, 0.900835, 1.000000 }, // ActiveContent
    { 0.999754, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.280514, 0.053945, 0.377615, 1.000000 }, // Information
-   { 0.992560, 0.986050, 0.995350, 1.000000 }, // Infinity
+   { 0.992624, 0.986170, 0.995390, 1.000000 }, // Infinity
 // Hue 283
    { 0.993972, 0.985642, 0.997265, 1.000000 }, // PrimaryFill
    { 0.977899, 0.952213, 0.988053, 1.000000 }, // InactiveFill
@@ -23112,7 +23112,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.854456, 0.737840, 0.900560, 1.000000 }, // ActiveContent
    { 0.999758, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.282826, 0.053363, 0.373543, 1.000000 }, // Information
-   { 0.992715, 0.986050, 0.995350, 1.000000 }, // Infinity
+   { 0.992757, 0.986130, 0.995377, 1.000000 }, // Infinity
 // Hue 284
    { 0.994147, 0.985597, 0.997257, 1.000000 }, // PrimaryFill
    { 0.978448, 0.952107, 0.988027, 1.000000 }, // InactiveFill
@@ -23135,7 +23135,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.856694, 0.736970, 0.900230, 1.000000 }, // ActiveContent
    { 0.999763, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.284886, 0.052757, 0.369297, 1.000000 }, // Information
-   { 0.992870, 0.986050, 0.995350, 1.000000 }, // Infinity
+   { 0.992890, 0.986090, 0.995363, 1.000000 }, // Infinity
 // Hue 285
    { 0.994258, 0.985384, 0.997216, 1.000000 }, // PrimaryFill
    { 0.979000, 0.952000, 0.988000, 1.000000 }, // InactiveFill
@@ -23158,7 +23158,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.845000, 0.710000, 0.890000, 1.000000 }, // ActiveContent
    { 0.999690, 0.999420, 0.999780, 1.000000 }, // HighlightedContent
    { 0.286687, 0.052125, 0.364875, 1.000000 }, // Information
-   { 0.985000, 0.970000, 0.990000, 1.000000 }, // Infinity
+   { 0.992950, 0.985900, 0.995300, 1.000000 }, // Infinity
 // Hue 286
    { 0.994498, 0.985496, 0.997237, 1.000000 }, // PrimaryFill
    { 0.979473, 0.951701, 0.987925, 1.000000 }, // InactiveFill
@@ -23181,7 +23181,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.861300, 0.735375, 0.899625, 1.000000 }, // ActiveContent
    { 0.999772, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.289287, 0.051658, 0.361608, 1.000000 }, // Information
-   { 0.993107, 0.985900, 0.995300, 1.000000 }, // Infinity
+   { 0.993160, 0.986010, 0.995337, 1.000000 }, // Infinity
 // Hue 287
    { 0.994673, 0.985440, 0.997227, 1.000000 }, // PrimaryFill
    { 0.980020, 0.951563, 0.987891, 1.000000 }, // InactiveFill
@@ -23204,7 +23204,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.863591, 0.734505, 0.899295, 1.000000 }, // ActiveContent
    { 0.999776, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.291507, 0.051142, 0.357992, 1.000000 }, // Information
-   { 0.993263, 0.985900, 0.995300, 1.000000 }, // Infinity
+   { 0.993297, 0.985970, 0.995323, 1.000000 }, // Infinity
 // Hue 288
    { 0.994850, 0.985384, 0.997216, 1.000000 }, // PrimaryFill
    { 0.980570, 0.951424, 0.987856, 1.000000 }, // InactiveFill
@@ -23227,7 +23227,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.865972, 0.733780, 0.899020, 1.000000 }, // ActiveContent
    { 0.999781, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.293625, 0.050625, 0.354375, 1.000000 }, // Information
-   { 0.993420, 0.985900, 0.995300, 1.000000 }, // Infinity
+   { 0.993434, 0.985930, 0.995310, 1.000000 }, // Infinity
 // Hue 289
    { 0.995028, 0.985328, 0.997205, 1.000000 }, // PrimaryFill
    { 0.981123, 0.951285, 0.987821, 1.000000 }, // InactiveFill
@@ -23250,7 +23250,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.868297, 0.732910, 0.898690, 1.000000 }, // ActiveContent
    { 0.999785, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.295787, 0.050133, 0.350933, 1.000000 }, // Information
-   { 0.993508, 0.985750, 0.995250, 1.000000 }, // Infinity
+   { 0.993572, 0.985890, 0.995297, 1.000000 }, // Infinity
 // Hue 290
    { 0.995208, 0.985272, 0.997195, 1.000000 }, // PrimaryFill
    { 0.981680, 0.951147, 0.987787, 1.000000 }, // InactiveFill
@@ -23273,7 +23273,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.870640, 0.732040, 0.898360, 1.000000 }, // ActiveContent
    { 0.999790, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.297850, 0.049642, 0.347492, 1.000000 }, // Information
-   { 0.993667, 0.985750, 0.995250, 1.000000 }, // Infinity
+   { 0.993711, 0.985850, 0.995283, 1.000000 }, // Infinity
 // Hue 291
    { 0.995389, 0.985216, 0.997184, 1.000000 }, // PrimaryFill
    { 0.982240, 0.951008, 0.987752, 1.000000 }, // InactiveFill
@@ -23296,7 +23296,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.873070, 0.731315, 0.898085, 1.000000 }, // ActiveContent
    { 0.999794, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.299663, 0.049125, 0.343875, 1.000000 }, // Information
-   { 0.993825, 0.985750, 0.995250, 1.000000 }, // Infinity
+   { 0.993851, 0.985810, 0.995270, 1.000000 }, // Infinity
 // Hue 292
    { 0.995572, 0.985160, 0.997173, 1.000000 }, // PrimaryFill
    { 0.982804, 0.950869, 0.987717, 1.000000 }, // InactiveFill
@@ -23319,7 +23319,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.875447, 0.730445, 0.897755, 1.000000 }, // ActiveContent
    { 0.999799, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.301372, 0.048608, 0.340258, 1.000000 }, // Information
-   { 0.993983, 0.985750, 0.995250, 1.000000 }, // Infinity
+   { 0.993992, 0.985770, 0.995257, 1.000000 }, // Infinity
 // Hue 293
    { 0.995756, 0.985104, 0.997163, 1.000000 }, // PrimaryFill
    { 0.983372, 0.950731, 0.987683, 1.000000 }, // InactiveFill
@@ -23342,7 +23342,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.877843, 0.729575, 0.897425, 1.000000 }, // ActiveContent
    { 0.999803, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.302978, 0.048092, 0.336642, 1.000000 }, // Information
-   { 0.994080, 0.985600, 0.995200, 1.000000 }, // Infinity
+   { 0.994133, 0.985730, 0.995243, 1.000000 }, // Infinity
 // Hue 294
    { 0.995942, 0.985048, 0.997152, 1.000000 }, // PrimaryFill
    { 0.983942, 0.950592, 0.987648, 1.000000 }, // InactiveFill
@@ -23365,7 +23365,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.880256, 0.728705, 0.897095, 1.000000 }, // ActiveContent
    { 0.999808, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.304640, 0.047600, 0.333200, 1.000000 }, // Information
-   { 0.994240, 0.985600, 0.995200, 1.000000 }, // Infinity
+   { 0.994276, 0.985690, 0.995230, 1.000000 }, // Infinity
 // Hue 295
    { 0.996129, 0.984992, 0.997141, 1.000000 }, // PrimaryFill
    { 0.984517, 0.950453, 0.987613, 1.000000 }, // InactiveFill
@@ -23388,7 +23388,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.882688, 0.727835, 0.896765, 1.000000 }, // ActiveContent
    { 0.999812, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.306204, 0.047108, 0.329758, 1.000000 }, // Information
-   { 0.994400, 0.985600, 0.995200, 1.000000 }, // Infinity
+   { 0.994419, 0.985650, 0.995217, 1.000000 }, // Infinity
 // Hue 296
    { 0.996318, 0.984936, 0.997131, 1.000000 }, // PrimaryFill
    { 0.985094, 0.950315, 0.987579, 1.000000 }, // InactiveFill
@@ -23411,7 +23411,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.885076, 0.726820, 0.896380, 1.000000 }, // ActiveContent
    { 0.999817, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.307670, 0.046617, 0.326317, 1.000000 }, // Information
-   { 0.994503, 0.985450, 0.995150, 1.000000 }, // Infinity
+   { 0.994564, 0.985610, 0.995203, 1.000000 }, // Infinity
 // Hue 297
    { 0.996508, 0.984880, 0.997120, 1.000000 }, // PrimaryFill
    { 0.985676, 0.950176, 0.987544, 1.000000 }, // InactiveFill
@@ -23434,7 +23434,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.887545, 0.725950, 0.896050, 1.000000 }, // ActiveContent
    { 0.999821, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.309205, 0.046150, 0.323050, 1.000000 }, // Information
-   { 0.994665, 0.985450, 0.995150, 1.000000 }, // Infinity
+   { 0.994709, 0.985570, 0.995190, 1.000000 }, // Infinity
 // Hue 298
    { 0.996700, 0.984824, 0.997109, 1.000000 }, // PrimaryFill
    { 0.986260, 0.950037, 0.987509, 1.000000 }, // InactiveFill
@@ -23457,7 +23457,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.890032, 0.725080, 0.895720, 1.000000 }, // ActiveContent
    { 0.999826, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.310647, 0.045683, 0.319783, 1.000000 }, // Information
-   { 0.994827, 0.985450, 0.995150, 1.000000 }, // Infinity
+   { 0.994855, 0.985530, 0.995177, 1.000000 }, // Infinity
 // Hue 299
    { 0.996893, 0.984768, 0.997099, 1.000000 }, // PrimaryFill
    { 0.986848, 0.949899, 0.987475, 1.000000 }, // InactiveFill
@@ -23480,7 +23480,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.892537, 0.724210, 0.895390, 1.000000 }, // ActiveContent
    { 0.999830, 0.999565, 0.999835, 1.000000 }, // HighlightedContent
    { 0.311995, 0.045217, 0.316517, 1.000000 }, // Information
-   { 0.994988, 0.985450, 0.995150, 1.000000 }, // Infinity
+   { 0.995002, 0.985490, 0.995163, 1.000000 }, // Infinity
 // Hue 300
    { 0.997056, 0.984544, 0.997056, 1.000000 }, // PrimaryFill
    { 0.987480, 0.949920, 0.987480, 1.000000 }, // InactiveFill
@@ -23503,7 +23503,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.890000, 0.710000, 0.890000, 1.000000 }, // ActiveContent
    { 0.999780, 0.999420, 0.999780, 1.000000 }, // HighlightedContent
    { 0.313250, 0.044750, 0.313250, 1.000000 }, // Information
-   { 0.990000, 0.970000, 0.990000, 1.000000 }, // Infinity
+   { 0.995100, 0.985300, 0.995100, 1.000000 }, // Infinity
 // Hue 301
    { 0.997092, 0.984734, 0.996886, 1.000000 }, // PrimaryFill
    { 0.987456, 0.949824, 0.986829, 1.000000 }, // InactiveFill
@@ -23526,7 +23526,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.895115, 0.723485, 0.892255, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999830, 1.000000 }, // HighlightedContent
    { 0.314090, 0.044870, 0.309603, 1.000000 }, // Information
-   { 0.995100, 0.985300, 0.994937, 1.000000 }, // Infinity
+   { 0.995157, 0.985470, 0.994995, 1.000000 }, // Infinity
 // Hue 302
    { 0.997097, 0.984757, 0.996685, 1.000000 }, // PrimaryFill
    { 0.987472, 0.949888, 0.986219, 1.000000 }, // InactiveFill
@@ -23549,7 +23549,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.895225, 0.723775, 0.889510, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999826, 1.000000 }, // HighlightedContent
    { 0.315105, 0.045015, 0.306102, 1.000000 }, // Information
-   { 0.995100, 0.985300, 0.994773, 1.000000 }, // Infinity
+   { 0.995163, 0.985490, 0.994841, 1.000000 }, // Infinity
 // Hue 303
    { 0.997101, 0.984779, 0.996485, 1.000000 }, // PrimaryFill
    { 0.987488, 0.949952, 0.985611, 1.000000 }, // InactiveFill
@@ -23572,7 +23572,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.895390, 0.724210, 0.886831, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999821, 1.000000 }, // HighlightedContent
    { 0.316120, 0.045160, 0.302572, 1.000000 }, // Information
-   { 0.995150, 0.985450, 0.994665, 1.000000 }, // Infinity
+   { 0.995170, 0.985510, 0.994687, 1.000000 }, // Infinity
 // Hue 304
    { 0.997105, 0.984802, 0.996285, 1.000000 }, // PrimaryFill
    { 0.987504, 0.950016, 0.985005, 1.000000 }, // InactiveFill
@@ -23595,7 +23595,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.895500, 0.724500, 0.884100, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999817, 1.000000 }, // HighlightedContent
    { 0.317135, 0.045305, 0.299013, 1.000000 }, // Information
-   { 0.995150, 0.985450, 0.994503, 1.000000 }, // Infinity
+   { 0.995177, 0.985530, 0.994534, 1.000000 }, // Infinity
 // Hue 305
    { 0.997109, 0.984824, 0.996086, 1.000000 }, // PrimaryFill
    { 0.987520, 0.950080, 0.984400, 1.000000 }, // InactiveFill
@@ -23618,7 +23618,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.895610, 0.724790, 0.881375, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999812, 1.000000 }, // HighlightedContent
    { 0.318150, 0.045450, 0.295425, 1.000000 }, // Information
-   { 0.995150, 0.985450, 0.994342, 1.000000 }, // Infinity
+   { 0.995183, 0.985550, 0.994381, 1.000000 }, // Infinity
 // Hue 306
    { 0.997114, 0.984846, 0.995887, 1.000000 }, // PrimaryFill
    { 0.987536, 0.950144, 0.983797, 1.000000 }, // InactiveFill
@@ -23641,7 +23641,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.895720, 0.725080, 0.878656, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999808, 1.000000 }, // HighlightedContent
    { 0.319165, 0.045595, 0.291808, 1.000000 }, // Information
-   { 0.995150, 0.985450, 0.994180, 1.000000 }, // Infinity
+   { 0.995190, 0.985570, 0.994228, 1.000000 }, // Infinity
 // Hue 307
    { 0.997118, 0.984869, 0.995689, 1.000000 }, // PrimaryFill
    { 0.987552, 0.950208, 0.983195, 1.000000 }, // InactiveFill
@@ -23664,7 +23664,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.895830, 0.725370, 0.875943, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999803, 1.000000 }, // HighlightedContent
    { 0.320180, 0.045740, 0.288162, 1.000000 }, // Information
-   { 0.995150, 0.985450, 0.994018, 1.000000 }, // Infinity
+   { 0.995197, 0.985590, 0.994076, 1.000000 }, // Infinity
 // Hue 308
    { 0.997122, 0.984891, 0.995491, 1.000000 }, // PrimaryFill
    { 0.987568, 0.950272, 0.982595, 1.000000 }, // InactiveFill
@@ -23687,7 +23687,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.895940, 0.725660, 0.873236, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999799, 1.000000 }, // HighlightedContent
    { 0.321195, 0.045885, 0.284487, 1.000000 }, // Information
-   { 0.995150, 0.985450, 0.993857, 1.000000 }, // Infinity
+   { 0.995203, 0.985610, 0.993924, 1.000000 }, // Infinity
 // Hue 309
    { 0.997126, 0.984914, 0.995294, 1.000000 }, // PrimaryFill
    { 0.987584, 0.950336, 0.981997, 1.000000 }, // InactiveFill
@@ -23710,7 +23710,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.896050, 0.725950, 0.870535, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999794, 1.000000 }, // HighlightedContent
    { 0.322210, 0.046030, 0.280783, 1.000000 }, // Information
-   { 0.995150, 0.985450, 0.993695, 1.000000 }, // Infinity
+   { 0.995210, 0.985630, 0.993773, 1.000000 }, // Infinity
 // Hue 310
    { 0.997131, 0.984936, 0.995098, 1.000000 }, // PrimaryFill
    { 0.987600, 0.950400, 0.981400, 1.000000 }, // InactiveFill
@@ -23733,7 +23733,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.896160, 0.726240, 0.867840, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999790, 1.000000 }, // HighlightedContent
    { 0.323225, 0.046175, 0.277050, 1.000000 }, // Information
-   { 0.995150, 0.985450, 0.993533, 1.000000 }, // Infinity
+   { 0.995217, 0.985650, 0.993622, 1.000000 }, // Infinity
 // Hue 311
    { 0.997135, 0.984958, 0.994903, 1.000000 }, // PrimaryFill
    { 0.987616, 0.950464, 0.980805, 1.000000 }, // InactiveFill
@@ -23756,7 +23756,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.896270, 0.726530, 0.865151, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999785, 1.000000 }, // HighlightedContent
    { 0.324240, 0.046320, 0.273288, 1.000000 }, // Information
-   { 0.995150, 0.985450, 0.993372, 1.000000 }, // Infinity
+   { 0.995223, 0.985670, 0.993472, 1.000000 }, // Infinity
 // Hue 312
    { 0.997139, 0.984981, 0.994708, 1.000000 }, // PrimaryFill
    { 0.987632, 0.950528, 0.980211, 1.000000 }, // InactiveFill
@@ -23779,7 +23779,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.896380, 0.726820, 0.862468, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999781, 1.000000 }, // HighlightedContent
    { 0.325255, 0.046465, 0.269497, 1.000000 }, // Information
-   { 0.995150, 0.985450, 0.993210, 1.000000 }, // Infinity
+   { 0.995230, 0.985690, 0.993322, 1.000000 }, // Infinity
 // Hue 313
    { 0.997143, 0.985003, 0.994513, 1.000000 }, // PrimaryFill
    { 0.987648, 0.950592, 0.979619, 1.000000 }, // InactiveFill
@@ -23802,7 +23802,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.896490, 0.727110, 0.859791, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999776, 1.000000 }, // HighlightedContent
    { 0.326270, 0.046610, 0.265677, 1.000000 }, // Information
-   { 0.995200, 0.985600, 0.993120, 1.000000 }, // Infinity
+   { 0.995237, 0.985710, 0.993173, 1.000000 }, // Infinity
 // Hue 314
    { 0.997148, 0.985026, 0.994319, 1.000000 }, // PrimaryFill
    { 0.987664, 0.950656, 0.979029, 1.000000 }, // InactiveFill
@@ -23825,7 +23825,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.896600, 0.727400, 0.857120, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999772, 1.000000 }, // HighlightedContent
    { 0.327285, 0.046755, 0.261828, 1.000000 }, // Information
-   { 0.995200, 0.985600, 0.992960, 1.000000 }, // Infinity
+   { 0.995243, 0.985730, 0.993024, 1.000000 }, // Infinity
 // Hue 315
    { 0.997120, 0.984880, 0.994060, 1.000000 }, // PrimaryFill
    { 0.987720, 0.950880, 0.978510, 1.000000 }, // InactiveFill
@@ -23848,7 +23848,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.890000, 0.710000, 0.845000, 1.000000 }, // ActiveContent
    { 0.999780, 0.999420, 0.999690, 1.000000 }, // HighlightedContent
    { 0.328475, 0.046925, 0.258088, 1.000000 }, // Information
-   { 0.990000, 0.970000, 0.985000, 1.000000 }, // Infinity
+   { 0.995200, 0.985600, 0.992800, 1.000000 }, // Infinity
 // Hue 316
    { 0.997156, 0.985070, 0.993933, 1.000000 }, // PrimaryFill
    { 0.987693, 0.950773, 0.977848, 1.000000 }, // InactiveFill
@@ -23871,7 +23871,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.896820, 0.727980, 0.851796, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999763, 1.000000 }, // HighlightedContent
    { 0.329140, 0.047020, 0.253908, 1.000000 }, // Information
-   { 0.995200, 0.985600, 0.992640, 1.000000 }, // Infinity
+   { 0.995253, 0.985760, 0.992722, 1.000000 }, // Infinity
 // Hue 317
    { 0.997161, 0.985093, 0.993741, 1.000000 }, // PrimaryFill
    { 0.987707, 0.950827, 0.977257, 1.000000 }, // InactiveFill
@@ -23894,7 +23894,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.896930, 0.728270, 0.849143, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999758, 1.000000 }, // HighlightedContent
    { 0.329980, 0.047140, 0.249842, 1.000000 }, // Information
-   { 0.995200, 0.985600, 0.992480, 1.000000 }, // Infinity
+   { 0.995257, 0.985770, 0.992569, 1.000000 }, // Infinity
 // Hue 318
    { 0.997165, 0.985115, 0.993550, 1.000000 }, // PrimaryFill
    { 0.987720, 0.950880, 0.976668, 1.000000 }, // InactiveFill
@@ -23917,7 +23917,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897040, 0.728560, 0.846496, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999754, 1.000000 }, // HighlightedContent
    { 0.330820, 0.047260, 0.245752, 1.000000 }, // Information
-   { 0.995200, 0.985600, 0.992320, 1.000000 }, // Infinity
+   { 0.995260, 0.985780, 0.992416, 1.000000 }, // Infinity
 // Hue 319
    { 0.997169, 0.985138, 0.993359, 1.000000 }, // PrimaryFill
    { 0.987733, 0.950933, 0.976080, 1.000000 }, // InactiveFill
@@ -23940,7 +23940,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897150, 0.728850, 0.843855, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999749, 1.000000 }, // HighlightedContent
    { 0.331660, 0.047380, 0.241638, 1.000000 }, // Information
-   { 0.995200, 0.985600, 0.992160, 1.000000 }, // Infinity
+   { 0.995263, 0.985790, 0.992263, 1.000000 }, // Infinity
 // Hue 320
    { 0.997173, 0.985160, 0.993169, 1.000000 }, // PrimaryFill
    { 0.987747, 0.950987, 0.975493, 1.000000 }, // InactiveFill
@@ -23963,7 +23963,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897260, 0.729140, 0.841220, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999745, 1.000000 }, // HighlightedContent
    { 0.332500, 0.047500, 0.237500, 1.000000 }, // Information
-   { 0.995200, 0.985600, 0.992000, 1.000000 }, // Infinity
+   { 0.995267, 0.985800, 0.992111, 1.000000 }, // Infinity
 // Hue 321
    { 0.997178, 0.985182, 0.992979, 1.000000 }, // PrimaryFill
    { 0.987760, 0.951040, 0.974908, 1.000000 }, // InactiveFill
@@ -23986,7 +23986,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897370, 0.729430, 0.838591, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999740, 1.000000 }, // HighlightedContent
    { 0.333340, 0.047620, 0.233338, 1.000000 }, // Information
-   { 0.995200, 0.985600, 0.991840, 1.000000 }, // Infinity
+   { 0.995270, 0.985810, 0.991959, 1.000000 }, // Infinity
 // Hue 322
    { 0.997182, 0.985205, 0.992790, 1.000000 }, // PrimaryFill
    { 0.987773, 0.951093, 0.974324, 1.000000 }, // InactiveFill
@@ -24009,7 +24009,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897480, 0.729720, 0.835968, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999736, 1.000000 }, // HighlightedContent
    { 0.334180, 0.047740, 0.229152, 1.000000 }, // Information
-   { 0.995200, 0.985600, 0.991680, 1.000000 }, // Infinity
+   { 0.995273, 0.985820, 0.991807, 1.000000 }, // Infinity
 // Hue 323
    { 0.997186, 0.985227, 0.992602, 1.000000 }, // PrimaryFill
    { 0.987787, 0.951147, 0.973741, 1.000000 }, // InactiveFill
@@ -24032,7 +24032,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897590, 0.730010, 0.833351, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999731, 1.000000 }, // HighlightedContent
    { 0.335020, 0.047860, 0.224942, 1.000000 }, // Information
-   { 0.995200, 0.985600, 0.991520, 1.000000 }, // Infinity
+   { 0.995277, 0.985830, 0.991655, 1.000000 }, // Infinity
 // Hue 324
    { 0.997190, 0.985250, 0.992414, 1.000000 }, // PrimaryFill
    { 0.987800, 0.951200, 0.973160, 1.000000 }, // InactiveFill
@@ -24055,7 +24055,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897700, 0.730300, 0.830740, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999727, 1.000000 }, // HighlightedContent
    { 0.335860, 0.047980, 0.220708, 1.000000 }, // Information
-   { 0.995250, 0.985750, 0.991450, 1.000000 }, // Infinity
+   { 0.995280, 0.985840, 0.991504, 1.000000 }, // Infinity
 // Hue 325
    { 0.997195, 0.985272, 0.992227, 1.000000 }, // PrimaryFill
    { 0.987813, 0.951253, 0.972580, 1.000000 }, // InactiveFill
@@ -24078,7 +24078,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897810, 0.730590, 0.828135, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999722, 1.000000 }, // HighlightedContent
    { 0.336700, 0.048100, 0.216450, 1.000000 }, // Information
-   { 0.995250, 0.985750, 0.991292, 1.000000 }, // Infinity
+   { 0.995283, 0.985850, 0.991353, 1.000000 }, // Infinity
 // Hue 326
    { 0.997199, 0.985294, 0.992040, 1.000000 }, // PrimaryFill
    { 0.987827, 0.951307, 0.972001, 1.000000 }, // InactiveFill
@@ -24101,7 +24101,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897920, 0.730880, 0.825536, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999718, 1.000000 }, // HighlightedContent
    { 0.337540, 0.048220, 0.212168, 1.000000 }, // Information
-   { 0.995250, 0.985750, 0.991133, 1.000000 }, // Infinity
+   { 0.995287, 0.985860, 0.991202, 1.000000 }, // Infinity
 // Hue 327
    { 0.997203, 0.985317, 0.991854, 1.000000 }, // PrimaryFill
    { 0.987840, 0.951360, 0.971424, 1.000000 }, // InactiveFill
@@ -24124,7 +24124,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.897975, 0.731025, 0.822848, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999713, 1.000000 }, // HighlightedContent
    { 0.338380, 0.048340, 0.207862, 1.000000 }, // Information
-   { 0.995250, 0.985750, 0.990975, 1.000000 }, // Infinity
+   { 0.995290, 0.985870, 0.991051, 1.000000 }, // Infinity
 // Hue 328
    { 0.997207, 0.985339, 0.991669, 1.000000 }, // PrimaryFill
    { 0.987853, 0.951413, 0.970848, 1.000000 }, // InactiveFill
@@ -24147,7 +24147,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.898085, 0.731315, 0.820259, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999709, 1.000000 }, // HighlightedContent
    { 0.339220, 0.048460, 0.203532, 1.000000 }, // Information
-   { 0.995250, 0.985750, 0.990817, 1.000000 }, // Infinity
+   { 0.995293, 0.985880, 0.990900, 1.000000 }, // Infinity
 // Hue 329
    { 0.997212, 0.985362, 0.991484, 1.000000 }, // PrimaryFill
    { 0.987867, 0.951467, 0.970273, 1.000000 }, // InactiveFill
@@ -24170,7 +24170,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.898195, 0.731605, 0.817677, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999704, 1.000000 }, // HighlightedContent
    { 0.340060, 0.048580, 0.199178, 1.000000 }, // Information
-   { 0.995250, 0.985750, 0.990658, 1.000000 }, // Infinity
+   { 0.995297, 0.985890, 0.990750, 1.000000 }, // Infinity
 // Hue 330
    { 0.997184, 0.985216, 0.991200, 1.000000 }, // PrimaryFill
    { 0.987920, 0.951680, 0.969800, 1.000000 }, // InactiveFill
@@ -24193,7 +24193,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.890000, 0.710000, 0.800000, 1.000000 }, // ActiveContent
    { 0.999780, 0.999420, 0.999600, 1.000000 }, // HighlightedContent
    { 0.341075, 0.048725, 0.194900, 1.000000 }, // Information
-   { 0.990000, 0.970000, 0.980000, 1.000000 }, // Infinity
+   { 0.995250, 0.985750, 0.990500, 1.000000 }, // Infinity
 // Hue 331
    { 0.997218, 0.985395, 0.991110, 1.000000 }, // PrimaryFill
    { 0.987885, 0.951541, 0.969108, 1.000000 }, // InactiveFill
@@ -24216,7 +24216,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.898415, 0.732185, 0.812530, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999695, 1.000000 }, // HighlightedContent
    { 0.341483, 0.048783, 0.190255, 1.000000 }, // Information
-   { 0.995250, 0.985750, 0.990342, 1.000000 }, // Infinity
+   { 0.995303, 0.985910, 0.990450, 1.000000 }, // Infinity
 // Hue 332
    { 0.997220, 0.985406, 0.990920, 1.000000 }, // PrimaryFill
    { 0.987891, 0.951563, 0.968516, 1.000000 }, // InactiveFill
@@ -24239,7 +24239,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.898525, 0.732475, 0.809965, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999691, 1.000000 }, // HighlightedContent
    { 0.342067, 0.048867, 0.185693, 1.000000 }, // Information
-   { 0.995250, 0.985750, 0.990183, 1.000000 }, // Infinity
+   { 0.995307, 0.985920, 0.990300, 1.000000 }, // Infinity
 // Hue 333
    { 0.997222, 0.985418, 0.990730, 1.000000 }, // PrimaryFill
    { 0.987896, 0.951584, 0.967924, 1.000000 }, // InactiveFill
@@ -24262,7 +24262,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.898580, 0.732620, 0.807302, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999686, 1.000000 }, // HighlightedContent
    { 0.342650, 0.048950, 0.181115, 1.000000 }, // Information
-   { 0.995250, 0.985750, 0.990025, 1.000000 }, // Infinity
+   { 0.995310, 0.985930, 0.990151, 1.000000 }, // Infinity
 // Hue 334
    { 0.997225, 0.985429, 0.990540, 1.000000 }, // PrimaryFill
    { 0.987901, 0.951605, 0.967334, 1.000000 }, // InactiveFill
@@ -24285,7 +24285,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.898690, 0.732910, 0.804748, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999682, 1.000000 }, // HighlightedContent
    { 0.343408, 0.049058, 0.176610, 1.000000 }, // Information
-   { 0.995250, 0.985750, 0.989867, 1.000000 }, // Infinity
+   { 0.995313, 0.985940, 0.990002, 1.000000 }, // Infinity
 // Hue 335
    { 0.997227, 0.985440, 0.990351, 1.000000 }, // PrimaryFill
    { 0.987907, 0.951627, 0.966743, 1.000000 }, // InactiveFill
@@ -24308,7 +24308,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.898800, 0.733200, 0.802200, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999677, 1.000000 }, // HighlightedContent
    { 0.343992, 0.049142, 0.171996, 1.000000 }, // Information
-   { 0.995300, 0.985900, 0.989817, 1.000000 }, // Infinity
+   { 0.995317, 0.985950, 0.989853, 1.000000 }, // Infinity
 // Hue 336
    { 0.997229, 0.985451, 0.990162, 1.000000 }, // PrimaryFill
    { 0.987912, 0.951648, 0.966154, 1.000000 }, // InactiveFill
@@ -24331,7 +24331,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.898910, 0.733490, 0.799658, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999673, 1.000000 }, // HighlightedContent
    { 0.344575, 0.049225, 0.167365, 1.000000 }, // Information
-   { 0.995300, 0.985900, 0.989660, 1.000000 }, // Infinity
+   { 0.995320, 0.985960, 0.989704, 1.000000 }, // Infinity
 // Hue 337
    { 0.997231, 0.985462, 0.989974, 1.000000 }, // PrimaryFill
    { 0.987917, 0.951669, 0.965564, 1.000000 }, // InactiveFill
@@ -24354,7 +24354,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.898965, 0.733635, 0.797012, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999668, 1.000000 }, // HighlightedContent
    { 0.345158, 0.049308, 0.162718, 1.000000 }, // Information
-   { 0.995300, 0.985900, 0.989503, 1.000000 }, // Infinity
+   { 0.995323, 0.985970, 0.989555, 1.000000 }, // Infinity
 // Hue 338
    { 0.997233, 0.985474, 0.989785, 1.000000 }, // PrimaryFill
    { 0.987923, 0.951691, 0.964976, 1.000000 }, // InactiveFill
@@ -24377,7 +24377,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.899075, 0.733925, 0.794480, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999664, 1.000000 }, // HighlightedContent
    { 0.345742, 0.049392, 0.158053, 1.000000 }, // Information
-   { 0.995300, 0.985900, 0.989347, 1.000000 }, // Infinity
+   { 0.995327, 0.985980, 0.989407, 1.000000 }, // Infinity
 // Hue 339
    { 0.997235, 0.985485, 0.989597, 1.000000 }, // PrimaryFill
    { 0.987928, 0.951712, 0.964388, 1.000000 }, // InactiveFill
@@ -24400,7 +24400,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.899185, 0.734215, 0.791955, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999659, 1.000000 }, // HighlightedContent
    { 0.346325, 0.049475, 0.153373, 1.000000 }, // Information
-   { 0.995300, 0.985900, 0.989190, 1.000000 }, // Infinity
+   { 0.995330, 0.985990, 0.989259, 1.000000 }, // Infinity
 // Hue 340
    { 0.997237, 0.985496, 0.989410, 1.000000 }, // PrimaryFill
    { 0.987933, 0.951733, 0.963800, 1.000000 }, // InactiveFill
@@ -24423,7 +24423,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.899295, 0.734505, 0.789435, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999655, 1.000000 }, // HighlightedContent
    { 0.346908, 0.049558, 0.148675, 1.000000 }, // Information
-   { 0.995300, 0.985900, 0.989033, 1.000000 }, // Infinity
+   { 0.995333, 0.986000, 0.989111, 1.000000 }, // Infinity
 // Hue 341
    { 0.997239, 0.985507, 0.989222, 1.000000 }, // PrimaryFill
    { 0.987939, 0.951755, 0.963213, 1.000000 }, // InactiveFill
@@ -24446,7 +24446,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.899350, 0.734650, 0.786805, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999650, 1.000000 }, // HighlightedContent
    { 0.347492, 0.049642, 0.143961, 1.000000 }, // Information
-   { 0.995300, 0.985900, 0.988877, 1.000000 }, // Infinity
+   { 0.995337, 0.986010, 0.988963, 1.000000 }, // Infinity
 // Hue 342
    { 0.997242, 0.985518, 0.989035, 1.000000 }, // PrimaryFill
    { 0.987944, 0.951776, 0.962626, 1.000000 }, // InactiveFill
@@ -24469,7 +24469,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.899460, 0.734940, 0.784296, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999646, 1.000000 }, // HighlightedContent
    { 0.348075, 0.049725, 0.139230, 1.000000 }, // Information
-   { 0.995300, 0.985900, 0.988720, 1.000000 }, // Infinity
+   { 0.995340, 0.986020, 0.988816, 1.000000 }, // Infinity
 // Hue 343
    { 0.997244, 0.985530, 0.988849, 1.000000 }, // PrimaryFill
    { 0.987949, 0.951797, 0.962040, 1.000000 }, // InactiveFill
@@ -24492,7 +24492,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.899570, 0.735230, 0.781793, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999641, 1.000000 }, // HighlightedContent
    { 0.348658, 0.049808, 0.134483, 1.000000 }, // Information
-   { 0.995300, 0.985900, 0.988563, 1.000000 }, // Infinity
+   { 0.995343, 0.986030, 0.988669, 1.000000 }, // Infinity
 // Hue 344
    { 0.997246, 0.985541, 0.988662, 1.000000 }, // PrimaryFill
    { 0.987955, 0.951819, 0.961455, 1.000000 }, // InactiveFill
@@ -24515,7 +24515,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.899625, 0.735375, 0.779175, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999637, 1.000000 }, // HighlightedContent
    { 0.349242, 0.049892, 0.129718, 1.000000 }, // Information
-   { 0.995300, 0.985900, 0.988407, 1.000000 }, // Infinity
+   { 0.995347, 0.986040, 0.988522, 1.000000 }, // Infinity
 // Hue 345
    { 0.997216, 0.985384, 0.988342, 1.000000 }, // PrimaryFill
    { 0.988000, 0.952000, 0.961000, 1.000000 }, // InactiveFill
@@ -24538,7 +24538,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.890000, 0.710000, 0.755000, 1.000000 }, // ActiveContent
    { 0.999780, 0.999420, 0.999510, 1.000000 }, // HighlightedContent
    { 0.349825, 0.049975, 0.124938, 1.000000 }, // Information
-   { 0.990000, 0.970000, 0.975000, 1.000000 }, // Infinity
+   { 0.995300, 0.985900, 0.988250, 1.000000 }, // Infinity
 // Hue 346
    { 0.997252, 0.985574, 0.988299, 1.000000 }, // PrimaryFill
    { 0.988003, 0.952011, 0.960409, 1.000000 }, // InactiveFill
@@ -24561,7 +24561,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.899845, 0.735955, 0.774196, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999628, 1.000000 }, // HighlightedContent
    { 0.350128, 0.050018, 0.120044, 1.000000 }, // Information
-   { 0.995350, 0.986050, 0.988220, 1.000000 }, // Infinity
+   { 0.995357, 0.986070, 0.988237, 1.000000 }, // Infinity
 // Hue 347
    { 0.997257, 0.985597, 0.988123, 1.000000 }, // PrimaryFill
    { 0.988005, 0.952021, 0.959818, 1.000000 }, // InactiveFill
@@ -24584,7 +24584,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.899900, 0.736100, 0.771590, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999623, 1.000000 }, // HighlightedContent
    { 0.350607, 0.050087, 0.115199, 1.000000 }, // Information
-   { 0.995350, 0.986050, 0.988065, 1.000000 }, // Infinity
+   { 0.995363, 0.986090, 0.988099, 1.000000 }, // Infinity
 // Hue 348
    { 0.997261, 0.985619, 0.987948, 1.000000 }, // PrimaryFill
    { 0.988008, 0.952032, 0.959227, 1.000000 }, // InactiveFill
@@ -24607,7 +24607,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900010, 0.736390, 0.769114, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999619, 1.000000 }, // HighlightedContent
    { 0.350910, 0.050130, 0.110286, 1.000000 }, // Information
-   { 0.995350, 0.986050, 0.987910, 1.000000 }, // Infinity
+   { 0.995370, 0.986110, 0.987962, 1.000000 }, // Infinity
 // Hue 349
    { 0.997265, 0.985642, 0.987773, 1.000000 }, // PrimaryFill
    { 0.988011, 0.952043, 0.958637, 1.000000 }, // InactiveFill
@@ -24630,7 +24630,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900065, 0.736535, 0.766516, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999614, 1.000000 }, // HighlightedContent
    { 0.351213, 0.050173, 0.105364, 1.000000 }, // Information
-   { 0.995350, 0.986050, 0.987755, 1.000000 }, // Infinity
+   { 0.995377, 0.986130, 0.987825, 1.000000 }, // Infinity
 // Hue 350
    { 0.997269, 0.985664, 0.987598, 1.000000 }, // PrimaryFill
    { 0.988013, 0.952053, 0.958047, 1.000000 }, // InactiveFill
@@ -24653,7 +24653,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900175, 0.736825, 0.764050, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999610, 1.000000 }, // HighlightedContent
    { 0.351517, 0.050217, 0.100433, 1.000000 }, // Information
-   { 0.995350, 0.986050, 0.987600, 1.000000 }, // Infinity
+   { 0.995383, 0.986150, 0.987689, 1.000000 }, // Infinity
 // Hue 351
    { 0.997274, 0.985686, 0.987425, 1.000000 }, // PrimaryFill
    { 0.988056, 0.952224, 0.957599, 1.000000 }, // InactiveFill
@@ -24676,7 +24676,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900285, 0.737115, 0.761591, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999605, 1.000000 }, // HighlightedContent
    { 0.351820, 0.050260, 0.095494, 1.000000 }, // Information
-   { 0.995350, 0.986050, 0.987445, 1.000000 }, // Infinity
+   { 0.995390, 0.986170, 0.987553, 1.000000 }, // Infinity
 // Hue 352
    { 0.997278, 0.985709, 0.987251, 1.000000 }, // PrimaryFill
    { 0.988059, 0.952235, 0.957011, 1.000000 }, // InactiveFill
@@ -24699,7 +24699,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900340, 0.737260, 0.759004, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999601, 1.000000 }, // HighlightedContent
    { 0.352123, 0.050303, 0.090546, 1.000000 }, // Information
-   { 0.995350, 0.986050, 0.987290, 1.000000 }, // Infinity
+   { 0.995397, 0.986190, 0.987418, 1.000000 }, // Infinity
 // Hue 353
    { 0.997282, 0.985731, 0.987079, 1.000000 }, // PrimaryFill
    { 0.988061, 0.952245, 0.956424, 1.000000 }, // InactiveFill
@@ -24722,7 +24722,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900450, 0.737550, 0.756555, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999596, 1.000000 }, // HighlightedContent
    { 0.352427, 0.050347, 0.085589, 1.000000 }, // Information
-   { 0.995350, 0.986050, 0.987135, 1.000000 }, // Infinity
+   { 0.995403, 0.986210, 0.987283, 1.000000 }, // Infinity
 // Hue 354
    { 0.997286, 0.985754, 0.986907, 1.000000 }, // PrimaryFill
    { 0.988064, 0.952256, 0.955837, 1.000000 }, // InactiveFill
@@ -24745,7 +24745,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900505, 0.737695, 0.753976, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999592, 1.000000 }, // HighlightedContent
    { 0.352730, 0.050390, 0.080624, 1.000000 }, // Information
-   { 0.995350, 0.986050, 0.986980, 1.000000 }, // Infinity
+   { 0.995410, 0.986230, 0.987148, 1.000000 }, // Infinity
 // Hue 355
    { 0.997291, 0.985776, 0.986736, 1.000000 }, // PrimaryFill
    { 0.988067, 0.952267, 0.955250, 1.000000 }, // InactiveFill
@@ -24768,7 +24768,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900615, 0.737985, 0.751538, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999587, 1.000000 }, // HighlightedContent
    { 0.353033, 0.050433, 0.075650, 1.000000 }, // Information
-   { 0.995350, 0.986050, 0.986825, 1.000000 }, // Infinity
+   { 0.995417, 0.986250, 0.987014, 1.000000 }, // Infinity
 // Hue 356
    { 0.997295, 0.985798, 0.986565, 1.000000 }, // PrimaryFill
    { 0.988069, 0.952277, 0.954664, 1.000000 }, // InactiveFill
@@ -24791,7 +24791,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900670, 0.738130, 0.748966, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999583, 1.000000 }, // HighlightedContent
    { 0.353337, 0.050477, 0.070667, 1.000000 }, // Information
-   { 0.995350, 0.986050, 0.986670, 1.000000 }, // Infinity
+   { 0.995423, 0.986270, 0.986880, 1.000000 }, // Infinity
 // Hue 357
    { 0.997299, 0.985821, 0.986395, 1.000000 }, // PrimaryFill
    { 0.988072, 0.952288, 0.954077, 1.000000 }, // InactiveFill
@@ -24814,7 +24814,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900780, 0.738420, 0.746538, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999578, 1.000000 }, // HighlightedContent
    { 0.353640, 0.050520, 0.065676, 1.000000 }, // Information
-   { 0.995400, 0.986200, 0.986660, 1.000000 }, // Infinity
+   { 0.995430, 0.986290, 0.986747, 1.000000 }, // Infinity
 // Hue 358
    { 0.997303, 0.985843, 0.986225, 1.000000 }, // PrimaryFill
    { 0.988075, 0.952299, 0.953491, 1.000000 }, // InactiveFill
@@ -24837,7 +24837,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900890, 0.738710, 0.744116, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999574, 1.000000 }, // HighlightedContent
    { 0.353943, 0.050563, 0.060676, 1.000000 }, // Information
-   { 0.995400, 0.986200, 0.986507, 1.000000 }, // Infinity
+   { 0.995437, 0.986310, 0.986614, 1.000000 }, // Infinity
 // Hue 359
    { 0.997308, 0.985866, 0.986056, 1.000000 }, // PrimaryFill
    { 0.988077, 0.952309, 0.952906, 1.000000 }, // InactiveFill
@@ -24860,7 +24860,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.900945, 0.738855, 0.741557, 1.000000 }, // ActiveContent
    { 0.999835, 0.999565, 0.999569, 1.000000 }, // HighlightedContent
    { 0.354247, 0.050607, 0.055667, 1.000000 }, // Information
-   { 0.995400, 0.986200, 0.986353, 1.000000 }, // Infinity
+   { 0.995443, 0.986330, 0.986482, 1.000000 }, // Infinity
 //
 // Colors for DarkStark mode
 //

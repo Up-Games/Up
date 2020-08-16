@@ -9,22 +9,18 @@
 
 typedef NS_ENUM(NSInteger, UPTheme) {
     UPThemeDefault,
-    UPThemeRedLight,
+    UPThemeBlueLight = 0,
     UPThemeGreenLight,
-    UPThemeBlueLight,
-    UPThemePurpleLight,
-    UPThemeOrangeDark,
-    UPThemeGreenDark,
+    UPThemeRedLight,
     UPThemeBlueDark,
+    UPThemeGreenDark,
     UPThemePurpleDark,
-    UPThemeRedLightStark,
-    UPThemeGreenLightStark,
     UPThemeBlueLightStark,
     UPThemePurpleLightStark,
-    UPThemeYellowDarkStark,
+    UPThemeRedLightStark,
     UPThemeGreenDarkStark,
-    UPThemeBlueDarkStark,
     UPThemePurpleDarkStark,
+    UPThemeYellowDarkStark,
 };
 
 typedef NS_ENUM(NSInteger, UPThemeColorStyle) {
