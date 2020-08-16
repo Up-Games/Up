@@ -710,7 +710,7 @@ static ViewController *_Instance;
 {
     NSMutableString *sourceCode = [NSMutableString string];
     [sourceCode appendString:@"//\n"];
-    [sourceCode appendString:@"// Generated code for Up Games colors\n"];
+    [sourceCode appendString:@"// Generated code for Up Games themes\n"];
     [sourceCode appendString:@"// DO NOT EDIT\n"];
     [sourceCode appendString:@"//\n"];
     [sourceCode appendString:@"typedef struct \n"];
@@ -723,10 +723,18 @@ static ViewController *_Instance;
     [sourceCode appendString:@"//\n"];
     [sourceCode appendString:@"\n"];
     [sourceCode appendString:@"static _UPRGBColorComponents _UPThemeColorComponents[] = {\n"];
-    [sourceCode appendString:[self generateSourceCodeForColorTheme:UPThemeColorStyleLight]];
-    [sourceCode appendString:[self generateSourceCodeForColorTheme:UPThemeColorStyleDark]];
-    [sourceCode appendString:[self generateSourceCodeForColorTheme:UPThemeColorStyleLightStark]];
-    [sourceCode appendString:[self generateSourceCodeForColorTheme:UPThemeColorStyleDarkStark]];
+    [sourceCode appendString:[self generateSourceCodeForHue:225 colorTheme:UPThemeColorStyleLight]];
+    [sourceCode appendString:[self generateSourceCodeForHue:120 colorTheme:UPThemeColorStyleLight]];
+    [sourceCode appendString:[self generateSourceCodeForHue:0 colorTheme:UPThemeColorStyleLight]];
+    [sourceCode appendString:[self generateSourceCodeForHue:225 colorTheme:UPThemeColorStyleDark]];
+    [sourceCode appendString:[self generateSourceCodeForHue:120 colorTheme:UPThemeColorStyleDark]];
+    [sourceCode appendString:[self generateSourceCodeForHue:285 colorTheme:UPThemeColorStyleDark]];
+    [sourceCode appendString:[self generateSourceCodeForHue:225 colorTheme:UPThemeColorStyleLightStark]];
+    [sourceCode appendString:[self generateSourceCodeForHue:285 colorTheme:UPThemeColorStyleLightStark]];
+    [sourceCode appendString:[self generateSourceCodeForHue:0 colorTheme:UPThemeColorStyleLightStark]];
+    [sourceCode appendString:[self generateSourceCodeForHue:120 colorTheme:UPThemeColorStyleDarkStark]];
+    [sourceCode appendString:[self generateSourceCodeForHue:285 colorTheme:UPThemeColorStyleDarkStark]];
+    [sourceCode appendString:[self generateSourceCodeForHue:45 colorTheme:UPThemeColorStyleDarkStark]];
     [sourceCode appendString:@"};\n"];
     [sourceCode appendString:@"\n"];
     NSError *error;
@@ -736,14 +744,13 @@ static ViewController *_Instance;
     }
 }
 
-- (NSString *)generateSourceCodeForColorTheme:(UPThemeColorStyle)colorTheme
+- (NSString *)generateSourceCodeForHue:(int)hue colorTheme:(UPThemeColorStyle)colorTheme
 {
     NSMutableString *sourceCode = [NSMutableString string];
     [sourceCode appendString:@"//\n"];
-    [sourceCode appendString:@"// Colors for "];
+    [sourceCode appendFormat:@"// Colors for Hue #%d : ", hue];
     [sourceCode appendString:[self stringForColorTheme:colorTheme]];
-    [sourceCode appendString:@" mode\n"];
-    [sourceCode appendString:@"//\n"];
+    [sourceCode appendString:@"\n//\n"];
 
     NSString *pathName = [NSString stringWithFormat:ColorMapPathFormat, [self stringForColorTheme:colorTheme]];
     NSData *data = [NSData dataWithContentsOfFile:pathName];
@@ -758,43 +765,22 @@ static ViewController *_Instance;
     
     NSDictionary *defaultColorMap = [self defaultColorMapForTheme:colorTheme];
     NSMutableDictionary *colorChips = [NSMutableDictionary dictionary];
-    
-    for (int hue = 0; hue < HueCount; hue++) {
-        [colorChips removeAllObjects];
-        if ([self isMilepostHue:hue]) {
-            NSDictionary *colorChipMap = [self colorChipMapForHue:hue colorMap:colorMap defaultColorMap:defaultColorMap];
-            for (NSString *key in self.colorKeys) {
-                colorChips[key] = colorChipMap[key];
-            }
-        }
-        else {
-            int prevHue = [self prevHueForHue:hue];
-            int nextHue = [self nextHueForHue:hue];
-            NSDictionary *prev = [self colorChipMapForHue:prevHue colorMap:colorMap defaultColorMap:defaultColorMap];
-            NSDictionary *next = [self colorChipMapForHue:nextHue colorMap:colorMap defaultColorMap:defaultColorMap];
-            CGFloat diff = HueCount - fabs(HueCount - fabs(hue - prevHue));
-            CGFloat fraction = diff / MilepostHue;
-            for (NSString *key in self.colorKeys) {
-                ColorChip *chipA = prev[key];
-                ColorChip *chipB = next[key];
-                ColorChip *chipC = [ColorChip chipWithName:key hue:hue targetLightness:chipA.targetLightness
-                    chipA:chipA chipB:chipB fraction:fraction];
-                ColorChip *conformedChip = [chipC chipWithTargetLightness];
-                colorChips[key] = conformedChip;
-            }
-        }
-        [sourceCode appendFormat:@"// Hue %d\n", hue];
-        for (NSString *colorKey in self.colorKeys) {
-            ColorChip *chip = colorChips[colorKey];
-            UIColor *color = chip.color;
-            CGFloat r, g, b, a;
-            [color getRed:&r green:&g blue:&b alpha:&a];
-            [sourceCode appendString:@"   "];
-            [sourceCode appendFormat:@"{ %3.6f, %3.6f, %3.6f, %3.6f },", r, g, b, a];
-            [sourceCode appendString:@" // "];
-            [sourceCode appendString:colorKey];
-            [sourceCode appendString:@"\n"];
-        }
+
+    NSDictionary *colorChipMap = [self colorChipMapForHue:hue colorMap:colorMap defaultColorMap:defaultColorMap];
+    for (NSString *key in self.colorKeys) {
+        colorChips[key] = colorChipMap[key];
+    }
+
+    for (NSString *colorKey in self.colorKeys) {
+        ColorChip *chip = colorChips[colorKey];
+        UIColor *color = chip.color;
+        CGFloat r, g, b, a;
+        [color getRed:&r green:&g blue:&b alpha:&a];
+        [sourceCode appendString:@"   "];
+        [sourceCode appendFormat:@"{ %3.6f, %3.6f, %3.6f, %3.6f },", r, g, b, a];
+        [sourceCode appendString:@" // "];
+        [sourceCode appendString:colorKey];
+        [sourceCode appendString:@"\n"];
     }
 
     return sourceCode;

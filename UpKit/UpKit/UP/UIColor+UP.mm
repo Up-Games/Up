@@ -162,12 +162,8 @@ static CGFloat _ThemeHue = 225;
         case UPColorCategoryInformation:
         case UPColorCategoryInfinity: {
             static const size_t ColorsPerHue = 22;
-            static const size_t HueCount = 360;
-            size_t themeOffset = (style == UPThemeColorStyleDefault ? 0 : (size_t)style - 1) * HueCount;
-            CGFloat effectiveHue = UPClampT(CGFloat, hue, 0, 359);
-            size_t hueOffset = (effectiveHue * ColorsPerHue);
             size_t categoryOffset = (effectiveCategory == UPColorCategoryDefault ? 0 : (size_t)effectiveCategory - 1);
-            size_t idx = (themeOffset * ColorsPerHue) + hueOffset + categoryOffset;
+            size_t idx = (_Theme * ColorsPerHue) + categoryOffset;
             _UPRGBColorComponents c = _UPThemeColorComponents[idx];
             ASSERT(c.r >= 0);
             ASSERT(c.r <= 1);
