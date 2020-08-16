@@ -25,6 +25,5 @@
 @property (nonatomic, readonly) UPAccessoryPane *selectedPane;
 
 - (void)setSelectedPaneFromSettingsWithDuration:(CFTimeInterval)duration;
-- (void)cancelAnimations;
 
 @end

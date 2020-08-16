@@ -306,6 +306,7 @@ void SpellLayout::calculate()
     calculate_stepper_control_metrics();
     calculate_slider_control_metrics();
     calculate_choice_control_metrics();
+    calculate_rotor_control_metrics();
     calculate_description_font_metrics();
     calculate_dialog_title_font_metrics();
     calculate_challenge_prompt_font_metrics();
@@ -472,6 +473,13 @@ void SpellLayout::calculate_choice_control_metrics()
 
     set_choice_control_label_left_margin(CanonicalChoiceLabelLeftMargin * layout_scale());
     set_choice_control_label_right_margin(CanonicalChoiceLabelRightMargin * layout_scale());
+}
+
+void SpellLayout::calculate_rotor_control_metrics()
+{
+    CGFloat cap_height = CanonicalRotorElementCapHeight * layout_scale();
+    UIFont *font = [UIFont checkboxControlFontOfSize:cap_height];
+    set_rotor_control_font(font);
 }
 
 void SpellLayout::calculate_description_font_metrics()
@@ -756,6 +764,7 @@ void SpellLayout::calculate_game_locations()
 
 void SpellLayout::calculate_extras_locations()
 {
+    calculate_and_set_locations(Role::ExtrasColorsThemeRotor, layout_relative_aspect_rect(CanonicalExtrasColorsThemeRotorFrame));
     calculate_and_set_locations(Role::ExtrasColorsHueWheel, layout_relative_aspect_rect(CanonicalExtrasColorsHueWheelFrame));
     calculate_and_set_locations(Role::ExtrasColorsDarkMode, layout_relative_aspect_rect(CanonicalExtrasColorsDarkModeFrame));
     calculate_and_set_locations(Role::ExtrasColorsStarkMode, layout_relative_aspect_rect(CanonicalExtrasColorsStarkModeFrame));

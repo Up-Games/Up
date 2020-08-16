@@ -73,8 +73,7 @@ using UP::TimeSpanning::start;
     self.delegate = self;
 
     UPSpellSettings *settings = [UPSpellSettings instance];
-    [UIColor setThemeColorStyle:settings.themeColorStyle];
-    [UIColor setThemeColorHue:settings.themeColorHue];
+    [UIColor setTheme:settings.theme];
 
     UP::TimeSpanning::init();
     UP::Lexicon::set_language(UPLexiconLanguageEnglish);
@@ -162,7 +161,6 @@ using UP::TimeSpanning::start;
 
 - (void)dismissPresentedController
 {
-    [self.extrasController cancelAnimations];
     [self dismissViewControllerAnimated:YES completion:^{
         self.dialogTopMenu.extrasButton.selected = NO;
         self.dialogTopMenu.aboutButton.selected = NO;
@@ -181,7 +179,6 @@ using UP::TimeSpanning::start;
     if (self.extrasController.presentedViewController) {
         [self.extrasController dismissViewControllerAnimated:NO completion:nil];
     }
-    [self.extrasController cancelAnimations];
     [self dismissViewControllerAnimated:NO completion:nil];
 
     NSArray<UPViewMove *> *moves = @[

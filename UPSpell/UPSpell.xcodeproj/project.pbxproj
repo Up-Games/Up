@@ -23,6 +23,7 @@
 		5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogTopMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */; };
 		5D4ECE3824E4842700D1A310 /* UPDialogChallengeHelp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4ECE3724E4842700D1A310 /* UPDialogChallengeHelp.mm */; };
+		5D4ECE4B24E8966600D1A310 /* UPRotor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4ECE4924E8966600D1A310 /* UPRotor.mm */; };
 		5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */; };
 		5D54078424841631003F193D /* UPSpellNavigationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D54078324841631003F193D /* UPSpellNavigationController.mm */; };
 		5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */; };
@@ -504,6 +505,8 @@
 		5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogTopMenu.mm; sourceTree = "<group>"; };
 		5D4ECE3624E4842700D1A310 /* UPDialogChallengeHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogChallengeHelp.h; sourceTree = "<group>"; };
 		5D4ECE3724E4842700D1A310 /* UPDialogChallengeHelp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogChallengeHelp.mm; sourceTree = "<group>"; };
+		5D4ECE4924E8966600D1A310 /* UPRotor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPRotor.mm; sourceTree = "<group>"; };
+		5D4ECE4A24E8966600D1A310 /* UPRotor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPRotor.h; sourceTree = "<group>"; };
 		5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellLayout.mm; sourceTree = "<group>"; };
 		5D5216EA246C7E9E005A2E9F /* UPSpellLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellLayout.h; sourceTree = "<group>"; };
 		5D54078224841631003F193D /* UPSpellNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellNavigationController.h; sourceTree = "<group>"; };
@@ -1073,6 +1076,8 @@
 				5D0FC21F24A168AC00353563 /* UPHueWheel.h */,
 				5D0FC22024A168AC00353563 /* UPHueWheel.mm */,
 				5DBC20C12497B9AD002A6ADC /* UPMode.h */,
+				5D4ECE4A24E8966600D1A310 /* UPRotor.h */,
+				5D4ECE4924E8966600D1A310 /* UPRotor.mm */,
 				5DF9DF5D2466165700B2199D /* UPSceneDelegate.h */,
 				5DF9DF5E2466165700B2199D /* UPSceneDelegate.mm */,
 				5D6FB58824DAFC2500CDC293 /* UPSlider.h */,
@@ -2049,6 +2054,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D4ECE4B24E8966600D1A310 /* UPRotor.mm in Sources */,
 				5D12E49C24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.mm in Sources */,
 				5D6FB59A24DD989100CDC293 /* UPChallenge.mm in Sources */,
 				5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */,

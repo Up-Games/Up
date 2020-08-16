@@ -9,6 +9,4 @@
 
 + (UPSpellExtrasPaneColors *)pane;
 
-- (void)cancelAnimations;
-
 @end

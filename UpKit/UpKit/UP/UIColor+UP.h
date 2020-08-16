@@ -7,6 +7,26 @@
 
 #import <UpKit/UPMacros.h>
 
+typedef NS_ENUM(NSInteger, UPTheme) {
+    UPThemeDefault,
+    UPThemeRedLight,
+    UPThemeGreenLight,
+    UPThemeBlueLight,
+    UPThemePurpleLight,
+    UPThemeOrangeDark,
+    UPThemeGreenDark,
+    UPThemeBlueDark,
+    UPThemePurpleDark,
+    UPThemeRedLightStark,
+    UPThemeGreenLightStark,
+    UPThemeBlueLightStark,
+    UPThemePurpleLightStark,
+    UPThemeRedDarkStark,
+    UPThemeGreenDarkStark,
+    UPThemeBlueDarkStark,
+    UPThemePurpleDarkStark,
+};
+
 typedef NS_ENUM(NSInteger, UPThemeColorStyle) {
     UPThemeColorStyleDefault,
     UPThemeColorStyleLight,
@@ -62,6 +82,9 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 };
 
 @interface UIColor (UP)
+
++ (void)setTheme:(UPTheme)theme;
++ (UPTheme)theme;
 
 + (void)setThemeColorStyle:(UPThemeColorStyle)style;
 + (UPThemeColorStyle)themeColorStyle;

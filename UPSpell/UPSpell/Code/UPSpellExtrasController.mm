@@ -92,7 +92,7 @@ static UPSpellExtrasController *_Instance;
     [self.view addSubview:self.backButton];
 
     self.choice1 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice1.labelString = @"COLOR";
+    self.choice1.labelString = @"THEME";
     self.choice1.tag = 0;
     self.choice1.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice1.frame = layout.frame_for(Role::ChoiceItem1Left, Place::OffLeftNear);
@@ -190,8 +190,6 @@ static UPSpellExtrasController *_Instance;
 
 - (void)setSelectedPane:(UPAccessoryPane *)selectedPane duration:(CFTimeInterval)duration
 {
-    [self cancelAnimations];
-    
     SpellLayout &layout = SpellLayout::instance();
 
     UPAccessoryPane *previousSelectedPane = _selectedPane;
@@ -249,11 +247,6 @@ static UPSpellExtrasController *_Instance;
     for (UPChoice *choice in self.choices) {
         choice.userInteractionEnabled = YES;
     }
-}
-
-- (void)cancelAnimations
-{
-    [self.colorsPane cancelAnimations];
 }
 
 #pragma mark - Update theme colors

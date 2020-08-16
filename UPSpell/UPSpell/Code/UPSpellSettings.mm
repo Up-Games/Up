@@ -8,9 +8,7 @@
 @implementation UPSpellSettings
 
 @dynamic dataVersion;
-@dynamic themeColorStyle;
-@dynamic themeColorHue;
-@dynamic quarkMode;
+@dynamic theme;
 @dynamic extrasSelectedIndex;
 @dynamic retryMode;
 @dynamic playMenuSelectedIndex;
@@ -40,9 +38,7 @@
 - (void)setDefaultValues
 {
     self.dataVersion = 0;
-    self.themeColorStyle = UPThemeColorStyleLight;
-    self.themeColorHue = 225;
-    self.quarkMode = NO;
+    self.theme = UPThemeBlueLight;
     self.extrasSelectedIndex = 0;
     self.retryMode = NO;
     self.playMenuSelectedIndex = 2;

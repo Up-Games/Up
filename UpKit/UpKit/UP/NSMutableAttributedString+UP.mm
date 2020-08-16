@@ -56,16 +56,15 @@
     [self addAttribute:NSBaselineOffsetAttributeName value:@(baselineOffset) range:range];
 }
 
-- (void)setTextAlignment:(NSTextAlignment)textAlignment paragraphSpacing:(CGFloat)paragraphSpacing
+- (void)setTextAlignment:(NSTextAlignment)textAlignment
 {
-    [self setTextAlignment:textAlignment paragraphSpacing:paragraphSpacing range:NSMakeRange(0, self.length)];
+    [self setTextAlignment:textAlignment range:NSMakeRange(0, self.length)];
 }
 
-- (void)setTextAlignment:(NSTextAlignment)textAlignment paragraphSpacing:(CGFloat)paragraphSpacing range:(NSRange)range
+- (void)setTextAlignment:(NSTextAlignment)textAlignment range:(NSRange)range
 {
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.alignment = textAlignment;
-    paragraphStyle.paragraphSpacing = paragraphSpacing;
     [self addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:range];
 }
 

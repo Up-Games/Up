@@ -56,7 +56,7 @@ public:
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
         ChoiceBackRight, ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
         ChoiceBackCenter, ChoiceTitleCenter, ChoiceItem1Center, ChoiceItem2Center, ChoiceItem3Center, ChoiceGoButtonCenter, ChoiceItemTopCenter,
-        ExtrasColorsDarkMode, ExtrasColorsStarkMode, ExtrasColorsQuarkMode, ExtrasColorsHueWheel,
+        ExtrasColorsDarkMode, ExtrasColorsStarkMode, ExtrasColorsQuarkMode, ExtrasColorsHueWheel, ExtrasColorsThemeRotor,
         ExtrasColorsHueStepMore, ExtrasColorsHueStepLess, ExtrasColorsDescription, ExtrasColorsExample,
         ExtrasColorsIconPrompt, ExtrasColorsIconButtonNope, ExtrasColorsIconButtonYep,
         ExtrasStatsHeader, ExtrasStatsTable,
@@ -106,7 +106,7 @@ public:
     static inline constexpr CGSize CanonicalBallotSize =          {  40,  36 };
     static inline constexpr CGSize CanonicalHueWheelSize =        { 220, 220 };
     static inline constexpr CGSize CanonicalStepperSize =         {  36,  36 };
-    static inline constexpr CGSize CanonicalRotorSize =           {  52, 228 };
+    static inline constexpr CGSize CanonicalRotorSize =           { 360, 228 };
     static inline constexpr CGSize CanonicalSliderSize =          { 510,  40 };
     static inline constexpr CGSize CanonicalSliderThumbSize =     {  40,  40 };
 
@@ -136,7 +136,7 @@ public:
     static inline constexpr CGFloat CanonicalChoiceLabelBaselineAdjustment = -12;
     static inline constexpr CGFloat CanonicalChoiceLabelLeftMargin = 82;
     static inline constexpr CGFloat CanonicalChoiceLabelRightMargin = 87;
-    static inline constexpr CGFloat CanonicalRotorElementCapHeight = 29;
+    static inline constexpr CGFloat CanonicalRotorElementCapHeight = 31;
 
     static inline constexpr CGSize CanonicalTileSize = { 100, 120 };
     static inline constexpr CGRect CanonicalTileFrame = { 0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize) };
@@ -183,13 +183,14 @@ public:
     static inline constexpr CGFloat CanonicalPlacardValueFontCapHeight = 38;
     static inline constexpr CGFloat CanonicalPlacardDescrptionFontCapHeight = 24;
 
+    static inline constexpr CGRect CanonicalExtrasColorsThemeRotorFrame =  { 490,  40, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
     static inline constexpr CGRect CanonicalExtrasColorsHueWheelFrame =    { 430,  36, up_size_width(CanonicalHueWheelSize), up_size_height(CanonicalHueWheelSize) };
     static inline constexpr CGRect CanonicalExtrasColorsHueStepMoreFrame = { 692,  98, 44, 44 };
     static inline constexpr CGRect CanonicalExtrasColorsHueStepLessFrame = { 692, 158, 44, 44 };
     static inline constexpr CGRect CanonicalExtrasColorsDarkModeFrame =    { 780,  64, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasColorsStarkModeFrame =   { 780, 124, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasColorsQuarkModeFrame =   { 780, 184, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasColorsDescriptionFrame = { 384, 278, 572, 76 };
+    static inline constexpr CGRect CanonicalExtrasColorsDescriptionFrame = { 384, 274, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsExampleFrame =     { 400, 386, 540, 66 };
     static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =  { 384, 278, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsIconLayoutFrame =  { 460, 381, 440, 76 };
@@ -290,6 +291,7 @@ public:
     UIFont *word_score_bonus_font() const { return m_word_score_bonus_font; }
     UIFont *ballot_control_font() const { return m_ballot_control_font; }
     UIFont *choice_control_font() const { return m_choice_control_font; }
+    UIFont *rotor_control_font() const { return m_rotor_control_font; }
     UIFont *description_font() const { return m_description_font; }
     UIFont *dialog_title_font() const { return m_dialog_title_font; }
     UIFont *challenge_prompt_font() const { return m_challenge_prompt_font; }
@@ -346,6 +348,7 @@ private:
     void set_choice_control_font(UIFont *font) { m_choice_control_font = font; }
     void set_choice_control_label_left_margin(CGFloat f) { m_choice_control_label_left_margin = f; }
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
+    void set_rotor_control_font(UIFont *font) { m_rotor_control_font = font; }
     void set_description_font(UIFont *font) { m_description_font = font; }
     void set_dialog_title_font(UIFont *font) { m_dialog_title_font = font; }
     void set_challenge_prompt_font(UIFont *font) { m_challenge_prompt_font = font; }
@@ -378,6 +381,7 @@ private:
     void calculate_stepper_control_metrics();
     void calculate_slider_control_metrics();
     void calculate_choice_control_metrics();
+    void calculate_rotor_control_metrics();
     void calculate_description_font_metrics();
     void calculate_dialog_title_font_metrics();
     void calculate_challenge_prompt_font_metrics();
@@ -440,6 +444,7 @@ private:
     __strong UIFont *m_word_score_bonus_font;
     __strong UIFont *m_ballot_control_font;
     __strong UIFont *m_choice_control_font;
+    __strong UIFont *m_rotor_control_font;
     __strong UIFont *m_description_font;
     __strong UIFont *m_dialog_title_font;
     __strong UIFont *m_challenge_prompt_font;

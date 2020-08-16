@@ -12,7 +12,7 @@
 #import "UPBallot.h"
 #import "UPChoice.h"
 #import "UPControl+UPSpell.h"
-#import "UPHueWheel.h"
+#import "UPRotor.h"
 #import "UPSpellExtrasPaneColors.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellLayout.h"
@@ -24,15 +24,8 @@
 #import "UPTileView.h"
 #import "UPViewMove+UPSpell.h"
 
-@interface UPSpellExtrasPaneColors ()  <UPHueWheelDelegate>
-@property (nonatomic, readwrite) CGFloat hue;
-@property (nonatomic, readwrite) UPLabel *modesLabel;
-@property (nonatomic, readwrite) UPBallot *darkModeCheckbox;
-@property (nonatomic, readwrite) UPBallot *starkModeCheckbox;
-@property (nonatomic, readwrite) UPBallot *quarkModeCheckbox;
-@property (nonatomic, readwrite) UPHueWheel *hueWheel;
-@property (nonatomic, readwrite) UPStepper *hueStepLess;
-@property (nonatomic, readwrite) UPStepper *hueStepMore;
+@interface UPSpellExtrasPaneColors ()
+@property (nonatomic, readwrite) UPRotor *themeRotor;
 @property (nonatomic) UIView *hueDescriptionContainer;
 @property (nonatomic) UPLabel *hueDescription;
 @property (nonatomic) UIView *exampleTilesContainer;
@@ -74,47 +67,38 @@ using Spot = UP::SpellLayout::Place;
 
     SpellLayout &layout = SpellLayout::instance();
     
-    self.darkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
-    self.darkModeCheckbox.labelString = @"DARK";
-    [self.darkModeCheckbox setTarget:self action:@selector(darkModeCheckboxTapped)];
-    self.darkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsDarkMode);
-    [self addSubview:self.darkModeCheckbox];
+    self.themeRotor = [UPRotor rotorWithElements:@[
+        @"RED/LIGHT",
+        @"GREEN/LIGHT",
+        @"BLUE/LIGHT",
+        @"PURPLE/LIGHT",
+        @"ORANGE/DARK",
+        @"GREEN/DARK",
+        @"BLUE/DARK",
+        @"PURPLE/DARK",
+        @"RED/LIGHT/STARK",
+        @"GREEN/LIGHT/STARK",
+        @"BLUE/LIGHT/STARK",
+        @"PURPLE/LIGHT/STARK",
+        @"RED/DARK/STARK",
+        @"GREEN/DARK/STARK",
+        @"BLUE/DARK/STARK",
+        @"PURPLE/DARK/STARK",
+    ]];
     
-    self.starkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
-    self.starkModeCheckbox.labelString = @"STARK";
-    [self.starkModeCheckbox setTarget:self action:@selector(starkModeCheckboxTapped)];
-    self.starkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsStarkMode);
-    [self addSubview:self.starkModeCheckbox];
-    
-    self.quarkModeCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];
-    self.quarkModeCheckbox.labelString = @"QUARK";
-    self.quarkModeCheckbox.frame = layout.frame_for(Role::ExtrasColorsQuarkMode);
-    [self addSubview:self.quarkModeCheckbox];
-
-    self.hueWheel = [UPHueWheel hueWheel];
-    self.hueWheel.frame = layout.frame_for(Role::ExtrasColorsHueWheel);
-    self.hueWheel.delegate = self;
-    [self addSubview:self.hueWheel];
-    
-    self.hueStepMore = [UPStepper stepperWithDirection:UPStepperDirectionUp];
-    [self.hueStepMore setTarget:self action:@selector(handleHueStepMore)];
-    self.hueStepMore.frame = layout.frame_for(Role::ExtrasColorsHueStepMore);
-    [self addSubview:self.hueStepMore];
-    
-    self.hueStepLess = [UPStepper stepperWithDirection:UPStepperDirectionDown];
-    [self.hueStepLess setTarget:self action:@selector(handleHueStepLess)];
-    self.hueStepLess.frame = layout.frame_for(Role::ExtrasColorsHueStepLess);
-    [self addSubview:self.hueStepLess];
+    self.themeRotor.frame = layout.frame_for(Role::ExtrasColorsThemeRotor);
+    [self.themeRotor setTarget:self action:@selector(themeRotorChanged)];
+    [self addSubview:self.themeRotor];
     
     self.hueDescriptionContainer = [[UIView alloc] initWithFrame:layout.frame_for(Role::ExtrasColorsDescription)];
     [self addSubview:self.hueDescriptionContainer];
-    
+
     self.hueDescription = [UPLabel label];
     self.hueDescription.font = layout.description_font();
     self.hueDescription.colorCategory = UPColorCategoryControlText;
     self.hueDescription.textAlignment = NSTextAlignmentLeft;
     [self.hueDescriptionContainer addSubview:self.hueDescription];
-    
+
     CGRect examplesFrame = CGRectMake(0, 0, SpellLayout::CanonicalTilesLayoutWidth, up_size_height(SpellLayout::CanonicalTileSize));
     self.exampleTilesContainer = [[UPContainerView alloc] initWithFrame:examplesFrame];
     [self addSubview:self.exampleTilesContainer];
@@ -156,7 +140,7 @@ using Spot = UP::SpellLayout::Place;
     self.exampleTilesContainer.center = layout.center_for(Role::ExtrasColorsExample);
 
     self.iconPrompt = [UPLabel label];
-    self.iconPrompt.string = @"Change the UP Spell app icon on your homescreen\nto match the hue on the wheel?";
+    self.iconPrompt.string = @"Change the UP Spell app icon on your homescreen\nto match theme color?";
     self.iconPrompt.frame = layout.frame_for(Role::ExtrasColorsIconPrompt);
     self.iconPrompt.font = layout.description_font();
     self.iconPrompt.colorCategory = UPColorCategoryControlText;
@@ -177,31 +161,6 @@ using Spot = UP::SpellLayout::Place;
     [self addSubview:self.iconButtonYep];
     self.iconButtonYep.frame = layout.frame_for(Role::ExtrasColorsIconButtonYep);
 
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    UPThemeColorStyle themeColorStyle = settings.themeColorStyle;
-    switch (themeColorStyle) {
-        case UPThemeColorStyleDefault:
-        case UPThemeColorStyleLight:
-            self.darkModeCheckbox.selected = NO;
-            self.starkModeCheckbox.selected = NO;
-            break;
-        case UPThemeColorStyleDark:
-            self.darkModeCheckbox.selected = YES;
-            self.starkModeCheckbox.selected = NO;
-            break;
-        case UPThemeColorStyleLightStark:
-            self.darkModeCheckbox.selected = NO;
-            self.starkModeCheckbox.selected = YES;
-            break;
-        case UPThemeColorStyleDarkStark:
-            self.darkModeCheckbox.selected = YES;
-            self.starkModeCheckbox.selected = YES;
-            break;
-    }
-    
-    CGFloat themeColorHue = settings.themeColorHue;
-    self.hueWheel.hue = themeColorHue;
-    
     [self updateHueDescription];
     
     return self;
@@ -213,7 +172,18 @@ using Spot = UP::SpellLayout::Place;
     self.userInteractionEnabled = YES;
 
     SpellLayout &layout = SpellLayout::instance();
-    self.hueDescriptionContainer.frame = layout.frame_for(Role::ExtrasColorsDescription);
+    
+    UPTheme theme = [UIColor theme];
+    NSUInteger rotorIndex = 0;
+    if (theme == UPThemeDefault) {
+        rotorIndex = UPThemeBlueLight - 1;
+    }
+    else {
+        rotorIndex = theme - 1;
+    }
+    [self.themeRotor selectIndex:rotorIndex];
+    
+     self.hueDescriptionContainer.frame = layout.frame_for(Role::ExtrasColorsDescription);
     [self.hueDescription centerInSuperview];
     self.exampleTilesContainer.center = layout.center_for(Role::ExtrasColorsExample);
     self.iconPrompt.frame = layout.frame_for(Role::ExtrasColorsIconPrompt, Spot::OffBottomFar);
@@ -277,76 +247,27 @@ using Spot = UP::SpellLayout::Place;
     }));
 }
 
-- (void)hueWheelDidUpdate:(UPHueWheel *)hueWheel
-{
-    CGFloat hue = self.hueWheel.hue;
-    if (up_is_fuzzy_equal(hue, [UIColor themeColorHue])) {
-        return;
-    }
-    [UIColor setThemeColorHue:hue];
-    [[UPSpellNavigationController instance] updateThemeColors];
-}
-
-- (void)hueWheelFinishedUpdating:(UPHueWheel *)hueWheel
-{
-    CGFloat hue = self.hueWheel.hue;
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.themeColorHue = hue;
-}
-
-- (void)handleHueStepLess
-{
-    CGFloat hue = [UIColor themeColorHue];
-    hue = up_previous_milepost_hue(hue);
-    self.hueWheel.hue = hue;
-    [self.hueWheel cancelAnimations];
-    [UIColor setThemeColorHue:hue];
-    [[UPSpellNavigationController instance] updateThemeColors];
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.themeColorHue = hue;
-}
-
-- (void)handleHueStepMore
-{
-    CGFloat hue = [UIColor themeColorHue];
-    hue = up_next_milepost_hue(hue);
-    self.hueWheel.hue = hue;
-    [self.hueWheel cancelAnimations];
-    [UIColor setThemeColorHue:hue];
-    [[UPSpellNavigationController instance] updateThemeColors];
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.themeColorHue = hue;
-}
-
 - (void)updateHueDescription
 {
     [self.hueDescription updateThemeColors];
     
     NSMutableString *string = [NSMutableString string];
-    if (self.quarkModeCheckbox.selected) {
-        [string appendString:@"Slowly-changing colors "];
-    }
-    else {
-        [string appendFormat:@"Colors based on HUE #%03d ", (int)[UIColor themeColorHue]];
-    }
-    if (self.starkModeCheckbox.selected) {
+    [string appendFormat:@"Colors based on HUE #%03d ", (int)[UIColor themeColorHue]];
+    
+    UPThemeColorStyle style = [UIColor themeColorStyle];
+    if (style == UPThemeColorStyleLightStark || style == UPThemeColorStyleDarkStark) {
         [string appendString:@"with more outlined shapes\nthan filled-in shapes "];
     }
     else {
         [string appendString:@"with more filled-in shapes\nthan outlined shapes "];
     }
-    if (self.darkModeCheckbox.selected) {
+    if (style == UPThemeColorStyleDark || style == UPThemeColorStyleDarkStark) {
         [string appendString:@"on a dark background."];
     }
     else {
         [string appendString:@"on a light background."];
     }
     self.hueDescription.string = string;
-}
-
-- (void)cancelAnimations
-{
-    [self.hueWheel cancelAnimations];
 }
 
 - (void)handleTappedTile:(UPTapGestureRecognizer *)gesture
@@ -387,90 +308,19 @@ using Spot = UP::SpellLayout::Place;
 
 #pragma mark - Target / Action
 
-- (void)darkModeCheckboxTapped
+- (void)themeRotorChanged
 {
-    UPThemeColorStyle themeColorStyle = [UIColor themeColorStyle];
-    if (self.darkModeCheckbox.selected) {
-        switch (themeColorStyle) {
-            case UPThemeColorStyleDefault:
-            case UPThemeColorStyleLight:
-                themeColorStyle = UPThemeColorStyleDark;
-                break;
-            case UPThemeColorStyleLightStark:
-                themeColorStyle = UPThemeColorStyleDarkStark;
-                break;
-            case UPThemeColorStyleDark:
-            case UPThemeColorStyleDarkStark:
-                // no-op
-                break;
-        }
-    }
-    else {
-        switch (themeColorStyle) {
-            case UPThemeColorStyleDefault:
-            case UPThemeColorStyleLight:
-            case UPThemeColorStyleLightStark:
-                // no-op
-                break;
-            case UPThemeColorStyleDark:
-                themeColorStyle = UPThemeColorStyleLight;
-                break;
-            case UPThemeColorStyleDarkStark:
-                themeColorStyle = UPThemeColorStyleLightStark;
-                break;
-        }
-    }
-    [UIColor setThemeColorStyle:themeColorStyle];
-    [[UPSpellNavigationController instance] updateThemeColors];
-    
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.themeColorStyle = themeColorStyle;
-}
+    NSUInteger index = self.themeRotor.selectedIndex;
+    UPTheme theme = (UPTheme)(index + 1);
 
-- (void)starkModeCheckboxTapped
-{
-    UPThemeColorStyle themeColorStyle = [UIColor themeColorStyle];
-    if (self.starkModeCheckbox.selected) {
-        switch (themeColorStyle) {
-            case UPThemeColorStyleDefault:
-            case UPThemeColorStyleLight:
-                themeColorStyle = UPThemeColorStyleLightStark;
-                break;
-            case UPThemeColorStyleDark:
-                themeColorStyle = UPThemeColorStyleDarkStark;
-                break;
-            case UPThemeColorStyleLightStark:
-            case UPThemeColorStyleDarkStark:
-                // no-op
-                break;
-        }
-    }
-    else {
-        switch (themeColorStyle) {
-            case UPThemeColorStyleDefault:
-            case UPThemeColorStyleLight:
-            case UPThemeColorStyleDark:
-                // no-op
-                break;
-            case UPThemeColorStyleLightStark:
-                themeColorStyle = UPThemeColorStyleLight;
-                break;
-            case UPThemeColorStyleDarkStark:
-                themeColorStyle = UPThemeColorStyleDark;
-                break;
-        }
-    }
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.themeColorStyle = themeColorStyle;
-    [UIColor setThemeColorStyle:themeColorStyle];
-    [[UPSpellNavigationController instance] updateThemeColors];
-}
+    cancel(BandSettingsUpdateDelay);
 
-- (void)quarkModeCheckboxTapped
-{
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.quarkMode = self.quarkModeCheckbox.selected;
-    [self updateHueDescription];
+    delay(BandSettingsUpdateDelay, 0.15, ^{
+        [UIColor setTheme:theme];
+        [[UPSpellNavigationController instance] updateThemeColors];
+        UPSpellSettings *settings = [UPSpellSettings instance];
+        settings.theme = theme;
+    });
 }
 
 - (void)iconButtonYepTapped

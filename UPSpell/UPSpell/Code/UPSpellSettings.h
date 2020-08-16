@@ -7,9 +7,7 @@
 
 @interface UPSpellSettings : UPSettings
 @property (nonatomic) NSUInteger dataVersion;
-@property (nonatomic) UPThemeColorStyle themeColorStyle;
-@property (nonatomic) CGFloat themeColorHue;
-@property (nonatomic) BOOL quarkMode;
+@property (nonatomic) UPTheme theme;
 @property (nonatomic) NSUInteger extrasSelectedIndex;
 @property (nonatomic) BOOL retryMode;
 @property (nonatomic) NSUInteger playMenuSelectedIndex;
