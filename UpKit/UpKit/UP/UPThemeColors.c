@@ -115,7 +115,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
 //
 // Colors for Hue #120 : Dark
 //
-   { 0.000000, 0.900000, 0.000000, 1.000000 }, // PrimaryFill
+   { 0.000000, 0.840000, 0.000000, 1.000000 }, // PrimaryFill
    { 0.368305, 0.498295, 0.368305, 1.000000 }, // InactiveFill
    { 0.059648, 0.313152, 0.059648, 1.000000 }, // ActiveFill
    { 1.000000, 1.000000, 1.000000, 1.000000 }, // HighlightedFill
@@ -135,7 +135,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.000000, 0.000000, 0.000000, 1.000000 }, // InactiveContent
    { 0.000000, 0.000000, 0.000000, 1.000000 }, // ActiveContent
    { 0.000000, 0.000000, 0.000000, 1.000000 }, // HighlightedContent
-   { 0.047000, 0.893000, 0.047000, 1.000000 }, // Information
+   { 0.045000, 0.855000, 0.045000, 1.000000 }, // Information
    { 0.021180, 0.120020, 0.021180, 1.000000 }, // Infinity
 //
 // Colors for Hue #285 : Dark
@@ -297,7 +297,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
    { 0.368850, 0.307375, 0.122950, 1.000000 }, // SecondaryActiveFill
    { 0.113568, 0.090584, 0.021632, 1.000000 }, // SecondaryInactiveFill
    { 0.368850, 0.307375, 0.122950, 1.000000 }, // SecondaryActiveFill
-   { 1.000000, 0.750000, 0.000000, 1.000000 }, // SecondaryHighlightedFill
+   { 0.900000, 0.675000, 0.000000, 1.000000 }, // SecondaryHighlightedFill
    { 1.000000, 0.750000, 0.000000, 1.000000 }, // PrimaryStroke
    { 0.498180, 0.465690, 0.368220, 1.000000 }, // InactiveStroke
    { 0.869680, 0.771940, 0.478720, 1.000000 }, // ActiveStroke

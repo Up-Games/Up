@@ -10,6 +10,7 @@
 #import <UpKit/UPGameKey.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPLabel.h>
+#import <UpKit/UPStringTools.h>
 
 #import "UPControl+UPSpell.h"
 #import "UIFont+UPSpell.h"
@@ -23,9 +24,11 @@
 #import "UPTextButton.h"
 #import "UPTextPaths.h"
 
+using UP::GameKey;
 using UP::SpellGameSummary;
 using UP::SpellLayout;
 using UP::SpellModel;
+using UP::ns_str;
 
 using Place = SpellLayout::Place;
 using Role = SpellLayout::Role;
@@ -110,6 +113,9 @@ using Role = SpellLayout::Role;
 
     UPSpellDossier *dossier = [UPSpellDossier instance];
     
+    LOG(General, "High Score: %@", ns_str(GameKey(dossier.highScoreGameKeyValue).string()));
+    LOG(General, "Last Game:  %@", ns_str(GameKey(dossier.lastGameKeyValue).string()));
+
     if (dossier.totalGamesPlayed == 0) {
         self.choice1.labelString = @"RETRY HIGH SCORE GAME";
         self.choice2.labelString = @"RETRY LAST GAME";
