@@ -80,7 +80,7 @@ using Spot = UP::SpellLayout::Place;
         @"GREEN/LIGHT/STARK",
         @"BLUE/LIGHT/STARK",
         @"PURPLE/LIGHT/STARK",
-        @"RED/DARK/STARK",
+        @"YELLOW/DARK/STARK",
         @"GREEN/DARK/STARK",
         @"BLUE/DARK/STARK",
         @"PURPLE/DARK/STARK",
@@ -250,10 +250,45 @@ using Spot = UP::SpellLayout::Place;
 - (void)updateHueDescription
 {
     [self.hueDescription updateThemeColors];
+
+    NSString *colorString = nil;
+    switch ([UIColor theme]) {
+        case UPThemeRedLight:
+        case UPThemeRedLightStark:
+            colorString = @"RED";
+            break;
+        case UPThemeGreenLight:
+        case UPThemeGreenDark:
+        case UPThemeGreenLightStark:
+        case UPThemeGreenDarkStark:
+            colorString = @"GREEN";
+            break;
+        case UPThemeDefault:
+        case UPThemeBlueLight:
+        case UPThemeBlueDark:
+        case UPThemeBlueLightStark:
+        case UPThemeBlueDarkStark:
+            colorString = @"BLUE";
+            break;
+        case UPThemePurpleLight:
+        case UPThemePurpleDark:
+        case UPThemePurpleLightStark:
+        case UPThemePurpleDarkStark:
+            colorString = @"PURPLE";
+            break;
+        case UPThemeOrangeDark:
+            colorString = @"ORANGE";
+            break;
+        case UPThemeYellowDarkStark:
+            colorString = @"YELLOW";
+            break;
+    }
     
     NSMutableString *string = [NSMutableString string];
-    [string appendFormat:@"Colors based on HUE #%03d ", (int)[UIColor themeColorHue]];
-    
+    [string appendFormat:@"Colors based on "];
+    [string appendString:colorString];
+    [string appendFormat:@" "];
+
     UPThemeColorStyle style = [UIColor themeColorStyle];
     if (style == UPThemeColorStyleLightStark || style == UPThemeColorStyleDarkStark) {
         [string appendString:@"with more outlined shapes\nthan filled-in shapes "];

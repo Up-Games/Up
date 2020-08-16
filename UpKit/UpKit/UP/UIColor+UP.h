@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, UPTheme) {
     UPThemeGreenLightStark,
     UPThemeBlueLightStark,
     UPThemePurpleLightStark,
-    UPThemeRedDarkStark,
+    UPThemeYellowDarkStark,
     UPThemeGreenDarkStark,
     UPThemeBlueDarkStark,
     UPThemePurpleDarkStark,

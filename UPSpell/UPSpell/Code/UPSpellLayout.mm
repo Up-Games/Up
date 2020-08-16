@@ -765,12 +765,6 @@ void SpellLayout::calculate_game_locations()
 void SpellLayout::calculate_extras_locations()
 {
     calculate_and_set_locations(Role::ExtrasColorsThemeRotor, layout_relative_aspect_rect(CanonicalExtrasColorsThemeRotorFrame));
-    calculate_and_set_locations(Role::ExtrasColorsHueWheel, layout_relative_aspect_rect(CanonicalExtrasColorsHueWheelFrame));
-    calculate_and_set_locations(Role::ExtrasColorsDarkMode, layout_relative_aspect_rect(CanonicalExtrasColorsDarkModeFrame));
-    calculate_and_set_locations(Role::ExtrasColorsStarkMode, layout_relative_aspect_rect(CanonicalExtrasColorsStarkModeFrame));
-    calculate_and_set_locations(Role::ExtrasColorsQuarkMode, layout_relative_aspect_rect(CanonicalExtrasColorsQuarkModeFrame));
-    calculate_and_set_locations(Role::ExtrasColorsHueStepMore, layout_relative_aspect_rect(CanonicalExtrasColorsHueStepMoreFrame));
-    calculate_and_set_locations(Role::ExtrasColorsHueStepLess, layout_relative_aspect_rect(CanonicalExtrasColorsHueStepLessFrame));
     calculate_and_set_locations(Role::ExtrasColorsDescription, layout_relative_aspect_rect(CanonicalExtrasColorsDescriptionFrame));
     calculate_and_set_locations(Role::ExtrasColorsExample, layout_relative_aspect_rect(CanonicalExtrasColorsExampleFrame));
 

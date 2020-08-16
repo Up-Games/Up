@@ -80,8 +80,8 @@ static CGFloat _ThemeHue = 225;
             [self setThemeColorHue:285];
             [self setThemeColorStyle:UPThemeColorStyleLightStark];
             break;
-        case UPThemeRedDarkStark:
-            [self setThemeColorHue:0];
+        case UPThemeYellowDarkStark:
+            [self setThemeColorHue:45];
             [self setThemeColorStyle:UPThemeColorStyleDarkStark];
             break;
         case UPThemeGreenDarkStark:

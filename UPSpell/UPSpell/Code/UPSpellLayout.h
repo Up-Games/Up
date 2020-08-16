@@ -106,7 +106,7 @@ public:
     static inline constexpr CGSize CanonicalBallotSize =          {  40,  36 };
     static inline constexpr CGSize CanonicalHueWheelSize =        { 220, 220 };
     static inline constexpr CGSize CanonicalStepperSize =         {  36,  36 };
-    static inline constexpr CGSize CanonicalRotorSize =           { 360, 228 };
+    static inline constexpr CGSize CanonicalRotorSize =           { 400, 250 };
     static inline constexpr CGSize CanonicalSliderSize =          { 510,  40 };
     static inline constexpr CGSize CanonicalSliderThumbSize =     {  40,  40 };
 
@@ -136,7 +136,7 @@ public:
     static inline constexpr CGFloat CanonicalChoiceLabelBaselineAdjustment = -12;
     static inline constexpr CGFloat CanonicalChoiceLabelLeftMargin = 82;
     static inline constexpr CGFloat CanonicalChoiceLabelRightMargin = 87;
-    static inline constexpr CGFloat CanonicalRotorElementCapHeight = 31;
+    static inline constexpr CGFloat CanonicalRotorElementCapHeight = 36;
 
     static inline constexpr CGSize CanonicalTileSize = { 100, 120 };
     static inline constexpr CGRect CanonicalTileFrame = { 0, 0, up_size_width(CanonicalTileSize), up_size_height(CanonicalTileSize) };
@@ -183,14 +183,8 @@ public:
     static inline constexpr CGFloat CanonicalPlacardValueFontCapHeight = 38;
     static inline constexpr CGFloat CanonicalPlacardDescrptionFontCapHeight = 24;
 
-    static inline constexpr CGRect CanonicalExtrasColorsThemeRotorFrame =  { 490,  40, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
-    static inline constexpr CGRect CanonicalExtrasColorsHueWheelFrame =    { 430,  36, up_size_width(CanonicalHueWheelSize), up_size_height(CanonicalHueWheelSize) };
-    static inline constexpr CGRect CanonicalExtrasColorsHueStepMoreFrame = { 692,  98, 44, 44 };
-    static inline constexpr CGRect CanonicalExtrasColorsHueStepLessFrame = { 692, 158, 44, 44 };
-    static inline constexpr CGRect CanonicalExtrasColorsDarkModeFrame =    { 780,  64, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasColorsStarkModeFrame =   { 780, 124, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasColorsQuarkModeFrame =   { 780, 184, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasColorsDescriptionFrame = { 384, 274, 572, 76 };
+    static inline constexpr CGRect CanonicalExtrasColorsThemeRotorFrame =  { 470,  30, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
+    static inline constexpr CGRect CanonicalExtrasColorsDescriptionFrame = { 384, 280, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsExampleFrame =     { 400, 386, 540, 66 };
     static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =  { 384, 278, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsIconLayoutFrame =  { 460, 381, 440, 76 };
