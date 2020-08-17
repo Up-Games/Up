@@ -111,6 +111,9 @@ using Role = UP::SpellLayout::Role;
     [self addSubview:self.highScoreDescriptionLabel];
 
     self.highScoreShareButton = [UPButton roundShareButton];
+    self.highScoreShareButton.band = BandSettingsUI;
+    [self.highScoreShareButton setFillColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.highScoreShareButton setStrokeColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     [self.highScoreShareButton setTarget:self action:@selector(highScoreShareButtonTapped)];
     self.highScoreShareButton.frame = layout.frame_for(Role::ExtrasShareHighScoreButton);
     [self addSubview:self.highScoreShareButton];
@@ -131,6 +134,9 @@ using Role = UP::SpellLayout::Role;
     [self addSubview:self.lastGameScoreDescriptionLabel];
     
     self.lastGameScoreShareButton = [UPButton roundShareButton];
+    self.lastGameScoreShareButton.band = BandSettingsUI;
+    [self.lastGameScoreShareButton setFillColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.lastGameScoreShareButton setStrokeColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     [self.lastGameScoreShareButton setTarget:self action:@selector(lastGameShareButtonTapped)];
     self.lastGameScoreShareButton.frame = layout.frame_for(Role::ExtrasShareLastGameButton);
     [self addSubview:self.lastGameScoreShareButton];
@@ -152,6 +158,11 @@ using Role = UP::SpellLayout::Role;
 - (void)prepare
 {
     self.userInteractionEnabled = YES;
+
+    self.highScoreShareButton.highlightedLocked = NO;
+    self.highScoreShareButton.highlighted = NO;
+    self.lastGameScoreShareButton.highlightedLocked = NO;
+    self.lastGameScoreShareButton.highlighted = NO;
 
     UPSpellDossier *dossier = [UPSpellDossier instance];
     SpellLayout &layout = SpellLayout::instance();
@@ -227,9 +238,31 @@ using Role = UP::SpellLayout::Role;
 
 - (void)presentShareSheetForShareType:(UPShareType)shareType
 {
+    if (shareType == UPShareTypeHighScore) {
+        self.highScoreShareButton.highlightedLocked = YES;
+        self.highScoreShareButton.highlighted = YES;
+    }
+    else if (shareType == UPShareTypeLastGameScore) {
+        self.lastGameScoreShareButton.highlightedLocked = YES;
+        self.lastGameScoreShareButton.highlighted = YES;
+    }
+    
     UPSpellExtrasController *extrasController = [UPSpellExtrasController instance];
     UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithShareType:shareType];
+    __weak UPActivityViewController *weakActivityViewController = activityViewController;
+    activityViewController.completionWithItemsHandler = ^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
+        [self shareSheetDismissed];
+        weakActivityViewController.completionWithItemsHandler = nil;
+    };
     [extrasController presentViewController:activityViewController animated:YES completion:nil];
+}
+
+- (void)shareSheetDismissed
+{
+    self.highScoreShareButton.highlightedLocked = NO;
+    self.highScoreShareButton.highlighted = NO;
+    self.lastGameScoreShareButton.highlightedLocked = NO;
+    self.lastGameScoreShareButton.highlighted = NO;
 }
 
 #pragma mark - Layout

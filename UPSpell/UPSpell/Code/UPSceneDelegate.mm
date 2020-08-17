@@ -10,6 +10,7 @@
 #import "UPSpellExtrasController.h"
 #import "UPSpellGameController.h"
 #import "UPSpellNavigationController.h"
+#import "UPSpellExtrasPaneShare.h"
 
 static UPSceneDelegate *_Instance;
 
@@ -47,6 +48,10 @@ static UPSceneDelegate *_Instance;
     UPSpellExtrasController *extrasController = [UPSpellExtrasController instance];
     if (extrasController.presentedViewController) {
         [extrasController dismissViewControllerAnimated:NO completion:nil];
+        if ([extrasController.selectedPane isKindOfClass:[UPSpellExtrasPaneShare class]]) {
+            UPSpellExtrasPaneShare *pane = (UPSpellExtrasPaneShare *)extrasController.selectedPane;
+            [pane shareSheetDismissed];
+        }
     }
 
     UPSpellGameController *gameController = [UPSpellGameController instance];

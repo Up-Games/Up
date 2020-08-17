@@ -9,4 +9,6 @@
 
 + (UPSpellExtrasPaneShare *)pane;
 
+- (void)shareSheetDismissed;
+
 @end
