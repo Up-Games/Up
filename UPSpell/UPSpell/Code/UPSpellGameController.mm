@@ -2417,8 +2417,8 @@ static UPSpellGameController *_Instance;
     
     [self.dialogChallengeHelp updateThemeColors];
     
-    self.dialogGameNote.shareButton.highlightedLocked = YES;
-    self.dialogGameNote.shareButton.highlighted = YES;
+    self.dialogChallenge.helpButton.highlightedLocked = YES;
+    self.dialogChallenge.helpButton.highlighted = YES;
     
     [UIView animateWithDuration:0.3 animations:^{
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonChallengeHelp];
@@ -2461,6 +2461,8 @@ static UPSpellGameController *_Instance;
     start(bloop_out(BandModeUI, moves, 0.4,  ^(UIViewAnimatingPosition) {
         self.dialogChallengeHelp.hidden = YES;
         self.dialogChallengeHelp.alpha = 1;
+        self.dialogChallenge.helpButton.highlightedLocked = NO;
+        self.dialogChallenge.helpButton.highlighted = NO;
         [self viewEnsureUnlocked];
         if (completion) {
             completion();
@@ -2511,7 +2513,9 @@ static UPSpellGameController *_Instance;
     self.dialogChallenge.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Place::OffBottomNear);
     self.dialogChallenge.cancelButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse, Place::OffBottomNear);
     self.dialogChallenge.helpButton.frame = layout.frame_for(Role::DialogHelpButton, Place::OffBottomNear);
-    
+    self.dialogChallenge.helpButton.highlightedLocked = NO;
+    self.dialogChallenge.helpButton.highlighted = NO;
+
     self.dialogShareHelp.titleLabel.frame = layout.frame_for(Role::DialogHelpTitle, Place::OffBottomFar);
     self.dialogShareHelp.helpLabelContainer.frame = layout.frame_for(Role::DialogHelpText, Place::OffBottomFar);
     self.dialogShareHelp.okButton.frame = layout.frame_for(Role::DialogHelpOKButton, Place::OffBottomNear);
@@ -3566,11 +3570,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     Role cancelRole = self.dialogChallenge.confirmButton.hidden ? Role::DialogButtonCenterResponse : Role::DialogButtonAlternativeResponse;
     
     NSArray<UPViewMove *> *buttonOutMoves = @[
-        UPViewMoveMake(self.dialogChallenge.challengePromptLabel, Location(Role::ChallengePrompt, Place::OffBottomNear)),
-        UPViewMoveMake(self.dialogChallenge.scorePromptLabel, Location(Role::ChallengeScore, Place::OffBottomFar)),
-        UPViewMoveMake(self.dialogChallenge.cancelButton, Location(cancelRole, Place::OffBottomFar)),
-        UPViewMoveMake(self.dialogChallenge.confirmButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
-        UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::GameShareButton, Place::OffBottomFar)),
+        UPViewMoveMake(self.dialogChallenge.challengePromptLabel, Location(Role::ChallengePrompt, Place::OffBottomFar)),
+        UPViewMoveMake(self.dialogChallenge.scorePromptLabel, Location(Role::ChallengeScore, Place::OffBottomNear)),
+        UPViewMoveMake(self.dialogChallenge.cancelButton, Location(cancelRole, Place::OffBottomNear)),
+        UPViewMoveMake(self.dialogChallenge.confirmButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomNear)),
+        UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::GameShareButton, Place::OffBottomNear)),
     ];
     start(bloop_out(BandModeUI, buttonOutMoves, 0.5, nil));
     
@@ -3674,11 +3678,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft, Place::OffTopNear)),
             UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter, Place::OffTopNear)),
             UPViewMoveMake(self.dialogTopMenu.aboutButton, Location(Role::DialogButtonTopRight, Place::OffTopNear)),
-            UPViewMoveMake(self.dialogChallenge.challengePromptLabel, Location(Role::ChallengePrompt, Place::OffBottomNear)),
-            UPViewMoveMake(self.dialogChallenge.scorePromptLabel, Location(Role::ChallengeScore, Place::OffBottomFar)),
-            UPViewMoveMake(self.dialogChallenge.cancelButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomFar)),
-            UPViewMoveMake(self.dialogChallenge.confirmButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomFar)),
-            UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::GameShareButton, Place::OffBottomFar)),
+            UPViewMoveMake(self.dialogChallenge.challengePromptLabel, Location(Role::ChallengePrompt, Place::OffBottomFar)),
+            UPViewMoveMake(self.dialogChallenge.scorePromptLabel, Location(Role::ChallengeScore, Place::OffBottomNear)),
+            UPViewMoveMake(self.dialogChallenge.cancelButton, Location(Role::DialogButtonAlternativeResponse, Place::OffBottomNear)),
+            UPViewMoveMake(self.dialogChallenge.confirmButton, Location(Role::DialogButtonDefaultResponse, Place::OffBottomNear)),
+            UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::GameShareButton, Place::OffBottomNear)),
         ];
         start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
             self.dialogChallenge.confirmButton.highlightedLocked = NO;
