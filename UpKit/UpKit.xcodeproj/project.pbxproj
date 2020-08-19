@@ -50,6 +50,7 @@
 		5DA8E06B247C76A8008D3015 /* UPTimeSpanning.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E069247C76A8008D3015 /* UPTimeSpanning.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA8E06C247C76A8008D3015 /* UPTimeSpanning.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E06A247C76A8008D3015 /* UPTimeSpanning.mm */; };
 		5DA8E06E247D50AB008D3015 /* UPSerialNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA8E06D247D50AB008D3015 /* UPSerialNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DB2C74724ED920A00EF4941 /* en-fixed-lexicon.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5DB2C74624ED920A00EF4941 /* en-fixed-lexicon.txt */; };
 		5DB9B1AE2487360900A4AAA8 /* UPSerialNumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AD2487360900A4AAA8 /* UPSerialNumber.cpp */; };
 		5DB9B1B02487EA9800A4AAA8 /* UPRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AF2487EA9800A4AAA8 /* UPRandom.cpp */; };
 		5DBAD6D524E22B8800471ABF /* UPVectorLogoView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBAD6D324E22B8800471ABF /* UPVectorLogoView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -183,6 +184,7 @@
 		5DA8E069247C76A8008D3015 /* UPTimeSpanning.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTimeSpanning.h; sourceTree = "<group>"; };
 		5DA8E06A247C76A8008D3015 /* UPTimeSpanning.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTimeSpanning.mm; sourceTree = "<group>"; };
 		5DA8E06D247D50AB008D3015 /* UPSerialNumber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSerialNumber.h; sourceTree = "<group>"; };
+		5DB2C74624ED920A00EF4941 /* en-fixed-lexicon.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "en-fixed-lexicon.txt"; sourceTree = "<group>"; };
 		5DB9B1AD2487360900A4AAA8 /* UPSerialNumber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPSerialNumber.cpp; sourceTree = "<group>"; };
 		5DB9B1AF2487EA9800A4AAA8 /* UPRandom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPRandom.cpp; sourceTree = "<group>"; };
 		5DBAD6D324E22B8800471ABF /* UPVectorLogoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPVectorLogoView.h; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				5DF9DF3D2465B0BE00B2199D /* en-lexicon.txt */,
+				5DB2C74624ED920A00EF4941 /* en-fixed-lexicon.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DF9DF3F2465B0BE00B2199D /* en-lexicon.txt in Resources */,
+				5DB2C74724ED920A00EF4941 /* en-fixed-lexicon.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

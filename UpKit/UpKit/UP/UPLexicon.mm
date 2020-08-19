@@ -29,7 +29,16 @@ static NSString *lexicon_file_name(UPLexiconLanguage language)
     }
 }
 
+static NSString *fixed_lexicon_file_name(UPLexiconLanguage language)
+{
+    switch (language) {
+        case UPLexiconLanguageEnglish:
+            return @"en-fixed-lexicon";
+    }
+}
+
 static Lexicon *g_instance;
+static Lexicon *g_fixed_instance;
 static UPLexiconLanguage g_language;
 static std::mutex g_mutex;
 
@@ -40,27 +49,50 @@ void Lexicon::set_language(UPLexiconLanguage language)
     if (has_instance && g_language == language) {
         return;
     }
-    if (has_instance) {
+    g_language = language;
+    NSBundle *upkitBundle = [NSBundle bundleForClass:[UPLexiconDummy class]];
+    if (g_instance) {
         delete g_instance;
         g_instance = nullptr;
     }
-    NSBundle *upkitBundle = [NSBundle bundleForClass:[UPLexiconDummy class]];
-    NSString *fileName = lexicon_file_name(language);
-    NSString *wordsFilePath = [upkitBundle pathForResource:fileName ofType:@"txt"];
-    NSError *error;
-    NSString *contents = [NSString stringWithContentsOfFile:wordsFilePath encoding:NSUTF8StringEncoding error:&error];
-    if (error) {
-        NSLog(@"*** error reading lexicon: %@", error.localizedDescription);
+    if (!g_instance) {
+        NSString *fileName = lexicon_file_name(language);
+        NSString *wordsFilePath = [upkitBundle pathForResource:fileName ofType:@"txt"];
+        NSError *error;
+        NSString *contents = [NSString stringWithContentsOfFile:wordsFilePath encoding:NSUTF8StringEncoding error:&error];
+        if (error) {
+            NSLog(@"*** error reading lexicon: %@", error.localizedDescription);
+        }
+        else {
+            g_instance = new Lexicon(cpp_u32str(contents));
+        }
     }
-    else {
-        g_instance = new Lexicon(cpp_u32str(contents));
-        g_language = language;
+    if (g_fixed_instance) {
+        delete g_fixed_instance;
+        g_fixed_instance = nullptr;
+    }
+    if (!g_fixed_instance) {
+        NSString *fileName = fixed_lexicon_file_name(language);
+        NSString *wordsFilePath = [upkitBundle pathForResource:fileName ofType:@"txt"];
+        NSError *error;
+        NSString *contents = [NSString stringWithContentsOfFile:wordsFilePath encoding:NSUTF8StringEncoding error:&error];
+        if (error) {
+            NSLog(@"*** error reading fixed lexicon: %@", error.localizedDescription);
+        }
+        else {
+            g_fixed_instance = new Lexicon(cpp_u32str(contents));
+        }
     }
 }
 
 Lexicon &Lexicon::instance()
 {
     return *g_instance;
+}
+
+Lexicon &Lexicon::fixed_instance()
+{
+    return *g_fixed_instance;
 }
 
 Lexicon::Lexicon(std::u32string &&contents) : m_contents(std::move(contents))

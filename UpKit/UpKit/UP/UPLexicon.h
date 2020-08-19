@@ -30,6 +30,7 @@ public:
     static void set_language(UPLexiconLanguage language);
     static UPLexiconLanguage language();
     static Lexicon &instance();
+    static Lexicon &fixed_instance();
 
     Lexicon() {}
 
