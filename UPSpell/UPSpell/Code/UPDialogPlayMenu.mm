@@ -116,6 +116,12 @@ using Role = SpellLayout::Role;
     LOG(General, "High Score: %@", ns_str(GameKey(dossier.highScoreGameKeyValue).string()));
     LOG(General, "Last Game:  %@", ns_str(GameKey(dossier.lastGameKeyValue).string()));
 
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    NSUInteger playMenuSelectedIndex = settings.playMenuSelectedIndex;
+    for (UPChoice *choice in self.choices) {
+        choice.selected = (choice.tag == playMenuSelectedIndex);
+    }
+
     if (dossier.totalGamesPlayed == 0) {
         self.choice1.labelString = @"RETRY HIGH SCORE GAME";
         self.choice2.labelString = @"RETRY LAST GAME";
@@ -160,11 +166,9 @@ using Role = SpellLayout::Role;
 
     }
 
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    NSUInteger playMenuSelectedIndex = settings.playMenuSelectedIndex;
-    for (UPChoice *choice in self.choices) {
-        choice.selected = (choice.tag == playMenuSelectedIndex);
-    }
+    [self.choice1 invalidate];
+    [self.choice2 invalidate];
+    [self.choice3 invalidate];
 }
 
 - (void)choiceSelected:(UPChoice *)sender

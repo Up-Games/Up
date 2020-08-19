@@ -10,12 +10,12 @@
 
 using UP::SpellLayout;
 
-UIBezierPath *ChoiceFillPath()
+static UIBezierPath *ChoiceFillPath()
 {
     return [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, 280, 76)];
 }
 
-UIBezierPath *ChoiceStrokePath()
+static UIBezierPath *ChoiceStrokePath()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(0, 76)];
@@ -29,6 +29,30 @@ UIBezierPath *ChoiceStrokePath()
     [path addLineToPoint: CGPointMake(277, 73)];
     [path addLineToPoint: CGPointMake(3, 73)];
     [path addLineToPoint: CGPointMake(3, 3)];
+    [path closePath];
+    return path;
+}
+
+static UIBezierPath *ChoiceStrokePathWithWidth(CGFloat width)
+{
+    SpellLayout &layout = SpellLayout::instance();
+    const CGFloat W = width;
+    const CGFloat I = up_float_scaled(3, layout.layout_scale());
+    const CGFloat H = up_float_scaled(76, layout.layout_scale());
+    const CGFloat IX = I;
+    const CGFloat IY = I;
+    const CGFloat IW = W - I;
+    const CGFloat IH = H - I;
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint: CGPointMake(0, H)];
+    [path addLineToPoint: CGPointMake(W, H)];
+    [path addLineToPoint: CGPointMake(W, 0)];
+    [path addLineToPoint: CGPointMake(0, 0)];
+    [path closePath];
+    [path moveToPoint: CGPointMake(IX, IY)];
+    [path addLineToPoint: CGPointMake(IW, IY)];
+    [path addLineToPoint: CGPointMake(IW, IH)];
+    [path addLineToPoint: CGPointMake(IX, IH)];
     [path closePath];
     return path;
 }
@@ -259,6 +283,10 @@ UIBezierPath *ChoiceRightFillPathSelected()
     if (self.variableWidth) {
         CGSize defaultSize = up_size_scaled(SpellLayout::CanonicalChoiceSize, layout.layout_scale());
         self.auxiliaryPathView.frame = CGRectMake(0, 0, defaultSize.width, defaultSize.height);
+        
+        UIBezierPath *path = ChoiceStrokePathWithWidth(up_rect_width(self.label.frame) + SpellLayout::CanonicalChoiceLabelLeftMargin);
+        self.strokePathView.canonicalSize = up_pixel_size(path.bounds.size, layout.screen_scale());
+        [self setStrokePath:path forState:UPControlStateSelected];
     }
 }
 
