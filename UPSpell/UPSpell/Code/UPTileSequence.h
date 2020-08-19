@@ -35,7 +35,42 @@ public:
             std::copy(key.begin(), key.end(), std::back_inserter(m_letters));
         }
         char32_t c = m_letters.back();
-        m_letters.pop_back();
+        if (Lexicon::is_vowel(c)) {
+            m_consonant_run = 0;
+        }
+        else {
+            m_consonant_run++;
+        }
+        if (m_consonant_run >= 5) {
+            m_consonant_run = 0;
+            // Nothing stops a game like having no vowels, so if there's a long consonant run,
+            // insert a random vowel. Frequencies taken from:
+            // https://en.wikipedia.org/wiki/Letter_frequency
+            static constexpr float Freq_U = 0.0736;
+            static constexpr float Freq_O = 0.2003;
+            static constexpr float Freq_I = 0.2014;
+            static constexpr float Freq_A = 0.2268;
+            float f = m_random.unit();
+            if (f <= Freq_U) {
+                c = 'U';
+            }
+            else if (f <= Freq_U + Freq_O) {
+                c = 'O';
+            }
+            else if (f <= Freq_U + Freq_O + Freq_I) {
+                c = 'I';
+            }
+            else if (f <= Freq_U + Freq_O + Freq_I + Freq_A) {
+                c = 'A';
+            }
+            else {
+                c = 'E';
+            }
+            LOG(General, "consonant run stopped: %c", c);
+        }
+        else {
+            m_letters.pop_back();
+        }
         int m = 1;
         m_multiplier_countdown--;
         if (m_multiplier_countdown == 0) {
@@ -53,6 +88,7 @@ private:
     Random m_random;
     std::vector<char32_t> m_letters;
     int m_multiplier_countdown = 0;
+    int m_consonant_run = 0;
 };
     
 }  // namespace UP
