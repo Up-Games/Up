@@ -191,9 +191,9 @@ public:
     template <bool B = true> static bool valid_opcode(Opcode opcode) { return (opcode >= Opcode::START && opcode <= Opcode::END) == B; }
     template <bool B = true> static bool valid_timestamp(CFTimeInterval timestamp) { return (timestamp >= 0 && timestamp <= 120) == B; }
 
-    static constexpr int SevenLetterWordBonus = 12;
-    static constexpr int SixLetterWordBonus = 6;
-    static constexpr int FiveLetterWordBonus = 3;
+    static constexpr int SevenLetterWordBonus = 20;
+    static constexpr int SixLetterWordBonus = 10;
+    static constexpr int FiveLetterWordBonus = 5;
 
     class Action {
     public:
