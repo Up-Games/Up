@@ -32,7 +32,22 @@ Word::Word(const TileArray &tiles) : m_tiles(tiles)
             count++;
         }
     }
-    m_total_score = m_score * m_total_multiplier;
+    int bonus = 0;
+    switch (count) {
+        default:
+            // no bonus
+            break;
+        case 5:
+            bonus = SpellModel::FiveLetterWordBonus;
+            break;
+        case 6:
+            bonus = SpellModel::SixLetterWordBonus;
+            break;
+        case 7:
+            bonus = SpellModel::SevenLetterWordBonus;
+            break;
+    }
+    m_total_score = (m_score + bonus) * m_total_multiplier;
 #if !ASSERT_DISABLED
     for (size_t idx = 0; idx < TileCount; idx++) {
         if (idx < count) {
@@ -43,22 +58,8 @@ Word::Word(const TileArray &tiles) : m_tiles(tiles)
         }
     }
 #endif
-    m_string = std::u32string(chars, count);
-    switch (count) {
-        default:
-            // no bonus
-            break;
-        case 5:
-            m_total_score += SpellModel::FiveLetterWordBonus;
-            break;
-        case 6:
-            m_total_score += SpellModel::SixLetterWordBonus;
-            break;
-        case 7:
-            m_total_score += SpellModel::SevenLetterWordBonus;
-            break;
-    }
     Lexicon &lexicon = Lexicon::instance();
+    m_string = std::u32string(chars, count);
     m_in_lexicon = count > 0 ? lexicon.contains(m_string) : false;
 }
 

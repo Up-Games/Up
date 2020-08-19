@@ -1395,8 +1395,8 @@ static UPSpellGameController *_Instance;
         role = Role::WordScoreBonus;
         NSMutableString *bonusString = [NSMutableString string];
         if (has_multiplier_bonus && has_length_bonus) {
-            [bonusString appendFormat:@"%d× WORD & ", word_multiplier];
             [bonusString appendString:lengthBonusString];
+            [bonusString appendFormat:@" & %d× WORD", word_multiplier];
         }
         else if (has_multiplier_bonus) {
             [bonusString appendFormat:@"%d× WORD ", word_multiplier];
