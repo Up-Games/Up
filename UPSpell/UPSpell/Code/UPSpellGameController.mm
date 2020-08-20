@@ -3142,7 +3142,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self configureTunesForTuneNumber:self.tuneNumber];
     if (self.tunesEnabled) {
         UPTunePlayer *tunePlayer = [UPTunePlayer instance];
-        [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 0.9, NO, 0, 0 }];
+        [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 1.0, NO, 0, 0 }];
     }
 }
 
