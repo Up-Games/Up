@@ -1192,7 +1192,7 @@ static UPSpellGameController *_Instance;
         BOOL active = m_spell_model->word().in_lexicon() && back != Opcode::HOVER && back != Opcode::NOVER;
         self.gameView.wordTrayControl.active = active;
         if (active) {
-            [self viewDecorateWordTrayTiles];
+            [self viewUpdateWordTrayTileDecorations];
         }
         else {
             [self viewUndecorateAllTiles];
@@ -1221,14 +1221,14 @@ static UPSpellGameController *_Instance;
     self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", score];
 }
 
-- (void)viewDecorateWordTrayTiles
+- (void)viewUpdateWordTrayTileDecorations
 {
     if (!m_spell_model) {
         return;
     }
     
     const Word &word = m_spell_model->word();
-    if (word.in_lexicon<false>() || word.length() == 0) {
+    if (word.in_lexicon<false>() || word.length() == 0 || word.key() == word.string()) {
         [self viewUndecorateAllTiles];
         return;
     }
@@ -1239,9 +1239,7 @@ static UPSpellGameController *_Instance;
     const std::u32string string = word.string();
     TileIndex idx = 0;
     for (UPTileView *tileView in wordTrayTileViews) {
-        if (string[idx] == U'E') {
-            tileView.glyph = U'É';
-        }
+        tileView.glyph = string[idx];
         idx++;
     }
 }
