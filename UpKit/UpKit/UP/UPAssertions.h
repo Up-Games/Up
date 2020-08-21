@@ -78,7 +78,7 @@
 
 #ifndef UP_NEVER_INLINE
 #ifdef NDEBUG
-#define UP_NEVER_INLINE __attribute__ ((__visibility__("hidden"), noinline))
+#define UP_NEVER_INLINE __attribute__ ((__visibility__("default"), noinline))
 #else
 #define UP_NEVER_INLINE
 #endif
@@ -137,6 +137,35 @@ void UPPrintBacktrace(void** stack, int size);
 #define LOG_CHANNEL_OFF(channel) ((void)0)
 #else
 #define LOG_CHANNEL_OFF(channel) UPLogDisable(&LOG_CHANNEL(channel))
+#endif
+
+#define CPU(UP_FEATURE) (defined UP_CPU_##UP_FEATURE  && UP_CPU_##UP_FEATURE)
+
+/* CPU(X86_64) - AMD64 / Intel64 / x86_64 64-bit */
+#if   defined(__x86_64__) || defined(_M_X64)
+#define UP_CPU_X86_64 1
+#define UP_CPU_X86_SSE2 1
+#define UP_CPU_KNOWN 1
+#endif
+
+/* CPU(ARM64) - Apple */
+#if (defined(__arm64__) && defined(__APPLE__)) || defined(__aarch64__)
+#define UP_CPU_ARM64 1
+#define UP_CPU_KNOWN 1
+
+#if defined(__arm64e__)
+#define UP_CPU_ARM64E 1
+#endif
+#endif
+
+#if CPU(X86_64) || CPU(X86)
+#define UPBreakpointTrap()  asm volatile ("int3")
+#elif CPU(ARM_THUMB2)
+#define UPBreakpointTrap()  asm volatile ("bkpt #0")
+#elif CPU(ARM64)
+#define UPBreakpointTrap()  asm volatile ("brk #0")
+#else
+#define UPBreakpointTrap() UPCrash() // Not implemented.
 #endif
 
 #ifndef CRASH

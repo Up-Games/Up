@@ -2276,11 +2276,13 @@
 				CODE_SIGN_ENTITLEMENTS = "UPSpell/UP Spell.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 784YP5V58W;
+				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = UPSpell/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_CFLAGS = "-DNDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.upgames.upspell;
 				PRODUCT_NAME = "Up Spell";
 				TARGETED_DEVICE_FAMILY = "1,2";
