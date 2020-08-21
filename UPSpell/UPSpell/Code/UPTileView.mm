@@ -21,7 +21,6 @@ using UP::TileModel;
 using UP::TilePaths;
 
 @interface UPTileView () <UIGestureRecognizerDelegate>
-@property (nonatomic, readwrite) char32_t glyph;
 @property (nonatomic, readwrite) int score;
 @property (nonatomic, readwrite) int multiplier;
 @end
@@ -42,15 +41,14 @@ static uint32_t _InstanceCount;
     _InstanceCount++;
     LOG(Leaks, "alloc:   %@ (%d)", self, _InstanceCount);
     
-    self.glyph = glyph;
     self.score = score;
     self.multiplier = multiplier;
+    self.glyph = glyph;
     if (glyph == UP::SentinelGlyph) {
         return self;
     }
 
     SpellLayout &layout = SpellLayout::instance();
-    TilePaths &tile_paths = TilePaths::instance();
 
     self.canonicalSize = SpellLayout::CanonicalTileSize;
 
@@ -65,19 +63,30 @@ static uint32_t _InstanceCount;
     [self setStrokeColorCategory:UPColorCategoryHighlightedStroke forState:UPControlStateHighlighted];
     [self setStrokeColorAnimationDuration:0.15 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
-    if (glyph != UP::BlankGlyph) {
+    [self bringPathViewToFront:self.contentPathView];
+    
+    return self;
+}
+
+- (void)setGlyph:(char32_t)glyph
+{
+    BOOL changed = _glyph != glyph;
+    _glyph = glyph;
+
+    if (changed || !self.contentPathView) {
         UIBezierPath *contentPath = [UIBezierPath bezierPath];
-        [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
-        if (self.score > 0) {
-            [contentPath appendPath:tile_paths.tile_path_for_score(self.score)];
-        }
-        if (self.multiplier != 1) {
-            [contentPath appendPath:tile_paths.tile_path_for_multiplier(self.multiplier)];
+        if (glyph != UP::SentinelGlyph) {
+            TilePaths &tile_paths = TilePaths::instance();
+            [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
+            if (self.score > 0) {
+                [contentPath appendPath:tile_paths.tile_path_for_score(self.score)];
+            }
+            if (self.multiplier != 1) {
+                [contentPath appendPath:tile_paths.tile_path_for_multiplier(self.multiplier)];
+            }
         }
         [self setContentPath:contentPath];
     }
-    
-    return self;
 }
 
 - (void)dealloc

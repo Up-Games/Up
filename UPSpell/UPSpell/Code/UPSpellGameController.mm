@@ -345,12 +345,19 @@ static UPSpellGameController *_Instance;
 
 - (NSArray *)wordTrayTileViews
 {
-    NSMutableArray *array = [NSMutableArray array];
+    TileArray word_tray_tiles;
     for (const auto &tile : m_spell_model->tiles()) {
         if (tile.in_word_tray()) {
-            ASSERT(tile.has_view());
-            [array addObject:tile.view()];
+            word_tray_tiles[tile.position().index()] = tile;
         }
+    }
+    NSMutableArray *array = [NSMutableArray array];
+    for (const auto &tile : word_tray_tiles) {
+        if (tile.model().is_sentinel()) {
+            continue;
+        }
+        ASSERT(tile.has_view());
+        [array addObject:tile.view()];
     }
     return array;
 }
@@ -714,7 +721,6 @@ static UPSpellGameController *_Instance;
     }
     else if (!m_spell_model || m_spell_model->word().length() == 0) {
         // Don't penalize. In the case it's a stray tap, let the player off the hook.
-        // FIXME: beep
     }
     else {
         [self applyActionReject];
@@ -1117,7 +1123,6 @@ static UPSpellGameController *_Instance;
         [self viewPenaltyForReject];
     }];
     
-    self.gameView.wordTrayControl.active = NO;
     SpellLayout &layout = SpellLayout::instance();
     NSMutableArray *views = [NSMutableArray arrayWithObject:self.gameView.wordTrayControl];
     [views addObjectsFromArray:[self wordTrayTileViews]];
@@ -1186,9 +1191,16 @@ static UPSpellGameController *_Instance;
         Opcode back = m_spell_model->back_opcode();
         BOOL active = m_spell_model->word().in_lexicon() && back != Opcode::HOVER && back != Opcode::NOVER;
         self.gameView.wordTrayControl.active = active;
+        if (active) {
+            [self viewDecorateWordTrayTiles];
+        }
+        else {
+            [self viewUndecorateAllTiles];
+        }
     }
     else {
         self.gameView.wordTrayControl.active = NO;
+        [self viewUndecorateAllTiles];
     }
     [self.gameView.wordTrayControl setNeedsUpdate];
     
@@ -1207,6 +1219,44 @@ static UPSpellGameController *_Instance;
         score = m_spell_model->game_score();
     }
     self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", score];
+}
+
+- (void)viewDecorateWordTrayTiles
+{
+    if (!m_spell_model) {
+        return;
+    }
+    
+    const Word &word = m_spell_model->word();
+    if (word.in_lexicon<false>() || word.length() == 0) {
+        [self viewUndecorateAllTiles];
+        return;
+    }
+
+    NSArray *wordTrayTileViews = [self wordTrayTileViews];
+    ASSERT(wordTrayTileViews.count);
+
+    const std::u32string string = word.string();
+    TileIndex idx = 0;
+    for (UPTileView *tileView in wordTrayTileViews) {
+        if (string[idx] == U'E') {
+            tileView.glyph = U'É';
+        }
+        idx++;
+    }
+}
+
+- (void)viewUndecorateAllTiles
+{
+    if (!m_spell_model) {
+        return;
+    }
+    
+    for (auto &tile : m_spell_model->tiles()) {
+        if (tile.has_view()) {
+            tile.view().glyph = tile.model().glyph();
+        }
+    }
 }
 
 - (void)viewSlideWordTrayViewsIntoPosition
@@ -2482,7 +2532,6 @@ static UPSpellGameController *_Instance;
     [[UPTunePlayer instance] stop];
 
     [self.gameTimer reset];
-    [self viewUpdateGameControls];
     m_spell_model = std::make_shared<SpellModel>();
     [self viewUpdateGameControls];
     [self viewFillUpSpellTileViews];

@@ -59,8 +59,16 @@ Word::Word(const TileArray &tiles) : m_tiles(tiles)
     }
 #endif
     Lexicon &lexicon = Lexicon::instance();
-    m_string = std::u32string(chars, count);
-    m_in_lexicon = count > 0 ? lexicon.contains(m_string) : false;
+    m_key = std::u32string(chars, count);
+    if (count == 0) {
+        m_in_lexicon = false;
+        m_string = U"";
+    }
+    else {
+        Lexicon::Lookup lookup = lexicon.lookup(m_key);
+        m_in_lexicon = lookup.found;
+        m_string = lookup.string;
+    }
 }
 
 // =========================================================================================================================================

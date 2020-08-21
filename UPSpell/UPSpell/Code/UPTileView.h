@@ -11,7 +11,7 @@
 
 @interface UPTileView : UPControl
 
-@property (nonatomic, readonly) char32_t glyph;
+@property (nonatomic) char32_t glyph;
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) int multiplier;
 

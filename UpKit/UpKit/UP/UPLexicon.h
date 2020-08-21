@@ -24,7 +24,7 @@ class Lexicon {
 public:
     struct Lookup {
         bool found;
-        std::u32string_view word;
+        std::u32string_view string;
     };
 
     static void set_language(UPLexiconLanguage language);

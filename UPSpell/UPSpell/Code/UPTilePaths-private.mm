@@ -470,6 +470,30 @@ void TilePaths::create_canonical_tile_paths()
     [glyphZPath closePath];
     m_canonical_tile_paths[U'Z'] = glyphZPath;
 
+    UIBezierPath* glyphEAcutePath = [UIBezierPath bezierPath];
+    [glyphEAcutePath moveToPoint: CGPointMake(51.56, 12.27)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(65.75, 12.27)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(65.75, 12.44)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(54.1, 23.51)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(47.87, 23.51)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(51.56, 12.27)];
+    [glyphEAcutePath closePath];
+    [glyphEAcutePath moveToPoint: CGPointMake(35.89, 27.85)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(64.28, 27.85)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(65.83, 38.35)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(47.95, 38.35)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(47.95, 51.14)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(63.13, 51.14)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(63.13, 61.23)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(47.95, 61.23)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(47.95, 74.76)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(66, 74.76)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(64.44, 85.25)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(35.89, 85.25)];
+    [glyphEAcutePath addLineToPoint: CGPointMake(35.89, 27.85)];
+    [glyphEAcutePath closePath];
+    m_canonical_tile_paths[U'É'] = glyphEAcutePath;
+    
     // 1
     UIBezierPath *score1Path = [UIBezierPath bezierPath];
     [score1Path moveToPoint:CGPointMake(80.46, 94.3)];

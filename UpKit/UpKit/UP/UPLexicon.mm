@@ -112,12 +112,12 @@ Lexicon::Lexicon(std::u32string &&contents) : m_contents(std::move(contents))
             start = count + 1;
         }
         else if (c == newline) {
-            std::u32string_view word(ptr + start, count - start);
+            std::u32string_view string(ptr + start, count - start);
             if (key.length() == 0) {
-                key = word;
+                key = string;
             }
             start = count + 1;
-            m_lookup.emplace(key, word);
+            m_lookup.emplace(key, string);
             m_keys.push_back(key);
             key = std::u32string_view();
         }

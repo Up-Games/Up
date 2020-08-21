@@ -141,21 +141,20 @@ class Word {
 public:
     Word() {}
     explicit Word(const TileArray &tiles);
-    Word(const TileArray &tiles, const std::u32string &string, int score, int total_multiplier, int total_score, bool in_lexicon) :
-        m_tiles(tiles), m_string(string), m_score(score), m_total_multiplier(total_multiplier),
-        m_total_score(total_score), m_in_lexicon(in_lexicon) {}
 
     const TileArray &tiles() const { return m_tiles; }
     TileArray &tiles() { return m_tiles; }
+    const std::u32string &key() const { return m_key; }
     const std::u32string &string() const { return m_string; }
-    size_t length() const { return m_string.length(); }
+    size_t length() const { return m_key.length(); }
     int score() const { return m_score; }
     int total_multiplier() const { return m_total_multiplier; }
     int total_score() const { return m_total_score; }
-    bool in_lexicon() const { return m_in_lexicon; }
-    
+    template <bool B = true> bool in_lexicon() const { return m_in_lexicon == B; }
+
 private:
     TileArray m_tiles;
+    std::u32string m_key;
     std::u32string m_string;
     int m_score = 0;
     int m_total_multiplier = 1;
