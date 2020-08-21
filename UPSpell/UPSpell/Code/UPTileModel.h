@@ -51,7 +51,18 @@ public:
     template <bool B = true> bool is_blank() const { return (glyph() == BlankGlyph) == B; }
 
     template <bool B = true> static bool valid_glyph(char32_t glyph) {
-        return ((glyph >= U'A' && glyph <= U'Z') || glyph == SentinelGlyph || glyph == BlankGlyph) == B;
+        bool b = ((glyph >= U'A' && glyph <= U'Z') || glyph == SentinelGlyph || glyph == BlankGlyph ||
+                  glyph == U'À' || glyph == U'Á' || glyph == U'Â' || glyph == U'Ä' || glyph == U'Ã' || glyph == U'Å' || glyph == U'Ā' ||
+                  glyph == U'Ç' || glyph == U'Ć' || glyph == U'Č' ||
+                  glyph == U'È' || glyph == U'É' || glyph == U'Ê' || glyph == U'Ë' || glyph == U'Ē' || glyph == U'Ė' || glyph == U'Ę' ||
+                  glyph == U'Î' || glyph == U'Ï' || glyph == U'Í' || glyph == U'Ī' || glyph == U'Į' || glyph == U'Ì' ||
+                  glyph == U'Ł' ||
+                  glyph == U'Ô' || glyph == U'Ö' || glyph == U'Ò' || glyph == U'Ó' || glyph == U'Ø' || glyph == U'Ō' || glyph == U'Õ' ||
+                  glyph == U'Ś' || glyph == U'Š' ||
+                  glyph == U'Û' || glyph == U'Ü' || glyph == U'Ù' || glyph == U'Ú' || glyph == U'Ū' ||
+                  glyph == U'Ÿ' ||
+                  glyph == U'Ž' || glyph == U'Ź' || glyph == U'Ż');
+        return b == B;
     }
     
     template <bool B = true> static bool valid_multiplier(int multiplier) {
