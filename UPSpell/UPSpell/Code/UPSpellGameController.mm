@@ -38,6 +38,7 @@
 #import "UPTilePaths.h"
 #import "UPTunePlayer.h"
 #import "UPChallenge.h"
+#import "UPPulseView.h"
 #import "UPViewMove+UPSpell.h"
 
 using Action = UP::SpellModel::Action;
@@ -198,10 +199,10 @@ static UPSpellGameController *_Instance;
     _Instance = self;
     
     SpellLayout &layout = SpellLayout::instance();
-    
+
     self.gameView = [UPSpellGameView instance];
     [self.view addSubview:self.gameView];
-    
+
     self.gameTimer = [UPGameTimer defaultGameTimer];
     [self.gameTimer addObserver:self.gameView.timerLabel];
     [self.gameTimer addObserver:self];
@@ -329,7 +330,17 @@ static UPSpellGameController *_Instance;
 
 - (void)gameTimerUpdated:(UPGameTimer *)gameTimer
 {
-    //    NSLog(@"gameTimerPeriodicUpdate: %.2f", gameTimer.remainingTime);
+//    NSLog(@"gameTimerPeriodicUpdate: %.2f", gameTimer.remainingTime);
+    if (up_is_fuzzy_equal(gameTimer.remainingTime, 5.0) ||
+        up_is_fuzzy_equal(gameTimer.remainingTime, 4.0) ||
+        up_is_fuzzy_equal(gameTimer.remainingTime, 3.0) ||
+        up_is_fuzzy_equal(gameTimer.remainingTime, 2.0) ||
+        up_is_fuzzy_equal(gameTimer.remainingTime, 1.0)) {
+        self.gameView.pulseView.alpha = [UIColor themePulseAlpha];
+        [UIView animateWithDuration:0.5 animations:^{
+            self.gameView.pulseView.alpha = 0;
+        } completion:nil];
+    }
 }
 
 - (void)gameTimerExpired:(UPGameTimer *)gameTimer
@@ -1637,7 +1648,7 @@ static UPSpellGameController *_Instance;
     switch (reason) {
         case UPSpellGameAlphaStateReasonInit: {
             CGFloat alpha = [UIColor themeDisabledAlpha];
-            for (UIView *view in self.gameView.subviews) {
+            for (UIView *view in self.gameView.interactiveSubviews) {
                 view.alpha = alpha;
             }
             for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.aboutButton ]) {
@@ -1651,7 +1662,7 @@ static UPSpellGameController *_Instance;
         }
         case UPSpellGameAlphaStateReasonReady: {
             CGFloat alpha = [UIColor themeDisabledAlpha];
-            for (UIView *view in self.gameView.subviews) {
+            for (UIView *view in self.gameView.interactiveSubviews) {
                 view.alpha = alpha;
             }
             m_alpha_reason_stack.clear();
@@ -1660,7 +1671,7 @@ static UPSpellGameController *_Instance;
         case UPSpellGameAlphaStateReasonOrderOutGameEnd:
         case UPSpellGameAlphaStateReasonQuitToEnd: {
             CGFloat alpha = [UIColor themeDisabledAlpha];
-            for (UIView *view in self.gameView.subviews) {
+            for (UIView *view in self.gameView.interactiveSubviews) {
                 view.alpha = alpha;
             }
             for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.aboutButton ]) {
@@ -1674,7 +1685,7 @@ static UPSpellGameController *_Instance;
         }
         case UPSpellGameAlphaStateReasonRestoredPause: {
             CGFloat alpha = [UIColor themeModalBackgroundAlpha];
-            for (UIView *view in self.gameView.subviews) {
+            for (UIView *view in self.gameView.interactiveSubviews) {
                 view.alpha = alpha;
             }
             m_alpha_reason_stack.clear();
@@ -1682,14 +1693,14 @@ static UPSpellGameController *_Instance;
         }
         case UPSpellGameAlphaStateReasonPause: {
             CGFloat alpha = [UIColor themeModalBackgroundAlpha];
-            for (UIView *view in self.gameView.subviews) {
+            for (UIView *view in self.gameView.interactiveSubviews) {
                 view.alpha = alpha;
             }
             break;
         }
         case UPSpellGameAlphaStateReasonPlayMenu: {
             CGFloat alpha = 0.02;
-            for (UIView *view in self.gameView.subviews) {
+            for (UIView *view in self.gameView.interactiveSubviews) {
                 view.alpha = alpha;
             }
             m_alpha_reason_stack.clear();
@@ -1697,7 +1708,7 @@ static UPSpellGameController *_Instance;
         }
         case UPSpellGameAlphaStateReasonShareHelp: {
             CGFloat alpha = 0.03;
-            for (UIView *view in self.gameView.subviews) {
+            for (UIView *view in self.gameView.interactiveSubviews) {
                 if (view == self.gameView.timerLabel) {
                     continue;
                 }
@@ -1715,7 +1726,7 @@ static UPSpellGameController *_Instance;
         }
         case UPSpellGameAlphaStateReasonChallenge: {
             CGFloat alpha = 0.03;
-            for (UIView *view in self.gameView.subviews) {
+            for (UIView *view in self.gameView.interactiveSubviews) {
                 view.alpha = alpha;
             }
             for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.aboutButton ]) {
@@ -1731,7 +1742,7 @@ static UPSpellGameController *_Instance;
             break;
         }
         case UPSpellGameAlphaStateReasonPrePlay: {
-            for (UIView *view in self.gameView.subviews) {
+            for (UIView *view in self.gameView.interactiveSubviews) {
                 if (view == self.gameView.tileContainerView) {
                     continue;
                 }
@@ -1745,7 +1756,7 @@ static UPSpellGameController *_Instance;
         case UPSpellGameAlphaStateReasonPlay: {
             if (m_alpha_reason_stack.size()) {
                 if (m_alpha_reason_stack.back() == UPSpellGameAlphaStateReasonReject) {
-                    for (UIView *view in self.gameView.subviews) {
+                    for (UIView *view in self.gameView.interactiveSubviews) {
                         if (view == self.gameView.wordTrayControl ||
                             view == self.gameView.clearControl ||
                             view == self.gameView.tileContainerView) {
@@ -1757,7 +1768,7 @@ static UPSpellGameController *_Instance;
                     }
                 }
                 else if (m_alpha_reason_stack.back() == UPSpellGameAlphaStateReasonDump) {
-                    for (UIView *view in self.gameView.subviews) {
+                    for (UIView *view in self.gameView.interactiveSubviews) {
                         if (view == self.gameView.wordTrayControl ||
                             view == self.gameView.tileContainerView) {
                             view.alpha = [UIColor themeDisabledAlpha];
@@ -1770,7 +1781,7 @@ static UPSpellGameController *_Instance;
             }
             else {
                 CGFloat alpha = 1;
-                for (UIView *view in self.gameView.subviews) {
+                for (UIView *view in self.gameView.interactiveSubviews) {
                     view.alpha = alpha;
                 }
             }
@@ -1796,7 +1807,7 @@ static UPSpellGameController *_Instance;
         }
         case UPSpellGameAlphaStateReasonGameOver: {
             CGFloat alpha = [UIColor themeModalGameOverAlpha];
-            for (UIView *view in self.gameView.subviews) {
+            for (UIView *view in self.gameView.interactiveSubviews) {
                 view.alpha = alpha;
             }
             m_alpha_reason_stack.clear();
@@ -1807,7 +1818,7 @@ static UPSpellGameController *_Instance;
             CGFloat alpha = [UIColor themeModalBackgroundAlpha];
             UIView *timerLabel = self.gameView.timerLabel;
             UIView *gameScoreLabel = self.gameView.gameScoreLabel;
-            for (UIView *view in self.gameView.subviews) {
+            for (UIView *view in self.gameView.interactiveSubviews) {
                 if (view == gameScoreLabel) {
                     view.alpha = 1;
                 }
@@ -1842,7 +1853,7 @@ static UPSpellGameController *_Instance;
     self.dialogTopMenu.userInteractionEnabled = NO;
     
     UIView *roundButtonPause = self.gameView.pauseControl;
-    for (UIView *view in self.gameView.subviews) {
+    for (UIView *view in self.gameView.interactiveSubviews) {
         if (!includingPause && view == roundButtonPause) {
             continue;
         }
@@ -1867,7 +1878,7 @@ static UPSpellGameController *_Instance;
     
     self.dialogTopMenu.userInteractionEnabled = YES;
     
-    for (UIView *view in self.gameView.subviews) {
+    for (UIView *view in self.gameView.interactiveSubviews) {
         view.userInteractionEnabled = YES;
     }
     for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
@@ -2552,7 +2563,12 @@ static UPSpellGameController *_Instance;
     self.dialogGameNote.shareButton.frame = layout.frame_for(Role::GameShareButton, Place::OffBottomFar);
     self.dialogGameNote.shareButton.highlightedLocked = NO;
     self.dialogGameNote.shareButton.highlighted = NO;
-    
+
+    self.dialogPlayMenu.backButton.highlightedLocked = NO;
+    self.dialogPlayMenu.backButton.highlighted = NO;
+    self.dialogPlayMenu.goButton.highlightedLocked = NO;
+    self.dialogPlayMenu.goButton.highlighted = NO;
+
     self.dialogChallenge.vectorLogoView.frame = layout.frame_for(Role::ChallengeInterstitialLogo, Place::OffBottomNear);
     self.dialogChallenge.wordMarkLabel.frame = layout.frame_for(Role::ChallengeInterstitialWordMark, Place::OffBottomNear);
     self.dialogChallenge.challengePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Place::OffBottomFar);
@@ -2589,6 +2605,7 @@ static UPSpellGameController *_Instance;
     self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
     self.gameView.gameScoreLabel.alpha = 1;
     self.gameView.timerLabel.alpha = 1;
+    self.gameView.pulseView.alpha = 0;
     
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
     
@@ -3572,6 +3589,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         choice.selected = NO;
     }
     
+    self.dialogPlayMenu.backButton.highlightedLocked = YES;
+    self.dialogPlayMenu.backButton.highlighted = YES;
+
     NSArray<UPViewMove *> *buttonOutMoves = @[
         UPViewMoveMake(self.dialogPlayMenu.goButton, Location(Role::ChoiceGoButtonCenter, Place::OffBottomFar)),
         UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice1, Role::ChoiceItem1Center, Place::OffBottomFar),
@@ -3583,7 +3603,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         self.dialogPlayMenu.alpha = 1;
     }));
     
-    delay(BandModeDelay, 0.25, ^{
+    delay(BandModeDelay, 0.35, ^{
         NSArray<UPViewMove *> *playMoves = @[
             UPViewMoveMake(self.dialogTopMenu.playButton, Role::DialogButtonTopCenter),
         ];
@@ -3608,6 +3628,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [UIView animateWithDuration:0.25 delay:0.45 options:0 animations:^{
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
     } completion:^(BOOL finished) {
+        self.dialogPlayMenu.backButton.highlightedLocked = NO;
+        self.dialogPlayMenu.backButton.highlighted = NO;
         [self viewUnlock];
     }];
     [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
@@ -3815,7 +3837,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.gameView.pauseControl.highlightedLocked = YES;
     self.gameView.pauseControl.highlighted = YES;
     self.gameView.pauseControl.alpha = [UIColor themeModalActiveAlpha];
-    
+    self.gameView.pulseView.alpha = 0;
+
     SpellLayout &layout = SpellLayout::instance();
     self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear);
     self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Place::OffBottomFar);
@@ -3866,7 +3889,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.gameView.pauseControl.highlightedLocked = YES;
     self.gameView.pauseControl.highlighted = YES;
     self.gameView.pauseControl.alpha = [UIColor themeModalActiveAlpha];
-    
+    self.gameView.pulseView.alpha = 0;
+
     SpellLayout &layout = SpellLayout::instance();
     self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray);
     self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse);
@@ -4005,7 +4029,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     self.gameView.timerLabel.alpha = [UIColor themeModalActiveAlpha];
     self.gameView.gameScoreLabel.alpha = [UIColor themeModalActiveAlpha];
-    
+    self.gameView.pulseView.alpha = 0;
+
     SpellLayout &layout = SpellLayout::instance();
     self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Place::OffBottomNear);
     self.dialogGameOver.center = layout.center_for(Location(Role::Screen));

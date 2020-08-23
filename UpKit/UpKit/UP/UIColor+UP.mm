@@ -130,6 +130,7 @@ static CGFloat _ThemeHue = 225;
         case UPColorCategoryControlText:
         case UPColorCategoryControlTextInactive:
         case UPColorCategoryControlIndicator:
+        case UPColorCategoryPulse:
             ASSERT_NOT_REACHED();
             return nil;
         case UPColorCategoryWhite:
@@ -218,6 +219,17 @@ static CGFloat _ThemeHue = 225;
                 case UPThemeColorStyleLightStark:
                 case UPThemeColorStyleDarkStark:
                     return UPColorCategoryPrimaryStroke;
+            }
+        }
+        case UPColorCategoryPulse: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryHighlightedFill;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryHighlightedStroke;
             }
         }
         case UPColorCategoryControlShapeFill: {
@@ -373,6 +385,26 @@ static CGFloat _ThemeHue = 225;
 + (CGFloat)themeDisabledAlpha
 {
     return [UIColor themeDisabledAlphaForStyle:_ThemeStyle];
+}
+
++ (CGFloat)themePulseAlphaForStyle:(UPThemeColorStyle)style
+{
+    switch (_ThemeStyle) {
+        case UPThemeColorStyleDefault:
+        case UPThemeColorStyleLight:
+            return 0.35;
+        case UPThemeColorStyleLightStark:
+            return 0.125;
+        case UPThemeColorStyleDark:
+            return 0.20;
+        case UPThemeColorStyleDarkStark:
+            return 0.25;
+    }
+}
+
++ (CGFloat)themePulseAlpha
+{
+    return [UIColor themePulseAlphaForStyle:_ThemeStyle];
 }
 
 + (CGFloat)themeModalBackgroundAlphaForStyle:(UPThemeColorStyle)style

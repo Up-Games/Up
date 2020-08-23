@@ -14,6 +14,7 @@
 
 #import "UPControl+UPSpell.h"
 #import "UPSpellGameView.h"
+#import "UPPulseView.h"
 #import "UPSpellLayout.h"
 
 using UP::SpellLayout;
@@ -48,7 +49,11 @@ using Spot = UP::SpellLayout::Place;
     self = [super initWithFrame:layout.screen_bounds()];
 
     self.multipleTouchEnabled = YES;
-    
+
+    self.pulseView = [[UPPulseView alloc] init];
+    self.pulseView.alpha = 0;
+    [self addSubview:self.pulseView];
+
     self.pauseControl = [UPControl roundGameControlMinusSign];
     self.pauseControl.band = BandGameUI;
     self.pauseControl.frame = layout.frame_for(Role::ControlButtonLeft);
@@ -115,7 +120,13 @@ using Spot = UP::SpellLayout::Place;
     [self.wordScoreContainerView addSubview:self.wordScoreLabel];
     self.wordScoreLabel.hidden = YES;
     
+    
     return self;
+}
+
+- (void)viewDidLayoutSubviews
+{
+    self.pulseView.frame = self.bounds;
 }
 
 - (void)updateThemeColors
@@ -126,7 +137,15 @@ using Spot = UP::SpellLayout::Place;
     [self.timerLabel updateThemeColors];
     [self.gameScoreLabel updateThemeColors];
     [self.wordScoreLabel updateThemeColors];
+    [self.pulseView updateThemeColors];
     [self.tileContainerView.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
+}
+
+@dynamic interactiveSubviews;
+- (NSArray<UIView *> *)interactiveSubviews
+{
+    return @[ self.wordTrayControl, self.pauseControl, self.clearControl, self.timerLabel, self.gameScoreLabel,
+              self.wordScoreLabel, self.tileContainerView ];
 }
 
 - (UIBezierPath *)wordTrayTileMaskPath

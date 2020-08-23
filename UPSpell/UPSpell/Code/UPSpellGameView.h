@@ -10,6 +10,7 @@
 @class UPGameTimer;
 @class UPGameTimerLabel;
 @class UPLabel;
+@class UPPulseView;
 
 @interface UPSpellGameView : UIView
 @property (nonatomic) UIView *tileContainerView;
@@ -19,6 +20,8 @@
 @property (nonatomic) UPGameTimerLabel *timerLabel;
 @property (nonatomic) UPLabel *gameScoreLabel;
 @property (nonatomic) UPLabel *wordScoreLabel;
+@property (nonatomic) UPPulseView *pulseView;
+@property (nonatomic, readonly) NSArray<UIView *> *interactiveSubviews;
 
 + (UPSpellGameView *)instance;
 
