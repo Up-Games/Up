@@ -3225,7 +3225,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
     
-    static constexpr CFTimeInterval UPGameTimerCanonicalDuration = 120;
+    static constexpr CFTimeInterval UPGameTimerCanonicalDuration = 10;
     
     UPTuneID tuneID = UPTuneID(self.tuneNumber);
     
@@ -3240,7 +3240,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         float volume = UPClampT(float, soundPlayer.volume * 1.2, 0, 1);
         if (UPGameTimerDefaultDuration - effectiveGameTimeElapsed > 1) {
             CFTimeInterval outroIntervalFromEnd = UPGameTimerDefaultDuration - GameOverOutroDuration;
-            CFTimeInterval outroBeginTime = delay + outroIntervalFromEnd - effectiveGameTimeElapsed;
+            CFTimeInterval timeBeforeOutroBegins = UPClampT(CFTimeInterval, outroIntervalFromEnd - effectiveGameTimeElapsed, 0, outroIntervalFromEnd);
+            CFTimeInterval outroBeginTime = delay + timeBeforeOutroBegins;
             CFTimeInterval outroTimeOffset = UPMaxT(CFTimeInterval, 0, effectiveGameTimeElapsed - outroIntervalFromEnd);
             [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOutro properties:{ volume, YES, 0, outroBeginTime, outroTimeOffset }];
         }

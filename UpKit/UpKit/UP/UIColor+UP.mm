@@ -392,7 +392,7 @@ static CGFloat _ThemeHue = 225;
     switch (_ThemeStyle) {
         case UPThemeColorStyleDefault:
         case UPThemeColorStyleLight:
-            return 0.35;
+            return 0.4;
         case UPThemeColorStyleLightStark:
             return 0.125;
         case UPThemeColorStyleDark:
