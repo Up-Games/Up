@@ -2764,15 +2764,24 @@ static UPSpellGameController *_Instance;
     }
     
     int score = m_spell_model->game_score();
-    
+
+    NSString *highScoreNote = @"";
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    if (score > dossier.highScore) {
+        highScoreNote = @"NEW HIGH SCORE! ";
+    }
+    else if (score == dossier.highScore) {
+        highScoreNote = @"TIED HIGH SCORE! ";
+    }
+
     if (score < m_spell_model->challenge_score()) {
-        result = [NSString stringWithFormat:@"CHALLENGE LOST!\nSCORE TO BEAT WAS %d", m_spell_model->challenge_score()];
+        result = [NSString stringWithFormat:@"%@CHALLENGE LOST!\nSCORE TO BEAT WAS %d", highScoreNote, m_spell_model->challenge_score()];
     }
     else if (score == m_spell_model->challenge_score()) {
-        result = [NSString stringWithFormat:@"CHALLENGE TIED!\nSCORE TO BEAT WAS %d", m_spell_model->challenge_score()];
+        result = [NSString stringWithFormat:@"%@CHALLENGE TIED!\nSCORE TO BEAT WAS %d", highScoreNote, m_spell_model->challenge_score()];
     }
     else {
-        result = [NSString stringWithFormat:@"CHALLENGE WON!\nSCORE TO BEAT WAS %d", m_spell_model->challenge_score()];
+        result = [NSString stringWithFormat:@"%@CHALLENGE WON!\nSCORE TO BEAT WAS %d", highScoreNote, m_spell_model->challenge_score()];
     }
     
     return result;
@@ -3655,9 +3664,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }
     
     [self updateSoundAndTunesSettings];
-    [self playTuneIntro];
-    
-    delay(BandModeDelay, 0.1, ^{
+    delay(BandModeDelay, 0.15, ^{
+        [self playTuneIntro];
+    });
+          
+    delay(BandModeDelay, 0.25, ^{
         SpellLayout &layout = SpellLayout::instance();
         self.dialogTopMenu.extrasButton.center = layout.center_for(Role::DialogButtonTopLeft, Place::OffTopNear);
         self.dialogTopMenu.aboutButton.center = layout.center_for(Role::DialogButtonTopRight, Place::OffTopNear);
