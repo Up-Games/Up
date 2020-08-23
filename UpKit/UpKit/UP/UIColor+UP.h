@@ -96,7 +96,7 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 + (CGFloat)themeDisabledAlphaForStyle:(UPThemeColorStyle)style;
 + (CGFloat)themeDisabledAlpha;
 
-+ (CGFloat)themePulseAlphaForStyle:(UPThemeColorStyle)style;
++ (CGFloat)themePulseAlphaForTheme:(UPTheme)theme;
 + (CGFloat)themePulseAlpha;
 
 + (CGFloat)themeModalBackgroundAlphaForStyle:(UPThemeColorStyle)style;

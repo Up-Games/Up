@@ -387,24 +387,39 @@ static CGFloat _ThemeHue = 225;
     return [UIColor themeDisabledAlphaForStyle:_ThemeStyle];
 }
 
-+ (CGFloat)themePulseAlphaForStyle:(UPThemeColorStyle)style
++ (CGFloat)themePulseAlphaForTheme:(UPTheme)theme
 {
-    switch (_ThemeStyle) {
-        case UPThemeColorStyleDefault:
-        case UPThemeColorStyleLight:
-            return 0.4;
-        case UPThemeColorStyleLightStark:
-            return 0.125;
-        case UPThemeColorStyleDark:
+    switch (theme) {
+        case UPThemeBlueLight:
+            return 0.275;
+        case UPThemeGreenLight:
             return 0.25;
-        case UPThemeColorStyleDarkStark:
+        case UPThemeRedLight:
+            return 0.25;
+        case UPThemeBlueDark:
+            return 0.25;
+        case UPThemeGreenDark:
+            return 0.25;
+        case UPThemePurpleDark:
+            return 0.25;
+        case UPThemeBlueLightStark:
+            return 0.125;
+        case UPThemePurpleLightStark:
+            return 0.125;
+        case UPThemeRedLightStark:
+            return 0.125;
+        case UPThemeGreenDarkStark:
+            return 0.25;
+        case UPThemePurpleDarkStark:
+            return 0.25;
+        case UPThemeYellowDarkStark:
             return 0.25;
     }
 }
 
 + (CGFloat)themePulseAlpha
 {
-    return [UIColor themePulseAlphaForStyle:_ThemeStyle];
+    return [UIColor themePulseAlphaForTheme:_Theme];
 }
 
 + (CGFloat)themeModalBackgroundAlphaForStyle:(UPThemeColorStyle)style
