@@ -3225,7 +3225,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
     
-    static constexpr CFTimeInterval UPGameTimerCanonicalDuration = 10;
+    static constexpr CFTimeInterval UPGameTimerCanonicalDuration = 120;
     
     UPTuneID tuneID = UPTuneID(self.tuneNumber);
     
