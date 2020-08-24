@@ -58,14 +58,14 @@ using Place = UP::SpellLayout::Place;
     [self.view addSubview:self.choice2];
     
     self.choice3 = [UPChoice choiceWithSide:UPChoiceSideRight];
-    self.choice3.labelString = @"LEGAL";
+    self.choice3.labelString = @"LEXICON";
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice3.frame = layout.frame_for(Role::ChoiceItem3Right, Place::OffRightNear);
     [self.choice3 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice3];
     
     self.choice4 = [UPChoice choiceWithSide:UPChoiceSideRight];
-    self.choice4.labelString = @"THANKS";
+    self.choice4.labelString = @"LEGAL";
     self.choice4.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice4.frame = layout.frame_for(Role::ChoiceItem4Right, Place::OffRightNear);
     [self.choice4 setTarget:self action:@selector(choiceSelected:)];
