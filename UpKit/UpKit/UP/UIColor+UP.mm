@@ -391,29 +391,29 @@ static CGFloat _ThemeHue = 225;
 {
     switch (theme) {
         case UPThemeBlueLight:
-            return 0.275;
+            return 0.2;
         case UPThemeGreenLight:
-            return 0.25;
+            return 0.125;
         case UPThemeRedLight:
-            return 0.25;
+            return 0.125;
         case UPThemeBlueDark:
-            return 0.25;
+            return 0.125;
         case UPThemeGreenDark:
-            return 0.25;
+            return 0.125;
         case UPThemePurpleDark:
-            return 0.25;
+            return 0.125;
         case UPThemeBlueLightStark:
-            return 0.125;
+            return 0.075;
         case UPThemePurpleLightStark:
-            return 0.125;
+            return 0.075;
         case UPThemeRedLightStark:
-            return 0.125;
+            return 0.075;
         case UPThemeGreenDarkStark:
-            return 0.25;
+            return 0.125;
         case UPThemePurpleDarkStark:
-            return 0.25;
+            return 0.125;
         case UPThemeYellowDarkStark:
-            return 0.25;
+            return 0.125;
     }
 }
 
