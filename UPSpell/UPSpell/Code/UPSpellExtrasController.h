@@ -5,25 +5,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class UPAccessoryPane;
-@class UPButton;
-@class UPBallot;
-@class UPChoice;
-@class UPHueStepperIndicator;
-@class UPHueWheel;
-@class UPStepper;
+#import "UPAccessoryPaneController.h"
 
-@interface UPSpellExtrasController : UIViewController
+@interface UPSpellExtrasController : UPAccessoryPaneController
 
 + (UPSpellExtrasController *)instance;
-
-@property (nonatomic, readonly) UPButton *backButton;
-@property (nonatomic, readonly) UPChoice *choice1;
-@property (nonatomic, readonly) UPChoice *choice2;
-@property (nonatomic, readonly) UPChoice *choice3;
-@property (nonatomic, readonly) UPChoice *choice4;
-@property (nonatomic, readonly) UPAccessoryPane *selectedPane;
-
-- (void)setSelectedPaneFromSettingsWithDuration:(CFTimeInterval)duration;
 
 @end

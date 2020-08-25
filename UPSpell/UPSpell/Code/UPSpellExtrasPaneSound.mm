@@ -19,7 +19,6 @@
 #import "UPBallot.h"
 #import "UPControl+UPSpell.h"
 #import "UPDialogTopMenu.h"
-#import "UPHueWheel.h"
 #import "UPSoundPlayer.h"
 #import "UPSlider.h"
 #import "UPSpellExtrasPaneSound.h"

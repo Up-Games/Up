@@ -5,35 +5,34 @@
 
 #import <UpKit/UPAssertions.h>
 #import <UpKit/UIColor+UP.h>
-#import <UpKit/UPBezierPathView.h>
 #import <UpKit/UPButton.h>
-#import <UpKit/UPTouchGestureRecognizer.h>
 
 #import "UPChoice.h"
 #import "UPControl+UPSpell.h"
 #import "UPSpellAboutController.h"
 #import "UPSpellLayout.h"
-#import "UPSpellNavigationController.h"
-#import "UPTextPaths.h"
 
 @interface UPSpellAboutController ()
-@property (nonatomic, readwrite) UPButton *backButton;
-@property (nonatomic, readwrite) UPChoice *choice1;
-@property (nonatomic, readwrite) UPChoice *choice2;
-@property (nonatomic, readwrite) UPChoice *choice3;
-@property (nonatomic, readwrite) UPChoice *choice4;
-@property (nonatomic, readwrite) UPAccessoryPane *selectedPane;
 @end
 
 using UP::SpellLayout;
 using Role = UP::SpellLayout::Role;
 using Place = UP::SpellLayout::Place;
 
+static UPSpellAboutController *_Instance;
+
 @implementation UPSpellAboutController
+
++ (UPSpellAboutController *)instance
+{
+    return _Instance;
+}
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    _Instance = self;
     
     SpellLayout &layout = SpellLayout::instance();
     
@@ -72,36 +71,6 @@ using Place = UP::SpellLayout::Place;
     [self.view addSubview:self.choice4];
     
     return self;
-}
-
-- (id<UIViewControllerTransitioningDelegate>)transitioningDelegate
-{
-    return [UPSpellNavigationController instance];
-}
-
-#pragma mark - Target / Action
-
-- (void)choiceSelected:(UPChoice *)sender
-{
-    if (self.choice1 != sender) {
-        self.choice1.selected = NO;
-    }
-    if (self.choice2 != sender) {
-        self.choice2.selected = NO;
-    }
-    if (self.choice3 != sender) {
-        self.choice3.selected = NO;
-    }
-    if (self.choice4 != sender) {
-        self.choice4.selected = NO;
-    }
-}
-
-#pragma mark - Update theme colors
-
-- (void)updateThemeColors
-{
-    [self.view.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
 }
 
 @end
