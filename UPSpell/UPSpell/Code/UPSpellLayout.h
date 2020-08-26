@@ -216,17 +216,16 @@ public:
     static inline constexpr CGRect CanonicalDialogShareHelpOKButtonFrame = { 429.5, 386, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
     static inline constexpr CGFloat CanonicalDialogTitleCapHeight = 35;
 
-    static inline constexpr CGRect CanonicalAboutLogoFrame = { 251, 60, 148, 148 };
-    static inline constexpr CGRect CanonicalAboutWordMarkFrame = { 25, 228, 605, 140 };
-    static inline constexpr CGFloat CanonicalAboutMarkCapHeight = 18;
+    static inline constexpr CGRect CanonicalAboutLogoFrame = { 245, 60, 160, 160 };
+    static inline constexpr CGRect CanonicalAboutWordMarkFrame = { 235, 223, 180, 140 };
     static inline constexpr CGRect CanonicalAboutGameDescriptionFrame = { 160, 304, 335, 150 };
     static inline constexpr CGFloat CanonicalSettingsAboutFontCapHeight = 19;
 
-    static inline constexpr CGRect CanonicalAboutLexiconDescriptionFrame = { 15, 44, 605, 400 };
+    static inline constexpr CGRect CanonicalAboutLexiconDescriptionFrame = { 40, 44, 600, 400 };
 
-    static inline constexpr CGRect CanonicalHeroLogoFrame = { 426, 132, 148, 148 };
-    static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 200, 282, 600, 300 };
-    static inline constexpr CGFloat CanonicalHeroWordMarkCapHeight = 34;
+    static inline constexpr CGRect CanonicalHeroLogoFrame = { 426, 132, 160, 160 };
+    static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 416, 295, 180, 300 };
+    static inline constexpr CGFloat CanonicalHeroWordMarkCapHeight = 31;
 
     static inline constexpr CGRect CanonicalChallengePromptFrame = { 200, 112, 600, 300 };
     static inline constexpr CGRect CanonicalChallengeScoreFrame = { 100, 228, 800, 300 };

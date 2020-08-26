@@ -146,7 +146,7 @@ using Role = UP::SpellLayout::Role;
     self.highScoreEqualsLastGameDescription.font = layout.description_font();
     self.highScoreEqualsLastGameDescription.textAlignment = NSTextAlignmentCenter;
     self.highScoreEqualsLastGameDescription.frame = layout.frame_for(Role::ExtrasShareLastGameHighScoreEqualDescription);
-    self.highScoreEqualsLastGameDescription.string = @"NOTE: last game was your high score.";
+    self.highScoreEqualsLastGameDescription.string = @"NOTE: Your last game was your high score.";
     [self addSubview:self.highScoreEqualsLastGameDescription];
     self.highScoreEqualsLastGameDescription.hidden = YES;
     

@@ -61,8 +61,7 @@ using Role = UP::SpellLayout::Role;
 
     self.logoView = [UPLogoView logoView];
     [self addSubview:self.logoView];
-    self.logoView.frame = CGRectMake(0, 0, 148, 148);
-    self.logoView.center = layout.center_for(Role::AboutLogo);
+    self.logoView.frame = layout.frame_for(Role::AboutLogo);
     
     self.wordMarkLabel = [UPLabel label];
     self.wordMarkLabel.string = @"UP SPELL";
