@@ -83,9 +83,9 @@ using Role = UP::SpellLayout::Role;
     SpellLayout &layout = SpellLayout::instance();
 
     NSString *string =
-    @"The LEXICON is the game’s word list. It’s built for fun. It contains everyday words, proper names, abbreviations, tech terms, texting slang, "
+    @"The LEXICON is the game’s word list. It’s built for fun. It contains everyday words, proper names, acronyms, tech terms, texting slang, "
     "the names of Santa’s reindeer, and much more. Try stuff.\n"
-    "Some terms of derision are not in the lexicon, but many impolite words are. If you type them, you’ll find them.\n"
+    "Some derisive terms are not in the lexicon. Many impolite words are. Use them or not.\n"
     "Due to randomness, bad words might appear in the letter tray. No offense intended.\n"
     "Find out more: ";
     NSMutableAttributedString *attributedAtring = [[NSMutableAttributedString alloc] initWithString:string];
