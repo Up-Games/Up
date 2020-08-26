@@ -16,7 +16,7 @@ using UP::SpellLayout;
 using Role = UP::SpellLayout::Role;
 
 @interface UPSpellAboutPaneLegal ()
-@property (nonatomic) UITextView *lexiconDescription;
+@property (nonatomic) UITextView *legalDescription;
 @end
 
 @implementation UPSpellAboutPaneLegal
@@ -32,10 +32,10 @@ using Role = UP::SpellLayout::Role;
 
     SpellLayout &layout = SpellLayout::instance();
 
-    self.lexiconDescription = [[UITextView alloc] initWithFrame:layout.frame_for(Role::AboutLexiconDescription)];
-    self.lexiconDescription.editable = NO;
-    self.lexiconDescription.backgroundColor = [UIColor clearColor];
-    [self addSubview:self.lexiconDescription];
+    self.legalDescription = [[UITextView alloc] initWithFrame:layout.frame_for(Role::AboutLexiconDescription)];
+    self.legalDescription.editable = NO;
+    self.legalDescription.backgroundColor = [UIColor clearColor];
+    [self addSubview:self.legalDescription];
 
     [self updateThemeColors];
 
@@ -44,7 +44,7 @@ using Role = UP::SpellLayout::Role;
 
 - (void)prepare
 {
-    self.lexiconDescription.userInteractionEnabled = YES;
+    self.legalDescription.userInteractionEnabled = YES;
     [self updateThemeColors];
 }
 
@@ -53,30 +53,19 @@ using Role = UP::SpellLayout::Role;
 - (void)updateThemeColors
 {
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
-    self.lexiconDescription.linkTextAttributes = @{ NSForegroundColorAttributeName: [UIColor themeColorWithCategory:UPColorCategoryControlText] };
+    self.legalDescription.linkTextAttributes = @{ NSForegroundColorAttributeName: [UIColor themeColorWithCategory:UPColorCategoryControlText] };
 
     SpellLayout &layout = SpellLayout::instance();
 
-    NSString *string =
-    @"The LEXICON is the game’s word list. It’s built for fun. It contains everyday words, proper names, acronyms, tech terms, texting slang, "
-    "the names of Santa’s reindeer, and much more. Try stuff.\n"
-    "Some derisive terms are not in the lexicon. Many impolite words are. Use them or not.\n"
-    "Due to randomness, bad words might appear in the letter tray. No offense intended.\n"
-    "Find out more: ";
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"legal" ofType:@"txt"];
+    NSString *string = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     NSMutableAttributedString *attributedAtring = [[NSMutableAttributedString alloc] initWithString:string];
     
-    NSMutableAttributedString *linkString = [[NSMutableAttributedString alloc] initWithString:@"https://upgames.dev/upspell/lexicon"];
-    [linkString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"https://upgames.dev/upspell/lexicon"] range:NSMakeRange(0, linkString.length)];
-    [linkString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, linkString.length)];
-    [linkString addAttribute:NSUnderlineColorAttributeName value:[UIColor themeColorWithCategory:UPColorCategoryControlText] range:NSMakeRange(0, linkString.length)];
-    [attributedAtring appendAttributedString:linkString];
-    
-    attributedAtring.font = layout.about_font();
-    CGFloat spacing = up_float_scaled(14, layout.layout_scale());
-    [attributedAtring setTextAlignment:NSTextAlignmentLeft paragraphSpacing:spacing];
+    attributedAtring.font = layout.legal_font();
+    [attributedAtring setTextAlignment:NSTextAlignmentLeft paragraphSpacing:0];
     attributedAtring.textColor = [UIColor themeColorWithCategory:UPColorCategoryControlText];
     
-    self.lexiconDescription.attributedText = attributedAtring;
+    self.legalDescription.attributedText = attributedAtring;
 }
 
 @end

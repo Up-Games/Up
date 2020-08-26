@@ -315,6 +315,7 @@ void SpellLayout::calculate()
     calculate_placard_value_font_metrics();
     calculate_placard_description_font_metrics();
     calculate_word_mark_font_metrics();
+    calculate_legal_font_metrics();
     calculate_game_controls_button_charge_outsets();
     calculate_help_button_charge_outsets();
     calculate_locations();
@@ -537,6 +538,13 @@ void SpellLayout::calculate_word_mark_font_metrics()
     CGFloat cap_height = CanonicalHeroWordMarkCapHeight * layout_scale();
     UIFont *font = [UIFont wordMarkFontWithCapHeight:cap_height];
     set_word_mark_font(font);
+}
+
+void SpellLayout::calculate_legal_font_metrics()
+{
+    CGFloat cap_height = CanonicalLegalFontCapHeight * layout_scale();
+    UIFont *font = [UIFont legalFontWithCapHeight:cap_height];
+    set_legal_font(font);
 }
 
 void SpellLayout::calculate_word_tray_layout_frame()
@@ -808,6 +816,7 @@ void SpellLayout::calculate_about_locations()
     calculate_and_set_locations(Role::AboutWordMark, layout_relative_aspect_rect(CanonicalAboutWordMarkFrame));
     calculate_and_set_locations(Role::AboutGameDescription, layout_relative_aspect_rect(CanonicalAboutGameDescriptionFrame));
     calculate_and_set_locations(Role::AboutLexiconDescription, layout_relative_aspect_rect(CanonicalAboutLexiconDescriptionFrame));
+    calculate_and_set_locations(Role::AboutLegalDescription, layout_relative_aspect_rect(CanonicalAboutLegalDescriptionFrame));
 }
 
 void SpellLayout::calculate_choice_locations()

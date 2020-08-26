@@ -24,6 +24,7 @@ NSString * const UPShareFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPPlacardValueFontName = @"MalloryCondensed-Black";
 NSString * const UPPlacardDescriptionFontName = @"MalloryCondensed-Black";
 NSString * const UPWordMarkFontName = @"MalloryCondensed-Black";
+NSString * const UPLegalFontName = @"MalloryCondensed-Bold";
 NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
 
 //
@@ -372,6 +373,19 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
     return [UIFont wordMarkFontOfSize:pointSize];
+}
+
++ (UIFont *)legalFontOfSize:(CGFloat)fontSize
+{
+    return [UIFont fontWithName:UPLegalFontName size:fontSize];
+}
+
++ (UIFont *)legalFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPLegalFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont legalFontOfSize:pointSize];
 }
 
 + (UIFont *)dingbatsFontOfSize:(CGFloat)fontSize

@@ -11,6 +11,7 @@
 #import "UPControl+UPSpell.h"
 #import "UPSpellAboutController.h"
 #import "UPSpellAboutPaneGame.h"
+#import "UPSpellAboutPaneLegal.h"
 #import "UPSpellAboutPaneLexicon.h"
 #import "UPSpellSettings.h"
 #import "UPSpellLayout.h"
@@ -18,6 +19,7 @@
 @interface UPSpellAboutController ()
 @property (nonatomic) UPSpellAboutPaneGame *gamePane;
 @property (nonatomic) UPSpellAboutPaneLexicon *lexiconPane;
+@property (nonatomic) UPSpellAboutPaneLegal *legalPane;
 @end
 
 using UP::SpellLayout;
@@ -86,14 +88,18 @@ static UPSpellAboutController *_Instance;
     self.lexiconPane = [UPSpellAboutPaneLexicon pane];
     self.lexiconPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
     [self.view addSubview:self.lexiconPane];
-    
+
+    self.legalPane = [UPSpellAboutPaneLegal pane];
+    self.legalPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    [self.view addSubview:self.legalPane];
+
     self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
     
     self.panes = @[
         self.gamePane,
         [UPAccessoryPane pane],
         self.lexiconPane,
-        [UPAccessoryPane pane]
+        self.legalPane
     ];
 
     return self;
