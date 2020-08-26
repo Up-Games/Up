@@ -974,7 +974,7 @@ void TilePaths::create_canonical_tile_paths()
     [glyphIDieresisPath addCurveToPoint: CGPointMake(48.28, 18.01) controlPoint1: CGPointMake(45.82, 12.11) controlPoint2: CGPointMake(48.28, 14.81)];
     [glyphIDieresisPath addCurveToPoint: CGPointMake(42.37, 23.83) controlPoint1: CGPointMake(48.28, 21.13) controlPoint2: CGPointMake(45.82, 23.83)];
     [glyphIDieresisPath closePath];
-    m_canonical_tile_paths[U'Î'] = glyphIDieresisPath;
+    m_canonical_tile_paths[U'Ï'] = glyphIDieresisPath;
 
     // Í
     UIBezierPath* glyphIAcutePath = [UIBezierPath bezierPath];
@@ -1029,6 +1029,7 @@ void TilePaths::create_canonical_tile_paths()
     [glyphIOgonekPath closePath];
     m_canonical_tile_paths[U'Į'] = glyphIOgonekPath;
 
+    // Ì
     UIBezierPath* glyphIGravePath = [UIBezierPath bezierPath];
     [glyphIGravePath moveToPoint: CGPointMake(43.93, 27.85)];
     [glyphIGravePath addLineToPoint: CGPointMake(56.07, 27.85)];

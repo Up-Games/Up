@@ -219,7 +219,7 @@ public:
     static inline constexpr CGRect CanonicalAboutLogoFrame = { 245, 60, 160, 160 };
     static inline constexpr CGRect CanonicalAboutWordMarkFrame = { 235, 223, 180, 140 };
     static inline constexpr CGRect CanonicalAboutGameDescriptionFrame = { 160, 304, 335, 150 };
-    static inline constexpr CGFloat CanonicalSettingsAboutFontCapHeight = 19;
+    static inline constexpr CGFloat CanonicalSettingsAboutFontCapHeight = 20;
 
     static inline constexpr CGRect CanonicalAboutLexiconDescriptionFrame = { 40, 44, 600, 400 };
 
