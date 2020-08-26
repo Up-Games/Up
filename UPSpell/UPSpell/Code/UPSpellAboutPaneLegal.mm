@@ -1,5 +1,5 @@
 //
-//  UPSpellAboutPaneLexicon.mm
+//  UPSpellAboutPaneLegal.mm
 //  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
@@ -8,20 +8,20 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
-#import "UPSpellAboutPaneLexicon.h"
+#import "UPSpellAboutPaneLegal.h"
 #import "UPSpellLayout.h"
 #import "UPSpellSettings.h"
 
 using UP::SpellLayout;
 using Role = UP::SpellLayout::Role;
 
-@interface UPSpellAboutPaneLexicon ()
+@interface UPSpellAboutPaneLegal ()
 @property (nonatomic) UITextView *lexiconDescription;
 @end
 
-@implementation UPSpellAboutPaneLexicon
+@implementation UPSpellAboutPaneLegal
 
-+ (UPSpellAboutPaneLexicon *)pane
++ (UPSpellAboutPaneLegal *)pane
 {
     return [[self alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
 }

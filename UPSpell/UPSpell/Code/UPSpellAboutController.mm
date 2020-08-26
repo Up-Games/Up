@@ -1,6 +1,6 @@
 //
 //  UPSpellAboutController.mm
-//  Copyright © 2020 Up Games. All rights reserved.
+//  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
 #import <UpKit/UPAssertions.h>
@@ -72,7 +72,7 @@ static UPSpellAboutController *_Instance;
     [self.view addSubview:self.choice3];
     
     self.choice4 = [UPChoice choiceWithSide:UPChoiceSideRight];
-    self.choice4.labelString = @"CREDITS";
+    self.choice4.labelString = @"LEGAL";
     self.choice4.tag = 3;
     self.choice4.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice4.frame = layout.frame_for(Role::ChoiceItem4Right, Place::OffRightNear);

@@ -1,6 +1,6 @@
 //
 //  UPAny.h
-//  Copyright © 2020 Up Games. All rights reserved.
+//  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
 #include <exception>

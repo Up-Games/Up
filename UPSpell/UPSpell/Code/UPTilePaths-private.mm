@@ -1,6 +1,6 @@
 //
 //  UPTilePaths-private.mm
-//  Copyright © 2020 Up Games. All rights reserved.
+//  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 //  Designed to be imported into UPTilePaths.mm
 //  Not for public distribution since it contains paths for proprietary fonts.
