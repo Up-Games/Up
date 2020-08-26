@@ -1,5 +1,5 @@
 //
-//  UPVectorLogoView.h
+//  UPLogoView.h
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -9,8 +9,8 @@
 
 @property (nonatomic, readonly) BOOL drawsBackground;
 
-+ (UPLogoView *)vectorLogoView; // drawsBackground = NO
-+ (UPLogoView *)vectorLogoViewWithDrawsBackground:(BOOL)drawsBackground;;
++ (UPLogoView *)logoView; // drawsBackground = NO
++ (UPLogoView *)logoViewWithDrawsBackground:(BOOL)drawsBackground;;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame drawsBackground:(BOOL)drawsBackground;

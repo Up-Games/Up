@@ -308,6 +308,7 @@ void SpellLayout::calculate()
     calculate_choice_control_metrics();
     calculate_rotor_control_metrics();
     calculate_description_font_metrics();
+    calculate_about_font_metrics();
     calculate_dialog_title_font_metrics();
     calculate_challenge_prompt_font_metrics();
     calculate_challenge_score_font_font_metrics();
@@ -489,6 +490,13 @@ void SpellLayout::calculate_description_font_metrics()
     set_description_font(font);
 }
 
+void SpellLayout::calculate_about_font_metrics()
+{
+    CGFloat cap_height = CanonicalSettingsAboutFontCapHeight * layout_scale();
+    UIFont *font = [UIFont aboutFontWithCapHeight:cap_height];
+    set_about_font(font);
+}
+
 void SpellLayout::calculate_dialog_title_font_metrics()
 {
     CGFloat cap_height = CanonicalDialogTitleCapHeight * layout_scale();
@@ -526,7 +534,7 @@ void SpellLayout::calculate_placard_description_font_metrics()
 
 void SpellLayout::calculate_word_mark_font_metrics()
 {
-    CGFloat cap_height = CanonicalWordMarkCapHeight * layout_scale();
+    CGFloat cap_height = CanonicalHeroWordMarkCapHeight * layout_scale();
     UIFont *font = [UIFont wordMarkFontWithCapHeight:cap_height];
     set_word_mark_font(font);
 }
@@ -665,6 +673,7 @@ void SpellLayout::calculate_locations()
     calculate_game_locations();
     calculate_choice_locations();
     calculate_extras_locations();
+    calculate_about_locations();
 }
 
 void SpellLayout::calculate_player_tile_locations()
@@ -721,9 +730,9 @@ void SpellLayout::calculate_dialog_locations()
 
     calculate_and_set_locations(Role::ChallengePrompt, layout_relative_aspect_rect(CanonicalChallengePromptFrame));
     calculate_and_set_locations(Role::ChallengeScore, layout_relative_aspect_rect(CanonicalChallengeScoreFrame));
-    calculate_and_set_locations(Role::ChallengeInterstitialLogo, layout_relative_aspect_rect(CanonicalChallengeInterstitialLogoFrame));
-    calculate_and_set_locations(Role::ChallengeInterstitialLogo, layout_relative_aspect_rect(CanonicalChallengeInterstitialLogoFrame));
-    calculate_and_set_locations(Role::ChallengeInterstitialWordMark, layout_relative_aspect_rect(CanonicalChallengeInterstitialWordMarkFrame));
+    calculate_and_set_locations(Role::HeroLogo, layout_relative_aspect_rect(CanonicalHeroLogoFrame));
+    calculate_and_set_locations(Role::HeroLogo, layout_relative_aspect_rect(CanonicalHeroLogoFrame));
+    calculate_and_set_locations(Role::HeroWordMark, layout_relative_aspect_rect(CanonicalHeroWordMarkFrame));
 
     calculate_and_set_locations(Role::DialogHelpTitle, layout_relative_aspect_rect(CanonicalDialogShareHelpTitleFrame));
     calculate_and_set_locations(Role::DialogHelpText, layout_relative_aspect_rect(CanonicalDialogShareHelpTextFrame));
@@ -791,6 +800,14 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasShareLastGameValue, layout_relative_aspect_rect(CanonicalExtrasShareLastGameValueFrame));
     calculate_and_set_locations(Role::ExtrasShareLastGameDescription, layout_relative_aspect_rect(CanonicalExtrasShareLastGameDescriptionFrame));
     calculate_and_set_locations(Role::ExtrasShareLastGameHighScoreEqualDescription, layout_relative_aspect_rect(CanonicalExtrasShareLastGameHighScoreEqualDescription));
+}
+
+void SpellLayout::calculate_about_locations()
+{
+    calculate_and_set_locations(Role::AboutLogo, layout_relative_aspect_rect(CanonicalAboutLogoFrame));
+    calculate_and_set_locations(Role::AboutWordMark, layout_relative_aspect_rect(CanonicalAboutWordMarkFrame));
+    calculate_and_set_locations(Role::AboutGameDescription, layout_relative_aspect_rect(CanonicalAboutGameDescriptionFrame));
+    calculate_and_set_locations(Role::AboutLexiconDescription, layout_relative_aspect_rect(CanonicalAboutLexiconDescriptionFrame));
 }
 
 void SpellLayout::calculate_choice_locations()

@@ -16,6 +16,7 @@
 #import "UPSpellExtrasPaneSound.h"
 #import "UPSpellExtrasPaneShare.h"
 #import "UPSpellLayout.h"
+#import "UPSpellSettings.h"
 
 @interface UPSpellExtrasController ()
 @property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
@@ -25,7 +26,6 @@
 @end
 
 using UP::SpellLayout;
-//using UP::BandSettingsUI;
 
 using Role = UP::SpellLayout::Role;
 using Place = UP::SpellLayout::Place;
@@ -112,6 +112,35 @@ static UPSpellExtrasController *_Instance;
     ];
     
     return self;
+}
+
+#pragma mark - Overrides
+
+- (void)choiceSelected:(UPChoice *)sender
+{
+    for (UPChoice *choice in self.choices) {
+        if (choice != sender) {
+            choice.selected = NO;
+            [choice invalidate];
+            [choice update];
+        }
+    }
+    
+    NSUInteger extrasSelectedIndex = sender.tag;
+    [self setSelectedPane:self.panes[extrasSelectedIndex] duration:0.5];
+    
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    settings.extrasSelectedIndex = extrasSelectedIndex;
+}
+
+- (void)setSelectedPaneFromSettingsWithDuration:(CFTimeInterval)duration
+{
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    NSUInteger index = settings.extrasSelectedIndex;
+    ASSERT(index < self.choices.count);
+    UPChoice *choice = self.choices[index];
+    choice.selected = YES;
+    [self setSelectedPane:self.panes[index] duration:duration];
 }
 
 #pragma mark - Update theme colors

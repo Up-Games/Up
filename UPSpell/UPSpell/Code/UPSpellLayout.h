@@ -65,7 +65,10 @@ public:
         ExtrasShareHighScoreValue, ExtrasShareHighScoreDescription, ExtrasShareHighScoreButton,
         ExtrasShareLastGameValue, ExtrasShareLastGameDescription, ExtrasShareLastGameButton,
         ExtrasShareDescription, ExtrasShareLastGameHighScoreEqualDescription,
-        ChallengeInterstitialLogo, ChallengeInterstitialWordMark, ChallengePrompt, ChallengeScore,
+        ChallengePrompt, ChallengeScore,
+        AboutGameDescription, AboutLexiconDescription,
+        AboutLogo, AboutWordMark,
+        HeroLogo, HeroWordMark,
     };
 
     enum class Place {
@@ -179,7 +182,7 @@ public:
     static inline constexpr CGFloat CanonicalChoiceCenterTitleMargin =  115;
     static inline constexpr CGRect CanonicalChoiceCenterGoFrame =  { 713, 376, up_size_width(CanonicalTextButtonSize), up_size_height(CanonicalTextButtonSize) };
     
-    static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 20;
+    static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 19;
     static inline constexpr CGFloat CanonicalPlacardValueFontCapHeight = 38;
     static inline constexpr CGFloat CanonicalPlacardDescrptionFontCapHeight = 24;
 
@@ -213,15 +216,23 @@ public:
     static inline constexpr CGRect CanonicalDialogShareHelpOKButtonFrame = { 429.5, 386, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
     static inline constexpr CGFloat CanonicalDialogTitleCapHeight = 35;
 
-    static inline constexpr CGRect CanonicalChallengeInterstitialLogoFrame = { 420, 132, 160, 160 };
-    static inline constexpr CGRect CanonicalChallengeInterstitialWordMarkFrame = { 200, 292, 600, 300 };
-    static inline constexpr CGFloat CanonicalWordMarkCapHeight = 35;
+    static inline constexpr CGRect CanonicalAboutLogoFrame = { 251, 60, 148, 148 };
+    static inline constexpr CGRect CanonicalAboutWordMarkFrame = { 25, 228, 605, 140 };
+    static inline constexpr CGFloat CanonicalAboutMarkCapHeight = 18;
+    static inline constexpr CGRect CanonicalAboutGameDescriptionFrame = { 160, 304, 335, 150 };
+    static inline constexpr CGFloat CanonicalSettingsAboutFontCapHeight = 19;
+
+    static inline constexpr CGRect CanonicalAboutLexiconDescriptionFrame = { 15, 44, 605, 400 };
+
+    static inline constexpr CGRect CanonicalHeroLogoFrame = { 426, 132, 148, 148 };
+    static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 200, 282, 600, 300 };
+    static inline constexpr CGFloat CanonicalHeroWordMarkCapHeight = 34;
 
     static inline constexpr CGRect CanonicalChallengePromptFrame = { 200, 112, 600, 300 };
     static inline constexpr CGRect CanonicalChallengeScoreFrame = { 100, 228, 800, 300 };
     static inline constexpr CGFloat CanonicalChallengePromptFontCapHeight = 62;
-    static inline constexpr CGFloat CanonicalChallengeScoreFontCapHeight = 35;
-
+    static inline constexpr CGFloat CanonicalChallengeScoreFontCapHeight = 34;
+    
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
         return *g_instance;
@@ -288,6 +299,7 @@ public:
     UIFont *rotor_control_font() const { return m_rotor_control_font; }
     UIFont *description_font() const { return m_description_font; }
     UIFont *dialog_title_font() const { return m_dialog_title_font; }
+    UIFont *about_font() const { return m_about_font; }
     UIFont *challenge_prompt_font() const { return m_challenge_prompt_font; }
     UIFont *challenge_score_font_font() const { return m_challenge_score_font_font; }
     UIFont *placard_value_font() const { return m_placard_value_font; }
@@ -344,6 +356,7 @@ private:
     void set_choice_control_label_right_margin(CGFloat f) { m_choice_control_label_right_margin = f; }
     void set_rotor_control_font(UIFont *font) { m_rotor_control_font = font; }
     void set_description_font(UIFont *font) { m_description_font = font; }
+    void set_about_font(UIFont *font) { m_about_font = font; }
     void set_dialog_title_font(UIFont *font) { m_dialog_title_font = font; }
     void set_challenge_prompt_font(UIFont *font) { m_challenge_prompt_font = font; }
     void set_challenge_score_font_font(UIFont *font) { m_challenge_score_font_font = font; }
@@ -377,6 +390,7 @@ private:
     void calculate_choice_control_metrics();
     void calculate_rotor_control_metrics();
     void calculate_description_font_metrics();
+    void calculate_about_font_metrics();
     void calculate_dialog_title_font_metrics();
     void calculate_challenge_prompt_font_metrics();
     void calculate_challenge_score_font_font_metrics();
@@ -390,6 +404,7 @@ private:
     void calculate_game_locations();
     void calculate_choice_locations();
     void calculate_extras_locations();
+    void calculate_about_locations();
     void calculate_game_controls_button_charge_outsets();
     void calculate_help_button_charge_outsets();
     void calculate_and_set_locations(const Role role, const CGRect &frame, CGFloat near_factor = CanonicalOffscreenNearFrameFactor);
@@ -440,6 +455,7 @@ private:
     __strong UIFont *m_choice_control_font;
     __strong UIFont *m_rotor_control_font;
     __strong UIFont *m_description_font;
+    __strong UIFont *m_about_font;
     __strong UIFont *m_dialog_title_font;
     __strong UIFont *m_challenge_prompt_font;
     __strong UIFont *m_challenge_score_font_font;

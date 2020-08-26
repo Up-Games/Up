@@ -9,6 +9,7 @@
 @property (nonatomic) NSUInteger dataVersion;
 @property (nonatomic) UPTheme theme;
 @property (nonatomic) NSUInteger extrasSelectedIndex;
+@property (nonatomic) NSUInteger aboutSelectedIndex;
 @property (nonatomic) BOOL retryMode;
 @property (nonatomic) NSUInteger playMenuSelectedIndex;
 @property (nonatomic) NSArray<NSNumber *> *tuneHistory;

@@ -690,23 +690,8 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>CFBundleURLIconFile</key>
-			<string>up-games-icon-225-76@2x</string>
-			<key>CFBundleURLName</key>
-			<string>games.up.spell</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>upspell</string>
-			</array>
-		</dict>
-	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
@@ -715,6 +700,7 @@
 		<string>MalloryCond-BlackItalic.otf</string>
 		<string>MalloryCond-Black.otf</string>
 		<string>MalloryCond-BoldItalic.otf</string>
+		<string>MalloryCond-Bold.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

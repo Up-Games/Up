@@ -11,7 +11,7 @@
 
 @interface UPDialogChallenge : UIView
 
-@property (nonatomic, readonly) UPVectorLogoView *vectorLogoView;
+@property (nonatomic, readonly) UPLogoView *logoView;
 @property (nonatomic, readonly) UPLabel *wordMarkLabel;
 @property (nonatomic, readonly) UPLabel *challengePromptLabel;
 @property (nonatomic, readonly) UPLabel *scorePromptLabel;

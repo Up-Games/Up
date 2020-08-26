@@ -20,6 +20,9 @@
 		5D12E49C24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D12E49B24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.mm */; };
 		5D29878B24F2CC9600AA6E78 /* UPPulseView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29878A24F2CC9600AA6E78 /* UPPulseView.mm */; };
 		5D29878E24F5561500AA6E78 /* UPAccessoryPaneController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29878C24F5561500AA6E78 /* UPAccessoryPaneController.mm */; };
+		5D29879124F5624800AA6E78 /* UPSpellAboutPaneGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29879024F5624800AA6E78 /* UPSpellAboutPaneGame.mm */; };
+		5D29879324F5697C00AA6E78 /* MalloryCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D29879224F5697C00AA6E78 /* MalloryCond-Bold.otf */; };
+		5D29879624F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29879524F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm */; };
 		5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */; };
 		5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogTopMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */; };
@@ -500,6 +503,11 @@
 		5D29878A24F2CC9600AA6E78 /* UPPulseView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPPulseView.mm; sourceTree = "<group>"; };
 		5D29878C24F5561500AA6E78 /* UPAccessoryPaneController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAccessoryPaneController.mm; sourceTree = "<group>"; };
 		5D29878D24F5561500AA6E78 /* UPAccessoryPaneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPAccessoryPaneController.h; sourceTree = "<group>"; };
+		5D29878F24F5624800AA6E78 /* UPSpellAboutPaneGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutPaneGame.h; sourceTree = "<group>"; };
+		5D29879024F5624800AA6E78 /* UPSpellAboutPaneGame.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPaneGame.mm; sourceTree = "<group>"; };
+		5D29879224F5697C00AA6E78 /* MalloryCond-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Bold.otf"; sourceTree = "<group>"; };
+		5D29879424F57F8700AA6E78 /* UPSpellAboutPaneLexicon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutPaneLexicon.h; sourceTree = "<group>"; };
+		5D29879524F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPaneLexicon.mm; sourceTree = "<group>"; };
 		5D34613624887918009FB46D /* UPViewMove+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UPViewMove+UPSpell.h"; sourceTree = "<group>"; };
 		5D4AE823248BDED200213904 /* UPSpellExtrasController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasController.h; sourceTree = "<group>"; };
 		5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasController.mm; sourceTree = "<group>"; };
@@ -1091,6 +1099,10 @@
 				5D5B53F124CDCACD00FD50D4 /* UPSoundPlayer.mm */,
 				5D4AE826248BDF2300213904 /* UPSpellAboutController.h */,
 				5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */,
+				5D29878F24F5624800AA6E78 /* UPSpellAboutPaneGame.h */,
+				5D29879024F5624800AA6E78 /* UPSpellAboutPaneGame.mm */,
+				5D29879424F57F8700AA6E78 /* UPSpellAboutPaneLexicon.h */,
+				5D29879524F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm */,
 				5D6261A124C0944600D19EEF /* UPSpellDossier.h */,
 				5D6261A224C0944600D19EEF /* UPSpellDossier.mm */,
 				5D4AE823248BDED200213904 /* UPSpellExtrasController.h */,
@@ -1142,6 +1154,7 @@
 		5D723118246B3694006027A3 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				5D29879224F5697C00AA6E78 /* MalloryCond-Bold.otf */,
 				5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */,
 				5D5EA14A24870128006264D2 /* MalloryCond-BlackItalic.otf */,
 				5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */,
@@ -1835,6 +1848,7 @@
 				5DBAD69824E2297400471ABF /* up-games-icon-225-29@3x.png in Resources */,
 				5DBAD5E824E2297400471ABF /* up-games-icon-270-40@3x.png in Resources */,
 				5DBAD5BA24E2297400471ABF /* up-games-icon-060-40@3x.png in Resources */,
+				5D29879324F5697C00AA6E78 /* MalloryCond-Bold.otf in Resources */,
 				5DBAD58024E2297400471ABF /* up-games-icon-090-60@3x.png in Resources */,
 				5D6FB58724DA134F00CDC293 /* Tub.aac in Resources */,
 				5DBAD69724E2297400471ABF /* up-games-icon-240-29@2x.png in Resources */,
@@ -2077,6 +2091,7 @@
 				5D4ECE3824E4842700D1A310 /* UPDialogChallengeHelp.mm in Sources */,
 				5D5B53F224CDCACD00FD50D4 /* UPSoundPlayer.mm in Sources */,
 				5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */,
+				5D29879124F5624800AA6E78 /* UPSpellAboutPaneGame.mm in Sources */,
 				5D29878B24F2CC9600AA6E78 /* UPPulseView.mm in Sources */,
 				5DA0A06624BCD4EA0029CE0E /* UPSpellGameRetry.mm in Sources */,
 				5D0FC23324A50E3B00353563 /* UPChoice.mm in Sources */,
@@ -2090,6 +2105,7 @@
 				5D6FB58A24DAFC2500CDC293 /* UPSlider.mm in Sources */,
 				5DA0A06924BD08590029CE0E /* UPDialogPlayMenu.mm in Sources */,
 				5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */,
+				5D29879624F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm in Sources */,
 				5D0FC22724A278D300353563 /* UPStepper.mm in Sources */,
 				5DF74C4024DF80B50000F43D /* UPActivityViewController.mm in Sources */,
 				5D6FB5A024DEF08800CDC293 /* UPSpellExtrasPaneShare.mm in Sources */,
@@ -2261,6 +2277,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_ENTITLEMENTS = "UPSpell/UP Spell.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = 784YP5V58W;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = UPSpell/Info.plist;
@@ -2281,6 +2298,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_ENTITLEMENTS = "UPSpell/UP Spell.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = 784YP5V58W;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = UPSpell/Info.plist;

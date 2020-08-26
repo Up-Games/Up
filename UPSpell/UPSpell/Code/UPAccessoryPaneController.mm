@@ -44,29 +44,10 @@ using Location = UP::SpellLayout::Location;
 
 - (void)choiceSelected:(UPChoice *)sender
 {
-    for (UPChoice *choice in self.choices) {
-        if (choice != sender) {
-            choice.selected = NO;
-            [choice invalidate];
-            [choice update];
-        }
-    }
-    
-    NSUInteger extrasSelectedIndex = sender.tag;
-    [self setSelectedPane:self.panes[extrasSelectedIndex] duration:0.5];
-    
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.extrasSelectedIndex = extrasSelectedIndex;
 }
 
 - (void)setSelectedPaneFromSettingsWithDuration:(CFTimeInterval)duration
 {
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    NSUInteger index = settings.extrasSelectedIndex;
-    ASSERT(index < self.choices.count);
-    UPChoice *choice = self.choices[index];
-    choice.selected = YES;
-    [self setSelectedPane:self.panes[index] duration:duration];
 }
 
 - (void)setSelectedPane:(UPAccessoryPane *)selectedPane

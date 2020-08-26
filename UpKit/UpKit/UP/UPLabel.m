@@ -145,6 +145,17 @@
     return TextLayer().foregroundColor ? [UIColor colorWithCGColor:TextLayer().foregroundColor] : nil;
 }
 
+@dynamic wrapped;
+- (void)setWrapped:(BOOL)wrapped
+{
+    TextLayer().wrapped = wrapped;
+}
+
+- (BOOL)wrapped
+{
+    return TextLayer().wrapped;
+}
+
 #pragma mark - Layout
 
 - (CGSize)sizeThatFits:(CGSize)size

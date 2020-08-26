@@ -9,7 +9,7 @@
 #import <UpKit/UPControl.h>
 #import <UpKit/UPGeometry.h>
 #import <UpKit/UPLabel.h>
-#import <UpKit/UPVectorLogoView.h>
+#import <UpKit/UPLogoView.h>
 
 #import "UPControl+UPSpell.h"
 #import "UPDialogChallenge.h"
@@ -22,7 +22,7 @@ using UP::SpellLayout;
 using Role = SpellLayout::Role;
 
 @interface UPDialogChallenge ()
-@property (nonatomic, readwrite) UPVectorLogoView *vectorLogoView;
+@property (nonatomic, readwrite) UPLogoView *logoView;
 @property (nonatomic, readwrite) UPLabel *wordMarkLabel;
 @property (nonatomic, readwrite) UPLabel *challengePromptLabel;
 @property (nonatomic, readwrite) UPLabel *scorePromptLabel;
@@ -48,16 +48,16 @@ using Role = SpellLayout::Role;
     SpellLayout &layout = SpellLayout::instance();
     self = [super initWithFrame:layout.canvas_frame()];
 
-    self.vectorLogoView = [UPVectorLogoView vectorLogoView];
-    [self addSubview:self.vectorLogoView];
-    self.vectorLogoView.frame = CGRectMake(0, 0, 160, 160);
-    self.vectorLogoView.center = layout.center_for(Role::ChallengeInterstitialLogo);
+    self.logoView = [UPLogoView logoView];
+    [self addSubview:self.logoView];
+    self.logoView.frame = CGRectMake(0, 0, 148, 148);
+    self.logoView.center = layout.center_for(Role::HeroLogo);
 
     self.wordMarkLabel = [UPLabel label];
     self.wordMarkLabel.string = @"UP SPELL";
     self.wordMarkLabel.font = layout.word_mark_font();
     self.wordMarkLabel.textAlignment = NSTextAlignmentCenter;
-    self.wordMarkLabel.frame = layout.frame_for(Role::ChallengeInterstitialWordMark);
+    self.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark);
     [self addSubview:self.wordMarkLabel];
     
     self.challengePromptLabel = [UPLabel label];

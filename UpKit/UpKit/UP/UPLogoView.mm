@@ -1,5 +1,5 @@
 //
-//  UPVectorLogoView.mm
+//  UPLogoView.mm
 //  Copyright © 2020 Up Games. All rights reserved.
 //
 
@@ -7,14 +7,14 @@
 #import "UPBezierPathView.h"
 #import "UPGeometry.h"
 #import "UPGradientView.h"
-#import "UPVectorLogoView.h"
+#import "UPLogoView.h"
 
 static constexpr CGSize UPVectorLogoCanonicalSize = { 1024, 1024 };
 static constexpr CGSize UPVectorLogoCanonicalFillSize = { 874, 874 };
 
 static UIColor *UPVectorLogoBorderBackgroundColor()
 {
-    return [UIColor colorWithWhite:0.5 alpha:0.6];
+    return [UIColor colorWithWhite:0.5 alpha:0.7];
 }
 
 static UIColor *UPVectorLogoBorderColor()
@@ -230,7 +230,7 @@ static UIBezierPath *UPVectorLogoArrowPath()
     return path;
 }
 
-@interface UPVectorLogoView ()
+@interface UPLogoView ()
 @property (nonatomic, readwrite) BOOL drawsBackground;
 @property (nonatomic) UPGradientView *gradientBackgroundView;
 @property (nonatomic) UPBezierPathView *borderBackgroundView;
@@ -241,14 +241,14 @@ static UIBezierPath *UPVectorLogoArrowPath()
 @property (nonatomic) UPBezierPathView *arrowView;
 @end
 
-@implementation UPVectorLogoView
+@implementation UPLogoView
 
-+ (UPVectorLogoView *)vectorLogoView
++ (UPLogoView *)logoView
 {
-    return [self vectorLogoViewWithDrawsBackground:NO];
+    return [self logoViewWithDrawsBackground:NO];
 }
 
-+ (UPVectorLogoView *)vectorLogoViewWithDrawsBackground:(BOOL)drawsBackground
++ (UPLogoView *)logoViewWithDrawsBackground:(BOOL)drawsBackground
 {
     CGRect frame = CGRectMake(0, 0, up_size_width(UPVectorLogoCanonicalSize), up_size_height(UPVectorLogoCanonicalSize));
     return [[self alloc] initWithFrame:frame drawsBackground:drawsBackground];

@@ -2355,8 +2355,8 @@ static UPSpellGameController *_Instance;
         self.challenge = nil;
     }
 
-    self.dialogChallenge.vectorLogoView.frame = layout.frame_for(Role::ChallengeInterstitialLogo);
-    self.dialogChallenge.wordMarkLabel.frame = layout.frame_for(Role::ChallengeInterstitialWordMark);
+    self.dialogChallenge.logoView.frame = layout.frame_for(Role::HeroLogo);
+    self.dialogChallenge.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark);
     self.dialogChallenge.challengePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Place::OffBottomFar);
     self.dialogChallenge.scorePromptLabel.frame = layout.frame_for(Role::ChallengeScore, Place::OffBottomNear);
     self.dialogChallenge.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Place::OffBottomNear);
@@ -2366,8 +2366,8 @@ static UPSpellGameController *_Instance;
     delay(BandModeDelay, 1.1, ^{
         // Move the logo interstitial out
         NSArray<UPViewMove *> *logoMoves = @[
-            UPViewMoveMake(self.dialogChallenge.vectorLogoView, Location(Role::ChallengeInterstitialLogo, Place::OffBottomFar)),
-            UPViewMoveMake(self.dialogChallenge.wordMarkLabel, Location(Role::ChallengeInterstitialWordMark, Place::OffBottomFar)),
+            UPViewMoveMake(self.dialogChallenge.logoView, Location(Role::HeroLogo, Place::OffBottomFar)),
+            UPViewMoveMake(self.dialogChallenge.wordMarkLabel, Location(Role::HeroWordMark, Place::OffBottomFar)),
         ];
         start(bloop_out(BandModeUI, logoMoves, 0.4,  ^(UIViewAnimatingPosition) {
             // Move the challenge dialog in
@@ -2569,8 +2569,8 @@ static UPSpellGameController *_Instance;
     self.dialogPlayMenu.goButton.highlightedLocked = NO;
     self.dialogPlayMenu.goButton.highlighted = NO;
 
-    self.dialogChallenge.vectorLogoView.frame = layout.frame_for(Role::ChallengeInterstitialLogo, Place::OffBottomNear);
-    self.dialogChallenge.wordMarkLabel.frame = layout.frame_for(Role::ChallengeInterstitialWordMark, Place::OffBottomNear);
+    self.dialogChallenge.logoView.frame = layout.frame_for(Role::HeroLogo, Place::OffBottomNear);
+    self.dialogChallenge.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark, Place::OffBottomNear);
     self.dialogChallenge.challengePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Place::OffBottomFar);
     self.dialogChallenge.scorePromptLabel.frame = layout.frame_for(Role::ChallengeScore, Place::OffBottomNear);
     self.dialogChallenge.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Place::OffBottomNear);

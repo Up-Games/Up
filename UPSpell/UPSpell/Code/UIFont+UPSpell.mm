@@ -18,7 +18,8 @@ NSString * const UPCheckboxControlFontName = @"MalloryCondensed-Black";
 NSString * const UPChoiceControlFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPRotorControlFontName = @"MalloryCondensed-Black";
 NSString * const UPDialogTitleFontName = @"MalloryCondensed-BlackItalic";
-NSString * const UPDescriptionFontName = @"MalloryCondensed-BoldItalic";
+NSString * const UPDescriptionFontName = @"MalloryCondensed-Bold";
+NSString * const UPAboutFontName = @"MalloryCondensed-Bold";
 NSString * const UPShareFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPPlacardValueFontName = @"MalloryCondensed-Black";
 NSString * const UPPlacardDescriptionFontName = @"MalloryCondensed-Black";
@@ -262,6 +263,30 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
     return [UIFont descriptionFontOfSize:pointSize];
+}
+
++ (UIFont *)aboutFontOfSize:(CGFloat)fontSize
+{
+    UIFont *font = [UIFont fontWithName:UPAboutFontName size:fontSize];
+    UIFontDescriptor *descriptor = [font fontDescriptor];
+    NSDictionary *attributes = @{
+        UIFontDescriptorFeatureSettingsAttribute: @[
+                @{
+                    UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+                    UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+                }
+        ]
+    };
+    UIFontDescriptor *fontDescriptor = [descriptor fontDescriptorByAddingAttributes:attributes];
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
+}
+
++ (UIFont *)aboutFontWithCapHeight:(CGFloat)capHeight
+{
+    UIFont *canonicalFont = [UIFont fontWithName:UPAboutFontName size:1];
+    CGFloat factor = capHeight / canonicalFont.capHeight;
+    CGFloat pointSize = canonicalFont.pointSize * factor;
+    return [UIFont aboutFontOfSize:pointSize];
 }
 
 + (UIFont *)challengeFontOfSize:(CGFloat)fontSize

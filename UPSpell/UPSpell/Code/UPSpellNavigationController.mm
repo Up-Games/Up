@@ -355,6 +355,7 @@ using UP::TimeSpanning::start;
         start(bloop_in(BandModeUI, itemMoves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
             [transitionContext completeTransition:YES];
         }));
+        [aboutController setSelectedPaneFromSettingsWithDuration:[self transitionDuration:transitionContext]];
     });
 }
 
@@ -394,6 +395,7 @@ using UP::TimeSpanning::start;
         UPViewMoveMake(aboutController.choice2, Role::ChoiceItem2Right, Spot::OffRightNear),
         UPViewMoveMake(aboutController.choice3, Role::ChoiceItem3Right, Spot::OffRightNear),
         UPViewMoveMake(aboutController.choice4, Role::ChoiceItem4Right, Spot::OffRightNear),
+        UPViewMoveMake(aboutController.selectedPane, Role::Screen, Spot::OffBottomFar),
     ];
     start(bloop_out(BandModeUI, moves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
         [transitionContext completeTransition:YES];
