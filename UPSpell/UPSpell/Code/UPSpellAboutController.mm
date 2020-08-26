@@ -11,15 +11,15 @@
 #import "UPControl+UPSpell.h"
 #import "UPSpellAboutController.h"
 #import "UPSpellAboutPaneGame.h"
-#import "UPSpellAboutPaneLegal.h"
 #import "UPSpellAboutPaneLexicon.h"
+#import "UPSpellAboutPaneThanks.h"
 #import "UPSpellSettings.h"
 #import "UPSpellLayout.h"
 
 @interface UPSpellAboutController ()
 @property (nonatomic) UPSpellAboutPaneGame *gamePane;
 @property (nonatomic) UPSpellAboutPaneLexicon *lexiconPane;
-@property (nonatomic) UPSpellAboutPaneLegal *legalPane;
+@property (nonatomic) UPSpellAboutPaneThanks *thanksPane;
 @end
 
 using UP::SpellLayout;
@@ -74,7 +74,7 @@ static UPSpellAboutController *_Instance;
     [self.view addSubview:self.choice3];
     
     self.choice4 = [UPChoice choiceWithSide:UPChoiceSideRight];
-    self.choice4.labelString = @"LEGAL";
+    self.choice4.labelString = @"THANKS";
     self.choice4.tag = 3;
     self.choice4.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice4.frame = layout.frame_for(Role::ChoiceItem4Right, Place::OffRightNear);
@@ -89,9 +89,9 @@ static UPSpellAboutController *_Instance;
     self.lexiconPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
     [self.view addSubview:self.lexiconPane];
 
-    self.legalPane = [UPSpellAboutPaneLegal pane];
-    self.legalPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
-    [self.view addSubview:self.legalPane];
+    self.thanksPane = [UPSpellAboutPaneThanks pane];
+    self.thanksPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    [self.view addSubview:self.thanksPane];
 
     self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
     
@@ -99,7 +99,7 @@ static UPSpellAboutController *_Instance;
         self.gamePane,
         [UPAccessoryPane pane],
         self.lexiconPane,
-        self.legalPane
+        self.thanksPane
     ];
 
     return self;

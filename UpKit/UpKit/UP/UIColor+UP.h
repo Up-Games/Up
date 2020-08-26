@@ -122,6 +122,8 @@ typedef NS_ENUM(NSInteger, UPColorCategory) {
 + (UIColor *)testColor3;
 + (UIColor *)testColor4;
 
+- (NSString *)asCSSRGBAString;
+
 @end
 
 @interface NSObject (UPThemeColors)

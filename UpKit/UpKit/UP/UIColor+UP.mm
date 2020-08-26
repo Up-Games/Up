@@ -564,6 +564,13 @@ static CGFloat _ThemeHue = 225;
     return [[UIColor purpleColor] colorWithAlphaComponent:0.5];
 }
 
+- (NSString *)asCSSRGBAString
+{
+    CGFloat r, g, b, a;
+    [self getRed:&r green:&g blue:&b alpha:&a];
+    return [NSString stringWithFormat:@"rgba(%d,%d,%d,%.2f)", (int)round(r * 255.0), (int)round(g * 255.0), (int)round(b * 255.0), a];
+}
+
 @end
 
 // =========================================================================================================================================
