@@ -67,6 +67,7 @@ public:
         ExtrasShareDescription, ExtrasShareLastGameHighScoreEqualDescription,
         ChallengePrompt, ChallengeScore,
         AboutGameDescription, AboutLexiconDescription, AboutLegalDescription,
+        AboutPlayingGameView, AboutPlayingBottomPrompt, AboutPlayingTopLeftPrompt, AboutPlayingTopRightPrompt,
         AboutLogo, AboutWordMark,
         HeroLogo, HeroWordMark,
     };
@@ -185,7 +186,7 @@ public:
     
     static inline constexpr CGFloat CanonicalSettingsDescriptionFontCapHeight = 19;
     static inline constexpr CGFloat CanonicalPlacardValueFontCapHeight = 38;
-    static inline constexpr CGFloat CanonicalPlacardDescrptionFontCapHeight = 24;
+    static inline constexpr CGFloat CanonicalPlacardDescriptionFontCapHeight = 24;
 
     static inline constexpr CGRect CanonicalExtrasColorsThemeRotorFrame =  { 470,  30, up_size_width(CanonicalRotorSize), up_size_height(CanonicalRotorSize) };
     static inline constexpr CGRect CanonicalExtrasColorsDescriptionFrame = { 384, 282, 572, 76 };
@@ -225,7 +226,10 @@ public:
     static inline constexpr CGRect CanonicalAboutLexiconDescriptionFrame = { 40, 44, 600, 400 };
     static inline constexpr CGRect CanonicalAboutLegalDescriptionFrame = { 40, 44, 600, 400 };
 
-    static inline constexpr CGPoint CanonicalAboutPlayingGameViewCenter = { 385, 125 };
+    static inline constexpr CGRect CanonicalAboutPlayingGameViewFrame = { -180, -125, 1000, 500 };
+    static inline constexpr CGRect CanonicalAboutPlayingGameBottomPromptFrame = { 40, 410, 560, 80 };
+    static inline constexpr CGRect CanonicalAboutPlayingGameTopLeftPromptFrame = { 40, 40, 150, 60 };
+    static inline constexpr CGRect CanonicalAboutPlayingGameRightLeftPromptFrame = { 760, 40, 150, 60 };
 
     static inline constexpr CGRect CanonicalHeroLogoFrame = { 426, 132, 160, 160 };
     static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 416, 295, 180, 300 };
@@ -407,7 +411,6 @@ private:
     void calculate_placard_description_font_metrics();
     void calculate_word_mark_font_metrics();
     void calculate_legal_font_metrics();
-    void calculate_locations();
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
     void calculate_dialog_locations();

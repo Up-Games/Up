@@ -318,7 +318,15 @@ void SpellLayout::calculate()
     calculate_legal_font_metrics();
     calculate_game_controls_button_charge_outsets();
     calculate_help_button_charge_outsets();
-    calculate_locations();
+
+    calculate_and_set_locations(Role::Screen, screen_bounds(), 1.0);
+    calculate_player_tile_locations();
+    calculate_word_tile_locations();
+    calculate_dialog_locations();
+    calculate_game_locations();
+    calculate_choice_locations();
+    calculate_extras_locations();
+    calculate_about_locations();
 }
 
 CGRect SpellLayout::frame_for(const Location &loc)
@@ -532,7 +540,7 @@ void SpellLayout::calculate_placard_value_font_metrics()
 
 void SpellLayout::calculate_placard_description_font_metrics()
 {
-    CGFloat cap_height = CanonicalPlacardDescrptionFontCapHeight * layout_scale();
+    CGFloat cap_height = CanonicalPlacardDescriptionFontCapHeight * layout_scale();
     UIFont *font = [UIFont placardDescriptionFontWithCapHeight:cap_height];
     set_placard_description_font(font);
 }
@@ -676,18 +684,6 @@ void SpellLayout::calculate_word_tray_tile_frames()
     m_word_tray_tile_centers[1] = even_centers;
 }
 
-void SpellLayout::calculate_locations()
-{
-    calculate_and_set_locations(Role::Screen, screen_bounds(), 1.0);
-    calculate_player_tile_locations();
-    calculate_word_tile_locations();
-    calculate_dialog_locations();
-    calculate_game_locations();
-    calculate_choice_locations();
-    calculate_extras_locations();
-    calculate_about_locations();
-}
-
 void SpellLayout::calculate_player_tile_locations()
 {
     const auto &begin = m_player_tray_tile_frames.begin();
@@ -821,6 +817,10 @@ void SpellLayout::calculate_about_locations()
     calculate_and_set_locations(Role::AboutGameDescription, layout_relative_aspect_rect(CanonicalAboutGameDescriptionFrame));
     calculate_and_set_locations(Role::AboutLexiconDescription, layout_relative_aspect_rect(CanonicalAboutLexiconDescriptionFrame));
     calculate_and_set_locations(Role::AboutLegalDescription, layout_relative_aspect_rect(CanonicalAboutLegalDescriptionFrame));
+    calculate_and_set_locations(Role::AboutPlayingGameView, layout_relative_aspect_rect(CanonicalAboutPlayingGameViewFrame));
+    calculate_and_set_locations(Role::AboutPlayingBottomPrompt, layout_relative_aspect_rect(CanonicalAboutPlayingGameBottomPromptFrame));
+    calculate_and_set_locations(Role::AboutPlayingTopLeftPrompt, layout_relative_aspect_rect(CanonicalAboutPlayingGameTopLeftPromptFrame));
+    calculate_and_set_locations(Role::AboutPlayingTopRightPrompt, layout_relative_aspect_rect(CanonicalAboutPlayingGameRightLeftPromptFrame));
 }
 
 void SpellLayout::calculate_choice_locations()
