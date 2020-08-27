@@ -17,7 +17,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
 //
    { 0.114000, 0.247000, 0.646000, 1.000000 }, // PrimaryFill
    { 0.683520, 0.742860, 0.920880, 1.000000 }, // InactiveFill
-   { 0.192360, 0.336630, 0.769440, 1.000000 }, // ActiveFill
+   { 0.751680, 0.798240, 0.937920, 1.000000 }, // ActiveFill
    { 0.540000, 0.655000, 1.000000, 1.000000 }, // HighlightedFill
    { 0.703000, 0.761500, 0.937000, 1.000000 }, // SecondaryActiveFill
    { 0.932500, 0.941250, 0.967500, 1.000000 }, // SecondaryInactiveFill
@@ -42,7 +42,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
 //
    { 0.075000, 0.425000, 0.075000, 1.000000 }, // PrimaryFill
    { 0.367680, 0.841920, 0.367680, 1.000000 }, // InactiveFill
-   { 0.106960, 0.427840, 0.106960, 1.000000 }, // ActiveFill
+   { 0.523680, 0.880920, 0.523680, 1.000000 }, // ActiveFill
    { 0.117500, 0.822500, 0.117500, 1.000000 }, // HighlightedFill
    { 0.662500, 0.837500, 0.662500, 1.000000 }, // SecondaryActiveFill
    { 0.932500, 0.967500, 0.932500, 1.000000 }, // SecondaryInactiveFill
@@ -67,7 +67,7 @@ static _UPRGBColorComponents _UPThemeColorComponents[] = {
 //
    { 0.666500, 0.193500, 0.193500, 1.000000 }, // PrimaryFill
    { 0.921960, 0.687840, 0.687840, 1.000000 }, // InactiveFill
-   { 0.692000, 0.173000, 0.173000, 1.000000 }, // ActiveFill
+   { 0.939120, 0.756480, 0.756480, 1.000000 }, // ActiveFill
    { 1.000000, 0.540000, 0.540000, 1.000000 }, // HighlightedFill
    { 0.898000, 0.702000, 0.702000, 1.000000 }, // SecondaryActiveFill
    { 0.967500, 0.932500, 0.932500, 1.000000 }, // SecondaryInactiveFill
