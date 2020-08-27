@@ -821,6 +821,15 @@ void SpellLayout::calculate_about_locations()
     calculate_and_set_locations(Role::AboutPlayingBottomPrompt, layout_relative_aspect_rect(CanonicalAboutPlayingGameBottomPromptFrame));
     calculate_and_set_locations(Role::AboutPlayingTopLeftPrompt, layout_relative_aspect_rect(CanonicalAboutPlayingGameTopLeftPromptFrame));
     calculate_and_set_locations(Role::AboutPlayingTopRightPrompt, layout_relative_aspect_rect(CanonicalAboutPlayingGameRightLeftPromptFrame));
+
+    CGRect controls_button_left_frame = frame_for(Role::ControlButtonLeft);
+    controls_button_left_frame.origin.x += 20;
+    controls_button_left_frame.origin.y += 10;
+    CGRect controls_button_right_frame = frame_for(Role::ControlButtonRight);
+    controls_button_right_frame.origin.x -= 20;
+    controls_button_right_frame.origin.y += 10;
+    calculate_and_set_locations(Role::AboutPlayingTopLeftButtonClick, controls_button_left_frame);
+    calculate_and_set_locations(Role::AboutPlayingTopRightButtonClick, controls_button_right_frame);
 }
 
 void SpellLayout::calculate_choice_locations()
