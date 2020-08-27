@@ -10,7 +10,7 @@
 		5D08E6DC24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D08E6DB24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm */; };
 		5D08E6E124F6B3DD007DBE44 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D08E6E024F6B3DD007DBE44 /* WebKit.framework */; };
 		5D08E6E324F6B631007DBE44 /* thanks.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D08E6E224F6B631007DBE44 /* thanks.html */; };
-		5D08E6E524F6B840007DBE44 /* styles.css in Resources */ = {isa = PBXBuildFile; fileRef = 5D08E6E424F6B840007DBE44 /* styles.css */; };
+		5D08E6E524F6B840007DBE44 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 5D08E6E424F6B840007DBE44 /* style.css */; };
 		5D08E6E724F6D893007DBE44 /* lexicon.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D08E6E624F6D893007DBE44 /* lexicon.html */; };
 		5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */; };
 		5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21A24A125D000353563 /* UPBallot.mm */; };
@@ -487,7 +487,7 @@
 		5D08E6DB24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPaneThanks.mm; sourceTree = "<group>"; };
 		5D08E6E024F6B3DD007DBE44 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5D08E6E224F6B631007DBE44 /* thanks.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = thanks.html; sourceTree = "<group>"; };
-		5D08E6E424F6B840007DBE44 /* styles.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = styles.css; sourceTree = "<group>"; };
+		5D08E6E424F6B840007DBE44 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		5D08E6E624F6D893007DBE44 /* lexicon.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = lexicon.html; sourceTree = "<group>"; };
 		5D0FC21324A02FB600353563 /* UPDialogGameNote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogGameNote.h; sourceTree = "<group>"; };
 		5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameNote.mm; sourceTree = "<group>"; };
@@ -1017,7 +1017,7 @@
 		5D08E6DD24F6AB05007DBE44 /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				5D08E6E424F6B840007DBE44 /* styles.css */,
+				5D08E6E424F6B840007DBE44 /* style.css */,
 				5D08E6E624F6D893007DBE44 /* lexicon.html */,
 				5D08E6E224F6B631007DBE44 /* thanks.html */,
 			);
@@ -2078,7 +2078,7 @@
 				5DBAD5C424E2297400471ABF /* up-games-icon-150-29@3x.png in Resources */,
 				5DBAD62C24E2297400471ABF /* up-games-icon-090-29.png in Resources */,
 				5DBAD6BF24E2297400471ABF /* up-games-icon-150-20@2x.png in Resources */,
-				5D08E6E524F6B840007DBE44 /* styles.css in Resources */,
+				5D08E6E524F6B840007DBE44 /* style.css in Resources */,
 				5DBAD5B024E2297400471ABF /* up-games-icon-225-1024.png in Resources */,
 				5DBAD65D24E2297400471ABF /* up-games-icon-315-29@2x.png in Resources */,
 				5DBAD5EC24E2297400471ABF /* up-games-icon-165-76@2x.png in Resources */,

@@ -82,11 +82,17 @@ using Role = UP::SpellLayout::Role;
 - (void)updateThemeColors
 {
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
-    
+
+    SpellLayout &layout = SpellLayout::instance();
+    NSString *mainFontSize = [NSString stringWithFormat:@"%.0f", roundf(26 * layout.layout_scale())];
+    NSString *smallFontSize = [NSString stringWithFormat:@"%.0f", roundf(22 * layout.layout_scale())];
+
     NSBundle *bundle = [NSBundle mainBundle];
     NSURL *baseURL = [NSURL fileURLWithPath:bundle.resourcePath];
-    NSString *path = [bundle pathForResource:@"lexicon" ofType:@"html"];
-    NSString *htmlString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    NSString *htmlPath = [bundle pathForResource:@"lexicon" ofType:@"html"];
+    NSString *stylePath = [bundle pathForResource:@"style" ofType:@"css"];
+    NSString *styleString = [NSString stringWithContentsOfFile:stylePath encoding:NSUTF8StringEncoding error:nil];
+    NSString *htmlString = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
     NSString *textColorString = [[UIColor themeColorWithCategory:UPColorCategoryControlText] asCSSRGBAString];
     NSString *cssColorString = [NSString stringWithFormat:@"color: %@;", textColorString];
     NSString *aLinkString = [[UIColor themeColorWithCategory:UPColorCategoryControlText] asCSSRGBAString];
@@ -95,10 +101,14 @@ using Role = UP::SpellLayout::Role;
     NSString *cssAVisitedString = [NSString stringWithFormat:@"color: %@;", aVisitedString];
     NSString *aActiveString = [[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] asCSSRGBAString];
     NSString *cssAActiveString = [NSString stringWithFormat:@"color: %@;", aActiveString];
+    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"<!-- style -->" withString:styleString];
     htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --color-- */" withString:cssColorString];
     htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --a:link-- */" withString:cssALinkString];
     htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --a:visited-- */" withString:cssAVisitedString];
     htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --a:active-- */" withString:cssAActiveString];
+    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --main-font-size-- */" withString:mainFontSize];
+    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --small-font-size-- */" withString:smallFontSize];
+
     [self.lexiconDescription loadHTMLString:htmlString baseURL:baseURL];
 }
 
