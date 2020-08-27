@@ -62,6 +62,10 @@ using Location = UP::SpellLayout::Location;
     UPAccessoryPane *previousSelectedPane = _selectedPane;
     _selectedPane = selectedPane;
     
+    if (previousSelectedPane) {
+        [previousSelectedPane finish];
+    }
+    
     if (selectedPane) {
         [self.view bringSubviewToFront:selectedPane];
         [selectedPane prepare];

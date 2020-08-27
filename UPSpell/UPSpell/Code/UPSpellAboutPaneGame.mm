@@ -5,39 +5,19 @@
 
 #import <UpKit/NSMutableAttributedString+UP.h>
 #import <UpKit/UIColor+UP.h>
-#import <UpKit/UPBand.h>
 #import <UpKit/UPLabel.h>
-#import <UpKit/UPLayoutRule.h>
 #import <UpKit/UPLogoView.h>
 #import <UpKit/UPMath.h>
-#import <UpKit/UPTapGestureRecognizer.h>
-#import <UpKit/UPTimeSpanning.h>
 
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
-#import "UPDialogTopMenu.h"
 #import "UPSpellAboutPaneGame.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellLayout.h"
 #import "UPSpellNavigationController.h"
 #import "UPSpellSettings.h"
-#import "UPViewMove+UPSpell.h"
 
-using UP::BandSettingsUI;
-using UP::BandSettingsAnimationDelay;
-using UP::BandSettingsUpdateDelay;
 using UP::SpellLayout;
-using UP::SpellModel;
-
-using UP::cpp_str;
-using UP::ns_str;
-
-using UP::TimeSpanning::bloop_in;
-using UP::TimeSpanning::bloop_out;
-
-using UP::TimeSpanning::delay;
-using UP::TimeSpanning::start;
-
 using Role = UP::SpellLayout::Role;
 
 @interface UPSpellAboutPaneGame ()

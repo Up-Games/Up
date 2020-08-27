@@ -295,7 +295,8 @@ using UP::TimeSpanning::start;
 {
     UPSpellNavigationController *spellNavigationController = [UPSpellNavigationController instance];
     UPSpellExtrasController *extrasController = spellNavigationController.extrasController;
-    
+    [extrasController.selectedPane finish];
+
     SpellLayout &layout = SpellLayout::instance();
 
     [transitionContext.containerView addSubview:extrasController.view];
@@ -383,6 +384,7 @@ using UP::TimeSpanning::start;
 {
     UPSpellNavigationController *spellNavigationController = [UPSpellNavigationController instance];
     UPSpellAboutController *aboutController = spellNavigationController.aboutController;
+    [aboutController.selectedPane finish];
     
     SpellLayout &layout = SpellLayout::instance();
     

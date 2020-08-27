@@ -11,5 +11,6 @@
 + (UPAccessoryPane *)pane;
 
 - (void)prepare;
+- (void)finish;
 
 @end

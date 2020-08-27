@@ -19,4 +19,8 @@ using UP::SpellLayout;
 {
 }
 
+- (void)finish
+{
+}
+
 @end
