@@ -286,7 +286,7 @@ void SpellLayout::calculate()
         LOG(Layout, "     letterbox_insets:  %@", NSStringFromUIEdgeInsets(letterbox_insets()));
     }
 
-    calculate_menu_game_view_transform();
+    calculate_game_view_transforms();
     calculate_extras_example_transform();
     calculate_tile_size();
     calculate_tile_stroke_width();
@@ -338,13 +338,17 @@ CGPoint SpellLayout::center_for(const Location &loc)
     return up_rect_center(frame_for(loc));
 }
 
-void SpellLayout::calculate_menu_game_view_transform()
+void SpellLayout::calculate_game_view_transforms()
 {
-    CGAffineTransform t = CGAffineTransformMakeScale(CanonicalGameViewMenuScale, CanonicalGameViewMenuScale);
-    CGFloat dy = ((1.0 - CanonicalGameViewMenuScale) / 2.0) * up_rect_height(screen_bounds());
-    t = CGAffineTransformTranslate(t, 0, dy);
-    set_menu_game_view_transform(t);
-    LOG(Layout, "menu_game_view_transform: %@", NSStringFromCGAffineTransform(menu_game_view_transform()));
+    CGAffineTransform menu_game_view_transform = CGAffineTransformMakeScale(CanonicalGameViewMenuScale, CanonicalGameViewMenuScale);
+    CGFloat menu_game_view_dy = ((1.0 - CanonicalGameViewMenuScale) / 2.0) * up_rect_height(screen_bounds());
+    menu_game_view_transform = CGAffineTransformTranslate(menu_game_view_transform, 0, menu_game_view_dy);
+    set_menu_game_view_transform(menu_game_view_transform);
+
+    CGAffineTransform about_playing_game_view_transform = CGAffineTransformMakeScale(CanonicalGameViewAboutPlayingScale, CanonicalGameViewAboutPlayingScale);
+    CGFloat about_playing_game_view_dy = ((1.0 - CanonicalGameViewAboutPlayingScale) / 2.0) * up_rect_height(screen_bounds());
+    about_playing_game_view_transform = CGAffineTransformTranslate(menu_game_view_transform, 0, about_playing_game_view_dy);
+    set_about_playing_game_view_transform(about_playing_game_view_transform);
 }
 
 void SpellLayout::calculate_extras_example_transform()

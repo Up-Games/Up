@@ -38,12 +38,12 @@ using Spot = UP::SpellLayout::Place;
     static dispatch_once_t onceToken;
     static UPSpellGameView *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPSpellGameView alloc] _init];
+        _Instance = [[UPSpellGameView alloc] init];
     });
     return _Instance;
 }
 
-- (instancetype)_init
+- (instancetype)init
 {
     SpellLayout &layout = SpellLayout::instance();
     self = [super initWithFrame:layout.screen_bounds()];

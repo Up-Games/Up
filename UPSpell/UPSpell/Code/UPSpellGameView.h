@@ -25,6 +25,7 @@
 
 + (UPSpellGameView *)instance;
 
+- (instancetype)init;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
 @end

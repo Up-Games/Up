@@ -168,6 +168,7 @@ public:
     static inline constexpr CGRect CanonicalGameShareButtonFrame = { 853, 382,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
     static inline constexpr CGFloat CanonicalGameViewMenuScale = 0.7;
+    static inline constexpr CGFloat CanonicalGameViewAboutPlayingScale = 0.65;
     static inline constexpr CGFloat CanonicalOffscreenNearFrameFactor = 1.2;
 
     static inline constexpr CGRect CanonicalChoiceBackButtonRowLayoutFrame = {  20,  30, 960, 64 };
@@ -223,6 +224,8 @@ public:
 
     static inline constexpr CGRect CanonicalAboutLexiconDescriptionFrame = { 40, 44, 600, 400 };
     static inline constexpr CGRect CanonicalAboutLegalDescriptionFrame = { 40, 44, 600, 400 };
+
+    static inline constexpr CGPoint CanonicalAboutPlayingGameViewCenter = { 385, 125 };
 
     static inline constexpr CGRect CanonicalHeroLogoFrame = { 426, 132, 160, 160 };
     static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 416, 295, 180, 300 };
@@ -314,6 +317,7 @@ public:
     CGFloat choice_control_label_right_margin() const { return m_choice_control_label_right_margin; }
 
     CGAffineTransform menu_game_view_transform() const { return m_menu_game_view_transform; }
+    CGAffineTransform about_playing_game_view_transform() const { return m_about_playing_game_view_transform; }
     CGAffineTransform extras_example_transform() const { return m_extras_example_transform; }
 
     CGRect layout_relative_aspect_rect(CGRect) const;
@@ -341,6 +345,7 @@ private:
     void set_tile_drag_barrier_frame(CGRect rect) { m_tile_drag_barrier_frame = rect; }
     void set_word_tray_shake_offset(UIOffset offset) { m_word_tray_shake_offset = offset; }
     void set_menu_game_view_transform(CGAffineTransform t) { m_menu_game_view_transform = t; }
+    void set_about_playing_game_view_transform(CGAffineTransform t) { m_about_playing_game_view_transform = t; }
     void set_extras_example_transform(CGAffineTransform t) { m_extras_example_transform = t; }
     void set_text_button_font(UIFont *font) { m_text_button_font = font; }
     void set_small_text_button_font(UIFont *font) { m_small_text_button_font = font; }
@@ -372,7 +377,7 @@ private:
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
     void set_game_score_frame(CGRect rect) { m_game_score_frame = rect; }
 
-    void calculate_menu_game_view_transform();
+    void calculate_game_view_transforms();
     void calculate_extras_example_transform();
     void calculate_tile_size();
     void calculate_tile_stroke_width();
@@ -447,6 +452,7 @@ private:
     CGFloat m_layout_scale = 1.0;
     UIEdgeInsets m_letterbox_insets = UIEdgeInsetsZero;
     CGAffineTransform m_menu_game_view_transform;
+    CGAffineTransform m_about_playing_game_view_transform;
     CGAffineTransform m_extras_example_transform;
 
     __strong UIFont *m_text_button_font;
