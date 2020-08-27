@@ -12,12 +12,14 @@
 #import "UPSpellAboutController.h"
 #import "UPSpellAboutPaneGame.h"
 #import "UPSpellAboutPaneLexicon.h"
+#import "UPSpellAboutPanePlaying.h"
 #import "UPSpellAboutPaneThanks.h"
 #import "UPSpellSettings.h"
 #import "UPSpellLayout.h"
 
 @interface UPSpellAboutController ()
 @property (nonatomic) UPSpellAboutPaneGame *gamePane;
+@property (nonatomic) UPSpellAboutPanePlaying *playingPane;
 @property (nonatomic) UPSpellAboutPaneLexicon *lexiconPane;
 @property (nonatomic) UPSpellAboutPaneThanks *thanksPane;
 @end
@@ -85,6 +87,10 @@ static UPSpellAboutController *_Instance;
     self.gamePane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
     [self.view addSubview:self.gamePane];
     
+    self.playingPane = [UPSpellAboutPanePlaying pane];
+    self.playingPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    [self.view addSubview:self.playingPane];
+    
     self.lexiconPane = [UPSpellAboutPaneLexicon pane];
     self.lexiconPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
     [self.view addSubview:self.lexiconPane];
@@ -97,7 +103,7 @@ static UPSpellAboutController *_Instance;
     
     self.panes = @[
         self.gamePane,
-        [UPAccessoryPane pane],
+        self.playingPane,
         self.lexiconPane,
         self.thanksPane
     ];

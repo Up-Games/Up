@@ -12,6 +12,7 @@
 		5D08E6E324F6B631007DBE44 /* thanks.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D08E6E224F6B631007DBE44 /* thanks.html */; };
 		5D08E6E524F6B840007DBE44 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 5D08E6E424F6B840007DBE44 /* style.css */; };
 		5D08E6E724F6D893007DBE44 /* lexicon.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D08E6E624F6D893007DBE44 /* lexicon.html */; };
+		5D08E6EA24F74326007DBE44 /* UPSpellAboutPanePlaying.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D08E6E824F74326007DBE44 /* UPSpellAboutPanePlaying.mm */; };
 		5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */; };
 		5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21A24A125D000353563 /* UPBallot.mm */; };
 		5D0FC21E24A130D700353563 /* MalloryCond-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */; };
@@ -489,6 +490,8 @@
 		5D08E6E224F6B631007DBE44 /* thanks.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = thanks.html; sourceTree = "<group>"; };
 		5D08E6E424F6B840007DBE44 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		5D08E6E624F6D893007DBE44 /* lexicon.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = lexicon.html; sourceTree = "<group>"; };
+		5D08E6E824F74326007DBE44 /* UPSpellAboutPanePlaying.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPanePlaying.mm; sourceTree = "<group>"; };
+		5D08E6E924F74326007DBE44 /* UPSpellAboutPanePlaying.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutPanePlaying.h; sourceTree = "<group>"; };
 		5D0FC21324A02FB600353563 /* UPDialogGameNote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogGameNote.h; sourceTree = "<group>"; };
 		5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameNote.mm; sourceTree = "<group>"; };
 		5D0FC21A24A125D000353563 /* UPBallot.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPBallot.mm; sourceTree = "<group>"; };
@@ -1125,6 +1128,8 @@
 				5D29879024F5624800AA6E78 /* UPSpellAboutPaneGame.mm */,
 				5D29879424F57F8700AA6E78 /* UPSpellAboutPaneLexicon.h */,
 				5D29879524F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm */,
+				5D08E6E924F74326007DBE44 /* UPSpellAboutPanePlaying.h */,
+				5D08E6E824F74326007DBE44 /* UPSpellAboutPanePlaying.mm */,
 				5D08E6DA24F6AABB007DBE44 /* UPSpellAboutPaneThanks.h */,
 				5D08E6DB24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm */,
 				5D6261A124C0944600D19EEF /* UPSpellDossier.h */,
@@ -2128,6 +2133,7 @@
 				5D5B546B24D0A40500FD50D4 /* UPTunePlayer.mm in Sources */,
 				5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */,
 				5D4AE82A248ED25500213904 /* UPDialogTopMenu.mm in Sources */,
+				5D08E6EA24F74326007DBE44 /* UPSpellAboutPanePlaying.mm in Sources */,
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
 				5D6FB59D24DDC56100CDC293 /* UPDialogChallenge.mm in Sources */,
 				5D0FC33624A65C0B00353563 /* UPSpellExtrasPaneColors.mm in Sources */,
