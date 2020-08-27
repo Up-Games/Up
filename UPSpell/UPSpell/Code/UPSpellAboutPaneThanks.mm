@@ -31,20 +31,16 @@ using Role = UP::SpellLayout::Role;
 {
     self = [super initWithFrame:frame];
 
-    SpellLayout &layout = SpellLayout::instance();
-
-    self.thanksDescription.backgroundColor = [UIColor clearColor];
-    [self addSubview:self.thanksDescription];
-
-    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-    self.thanksDescription = [[WKWebView alloc] initWithFrame:layout.frame_for(Role::AboutLegalDescription) configuration:configuration];
-    self.thanksDescription.opaque = NO;
-    self.thanksDescription.backgroundColor = [UIColor clearColor];
-    self.thanksDescription.scrollView.backgroundColor = [UIColor clearColor];
-    self.thanksDescription.navigationDelegate = self;
-    [self addSubview:self.thanksDescription];
-    
-    [self updateThemeColors];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        SpellLayout &layout = SpellLayout::instance();
+        WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+        self.thanksDescription = [[WKWebView alloc] initWithFrame:layout.frame_for(Role::AboutLegalDescription) configuration:configuration];
+        self.thanksDescription.opaque = NO;
+        self.thanksDescription.backgroundColor = [UIColor clearColor];
+        self.thanksDescription.scrollView.backgroundColor = [UIColor clearColor];
+        self.thanksDescription.navigationDelegate = self;
+        [self addSubview:self.thanksDescription];
+    });
 
     return self;
 }

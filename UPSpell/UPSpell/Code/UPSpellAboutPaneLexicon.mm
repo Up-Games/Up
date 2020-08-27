@@ -30,22 +30,18 @@ using Role = UP::SpellLayout::Role;
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    
-    SpellLayout &layout = SpellLayout::instance();
-    
-    self.lexiconDescription.backgroundColor = [UIColor clearColor];
-    [self addSubview:self.lexiconDescription];
-    
-    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-    self.lexiconDescription = [[WKWebView alloc] initWithFrame:layout.frame_for(Role::AboutLegalDescription) configuration:configuration];
-    self.lexiconDescription.opaque = NO;
-    self.lexiconDescription.backgroundColor = [UIColor clearColor];
-    self.lexiconDescription.scrollView.backgroundColor = [UIColor clearColor];
-    self.lexiconDescription.navigationDelegate = self;
-    [self addSubview:self.lexiconDescription];
-    
-    [self updateThemeColors];
-    
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        SpellLayout &layout = SpellLayout::instance();
+        WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+        self.lexiconDescription = [[WKWebView alloc] initWithFrame:layout.frame_for(Role::AboutLegalDescription) configuration:configuration];
+        self.lexiconDescription.opaque = NO;
+        self.lexiconDescription.backgroundColor = [UIColor clearColor];
+        self.lexiconDescription.scrollView.backgroundColor = [UIColor clearColor];
+        self.lexiconDescription.navigationDelegate = self;
+        [self addSubview:self.lexiconDescription];
+    });
+
     return self;
 }
 
