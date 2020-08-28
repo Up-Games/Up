@@ -22,7 +22,8 @@ typedef NS_OPTIONS(NSInteger, UPAnimatorType) {
     UPAnimatorTypeFade       = 1 << 2,
     UPAnimatorTypeShake      = 1 << 3,
     UPAnimatorTypeSlide      = 1 << 4,
-    UPAnimatorTypeSetColor   = 1 << 5,
+    UPAnimatorTypeEase       = 1 << 5,
+    UPAnimatorTypeSetColor   = 1 << 6,
 };
 
 @interface UPAnimator : NSObject <UIViewAnimating, UPTimeSpanning>
@@ -41,6 +42,9 @@ typedef NS_OPTIONS(NSInteger, UPAnimatorType) {
 
 + (UPAnimator *)slideAnimatorInBand:(UP::Band)band moves:(NSArray<UPViewMove *> *)moves duration:(CFTimeInterval)duration
                          completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
+
++ (UPAnimator *)easeAnimatorInBand:(UP::Band)band moves:(NSArray<UPViewMove *> *)moves duration:(CFTimeInterval)duration
+                        completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;
 
 + (UPAnimator *)setColorAnimatorInBand:(UP::Band)band controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
     element:(UPControlElement)element fromControlState:(UPControlState)fromControlState toControlState:(UPControlState)toControlState

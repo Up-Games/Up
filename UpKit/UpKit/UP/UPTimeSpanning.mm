@@ -93,6 +93,13 @@ UPAnimator *slide(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval du
     return animator;
 }
 
+UPAnimator *ease(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition))
+{
+    UPAnimator *animator = [UPAnimator easeAnimatorInBand:band moves:moves duration:duration completion:completion];
+    emplace(animator.serialNumber, animator);
+    return animator;
+}
+
 UPAnimator *set_color(UP::Band band, NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
     UPControlState fromControlState, UPControlState toControlState, void (^completion)(UIViewAnimatingPosition))
 {

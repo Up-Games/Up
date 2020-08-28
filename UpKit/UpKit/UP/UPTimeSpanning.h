@@ -31,13 +31,10 @@ void init();
 
 UPAnimator *bloop_in(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
 UPAnimator *bloop_out(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
-
 UPAnimator *fade(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
-
-UPAnimator *shake(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset,
-    void (^completion)(UIViewAnimatingPosition));
-
+UPAnimator *shake(UP::Band band, NSArray<UIView *> *views, CFTimeInterval duration, UIOffset offset, void (^completion)(UIViewAnimatingPosition));
 UPAnimator *slide(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
+UPAnimator *ease(UP::Band band, NSArray<UPViewMove *> *moves, CFTimeInterval duration, void (^completion)(UIViewAnimatingPosition));
 
 UPAnimator *set_color(UP::Band band, NSArray<UPControl *> *controls, CFTimeInterval duration, UPControlElement element,
     UPControlState fromControlState, UPControlState toControlState, void (^completion)(UIViewAnimatingPosition));

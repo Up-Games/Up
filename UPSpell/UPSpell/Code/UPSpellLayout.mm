@@ -821,6 +821,7 @@ void SpellLayout::calculate_about_locations()
     calculate_and_set_locations(Role::AboutPlayingBottomPrompt, layout_relative_aspect_rect(CanonicalAboutPlayingGameBottomPromptFrame));
     calculate_and_set_locations(Role::AboutPlayingTopLeftPrompt, layout_relative_aspect_rect(CanonicalAboutPlayingGameTopLeftPromptFrame));
     calculate_and_set_locations(Role::AboutPlayingTopRightPrompt, layout_relative_aspect_rect(CanonicalAboutPlayingGameRightLeftPromptFrame));
+    calculate_and_set_locations(Role::AboutPlaying2xCallout, layout_relative_aspect_rect(CanonicalAboutPlaying2xCalloutFrame));
 
     CGRect controls_button_left_frame = frame_for(Role::ControlButtonLeft);
     controls_button_left_frame.origin.x += 20;

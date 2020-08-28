@@ -42,6 +42,7 @@ using Place = UP::SpellLayout::Place;
 using UP::TimeSpanning::bloop_in;
 using UP::TimeSpanning::bloop_out;
 using UP::TimeSpanning::slide;
+using UP::TimeSpanning::ease;
 
 using UP::TimeSpanning::cancel;
 using UP::TimeSpanning::delay;
@@ -78,8 +79,6 @@ using UP::TimeSpanning::start;
 
     CGRect botSpotFrame = up_rect_scaled(CGRectMake(0, 0, 92, 92), layout.layout_scale());
     self.botSpot = [[UIView alloc] initWithFrame:botSpotFrame];
-    self.botSpot.layer.cornerRadius = up_rect_width(botSpotFrame) * 0.5;
-    self.botSpot.layer.borderWidth = 4;
     [self.gameView addSubview:self.botSpot];
 
     self.gameTimer = [[UPGameTimer alloc] initWithDuration:UPGameTimerDefaultDuration];
@@ -98,11 +97,16 @@ using UP::TimeSpanning::start;
 
 - (void)prepare
 {
+    SpellLayout &layout = SpellLayout::instance();
+
     self.gameView.alpha = 1;
     self.bottomPromptLabel.alpha = 1;
+    self.botSpot.alpha = 1;
+    self.botSpot.transform = CGAffineTransformIdentity;
+    self.botSpot.frame = up_rect_scaled(CGRectMake(0, 0, 92, 92), layout.layout_scale());
+    self.botSpot.layer.cornerRadius = up_rect_width(self.botSpot.frame) * 0.5;
+    self.botSpot.layer.borderWidth = up_float_scaled(6, layout.layout_scale());
     self.step = 1;
-
-    SpellLayout &layout = SpellLayout::instance();
 
     [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (TileIndex idx = 0; idx < TileCount; idx++) {
@@ -142,11 +146,7 @@ using UP::TimeSpanning::start;
     [self updateThemeColors];
 
     self.active = YES;
-    
-    delay(BandAboutPlayingDelay, 1.2, ^{
-        [self nextStep];
-    });
-    
+        
     self.bottomPromptLabel.string = @"";
     self.bottomPromptLabel.frame = layout.frame_for(Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
     self.botSpot.center = layout.center_for(Role::DialogMessageCenteredInWordTray);
@@ -154,12 +154,25 @@ using UP::TimeSpanning::start;
     self.gameView.wordScoreLabel.hidden = YES;
     self.gameView.gameScoreLabel.string = @"0";
 
+    delay(BandAboutPlayingDelay, 1, ^{
+        [self nextStep];
+    });
 }
 
 - (void)finish
 {
     cancel(BandAboutPlaying);
     self.active = NO;
+}
+
+- (void)botSpotTap
+{
+    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75];
+}
+
+- (void)botSpotRelease
+{
+    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
 }
 
 - (void)animateToStepTwo
@@ -195,7 +208,7 @@ using UP::TimeSpanning::start;
     self.botSpot.center = layout.center_for(Role::DialogMessageCenteredInWordTray);
     
     UPViewMove *botSpotMove1 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 4)));
-    start(slide(BandAboutPlayingUI, @[ botSpotMove1 ], 0.4, ^(UIViewAnimatingPosition) {
+    start(ease(BandAboutPlayingUI, @[ botSpotMove1 ], 0.4, ^(UIViewAnimatingPosition) {
         
         if (!self.active) {
             return;
@@ -203,15 +216,17 @@ using UP::TimeSpanning::start;
 
         UPViewMove *tileMove1 = UPViewMoveMake(tileView1, Role::WordTile1of1);
         tileView1.highlighted = YES;
+        [self botSpotTap];
         start(bloop_in(BandAboutPlayingUI, @[ tileMove1 ], 0.3, nil));
         delay(BandAboutPlayingDelay, 0.2, ^{
+            [self botSpotRelease];
             tileView1.highlighted = NO;
             [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
             [self.gameView.clearControl setNeedsUpdate];
         });
                                                
         UPViewMove *botSpotMove2 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 1)));
-        start(slide(BandAboutPlayingUI, @[ botSpotMove2 ], 0.4, ^(UIViewAnimatingPosition) {
+        start(ease(BandAboutPlayingUI, @[ botSpotMove2 ], 0.4, ^(UIViewAnimatingPosition) {
 
             if (!self.active) {
                 return;
@@ -222,13 +237,15 @@ using UP::TimeSpanning::start;
 
             UPViewMove *tileMove2 = UPViewMoveMake(tileView2, Role::WordTile2of2);
             tileView2.highlighted = YES;
+            [self botSpotTap];
             start(bloop_in(BandAboutPlayingUI, @[ tileMove2 ], 0.3, nil));
             delay(BandAboutPlayingDelay, 0.2, ^{
+                [self botSpotRelease];
                 tileView2.highlighted = NO;
             });
 
             UPViewMove *botSpotMove3 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 6)));
-            start(slide(BandAboutPlayingUI, @[ botSpotMove3 ], 0.4, ^(UIViewAnimatingPosition) {
+            start(ease(BandAboutPlayingUI, @[ botSpotMove3 ], 0.4, ^(UIViewAnimatingPosition) {
 
                 if (!self.active) {
                     return;
@@ -239,14 +256,16 @@ using UP::TimeSpanning::start;
                 start(slide(BandAboutPlayingUI, @[ tileMove1b, tileMove2b ], 0.1, nil));
                 
                 UPViewMove *tileMove3 = UPViewMoveMake(tileView3, Role::WordTile3of3);
+                [self botSpotTap];
                 tileView3.highlighted = YES;
                 start(bloop_in(BandAboutPlayingUI, @[ tileMove3 ], 0.3, nil));
                 delay(BandAboutPlayingDelay, 0.2, ^{
+                    [self botSpotRelease];
                     tileView3.highlighted = NO;
                 });
 
                 UPViewMove *botSpotMove4 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 2)));
-                start(slide(BandAboutPlayingUI, @[ botSpotMove4 ], 0.4, ^(UIViewAnimatingPosition) {
+                start(ease(BandAboutPlayingUI, @[ botSpotMove4 ], 0.4, ^(UIViewAnimatingPosition) {
 
                     if (!self.active) {
                         return;
@@ -261,16 +280,16 @@ using UP::TimeSpanning::start;
                     start(slide(BandAboutPlayingUI, @[ tileMove1c, tileMove2c, tileMove3c ], 0.1, nil));
                     
                     UPViewMove *tileMove4 = UPViewMoveMake(tileView4, Role::WordTile4of4);
+                    [self botSpotTap];
                     tileView4.highlighted = YES;
                     start(bloop_in(BandAboutPlayingUI, @[ tileMove4 ], 0.3, nil));
                     delay(BandAboutPlayingDelay, 0.2, ^{
+                        [self botSpotRelease];
                         tileView4.highlighted = NO;
-
                     });
                     delay(BandAboutPlayingDelay, 1, ^{
                         [self nextStep];
                     });
-
                 }));
             }));
         }));
@@ -306,19 +325,21 @@ using UP::TimeSpanning::start;
     }
     
     UPViewMove *botSpotMove = UPViewMoveMake(self.botSpot, Role::WordTile1of6);
-    start(slide(BandAboutPlayingUI, @[ botSpotMove ], 0.4, ^(UIViewAnimatingPosition) {
+    start(ease(BandAboutPlayingUI, @[ botSpotMove ], 0.4, ^(UIViewAnimatingPosition) {
         if (!self.active) {
             return;
         }
 
         delay(BandAboutPlayingDelay, 0.5, ^{
             self.gameView.wordTrayControl.highlighted = YES;
+            [self botSpotTap];
             [self.gameView.wordTrayControl setNeedsUpdate];
 
             delay(BandAboutPlayingDelay, 0.2, ^{
                 self.gameView.wordTrayControl.highlighted = NO;
                 self.gameView.wordTrayControl.active = NO;
                 [self.gameView.wordTrayControl setNeedsUpdate];
+                [self botSpotRelease];
                 [self nextStep];
             });
         });
@@ -443,11 +464,13 @@ using UP::TimeSpanning::start;
     }
 
     UPViewMove *botSpotMove1 = UPViewMoveMake(self.botSpot, Role::AboutPlayingTopRightButtonClick);
-    start(slide(BandAboutPlayingUI, @[ botSpotMove1 ], 0.8, ^(UIViewAnimatingPosition) {
+    start(ease(BandAboutPlayingUI, @[ botSpotMove1 ], 0.8, ^(UIViewAnimatingPosition) {
         delay(BandAboutPlayingDelay, 0.2, ^{
             self.gameView.clearControl.highlighted = YES;
+            [self botSpotTap];
             delay(BandAboutPlayingDelay, 0.2, ^{
                 self.gameView.clearControl.highlighted = NO;
+                [self botSpotRelease];
                 [self nextStep];
             });
         });
@@ -521,7 +544,7 @@ using UP::TimeSpanning::start;
                 model = TileModel(U'S');
                 break;
             case 6:
-                model = TileModel(U'T');
+                model = TileModel(U'T', 2);
                 break;
         }
         UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
@@ -549,11 +572,8 @@ using UP::TimeSpanning::start;
     UPTileView *tileView3 = self.tileViews[4];
     UPTileView *tileView4 = self.tileViews[1];
     
-    SpellLayout &layout = SpellLayout::instance();
-    self.botSpot.center = layout.center_for(Role::DialogMessageCenteredInWordTray);
-    
     UPViewMove *botSpotMove1 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 0)));
-    start(slide(BandAboutPlayingUI, @[ botSpotMove1 ], 0.4, ^(UIViewAnimatingPosition) {
+    start(ease(BandAboutPlayingUI, @[ botSpotMove1 ], 0.4, ^(UIViewAnimatingPosition) {
         
         if (!self.active) {
             return;
@@ -561,11 +581,13 @@ using UP::TimeSpanning::start;
         
         UPViewMove *tileMove1 = UPViewMoveMake(tileView1, Role::WordTile1of1);
         tileView1.highlighted = YES;
+        [self botSpotTap];
+        [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
+        [self.gameView.clearControl setNeedsUpdate];
         start(bloop_in(BandAboutPlayingUI, @[ tileMove1 ], 0.3, nil));
         delay(BandAboutPlayingDelay, 0.2, ^{
             tileView1.highlighted = NO;
-            [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
-            [self.gameView.clearControl setNeedsUpdate];
+            [self botSpotRelease];
         });
         
         UPViewMove *botSpotMove2 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 2)));
@@ -580,9 +602,11 @@ using UP::TimeSpanning::start;
             
             UPViewMove *tileMove2 = UPViewMoveMake(tileView2, Role::WordTile2of2);
             tileView2.highlighted = YES;
+            [self botSpotTap];
             start(bloop_in(BandAboutPlayingUI, @[ tileMove2 ], 0.3, nil));
             delay(BandAboutPlayingDelay, 0.2, ^{
                 tileView2.highlighted = NO;
+                [self botSpotRelease];
             });
             
             UPViewMove *botSpotMove3 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 4)));
@@ -598,9 +622,11 @@ using UP::TimeSpanning::start;
                 
                 UPViewMove *tileMove3 = UPViewMoveMake(tileView3, Role::WordTile3of3);
                 tileView3.highlighted = YES;
+                [self botSpotTap];
                 start(bloop_in(BandAboutPlayingUI, @[ tileMove3 ], 0.3, nil));
                 delay(BandAboutPlayingDelay, 0.2, ^{
                     tileView3.highlighted = NO;
+                    [self botSpotRelease];
                 });
                 
                 UPViewMove *botSpotMove4 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 1)));
@@ -617,10 +643,11 @@ using UP::TimeSpanning::start;
                     
                     UPViewMove *tileMove4 = UPViewMoveMake(tileView4, Role::WordTile4of4);
                     tileView4.highlighted = YES;
+                    [self botSpotTap];
                     start(bloop_in(BandAboutPlayingUI, @[ tileMove4 ], 0.3, nil));
                     delay(BandAboutPlayingDelay, 0.2, ^{
                         tileView4.highlighted = NO;
-                        
+                        [self botSpotRelease];
                     });
                     delay(BandAboutPlayingDelay, 0.2, ^{
                         [self nextStep];
@@ -661,11 +688,13 @@ using UP::TimeSpanning::start;
     }
     
     UPViewMove *botSpotMove1 = UPViewMoveMake(self.botSpot, Role::AboutPlayingTopRightButtonClick);
-    start(slide(BandAboutPlayingUI, @[ botSpotMove1 ], 0.8, ^(UIViewAnimatingPosition) {
+    start(ease(BandAboutPlayingUI, @[ botSpotMove1 ], 0.8, ^(UIViewAnimatingPosition) {
         delay(BandAboutPlayingDelay, 0.2, ^{
             self.gameView.clearControl.highlighted = YES;
+            [self botSpotTap];
             delay(BandAboutPlayingDelay, 0.2, ^{
                 self.gameView.clearControl.highlighted = NO;
+                [self botSpotRelease];
                 [self nextStep];
             });
         });
@@ -677,7 +706,10 @@ using UP::TimeSpanning::start;
     if (!self.active) {
         return;
     }
-    
+
+    [self.gameView.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
+    [self.gameView.clearControl setNeedsUpdate];
+
     UPTileView *tileView1 = self.tileViews[0];
     UPTileView *tileView2 = self.tileViews[1];
     UPTileView *tileView3 = self.tileViews[2];
@@ -720,9 +752,11 @@ using UP::TimeSpanning::start;
     }
     
     UPViewMove *botSpotMove1 = UPViewMoveMake(self.botSpot, Role::AboutPlayingTopLeftButtonClick);
-    start(slide(BandAboutPlayingUI, @[ botSpotMove1 ], 0.8, ^(UIViewAnimatingPosition) {
+    start(ease(BandAboutPlayingUI, @[ botSpotMove1 ], 0.8, ^(UIViewAnimatingPosition) {
         delay(BandAboutPlayingDelay, 0.2, ^{
             delay(BandAboutPlayingDelay, 1.25, ^{
+                UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+                start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, nil));
                 [self nextStep];
             });
         });
@@ -735,24 +769,14 @@ using UP::TimeSpanning::start;
         return;
     }
     
-    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
-    start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
-        self.bottomPromptLabel.string = @"GOOD LUCK & HAVE FUN!";
-        UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
-        start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, nil));
-    }));
-
     UPTileView *tileView1 = self.tileViews[4];
     UPTileView *tileView2 = self.tileViews[1];
     UPTileView *tileView3 = self.tileViews[2];
-    UPTileView *tileView4 = self.tileViews[5];
-    UPTileView *tileView5 = self.tileViews[6];
+    UPTileView *tileView4 = self.tileViews[6];
+    UPTileView *tileView5 = self.tileViews[5];
 
-    SpellLayout &layout = SpellLayout::instance();
-    self.botSpot.center = layout.center_for(Role::DialogMessageCenteredInWordTray);
-    
     UPViewMove *botSpotMove1 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 4)));
-    start(slide(BandAboutPlayingUI, @[ botSpotMove1 ], 0.4, ^(UIViewAnimatingPosition) {
+    start(ease(BandAboutPlayingUI, @[ botSpotMove1 ], 0.4, ^(UIViewAnimatingPosition) {
         
         if (!self.active) {
             return;
@@ -760,15 +784,17 @@ using UP::TimeSpanning::start;
         
         UPViewMove *tileMove1 = UPViewMoveMake(tileView1, Role::WordTile1of1);
         tileView1.highlighted = YES;
+        [self botSpotTap];
         start(bloop_in(BandAboutPlayingUI, @[ tileMove1 ], 0.3, nil));
         delay(BandAboutPlayingDelay, 0.2, ^{
             tileView1.highlighted = NO;
+            [self botSpotRelease];
             [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
             [self.gameView.clearControl setNeedsUpdate];
         });
         
         UPViewMove *botSpotMove2 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 1)));
-        start(slide(BandAboutPlayingUI, @[ botSpotMove2 ], 0.4, ^(UIViewAnimatingPosition) {
+        start(ease(BandAboutPlayingUI, @[ botSpotMove2 ], 0.4, ^(UIViewAnimatingPosition) {
             
             if (!self.active) {
                 return;
@@ -779,9 +805,11 @@ using UP::TimeSpanning::start;
             
             UPViewMove *tileMove2 = UPViewMoveMake(tileView2, Role::WordTile2of2);
             tileView2.highlighted = YES;
+            [self botSpotTap];
             start(bloop_in(BandAboutPlayingUI, @[ tileMove2 ], 0.3, nil));
             delay(BandAboutPlayingDelay, 0.2, ^{
                 tileView2.highlighted = NO;
+                [self botSpotRelease];
             });
             
             UPViewMove *botSpotMove3 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 2)));
@@ -797,12 +825,14 @@ using UP::TimeSpanning::start;
                 
                 UPViewMove *tileMove3 = UPViewMoveMake(tileView3, Role::WordTile3of3);
                 tileView3.highlighted = YES;
+                [self botSpotTap];
                 start(bloop_in(BandAboutPlayingUI, @[ tileMove3 ], 0.3, nil));
                 delay(BandAboutPlayingDelay, 0.2, ^{
                     tileView3.highlighted = NO;
+                    [self botSpotRelease];
                 });
                 
-                UPViewMove *botSpotMove4 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 5)));
+                UPViewMove *botSpotMove4 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 6)));
                 start(slide(BandAboutPlayingUI, @[ botSpotMove4 ], 0.4, ^(UIViewAnimatingPosition) {
                     
                     if (!self.active) {
@@ -816,13 +846,14 @@ using UP::TimeSpanning::start;
                     
                     UPViewMove *tileMove4 = UPViewMoveMake(tileView4, Role::WordTile4of4);
                     tileView4.highlighted = YES;
+                    [self botSpotTap];
                     start(bloop_in(BandAboutPlayingUI, @[ tileMove4 ], 0.3, nil));
                     delay(BandAboutPlayingDelay, 0.2, ^{
                         tileView4.highlighted = NO;
-                        
+                        [self botSpotRelease];
                     });
                     delay(BandAboutPlayingDelay, 0.2, ^{
-                        UPViewMove *botSpotMove5 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 6)));
+                        UPViewMove *botSpotMove5 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 5)));
                         start(slide(BandAboutPlayingUI, @[ botSpotMove5 ], 0.2, ^(UIViewAnimatingPosition) {
                             
                             if (!self.active) {
@@ -837,10 +868,11 @@ using UP::TimeSpanning::start;
                             
                             UPViewMove *tileMove5 = UPViewMoveMake(tileView5, Role::WordTile5of5);
                             tileView5.highlighted = YES;
+                            [self botSpotTap];
                             start(bloop_in(BandAboutPlayingUI, @[ tileMove5 ], 0.3, nil));
                             delay(BandAboutPlayingDelay, 0.2, ^{
                                 tileView5.highlighted = NO;
-                                
+                                [self botSpotRelease];
                             });
                             delay(BandAboutPlayingDelay, 1, ^{
                                 [self nextStep];
@@ -854,6 +886,99 @@ using UP::TimeSpanning::start;
 }
 
 - (void)animateToStepEighteen
+{
+    self.bottomPromptLabel.string = @"DRAG LETTERS TO REARRANGE";
+    UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
+    start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
+        delay(BandAboutPlayingDelay, 1, ^{
+            [self nextStep];
+        });
+    }));
+}
+
+- (void)animateToStepNineteen
+{
+    if (!self.active) {
+        return;
+    }
+
+    UPViewMove *botSpotMove1 = UPViewMoveMake(self.botSpot, Role::WordTile5of5);
+    start(ease(BandAboutPlayingUI, @[ botSpotMove1 ], 0.5, ^(UIViewAnimatingPosition) {
+        delay(BandAboutPlayingDelay, 0.3, ^{
+            UPViewMove *botSpotMove2 = UPViewMoveMake(self.botSpot, Role::WordTile4of5);
+            UPTileView *tileView1 = self.tileViews[5];
+            UPTileView *tileView2 = self.tileViews[6];
+            UPViewMove *tileMove1 = UPViewMoveMake(tileView1, Role::WordTile4of5);
+            UPViewMove *tileMove2 = UPViewMoveMake(tileView2, Role::WordTile5of5);
+            [self botSpotTap];
+            start(ease(BandAboutPlayingUI, @[ botSpotMove2, tileMove1, tileMove2 ], 0.3, ^(UIViewAnimatingPosition) {
+                [self botSpotRelease];
+                delay(BandAboutPlayingDelay, 1, ^{
+                    [self nextStep];
+                });
+            }));
+        });
+    }));
+}
+
+- (void)animateToStepTwenty
+{
+    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+    start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
+        self.bottomPromptLabel.string = @"2x TILES DOUBLE YOUR WORD SCORE";
+        UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
+        start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
+            delay(BandAboutPlayingDelay, 1, ^{
+                [UIView animateWithDuration:0.2 animations:^{
+                    self.botSpot.backgroundColor = [UIColor clearColor];
+                    self.botSpot.transform = CGAffineTransformMakeScale(4, 4);
+                } completion:^(BOOL finished) {
+                    [UIView animateWithDuration:0.2 animations:^{
+                        SpellLayout &layout = SpellLayout::instance();
+                        self.botSpot.transform = CGAffineTransformIdentity;
+                        self.botSpot.frame = layout.frame_for(Role::AboutPlaying2xCallout);
+                        self.botSpot.layer.cornerRadius = up_rect_width(self.botSpot.frame) * 0.5;
+                        self.botSpot.layer.borderWidth = up_float_scaled(4, layout.layout_scale());
+                    } completion:^(BOOL finished) {
+                        delay(BandAboutPlayingDelay, 2, ^{
+                            [self nextStep];
+                        });
+                    }];
+                }];
+            });
+        }));
+    }));
+}
+
+- (void)animateToStepTwentyOne
+{
+    if (!self.active) {
+        return;
+    }
+
+    [UIView animateWithDuration:0.5 animations:^{
+        self.botSpot.transform = CGAffineTransformMakeScale(7, 7);
+        self.botSpot.alpha = 0;
+    } completion:^(BOOL finished) {
+        delay(BandAboutPlayingDelay, 0.5, ^{
+            if (!self.active) {
+                return;
+            }
+            UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+            start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
+                self.bottomPromptLabel.string = @"GOOD LUCK & HAVE FUN!";
+                UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
+                start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
+                    delay(BandAboutPlayingDelay, 1.25, ^{
+                        [self nextStep];
+                    });
+                }));
+            }));
+        });
+    }];
+}
+
+- (void)animateToStepTwentyX
 {
     if (!self.active) {
         return;
@@ -937,6 +1062,18 @@ using UP::TimeSpanning::start;
         case 18:
             [self animateToStepEighteen];
             break;
+        case 19:
+            [self animateToStepNineteen];
+            break;
+        case 20:
+            [self animateToStepTwenty];
+            break;
+        case 21:
+            [self animateToStepTwentyOne];
+            break;
+        case 22:
+            [self animateToStepTwentyX];
+            break;
     }
 }
 
@@ -946,9 +1083,9 @@ using UP::TimeSpanning::start;
 {
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
     
-    UIColor *borderColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
-    self.botSpot.layer.borderColor = [borderColor colorWithAlphaComponent:0.6].CGColor;
-    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.8];
+    UIColor *borderColor = [UIColor themeColorWithCategory:UPColorCategoryCanonicalHighlighted];
+    self.botSpot.layer.borderColor = borderColor.CGColor;
+    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
 }
 
 @end

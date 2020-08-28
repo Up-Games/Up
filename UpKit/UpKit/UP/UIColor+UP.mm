@@ -118,6 +118,8 @@ static CGFloat _ThemeHue = 225;
     switch (effectiveCategory) {
         case UPColorCategoryOneBit:
         case UPColorCategoryCanonical:
+        case UPColorCategoryCanonicalActive:
+        case UPColorCategoryCanonicalHighlighted:
         case UPColorCategoryControlShapeFill:
         case UPColorCategoryControlShapeActiveFill:
         case UPColorCategoryControlShapeInactiveFill:
@@ -219,6 +221,28 @@ static CGFloat _ThemeHue = 225;
                 case UPThemeColorStyleLightStark:
                 case UPThemeColorStyleDarkStark:
                     return UPColorCategoryPrimaryStroke;
+            }
+        }
+        case UPColorCategoryCanonicalActive: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryActiveFill;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryActiveStroke;
+            }
+        }
+        case UPColorCategoryCanonicalHighlighted: {
+            switch (style) {
+                case UPThemeColorStyleDefault:
+                case UPThemeColorStyleLight:
+                case UPThemeColorStyleDark:
+                    return UPColorCategoryHighlightedFill;
+                case UPThemeColorStyleLightStark:
+                case UPThemeColorStyleDarkStark:
+                    return UPColorCategoryHighlightedStroke;
             }
         }
         case UPColorCategoryPulse: {

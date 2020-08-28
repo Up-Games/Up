@@ -148,6 +148,29 @@ static uint32_t _InstanceCount;
     return animator;
 }
 
++ (UPAnimator *)easeAnimatorInBand:(UP::Band)band moves:(NSArray<UPViewMove *> *)moves duration:(CFTimeInterval)duration
+                         completion:(void (^)(UIViewAnimatingPosition finalPosition))completion
+{
+    UPAnimator *animator = [[self alloc] _initWithType:UPAnimatorTypeEase band:band moves:moves];
+    animator.type = UPAnimatorTypeSlide;
+    UPTickingAnimator *inner = [UPTickingAnimator animatorInBand:band duration:duration
+                                                    unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInEaseOut]
+                                                         applier:^(UPTickingAnimator *animator) {
+        for (UPViewMove *move in moves) {
+            move.view.center = up_lerp_points(move.beginning, move.destination, animator.fractionComplete);
+        }
+    } completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+        if (completion) {
+            completion(finalPosition);
+        }
+        [inner clearBlocks];
+        UP::TimeSpanning::remove(animator);
+    }
+                                ];
+    animator.inner = inner;
+    return animator;
+}
+
 + (UPAnimator *)setColorAnimatorInBand:(UP::Band)band controls:(NSArray<UPControl *> *)controls duration:(CFTimeInterval)duration
     element:(UPControlElement)element fromControlState:(UPControlState)fromControlState toControlState:(UPControlState)toControlState
         completion:(void (^)(UIViewAnimatingPosition finalPosition))completion;

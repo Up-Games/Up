@@ -68,7 +68,7 @@ public:
         ChallengePrompt, ChallengeScore,
         AboutGameDescription, AboutLexiconDescription, AboutLegalDescription,
         AboutPlayingGameView, AboutPlayingBottomPrompt, AboutPlayingTopLeftPrompt, AboutPlayingTopRightPrompt,
-        AboutPlayingTopLeftButtonClick, AboutPlayingTopRightButtonClick,
+        AboutPlayingTopLeftButtonClick, AboutPlayingTopRightButtonClick, AboutPlaying2xCallout,
         AboutLogo, AboutWordMark,
         HeroLogo, HeroWordMark,
     };
@@ -231,6 +231,7 @@ public:
     static inline constexpr CGRect CanonicalAboutPlayingGameBottomPromptFrame = { 40, 410, 560, 80 };
     static inline constexpr CGRect CanonicalAboutPlayingGameTopLeftPromptFrame = { 40, 40, 150, 60 };
     static inline constexpr CGRect CanonicalAboutPlayingGameRightLeftPromptFrame = { 760, 40, 150, 60 };
+    static inline constexpr CGRect CanonicalAboutPlaying2xCalloutFrame = { 676, 243, 46, 46 };
 
     static inline constexpr CGRect CanonicalHeroLogoFrame = { 426, 132, 160, 160 };
     static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 416, 295, 180, 300 };
