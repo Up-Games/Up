@@ -106,6 +106,8 @@ using UP::TimeSpanning::start;
     self.botSpot.frame = up_rect_scaled(CGRectMake(0, 0, 92, 92), layout.layout_scale());
     self.botSpot.layer.cornerRadius = up_rect_width(self.botSpot.frame) * 0.5;
     self.botSpot.layer.borderWidth = up_float_scaled(6, layout.layout_scale());
+    self.gameView.wordTrayControl.active = NO;
+    [self.gameView.wordTrayControl setNeedsUpdate];
     self.step = 1;
 
     [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -167,12 +169,12 @@ using UP::TimeSpanning::start;
 
 - (void)botSpotTap
 {
-    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75];
+    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.55];
 }
 
 - (void)botSpotRelease
 {
-    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
 }
 
 - (void)animateToStepTwo
@@ -913,6 +915,8 @@ using UP::TimeSpanning::start;
             [self botSpotTap];
             start(ease(BandAboutPlayingUI, @[ botSpotMove2, tileMove1, tileMove2 ], 0.3, ^(UIViewAnimatingPosition) {
                 [self botSpotRelease];
+                self.gameView.wordTrayControl.active = YES;
+                [self.gameView.wordTrayControl setNeedsUpdate];
                 delay(BandAboutPlayingDelay, 1, ^{
                     [self nextStep];
                 });
@@ -1085,7 +1089,7 @@ using UP::TimeSpanning::start;
     
     UIColor *borderColor = [UIColor themeColorWithCategory:UPColorCategoryCanonicalHighlighted];
     self.botSpot.layer.borderColor = borderColor.CGColor;
-    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
 }
 
 @end
