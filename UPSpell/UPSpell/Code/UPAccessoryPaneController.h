@@ -21,6 +21,8 @@
 @property (nonatomic) NSArray<UPChoice *> *choices;
 @property (nonatomic) NSArray<UPAccessoryPane *> *panes;
 
+- (void)delayedInit;
+
 - (void)setSelectedPaneFromSettingsWithDuration:(CFTimeInterval)duration;
 - (void)setSelectedPane:(UPAccessoryPane *)selectedPane duration:(CFTimeInterval)duration;
 

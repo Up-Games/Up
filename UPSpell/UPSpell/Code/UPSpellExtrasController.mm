@@ -43,9 +43,12 @@ static UPSpellExtrasController *_Instance;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
     _Instance = self;
-    
+    return self;
+}
+
+- (void)delayedInit
+{
     SpellLayout &layout = SpellLayout::instance();
 
     self.backButton = [UPButton roundBackButtonLeftArrow];
@@ -110,8 +113,6 @@ static UPSpellExtrasController *_Instance;
         self.retryPane,
         self.sharePane,
     ];
-    
-    return self;
 }
 
 #pragma mark - Overrides

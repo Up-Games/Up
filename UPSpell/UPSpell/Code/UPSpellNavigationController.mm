@@ -91,11 +91,9 @@ using UP::TimeSpanning::start;
     
     self.aboutController = [[UPSpellAboutController alloc] initWithNibName:nil bundle:nil];
     self.aboutController.modalPresentationStyle = UIModalPresentationCustom;
-    [self.aboutController.backButton setTarget:self action:@selector(dismissPresentedController)];
 
     self.extrasController = [[UPSpellExtrasController alloc] initWithNibName:nil bundle:nil];
     self.extrasController.modalPresentationStyle = UIModalPresentationCustom;
-    [self.extrasController.backButton setTarget:self action:@selector(dismissPresentedController)];
 
     self.dialogTopMenu = [UPDialogTopMenu instance];
     [self.view addSubview:self.dialogTopMenu];
@@ -106,11 +104,22 @@ using UP::TimeSpanning::start;
 
     self.dialogTopMenu.hidden = YES;
     self.dialogTopMenu.frame = layout.screen_bounds();
-    
+    self.dialogTopMenu.extrasButton.userInteractionEnabled = NO;
+    self.dialogTopMenu.aboutButton.userInteractionEnabled = NO;
+
     NSArray<UIViewController *> *viewControllers = @[
         self.gameController
     ];
     [self setViewControllers:viewControllers animated:NO];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.aboutController delayedInit];
+        [self.extrasController delayedInit];
+        [self.aboutController.backButton setTarget:self action:@selector(dismissPresentedController)];
+        [self.extrasController.backButton setTarget:self action:@selector(dismissPresentedController)];
+        self.dialogTopMenu.extrasButton.userInteractionEnabled = YES;
+        self.dialogTopMenu.aboutButton.userInteractionEnabled = YES;
+    });
 }
 
 #pragma mark - Update theme colors

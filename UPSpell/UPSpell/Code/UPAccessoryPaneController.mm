@@ -42,6 +42,10 @@ using Location = UP::SpellLayout::Location;
     return [UPSpellNavigationController instance];
 }
 
+- (void)delayedInit
+{
+    }
+
 - (void)choiceSelected:(UPChoice *)sender
 {
 }
