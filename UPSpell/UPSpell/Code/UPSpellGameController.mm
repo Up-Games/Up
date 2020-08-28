@@ -1249,8 +1249,16 @@ static UPSpellGameController *_Instance;
 
     const std::u32string string = word.string();
     TileIndex idx = 0;
+    UPTileView *previousTileView = nil;
     for (UPTileView *tileView in wordTrayTileViews) {
+        if (string[idx] == U'’' && previousTileView) {
+            previousTileView.hasApostrophe = YES;
+            [previousTileView updateTile];
+            idx++;
+        }
         tileView.glyph = string[idx];
+        [tileView updateTile];
+        previousTileView = tileView;
         idx++;
     }
 }
@@ -1263,7 +1271,12 @@ static UPSpellGameController *_Instance;
     
     for (auto &tile : m_spell_model->tiles()) {
         if (tile.has_view()) {
-            tile.view().glyph = tile.model().glyph();
+            UPTileView *tileView = tile.view();
+            if (tileView.glyph != tile.model().glyph() || tileView.hasApostrophe) {
+                tileView.glyph = tile.model().glyph();
+                tileView.hasApostrophe = NO;
+                [tileView updateTile];
+            }
         }
     }
 }

@@ -1578,6 +1578,18 @@ void TilePaths::create_canonical_tile_paths()
     [glyphZDotAbovePath closePath];
     m_canonical_tile_paths[U'Ż'] = glyphZDotAbovePath;
 
+    // APOSTROPHE
+    UIBezierPath* glyphApostrophePath = [UIBezierPath bezierPath];
+    [glyphApostrophePath moveToPoint: CGPointMake(91.25, 27.85)];
+    [glyphApostrophePath addCurveToPoint: CGPointMake(92.73, 35.89) controlPoint1: CGPointMake(92.24, 30.64) controlPoint2: CGPointMake(92.73, 32.94)];
+    [glyphApostrophePath addCurveToPoint: CGPointMake(84.2, 49.75) controlPoint1: CGPointMake(92.73, 40.89) controlPoint2: CGPointMake(89.12, 45.4)];
+    [glyphApostrophePath addLineToPoint: CGPointMake(81, 47.78)];
+    [glyphApostrophePath addCurveToPoint: CGPointMake(84.28, 37.45) controlPoint1: CGPointMake(83.3, 43.68) controlPoint2: CGPointMake(84.28, 40.65)];
+    [glyphApostrophePath addCurveToPoint: CGPointMake(81.33, 27.85) controlPoint1: CGPointMake(84.28, 34.74) controlPoint2: CGPointMake(83.54, 32.77)];
+    [glyphApostrophePath addLineToPoint: CGPointMake(91.25, 27.85)];
+    [glyphApostrophePath closePath];
+    m_canonical_tile_paths[U'’'] = glyphApostrophePath;
+
     // 1
     UIBezierPath *score1Path = [UIBezierPath bezierPath];
     [score1Path moveToPoint:CGPointMake(80.46, 94.3)];

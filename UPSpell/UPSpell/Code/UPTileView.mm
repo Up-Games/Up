@@ -21,8 +21,6 @@ using UP::TileModel;
 using UP::TilePaths;
 
 @interface UPTileView () <UIGestureRecognizerDelegate>
-@property (nonatomic, readwrite) int score;
-@property (nonatomic, readwrite) int multiplier;
 @end
 
 static uint32_t _InstanceCount;
@@ -41,9 +39,9 @@ static uint32_t _InstanceCount;
     _InstanceCount++;
     LOG(Leaks, "alloc:   %@ (%d)", self, _InstanceCount);
     
-    self.score = score;
-    self.multiplier = multiplier;
-    self.glyph = glyph;
+    _glyph = glyph;
+    _score = score;
+    _multiplier = multiplier;
     if (glyph == UP::SentinelGlyph) {
         return self;
     }
@@ -63,30 +61,28 @@ static uint32_t _InstanceCount;
     [self setStrokeColorCategory:UPColorCategoryHighlightedStroke forState:UPControlStateHighlighted];
     [self setStrokeColorAnimationDuration:0.15 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
-    [self bringPathViewToFront:self.contentPathView];
+    [self updateTile];
     
     return self;
 }
 
-- (void)setGlyph:(char32_t)glyph
+- (void)updateTile
 {
-    BOOL changed = _glyph != glyph;
-    _glyph = glyph;
-
-    if (changed || !self.contentPathView) {
-        UIBezierPath *contentPath = [UIBezierPath bezierPath];
-        if (glyph != UP::SentinelGlyph) {
-            TilePaths &tile_paths = TilePaths::instance();
-            [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
-            if (self.score > 0) {
-                [contentPath appendPath:tile_paths.tile_path_for_score(self.score)];
-            }
-            if (self.multiplier != 1) {
-                [contentPath appendPath:tile_paths.tile_path_for_multiplier(self.multiplier)];
-            }
+    UIBezierPath *contentPath = [UIBezierPath bezierPath];
+    if (self.glyph != UP::SentinelGlyph) {
+        TilePaths &tile_paths = TilePaths::instance();
+        [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
+        if (self.score > 0) {
+            [contentPath appendPath:tile_paths.tile_path_for_score(self.score)];
         }
-        [self setContentPath:contentPath];
+        if (self.multiplier != 1) {
+            [contentPath appendPath:tile_paths.tile_path_for_multiplier(self.multiplier)];
+        }
+        if (self.hasApostrophe) {
+            [contentPath appendPath:tile_paths.tile_path_for_glyph(U'’')];
+        }
     }
+    [self setContentPath:contentPath];
 }
 
 - (void)dealloc

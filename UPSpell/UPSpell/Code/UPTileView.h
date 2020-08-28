@@ -12,11 +12,14 @@
 @interface UPTileView : UPControl
 
 @property (nonatomic) char32_t glyph;
-@property (nonatomic, readonly) int score;
-@property (nonatomic, readonly) int multiplier;
+@property (nonatomic) int score;
+@property (nonatomic) int multiplier;
+@property (nonatomic) BOOL hasApostrophe;
 
 @property (nonatomic) UP::SpellLayout::Location submitLocation;
 
 + (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier;
+
+- (void)updateTile;
 
 @end
