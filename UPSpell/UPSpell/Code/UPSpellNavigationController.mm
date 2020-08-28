@@ -61,8 +61,9 @@ using UP::TimeSpanning::start;
     //LOG_CHANNEL_ON(Leaks);
     //LOG_CHANNEL_ON(Lexicon);
     //LOG_CHANNEL_ON(Mode);
+    //LOG_CHANNEL_ON(SaveRestore);
     //LOG_CHANNEL_ON(Settings);
-    LOG_CHANNEL_ON(Sound);
+    //LOG_CHANNEL_ON(Sound);
     //LOG_CHANNEL_ON(State);
 
     _Instance = self;

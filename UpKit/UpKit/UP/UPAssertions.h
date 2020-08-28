@@ -192,6 +192,7 @@ M(Layout) \
 M(Leaks) \
 M(Lexicon) \
 M(Mode) \
+M(SaveRestore) \
 M(Settings) \
 M(Sound) \
 M(State) \

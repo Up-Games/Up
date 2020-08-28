@@ -2902,7 +2902,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         m_spell_model->back_opcode() == Opcode::END ||
         self.gameTimer.remainingTime == 0 ||
         self.gameTimer.remainingTime == UPGameTimerDefaultDuration) {
-        LOG(General, "not saving game");
+        LOG(SaveRestore, "not saving game");
         [self removeInProgressGameFileLogErrors:NO];
         return;
     }
@@ -2915,16 +2915,16 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     NSError *error;
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model requiringSecureCoding:YES error:&error];
     if (error) {
-        LOG(General, "error writing in-progress game: %@", error);
+        LOG(SaveRestore, "error writing in-progress game: %@", error);
     }
     else {
         NSString *saveFilePath = [[NSFileManager defaultManager] documentsDirectoryPathWithFileName:UPSpellInProgressGameFileName];
         if (saveFilePath) {
             [data writeToFile:saveFilePath atomically:YES];
-            LOG(General, "saveInProgressGameIfNecessary: %@", saveFilePath);
+            LOG(SaveRestore, "saveInProgressGameIfNecessary: %@", saveFilePath);
         }
         else {
-            LOG(General, "error writing in-progress game: save file unavailable, %@", saveFilePath);
+            LOG(SaveRestore, "error writing in-progress game: save file unavailable, %@", saveFilePath);
         }
     }
 }
@@ -2936,7 +2936,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     NSString *saveFilePath = [[NSFileManager defaultManager] documentsDirectoryPathWithFileName:UPSpellInProgressGameFileName];
     if (saveFilePath) {
-        LOG(General, "restoreInProgressGameIfExists: %@", saveFilePath);
+        LOG(SaveRestore, "restoreInProgressGameIfExists: %@", saveFilePath);
         NSData *data = [NSData dataWithContentsOfFile:saveFilePath];
         
         // Remove file before trying to read it.
@@ -2947,10 +2947,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         if (data) {
             UPSpellModel *model = [NSKeyedUnarchiver unarchivedObjectOfClass:[UPSpellModel class] fromData:data error:&error];
             if (!model || error) {
-                LOG(General, "error reading in-progress game data: %@ : %@ : %@", saveFilePath, model, error);
+                LOG(SaveRestore, "error reading in-progress game data: %@ : %@ : %@", saveFilePath, model, error);
             }
             else if (model.inner->back_opcode() != Opcode::PAUSE) {
-                LOG(General, "in-progress game doesn't end with PAUSE: %@ : %@", saveFilePath, error);
+                LOG(SaveRestore, "in-progress game doesn't end with PAUSE: %@ : %@", saveFilePath, error);
             }
             else {
                 result = model.inner;
@@ -2985,7 +2985,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     NSFileManager *fm = [NSFileManager defaultManager];
     [fm removeItemAtPath:saveFilePath error:&error];
     if (error && logErrors) {
-        LOG(General, "error removing in-progress game data file: %@ : %@", saveFilePath, error);
+        LOG(SaveRestore, "error removing in-progress game data file: %@ : %@", saveFilePath, error);
     }
 }
 
