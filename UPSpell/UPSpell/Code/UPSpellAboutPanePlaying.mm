@@ -165,6 +165,7 @@ using UP::TimeSpanning::start;
 {
     cancel(BandAboutPlaying);
     SpellLayout &layout = SpellLayout::instance();
+    self.bottomPromptLabel.string = @"";
     self.bottomPromptLabel.frame = layout.frame_for(Role::AboutPlayingBottomPrompt);
     self.active = NO;
 }
@@ -946,7 +947,7 @@ using UP::TimeSpanning::start;
                         self.botSpot.layer.cornerRadius = up_rect_width(self.botSpot.frame) * 0.5;
                         self.botSpot.layer.borderWidth = up_float_scaled(4, layout.layout_scale());
                     } completion:^(BOOL finished) {
-                        delay(BandAboutPlayingDelay, 2, ^{
+                        delay(BandAboutPlayingDelay, 0.25, ^{
                             [self nextStep];
                         });
                     }];
@@ -962,7 +963,7 @@ using UP::TimeSpanning::start;
         return;
     }
 
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.75 animations:^{
         self.botSpot.transform = CGAffineTransformMakeScale(7, 7);
         self.botSpot.alpha = 0;
     } completion:^(BOOL finished) {
