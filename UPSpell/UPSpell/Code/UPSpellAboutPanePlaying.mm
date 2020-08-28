@@ -5,6 +5,7 @@
 
 #import <UpKit/NSMutableAttributedString+UP.h>
 #import <UpKit/UIColor+UP.h>
+#import <UpKit/UIView+UP.h>
 #import <UpKit/UPBand.h>
 #import <UpKit/UPLabel.h>
 #import <UpKit/UPRandom.h>
@@ -104,10 +105,9 @@ using UP::TimeSpanning::start;
     self.botSpot.alpha = 1;
     self.botSpot.transform = CGAffineTransformIdentity;
     self.botSpot.frame = up_rect_scaled(CGRectMake(0, 0, 92, 92), layout.layout_scale());
-    self.botSpot.layer.cornerRadius = up_rect_width(self.botSpot.frame) * 0.5;
-    self.botSpot.layer.borderWidth = up_float_scaled(6, layout.layout_scale());
+    self.botSpot.cornerRadius = up_rect_width(self.botSpot.frame) * 0.5;
+    self.botSpot.borderWidth = up_float_scaled(6, layout.layout_scale());
     self.gameView.wordTrayControl.active = NO;
-    [self.gameView.wordTrayControl setNeedsUpdate];
     self.step = 1;
 
     [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -227,7 +227,6 @@ using UP::TimeSpanning::start;
             [self botSpotRelease];
             tileView1.highlighted = NO;
             [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
-            [self.gameView.clearControl setNeedsUpdate];
         });
                                                
         UPViewMove *botSpotMove2 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 1)));
@@ -277,7 +276,6 @@ using UP::TimeSpanning::start;
                     }
 
                     self.gameView.wordTrayControl.active = YES;
-                    [self.gameView.wordTrayControl setNeedsUpdate];
 
                     UPViewMove *tileMove1c = UPViewMoveMake(tileView1, Role::WordTile1of4);
                     UPViewMove *tileMove2c = UPViewMoveMake(tileView2, Role::WordTile2of4);
@@ -338,12 +336,10 @@ using UP::TimeSpanning::start;
         delay(BandAboutPlayingDelay, 0.5, ^{
             self.gameView.wordTrayControl.highlighted = YES;
             [self botSpotTap];
-            [self.gameView.wordTrayControl setNeedsUpdate];
 
             delay(BandAboutPlayingDelay, 0.2, ^{
                 self.gameView.wordTrayControl.highlighted = NO;
                 self.gameView.wordTrayControl.active = NO;
-                [self.gameView.wordTrayControl setNeedsUpdate];
                 [self botSpotRelease];
                 [self nextStep];
             });
@@ -423,7 +419,6 @@ using UP::TimeSpanning::start;
     self.gameView.wordScoreLabel.attributedString = attrString;
     
     [self.gameView.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
-    [self.gameView.clearControl setNeedsUpdate];
 
     self.tileViews = self.gameView.tileContainerView.subviews;
 
@@ -588,7 +583,6 @@ using UP::TimeSpanning::start;
         tileView1.highlighted = YES;
         [self botSpotTap];
         [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
-        [self.gameView.clearControl setNeedsUpdate];
         start(bloop_in(BandAboutPlayingUI, @[ tileMove1 ], 0.3, nil));
         delay(BandAboutPlayingDelay, 0.2, ^{
             tileView1.highlighted = NO;
@@ -713,7 +707,6 @@ using UP::TimeSpanning::start;
     }
 
     [self.gameView.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
-    [self.gameView.clearControl setNeedsUpdate];
 
     UPTileView *tileView1 = self.tileViews[0];
     UPTileView *tileView2 = self.tileViews[1];
@@ -740,13 +733,10 @@ using UP::TimeSpanning::start;
     
     UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
     start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
+        [self nextStep];
         self.bottomPromptLabel.string = @"TAP TO PAUSE GAME";
         UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
-        start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
-            delay(BandAboutPlayingDelay, 0.5, ^{
-                [self nextStep];
-            });
-        }));
+        start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, nil));
     }));
 }
 
@@ -795,7 +785,6 @@ using UP::TimeSpanning::start;
             tileView1.highlighted = NO;
             [self botSpotRelease];
             [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
-            [self.gameView.clearControl setNeedsUpdate];
         });
         
         UPViewMove *botSpotMove2 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 1)));
@@ -919,7 +908,6 @@ using UP::TimeSpanning::start;
             start(ease(BandAboutPlayingUI, @[ botSpotMove2, tileMove1, tileMove2 ], 0.3, ^(UIViewAnimatingPosition) {
                 [self botSpotRelease];
                 self.gameView.wordTrayControl.active = YES;
-                [self.gameView.wordTrayControl setNeedsUpdate];
                 delay(BandAboutPlayingDelay, 1, ^{
                     [self nextStep];
                 });
@@ -944,8 +932,8 @@ using UP::TimeSpanning::start;
                         SpellLayout &layout = SpellLayout::instance();
                         self.botSpot.transform = CGAffineTransformIdentity;
                         self.botSpot.frame = layout.frame_for(Role::AboutPlaying2xCallout);
-                        self.botSpot.layer.cornerRadius = up_rect_width(self.botSpot.frame) * 0.5;
-                        self.botSpot.layer.borderWidth = up_float_scaled(4, layout.layout_scale());
+                        self.botSpot.cornerRadius = up_rect_width(self.botSpot.frame) * 0.5;
+                        self.botSpot.borderWidth = up_float_scaled(4, layout.layout_scale());
                     } completion:^(BOOL finished) {
                         delay(BandAboutPlayingDelay, 0.25, ^{
                             [self nextStep];
@@ -1089,9 +1077,8 @@ using UP::TimeSpanning::start;
 - (void)updateThemeColors
 {
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
-    
-    UIColor *borderColor = [UIColor themeColorWithCategory:UPColorCategoryCanonicalHighlighted];
-    self.botSpot.layer.borderColor = borderColor.CGColor;
+     
+    self.botSpot.borderColor = [UIColor themeColorWithCategory:UPColorCategoryCanonicalHighlighted];
     self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
 }
 

@@ -11,6 +11,11 @@
 
 @implementation UIView (UP)
 
++ (UIView *)view
+{
+    return [[[self class] alloc] initWithFrame:CGRectZero];
+}
+
 + (UIView *)viewWithBoundsSize:(CGSize)boundsSize
 {
     return [[[self class] alloc] initWithBoundsSize:boundsSize];
@@ -55,10 +60,53 @@
     return value ? [value CGPointValue] : self.center;
 }
 
+#pragma mark - borderColor
+
+@dynamic borderColor;
+
+- (void)setBorderColor:(UIColor *)borderColor
+{
+    self.layer.borderColor = borderColor.CGColor;
+}
+
+- (UIColor *)borderColor
+{
+    return [[UIColor alloc] initWithCGColor:self.layer.borderColor];
+}
+
+#pragma mark - borderWidth
+
+@dynamic borderWidth;
+
+- (void)setBorderWidth:(CGFloat)borderWidth
+{
+    self.layer.borderWidth = borderWidth;
+}
+
+- (CGFloat)borderWidth
+{
+    return self.layer.borderWidth;
+}
+
+#pragma mark - cornerRadius
+
+@dynamic cornerRadius;
+
+- (void)setCornerRadius:(CGFloat)cornerRadius
+{
+    self.layer.cornerRadius = cornerRadius;
+}
+
+- (CGFloat)cornerRadius
+{
+    return self.layer.cornerRadius;
+}
+
 #pragma mark - Update theme colors
 
 - (void)updateThemeColors
 {
+    [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
 }
 
 @end

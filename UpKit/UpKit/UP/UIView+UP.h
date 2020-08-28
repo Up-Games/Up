@@ -10,6 +10,7 @@
 
 @interface UIView (UP)
 
++ (UIView *)view;
 + (UIView *)viewWithBoundsSize:(CGSize)boundsSize;
 - (instancetype)initWithBoundsSize:(CGSize)boundsSize;
 
@@ -17,5 +18,9 @@
 - (void)layoutWithRule;
 
 @property (nonatomic) CGPoint destination;
+
+@property (nonatomic) UIColor *borderColor;
+@property (nonatomic) CGFloat borderWidth;
+@property (nonatomic) CGFloat cornerRadius;
 
 @end
