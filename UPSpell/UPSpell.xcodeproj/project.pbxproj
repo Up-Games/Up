@@ -29,6 +29,7 @@
 		5D29879124F5624800AA6E78 /* UPSpellAboutPaneGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29879024F5624800AA6E78 /* UPSpellAboutPaneGame.mm */; };
 		5D29879324F5697C00AA6E78 /* MalloryCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D29879224F5697C00AA6E78 /* MalloryCond-Bold.otf */; };
 		5D29879624F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29879524F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm */; };
+		5D3EB45324F94E86003CF411 /* UPSpellBotDot.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EB45224F94E86003CF411 /* UPSpellBotDot.mm */; };
 		5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */; };
 		5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogTopMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */; };
@@ -523,6 +524,8 @@
 		5D29879424F57F8700AA6E78 /* UPSpellAboutPaneLexicon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutPaneLexicon.h; sourceTree = "<group>"; };
 		5D29879524F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPaneLexicon.mm; sourceTree = "<group>"; };
 		5D34613624887918009FB46D /* UPViewMove+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UPViewMove+UPSpell.h"; sourceTree = "<group>"; };
+		5D3EB45124F94E86003CF411 /* UPSpellBotDot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellBotDot.h; sourceTree = "<group>"; };
+		5D3EB45224F94E86003CF411 /* UPSpellBotDot.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellBotDot.mm; sourceTree = "<group>"; };
 		5D4AE823248BDED200213904 /* UPSpellExtrasController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasController.h; sourceTree = "<group>"; };
 		5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasController.mm; sourceTree = "<group>"; };
 		5D4AE826248BDF2300213904 /* UPSpellAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutController.h; sourceTree = "<group>"; };
@@ -1132,6 +1135,8 @@
 				5D08E6E824F74326007DBE44 /* UPSpellAboutPanePlaying.mm */,
 				5D08E6DA24F6AABB007DBE44 /* UPSpellAboutPaneThanks.h */,
 				5D08E6DB24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm */,
+				5D3EB45124F94E86003CF411 /* UPSpellBotDot.h */,
+				5D3EB45224F94E86003CF411 /* UPSpellBotDot.mm */,
 				5D6261A124C0944600D19EEF /* UPSpellDossier.h */,
 				5D6261A224C0944600D19EEF /* UPSpellDossier.mm */,
 				5D4AE823248BDED200213904 /* UPSpellExtrasController.h */,
@@ -2137,6 +2142,7 @@
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
 				5D6FB59D24DDC56100CDC293 /* UPDialogChallenge.mm in Sources */,
 				5D0FC33624A65C0B00353563 /* UPSpellExtrasPaneColors.mm in Sources */,
+				5D3EB45324F94E86003CF411 /* UPSpellBotDot.mm in Sources */,
 				5DBAD6E124E43FFF00471ABF /* UPDialogShareHelp.mm in Sources */,
 				5D6FB58A24DAFC2500CDC293 /* UPSlider.mm in Sources */,
 				5DA0A06924BD08590029CE0E /* UPDialogPlayMenu.mm in Sources */,

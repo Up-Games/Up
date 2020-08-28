@@ -52,7 +52,7 @@ using UP::TimeSpanning::delay;
 using UP::TimeSpanning::start;
 
 using Role = UP::SpellLayout::Role;
-using Spot = UP::SpellLayout::Place;
+using Spot = UP::SpellLayout::Spot;
 
 @implementation UPSpellExtrasPaneColors
 

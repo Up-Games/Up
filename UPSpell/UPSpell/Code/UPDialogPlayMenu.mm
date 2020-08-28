@@ -30,7 +30,7 @@ using UP::SpellLayout;
 using UP::SpellModel;
 using UP::ns_str;
 
-using Place = SpellLayout::Place;
+using Spot = SpellLayout::Spot;
 using Role = SpellLayout::Role;
 
 @interface UPDialogPlayMenu ()
@@ -64,21 +64,21 @@ using Role = SpellLayout::Role;
     self = [super initWithFrame:layout.canvas_frame()];
 
     self.backButton = [UPButton roundBackButtonEx];
-    self.backButton.frame = layout.frame_for(Role::ChoiceBackCenter, Place::OffTopNear);
+    self.backButton.frame = layout.frame_for(Role::ChoiceBackCenter, Spot::OffTopNear);
     self.backButton.chargeOutsets = UPOutsetsMake(0, 0, 0, 140 * layout.layout_scale());
     [self addSubview:self.backButton];
 
     self.goButton = [UPTextButton textButton];
     self.goButton.labelString = @"GO";
     [self.goButton setLabelColorCategory:UPColorCategoryContent forState:UPControlStateNormal];
-    self.goButton.frame = layout.frame_for(Role::ChoiceGoButtonCenter, Place::OffBottomFar);
+    self.goButton.frame = layout.frame_for(Role::ChoiceGoButtonCenter, Spot::OffBottomFar);
     [self addSubview:self.goButton];
 
     self.choice1 = [UPChoice choiceWithSide:UPChoiceSideLeft];
     self.choice1.variableWidth = YES;
     self.choice1.tag = UPDialogPlayMenuChoiceRetryHighScore;
     self.choice1.canonicalSize = SpellLayout::CanonicalChoiceSize;
-    self.choice1.frame = layout.frame_for(Role::ChoiceItem1Center, Place::OffBottomNear);
+    self.choice1.frame = layout.frame_for(Role::ChoiceItem1Center, Spot::OffBottomNear);
     [self.choice1 setTarget:self action:@selector(choiceSelected:)];
     [self addSubview:self.choice1];
     
@@ -86,7 +86,7 @@ using Role = SpellLayout::Role;
     self.choice2.variableWidth = YES;
     self.choice2.tag = UPDialogPlayMenuChoiceRetryLastGame;
     self.choice2.canonicalSize = SpellLayout::CanonicalChoiceSize;
-    self.choice2.frame = layout.frame_for(Role::ChoiceItem2Center, Place::OffBottomNear);
+    self.choice2.frame = layout.frame_for(Role::ChoiceItem2Center, Spot::OffBottomNear);
     [self.choice2 setTarget:self action:@selector(choiceSelected:)];
     [self addSubview:self.choice2];
     
@@ -95,7 +95,7 @@ using Role = SpellLayout::Role;
     self.choice3.variableWidth = YES;
     self.choice3.tag = UPDialogPlayMenuChoiceNewGame;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
-    self.choice3.frame = layout.frame_for(Role::ChoiceItem3Center, Place::OffBottomNear);
+    self.choice3.frame = layout.frame_for(Role::ChoiceItem3Center, Spot::OffBottomNear);
     [self.choice3 setTarget:self action:@selector(choiceSelected:)];
     [self addSubview:self.choice3];
     

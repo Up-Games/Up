@@ -26,7 +26,7 @@
 
 using UP::SpellLayout;
 using Role = UP::SpellLayout::Role;
-using Place = UP::SpellLayout::Place;
+using Spot = UP::SpellLayout::Spot;
 
 static UPSpellAboutController *_Instance;
 
@@ -47,7 +47,7 @@ static UPSpellAboutController *_Instance;
     
     self.backButton = [UPButton roundBackButtonRightArrow];
     self.backButton.canonicalSize = SpellLayout::CanonicalRoundBackButtonSize;
-    self.backButton.frame = layout.frame_for(Role::ChoiceBackRight, Place::OffRightNear);
+    self.backButton.frame = layout.frame_for(Role::ChoiceBackRight, Spot::OffRightNear);
     self.backButton.chargeOutsets = UPOutsetsMake(0, 200 * layout.layout_scale(), 0, 0);
     [self.view addSubview:self.backButton];
     
@@ -55,7 +55,7 @@ static UPSpellAboutController *_Instance;
     self.choice1.labelString = @"UP SPELL";
     self.choice1.tag = 0;
     self.choice1.canonicalSize = SpellLayout::CanonicalChoiceSize;
-    self.choice1.frame = layout.frame_for(Role::ChoiceItem1Right, Place::OffRightNear);
+    self.choice1.frame = layout.frame_for(Role::ChoiceItem1Right, Spot::OffRightNear);
     [self.choice1 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice1];
     
@@ -63,7 +63,7 @@ static UPSpellAboutController *_Instance;
     self.choice2.labelString = @"PLAYING";
     self.choice2.tag = 1;
     self.choice2.canonicalSize = SpellLayout::CanonicalChoiceSize;
-    self.choice2.frame = layout.frame_for(Role::ChoiceItem2Right, Place::OffRightNear);
+    self.choice2.frame = layout.frame_for(Role::ChoiceItem2Right, Spot::OffRightNear);
     [self.choice2 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice2];
     
@@ -71,7 +71,7 @@ static UPSpellAboutController *_Instance;
     self.choice3.labelString = @"LEXICON";
     self.choice3.tag = 2;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
-    self.choice3.frame = layout.frame_for(Role::ChoiceItem3Right, Place::OffRightNear);
+    self.choice3.frame = layout.frame_for(Role::ChoiceItem3Right, Spot::OffRightNear);
     [self.choice3 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice3];
     
@@ -79,24 +79,24 @@ static UPSpellAboutController *_Instance;
     self.choice4.labelString = @"THANKS";
     self.choice4.tag = 3;
     self.choice4.canonicalSize = SpellLayout::CanonicalChoiceSize;
-    self.choice4.frame = layout.frame_for(Role::ChoiceItem4Right, Place::OffRightNear);
+    self.choice4.frame = layout.frame_for(Role::ChoiceItem4Right, Spot::OffRightNear);
     [self.choice4 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice4];
 
     self.gamePane = [UPSpellAboutPaneGame pane];
-    self.gamePane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    self.gamePane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.gamePane];
     
     self.playingPane = [UPSpellAboutPanePlaying pane];
-    self.playingPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    self.playingPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.playingPane];
     
     self.lexiconPane = [UPSpellAboutPaneLexicon pane];
-    self.lexiconPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    self.lexiconPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.lexiconPane];
 
     self.thanksPane = [UPSpellAboutPaneThanks pane];
-    self.thanksPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+    self.thanksPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.thanksPane];
 
     self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];

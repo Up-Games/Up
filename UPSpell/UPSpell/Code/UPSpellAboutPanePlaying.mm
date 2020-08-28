@@ -37,7 +37,7 @@ using UP::TilePosition;
 using UP::TileTray;
 using Location = UP::SpellLayout::Location;
 using Role = UP::SpellLayout::Role;
-using Place = UP::SpellLayout::Place;
+using Spot = UP::SpellLayout::Spot;
 
 using UP::TimeSpanning::bloop_in;
 using UP::TimeSpanning::bloop_out;
@@ -150,7 +150,7 @@ using UP::TimeSpanning::start;
     self.active = YES;
         
     self.bottomPromptLabel.string = @"";
-    self.bottomPromptLabel.frame = layout.frame_for(Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+    self.bottomPromptLabel.frame = layout.frame_for(Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
     self.botSpot.center = layout.center_for(Role::DialogMessageCenteredInWordTray);
 
     self.gameView.wordScoreLabel.hidden = YES;
@@ -307,7 +307,7 @@ using UP::TimeSpanning::start;
         return;
     }
 
-    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
     start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
         if (!self.active) {
             return;
@@ -365,10 +365,10 @@ using UP::TimeSpanning::start;
     UPTileView *tileView4 = self.tileViews[2];
     
     NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
-    [moves addObject:UPViewMoveMake(tileView1, Role::WordTile1of4, Place::OffTopNear)];
-    [moves addObject:UPViewMoveMake(tileView2, Role::WordTile2of4, Place::OffTopNear)];
-    [moves addObject:UPViewMoveMake(tileView3, Role::WordTile3of4, Place::OffTopNear)];
-    [moves addObject:UPViewMoveMake(tileView4, Role::WordTile4of4, Place::OffTopNear)];
+    [moves addObject:UPViewMoveMake(tileView1, Role::WordTile1of4, Spot::OffTopNear)];
+    [moves addObject:UPViewMoveMake(tileView2, Role::WordTile2of4, Spot::OffTopNear)];
+    [moves addObject:UPViewMoveMake(tileView3, Role::WordTile3of4, Spot::OffTopNear)];
+    [moves addObject:UPViewMoveMake(tileView4, Role::WordTile4of4, Spot::OffTopNear)];
     start(bloop_out(BandAboutPlayingUI, moves, 0.3, ^(UIViewAnimatingPosition) {
         [tileView1 removeFromSuperview];
         [tileView2 removeFromSuperview];
@@ -400,7 +400,7 @@ using UP::TimeSpanning::start;
             tileView.tag = idx;
             tileView.band = BandAboutPlayingUI;
             Role role = role_in_player_tray(TilePosition(TileTray::Player, idx));
-            tileView.frame = layout.frame_for(role, Place::OffBottomNear);
+            tileView.frame = layout.frame_for(role, Spot::OffBottomNear);
             [tileMoves addObject:UPViewMoveMake(tileView, role)];
             [self.gameView.tileContainerView addSubview:tileView];
         }
@@ -408,7 +408,7 @@ using UP::TimeSpanning::start;
         start(bloop_in(BandAboutPlayingUI, tileMoves, 0.3, nil));
     }));
 
-    self.gameView.wordScoreLabel.frame = layout.frame_for(Role::WordScore, Place::OffBottomFar);
+    self.gameView.wordScoreLabel.frame = layout.frame_for(Role::WordScore, Spot::OffBottomFar);
     self.gameView.wordScoreLabel.hidden = NO;
 
     self.gameView.gameScoreLabel.string = @"7";
@@ -430,7 +430,7 @@ using UP::TimeSpanning::start;
     delay(BandAboutPlayingDelay, 0.25, ^{
         start(bloop_in(BandAboutPlayingUI, @[wordScoreInMove], 0.3, ^(UIViewAnimatingPosition) {
             delay(BandAboutPlayingUI, 1.2, ^{
-                UPViewMove *wordScoreOutMove = UPViewMoveMake(self.gameView.wordScoreLabel, Role::WordScore, Place::OffTopNear);
+                UPViewMove *wordScoreOutMove = UPViewMoveMake(self.gameView.wordScoreLabel, Role::WordScore, Spot::OffTopNear);
                 start(bloop_out(BandAboutPlayingUI, @[wordScoreOutMove], 0.2, ^(UIViewAnimatingPosition) {
                     self.gameView.wordScoreLabel.hidden = YES;
                 }));
@@ -450,7 +450,7 @@ using UP::TimeSpanning::start;
         return;
     }
     
-    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
     start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
         self.bottomPromptLabel.string = @"TAP TRASH TO DUMP LETTERS";
         UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
@@ -488,7 +488,7 @@ using UP::TimeSpanning::start;
         return;
     }
 
-    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
     start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, nil));
     
     Random &random = Random::instance();
@@ -503,7 +503,7 @@ using UP::TimeSpanning::start;
     for (TileIndex idx = 0; idx < TileCount; idx++) {
         for (UPTileView *tileView in self.tileViews) {
             if (tileView.tag == idx) {
-                Location location = Location(role_in_player_tray(TilePosition(TileTray::Player, idx)), Place::OffBottomNear);
+                Location location = Location(role_in_player_tray(TilePosition(TileTray::Player, idx)), Spot::OffBottomNear);
                 UPAnimator *animator = slide(BandAboutPlayingUI, @[UPViewMoveMake(tileView, location)], 0.75, ^(UIViewAnimatingPosition) {
                     [tileView removeFromSuperview];
                 });
@@ -556,7 +556,7 @@ using UP::TimeSpanning::start;
         tileView.tag = idx;
         tileView.band = BandAboutPlayingUI;
         Role role = role_in_player_tray(TilePosition(TileTray::Player, idx));
-        tileView.frame = layout.frame_for(role, Place::OffBottomNear);
+        tileView.frame = layout.frame_for(role, Spot::OffBottomNear);
         [tileMoves addObject:UPViewMoveMake(tileView, role)];
         [self.gameView.tileContainerView addSubview:tileView];
     }
@@ -670,7 +670,7 @@ using UP::TimeSpanning::start;
         return;
     }
     
-    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
     start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
         if (!self.active) {
             return;
@@ -738,7 +738,7 @@ using UP::TimeSpanning::start;
         return;
     }
     
-    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
     start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
         self.bottomPromptLabel.string = @"TAP TO PAUSE GAME";
         UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
@@ -760,7 +760,7 @@ using UP::TimeSpanning::start;
     start(ease(BandAboutPlayingUI, @[ botSpotMove1 ], 0.8, ^(UIViewAnimatingPosition) {
         delay(BandAboutPlayingDelay, 0.2, ^{
             delay(BandAboutPlayingDelay, 1.25, ^{
-                UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+                UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
                 start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, nil));
                 [self nextStep];
             });
@@ -930,7 +930,7 @@ using UP::TimeSpanning::start;
 
 - (void)animateToStepTwenty
 {
-    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
     start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
         self.bottomPromptLabel.string = @"2x TILES DOUBLE YOUR WORD SCORE";
         UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
@@ -971,7 +971,7 @@ using UP::TimeSpanning::start;
             if (!self.active) {
                 return;
             }
-            UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Place::OffBottomNear);
+            UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
             start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
                 self.bottomPromptLabel.string = @"GOOD LUCK & HAVE FUN!";
                 UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);

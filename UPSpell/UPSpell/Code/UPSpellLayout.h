@@ -73,7 +73,7 @@ public:
         HeroLogo, HeroWordMark,
     };
 
-    enum class Place {
+    enum class Spot {
         Default,
         OffTopNear,
         OffBottomNear,
@@ -88,14 +88,14 @@ public:
     class Location {
     public:
         constexpr Location() {}
-        constexpr Location(Role role, Place spot = Place::Default) : m_role(role), m_spot(spot) {}
+        constexpr Location(Role role, Spot spot = Spot::Default) : m_role(role), m_spot(spot) {}
         
         Role role() const { return m_role; }
-        Place spot() const { return m_spot; }
+        Spot spot() const { return m_spot; }
 
     private:
         Role m_role = Role::None;
-        Place m_spot = Place::Default;
+        Spot m_spot = Spot::Default;
     };
     
     static constexpr CGFloat CanonicalCanvasWidth = 1000;
@@ -232,6 +232,8 @@ public:
     static inline constexpr CGRect CanonicalAboutPlayingGameTopLeftPromptFrame = { 40, 40, 150, 60 };
     static inline constexpr CGRect CanonicalAboutPlayingGameRightLeftPromptFrame = { 760, 40, 150, 60 };
     static inline constexpr CGRect CanonicalAboutPlaying2xCalloutFrame = { 676, 243, 46, 46 };
+
+    static inline constexpr CGSize CanonicalBotSpotSize = { 92, 92 };
 
     static inline constexpr CGRect CanonicalHeroLogoFrame = { 426, 132, 160, 160 };
     static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 416, 295, 180, 300 };

@@ -32,7 +32,7 @@ using UP::TimeSpanning::delay;
 using UP::TimeSpanning::start;
 
 using Role = UP::SpellLayout::Role;
-using Place = UP::SpellLayout::Place;
+using Spot = UP::SpellLayout::Spot;
 using Location = UP::SpellLayout::Location;
 
 @implementation UPAccessoryPaneController
@@ -73,7 +73,7 @@ using Location = UP::SpellLayout::Location;
     
     if (up_is_fuzzy_zero(duration)) {
         if (previousSelectedPane) {
-            previousSelectedPane.center = layout.center_for(Role::Screen, Place::OffTopFar);
+            previousSelectedPane.center = layout.center_for(Role::Screen, Spot::OffTopFar);
         }
         if (selectedPane) {
             selectedPane.center = layout.center_for(Role::Screen);
@@ -82,9 +82,9 @@ using Location = UP::SpellLayout::Location;
     else {
         [self lock];
         
-        selectedPane.center = layout.center_for(Role::Screen, Place::OffBottomFar);
+        selectedPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
         if (previousSelectedPane && previousSelectedPane != selectedPane) {
-            NSArray *outMoves = @[UPViewMoveMake(previousSelectedPane, Role::Screen, Place::OffTopFar)];
+            NSArray *outMoves = @[UPViewMoveMake(previousSelectedPane, Role::Screen, Spot::OffTopFar)];
             start(bloop_out(BandSettingsUI, outMoves, duration,
                             ^(UIViewAnimatingPosition) {
                 start(bloop_in(BandSettingsUI, @[UPViewMoveMake(selectedPane, Role::Screen)], duration, ^(UIViewAnimatingPosition) {

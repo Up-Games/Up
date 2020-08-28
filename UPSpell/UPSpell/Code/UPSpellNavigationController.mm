@@ -35,7 +35,7 @@ using UP::SpellLayout;
 using Location = UP::SpellLayout::Location;
 using Mode = UP::Mode;
 using Role = UP::SpellLayout::Role;
-using Spot = UP::SpellLayout::Place;
+using Spot = UP::SpellLayout::Spot;
 
 using UP::BandModeDelay;
 using UP::BandModeUI;
