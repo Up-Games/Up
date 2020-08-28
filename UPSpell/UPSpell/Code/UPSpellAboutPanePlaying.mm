@@ -156,7 +156,7 @@ using UP::TimeSpanning::start;
     self.gameView.wordScoreLabel.hidden = YES;
     self.gameView.gameScoreLabel.string = @"0";
 
-    delay(BandAboutPlayingDelay, 1, ^{
+    delay(BandAboutPlayingDelay, 1.5, ^{
         [self nextStep];
     });
 }
@@ -164,6 +164,8 @@ using UP::TimeSpanning::start;
 - (void)finish
 {
     cancel(BandAboutPlaying);
+    SpellLayout &layout = SpellLayout::instance();
+    self.bottomPromptLabel.frame = layout.frame_for(Role::AboutPlayingBottomPrompt);
     self.active = NO;
 }
 
@@ -593,7 +595,7 @@ using UP::TimeSpanning::start;
         });
         
         UPViewMove *botSpotMove2 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 2)));
-        start(slide(BandAboutPlayingUI, @[ botSpotMove2 ], 0.4, ^(UIViewAnimatingPosition) {
+        start(ease(BandAboutPlayingUI, @[ botSpotMove2 ], 0.4, ^(UIViewAnimatingPosition) {
             
             if (!self.active) {
                 return;
@@ -612,7 +614,7 @@ using UP::TimeSpanning::start;
             });
             
             UPViewMove *botSpotMove3 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 4)));
-            start(slide(BandAboutPlayingUI, @[ botSpotMove3 ], 0.4, ^(UIViewAnimatingPosition) {
+            start(ease(BandAboutPlayingUI, @[ botSpotMove3 ], 0.4, ^(UIViewAnimatingPosition) {
                 
                 if (!self.active) {
                     return;
@@ -632,7 +634,7 @@ using UP::TimeSpanning::start;
                 });
                 
                 UPViewMove *botSpotMove4 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 1)));
-                start(slide(BandAboutPlayingUI, @[ botSpotMove4 ], 0.4, ^(UIViewAnimatingPosition) {
+                start(ease(BandAboutPlayingUI, @[ botSpotMove4 ], 0.4, ^(UIViewAnimatingPosition) {
                     
                     if (!self.active) {
                         return;
@@ -815,7 +817,7 @@ using UP::TimeSpanning::start;
             });
             
             UPViewMove *botSpotMove3 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 2)));
-            start(slide(BandAboutPlayingUI, @[ botSpotMove3 ], 0.2, ^(UIViewAnimatingPosition) {
+            start(ease(BandAboutPlayingUI, @[ botSpotMove3 ], 0.2, ^(UIViewAnimatingPosition) {
                 
                 if (!self.active) {
                     return;
@@ -835,7 +837,7 @@ using UP::TimeSpanning::start;
                 });
                 
                 UPViewMove *botSpotMove4 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 6)));
-                start(slide(BandAboutPlayingUI, @[ botSpotMove4 ], 0.4, ^(UIViewAnimatingPosition) {
+                start(ease(BandAboutPlayingUI, @[ botSpotMove4 ], 0.4, ^(UIViewAnimatingPosition) {
                     
                     if (!self.active) {
                         return;
@@ -856,7 +858,7 @@ using UP::TimeSpanning::start;
                     });
                     delay(BandAboutPlayingDelay, 0.2, ^{
                         UPViewMove *botSpotMove5 = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, 5)));
-                        start(slide(BandAboutPlayingUI, @[ botSpotMove5 ], 0.2, ^(UIViewAnimatingPosition) {
+                        start(ease(BandAboutPlayingUI, @[ botSpotMove5 ], 0.2, ^(UIViewAnimatingPosition) {
                             
                             if (!self.active) {
                                 return;
