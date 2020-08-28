@@ -816,7 +816,7 @@ void SpellLayout::calculate_about_locations()
     calculate_and_set_locations(Role::AboutWordMark, layout_relative_aspect_rect(CanonicalAboutWordMarkFrame));
     calculate_and_set_locations(Role::AboutGameDescription, layout_relative_aspect_rect(CanonicalAboutGameDescriptionFrame));
     calculate_and_set_locations(Role::AboutLexiconDescription, layout_relative_aspect_rect(CanonicalAboutLexiconDescriptionFrame));
-    calculate_and_set_locations(Role::AboutLegalDescription, layout_relative_aspect_rect(CanonicalAboutLegalDescriptionFrame));
+    calculate_and_set_locations(Role::AboutThanksDescription, layout_relative_aspect_rect(CanonicalAboutThanksDescriptionFrame));
     calculate_and_set_locations(Role::AboutPlayingGameView, layout_relative_aspect_rect(CanonicalAboutPlayingGameViewFrame));
     calculate_and_set_locations(Role::AboutPlayingBottomPrompt, layout_relative_aspect_rect(CanonicalAboutPlayingGameBottomPromptFrame));
     calculate_and_set_locations(Role::AboutPlaying2xCallout, layout_relative_aspect_rect(CanonicalAboutPlaying2xCalloutFrame));

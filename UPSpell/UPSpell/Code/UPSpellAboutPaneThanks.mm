@@ -17,7 +17,7 @@ using UP::SpellLayout;
 using Role = UP::SpellLayout::Role;
 
 @interface UPSpellAboutPaneThanks () <WKNavigationDelegate>
-@property (nonatomic) WKWebView *thanksDescription;
+@property (nonatomic) UITextView *thanksDescription;
 @end
 
 @implementation UPSpellAboutPaneThanks
@@ -32,12 +32,10 @@ using Role = UP::SpellLayout::Role;
     self = [super initWithFrame:frame];
 
     SpellLayout &layout = SpellLayout::instance();
-    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-    self.thanksDescription = [[WKWebView alloc] initWithFrame:layout.frame_for(Role::AboutLegalDescription) configuration:configuration];
+    self.thanksDescription = [[UITextView alloc] initWithFrame:layout.frame_for(Role::AboutThanksDescription)];
+    self.thanksDescription.editable = NO;
     self.thanksDescription.opaque = NO;
     self.thanksDescription.backgroundColor = [UIColor clearColor];
-    self.thanksDescription.scrollView.backgroundColor = [UIColor clearColor];
-    self.thanksDescription.navigationDelegate = self;
     [self addSubview:self.thanksDescription];
 
     return self;
@@ -49,29 +47,6 @@ using Role = UP::SpellLayout::Role;
     [self updateThemeColors];
 }
 
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
-{
-    [webView evaluateJavaScript:@"window.scrollTo(0,0)" completionHandler:nil];
-}
-
-- (void)webView:(WKWebView *)webView
-    decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
-    decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
-{
-    NSURL *URL = navigationAction.request.URL;
-    if (URL.isFileURL) {
-        if (decisionHandler) {
-            decisionHandler(WKNavigationActionPolicyAllow);
-        }
-    }
-    else {
-        if (decisionHandler) {
-            decisionHandler(WKNavigationActionPolicyCancel);
-        }
-        [[UIApplication sharedApplication] openURL:URL options:@{} completionHandler:nil];
-    }
-}
-
 #pragma mark - Update theme colors
 
 - (void)updateThemeColors
@@ -79,32 +54,35 @@ using Role = UP::SpellLayout::Role;
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
 
     SpellLayout &layout = SpellLayout::instance();
-    NSString *mainFontSize = [NSString stringWithFormat:@"%.0f", roundf(26 * layout.layout_scale())];
-    NSString *smallFontSize = [NSString stringWithFormat:@"%.0f", roundf(22 * layout.layout_scale())];
-
+    
     NSBundle *bundle = [NSBundle mainBundle];
-    NSURL *baseURL = [NSURL fileURLWithPath:bundle.resourcePath];
-    NSString *htmlPath = [bundle pathForResource:@"thanks" ofType:@"html"];
-    NSString *stylePath = [bundle pathForResource:@"style" ofType:@"css"];
-    NSString *styleString = [NSString stringWithContentsOfFile:stylePath encoding:NSUTF8StringEncoding error:nil];
-    NSString *htmlString = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
-    NSString *textColorString = [[UIColor themeColorWithCategory:UPColorCategoryControlText] asCSSRGBAString];
-    NSString *cssColorString = [NSString stringWithFormat:@"color: %@;", textColorString];
-    NSString *aLinkString = [[UIColor themeColorWithCategory:UPColorCategoryControlText] asCSSRGBAString];
-    NSString *cssALinkString = [NSString stringWithFormat:@"color: %@;", aLinkString];
-    NSString *aVisitedString = [[UIColor themeColorWithCategory:UPColorCategoryControlText] asCSSRGBAString];
-    NSString *cssAVisitedString = [NSString stringWithFormat:@"color: %@;", aVisitedString];
-    NSString *aActiveString = [[UIColor themeColorWithCategory:UPColorCategoryHighlightedFill] asCSSRGBAString];
-    NSString *cssAActiveString = [NSString stringWithFormat:@"color: %@;", aActiveString];
-    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"<!-- style -->" withString:styleString];
-    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --color-- */" withString:cssColorString];
-    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --a:link-- */" withString:cssALinkString];
-    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --a:visited-- */" withString:cssAVisitedString];
-    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --a:active-- */" withString:cssAActiveString];
-    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --main-font-size-- */" withString:mainFontSize];
-    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"/* --small-font-size-- */" withString:smallFontSize];
+    NSURL *introFileURL = [bundle URLForResource:@"thanks-intro" withExtension:@"rtf"];
+    NSMutableAttributedString *introAttrString = [[NSMutableAttributedString alloc] initWithURL:introFileURL options:@{
+        NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType
+    } documentAttributes:nil error:nil];
+    NSURL *licensesFileURL = [bundle URLForResource:@"thanks-licenses" withExtension:@"rtf"];
+    NSMutableAttributedString *licensesAttrString = [[NSMutableAttributedString alloc] initWithURL:licensesFileURL options:@{
+        NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType
+    } documentAttributes:nil error:nil];
 
-    [self.thanksDescription loadHTMLString:htmlString baseURL:baseURL];
+    UIColor *color = [UIColor themeColorWithCategory:UPColorCategoryControlText];
+    
+    [introAttrString setFont:layout.about_font()];
+    [introAttrString setTextColor:color];
+
+    [licensesAttrString setFont:layout.legal_font()];
+    [licensesAttrString setTextColor:color];
+
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
+    [attrString appendAttributedString:introAttrString];
+    [attrString appendAttributedString:licensesAttrString];
+
+    self.thanksDescription.linkTextAttributes = @{
+        NSForegroundColorAttributeName: color,
+        NSUnderlineColorAttributeName: color,
+        NSUnderlineStyleAttributeName: @(1)
+    };
+    self.thanksDescription.attributedText = attrString;
 }
 
 @end

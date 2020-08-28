@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5D08E6DC24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D08E6DB24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm */; };
-		5D08E6E124F6B3DD007DBE44 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D08E6E024F6B3DD007DBE44 /* WebKit.framework */; };
-		5D08E6E324F6B631007DBE44 /* thanks.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D08E6E224F6B631007DBE44 /* thanks.html */; };
-		5D08E6E524F6B840007DBE44 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 5D08E6E424F6B840007DBE44 /* style.css */; };
-		5D08E6E724F6D893007DBE44 /* lexicon.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D08E6E624F6D893007DBE44 /* lexicon.html */; };
 		5D08E6EA24F74326007DBE44 /* UPSpellAboutPanePlaying.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D08E6E824F74326007DBE44 /* UPSpellAboutPanePlaying.mm */; };
 		5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */; };
 		5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21A24A125D000353563 /* UPBallot.mm */; };
@@ -30,6 +26,9 @@
 		5D29879324F5697C00AA6E78 /* MalloryCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D29879224F5697C00AA6E78 /* MalloryCond-Bold.otf */; };
 		5D29879624F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29879524F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm */; };
 		5D3EB45324F94E86003CF411 /* UPSpellBotDot.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EB45224F94E86003CF411 /* UPSpellBotDot.mm */; };
+		5D3EB45524F9676B003CF411 /* lexicon.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5D3EB45424F9676B003CF411 /* lexicon.rtf */; };
+		5D3EB45824F979AB003CF411 /* thanks-intro.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5D3EB45624F979AB003CF411 /* thanks-intro.rtf */; };
+		5D3EB45924F979AB003CF411 /* thanks-licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5D3EB45724F979AB003CF411 /* thanks-licenses.rtf */; };
 		5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */; };
 		5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogTopMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */; };
@@ -488,9 +487,6 @@
 		5D08E6DA24F6AABB007DBE44 /* UPSpellAboutPaneThanks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutPaneThanks.h; sourceTree = "<group>"; };
 		5D08E6DB24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPaneThanks.mm; sourceTree = "<group>"; };
 		5D08E6E024F6B3DD007DBE44 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		5D08E6E224F6B631007DBE44 /* thanks.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = thanks.html; sourceTree = "<group>"; };
-		5D08E6E424F6B840007DBE44 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
-		5D08E6E624F6D893007DBE44 /* lexicon.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = lexicon.html; sourceTree = "<group>"; };
 		5D08E6E824F74326007DBE44 /* UPSpellAboutPanePlaying.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPanePlaying.mm; sourceTree = "<group>"; };
 		5D08E6E924F74326007DBE44 /* UPSpellAboutPanePlaying.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutPanePlaying.h; sourceTree = "<group>"; };
 		5D0FC21324A02FB600353563 /* UPDialogGameNote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogGameNote.h; sourceTree = "<group>"; };
@@ -526,6 +522,9 @@
 		5D34613624887918009FB46D /* UPViewMove+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UPViewMove+UPSpell.h"; sourceTree = "<group>"; };
 		5D3EB45124F94E86003CF411 /* UPSpellBotDot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellBotDot.h; sourceTree = "<group>"; };
 		5D3EB45224F94E86003CF411 /* UPSpellBotDot.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellBotDot.mm; sourceTree = "<group>"; };
+		5D3EB45424F9676B003CF411 /* lexicon.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = lexicon.rtf; sourceTree = "<group>"; };
+		5D3EB45624F979AB003CF411 /* thanks-intro.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "thanks-intro.rtf"; sourceTree = "<group>"; };
+		5D3EB45724F979AB003CF411 /* thanks-licenses.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "thanks-licenses.rtf"; sourceTree = "<group>"; };
 		5D4AE823248BDED200213904 /* UPSpellExtrasController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasController.h; sourceTree = "<group>"; };
 		5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasController.mm; sourceTree = "<group>"; };
 		5D4AE826248BDF2300213904 /* UPSpellAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutController.h; sourceTree = "<group>"; };
@@ -1005,7 +1004,6 @@
 			files = (
 				5D8D827224E03B08007B050C /* LinkPresentation.framework in Frameworks */,
 				5D5B53F424CDCB5000FD50D4 /* AVFoundation.framework in Frameworks */,
-				5D08E6E124F6B3DD007DBE44 /* WebKit.framework in Frameworks */,
 				5DF9DF8C2466168500B2199D /* UpKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1023,9 +1021,9 @@
 		5D08E6DD24F6AB05007DBE44 /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				5D08E6E424F6B840007DBE44 /* style.css */,
-				5D08E6E624F6D893007DBE44 /* lexicon.html */,
-				5D08E6E224F6B631007DBE44 /* thanks.html */,
+				5D3EB45424F9676B003CF411 /* lexicon.rtf */,
+				5D3EB45624F979AB003CF411 /* thanks-intro.rtf */,
+				5D3EB45724F979AB003CF411 /* thanks-licenses.rtf */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -1733,6 +1731,7 @@
 				5DBAD64824E2297400471ABF /* up-games-icon-045-40@2x.png in Resources */,
 				5DBAD69F24E2297400471ABF /* up-games-icon-000-76@2x.png in Resources */,
 				5D5B54B924DA107B00FD50D4 /* Happy-2.aac in Resources */,
+				5D3EB45524F9676B003CF411 /* lexicon.rtf in Resources */,
 				5DBAD5E424E2297400471ABF /* up-games-icon-165-40.png in Resources */,
 				5DBAD62624E2297400471ABF /* up-games-icon-345-29@2x.png in Resources */,
 				5DBAD63924E2297400471ABF /* up-games-icon-255-29@2x.png in Resources */,
@@ -1742,7 +1741,6 @@
 				5DBAD69124E2297400471ABF /* up-games-icon-105-60@3x.png in Resources */,
 				5DBAD58E24E2297400471ABF /* up-games-icon-090-40.png in Resources */,
 				5D0FC21E24A130D700353563 /* MalloryCond-Black.otf in Resources */,
-				5D08E6E324F6B631007DBE44 /* thanks.html in Resources */,
 				5D5B549D24D4F8E000FD50D4 /* Variation-19-Tune.aac in Resources */,
 				5DBAD67424E2297400471ABF /* up-games-icon-270-20@2x.png in Resources */,
 				5DBAD62E24E2297400471ABF /* up-games-icon-315-29@3x.png in Resources */,
@@ -1784,6 +1782,7 @@
 				5DBAD5AD24E2297400471ABF /* up-games-icon-180-60@2x.png in Resources */,
 				5DBAD6C224E2297400471ABF /* up-games-icon-075-29.png in Resources */,
 				5DBAD6B724E2297400471ABF /* up-games-icon-300-20.png in Resources */,
+				5D3EB45824F979AB003CF411 /* thanks-intro.rtf in Resources */,
 				5DBAD59624E2297400471ABF /* up-games-icon-210-20@2x.png in Resources */,
 				5DBAD65B24E2297400471ABF /* up-games-icon-195-83.5@2x.png in Resources */,
 				5DBAD6A424E2297400471ABF /* up-games-icon-045-76.png in Resources */,
@@ -1896,7 +1895,6 @@
 				5DBAD5F424E2297400471ABF /* up-games-icon-165-1024.png in Resources */,
 				5DBAD67924E2297400471ABF /* up-games-icon-090-76.png in Resources */,
 				5DBAD57324E2297400471ABF /* up-games-icon-105-83.5@2x.png in Resources */,
-				5D08E6E724F6D893007DBE44 /* lexicon.html in Resources */,
 				5DBAD5CA24E2297400471ABF /* up-games-icon-300-20@3x.png in Resources */,
 				5DBAD68D24E2297400471ABF /* up-games-icon-330-20@3x.png in Resources */,
 				5DBAD6D224E2297400471ABF /* up-games-icon-135-20.png in Resources */,
@@ -1974,6 +1972,7 @@
 				5DBAD5EA24E2297400471ABF /* up-games-icon-030-40.png in Resources */,
 				5DBAD69A24E2297400471ABF /* up-games-icon-210-20.png in Resources */,
 				5DBAD63D24E2297400471ABF /* up-games-icon-060-20@3x.png in Resources */,
+				5D3EB45924F979AB003CF411 /* thanks-licenses.rtf in Resources */,
 				5DBAD66B24E2297400471ABF /* up-games-icon-225-29.png in Resources */,
 				5DBAD56C24E2297400471ABF /* up-games-icon-030-40@3x.png in Resources */,
 				5DBAD67524E2297400471ABF /* up-games-icon-165-29.png in Resources */,
@@ -2088,7 +2087,6 @@
 				5DBAD5C424E2297400471ABF /* up-games-icon-150-29@3x.png in Resources */,
 				5DBAD62C24E2297400471ABF /* up-games-icon-090-29.png in Resources */,
 				5DBAD6BF24E2297400471ABF /* up-games-icon-150-20@2x.png in Resources */,
-				5D08E6E524F6B840007DBE44 /* style.css in Resources */,
 				5DBAD5B024E2297400471ABF /* up-games-icon-225-1024.png in Resources */,
 				5DBAD65D24E2297400471ABF /* up-games-icon-315-29@2x.png in Resources */,
 				5DBAD5EC24E2297400471ABF /* up-games-icon-165-76@2x.png in Resources */,

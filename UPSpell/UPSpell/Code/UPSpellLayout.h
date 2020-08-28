@@ -66,7 +66,7 @@ public:
         ExtrasShareLastGameValue, ExtrasShareLastGameDescription, ExtrasShareLastGameButton,
         ExtrasShareDescription, ExtrasShareLastGameHighScoreEqualDescription,
         ChallengePrompt, ChallengeScore,
-        AboutGameDescription, AboutLexiconDescription, AboutLegalDescription,
+        AboutGameDescription, AboutLexiconDescription, AboutThanksDescription,
         AboutPlayingGameView, AboutPlayingBottomPrompt,
         AboutPlayingTopLeftButtonClick, AboutPlayingTopRightButtonClick, AboutPlaying2xCallout,
         AboutLogo, AboutWordMark,
@@ -222,10 +222,11 @@ public:
     static inline constexpr CGRect CanonicalAboutLogoFrame = { 245, 60, 160, 160 };
     static inline constexpr CGRect CanonicalAboutWordMarkFrame = { 235, 223, 180, 140 };
     static inline constexpr CGRect CanonicalAboutGameDescriptionFrame = { 160, 304, 335, 150 };
-    static inline constexpr CGFloat CanonicalSettingsAboutFontCapHeight = 20;
+    static inline constexpr CGFloat CanonicalSettingsAboutFontCapHeight = 19;
+    static inline constexpr CGFloat CanonicalLegalFontCapHeight = 16;
 
     static inline constexpr CGRect CanonicalAboutLexiconDescriptionFrame = { 40, 44, 600, 400 };
-    static inline constexpr CGRect CanonicalAboutLegalDescriptionFrame = { 40, 44, 600, 400 };
+    static inline constexpr CGRect CanonicalAboutThanksDescriptionFrame = { 40, 44, 600, 400 };
 
     static inline constexpr CGRect CanonicalAboutPlayingGameViewFrame = { -180, -132, 1000, 500 };
     static inline constexpr CGRect CanonicalAboutPlayingGameBottomPromptFrame = { 40, 410, 560, 80 };
@@ -241,8 +242,6 @@ public:
     static inline constexpr CGRect CanonicalChallengeScoreFrame = { 100, 228, 800, 300 };
     static inline constexpr CGFloat CanonicalChallengePromptFontCapHeight = 62;
     static inline constexpr CGFloat CanonicalChallengeScoreFontCapHeight = 34;
-
-    static inline constexpr CGFloat CanonicalLegalFontCapHeight = 18;
 
     static SpellLayout &create_instance() {
         g_instance = new SpellLayout();
