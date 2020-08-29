@@ -41,7 +41,7 @@
     self.dataVersion = 0;
     self.theme = UPThemeBlueLight;
     self.extrasSelectedIndex = 0;
-    self.aboutSelectedIndex = 0;
+    self.aboutSelectedIndex = 1;
     self.retryMode = NO;
     self.playMenuSelectedIndex = 2;
     self.tuneHistory = [NSArray array];
