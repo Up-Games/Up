@@ -164,7 +164,6 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) CGFloat activeTouchCurrentPanDistance;
 @property (nonatomic) CGFloat activeTouchTotalPanDistance;
 @property (nonatomic) CGFloat activeTouchFurthestPanDistance;
-@property (nonatomic) BOOL activeTouchPanEverMovedUp;
 @property (nonatomic) CFTimeInterval activeTouchStartTimestamp;
 @property (nonatomic) CFTimeInterval activeTouchPreviousTimestamp;
 
@@ -484,7 +483,6 @@ static UPSpellGameController *_Instance;
     self.activeTouchVelocity = CGPointMake(avx, avy);
     self.activeTouchPreviousPoint = self.activeTouchPoint;
     self.activeTouchPreviousTimestamp = now;
-    self.activeTouchPanEverMovedUp = self.activeTouchPanEverMovedUp || avy < 0;
     
     if (self.touchedControl == self.gameView.pauseControl ||
         self.touchedControl == self.gameView.clearControl ||
@@ -631,7 +629,6 @@ static UPSpellGameController *_Instance;
     self.activeTouchPanPoint = self.activeTouchPanStartPoint;
     self.activeTouchTotalPanDistance = 0;
     self.activeTouchFurthestPanDistance = 0;
-    self.activeTouchPanEverMovedUp = NO;
 }
 
 - (void)touchEndedInTileView:(UPTileView *)tileView
