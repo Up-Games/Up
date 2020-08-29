@@ -1295,6 +1295,39 @@ void TilePaths::create_canonical_tile_paths()
     [glyphOTildePath closePath];
     m_canonical_tile_paths[U'Õ'] = glyphOTildePath;
 
+    UIBezierPath* glyphOWithHornAndHookAbovePath = [UIBezierPath bezierPath];
+    [glyphOWithHornAndHookAbovePath moveToPoint: CGPointMake(44.79, 22.2)];
+    [glyphOWithHornAndHookAbovePath addLineToPoint: CGPointMake(44.79, 22.03)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(50.37, 15.72) controlPoint1: CGPointMake(49.63, 17.77) controlPoint2: CGPointMake(50.37, 16.7)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(48.07, 14.08) controlPoint1: CGPointMake(50.37, 14.73) controlPoint2: CGPointMake(49.47, 14.08)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(41.51, 16.87) controlPoint1: CGPointMake(46.35, 14.08) controlPoint2: CGPointMake(43.89, 15.06)];
+    [glyphOWithHornAndHookAbovePath addLineToPoint: CGPointMake(41.35, 16.78)];
+    [glyphOWithHornAndHookAbovePath addLineToPoint: CGPointMake(41.35, 10.31)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(50.12, 7.44) controlPoint1: CGPointMake(43.31, 8.83) controlPoint2: CGPointMake(46.6, 7.44)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(58.41, 14) controlPoint1: CGPointMake(55.7, 7.44) controlPoint2: CGPointMake(58.41, 10.39)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(50.53, 23.84) controlPoint1: CGPointMake(58.41, 17.69) controlPoint2: CGPointMake(55.7, 20.15)];
+    [glyphOWithHornAndHookAbovePath addLineToPoint: CGPointMake(44.79, 22.2)];
+    [glyphOWithHornAndHookAbovePath closePath];
+    [glyphOWithHornAndHookAbovePath moveToPoint: CGPointMake(49.96, 75.58)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(59.4, 57.05) controlPoint1: CGPointMake(55.62, 75.58) controlPoint2: CGPointMake(59.4, 69.18)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(49.96, 38.43) controlPoint1: CGPointMake(59.4, 44.91) controlPoint2: CGPointMake(55.7, 38.43)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(40.61, 57.05) controlPoint1: CGPointMake(44.3, 38.43) controlPoint2: CGPointMake(40.61, 44.91)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(49.96, 75.58) controlPoint1: CGPointMake(40.61, 69.1) controlPoint2: CGPointMake(44.22, 75.58)];
+    [glyphOWithHornAndHookAbovePath closePath];
+    [glyphOWithHornAndHookAbovePath moveToPoint: CGPointMake(49.96, 86.4)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(28.22, 57.05) controlPoint1: CGPointMake(36.67, 86.4) controlPoint2: CGPointMake(28.22, 74.84)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(50.53, 27.69) controlPoint1: CGPointMake(28.22, 39.25) controlPoint2: CGPointMake(36.67, 27.69)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(56.69, 27.85) controlPoint1: CGPointMake(52.91, 27.69) controlPoint2: CGPointMake(54.72, 27.85)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(63.33, 20.39) controlPoint1: CGPointMake(61.36, 27.85) controlPoint2: CGPointMake(63.33, 25.23)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(63.09, 17.19) controlPoint1: CGPointMake(63.33, 19.24) controlPoint2: CGPointMake(63.25, 18.26)];
+    [glyphOWithHornAndHookAbovePath addLineToPoint: CGPointMake(71.95, 17.19)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(72.52, 22.03) controlPoint1: CGPointMake(72.28, 18.51) controlPoint2: CGPointMake(72.52, 19.98)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(63.42, 33.35) controlPoint1: CGPointMake(72.52, 27.36) controlPoint2: CGPointMake(69.98, 31.87)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(71.78, 57.05) controlPoint1: CGPointMake(68.83, 38.19) controlPoint2: CGPointMake(71.78, 46.06)];
+    [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(49.96, 86.4) controlPoint1: CGPointMake(71.78, 74.84) controlPoint2: CGPointMake(63.25, 86.4)];
+    [glyphOWithHornAndHookAbovePath closePath];
+    m_canonical_tile_paths[U'Ở'] = glyphOTildePath;
+    
     // Ś
     UIBezierPath* glyphSAcutePath = [UIBezierPath bezierPath];
     [glyphSAcutePath moveToPoint: CGPointMake(50.94, 11.86)];
@@ -1798,6 +1831,36 @@ void TilePaths::create_canonical_tile_paths()
     [glyphOWithTrailingApostrophePath addLineToPoint: CGPointMake(84.07, 27.85)];
     [glyphOWithTrailingApostrophePath closePath];
     m_canonical_tile_paths[TrailingApostropheOffset + U'O'] = glyphOWithTrailingApostrophePath;
+
+    // T’
+    UIBezierPath* glyphSWithTrailingApostrophePath = [UIBezierPath bezierPath];
+    [glyphSWithTrailingApostrophePath moveToPoint: CGPointMake(44.1, 26.87)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(57.55, 31.13) controlPoint1: CGPointMake(49.43, 26.87) controlPoint2: CGPointMake(54.11, 28.59)];
+    [glyphSWithTrailingApostrophePath addLineToPoint: CGPointMake(57.55, 43.11)];
+    [glyphSWithTrailingApostrophePath addLineToPoint: CGPointMake(57.39, 43.11)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(44.59, 37.2) controlPoint1: CGPointMake(53.12, 39.5) controlPoint2: CGPointMake(48.61, 37.2)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(39.34, 42.04) controlPoint1: CGPointMake(41.39, 37.2) controlPoint2: CGPointMake(39.34, 39.17)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(46.72, 50.65) controlPoint1: CGPointMake(39.34, 44.99) controlPoint2: CGPointMake(41.23, 46.88)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(59.85, 69.84) controlPoint1: CGPointMake(55.26, 56.39) controlPoint2: CGPointMake(59.85, 61.39)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(42.46, 86.24) controlPoint1: CGPointMake(59.85, 80.01) controlPoint2: CGPointMake(52.63, 86.24)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(28.02, 81.24) controlPoint1: CGPointMake(36.55, 86.24) controlPoint2: CGPointMake(31.46, 84.19)];
+    [glyphSWithTrailingApostrophePath addLineToPoint: CGPointMake(26.7, 68.2)];
+    [glyphSWithTrailingApostrophePath addLineToPoint: CGPointMake(26.87, 68.03)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(41.8, 75.91) controlPoint1: CGPointMake(31.95, 72.87) controlPoint2: CGPointMake(37.86, 75.91)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(47.87, 70.49) controlPoint1: CGPointMake(45.41, 75.91) controlPoint2: CGPointMake(47.87, 73.77)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(40.16, 61.39) controlPoint1: CGPointMake(47.87, 67.3) controlPoint2: CGPointMake(45.66, 65.08)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(27.44, 42.78) controlPoint1: CGPointMake(32.2, 56.06) controlPoint2: CGPointMake(27.44, 51.47)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(44.1, 26.87) controlPoint1: CGPointMake(27.44, 33.35) controlPoint2: CGPointMake(33.92, 26.87)];
+    [glyphSWithTrailingApostrophePath closePath];
+    [glyphSWithTrailingApostrophePath moveToPoint: CGPointMake(77.41, 27.85)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(78.89, 35.89) controlPoint1: CGPointMake(78.39, 30.64) controlPoint2: CGPointMake(78.89, 32.94)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(70.35, 49.75) controlPoint1: CGPointMake(78.89, 40.89) controlPoint2: CGPointMake(75.28, 45.4)];
+    [glyphSWithTrailingApostrophePath addLineToPoint: CGPointMake(67.15, 47.78)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(70.44, 37.45) controlPoint1: CGPointMake(69.45, 43.68) controlPoint2: CGPointMake(70.44, 40.65)];
+    [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(67.48, 27.85) controlPoint1: CGPointMake(70.44, 34.74) controlPoint2: CGPointMake(69.7, 32.77)];
+    [glyphSWithTrailingApostrophePath addLineToPoint: CGPointMake(77.41, 27.85)];
+    [glyphSWithTrailingApostrophePath closePath];
+    m_canonical_tile_paths[TrailingApostropheOffset + U'S'] = glyphSWithTrailingApostrophePath;
 
     // T’
     UIBezierPath* glyphTWithTrailingApostrophePath = [UIBezierPath bezierPath];

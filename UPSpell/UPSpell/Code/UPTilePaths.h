@@ -59,6 +59,7 @@ public:
             case U'M':
             case U'N':
             case U'O':
+            case U'S':
             case U'T':
             case U'U':
             case U'W':
