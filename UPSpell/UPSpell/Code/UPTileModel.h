@@ -56,7 +56,7 @@ public:
                   glyph == U'Ç' || glyph == U'Ć' || glyph == U'Č' ||
                   glyph == U'È' || glyph == U'É' || glyph == U'Ê' || glyph == U'Ë' || glyph == U'Ē' || glyph == U'Ė' || glyph == U'Ę' ||
                   glyph == U'Î' || glyph == U'Ï' || glyph == U'Í' || glyph == U'Ī' || glyph == U'Į' || glyph == U'Ì' ||
-                  glyph == U'Ł' ||
+                  glyph == U'Ł' || glyph == U'Ñ' || glyph == U'Ń' ||
                   glyph == U'Ô' || glyph == U'Ö' || glyph == U'Ò' || glyph == U'Ó' || glyph == U'Ø' || glyph == U'Ō' || glyph == U'Õ' ||
                   glyph == U'Ś' || glyph == U'Š' ||
                   glyph == U'Û' || glyph == U'Ü' || glyph == U'Ù' || glyph == U'Ú' || glyph == U'Ū' ||
