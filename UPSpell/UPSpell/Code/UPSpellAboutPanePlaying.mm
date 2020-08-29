@@ -881,7 +881,7 @@ using UP::TimeSpanning::start;
 
 - (void)animateToStepEighteen
 {
-    self.bottomPromptLabel.string = @"DRAG LETTERS TO REARRANGE";
+    self.bottomPromptLabel.string = @"DRAG TO REARRANGE LETTERS";
     UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
     start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
         delay(BandAboutPlayingDelay, 1, ^{
