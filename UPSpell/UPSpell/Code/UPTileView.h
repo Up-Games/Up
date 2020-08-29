@@ -14,7 +14,8 @@
 @property (nonatomic) char32_t glyph;
 @property (nonatomic) int score;
 @property (nonatomic) int multiplier;
-@property (nonatomic) BOOL hasApostrophe;
+@property (nonatomic) BOOL hasLeadingApostrophe;
+@property (nonatomic) BOOL hasTrailingApostrophe;
 
 @property (nonatomic) UP::SpellLayout::Location submitLocation;
 

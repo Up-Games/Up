@@ -1247,21 +1247,21 @@ static UPSpellGameController *_Instance;
     const std::u32string string = word.string();
     TileIndex idx = 0;
     UPTileView *previousTileView = nil;
-    bool add_apostrophe = false;
+    bool has_leading_apostrophe = false;
     for (UPTileView *tileView in wordTrayTileViews) {
-        add_apostrophe = false;
+        has_leading_apostrophe = false;
         if (string[idx] == U'’') {
             if (previousTileView) {
-                previousTileView.hasApostrophe = YES;
+                previousTileView.hasTrailingApostrophe = YES;
                 [previousTileView updateTile];
             }
             else {
-                add_apostrophe = true;
+                has_leading_apostrophe = true;
             }
             idx++;
         }
         tileView.glyph = string[idx];
-        tileView.hasApostrophe = add_apostrophe;
+        tileView.hasLeadingApostrophe = has_leading_apostrophe;
         [tileView updateTile];
         previousTileView = tileView;
         idx++;
@@ -1277,9 +1277,9 @@ static UPSpellGameController *_Instance;
     for (auto &tile : m_spell_model->tiles()) {
         if (tile.has_view()) {
             UPTileView *tileView = tile.view();
-            if (tileView.glyph != tile.model().glyph() || tileView.hasApostrophe) {
+            if (tileView.glyph != tile.model().glyph() || tileView.hasTrailingApostrophe) {
                 tileView.glyph = tile.model().glyph();
-                tileView.hasApostrophe = NO;
+                tileView.hasTrailingApostrophe = NO;
                 [tileView updateTile];
             }
         }

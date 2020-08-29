@@ -71,15 +71,20 @@ static uint32_t _InstanceCount;
     UIBezierPath *contentPath = [UIBezierPath bezierPath];
     if (self.glyph != UP::SentinelGlyph) {
         TilePaths &tile_paths = TilePaths::instance();
-        [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
+        if (self.hasLeadingApostrophe) {
+            [contentPath appendPath:tile_paths.tile_path_for_glyph_with_leading_apostrophe(self.glyph)];
+        }
+        else if (self.hasTrailingApostrophe) {
+            [contentPath appendPath:tile_paths.tile_path_for_glyph_with_trailing_apostrophe(self.glyph)];
+        }
+        else {
+            [contentPath appendPath:tile_paths.tile_path_for_glyph(self.glyph)];
+        }
         if (self.score > 0) {
             [contentPath appendPath:tile_paths.tile_path_for_score(self.score)];
         }
         if (self.multiplier != 1) {
             [contentPath appendPath:tile_paths.tile_path_for_multiplier(self.multiplier)];
-        }
-        if (self.hasApostrophe) {
-            [contentPath appendPath:tile_paths.tile_path_for_glyph(U'’')];
         }
     }
     [self setContentPath:contentPath];

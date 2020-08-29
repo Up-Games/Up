@@ -59,7 +59,7 @@ using UP::TimeSpanning::start;
     //LOG_CHANNEL_ON(Gestures);
     //LOG_CHANNEL_ON(Layout);
     //LOG_CHANNEL_ON(Leaks);
-    //LOG_CHANNEL_ON(Lexicon);
+    LOG_CHANNEL_ON(Lexicon);
     //LOG_CHANNEL_ON(Mode);
     //LOG_CHANNEL_ON(SaveRestore);
     //LOG_CHANNEL_ON(Settings);

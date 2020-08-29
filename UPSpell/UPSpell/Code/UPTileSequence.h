@@ -66,7 +66,7 @@ public:
             else {
                 c = 'E';
             }
-            LOG(General, "consonant run stopped: %c", c);
+            LOG(Lexicon, "consonant run stopped: %c", c);
         }
         else {
             m_letters.pop_back();
