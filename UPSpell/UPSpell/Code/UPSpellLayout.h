@@ -201,7 +201,7 @@ public:
     static inline constexpr CGRect CanonicalExtrasSoundTunesSliderFrame =  { 423, 276, up_size_width(CanonicalSliderSize), up_size_height(CanonicalSliderSize) };
     static inline constexpr CGRect CanonicalExtrasSoundDescriptionFrame = { 384, 368, 572, 300 };
 
-    static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 545, 354, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 540, 354, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasRetryDescriptionFrame = { 384, 88, 572, 300 };
 
     static inline constexpr CGRect CanonicalExtrasShareHighScoreButtonFrame =  { 516.5, 90, up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };

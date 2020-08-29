@@ -2284,7 +2284,7 @@ static UPSpellGameController *_Instance;
     NSMutableArray<UPViewMove *> *buttonOutMoves = [NSMutableArray arrayWithArray:@[
         UPViewMoveMake(self.dialogTopMenu.extrasButton, Role::DialogButtonTopLeft, Spot::OffLeftNear),
         UPViewMoveMake(self.dialogTopMenu.aboutButton, Role::DialogButtonTopRight, Spot::OffRightNear),
-        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Spot::OffBottomNear),
+        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Spot::OffBottomFar),
         UPViewMoveMake(self.dialogGameNote.noteLabel, Role::DialogGameNote, Spot::OffBottomFar),
         UPViewMoveMake(self.dialogGameNote.shareButton, Role::GameShareButton, Spot::OffBottomFar),
     ]];
@@ -2345,7 +2345,7 @@ static UPSpellGameController *_Instance;
     // Handle coming from Pause
     if (mode == Mode::Pause) {
         self.gameView.transform = layout.menu_game_view_transform();
-        self.dialogPause.messagePathView.frame = layout.frame_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
+        self.dialogPause.messagePathView.frame = layout.frame_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomFar);
         self.dialogPause.quitButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar);
         self.dialogPause.resumeButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Spot::OffBottomFar);
         self.dialogPause.alpha = 0;
@@ -2379,8 +2379,8 @@ static UPSpellGameController *_Instance;
     self.dialogChallenge.logoView.frame = layout.frame_for(Role::HeroLogo);
     self.dialogChallenge.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark);
     self.dialogChallenge.challengePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Spot::OffBottomFar);
-    self.dialogChallenge.scorePromptLabel.frame = layout.frame_for(Role::ChallengeScore, Spot::OffBottomNear);
-    self.dialogChallenge.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Spot::OffBottomNear);
+    self.dialogChallenge.scorePromptLabel.frame = layout.frame_for(Role::ChallengeScore, Spot::OffBottomFar);
+    self.dialogChallenge.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Spot::OffBottomFar);
     self.dialogChallenge.cancelButton.frame = layout.frame_for(cancelRole, Spot::OffBottomNear);
     self.dialogChallenge.helpButton.frame = layout.frame_for(Role::DialogHelpButton, Spot::OffBottomNear);
     
@@ -3671,10 +3671,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     NSArray<UPViewMove *> *buttonOutMoves = @[
         UPViewMoveMake(self.dialogChallenge.challengePromptLabel, Location(Role::ChallengePrompt, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogChallenge.scorePromptLabel, Location(Role::ChallengeScore, Spot::OffBottomNear)),
-        UPViewMoveMake(self.dialogChallenge.cancelButton, Location(cancelRole, Spot::OffBottomNear)),
-        UPViewMoveMake(self.dialogChallenge.confirmButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomNear)),
-        UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::GameShareButton, Spot::OffBottomNear)),
+        UPViewMoveMake(self.dialogChallenge.scorePromptLabel, Location(Role::ChallengeScore, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogChallenge.cancelButton, Location(cancelRole, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogChallenge.confirmButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::GameShareButton, Spot::OffBottomFar)),
     ];
     start(bloop_out(BandModeUI, buttonOutMoves, 0.5, nil));
     
@@ -3728,8 +3728,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         } completion:nil];
         
         NSArray<UPViewMove *> *buttonOutMoves = @[
-            UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::ChoiceTitleCenter, Spot::OffBottomFar)),
-            UPViewMoveMake(self.dialogPlayMenu.backButton, Location(Role::ChoiceBackCenter, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::ChoiceTitleCenter, Spot::OffTopNear)),
+            UPViewMoveMake(self.dialogPlayMenu.backButton, Location(Role::ChoiceBackCenter, Spot::OffTopNear)),
             UPViewMoveMake(self.dialogPlayMenu.goButton, Location(Role::ChoiceGoButtonCenter, Spot::OffBottomFar)),
             UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice1, Role::ChoiceItem1Center, Spot::OffBottomFar),
             UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice2, Role::ChoiceItem2Center, Spot::OffBottomFar),
@@ -3781,10 +3781,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffTopNear)),
             UPViewMoveMake(self.dialogTopMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffTopNear)),
             UPViewMoveMake(self.dialogChallenge.challengePromptLabel, Location(Role::ChallengePrompt, Spot::OffBottomFar)),
-            UPViewMoveMake(self.dialogChallenge.scorePromptLabel, Location(Role::ChallengeScore, Spot::OffBottomNear)),
-            UPViewMoveMake(self.dialogChallenge.cancelButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomNear)),
-            UPViewMoveMake(self.dialogChallenge.confirmButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomNear)),
-            UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::GameShareButton, Spot::OffBottomNear)),
+            UPViewMoveMake(self.dialogChallenge.scorePromptLabel, Location(Role::ChallengeScore, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogChallenge.cancelButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogChallenge.confirmButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::GameShareButton, Spot::OffBottomFar)),
         ];
         start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
             self.dialogChallenge.confirmButton.highlightedLocked = NO;
@@ -3862,7 +3862,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.gameView.pulseView.alpha = 0;
 
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
+    self.dialogPause.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomFar);
     self.dialogPause.quitButton.center = layout.center_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar);
     self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse, Spot::OffBottomFar);
     
@@ -3937,7 +3937,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     } completion:nil];
     
     NSArray<UPViewMove *> *nearMoves = @[
-        UPViewMoveMake(self.dialogPause.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear)),
+        UPViewMoveMake(self.dialogPause.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffBottomFar)),
     ];
     NSArray<UPViewMove *> *farMoves = @[
         UPViewMoveMake(self.dialogPause.quitButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
