@@ -1326,7 +1326,7 @@ void TilePaths::create_canonical_tile_paths()
     [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(71.78, 57.05) controlPoint1: CGPointMake(68.83, 38.19) controlPoint2: CGPointMake(71.78, 46.06)];
     [glyphOWithHornAndHookAbovePath addCurveToPoint: CGPointMake(49.96, 86.4) controlPoint1: CGPointMake(71.78, 74.84) controlPoint2: CGPointMake(63.25, 86.4)];
     [glyphOWithHornAndHookAbovePath closePath];
-    m_canonical_tile_paths[U'Ở'] = glyphOTildePath;
+    m_canonical_tile_paths[U'Ở'] = glyphOWithHornAndHookAbovePath;
     
     // Ś
     UIBezierPath* glyphSAcutePath = [UIBezierPath bezierPath];
@@ -1832,7 +1832,7 @@ void TilePaths::create_canonical_tile_paths()
     [glyphOWithTrailingApostrophePath closePath];
     m_canonical_tile_paths[TrailingApostropheOffset + U'O'] = glyphOWithTrailingApostrophePath;
 
-    // T’
+    // S’
     UIBezierPath* glyphSWithTrailingApostrophePath = [UIBezierPath bezierPath];
     [glyphSWithTrailingApostrophePath moveToPoint: CGPointMake(44.1, 26.87)];
     [glyphSWithTrailingApostrophePath addCurveToPoint: CGPointMake(57.55, 31.13) controlPoint1: CGPointMake(49.43, 26.87) controlPoint2: CGPointMake(54.11, 28.59)];
