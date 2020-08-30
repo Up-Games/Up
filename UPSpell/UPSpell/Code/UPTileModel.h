@@ -57,11 +57,16 @@ public:
                   glyph == U'È' || glyph == U'É' || glyph == U'Ê' || glyph == U'Ë' || glyph == U'Ē' || glyph == U'Ė' || glyph == U'Ę' ||
                   glyph == U'Î' || glyph == U'Ï' || glyph == U'Í' || glyph == U'Ī' || glyph == U'Į' || glyph == U'Ì' ||
                   glyph == U'Ł' || glyph == U'Ñ' || glyph == U'Ń' ||
-                  glyph == U'Ô' || glyph == U'Ö' || glyph == U'Ò' || glyph == U'Ó' || glyph == U'Ø' || glyph == U'Ō' || glyph == U'Õ' ||
+                  glyph == U'Ô' || glyph == U'Ö' || glyph == U'Ò' || glyph == U'Ó' || glyph == U'Ø' || glyph == U'Ō' || glyph == U'Õ' || glyph == U'Ở' ||
                   glyph == U'Ś' || glyph == U'Š' ||
                   glyph == U'Û' || glyph == U'Ü' || glyph == U'Ù' || glyph == U'Ú' || glyph == U'Ū' ||
                   glyph == U'Ÿ' ||
-                  glyph == U'Ž' || glyph == U'Ź' || glyph == U'Ż');
+                  glyph == U'Ž' || glyph == U'Ź' || glyph == U'Ż' ||
+                  char_with_leading_apostrophe(U'D') || char_with_leading_apostrophe(U'L') || char_with_leading_apostrophe(U'R') ||
+                  char_with_leading_apostrophe(U'S') || char_with_leading_apostrophe(U'T') || char_with_leading_apostrophe(U'V') ||
+                  char_with_trailing_apostrophe(U'A') || char_with_trailing_apostrophe(U'E') || char_with_trailing_apostrophe(U'G') ||
+                  char_with_trailing_apostrophe(U'I') || char_with_trailing_apostrophe(U'O') || char_with_trailing_apostrophe(U'S') ||
+                  char_with_trailing_apostrophe(U'Y'));
         return b == B;
     }
     

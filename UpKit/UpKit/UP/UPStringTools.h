@@ -19,6 +19,11 @@
 
 namespace UP {
 
+UP_STATIC_CONSTEXPR char32_t LeadingApostrophe =  0xE000;
+UP_STATIC_CONSTEXPR char32_t TrailingApostrophe = 0xE100;
+UP_STATIC_CONSTEXPR char32_t char_with_leading_apostrophe(char32_t c) { return c + LeadingApostrophe; }
+UP_STATIC_CONSTEXPR char32_t char_with_trailing_apostrophe(char32_t c) { return c + TrailingApostrophe; }
+
 UP_STATIC_INLINE std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> &utf8_char32_conv() {
     static std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv;
     return conv;

@@ -66,6 +66,8 @@ using UP::valid;
 using UP::Word;
 
 using UP::ns_str;
+using UP::char_with_leading_apostrophe;
+using UP::char_with_trailing_apostrophe;
 
 using UP::TimeSpanning::bloop_in;
 using UP::TimeSpanning::bloop_out;
@@ -1244,26 +1246,62 @@ static UPSpellGameController *_Instance;
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
     ASSERT(wordTrayTileViews.count);
 
-    const std::u32string string = word.string();
+    std::u32string string = word.string();
+    
+    // handle insertion of apostrophe if necessary
+    if (string.find_first_of(U'’') != std::u32string::npos) {
+        std::u32string::size_type idx = std::u32string::npos;
+        if ((idx = string.find(U"N’T")) != std::u32string::npos) {
+            string[idx + 2] = char_with_leading_apostrophe(U'T');
+        }
+        else if ((idx = string.find(U"G’DAY")) != std::u32string::npos) {
+            string[idx] = char_with_trailing_apostrophe(U'G');
+        }
+        else if ((idx = string.find(U"’LL")) != std::u32string::npos) {
+            string[idx + 1] = char_with_leading_apostrophe(U'L');
+        }
+        else if ((idx = string.find(U"’D")) != std::u32string::npos) {
+            string[idx + 1] = char_with_leading_apostrophe(U'D');
+        }
+        else if ((idx = string.find(U"’S")) != std::u32string::npos) {
+            string[idx + 1] = char_with_leading_apostrophe(U'S');
+        }
+        else if ((idx = string.find(U"’RE")) != std::u32string::npos) {
+            string[idx + 1] = char_with_leading_apostrophe(U'R');
+        }
+        else if ((idx = string.find(U"’VE")) != std::u32string::npos) {
+            string[idx + 1] = char_with_leading_apostrophe(U'V');
+        }
+        else if ((idx = string.find(U"’T")) != std::u32string::npos) {
+            string[idx] = char_with_leading_apostrophe(U'T');
+        }
+        else if ((idx = string.find(U"A’")) != std::u32string::npos) {
+            string[idx] = char_with_trailing_apostrophe(U'A');
+        }
+        else if ((idx = string.find(U"E’")) != std::u32string::npos) {
+            string[idx] = char_with_trailing_apostrophe(U'E');
+        }
+        else if ((idx = string.find(U"I’M")) != std::u32string::npos) {
+            string[idx] = char_with_trailing_apostrophe(U'I');
+        }
+        else if ((idx = string.find(U"O’")) != std::u32string::npos) {
+            string[idx] = char_with_trailing_apostrophe(U'O');
+        }
+        else if ((idx = string.find(U"S’")) != std::u32string::npos) {
+            string[idx] = char_with_trailing_apostrophe(U'S');
+        }
+        else if ((idx = string.find(U"Y’")) != std::u32string::npos) {
+            string[idx] = char_with_trailing_apostrophe(U'Y');
+        }
+    }
+    
     TileIndex idx = 0;
-    UPTileView *previousTileView = nil;
-    bool has_leading_apostrophe = false;
     for (UPTileView *tileView in wordTrayTileViews) {
-        has_leading_apostrophe = false;
         if (string[idx] == U'’') {
-            if (previousTileView) {
-                previousTileView.hasTrailingApostrophe = YES;
-                [previousTileView updateTile];
-            }
-            else {
-                has_leading_apostrophe = true;
-            }
             idx++;
         }
         tileView.glyph = string[idx];
-        tileView.hasLeadingApostrophe = has_leading_apostrophe;
         [tileView updateTile];
-        previousTileView = tileView;
         idx++;
     }
 }
