@@ -1277,8 +1277,9 @@ static UPSpellGameController *_Instance;
     for (auto &tile : m_spell_model->tiles()) {
         if (tile.has_view()) {
             UPTileView *tileView = tile.view();
-            if (tileView.glyph != tile.model().glyph() || tileView.hasTrailingApostrophe) {
+            if (tileView.glyph != tile.model().glyph() || tileView.hasLeadingApostrophe || tileView.hasTrailingApostrophe) {
                 tileView.glyph = tile.model().glyph();
+                tileView.hasLeadingApostrophe = NO;
                 tileView.hasTrailingApostrophe = NO;
                 [tileView updateTile];
             }
