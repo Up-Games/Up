@@ -3838,7 +3838,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromReadyToPlay
 {
-    ASSERT(self.lockCount == 1);
+    ASSERT(self.lockCount);
     
     if (@available(iOS 11.0, *)) {
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
@@ -3862,7 +3862,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
         } completion:nil];
         delay(BandModeDelay, 0.1, ^{
-            [self viewUnlock];
+            [self viewEnsureUnlocked];
             [self viewFillPlayerTrayWithCompletion:nil];
         });
     }];
