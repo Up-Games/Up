@@ -2254,7 +2254,7 @@ static UPSpellGameController *_Instance;
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffLeftFar));
     UPViewMove *dialogGameOverMesageMove = UPViewMoveMake(self.dialogGameOver.gameOverMessagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffLeftFar));
     UPViewMove *dialogGameOverNoteLabelMove = UPViewMoveMake(self.dialogGameOver.gameOverNoteLabel, Location(Role::DialogGameNote, Spot::OffLeftFar));
-    UPViewMove *dialogGameOverShareButtonMove = UPViewMoveMake(self.dialogGameOver.gameOverShareButton, Location(Role::GameShareButton, Spot::OffLeftNear));
+    UPViewMove *dialogGameOverShareButtonMove = UPViewMoveMake(self.dialogGameOver.gameOverShareButton, Location(Role::GameShareButton, Spot::OffLeftFar));
 
     CFTimeInterval duration = 0.75;
     CFTimeInterval stagger = 0.075;
@@ -2301,6 +2301,7 @@ static UPSpellGameController *_Instance;
         NSArray<UPViewMove *> *moves = @[gameViewMove, dialogGameOverMesageMove, dialogGameOverNoteLabelMove, dialogGameOverShareButtonMove];
         start(bloop_out(BandModeUI, moves, duration - (1.5 * stagger),
                         ^(UIViewAnimatingPosition) {
+            
             [self viewUnlock];
             self.dialogTopMenuUserInteractionEnabled = NO;
             if (completion) {
