@@ -2321,7 +2321,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dev.upgames.upspell;
 				PRODUCT_NAME = "Up Spell";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -2343,7 +2343,7 @@
 				OTHER_CFLAGS = "-DNDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.upgames.upspell;
 				PRODUCT_NAME = "Up Spell";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
