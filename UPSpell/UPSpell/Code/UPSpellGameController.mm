@@ -4146,7 +4146,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             self.dialogTopMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Spot::OffTopNear));
             self.dialogTopMenu.playButton.highlightedLocked = NO;
             self.dialogTopMenu.playButton.highlighted = NO;
+
             Role gameNoteRole = wasChallenge ? Role::DialogChallengeGameNote : Role::DialogGameNote;
+            self.dialogGameOver.gameOverNoteLabel.frame = layout.frame_for(Location(gameNoteRole, Spot::OffBottomNear));
+            self.dialogGameOver.gameOverShareButton.frame = layout.frame_for(Location(Role::GameShareButton, Spot::OffBottomNear));
             NSArray<UPViewMove *> *buttonMoves = @[
                 UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
                 UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter)),
