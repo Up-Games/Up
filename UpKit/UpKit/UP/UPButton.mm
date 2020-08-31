@@ -31,6 +31,7 @@
     self.action = action;
     self.gestureRecognizer = [UPTapGestureRecognizer gestureWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:self.gestureRecognizer];
+    self.exclusiveTouch = YES;
     return self;
 }
 

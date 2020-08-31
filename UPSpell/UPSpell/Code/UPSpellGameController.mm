@@ -770,8 +770,9 @@ static UPSpellGameController *_Instance;
             case UP::Mode::Quit:
                 return NO;
             case UP::Mode::Init:
-            case UP::Mode::End:
+            case UP::Mode::End: {
                 return self.dialogTopMenuUserInteractionEnabled;
+            }
         }
     }
     return YES;
