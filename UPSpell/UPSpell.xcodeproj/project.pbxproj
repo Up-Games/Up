@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5D08E6DC24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D08E6DB24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm */; };
 		5D08E6EA24F74326007DBE44 /* UPSpellAboutPanePlaying.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D08E6E824F74326007DBE44 /* UPSpellAboutPanePlaying.mm */; };
-		5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */; };
 		5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21A24A125D000353563 /* UPBallot.mm */; };
 		5D0FC21E24A130D700353563 /* MalloryCond-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */; };
 		5D0FC22724A278D300353563 /* UPStepper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22624A278D300353563 /* UPStepper.mm */; };
@@ -488,8 +487,6 @@
 		5D08E6E024F6B3DD007DBE44 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5D08E6E824F74326007DBE44 /* UPSpellAboutPanePlaying.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPanePlaying.mm; sourceTree = "<group>"; };
 		5D08E6E924F74326007DBE44 /* UPSpellAboutPanePlaying.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutPanePlaying.h; sourceTree = "<group>"; };
-		5D0FC21324A02FB600353563 /* UPDialogGameNote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPDialogGameNote.h; sourceTree = "<group>"; };
-		5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameNote.mm; sourceTree = "<group>"; };
 		5D0FC21A24A125D000353563 /* UPBallot.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPBallot.mm; sourceTree = "<group>"; };
 		5D0FC21B24A125D000353563 /* UPBallot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPBallot.h; sourceTree = "<group>"; };
 		5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Black.otf"; sourceTree = "<group>"; };
@@ -1097,8 +1094,6 @@
 				5D6FB59C24DDC56100CDC293 /* UPDialogChallenge.mm */,
 				5D4ECE3624E4842700D1A310 /* UPDialogChallengeHelp.h */,
 				5D4ECE3724E4842700D1A310 /* UPDialogChallengeHelp.mm */,
-				5D0FC21324A02FB600353563 /* UPDialogGameNote.h */,
-				5D0FC21424A02FB600353563 /* UPDialogGameNote.mm */,
 				5D5EA1462486A1D2006264D2 /* UPDialogGameOver.h */,
 				5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */,
 				5D5EA1402485B49E006264D2 /* UPDialogPause.h */,
@@ -2145,7 +2140,6 @@
 				5D6FB5A024DEF08800CDC293 /* UPSpellExtrasPaneShare.mm in Sources */,
 				5D6261A324C0944600D19EEF /* UPSpellDossier.mm in Sources */,
 				5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */,
-				5D0FC21524A02FB600353563 /* UPDialogGameNote.mm in Sources */,
 				5D5B546E24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm in Sources */,
 				5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */,
 				5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */,

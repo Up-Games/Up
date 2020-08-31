@@ -7,12 +7,12 @@
 
 @class UPControl;
 
-@interface UPDialogGameOver : UIView
+@interface UPDialogGameOver : NSObject
 
-@property (nonatomic, readonly) UPBezierPathView *messagePathView;
+@property (nonatomic, readonly) UPBezierPathView *gameOverMessagePathView;
+@property (nonatomic, readonly) UPLabel *gameOverNoteLabel;
+@property (nonatomic, readonly) UPButton *gameOverShareButton;
 
 + (UPDialogGameOver *)instance;
-
-- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
 @end
