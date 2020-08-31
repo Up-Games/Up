@@ -42,6 +42,7 @@ using Role = UP::SpellLayout::Role;
 
 - (void)prepare
 {
+    self.lexiconDescription.contentOffset = CGPointZero;
     self.lexiconDescription.userInteractionEnabled = YES;
     [self updateThemeColors];
 }
@@ -71,6 +72,18 @@ using Role = UP::SpellLayout::Role;
         NSUnderlineStyleAttributeName: @(1)
     };
     self.lexiconDescription.attributedText = attrString;
+
+    switch ([UIColor themeColorStyle]) {
+        case UPThemeColorStyleDefault:
+        case UPThemeColorStyleLight:
+        case UPThemeColorStyleLightStark:
+            self.lexiconDescription.indicatorStyle = UIScrollViewIndicatorStyleDefault;
+            break;
+        case UPThemeColorStyleDark:
+        case UPThemeColorStyleDarkStark:
+            self.lexiconDescription.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+            break;
+    }
 }
 
 @end

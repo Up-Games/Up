@@ -43,6 +43,7 @@ using Role = UP::SpellLayout::Role;
 
 - (void)prepare
 {
+    self.thanksDescription.contentOffset = CGPointZero;
     self.thanksDescription.userInteractionEnabled = YES;
     [self updateThemeColors];
 }
@@ -83,6 +84,18 @@ using Role = UP::SpellLayout::Role;
         NSUnderlineStyleAttributeName: @(1)
     };
     self.thanksDescription.attributedText = attrString;
+
+    switch ([UIColor themeColorStyle]) {
+        case UPThemeColorStyleDefault:
+        case UPThemeColorStyleLight:
+        case UPThemeColorStyleLightStark:
+            self.thanksDescription.indicatorStyle = UIScrollViewIndicatorStyleDefault;
+            break;
+        case UPThemeColorStyleDark:
+        case UPThemeColorStyleDarkStark:
+            self.thanksDescription.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+            break;
+    }
 }
 
 @end
