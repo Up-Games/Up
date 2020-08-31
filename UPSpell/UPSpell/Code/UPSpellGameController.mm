@@ -1273,7 +1273,7 @@ static UPSpellGameController *_Instance;
             string[idx + 1] = char_with_leading_apostrophe(U'V');
         }
         else if ((idx = string.find(U"’T")) != std::u32string::npos) {
-            string[idx] = char_with_leading_apostrophe(U'T');
+            string[idx + 1] = char_with_leading_apostrophe(U'T');
         }
         else if ((idx = string.find(U"A’")) != std::u32string::npos) {
             string[idx] = char_with_trailing_apostrophe(U'A');
