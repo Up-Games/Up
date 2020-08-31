@@ -145,6 +145,7 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) UPDialogChallengeHelp *dialogChallengeHelp;
 @property (nonatomic) UPDialogShareHelp *dialogShareHelp;
 @property (nonatomic) UPDialogTopMenu *dialogTopMenu;
+@property (nonatomic) BOOL dialogTopMenuUserInteractionEnabled;
 @property (nonatomic) NSInteger lockCount;
 @property (nonatomic) UPChoice *playMenuChoice;
 @property (nonatomic) int endGameScore;
@@ -200,7 +201,8 @@ static UPSpellGameController *_Instance;
     _Instance = self;
     
     SpellLayout &layout = SpellLayout::instance();
-
+    UPSpellNavigationController *navigationController = [UPSpellNavigationController instance];
+    
     self.gameView = [UPSpellGameView instance];
     [self.view addSubview:self.gameView];
 
@@ -221,11 +223,18 @@ static UPSpellGameController *_Instance;
     [self.dialogGameNote.shareButton setTarget:self action:@selector(gameOverShareButtonTapped)];
     
     self.dialogTopMenu = [UPDialogTopMenu instance];
-    self.dialogTopMenu.hidden = YES;
-    self.dialogTopMenu.frame = layout.screen_bounds();
+    [self.view addSubview:self.dialogTopMenu.extrasButton];
+    [self.view addSubview:self.dialogTopMenu.playButton];
+    [self.view addSubview:self.dialogTopMenu.aboutButton];
+    [self.view addSubview:self.dialogTopMenu.readyMessagePathView];
+    [self.dialogTopMenu.playButton setTarget:navigationController action:@selector(dialogMenuPlayButtonTapped)];
+    [self.dialogTopMenu.extrasButton setTarget:navigationController action:@selector(dialogMenuExtrasButtonTapped)];
+    [self.dialogTopMenu.aboutButton setTarget:navigationController action:@selector(dialogMenuAboutButtonTapped)];
     self.dialogTopMenu.extrasButton.gestureRecognizerDelegate = self;
     self.dialogTopMenu.playButton.gestureRecognizerDelegate = self;
     self.dialogTopMenu.aboutButton.gestureRecognizerDelegate = self;
+    self.dialogTopMenu.extrasButton.userInteractionEnabled = NO;
+    self.dialogTopMenu.aboutButton.userInteractionEnabled = NO;
 
     self.dialogPause = [UPDialogPause instance];
     [self.view addSubview:self.dialogPause];
@@ -297,6 +306,7 @@ static UPSpellGameController *_Instance;
 - (void)updateThemeColors
 {
     [self.gameView updateThemeColors];
+    [self.dialogTopMenu updateThemeColors];
     [self.dialogGameOver updateThemeColors];
     [self.dialogGameNote updateThemeColors];
     [self.dialogPause updateThemeColors];
@@ -310,6 +320,16 @@ static UPSpellGameController *_Instance;
         return (UPSpellNavigationController *)self.navigationController;
     }
     return nil;
+}
+
+#pragma mark - Top menu
+
+- (void)setDialogTopMenuUserInteractionEnabled:(BOOL)enabled
+{
+    _dialogTopMenuUserInteractionEnabled = enabled;
+    self.dialogTopMenu.extrasButton.userInteractionEnabled = enabled;
+    self.dialogTopMenu.playButton.userInteractionEnabled = enabled;
+    self.dialogTopMenu.aboutButton.userInteractionEnabled = enabled;
 }
 
 #pragma mark - UPGameTimerObserver
@@ -758,7 +778,7 @@ static UPSpellGameController *_Instance;
                 return NO;
             case UP::Mode::Init:
             case UP::Mode::End:
-                return self.dialogTopMenu.userInteractionEnabled;
+                return self.dialogTopMenuUserInteractionEnabled;
         }
     }
     return YES;
@@ -1907,7 +1927,7 @@ static UPSpellGameController *_Instance;
 {
     self.lockCount++;
     
-    self.dialogTopMenu.userInteractionEnabled = NO;
+    self.dialogTopMenuUserInteractionEnabled = NO;
     
     UIView *roundButtonPause = self.gameView.pauseControl;
     for (UIView *view in self.gameView.interactiveSubviews) {
@@ -1933,7 +1953,7 @@ static UPSpellGameController *_Instance;
         return;
     }
     
-    self.dialogTopMenu.userInteractionEnabled = YES;
+    self.dialogTopMenuUserInteractionEnabled = YES;
     
     for (UIView *view in self.gameView.interactiveSubviews) {
         view.userInteractionEnabled = YES;
@@ -2252,7 +2272,7 @@ static UPSpellGameController *_Instance;
         start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - (1.5 * stagger),
                         ^(UIViewAnimatingPosition) {
             [self viewUnlock];
-            self.dialogTopMenu.userInteractionEnabled = NO;
+            self.dialogTopMenuUserInteractionEnabled = NO;
             if (completion) {
                 completion();
             }
@@ -2284,7 +2304,7 @@ static UPSpellGameController *_Instance;
         start(bloop_out(BandModeUI, @[gameViewMove, dialogGameOverMove, dialogGameNoteMove], duration - (1.5 * stagger),
                         ^(UIViewAnimatingPosition) {
             [self viewUnlock];
-            self.dialogTopMenu.userInteractionEnabled = NO;
+            self.dialogTopMenuUserInteractionEnabled = NO;
             if (completion) {
                 completion();
             }
@@ -2299,7 +2319,7 @@ static UPSpellGameController *_Instance;
     
     [self.dialogPlayMenu updateChoiceLabels];
     
-    self.dialogTopMenu.userInteractionEnabled = NO;
+    self.dialogTopMenuUserInteractionEnabled = NO;
     
     SpellLayout &layout = SpellLayout::instance();
     self.dialogPlayMenu.backButton.center = layout.center_for(Role::ChoiceBackCenter, Spot::OffTopNear);
@@ -2396,9 +2416,7 @@ static UPSpellGameController *_Instance;
     self.dialogTopMenu.aboutButton.frame = layout.frame_for(Role::DialogButtonTopRight);
     self.dialogTopMenu.playButton.highlightedLocked = NO;
     self.dialogTopMenu.playButton.highlighted = NO;
-    self.dialogTopMenu.userInteractionEnabled = NO;
-    self.dialogTopMenu.hidden = NO;
-    self.dialogTopMenu.alpha = 1;
+    self.dialogTopMenuUserInteractionEnabled = NO;
     
     // Show the logo interstitial
     [self.dialogChallenge updateThemeColors];
@@ -2490,7 +2508,7 @@ static UPSpellGameController *_Instance;
     self.dialogShareHelp.hidden = NO;
     self.dialogShareHelp.alpha = 1;
     
-    self.dialogTopMenu.userInteractionEnabled = NO;
+    self.dialogTopMenuUserInteractionEnabled = NO;
     
     NSArray<UPViewMove *> *moves = @[
         UPViewMoveMake(self.dialogShareHelp.titleLabel, Location(Role::DialogHelpTitle)),
@@ -2506,7 +2524,7 @@ static UPSpellGameController *_Instance;
 {
     [self viewLock];
     
-    self.dialogTopMenu.userInteractionEnabled = YES;
+    self.dialogTopMenuUserInteractionEnabled = YES;
     
     [UIView animateWithDuration:0.3 delay:0.3 options:0 animations:^{
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonShareHelpToEnd];
@@ -2547,7 +2565,7 @@ static UPSpellGameController *_Instance;
     self.dialogChallengeHelp.hidden = NO;
     self.dialogChallengeHelp.alpha = 1;
     
-    self.dialogTopMenu.userInteractionEnabled = NO;
+    self.dialogTopMenuUserInteractionEnabled = NO;
     
     NSArray<UPViewMove *> *moves = @[
         UPViewMoveMake(self.dialogChallengeHelp.titleLabel, Location(Role::DialogHelpTitle)),
@@ -2563,7 +2581,7 @@ static UPSpellGameController *_Instance;
 {
     [self viewLock];
     
-    self.dialogTopMenu.userInteractionEnabled = YES;
+    self.dialogTopMenuUserInteractionEnabled = YES;
     
     [UIView animateWithDuration:0.3 delay:0.3 options:0 animations:^{
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonChallenge];
@@ -2607,13 +2625,13 @@ static UPSpellGameController *_Instance;
     self.gameView.frame = layout.frame_for(Role::Screen);
     self.gameView.transform = layout.menu_game_view_transform();
     
-    self.dialogTopMenu.messagePathView.frame = layout.frame_for(Location(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear));
+    self.dialogTopMenu.readyMessagePathView.frame = layout.frame_for(Location(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear));
     self.dialogTopMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft));
     self.dialogTopMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter));
     self.dialogTopMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight));
     self.dialogTopMenu.playButton.highlightedLocked = NO;
     self.dialogTopMenu.playButton.highlighted = NO;
-    self.dialogTopMenu.userInteractionEnabled = YES;
+    self.dialogTopMenuUserInteractionEnabled = YES;
     
     self.dialogGameOver.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
     self.dialogGameNote.noteLabel.frame = layout.frame_for(Role::DialogGameNote, Spot::OffBottomFar);
@@ -2644,9 +2662,6 @@ static UPSpellGameController *_Instance;
     self.dialogChallengeHelp.helpLabelContainer.frame = layout.frame_for(Role::DialogHelpText, Spot::OffBottomFar);
     self.dialogChallengeHelp.okButton.frame = layout.frame_for(Role::DialogHelpOKButton, Spot::OffBottomNear);
     
-    self.dialogTopMenu.alpha = 1;
-    self.dialogTopMenu.hidden = NO;
-
     self.dialogGameOver.alpha = 1;
     self.dialogGameOver.hidden = YES;
     self.dialogGameNote.alpha = 1;
@@ -2694,11 +2709,11 @@ static UPSpellGameController *_Instance;
         }];
         delay(BandModeDelay, 0.45, ^{
             // bloop in ready message
-            self.dialogTopMenu.messagePathView.alpha = 0;
+            self.dialogTopMenu.readyMessagePathView.alpha = 0;
             [UIView animateWithDuration:0.2 animations:^{
-                self.dialogTopMenu.messagePathView.alpha = 1;
+                self.dialogTopMenu.readyMessagePathView.alpha = 1;
             }];
-            UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray));
+            UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.readyMessagePathView, Location(Role::DialogMessageCenteredInWordTray));
             start(bloop_in(BandModeUI, @[readyMove], 0.3,  nil));
         });
         delay(BandModeDelay, 1.75, ^{
@@ -3423,10 +3438,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 {
     SpellLayout &layout = SpellLayout::instance();
     
-    self.dialogTopMenu.transform = CGAffineTransformIdentity;
-    self.dialogTopMenu.hidden = NO;
-    self.dialogTopMenu.alpha = 1;
-    self.dialogTopMenu.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
+    self.dialogTopMenu.readyMessagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
     
     self.gameView.transform = layout.menu_game_view_transform();
     [self viewUpdateGameControls];
@@ -3464,10 +3476,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.dialogPause.hidden = NO;
     self.dialogPause.alpha = 1;
     
-    self.dialogTopMenu.messagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
+    self.dialogTopMenu.readyMessagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
     
-    self.dialogTopMenu.alpha = 1;
-    self.dialogTopMenu.hidden = YES;
     self.dialogGameOver.alpha = 1;
     self.dialogGameOver.hidden = YES;
     self.dialogGameNote.alpha = 1;
@@ -3541,7 +3551,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     });
     delay(BandModeDelay, (1.5 * stagger), ^{
         start(bloop_in(BandModeUI, @[extrasButtonMove], duration - (1.5 * stagger), ^(UIViewAnimatingPosition) {
-            self.dialogTopMenu.userInteractionEnabled = YES;
+            self.dialogTopMenuUserInteractionEnabled = YES;
             [self viewUnlock];
         }));
     });
@@ -3642,11 +3652,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (void)modeTransitionFromPlayMenuToInit
 {
     [self viewLock];
-    
-    for (UPChoice *choice in self.dialogPlayMenu.choices) {
-        choice.selected = NO;
-    }
-    
+        
     self.dialogPlayMenu.backButton.highlightedLocked = YES;
     self.dialogPlayMenu.backButton.highlighted = YES;
 
@@ -3666,7 +3672,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             UPViewMoveMake(self.dialogTopMenu.playButton, Role::DialogButtonTopCenter),
         ];
         start(bloop_in(BandModeUI, playMoves, 0.5, ^(UIViewAnimatingPosition) {
-            self.dialogTopMenu.userInteractionEnabled = YES;
+            self.dialogTopMenuUserInteractionEnabled = YES;
         }));
         self.dialogTopMenu.playButton.selected = NO;
         NSArray<UPViewMove *> *buttonInMoves = @[
@@ -3688,6 +3694,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     } completion:^(BOOL finished) {
         self.dialogPlayMenu.backButton.highlightedLocked = NO;
         self.dialogPlayMenu.backButton.highlighted = NO;
+        for (UPChoice *choice in self.dialogPlayMenu.choices) {
+            choice.selected = NO;
+        }
         [self viewUnlock];
     }];
     [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
@@ -3856,13 +3865,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self.gameTimer start];
     });
     
-    UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear));
+    UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.readyMessagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear));
     start(bloop_out(BandModeUI, @[readyMove], 0.3, nil));
     [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
-        self.dialogTopMenu.alpha = 0;
+        self.dialogTopMenu.readyMessagePathView.alpha = 0;
     } completion:^(BOOL finished) {
-        self.dialogTopMenu.alpha = 1;
-        self.dialogTopMenu.hidden = YES;
+        self.dialogTopMenu.readyMessagePathView.alpha = 1;
         self.dialogGameOver.alpha = 1;
         self.dialogGameOver.hidden = YES;
         self.dialogGameNote.alpha = 1;
@@ -4155,8 +4163,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self viewBloopOutExistingTileViewsWithDuration:GameOverInOutBloopDuration tiles:incoming_tiles wordLength:incoming_word_length
                                              completion:^{
             [self viewBloopInBlankTileViewsWithDuration:GameOverInOutBloopDuration completion:nil];
-            self.dialogTopMenu.hidden = NO;
-            self.dialogTopMenu.alpha = 1;
             self.dialogTopMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft, Spot::OffTopNear));
             self.dialogTopMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
             self.dialogTopMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Spot::OffTopNear));
@@ -4253,8 +4259,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             self.gameView.transform = layout.menu_game_view_transform();
             [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonQuitToEnd];
         } completion:^(BOOL finished) {
-            self.dialogTopMenu.hidden = NO;
-            self.dialogTopMenu.alpha = 1;
             self.dialogTopMenu.extrasButton.frame = layout.frame_for(Location(Role::DialogButtonTopLeft, Spot::OffTopNear));
             self.dialogTopMenu.playButton.frame = layout.frame_for(Location(Role::DialogButtonTopCenter, Spot::OffTopNear));
             self.dialogTopMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight, Spot::OffTopNear));

@@ -88,6 +88,8 @@ using UP::TimeSpanning::start;
 
     self.view.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
 
+    self.dialogTopMenu = [UPDialogTopMenu instance];
+    
     self.gameController = [[UPSpellGameController alloc] initWithNibName:nil bundle:nil];
     
     self.aboutController = [[UPSpellAboutController alloc] initWithNibName:nil bundle:nil];
@@ -95,18 +97,6 @@ using UP::TimeSpanning::start;
 
     self.extrasController = [[UPSpellExtrasController alloc] initWithNibName:nil bundle:nil];
     self.extrasController.modalPresentationStyle = UIModalPresentationCustom;
-
-    self.dialogTopMenu = [UPDialogTopMenu instance];
-    [self.view addSubview:self.dialogTopMenu];
-
-    [self.dialogTopMenu.playButton setTarget:self action:@selector(dialogMenuPlayButtonTapped)];
-    [self.dialogTopMenu.extrasButton setTarget:self action:@selector(dialogMenuExtrasButtonTapped)];
-    [self.dialogTopMenu.aboutButton setTarget:self action:@selector(dialogMenuAboutButtonTapped)];
-
-    self.dialogTopMenu.hidden = YES;
-    self.dialogTopMenu.frame = layout.screen_bounds();
-    self.dialogTopMenu.extrasButton.userInteractionEnabled = NO;
-    self.dialogTopMenu.aboutButton.userInteractionEnabled = NO;
 
     NSArray<UIViewController *> *viewControllers = @[
         self.gameController

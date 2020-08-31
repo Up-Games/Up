@@ -19,8 +19,11 @@
 
 using UP::SpellLayout;
 
+using Role = SpellLayout::Role;
+using Spot = SpellLayout::Spot;
+
 @interface UPDialogTopMenu ()
-@property (nonatomic, readwrite) UPBezierPathView *messagePathView;
+@property (nonatomic, readwrite) UPBezierPathView *readyMessagePathView;
 @property (nonatomic, readwrite) UPTextButton *extrasButton;
 @property (nonatomic, readwrite) UPTextButton *playButton;
 @property (nonatomic, readwrite) UPTextButton *aboutButton;
@@ -33,32 +36,29 @@ using UP::SpellLayout;
     static dispatch_once_t onceToken;
     static UPDialogTopMenu *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPDialogTopMenu alloc] _init];
+        _Instance = [[UPDialogTopMenu alloc] init];
     });
     return _Instance;
 }
 
-- (instancetype)_init
+- (instancetype)init
 {
     SpellLayout &layout = SpellLayout::instance();
-    self = [super initWithFrame:layout.canvas_frame()];
+    self = [super init];
 
-    self.messagePathView = [UPBezierPathView bezierPathView];
-    self.messagePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
-    self.messagePathView.path = UP::TextPathDialogReady();
-    self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageVerticallyCentered);
-    [self addSubview:self.messagePathView];
+    self.readyMessagePathView = [UPBezierPathView bezierPathView];
+    self.readyMessagePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
+    self.readyMessagePathView.path = UP::TextPathDialogReady();
+    self.readyMessagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
 
     self.extrasButton = [UPTextButton textButton];
     self.extrasButton.behavior = UPTextButtonBehaviorModeButton;
     self.extrasButton.labelString = @"EXTRAS";
-    self.extrasButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopLeft);
-    [self addSubview:self.extrasButton];
+    self.extrasButton.frame = layout.frame_for(Role::DialogButtonTopLeft);
 
     self.playButton = [UPTextButton textButton];
     self.playButton.labelString = @"PLAY";
-    self.playButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopCenter);
-    [self addSubview:self.playButton];
+    self.playButton.frame = layout.frame_for(Role::DialogButtonTopCenter);
 
     UPSpellSettings *settings = [UPSpellSettings instance];
     if (settings.retryMode) {
@@ -69,7 +69,6 @@ using UP::SpellLayout;
     self.aboutButton.behavior = UPTextButtonBehaviorModeButton;
     self.aboutButton.labelString = @"ABOUT";
     self.aboutButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopRight);
-    [self addSubview:self.aboutButton];
     
     [self updateThemeColors];
 
@@ -80,7 +79,7 @@ using UP::SpellLayout;
 
 - (void)updateThemeColors
 {
-    self.messagePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
+    self.readyMessagePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
     [self.extrasButton updateThemeColors];
     [self.playButton updateThemeColors];
     [self.aboutButton updateThemeColors];

@@ -15,6 +15,10 @@
 - (void)presentAboutController;
 - (void)dismissPresentedControllerImmediateIfNecessary;
 
+- (void)dialogMenuPlayButtonTapped;
+- (void)dialogMenuExtrasButtonTapped;
+- (void)dialogMenuAboutButtonTapped;
+
 @end
 
 @interface UPSpellExtrasPresentAnimationController : NSObject <UIViewControllerAnimatedTransitioning>

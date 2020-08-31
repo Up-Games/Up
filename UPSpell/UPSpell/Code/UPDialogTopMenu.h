@@ -9,15 +9,13 @@
 @class UPBezierPathView;
 @class UPTextButton;
 
-@interface UPDialogTopMenu : UPContainerView
+@interface UPDialogTopMenu : NSObject
 
-@property (nonatomic, readonly) UPBezierPathView *messagePathView;
+@property (nonatomic, readonly) UPBezierPathView *readyMessagePathView;
 @property (nonatomic, readonly) UPTextButton *extrasButton;
 @property (nonatomic, readonly) UPTextButton *playButton;
 @property (nonatomic, readonly) UPTextButton *aboutButton;
 
 + (UPDialogTopMenu *)instance;
-
-- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
 @end
