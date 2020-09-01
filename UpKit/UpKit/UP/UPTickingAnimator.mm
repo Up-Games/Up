@@ -137,6 +137,7 @@ UP_STATIC_INLINE CGFloat compute_completed_fraction(BOOL rebounds, NSUInteger re
 
     // prevent self from being released before method finishes
     UPTickingAnimator *ref = self;
+    UP_ALLOW_UNUSED(ref);
 
     if (up_is_fuzzy_zero(self.previousTick)) {
         self.remainingDuration -= (UPTickerInterval * self.rate);

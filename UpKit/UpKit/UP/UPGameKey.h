@@ -111,7 +111,7 @@ private:
         chars[3] = '-'; // dash at index 3
         c = rem % 26; rem /= 26; chars[2] = c + 'A';
         c = rem % 26; rem /= 26; chars[1] = c + 'A';
-        c = rem % 26; rem /= 26; chars[0] = c + 'A';
+        c = rem % 26; chars[0] = c + 'A';
         chars[StringLength] = '\0';
         return std::string(chars);
     }

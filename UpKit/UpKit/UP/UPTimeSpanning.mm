@@ -141,6 +141,7 @@ void cancel(uint32_t serial_number)
     if (it != g_map->end()) {
         NSObject<UPTimeSpanning> *obj = it->second;
         NSObject<UPTimeSpanning> *ref = obj;
+        UP_ALLOW_UNUSED(ref);
         g_map->erase(it);
         [obj cancel];
         ref = nil;
@@ -156,6 +157,7 @@ void cancel(NSArray<UIView *> *views)
         NSObject<UPTimeSpanning> *obj = it->second;
         if ([obj isKindOfClass:[UPAnimator class]] && [views isEqualToArray:((UPAnimator *)obj).views]) {
             NSObject<UPTimeSpanning> *ref = obj;
+            UP_ALLOW_UNUSED(ref);
             it = g_map->erase(it);
             [obj cancel];
 #if !LOG_DISABLED
@@ -176,6 +178,7 @@ void cancel(UP::Band band)
         NSObject<UPTimeSpanning> *obj = it->second;
         if (band_match(band, obj.band)) {
             NSObject<UPTimeSpanning> *ref = obj;
+            UP_ALLOW_UNUSED(ref);
             it = g_map->erase(it);
             [obj cancel];
 #if !LOG_DISABLED
@@ -200,6 +203,7 @@ void cancel(NSArray<UIView *> *views, uint32_t type)
         UPAnimator *animator = (UPAnimator *)obj;
         if ((animator.type & type) && [views isEqualToArray:animator.views]) {
             NSObject<UPTimeSpanning> *ref = obj;
+            UP_ALLOW_UNUSED(ref);
             it = g_map->erase(it);
             [obj cancel];
 #if !LOG_DISABLED

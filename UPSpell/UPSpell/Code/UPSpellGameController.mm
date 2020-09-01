@@ -1504,8 +1504,6 @@ static UPSpellGameController *_Instance;
     [attrString addAttribute:NSFontAttributeName value:layout.word_score_font() range:range];
     [attrString addAttribute:NSForegroundColorAttributeName value:wordScoreColor range:range];
     
-    Role role = Role::WordScore;
-    
     const size_t word_length = m_spell_model->word().length();
     const int word_multiplier = m_spell_model->word().total_multiplier();
     NSString *lengthBonusString = nil;
@@ -1523,7 +1521,6 @@ static UPSpellGameController *_Instance;
     BOOL has_length_bonus = lengthBonusString != nil;
     BOOL has_multiplier_bonus = word_multiplier > 1;
     if (has_length_bonus || has_multiplier_bonus) {
-        role = Role::WordScoreBonus;
         NSMutableString *bonusString = [NSMutableString string];
         if (has_multiplier_bonus && has_length_bonus) {
             [bonusString appendString:lengthBonusString];

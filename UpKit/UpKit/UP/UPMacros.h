@@ -38,8 +38,8 @@
 #define LIKELY(x) __builtin_expect(!!(x), 1)
 #endif
 
-#if !defined(LIKELY)
-#define LIKELY(x) (x)
+#if !defined(UP_ALLOW_UNUSED)
+#define UP_ALLOW_UNUSED(x) (void)(x)
 #endif
 
 #if __OBJC__

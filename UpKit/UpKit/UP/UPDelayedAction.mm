@@ -4,6 +4,7 @@
 //
 
 #import "UPAssertions.h"
+#import "UPMacros.h"
 #import "UPDelayedAction.h"
 #import "UPMath.h"
 #import "UPTimeSpanning.h"
@@ -96,7 +97,8 @@ static uint32_t _InstanceCount;
     ASSERT(self.state != UPDelayedActionStateCalled);
 
     UPDelayedAction *ref = self;
-
+    UP_ALLOW_UNUSED(ref);
+    
     self.state = UPDelayedActionStateCalled;
     [[UPTicker instance] removeTicking:self];
     if (self.block) {
