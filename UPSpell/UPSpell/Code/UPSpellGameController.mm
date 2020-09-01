@@ -760,7 +760,6 @@ static UPSpellGameController *_Instance;
             case UP::Mode::None:
             case UP::Mode::About:
             case UP::Mode::Extras:
-            case UP::Mode::Attract:
             case UP::Mode::PlayMenu:
             case UP::Mode::ShareHelp:
             case UP::Mode::Challenge:
@@ -1213,7 +1212,7 @@ static UPSpellGameController *_Instance;
 - (void)viewUpdateGameControls
 {
     // word tray
-    if (m_spell_model && (self.mode == Mode::Attract || self.mode == Mode::Play || self.mode == Mode::Pause)) {
+    if (m_spell_model && (self.mode == Mode::Play || self.mode == Mode::Pause)) {
         Opcode back = m_spell_model->back_opcode();
         BOOL active = m_spell_model->word().in_lexicon() && back != Opcode::HOVER && back != Opcode::NOVER;
         self.gameView.wordTrayControl.active = active;
@@ -3124,7 +3123,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         switch (self.mode) {
             case UP::Mode::None:
             case UP::Mode::Init:
-            case UP::Mode::Attract:
             case UP::Mode::About:
             case UP::Mode::Extras:
             case UP::Mode::PlayMenu:
@@ -3333,7 +3331,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     m_default_transition_table = {
         { Mode::None,          Mode::Init,          @selector(modeTransitionFromNoneToInit) },
         { Mode::None,          Mode::Pause,         @selector(modeTransitionFromNoneToPause) },
-        { Mode::Init,          Mode::Attract,       @selector(modeTransitionFromInitToAttract) },
         { Mode::Init,          Mode::About,         @selector(modeTransitionFromInitToAbout) },
         { Mode::Init,          Mode::Extras,        @selector(modeTransitionFromInitToExtras) },
         { Mode::Init,          Mode::PlayMenu,      @selector(modeTransitionFromInitToPlayMenu) },
@@ -3341,9 +3338,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Init,          Mode::Ready,         @selector(modeTransitionFromInitToReady) },
         { Mode::About,         Mode::Init,          @selector(modeTransitionFromAboutToInit) },
         { Mode::Extras,        Mode::Init,          @selector(modeTransitionFromExtrasToInit) },
-        { Mode::Attract,       Mode::About,         @selector(modeTransitionFromAttractToAbout) },
-        { Mode::Attract,       Mode::Extras,        @selector(modeTransitionFromAttractToExtras) },
-        { Mode::Attract,       Mode::Ready,         @selector(modeTransitionFromAttractToReady) },
         { Mode::PlayMenu,      Mode::Init,          @selector(modeTransitionFromPlayMenuToInit) },
         { Mode::PlayMenu,      Mode::Ready,         @selector(modeTransitionFromPlayMenuToReady) },
         { Mode::Challenge,     Mode::Init,          @selector(modeTransitionFromChallengeToInit) },
@@ -3478,11 +3472,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewUnlock];
 }
 
-- (void)modeTransitionFromInitToAttract
-{
-    ASSERT_NOT_REACHED();
-}
-
 - (void)modeTransitionFromInitToAbout
 {
     ASSERT(self.lockCount == 0);
@@ -3615,30 +3604,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewLock];
     [self viewImmediateTransitionToInit];
     [self viewUnlock];
-}
-
-- (void)modeTransitionFromAttractToAbout
-{
-    ASSERT(self.lockCount == 0);
-    [self viewLock];
-    [self viewOrderInAboutWithCompletion:^{
-        // clean up after attract, return game view to start
-        [self viewUnlock];
-    }];
-}
-
-- (void)modeTransitionFromAttractToExtras
-{
-    ASSERT(self.lockCount == 0);
-    [self viewLock];
-    [self viewOrderInExtrasWithCompletion:^{
-        // clean up after attract, return game view to start
-        [self viewUnlock];
-    }];
-}
-
-- (void)modeTransitionFromAttractToReady
-{
 }
 
 - (void)modeTransitionFromPlayMenuToInit
