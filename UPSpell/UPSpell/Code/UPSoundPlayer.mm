@@ -137,29 +137,29 @@
 {
     switch (level) {
         case 0:
-            self.volume = 0.0;
+            self.volume = 0.0f;
             break;
         case 1:
         default:
-            self.volume = 0.05;
+            self.volume = 0.05f;
             break;
         case 2:
-            self.volume = 0.2;
+            self.volume = 0.2f;
             break;
         case 3:
-            self.volume = 0.4;
+            self.volume = 0.4f;
             break;
         case 4:
-            self.volume = 0.6;
+            self.volume = 0.6f;
             break;
         case 5:
-            self.volume = 0.72;
+            self.volume = 0.72f;
             break;
         case 6:
-            self.volume = 0.85;
+            self.volume = 0.85f;
             break;
         case 7:
-            self.volume = 1.0;
+            self.volume = 1.0f;
             break;
     }
     [self playSoundID:UPSoundIDNone];

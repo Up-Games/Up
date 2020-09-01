@@ -24,11 +24,11 @@ UPUnit unchecked_unit_curve_value(UPUnit input_value, UPFloat exponent, UPUnit e
 {
     UPUnit output_value = input_value;
     if (input_value <= ease_factor) {
-        output_value = (ease_factor * UPUnit(powf(UPFloat(input_value / ease_factor), exponent)));
+        output_value = (ease_factor * UPUnit(pow(UPFloat(input_value / ease_factor), exponent)));
     }
     else {
         output_value = UPUnitOne - ((UPUnitOne - ease_factor) *
-            UPUnit(powf(UPFloat((UPUnitOne - input_value) / (UPUnitOne - ease_factor)), exponent)));
+            UPUnit(pow(UPFloat((UPUnitOne - input_value) / (UPUnitOne - ease_factor)), exponent)));
     }
     return output_value;
 }

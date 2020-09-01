@@ -41,13 +41,13 @@ static const NSUInteger _StringLength = 5;
 {
     double integer_part;
     double fractional_part = modf(remainingTime, &integer_part);
-    NSInteger t = integer_part;
+    NSInteger t = (NSInteger)integer_part;
     NSInteger minutes = t / 60;
     t -= (minutes * 60);
     NSInteger secondsTens = t / 10;
     t -= (secondsTens * 10);
     NSInteger secondsOnes = t;
-    NSInteger secondsTenths = fractional_part * 10;
+    NSInteger secondsTenths = (NSInteger)fractional_part * 10;
     self.autoHidesSecondsInTenths = (secondsOnes == 0 && secondsTenths == 0) || integer_part > 4;
     self.effectiveHidesSecondsInTenths = self.autoHidesSecondsInTenths;
     
@@ -66,11 +66,11 @@ static const NSUInteger _StringLength = 5;
     self.previousEffectiveHidesSecondsInTenths = self.effectiveHidesSecondsInTenths;
     
     unichar chars[_StringLength];
-    chars[0] = minutes + '0';
+    chars[0] = (unichar)minutes + '0';
     chars[1] = ':';
-    chars[2] = secondsTens + '0';
-    chars[3] = secondsOnes + '0';
-    chars[4] = secondsTenths + '0';
+    chars[2] = (unichar)secondsTens + '0';
+    chars[3] = (unichar)secondsOnes + '0';
+    chars[4] = (unichar)secondsTenths + '0';
     NSString *string = [[NSString alloc] initWithCharacters:chars length:_StringLength];
     [self.formattedTimeString setString:string];
     [self updateThemeColors];

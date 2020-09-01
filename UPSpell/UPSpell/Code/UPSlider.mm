@@ -14,12 +14,7 @@
 
 using UP::SpellLayout;
 
-//UIBezierPath *SliderChannelFillPath()
-//{
-//    return [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, 280, 76)];
-//}
-
-UIBezierPath *SliderThumbFillPath()
+static UIBezierPath *SliderThumbFillPath()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(20.28, 0)];
@@ -75,7 +70,7 @@ UIBezierPath *SliderThumbFillPath()
     return path;
 }
 
-UIBezierPath *SliderThumbStrokePath()
+static UIBezierPath *SliderThumbStrokePath()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(20.28, 0)];
@@ -136,7 +131,7 @@ UIBezierPath *SliderThumbStrokePath()
     return path;
 }
 
-UIBezierPath *SliderThumbBackgroundPath()
+static UIBezierPath *SliderThumbBackgroundPath()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(24.29, 3.56)];
@@ -161,7 +156,7 @@ UIBezierPath *SliderThumbBackgroundPath()
     return path;
 }
 
-UIBezierPath *SoundSliderTrackFillPath()
+static UIBezierPath *SoundSliderTrackFillPath()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(434, 10)];
@@ -235,7 +230,7 @@ UIBezierPath *SoundSliderTrackFillPath()
     return path;
 }
 
-UIBezierPath *SoundSliderTrackStrokePath()
+static UIBezierPath *SoundSliderTrackStrokePath()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(434, 10.5)];
@@ -540,7 +535,7 @@ static UIBezierPath *SoundSliderStrokedIcons()
         self.valueAsMark = 0;
     }
     else {
-        self.valueAsMark = round(self.valueAsFraction * self.marks);
+        self.valueAsMark = (NSUInteger)round(self.valueAsFraction * self.marks);
     }
     [self setNeedsLayout];
 }
@@ -578,7 +573,7 @@ static UIBezierPath *SoundSliderStrokedIcons()
         self.valueAsMark = 0;
     }
     else {
-        self.valueAsMark = round(self.valueAsFraction * self.marks);
+        self.valueAsMark = (NSUInteger)round(self.valueAsFraction * self.marks);
     }
     
     [self setNeedsLayout];

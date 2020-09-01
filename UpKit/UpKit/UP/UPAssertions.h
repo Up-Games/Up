@@ -122,6 +122,8 @@ void UPReportFatalError(const char *file, int line, const char *function, const 
 void UPReportError(const char *file, int line, const char *function, const char *format, ...);
 void UPLogVerbose(const char *file, int line, const char *function, UPLogChannel *channel, const char *format, ...);
 void UPLogAlwaysV(const char *format, va_list args);
+void UPLogAlways(const char *format, ...);
+void UPLogAlwaysAndCrash(const char *format, ...);
 void UPLog(UPLogChannel *, const char *format, ...);
 void UPGetBacktrace(void **stack, int *size);
 void UPReportBacktrace(void);

@@ -96,7 +96,7 @@ private:
     }
 
     static constexpr char letter_for_value(uint32_t rem, uint32_t letter_factor, uint32_t letter_max) {
-        uint32_t n = rem % 26;
+        char n = rem % 26;
         return n + 'A';
     }
 

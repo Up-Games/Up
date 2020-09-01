@@ -335,7 +335,7 @@ static UIBezierPath *UPVectorLogoArrowPath()
 
 - (void)updateThemeColors
 {
-    int hue = up_closest_milepost_hue([UIColor themeColorHue]);
+    int hue = up_closest_milepost_hue((int)[UIColor themeColorHue]);
     if (self.drawsBackground) {
         self.gradientBackgroundView.colors = UPVectorLogoBackgroundColors(hue);
     }

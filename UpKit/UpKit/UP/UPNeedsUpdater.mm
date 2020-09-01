@@ -31,7 +31,7 @@
     self = [super init];
 
     CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(NULL, kCFRunLoopBeforeWaiting, YES, 0,
-                                                                       ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) {
+                                                                       ^(CFRunLoopObserverRef _observer, CFRunLoopActivity _activity) {
         if (self->m_map.size()) {
             std::multimap<NSUInteger, __strong NSObject<UPNeedsUpdatable> *> update_map;
             update_map.swap(self->m_map);

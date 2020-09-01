@@ -116,7 +116,7 @@ template <class T, class S>
 typename std::enable_if_t<std::is_unsigned<T>::value, T>
 constexpr rotl(const T n, const S i){
     const T m = (std::numeric_limits<T>::digits - 1);
-    const T c = i & m;
+    const T c = (T)i & m;
     return (n << c) | (n >> ((T(0) - c) & m));
 }
 

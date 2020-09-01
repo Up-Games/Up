@@ -13,7 +13,7 @@
 
 using UP::SpellLayout;
 
-UIBezierPath *TextButtonFillPath()
+static UIBezierPath *TextButtonFillPath()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(187.99, 17.78)];
@@ -50,7 +50,7 @@ UIBezierPath *TextButtonFillPath()
     return path;
 }
 
-UIBezierPath *TextButtonStrokePath()
+static UIBezierPath *TextButtonStrokePath()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(114.84, 0)];

@@ -34,15 +34,15 @@ static uint32_t _InstanceCount;
     animator.type = UPAnimatorTypeBloopIn;
     UPTickingAnimator *inner = [UPTickingAnimator animatorInBand:band duration:duration
                                                     unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutBack]
-                                                         applier:^(UPTickingAnimator *animator) {
+                                                         applier:^(UPTickingAnimator *animator_) {
         for (UPViewMove *move in moves) {
-            move.view.center = up_lerp_points(move.beginning, move.destination, animator.fractionComplete);
+            move.view.center = up_lerp_points(move.beginning, move.destination, animator_.fractionComplete);
         }
-    } completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+    } completion:^(UPTickingAnimator *inner_, UIViewAnimatingPosition finalPosition) {
         if (completion) {
             completion(finalPosition);
         }
-        [inner clearBlocks];
+        [inner_ clearBlocks];
         UP::TimeSpanning::remove(animator);
     }];
     animator.inner = inner;
@@ -57,15 +57,15 @@ static uint32_t _InstanceCount;
     animator.type = UPAnimatorTypeBloopOut;
     UPTickingAnimator *inner = [UPTickingAnimator animatorInBand:band duration:duration
                                                     unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInBack]
-                                                         applier:^(UPTickingAnimator *animator) {
+                                                         applier:^(UPTickingAnimator *animator_) {
         for (UPViewMove *move in moves) {
-            move.view.center = up_lerp_points(move.beginning, move.destination, animator.fractionComplete);
+            move.view.center = up_lerp_points(move.beginning, move.destination, animator_.fractionComplete);
         }
-    } completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+    } completion:^(UPTickingAnimator *inner_, UIViewAnimatingPosition finalPosition) {
         if (completion) {
             completion(finalPosition);
         }
-        [inner clearBlocks];
+        [inner_ clearBlocks];
         UP::TimeSpanning::remove(animator);
     }];
     animator.inner = inner;
@@ -104,8 +104,8 @@ static uint32_t _InstanceCount;
     __block UIOffset roffset = UIOffsetZero;
     UPTickingAnimator *inner = [UPTickingAnimator animatorInBand:band duration:duration
         unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear]
-        applier:^(UPTickingAnimator *animator) {
-            CGFloat factor = sin(5 * M_PI * animator.fractionComplete);
+        applier:^(UPTickingAnimator *animator_) {
+            CGFloat factor = sin(5 * M_PI * animator_.fractionComplete);
             UIOffset foffset = UIOffsetMake(factor * offset.horizontal, factor * offset.vertical);
             UIOffset doffset = UIOffsetMake(foffset.horizontal - roffset.horizontal, foffset.vertical - roffset.vertical);
             roffset = foffset;
@@ -113,11 +113,11 @@ static uint32_t _InstanceCount;
                 view.transform = CGAffineTransformTranslate(view.transform, doffset.horizontal, doffset.vertical);
             }
         }
-        completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+        completion:^(UPTickingAnimator *inner_, UIViewAnimatingPosition finalPosition) {
             if (completion) {
                 completion(finalPosition);
             }
-            [inner clearBlocks];
+            [inner_ clearBlocks];
             UP::TimeSpanning::remove(animator);
         }
     ];
@@ -132,15 +132,15 @@ static uint32_t _InstanceCount;
     animator.type = UPAnimatorTypeSlide;
     UPTickingAnimator *inner = [UPTickingAnimator animatorInBand:band duration:duration
                                                     unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeLinear]
-                                                         applier:^(UPTickingAnimator *animator) {
+                                                         applier:^(UPTickingAnimator *animator_) {
         for (UPViewMove *move in moves) {
-            move.view.center = up_lerp_points(move.beginning, move.destination, animator.fractionComplete);
+            move.view.center = up_lerp_points(move.beginning, move.destination, animator_.fractionComplete);
         }
-    } completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+    } completion:^(UPTickingAnimator *inner_, UIViewAnimatingPosition finalPosition) {
         if (completion) {
             completion(finalPosition);
         }
-        [inner clearBlocks];
+        [inner_ clearBlocks];
         UP::TimeSpanning::remove(animator);
     }
                                 ];
@@ -155,15 +155,15 @@ static uint32_t _InstanceCount;
     animator.type = UPAnimatorTypeSlide;
     UPTickingAnimator *inner = [UPTickingAnimator animatorInBand:band duration:duration
                                                     unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseInEaseOut]
-                                                         applier:^(UPTickingAnimator *animator) {
+                                                         applier:^(UPTickingAnimator *animator_) {
         for (UPViewMove *move in moves) {
-            move.view.center = up_lerp_points(move.beginning, move.destination, animator.fractionComplete);
+            move.view.center = up_lerp_points(move.beginning, move.destination, animator_.fractionComplete);
         }
-    } completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+    } completion:^(UPTickingAnimator *inner_, UIViewAnimatingPosition finalPosition) {
         if (completion) {
             completion(finalPosition);
         }
-        [inner clearBlocks];
+        [inner_ clearBlocks];
         UP::TimeSpanning::remove(animator);
     }
                                 ];
@@ -179,56 +179,56 @@ static uint32_t _InstanceCount;
     animator.type = UPAnimatorTypeSetColor;
     UPTickingAnimator *inner = [UPTickingAnimator animatorInBand:band duration:duration
                                                     unitFunction:[UPUnitFunction unitFunctionWithType:UPUnitFunctionTypeEaseOutSine]
-        applier:^(UPTickingAnimator *animator) {
+        applier:^(UPTickingAnimator *animator_) {
             if (element & UPControlElementFill) {
                 for (UPControl *control in controls) {
                     UIColor *c1 = [control fillColorForState:fromControlState];
                     UIColor *c2 = [control fillColorForState:toControlState];
-                    control.fillPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+                    control.fillPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator_.fractionComplete];
                 }
             }
             if (element & UPControlElementStroke) {
                 for (UPControl *control in controls) {
                     UIColor *c1 = [control strokeColorForState:fromControlState];
                     UIColor *c2 = [control strokeColorForState:toControlState];
-                    control.strokePathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+                    control.strokePathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator_.fractionComplete];
                 }
             }
             if (element & UPControlElementContent) {
                 for (UPControl *control in controls) {
                     UIColor *c1 = [control contentColorForState:fromControlState];
                     UIColor *c2 = [control contentColorForState:toControlState];
-                    control.contentPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+                    control.contentPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator_.fractionComplete];
                 }
             }
             if (element & UPControlElementAuxiliary) {
                 for (UPControl *control in controls) {
                     UIColor *c1 = [control contentColorForState:fromControlState];
                     UIColor *c2 = [control contentColorForState:toControlState];
-                    control.auxiliaryPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+                    control.auxiliaryPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator_.fractionComplete];
                 }
             }
             if (element & UPControlElementAccent) {
                 for (UPControl *control in controls) {
                     UIColor *c1 = [control contentColorForState:fromControlState];
                     UIColor *c2 = [control contentColorForState:toControlState];
-                    control.accentPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+                    control.accentPathView.fillColor = [UIColor colorByMixingColor:c1 color:c2 fraction:animator_.fractionComplete];
                 }
             }
             if (element & UPControlElementLabel) {
                 for (UPControl *control in controls) {
                     UIColor *c1 = [control labelColorForState:fromControlState];
                     UIColor *c2 = [control labelColorForState:toControlState];
-                    UIColor *color = [UIColor colorByMixingColor:c1 color:c2 fraction:animator.fractionComplete];
+                    UIColor *color = [UIColor colorByMixingColor:c1 color:c2 fraction:animator_.fractionComplete];
                     control.label.textColor = color;
                 }
             }
         }
-        completion:^(UPTickingAnimator *inner, UIViewAnimatingPosition finalPosition) {
+        completion:^(UPTickingAnimator *inner_, UIViewAnimatingPosition finalPosition) {
             if (completion) {
                 completion(finalPosition);
             }
-            [inner clearBlocks];
+            [inner_ clearBlocks];
             UP::TimeSpanning::remove(animator);
         }
     ];

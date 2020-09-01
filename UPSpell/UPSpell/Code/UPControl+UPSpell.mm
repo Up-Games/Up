@@ -516,7 +516,7 @@ UIBezierPath *RoundBackButtonRightArrowIconPath()
     return path;
 }
 
-UIBezierPath *RoundBackButtonExIconPath()
+static UIBezierPath *RoundBackButtonExIconPath()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(48.83, 45.11)];
@@ -592,7 +592,7 @@ UIBezierPath *RoundBackButtonExIconPath()
     return path;
 }
 
-UIBezierPath *RoundShareButtonIconPath()
+static UIBezierPath *RoundShareButtonIconPath()
 {
     // box
     UIBezierPath *path = [UIBezierPath bezierPath];

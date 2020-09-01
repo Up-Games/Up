@@ -49,13 +49,6 @@ CGRect up_rect_scaled_in_rect(CGRect rect, CGFloat scale, CGRect referenceRect)
     return CGRectMake(x, y, w, h);
 }
 
-CGRect up_rect_centered_in_rect_scaled(CGRect rectToCenter, CGFloat scale, CGRect referenceRect)
-{
-    CGFloat w = CGRectGetWidth(rectToCenter) * scale;
-    CGFloat h = CGRectGetHeight(rectToCenter) * scale;
-    return up_rect_centered_in_rect(CGRectMake(0, 0, w, h), referenceRect);
-}
-
 CGRect up_rect_scaled_centered_x_in_rect(CGRect rectToCenter, CGFloat scale, CGRect referenceRect)
 {
     CGFloat y = CGRectGetMinY(referenceRect) + CGRectGetMinY(rectToCenter) * scale;
@@ -173,7 +166,7 @@ CGRect up_pixel_rect(CGRect rect, CGFloat screen_scale)
 // =========================================================================================================================================
 #pragma mark - Bezier curves
 
-CGFloat up_bezier_mix(CGFloat a, CGFloat b, CGFloat t)
+static CGFloat up_bezier_mix(CGFloat a, CGFloat b, CGFloat t)
 {
     // degree 1
     return a * (1.0f - t) + (b * t);

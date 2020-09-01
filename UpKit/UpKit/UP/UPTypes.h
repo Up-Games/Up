@@ -8,7 +8,7 @@
 
 #import <stdint.h>
 
-typedef float UPUnit;
+typedef double UPUnit;
 typedef double UPFloat;
 
 #endif  // UP_TYPES_H

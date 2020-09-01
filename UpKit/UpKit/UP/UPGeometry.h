@@ -27,7 +27,7 @@ typedef struct __attribute__((objc_boxable)) UPQuadOffsets {
     UPOffset tl, tr, bl, br;
 } UPQuadOffsets;
 
-UP_STATIC_CONST UPQuad UPQuadZero = (UPQuad){0, 0, 0, 0};
+UP_STATIC_CONST UPQuad UPQuadZero = (UPQuad){ {0, 0}, {0, 0}, {0, 0}, {0, 0} };
 UP_STATIC_CONST UPOffset UPOffsetZero = (UPOffset){0, 0};
 UP_STATIC_CONST UPQuadOffsets UPQuadOffsetsZero = (UPQuadOffsets){0, 0, 0, 0, 0, 0, 0, 0};
 

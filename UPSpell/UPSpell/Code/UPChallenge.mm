@@ -190,7 +190,7 @@ static constexpr size_t UPSaltLength = 2;
     [base64String appendString:@"=="];
     NSData *input = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
     size_t actualOutputLength;
-    size_t outputLength = 4 * ceil(((double)input.length / 3));
+    size_t outputLength = (size_t)(4 * ceil(((double)input.length / 3)));
     uint8_t output[outputLength];
     NSString *result = nil;
     

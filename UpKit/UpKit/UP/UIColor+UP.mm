@@ -632,7 +632,7 @@ int up_next_milepost_hue(int hue)
 
 int up_theme_milepost_hue(void)
 {
-    return up_closest_milepost_hue([UIColor themeColorHue]);
+    return up_closest_milepost_hue((int)[UIColor themeColorHue]);
 }
 
 int up_closest_milepost_hue(int hue)

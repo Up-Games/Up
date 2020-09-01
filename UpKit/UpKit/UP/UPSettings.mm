@@ -243,7 +243,7 @@ using UP::SettingsProperty;
 static std::string up_property_setter_name(const std::string &property_name)
 {
     std::string upper_property_name = property_name;
-    upper_property_name[0] = std::toupper(upper_property_name[0]);
+    upper_property_name[0] = static_cast<std::string::value_type>(std::toupper(upper_property_name[0]));
     
     std::ostringstream sstr;
     sstr << "set" << upper_property_name << ":";

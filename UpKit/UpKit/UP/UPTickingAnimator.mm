@@ -29,7 +29,7 @@ static CGFloat compute_effective_fraction(CGFloat fraction, BOOL rebounds, NSUIn
         }
         else {
             effective_fraction = fpart;
-            if (((NSInteger)roundf(ipart)) % 2 == 1) {
+            if (((NSInteger)round(ipart)) % 2 == 1) {
                 effective_fraction = 1.0 - effective_fraction;
             }
         }

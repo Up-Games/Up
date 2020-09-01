@@ -46,10 +46,10 @@ public:
             // Nothing stops a game like having no vowels, so if there's a long consonant run,
             // insert a random vowel. Frequencies taken from:
             // https://en.wikipedia.org/wiki/Letter_frequency
-            static constexpr float Freq_U = 0.0736;
-            static constexpr float Freq_O = 0.2003;
-            static constexpr float Freq_I = 0.2014;
-            static constexpr float Freq_A = 0.2268;
+            static constexpr float Freq_U = 0.0736f;
+            static constexpr float Freq_O = 0.2003f;
+            static constexpr float Freq_I = 0.2014f;
+            static constexpr float Freq_A = 0.2268f;
             float f = m_random.unit();
             if (f <= Freq_U) {
                 c = 'U';

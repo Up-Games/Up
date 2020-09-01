@@ -57,7 +57,7 @@ static UIBezierPath *ChoiceStrokePathWithWidth(CGFloat width)
     return path;
 }
 
-UIBezierPath *ChoiceLeftFillPathSelected()
+static UIBezierPath *ChoiceLeftFillPathSelected()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(69.28, 25.09)];
@@ -111,7 +111,7 @@ UIBezierPath *ChoiceLeftFillPathSelected()
     return path;
 }
 
-UIBezierPath *ChoiceRightFillPathSelected()
+static UIBezierPath *ChoiceRightFillPathSelected()
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint: CGPointMake(248.28, 23.09)];

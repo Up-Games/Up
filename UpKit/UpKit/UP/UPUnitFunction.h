@@ -128,33 +128,33 @@ public:
     static UPUnit bounce_inout_value_for_t(UPUnit t) {
         return t < UPUnitHalf ? (UPUnitOne - bounce_out(UPUnitOne - UPUnitTwo * t)) / UPUnitTwo : (UPUnitOne + bounce_out(UPUnitTwo * t - UPUnitOne )) / UPUnitTwo;
     }
-    static UPUnit circ_in_value_for_t(UPUnit t) { return UPUnitOne - sqrtf(UPUnitOne - powf(t, UPUnitTwo)); }
-    static UPUnit circ_out_value_for_t(UPUnit t) { return sqrtf(UPUnitOne - pow(t - UPUnitOne, UPUnitTwo)); }
+    static UPUnit circ_in_value_for_t(UPUnit t) { return UPUnitOne - sqrt(UPUnitOne - pow(t, UPUnitTwo)); }
+    static UPUnit circ_out_value_for_t(UPUnit t) { return sqrt(UPUnitOne - pow(t - UPUnitOne, UPUnitTwo)); }
     static UPUnit circ_inout_value_for_t(UPUnit t) {
-        return t < UPUnitHalf ? (UPUnitOne - sqrtf(UPUnitOne - pow(UPUnitTwo * t, UPUnitTwo))) / UPUnitTwo : (sqrtf(UPUnitOne - pow(-UPUnitTwo * t + UPUnitTwo, UPUnitTwo)) + UPUnitOne) / UPUnitTwo;
+        return t < UPUnitHalf ? (UPUnitOne - sqrt(UPUnitOne - pow(UPUnitTwo * t, UPUnitTwo))) / UPUnitTwo : (sqrt(UPUnitOne - pow(-UPUnitTwo * t + UPUnitTwo, UPUnitTwo)) + UPUnitOne) / UPUnitTwo;
     }
     static UPUnit back_in_value_for_t(UPUnit t) { return cb3 * t * t * t - cb1 * t * t; }
     static UPUnit back_out_value_for_t(UPUnit t) { return UPUnitOne + cb3 * pow(t - UPUnitOne, 3) + cb1 * pow(t - UPUnitOne, UPUnitTwo); }
     static UPUnit back_inout_value_for_t(UPUnit t) {
         return t < UPUnitHalf ?
-            (powf(UPUnitTwo * t, UPUnitTwo) * ((cb4) * UPUnitTwo * t - cb2)) / UPUnitTwo :
-            (powf(UPUnitTwo * t - UPUnitTwo, UPUnitTwo) * ((cb4) * (t * UPUnitTwo - UPUnitTwo) + cb2) + UPUnitTwo) / UPUnitTwo;
+            (pow(UPUnitTwo * t, UPUnitTwo) * ((cb4) * UPUnitTwo * t - cb2)) / UPUnitTwo :
+            (pow(UPUnitTwo * t - UPUnitTwo, UPUnitTwo) * ((cb4) * (t * UPUnitTwo - UPUnitTwo) + cb2) + UPUnitTwo) / UPUnitTwo;
     }
-    static UPUnit elastic_in_value_for_t(UPUnit t) { return t == UPUnitZero ? UPUnitZero : t == UPUnitOne ? UPUnitOne : -powf(UPUnitTwo, 10 * t - 10) * sinf((t * 10 - 10.75) * c5); }
-    static UPUnit elastic_out_value_for_t(UPUnit t) { return t == UPUnitZero ? UPUnitZero : t == UPUnitOne ? UPUnitOne : powf(UPUnitTwo, -10 * t) * sinf((t * 10 - 0.75) * c5) + UPUnitOne; }
+    static UPUnit elastic_in_value_for_t(UPUnit t) { return t == UPUnitZero ? UPUnitZero : t == UPUnitOne ? UPUnitOne : -pow(UPUnitTwo, 10 * t - 10) * sin((t * 10 - 10.75) * c5); }
+    static UPUnit elastic_out_value_for_t(UPUnit t) { return t == UPUnitZero ? UPUnitZero : t == UPUnitOne ? UPUnitOne : pow(UPUnitTwo, -10 * t) * sin((t * 10 - 0.75) * c5) + UPUnitOne; }
     static UPUnit elastic_inout_value_for_t(UPUnit t) {
         return t == UPUnitZero ? UPUnitZero : t == UPUnitOne ? UPUnitOne : t < UPUnitHalf ?
-            -(powf(UPUnitTwo, 20 * t - 10) * sinf((20 * t - 11.125) * c6)) / UPUnitTwo :
-                powf(UPUnitTwo, -20 * t + 10) * sinf((20 * t - 11.125 ) * c6) / UPUnitTwo + UPUnitOne;
+            -(pow(UPUnitTwo, 20 * t - 10) * sin((20 * t - 11.125) * c6)) / UPUnitTwo :
+                pow(UPUnitTwo, -20 * t + 10) * sin((20 * t - 11.125 ) * c6) / UPUnitTwo + UPUnitOne;
     }
-    static UPUnit expo_in_value_for_t(UPUnit t) { return t == UPUnitZero ? UPUnitZero : powf(UPUnitTwo, 10 * t - 10); }
-    static UPUnit expo_out_value_for_t(UPUnit t) { return t == UPUnitOne ? UPUnitOne : UPUnitOne - powf(UPUnitTwo, -10 * t); }
+    static UPUnit expo_in_value_for_t(UPUnit t) { return t == UPUnitZero ? UPUnitZero : pow(UPUnitTwo, 10 * t - 10); }
+    static UPUnit expo_out_value_for_t(UPUnit t) { return t == UPUnitOne ? UPUnitOne : UPUnitOne - pow(UPUnitTwo, -10 * t); }
     static UPUnit expo_inout_value_for_t(UPUnit t) {
-        return t == UPUnitZero ? UPUnitZero : t == UPUnitOne ? UPUnitOne : t < UPUnitHalf ? powf(UPUnitTwo, 20 * t - 10) / UPUnitTwo : (UPUnitTwo - powf(UPUnitTwo, -20 * t + 10)) / UPUnitTwo;
+        return t == UPUnitZero ? UPUnitZero : t == UPUnitOne ? UPUnitOne : t < UPUnitHalf ? pow(UPUnitTwo, 20 * t - 10) / UPUnitTwo : (UPUnitTwo - pow(UPUnitTwo, -20 * t + 10)) / UPUnitTwo;
     }
-    static UPUnit sine_in_value_for_t(UPUnit t) { return UPUnitOne - cosf(t * M_PI_2); }
-    static UPUnit sine_out_value_for_t(UPUnit t) { return sinf(t * M_PI_2); }
-    static UPUnit sine_inout_value_for_t(UPUnit t) { return -(cosf(t * M_PI) - UPUnitOne) / UPUnitTwo; }
+    static UPUnit sine_in_value_for_t(UPUnit t) { return UPUnitOne - cos(t * M_PI_2); }
+    static UPUnit sine_out_value_for_t(UPUnit t) { return sin(t * M_PI_2); }
+    static UPUnit sine_inout_value_for_t(UPUnit t) { return -(cos(t * M_PI) - UPUnitOne) / UPUnitTwo; }
 
 private:
     static UPUnit bounce_out(UPUnit t) {
