@@ -170,6 +170,7 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 
 @property (nonatomic) NSInteger tuneNumber;
 @property (nonatomic) CFTimeInterval tapSoundTimestamp;
+@property (nonatomic) CFTimeInterval tubSoundTimestamp;
 @property (nonatomic) BOOL soundEffectsEnabled;
 @property (nonatomic) BOOL tunesEnabled;
 
@@ -182,6 +183,7 @@ static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
 static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.5;
 static constexpr CFTimeInterval GameOverOutroDuration = 5;
 static constexpr CFTimeInterval TapToTubInterval = 0.15;
+static constexpr CFTimeInterval TubToTubInterval = 0.05;
 
 static UPSpellGameController *_Instance;
 
@@ -3319,7 +3321,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (BOOL)shouldPlayTubSound
 {
     CFTimeInterval now = CACurrentMediaTime();
-    return now - self.tapSoundTimestamp > TapToTubInterval;
+    BOOL result = now - self.tapSoundTimestamp > TapToTubInterval && now - self.tubSoundTimestamp > TubToTubInterval;
+    self.tubSoundTimestamp = now;
+    return result;
 }
 
 #pragma mark - Modes
