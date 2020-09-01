@@ -182,7 +182,7 @@ static constexpr CFTimeInterval DefaultTileSlideDuration = 0.05;
 static constexpr CFTimeInterval GameOverInOutBloopDuration = 0.5;
 static constexpr CFTimeInterval GameOverRespositionBloopDuration = 0.5;
 static constexpr CFTimeInterval GameOverOutroDuration = 5;
-static constexpr CFTimeInterval TapToTubInterval = 0.15;
+static constexpr CFTimeInterval TapToTubInterval = 0.05;
 static constexpr CFTimeInterval TubToTubInterval = 0.05;
 
 static UPSpellGameController *_Instance;
@@ -4086,10 +4086,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.gameView.pulseView.alpha = 0;
 
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogGameOver.gameOverMessagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
+    self.dialogGameOver.gameOverMessagePathView.transform = CGAffineTransformIdentity;
+    self.dialogGameOver.gameOverMessagePathView.frame = layout.frame_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
     self.dialogGameOver.gameOverMessagePathView.alpha = 0;
-    self.dialogGameOver.gameOverNoteLabel.center = layout.center_for(Role::DialogGameNote, Spot::OffBottomFar);
-    self.dialogGameOver.gameOverShareButton.center = layout.center_for(Role::GameShareButton, Spot::OffBottomFar);
+    self.dialogGameOver.gameOverNoteLabel.frame = layout.frame_for(Role::DialogGameNote, Spot::OffBottomFar);
+    self.dialogGameOver.gameOverShareButton.frame = layout.frame_for(Role::GameShareButton, Spot::OffBottomFar);
     [UIView animateWithDuration:0.15 animations:^{
         self.dialogGameOver.gameOverMessagePathView.alpha = 1;
     }];
