@@ -212,10 +212,11 @@ static UPSpellGameController *_Instance;
     [self.gameTimer notifyObservers];
     
     self.dialogGameOver = [UPDialogGameOver instance];
-    [self.view addSubview:self.dialogGameOver.gameOverMessagePathView];
-    [self.view addSubview:self.dialogGameOver.gameOverNoteLabel];
-    [self.view addSubview:self.dialogGameOver.gameOverShareButton];
-    [self.dialogGameOver.gameOverShareButton setTarget:self action:@selector(gameOverShareButtonTapped)];
+    [self.view addSubview:self.dialogGameOver.messagePathView];
+    [self.view addSubview:self.dialogGameOver.noteLabel];
+    [self.view addSubview:self.dialogGameOver.shareButton];
+    [self.dialogGameOver.shareButton setTarget:self action:@selector(gameOverShareButtonTapped)];
+    [self setGameOverViewsHidden:YES];
     
     self.dialogTopMenu = [UPDialogTopMenu instance];
     [self.view addSubview:self.dialogTopMenu.extrasButton];
@@ -325,6 +326,15 @@ static UPSpellGameController *_Instance;
     self.dialogTopMenu.extrasButton.userInteractionEnabled = enabled;
     self.dialogTopMenu.playButton.userInteractionEnabled = enabled;
     self.dialogTopMenu.aboutButton.userInteractionEnabled = enabled;
+}
+
+#pragma mark - Game over views
+
+- (void)setGameOverViewsHidden:(BOOL)hidden
+{
+    self.dialogGameOver.messagePathView.hidden = hidden;
+    self.dialogGameOver.noteLabel.hidden = hidden;
+    self.dialogGameOver.shareButton.hidden = hidden;
 }
 
 #pragma mark - UPGameTimerObserver
@@ -1723,7 +1733,7 @@ static UPSpellGameController *_Instance;
             for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.aboutButton ]) {
                 view.alpha = 1;
             }
-            for (UIView *view in @[ self.dialogGameOver.gameOverNoteLabel, self.dialogGameOver.gameOverMessagePathView, self.dialogGameOver.gameOverShareButton ]) {
+            for (UIView *view in @[ self.dialogGameOver.noteLabel, self.dialogGameOver.messagePathView, self.dialogGameOver.shareButton ]) {
                 view.alpha = 1;
             }
             m_alpha_reason_stack.clear();
@@ -1746,7 +1756,7 @@ static UPSpellGameController *_Instance;
             for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.aboutButton ]) {
                 view.alpha = 1;
             }
-            for (UIView *view in @[ self.dialogGameOver.gameOverNoteLabel, self.dialogGameOver.gameOverMessagePathView, self.dialogGameOver.gameOverShareButton ]) {
+            for (UIView *view in @[ self.dialogGameOver.noteLabel, self.dialogGameOver.messagePathView, self.dialogGameOver.shareButton ]) {
                 view.alpha = 1;
             }
             m_alpha_reason_stack.clear();
@@ -1786,10 +1796,10 @@ static UPSpellGameController *_Instance;
             for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.aboutButton ]) {
                 view.alpha = alpha;
             }
-            for (UIView *view in @[ self.dialogGameOver.gameOverNoteLabel, self.dialogGameOver.gameOverMessagePathView ]) {
+            for (UIView *view in @[ self.dialogGameOver.noteLabel, self.dialogGameOver.messagePathView ]) {
                 view.alpha = 0;
             }
-            self.dialogGameOver.gameOverShareButton.alpha = [UIColor themeDisabledAlpha];
+            self.dialogGameOver.shareButton.alpha = [UIColor themeDisabledAlpha];
             m_alpha_reason_stack.clear();
             break;
         }
@@ -1901,7 +1911,7 @@ static UPSpellGameController *_Instance;
             for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.aboutButton ]) {
                 view.alpha = 1;
             }
-            for (UIView *view in @[ self.dialogGameOver.gameOverNoteLabel, self.dialogGameOver.gameOverMessagePathView, self.dialogGameOver.gameOverShareButton ]) {
+            for (UIView *view in @[ self.dialogGameOver.noteLabel, self.dialogGameOver.messagePathView, self.dialogGameOver.shareButton ]) {
                 view.alpha = 1;
             }
             break;
@@ -2250,9 +2260,9 @@ static UPSpellGameController *_Instance;
     UPViewMove *playButtonMove = UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffLeftFar));
     UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffLeftFar));
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffLeftFar));
-    UPViewMove *dialogGameOverMesageMove = UPViewMoveMake(self.dialogGameOver.gameOverMessagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffLeftFar));
-    UPViewMove *dialogGameOverNoteLabelMove = UPViewMoveMake(self.dialogGameOver.gameOverNoteLabel, Location(Role::DialogGameNote, Spot::OffLeftFar));
-    UPViewMove *dialogGameOverShareButtonMove = UPViewMoveMake(self.dialogGameOver.gameOverShareButton, Location(Role::GameShareButton, Spot::OffLeftFar));
+    UPViewMove *dialogGameOverMesageMove = UPViewMoveMake(self.dialogGameOver.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffLeftFar));
+    UPViewMove *dialogGameOverNoteLabelMove = UPViewMoveMake(self.dialogGameOver.noteLabel, Location(Role::DialogGameNote, Spot::OffLeftFar));
+    UPViewMove *dialogGameOverShareButtonMove = UPViewMoveMake(self.dialogGameOver.shareButton, Location(Role::GameShareButton, Spot::OffLeftFar));
 
     CFTimeInterval duration = 0.75;
     CFTimeInterval stagger = 0.075;
@@ -2266,6 +2276,7 @@ static UPSpellGameController *_Instance;
         start(bloop_out(BandModeUI, moves, duration - (1.5 * stagger),
                         ^(UIViewAnimatingPosition) {
             [self viewUnlock];
+            [self setGameOverViewsHidden:YES];
             self.dialogTopMenuUserInteractionEnabled = NO;
             if (completion) {
                 completion();
@@ -2283,9 +2294,9 @@ static UPSpellGameController *_Instance;
     UPViewMove *playButtonMove = UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffRightFar));
     UPViewMove *aboutButtonMove = UPViewMoveMake(self.dialogTopMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffRightFar));
     UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffRightFar));
-    UPViewMove *dialogGameOverMesageMove = UPViewMoveMake(self.dialogGameOver.gameOverMessagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffRightFar));
-    UPViewMove *dialogGameOverNoteLabelMove = UPViewMoveMake(self.dialogGameOver.gameOverNoteLabel, Location(Role::DialogGameNote, Spot::OffRightFar));
-    UPViewMove *dialogGameOverShareButtonMove = UPViewMoveMake(self.dialogGameOver.gameOverShareButton, Location(Role::GameShareButton, Spot::OffRightFar));
+    UPViewMove *dialogGameOverMesageMove = UPViewMoveMake(self.dialogGameOver.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffRightFar));
+    UPViewMove *dialogGameOverNoteLabelMove = UPViewMoveMake(self.dialogGameOver.noteLabel, Location(Role::DialogGameNote, Spot::OffRightFar));
+    UPViewMove *dialogGameOverShareButtonMove = UPViewMoveMake(self.dialogGameOver.shareButton, Location(Role::GameShareButton, Spot::OffRightFar));
 
     CFTimeInterval duration = 0.75;
     CFTimeInterval stagger = 0.075;
@@ -2301,6 +2312,7 @@ static UPSpellGameController *_Instance;
                         ^(UIViewAnimatingPosition) {
             
             [self viewUnlock];
+            [self setGameOverViewsHidden:YES];
             self.dialogTopMenuUserInteractionEnabled = NO;
             if (completion) {
                 completion();
@@ -2337,9 +2349,9 @@ static UPSpellGameController *_Instance;
     NSMutableArray<UPViewMove *> *buttonOutMoves = [NSMutableArray arrayWithArray:@[
         UPViewMoveMake(self.dialogTopMenu.extrasButton, Role::DialogButtonTopLeft, Spot::OffLeftNear),
         UPViewMoveMake(self.dialogTopMenu.aboutButton, Role::DialogButtonTopRight, Spot::OffRightNear),
-        UPViewMoveMake(self.dialogGameOver.gameOverMessagePathView, Role::DialogMessageVerticallyCentered, Spot::OffBottomFar),
-        UPViewMoveMake(self.dialogGameOver.gameOverNoteLabel, Role::DialogGameNote, Spot::OffBottomFar),
-        UPViewMoveMake(self.dialogGameOver.gameOverShareButton, Role::GameShareButton, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogGameNote, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogGameOver.shareButton, Role::GameShareButton, Spot::OffBottomFar),
     ]];
     BOOL gameScoreLabelNeedsMove = (mode == Mode::End && !CGAffineTransformIsIdentity(self.gameView.gameScoreLabel.transform));
     if (gameScoreLabelNeedsMove) {
@@ -2352,6 +2364,7 @@ static UPSpellGameController *_Instance;
         [self viewUpdateGameControls];
         self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
         self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
+        [self setGameOverViewsHidden:YES];
     }));
     [UIView animateWithDuration:0.4 animations:^{
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlayMenu];
@@ -2469,10 +2482,11 @@ static UPSpellGameController *_Instance;
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonOrderOutGameEnd];
     
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogGameOver.gameOverMessagePathView.center = layout.center_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
-    self.dialogGameOver.gameOverMessagePathView.transform = CGAffineTransformIdentity;
-    self.dialogGameOver.gameOverNoteLabel.center = layout.center_for(Role::DialogGameNote, Spot::OffBottomFar);
-    self.dialogGameOver.gameOverShareButton.center = layout.center_for(Role::GameShareButton, Spot::OffBottomFar);
+    self.dialogGameOver.messagePathView.center = layout.center_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
+    self.dialogGameOver.messagePathView.transform = CGAffineTransformIdentity;
+    self.dialogGameOver.noteLabel.center = layout.center_for(Role::DialogGameNote, Spot::OffBottomFar);
+    self.dialogGameOver.shareButton.center = layout.center_for(Role::GameShareButton, Spot::OffBottomFar);
+    [self setGameOverViewsHidden:YES];
     self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
     self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
     self.dialogShareHelp.titleLabel.center = layout.center_for(Role::DialogHelpTitle, Spot::OffBottomFar);
@@ -2489,8 +2503,8 @@ static UPSpellGameController *_Instance;
     
     [self.dialogShareHelp updateThemeColors];
     
-    self.dialogGameOver.gameOverShareButton.highlightedLocked = YES;
-    self.dialogGameOver.gameOverShareButton.highlighted = YES;
+    self.dialogGameOver.shareButton.highlightedLocked = YES;
+    self.dialogGameOver.shareButton.highlighted = YES;
     
     [UIView animateWithDuration:0.3 animations:^{
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonShareHelp];
@@ -2628,11 +2642,12 @@ static UPSpellGameController *_Instance;
     self.dialogTopMenu.playButton.highlighted = NO;
     self.dialogTopMenuUserInteractionEnabled = YES;
     
-    self.dialogGameOver.gameOverMessagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
-    self.dialogGameOver.gameOverNoteLabel.frame = layout.frame_for(Role::DialogGameNote, Spot::OffBottomFar);
-    self.dialogGameOver.gameOverShareButton.frame = layout.frame_for(Role::GameShareButton, Spot::OffBottomFar);
-    self.dialogGameOver.gameOverShareButton.highlightedLocked = NO;
-    self.dialogGameOver.gameOverShareButton.highlighted = NO;
+    self.dialogGameOver.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
+    self.dialogGameOver.noteLabel.frame = layout.frame_for(Role::DialogGameNote, Spot::OffBottomFar);
+    self.dialogGameOver.shareButton.frame = layout.frame_for(Role::GameShareButton, Spot::OffBottomFar);
+    self.dialogGameOver.shareButton.highlightedLocked = NO;
+    self.dialogGameOver.shareButton.highlighted = NO;
+    [self setGameOverViewsHidden:YES];
 
     self.dialogPlayMenu.backButton.highlightedLocked = NO;
     self.dialogPlayMenu.backButton.highlighted = NO;
@@ -2716,7 +2731,7 @@ static UPSpellGameController *_Instance;
     
     BOOL comingFromPlayMenuOrChallenge = mode == Mode::PlayMenu || mode == Mode::Challenge;
     if (comingFromPlayMenuOrChallenge) {
-        self.dialogGameOver.gameOverMessagePathView.transform = CGAffineTransformIdentity;
+        self.dialogGameOver.messagePathView.transform = CGAffineTransformIdentity;
         bottomHalf();
     }
     else {
@@ -2726,9 +2741,9 @@ static UPSpellGameController *_Instance;
         // move extras and about buttons offscreen
         
         NSMutableArray<UPViewMove *> *outGameOverMoves = [NSMutableArray arrayWithArray:@[
-            UPViewMoveMake(self.dialogGameOver.gameOverMessagePathView, Role::DialogMessageVerticallyCentered, Spot::OffBottomNear),
-            UPViewMoveMake(self.dialogGameOver.gameOverNoteLabel, Role::DialogGameNote, Spot::OffBottomFar),
-            UPViewMoveMake(self.dialogGameOver.gameOverShareButton, Role::GameShareButton, Spot::OffBottomFar),
+            UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Spot::OffBottomNear),
+            UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogGameNote, Spot::OffBottomFar),
+            UPViewMoveMake(self.dialogGameOver.shareButton, Role::GameShareButton, Spot::OffBottomFar),
         ]];
         BOOL gameScoreLabelNeedsMove = mode == Mode::End && !CGAffineTransformIsIdentity(self.gameView.gameScoreLabel.transform);
         if (gameScoreLabelNeedsMove) {
@@ -2759,7 +2774,7 @@ static UPSpellGameController *_Instance;
             UPViewMoveMake(self.dialogTopMenu.aboutButton, Location(Role::DialogButtonTopRight, Spot::OffTopNear)),
         ];
         start(bloop_out(BandModeUI, outMoves, 0.3, ^(UIViewAnimatingPosition) {
-            self.dialogGameOver.gameOverMessagePathView.transform = CGAffineTransformIdentity;
+            self.dialogGameOver.messagePathView.transform = CGAffineTransformIdentity;
             
             delay(BandModeDelay, 0.35, ^{
                 // move play button
@@ -2807,7 +2822,7 @@ static UPSpellGameController *_Instance;
     
     NSArray *components = [labelString componentsSeparatedByString:@"\n"];
     if (components.count == 1) {
-        self.dialogGameOver.gameOverNoteLabel.string = labelString;
+        self.dialogGameOver.noteLabel.string = labelString;
     }
     else if (components.count == 2) {
         SpellLayout &layout = SpellLayout::instance();
@@ -2822,10 +2837,10 @@ static UPSpellGameController *_Instance;
         
         [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
         [attrString appendAttributedString:bottomString];
-        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameOver.gameOverNoteLabel.colorCategory];
+        UIColor *color = [UIColor themeColorWithCategory:self.dialogGameOver.noteLabel.colorCategory];
         [attrString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, attrString.length)];
         
-        self.dialogGameOver.gameOverNoteLabel.attributedString = attrString;
+        self.dialogGameOver.noteLabel.attributedString = attrString;
     }
     
 }
@@ -3067,9 +3082,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)shareSheetDismissed
 {
-    self.dialogGameOver.gameOverShareButton.highlightedLocked = NO;
-    self.dialogGameOver.gameOverShareButton.highlighted = NO;
-    self.dialogGameOver.gameOverShareButton.alpha = 1;
+    self.dialogGameOver.shareButton.highlightedLocked = NO;
+    self.dialogGameOver.shareButton.highlighted = NO;
+    self.dialogGameOver.shareButton.alpha = 1;
 }
 
 #pragma mark - Challenges
@@ -4048,17 +4063,18 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.gameView.pulseView.alpha = 0;
 
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogGameOver.gameOverMessagePathView.transform = CGAffineTransformIdentity;
-    self.dialogGameOver.gameOverMessagePathView.frame = layout.frame_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
-    self.dialogGameOver.gameOverMessagePathView.alpha = 0;
-    self.dialogGameOver.gameOverNoteLabel.frame = layout.frame_for(Role::DialogGameNote, Spot::OffBottomFar);
-    self.dialogGameOver.gameOverShareButton.frame = layout.frame_for(Role::GameShareButton, Spot::OffBottomFar);
+    self.dialogGameOver.messagePathView.transform = CGAffineTransformIdentity;
+    self.dialogGameOver.messagePathView.frame = layout.frame_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
+    self.dialogGameOver.messagePathView.alpha = 0;
+    self.dialogGameOver.noteLabel.frame = layout.frame_for(Role::DialogGameNote, Spot::OffBottomFar);
+    self.dialogGameOver.shareButton.frame = layout.frame_for(Role::GameShareButton, Spot::OffBottomFar);
+    [self setGameOverViewsHidden:NO];
     [UIView animateWithDuration:0.15 animations:^{
-        self.dialogGameOver.gameOverMessagePathView.alpha = 1;
+        self.dialogGameOver.messagePathView.alpha = 1;
     }];
     
     NSArray<UPViewMove *> *moves = @[
-        UPViewMoveMake(self.dialogGameOver.gameOverMessagePathView, Role::DialogMessageCenteredInWordTray),
+        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageCenteredInWordTray),
     ];
     start(bloop_in(BandModeUI, moves, 0.3, ^(UIViewAnimatingPosition) {
         delay(BandModeDelay, 0.75, ^{
@@ -4101,7 +4117,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             CGFloat labelX = canvasCenter.x - (up_rect_width(labelFrame) * 0.5) + (width * 0.5);
             self.gameView.gameScoreLabel.center = CGPointMake(labelX, labelCenter.y);
             
-            self.dialogGameOver.gameOverMessagePathView.transform = layout.menu_game_view_transform();
+            self.dialogGameOver.messagePathView.transform = layout.menu_game_view_transform();
             [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonOverToEnd];
         }];
         
@@ -4117,14 +4133,14 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             self.dialogTopMenu.playButton.highlighted = NO;
 
             Role gameNoteRole = wasChallenge ? Role::DialogChallengeGameNote : Role::DialogGameNote;
-            self.dialogGameOver.gameOverNoteLabel.frame = layout.frame_for(Location(gameNoteRole, Spot::OffBottomNear));
-            self.dialogGameOver.gameOverShareButton.frame = layout.frame_for(Location(Role::GameShareButton, Spot::OffBottomNear));
+            self.dialogGameOver.noteLabel.frame = layout.frame_for(Location(gameNoteRole, Spot::OffBottomNear));
+            self.dialogGameOver.shareButton.frame = layout.frame_for(Location(Role::GameShareButton, Spot::OffBottomNear));
             NSArray<UPViewMove *> *buttonMoves = @[
                 UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
                 UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter)),
                 UPViewMoveMake(self.dialogTopMenu.aboutButton, Location(Role::DialogButtonTopRight)),
-                UPViewMoveMake(self.dialogGameOver.gameOverNoteLabel, gameNoteRole),
-                UPViewMoveMake(self.dialogGameOver.gameOverShareButton, Role::GameShareButton),
+                UPViewMoveMake(self.dialogGameOver.noteLabel, gameNoteRole),
+                UPViewMoveMake(self.dialogGameOver.shareButton, Role::GameShareButton),
             ];
             start(bloop_in(BandModeUI, buttonMoves, GameOverInOutBloopDuration, ^(UIViewAnimatingPosition) {
                 [self viewUnlock];

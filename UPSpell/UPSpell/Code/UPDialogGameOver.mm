@@ -21,9 +21,9 @@ using Role = SpellLayout::Role;
 using Spot = SpellLayout::Spot;
 
 @interface UPDialogGameOver ()
-@property (nonatomic, readwrite) UPBezierPathView *gameOverMessagePathView;
-@property (nonatomic, readwrite) UPLabel *gameOverNoteLabel;
-@property (nonatomic, readwrite) UPButton *gameOverShareButton;
+@property (nonatomic, readwrite) UPBezierPathView *messagePathView;
+@property (nonatomic, readwrite) UPLabel *noteLabel;
+@property (nonatomic, readwrite) UPButton *shareButton;
 @end
 
 @implementation UPDialogGameOver
@@ -43,22 +43,22 @@ using Spot = SpellLayout::Spot;
     SpellLayout &layout = SpellLayout::instance();
     self = [super init];
 
-    self.gameOverMessagePathView = [UPBezierPathView bezierPathView];
-    self.gameOverMessagePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
-    self.gameOverMessagePathView.path = UP::TextPathDialogGameOver();
-    self.gameOverMessagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
+    self.messagePathView = [UPBezierPathView bezierPathView];
+    self.messagePathView.canonicalSize = SpellLayout::CanonicalDialogTitleSize;
+    self.messagePathView.path = UP::TextPathDialogGameOver();
+    self.messagePathView.frame = layout.frame_for(SpellLayout::Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
 
-    self.gameOverNoteLabel = [UPLabel label];
-    self.gameOverNoteLabel.font = layout.game_note_font();
-    self.gameOverNoteLabel.colorCategory = UPColorCategoryInformation;
-    self.gameOverNoteLabel.textAlignment = NSTextAlignmentCenter;
-    self.gameOverNoteLabel.frame = layout.frame_for(SpellLayout::Role::DialogGameNote, Spot::OffBottomFar);
+    self.noteLabel = [UPLabel label];
+    self.noteLabel.font = layout.game_note_font();
+    self.noteLabel.colorCategory = UPColorCategoryInformation;
+    self.noteLabel.textAlignment = NSTextAlignmentCenter;
+    self.noteLabel.frame = layout.frame_for(SpellLayout::Role::DialogGameNote, Spot::OffBottomFar);
     
-    self.gameOverShareButton = [UPButton roundShareButton];
-    self.gameOverShareButton.frame = layout.frame_for(SpellLayout::Role::GameShareButton, Spot::OffBottomFar);
-    self.gameOverShareButton.band = UP::BandModeUI;
-    [self.gameOverShareButton setFillColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    [self.gameOverShareButton setStrokeColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    self.shareButton = [UPButton roundShareButton];
+    self.shareButton.frame = layout.frame_for(SpellLayout::Role::GameShareButton, Spot::OffBottomFar);
+    self.shareButton.band = UP::BandModeUI;
+    [self.shareButton setFillColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
+    [self.shareButton setStrokeColorAnimationDuration:0.1 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
 
     [self updateThemeColors];
 
@@ -69,9 +69,9 @@ using Spot = SpellLayout::Spot;
 
 - (void)updateThemeColors
 {
-    self.gameOverMessagePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
-    [self.gameOverNoteLabel updateThemeColors];
-    [self.gameOverShareButton updateThemeColors];
+    self.messagePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
+    [self.noteLabel updateThemeColors];
+    [self.shareButton updateThemeColors];
 }
 
 @end

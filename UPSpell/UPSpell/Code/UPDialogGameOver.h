@@ -9,9 +9,9 @@
 
 @interface UPDialogGameOver : NSObject
 
-@property (nonatomic, readonly) UPBezierPathView *gameOverMessagePathView;
-@property (nonatomic, readonly) UPLabel *gameOverNoteLabel;
-@property (nonatomic, readonly) UPButton *gameOverShareButton;
+@property (nonatomic, readonly) UPBezierPathView *messagePathView;
+@property (nonatomic, readonly) UPLabel *noteLabel;
+@property (nonatomic, readonly) UPButton *shareButton;
 
 + (UPDialogGameOver *)instance;
 
