@@ -294,7 +294,7 @@ static UPSpellGameController *_Instance;
 
 - (UIRectEdge)preferredScreenEdgesDeferringSystemGestures
 {
-    return self.mode == Mode::Play ? UIRectEdgeAll : UIRectEdgeNone;
+    return self.mode == Mode::Ready || self.mode == Mode::Play ? UIRectEdgeAll : UIRectEdgeNone;
 }
 
 #pragma mark - Update theme colors
@@ -2694,7 +2694,11 @@ static UPSpellGameController *_Instance;
 {
     ASSERT(!m_spell_model);
     ASSERT(self.lockCount > 0);
-    
+
+    if (@available(iOS 11.0, *)) {
+        [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
+    }
+
     // lock play button in highlighted state
     self.dialogTopMenu.playButton.highlightedLocked = YES;
     self.dialogTopMenu.playButton.highlighted = YES;
@@ -2714,17 +2718,35 @@ static UPSpellGameController *_Instance;
             self.gameView.transform = CGAffineTransformIdentity;
         }];
         delay(BandModeDelay, 0.45, ^{
+            if (self.mode != Mode::Ready) {
+                [self viewLock];
+                [self viewImmediateTransitionToInit];
+                [self viewUnlock];
+                return;
+            }
             // bloop in ready message
             self.dialogTopMenu.readyMessagePathView.alpha = 0;
             [UIView animateWithDuration:0.2 animations:^{
                 self.dialogTopMenu.readyMessagePathView.alpha = 1;
             }];
             UPViewMove *readyMove = UPViewMoveMake(self.dialogTopMenu.readyMessagePathView, Location(Role::DialogMessageCenteredInWordTray));
-            start(bloop_in(BandModeUI, @[readyMove], 0.3,  nil));
+            start(bloop_in(BandModeUI, @[readyMove], 0.3,  ^(UIViewAnimatingPosition) {
+                if (self.mode != Mode::Ready) {
+                    [self viewLock];
+                    [self viewImmediateTransitionToInit];
+                    [self viewUnlock];
+                    return;
+                }
+            }));
         });
         delay(BandModeDelay, 1.75, ^{
-            if (completion) {
+            if (self.mode == Mode::Ready) {
                 completion();
+            }
+            else {
+                [self viewLock];
+                [self viewImmediateTransitionToInit];
+                [self viewUnlock];
             }
         });
     };
@@ -3165,12 +3187,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [soundPlayer setFilePath:[bundle pathForResource:@"None" ofType:@"aac"] forSoundID:UPSoundIDNone volume:1.0f playerCount:8];
     [soundPlayer setFilePath:[bundle pathForResource:@"Tap" ofType:@"aac"] forSoundID:UPSoundIDTap volume:0.4f playerCount:10];
     [soundPlayer setFilePath:[bundle pathForResource:@"Tub" ofType:@"aac"] forSoundID:UPSoundIDTub volume:0.3f playerCount:12];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-1" ofType:@"aac"] forSoundID:UPSoundIDHappy1 volume:0.6f playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-2" ofType:@"aac"] forSoundID:UPSoundIDHappy2 volume:0.6f playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-3" ofType:@"aac"] forSoundID:UPSoundIDHappy3 volume:0.6f playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-4" ofType:@"aac"] forSoundID:UPSoundIDHappy4 volume:0.6f playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-1" ofType:@"aac"] forSoundID:UPSoundIDSad1 volume:0.55f playerCount:2];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-2" ofType:@"aac"] forSoundID:UPSoundIDSad2 volume:0.55f playerCount:2];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-1" ofType:@"aac"] forSoundID:UPSoundIDHappy1 volume:0.8f playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-2" ofType:@"aac"] forSoundID:UPSoundIDHappy2 volume:0.8f playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-3" ofType:@"aac"] forSoundID:UPSoundIDHappy3 volume:0.8f playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Happy-4" ofType:@"aac"] forSoundID:UPSoundIDHappy4 volume:0.8f playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-1" ofType:@"aac"] forSoundID:UPSoundIDSad1 volume:0.6f playerCount:2];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-2" ofType:@"aac"] forSoundID:UPSoundIDSad2 volume:0.6f playerCount:2];
     [soundPlayer setFilePath:[bundle pathForResource:@"Whoops" ofType:@"aac"] forSoundID:UPSoundIDWhoops volume:0.6f playerCount:3];
 }
 
@@ -3292,7 +3314,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self configureTunesForTuneNumber:self.tuneNumber];
     if (self.tunesEnabled) {
         UPTunePlayer *tunePlayer = [UPTunePlayer instance];
-        [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 1.0, NO, 0, 0, 0 }];
+        [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 0.9, NO, 0, 0, 0 }];
     }
 }
 
