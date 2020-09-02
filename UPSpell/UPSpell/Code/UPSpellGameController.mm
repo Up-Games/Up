@@ -3479,8 +3479,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.dialogPause.hidden = NO;
     self.dialogPause.alpha = 1;
     
+    self.dialogTopMenu.extrasButton.center = layout.center_for(Role::DialogButtonTopLeft, Spot::OffTopNear);
+    self.dialogTopMenu.playButton.center = layout.center_for(Role::DialogButtonTopCenter, Spot::OffTopNear);
+    self.dialogTopMenu.aboutButton.center = layout.center_for(Role::DialogButtonTopRight, Spot::OffTopNear);
     self.dialogTopMenu.readyMessagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
-    
+
     [self viewUnlock];
 }
 
