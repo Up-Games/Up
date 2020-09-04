@@ -3125,59 +3125,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }
 }
 
-#pragma mark - Lifecycle notifications
-
-- (void)configureLifecycleNotifications
-{
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    
-    [nc addObserverForName:UIApplicationDidBecomeActiveNotification object:nil queue:NSOperationQueue.mainQueue
-                usingBlock:^(NSNotification *note) {
-        [self removeInProgressGameFileLogErrors:NO];
-        [self viewEnsureUnlocked];
-    }];
-    
-    [nc addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:NSOperationQueue.mainQueue
-                usingBlock:^(NSNotification *note) {
-        [self removeInProgressGameFileLogErrors:NO];
-    }];
-    
-    [nc addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:NSOperationQueue.mainQueue
-                usingBlock:^(NSNotification *note) {
-        if (self.mode == Mode::Ready) {
-            [self setMode:Mode::Init transitionScenario:UPModeTransitionScenarioWillResignActive];
-        }
-        if (self.mode == Mode::Play) {
-            [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioWillResignActive];
-        }
-        [self saveInProgressGameIfNecessary];
-    }];
-    [nc addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:NSOperationQueue.mainQueue
-                usingBlock:^(NSNotification *note) {
-        switch (self.mode) {
-            case UP::Mode::None:
-            case UP::Mode::Init:
-            case UP::Mode::About:
-            case UP::Mode::Extras:
-            case UP::Mode::PlayMenu:
-            case UP::Mode::Pause:
-                break;
-            case UP::Mode::Play:
-                [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioDidEnterBackground];
-                break;
-            case UP::Mode::Ready:
-            case UP::Mode::ShareHelp:
-            case UP::Mode::Challenge:
-            case UP::Mode::ChallengeHelp:
-            case UP::Mode::GameOver:
-            case UP::Mode::Quit:
-            case UP::Mode::End:
-                [self setMode:Mode::Init transitionScenario:UPModeTransitionScenarioDidEnterBackground];
-                break;
-        }
-    }];
-}
-
 #pragma mark - Sounds and Tunes
 
 - (void)configureSounds
@@ -3358,6 +3305,64 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     return result;
 }
 
+#pragma mark - Lifecycle notifications
+
+- (void)configureLifecycleNotifications
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    [nc addObserverForName:UIApplicationDidBecomeActiveNotification object:nil queue:NSOperationQueue.mainQueue
+                usingBlock:^(NSNotification *note) {
+        [self removeInProgressGameFileLogErrors:NO];
+        [self viewEnsureUnlocked];
+    }];
+    
+    [nc addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:NSOperationQueue.mainQueue
+                usingBlock:^(NSNotification *note) {
+        [self removeInProgressGameFileLogErrors:NO];
+    }];
+    
+    [nc addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:NSOperationQueue.mainQueue
+                usingBlock:^(NSNotification *note) {
+        if (self.mode == Mode::Ready) {
+            [self setMode:Mode::Init transitionScenario:UPModeTransitionScenarioWillResignActive];
+        }
+        if (self.mode == Mode::Play) {
+            if (self.gameTimer.isRunning) {
+                [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioWillResignActive];
+            }
+            else {
+                [self setMode:Mode::Init transitionScenario:UPModeTransitionScenarioWillResignActive];
+            }
+        }
+        [self saveInProgressGameIfNecessary];
+    }];
+    [nc addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:NSOperationQueue.mainQueue
+                usingBlock:^(NSNotification *note) {
+        switch (self.mode) {
+            case UP::Mode::None:
+            case UP::Mode::Init:
+            case UP::Mode::About:
+            case UP::Mode::Extras:
+            case UP::Mode::PlayMenu:
+            case UP::Mode::Pause:
+                break;
+            case UP::Mode::Play:
+                [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioDidEnterBackground];
+                break;
+            case UP::Mode::Ready:
+            case UP::Mode::ShareHelp:
+            case UP::Mode::Challenge:
+            case UP::Mode::ChallengeHelp:
+            case UP::Mode::GameOver:
+            case UP::Mode::Quit:
+            case UP::Mode::End:
+                [self setMode:Mode::Init transitionScenario:UPModeTransitionScenarioDidEnterBackground];
+                break;
+        }
+    }];
+}
+
 #pragma mark - Modes
 
 - (void)configureModeTransitionTables
@@ -3405,6 +3410,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     m_will_resign_active_transition_table = {
         { Mode::Ready,    Mode::Init,   @selector(modeTransitionImmediateFromReadyToInit) },
+        { Mode::Play,     Mode::Init,   @selector(modeTransitionImmediateFromPlayToInit) },
         { Mode::Play,     Mode::Pause,  @selector(modeTransitionImmediateFromPlayToPause) },
     };
     
@@ -3865,14 +3871,16 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         self.dialogTopMenu.readyMessagePathView.alpha = 0;
     } completion:^(BOOL finished) {
         self.dialogTopMenu.readyMessagePathView.alpha = 1;
+    }];
+    delay(BandModeDelay, 0.3, ^{
         [UIView animateWithDuration:0.35 animations:^{
             [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
         } completion:nil];
-        delay(BandModeDelay, 0.1, ^{
-            [self viewEnsureUnlocked];
-            [self viewFillPlayerTrayWithCompletion:nil];
-        });
-    }];
+    });
+    delay(BandModeDelay, 0.4, ^{
+        [self viewEnsureUnlocked];
+        [self viewFillPlayerTrayWithCompletion:nil];
+    });
 }
 
 - (void)modeTransitionFromPlayToPause
@@ -3927,12 +3935,19 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewEnsureUnlocked];
 }
 
+- (void)modeTransitionImmediateFromPlayToInit
+{
+    [self viewLock];
+    [self viewImmediateTransitionToInit];
+    [self viewEnsureUnlocked];
+}
+
 - (void)modeTransitionImmediateFromPlayToPause
 {
     if (@available(iOS 11.0, *)) {
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
     }
-    
+
     [self.gameTimer stop];
     pause(BandGameAll);
     [[UPSoundPlayer instance] stop];

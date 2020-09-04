@@ -113,9 +113,7 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
     std::lock_guard<std::mutex> guard(m_mutex);
     for (auto it = m_map.begin(); it != m_map.end(); ++it) {
         AVAudioPlayer *player = it->second;
-        if (player.playing) {
-            [player pause];
-        }
+        [player stop];
     }
 }
 
