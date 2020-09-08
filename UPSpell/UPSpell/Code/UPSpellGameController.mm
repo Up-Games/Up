@@ -3132,15 +3132,15 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     NSBundle *bundle = [NSBundle mainBundle];
     UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
     [soundPlayer setFilePath:[bundle pathForResource:@"None" ofType:@"aac"] forSoundID:UPSoundIDNone volume:1.0f playerCount:8];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Tap" ofType:@"aac"] forSoundID:UPSoundIDTap volume:0.45f playerCount:10];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Tub" ofType:@"aac"] forSoundID:UPSoundIDTub volume:0.55f playerCount:12];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Tap" ofType:@"aac"] forSoundID:UPSoundIDTap volume:0.3f playerCount:10];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Tub" ofType:@"aac"] forSoundID:UPSoundIDTub volume:0.4f playerCount:12];
     [soundPlayer setFilePath:[bundle pathForResource:@"Happy-1" ofType:@"aac"] forSoundID:UPSoundIDHappy1 volume:1.0f playerCount:3];
     [soundPlayer setFilePath:[bundle pathForResource:@"Happy-2" ofType:@"aac"] forSoundID:UPSoundIDHappy2 volume:1.0f playerCount:3];
     [soundPlayer setFilePath:[bundle pathForResource:@"Happy-3" ofType:@"aac"] forSoundID:UPSoundIDHappy3 volume:1.0f playerCount:3];
     [soundPlayer setFilePath:[bundle pathForResource:@"Happy-4" ofType:@"aac"] forSoundID:UPSoundIDHappy4 volume:1.0f playerCount:3];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-1" ofType:@"aac"] forSoundID:UPSoundIDSad1 volume:0.75f playerCount:2];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-2" ofType:@"aac"] forSoundID:UPSoundIDSad2 volume:0.75f playerCount:2];
-    [soundPlayer setFilePath:[bundle pathForResource:@"Whoops" ofType:@"aac"] forSoundID:UPSoundIDWhoops volume:0.65f playerCount:3];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-1" ofType:@"aac"] forSoundID:UPSoundIDSad1 volume:0.7f playerCount:2];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Sad-2" ofType:@"aac"] forSoundID:UPSoundIDSad2 volume:0.65f playerCount:2];
+    [soundPlayer setFilePath:[bundle pathForResource:@"Whoops" ofType:@"aac"] forSoundID:UPSoundIDWhoops volume:0.75f playerCount:3];
 }
 
 - (void)updateSoundAndTunesSettings
@@ -3252,7 +3252,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             break;
         }
     }
-    return tuneNumber;
+    return 1;
 }
 
 - (void)playTuneIntro
@@ -3261,7 +3261,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self configureTunesForTuneNumber:self.tuneNumber];
     if (self.tunesEnabled) {
         UPTunePlayer *tunePlayer = [UPTunePlayer instance];
-        [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 0.6, NO, 0, 0, 0 }];
+        [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 1.0, NO, 0, 0, 0 }];
     }
 }
 
@@ -3278,7 +3278,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     if (self.tunesEnabled && UPGameTimerDefaultDuration - effectiveGameTimeElapsed > GameOverOutroDuration) {
         CFTimeInterval tuneBeginTime = delay;
         CFTimeInterval tuneTimeOffset = (UPGameTimerCanonicalDuration - UPGameTimerDefaultDuration) + effectiveGameTimeElapsed;
-        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 0.9, NO, 0, tuneBeginTime, tuneTimeOffset }];
+        [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, tuneBeginTime, tuneTimeOffset }];
     }
     
     if (self.soundEffectsEnabled) {
