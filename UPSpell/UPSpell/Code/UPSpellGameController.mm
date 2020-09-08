@@ -3252,7 +3252,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             break;
         }
     }
-    return 1;
+    return tuneNumber;
 }
 
 - (void)playTuneIntro
