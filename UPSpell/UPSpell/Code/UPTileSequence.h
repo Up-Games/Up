@@ -28,8 +28,9 @@ public:
     
     TileModel next() {
         if (m_letters.size() == 0) {
-            auto &lexicon = Lexicon::fixed_instance();
-            std::u32string key = lexicon.random_key(m_random);
+//            auto &lexicon = Lexicon::fixed_instance();
+//            std::u32string key = lexicon.random_key(m_random);
+            std::u32string key = U"SHAT";
             LOG(Lexicon, "w: %s", cpp_str(key).c_str());
             std::shuffle(key.begin(), key.end(), m_random.generator());
             std::copy(key.begin(), key.end(), std::back_inserter(m_letters));
