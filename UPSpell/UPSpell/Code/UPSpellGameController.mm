@@ -2622,7 +2622,7 @@ static UPSpellGameController *_Instance;
     [self removeInProgressGameFileLogErrors:NO];
 
     [[UPSoundPlayer instance] stop];
-    [[UPTunePlayer instance] stop];
+    [[UPTunePlayer instance] fade];
 
     [self.gameTimer reset];
     m_spell_model = std::make_shared<SpellModel>();
@@ -3893,7 +3893,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self.gameTimer stop];
     pause(BandGameAll);
     [[UPSoundPlayer instance] stop];
-    [[UPTunePlayer instance] stop];
+    [[UPTunePlayer instance] fade];
     [self viewLock];
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPause];
     
@@ -3951,7 +3951,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self.gameTimer stop];
     pause(BandGameAll);
     [[UPSoundPlayer instance] stop];
-    [[UPTunePlayer instance] stop];
+    [[UPTunePlayer instance] fade];
     [self viewLock];
     
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPause];

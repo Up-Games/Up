@@ -53,6 +53,7 @@ extern NSString * const UPTunePlayerFinishedPlayingNotification;
 
 - (BOOL)isPlayingTuneID:(UPTuneID)tuneID segment:(UPTuneSegment)segment;
 
+- (void)fade;
 - (void)stop;
 - (void)clear;
 

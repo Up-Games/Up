@@ -13,7 +13,6 @@
 #import <UpKit/UPAssertions.h>
 
 #import "AVAudioPlayer+UPSpell.h"
-#import "UPTunePlayer.h"
 
 NSString * const UPTunePlayerFinishedPlayingNotification = @"UPTunePlayerFinishedPlayingNotification";
 
@@ -108,17 +107,29 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
     return NO;
 }
 
+- (void)fade
+{
+    for (auto it = m_map.begin(); it != m_map.end(); ++it) {
+        AVAudioPlayer *player = it->second;
+        if (player.playing) {
+            static const CFTimeInterval FadeDelay = 0.1;
+            static const CFTimeInterval StopDelay = 0.11;
+            float oldVolume = player.volume;
+            [player setVolume:0 fadeDuration:FadeDelay];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(StopDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [player stop];
+                player.volume = oldVolume;
+            });
+        }
+    }
+}
+
 - (void)stop
 {
     std::lock_guard<std::mutex> guard(m_mutex);
     for (auto it = m_map.begin(); it != m_map.end(); ++it) {
         AVAudioPlayer *player = it->second;
-        float oldVolume = player.volume;
-        [player setVolume:0 fadeDuration:0.1];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [player stop];
-            player.volume = oldVolume;
-        });
+        [player stop];
     }
 }
 
