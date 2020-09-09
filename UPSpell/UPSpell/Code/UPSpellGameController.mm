@@ -3283,13 +3283,14 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     if (self.soundEffectsEnabled) {
         UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
-        float volume = UPClampT(float, soundPlayer.volume * 1.6f, 0, 1);
+        float volume = soundPlayer.volume;
+        float adjustedVolume = UPClampT(float, volume * 1.6f, 0, 1);
         if (UPGameTimerDefaultDuration - effectiveGameTimeElapsed > 1) {
             CFTimeInterval outroIntervalFromEnd = UPGameTimerDefaultDuration - GameOverOutroDuration;
             CFTimeInterval timeBeforeOutroBegins = UPClampT(CFTimeInterval, outroIntervalFromEnd - effectiveGameTimeElapsed, 0, outroIntervalFromEnd);
             CFTimeInterval outroBeginTime = delay + timeBeforeOutroBegins;
             CFTimeInterval outroTimeOffset = UPMaxT(CFTimeInterval, 0, effectiveGameTimeElapsed - outroIntervalFromEnd);
-            [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOutro properties:{ volume, YES, 0, outroBeginTime, outroTimeOffset }];
+            [tunePlayer playTuneID:tuneID segment:UPTuneSegmentOutro properties:{ adjustedVolume, YES, 0, outroBeginTime, outroTimeOffset }];
         }
         
         CFTimeInterval gameOverBeginTime = delay + (UPGameTimerDefaultDuration - effectiveGameTimeElapsed);
