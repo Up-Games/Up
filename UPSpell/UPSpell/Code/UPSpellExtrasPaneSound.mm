@@ -145,6 +145,7 @@ using Role = UP::SpellLayout::Role;
     NSBundle *bundle = [NSBundle mainBundle];
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
     [tunePlayer setFilePath:[bundle pathForResource:@"Demo-Tune" ofType:@"aac"] forTuneID:UPTuneIDDemo segment:UPTuneSegmentMain];
+    [tunePlayer stop];
 }
 
 - (void)effectsCheckboxTapped
