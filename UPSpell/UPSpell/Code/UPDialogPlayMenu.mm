@@ -115,6 +115,7 @@ using Role = SpellLayout::Role;
     
     LOG(General, "High Score: %@", ns_str(GameKey(dossier.highScoreGameKeyValue).string()));
     LOG(General, "Last Game:  %@", ns_str(GameKey(dossier.lastGameKeyValue).string()));
+    LOG(General, "Challenge?: %@", dossier.lastGameWasChallenge ? @"Y" : @"N");
 
     UPSpellSettings *settings = [UPSpellSettings instance];
     NSUInteger playMenuSelectedIndex = settings.playMenuSelectedIndex;
@@ -130,6 +131,10 @@ using Role = SpellLayout::Role;
         self.choice1.userInteractionEnabled = NO;
         self.choice2.userInteractionEnabled = NO;
         [self.choice3 setSelected:YES];
+    }
+    else if (dossier.lastGameWasChallenge) {
+        self.choice1.labelString = [NSString stringWithFormat:@"RETRY HIGH SCORE GAME (%d)", dossier.highScore];
+        self.choice2.labelString = [NSString stringWithFormat:@"RETRY CHALLENGE (%d)", dossier.lastGameChallengeScore];
     }
     else if (dossier.highScore == 0) {
         self.choice1.labelString = @"RETRY HIGH SCORE GAME";

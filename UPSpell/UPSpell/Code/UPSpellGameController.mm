@@ -2978,11 +2978,20 @@ static UPSpellGameController *_Instance;
         GameKey game_key;
         if (self.playMenuChoice.tag == UPDialogPlayMenuChoiceRetryHighScore) {
             game_key = GameKey(dossier.highScoreGameKeyValue);
+            m_spell_model = std::make_shared<SpellModel>(game_key);
         }
         else if (self.playMenuChoice.tag == UPDialogPlayMenuChoiceRetryLastGame) {
             game_key = GameKey(dossier.lastGameKeyValue);
+            if (dossier.lastGameWasChallenge) {
+                m_spell_model = std::make_shared<SpellModel>(game_key, dossier.lastGameChallengeScore);
+            }
+            else {
+                m_spell_model = std::make_shared<SpellModel>(game_key);
+            }
         }
-        m_spell_model = std::make_shared<SpellModel>(game_key);
+        else {
+            m_spell_model = std::make_shared<SpellModel>(game_key);
+        }
     }
     else {
         m_spell_model = std::make_shared<SpellModel>(GameKey::random());

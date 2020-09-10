@@ -53,6 +53,7 @@
     UP_DECODE(coder, highScore, Int);
     UP_DECODE(coder, highScoreGameKeyValue, Int32);
     UP_DECODE(coder, lastScore, Int);
+    UP_DECODE(coder, lastGameChallengeScore, Int);
     UP_DECODE(coder, lastGameKeyValue, Int32);
     UP_DECODE(coder, lastGameWasChallenge, Bool);
 
@@ -69,6 +70,7 @@
     UP_ENCODE(coder, highScore, Int);
     UP_ENCODE(coder, highScoreGameKeyValue, Int32);
     UP_ENCODE(coder, lastScore, Int);
+    UP_ENCODE(coder, lastGameChallengeScore, Int);
     UP_ENCODE(coder, lastGameKeyValue, Int32);
     UP_ENCODE(coder, lastGameWasChallenge, Bool);
 
@@ -88,20 +90,28 @@
 {
     ASSERT(model->back_opcode() == UP::SpellModel::Opcode::END);
     
-    UPSpellDossier *data = [UPSpellDossier instance];
+    UPSpellDossier *dossier = [UPSpellDossier instance];
     
-    if (data.highScore <= model->game_score() && model->game_score() > 0) {
-        data.highScore = model->game_score();
-        data.highScoreGameKeyValue = model->game_key().value();
+    if (dossier.highScore <= model->game_score() && model->game_score() > 0) {
+        dossier.highScore = model->game_score();
+        dossier.highScoreGameKeyValue = model->game_key().value();
     }
     
-    data.lastScore = model->game_score();
-    data.lastGameKeyValue = model->game_key().value();
-    
-    data.totalGamesPlayed++;
-    data.totalGameScore += model->game_score();
-    data.totalWordsSubmitted += model->game_words_submitted();
-    data.totalTilesSubmitted += model->game_tiles_submitted();
+    dossier.lastScore = model->game_score();
+    dossier.lastGameKeyValue = model->game_key().value();
+    if (model->is_challenge()) {
+        dossier.lastGameWasChallenge = YES;
+        dossier.lastGameChallengeScore = model->challenge_score();
+    }
+    else {
+        dossier.lastGameWasChallenge = NO;
+        dossier.lastGameChallengeScore = 0;
+    }
+
+    dossier.totalGamesPlayed++;
+    dossier.totalGameScore += model->game_score();
+    dossier.totalWordsSubmitted += model->game_words_submitted();
+    dossier.totalTilesSubmitted += model->game_tiles_submitted();
 }
 
 static NSString * const UPSpellDossierFileName = @"up-spell-dossier.dat";

@@ -14,6 +14,7 @@
 @property (nonatomic) int highScore;
 @property (nonatomic) uint32_t highScoreGameKeyValue;
 @property (nonatomic) int lastScore;
+@property (nonatomic) int lastGameChallengeScore;
 @property (nonatomic) uint32_t lastGameKeyValue;
 @property (nonatomic) BOOL lastGameWasChallenge;
 
