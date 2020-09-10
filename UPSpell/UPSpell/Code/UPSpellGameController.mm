@@ -3773,11 +3773,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }
     
     [self updateSoundAndTunesSettings];
-    delay(BandModeDelay, 0.15, ^{
-        [self playTuneIntro];
-    });
+    [self playTuneIntro];
           
-    delay(BandModeDelay, 0.25, ^{
+    delay(BandModeDelay, 0.1, ^{
         SpellLayout &layout = SpellLayout::instance();
         self.dialogTopMenu.extrasButton.center = layout.center_for(Role::DialogButtonTopLeft, Spot::OffTopNear);
         self.dialogTopMenu.aboutButton.center = layout.center_for(Role::DialogButtonTopRight, Spot::OffTopNear);
