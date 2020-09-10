@@ -2640,6 +2640,7 @@ static UPSpellGameController *_Instance;
     self.dialogTopMenu.aboutButton.frame = layout.frame_for(Location(Role::DialogButtonTopRight));
     self.dialogTopMenu.playButton.highlightedLocked = NO;
     self.dialogTopMenu.playButton.highlighted = NO;
+    self.dialogTopMenu.playButton.selected = NO;
     self.dialogTopMenuUserInteractionEnabled = YES;
     
     self.dialogGameOver.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
@@ -2649,6 +2650,12 @@ static UPSpellGameController *_Instance;
     self.dialogGameOver.shareButton.highlighted = NO;
     [self setGameOverViewsHidden:YES];
 
+    self.dialogPlayMenu.backButton.frame = layout.frame_for(Role::ChoiceBackCenter, Spot::OffBottomNear);
+    self.dialogPlayMenu.goButton.frame = layout.frame_for(Role::ChoiceGoButtonCenter, Spot::OffBottomNear);
+    self.dialogPlayMenu.choice1.frame = layout.frame_for(Role::ChoiceItem1Center, Spot::OffBottomNear);
+    self.dialogPlayMenu.choice2.frame = layout.frame_for(Role::ChoiceItem2Center, Spot::OffBottomNear);
+    self.dialogPlayMenu.choice3.frame = layout.frame_for(Role::ChoiceItem3Center, Spot::OffBottomNear);
+    
     self.dialogPlayMenu.backButton.highlightedLocked = NO;
     self.dialogPlayMenu.backButton.highlighted = NO;
     self.dialogPlayMenu.goButton.highlightedLocked = NO;
@@ -2678,7 +2685,9 @@ static UPSpellGameController *_Instance;
     self.dialogShareHelp.hidden = YES;
     self.dialogChallengeHelp.alpha = 1;
     self.dialogChallengeHelp.hidden = YES;
-    
+    self.dialogPlayMenu.alpha = 1;
+    self.dialogPlayMenu.hidden = YES;
+
     self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
     self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
     self.gameView.gameScoreLabel.alpha = 1;
@@ -3328,7 +3337,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         if (self.mode == Mode::Ready) {
             [self setMode:Mode::Init transitionScenario:UPModeTransitionScenarioWillResignActive];
         }
-        if (self.mode == Mode::Play) {
+        if (self.mode == Mode::Play || self.mode == Mode::PlayMenu) {
             if (self.gameTimer.isRunning) {
                 [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioWillResignActive];
             }
@@ -3412,6 +3421,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     m_will_resign_active_transition_table = {
         { Mode::Ready,    Mode::Init,   @selector(modeTransitionImmediateFromReadyToInit) },
         { Mode::Play,     Mode::Init,   @selector(modeTransitionImmediateFromPlayToInit) },
+        { Mode::PlayMenu, Mode::Init,   @selector(modeTransitionImmediateFromPlayMenuToInit) },
         { Mode::Play,     Mode::Pause,  @selector(modeTransitionImmediateFromPlayToPause) },
     };
     
@@ -3937,6 +3947,13 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 }
 
 - (void)modeTransitionImmediateFromPlayToInit
+{
+    [self viewLock];
+    [self viewImmediateTransitionToInit];
+    [self viewEnsureUnlocked];
+}
+
+- (void)modeTransitionImmediateFromPlayMenuToInit
 {
     [self viewLock];
     [self viewImmediateTransitionToInit];
