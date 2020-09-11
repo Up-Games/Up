@@ -12,7 +12,6 @@
 		5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21A24A125D000353563 /* UPBallot.mm */; };
 		5D0FC21E24A130D700353563 /* MalloryCond-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */; };
 		5D0FC22724A278D300353563 /* UPStepper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22624A278D300353563 /* UPStepper.mm */; };
-		5D0FC22924A2A4C400353563 /* MalloryCond-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D0FC22824A2A4C400353563 /* MalloryCond-BoldItalic.otf */; };
 		5D0FC22C24A2A5C300353563 /* UPSpellSettings.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22B24A2A5C300353563 /* UPSpellSettings.mm */; };
 		5D0FC23324A50E3B00353563 /* UPChoice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC23124A50E3B00353563 /* UPChoice.mm */; };
 		5D0FC33324A65A6C00353563 /* UPAccessoryPane.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC33224A65A6C00353563 /* UPAccessoryPane.mm */; };
@@ -492,7 +491,6 @@
 		5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Black.otf"; sourceTree = "<group>"; };
 		5D0FC22524A278D300353563 /* UPStepper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPStepper.h; sourceTree = "<group>"; };
 		5D0FC22624A278D300353563 /* UPStepper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPStepper.mm; sourceTree = "<group>"; };
-		5D0FC22824A2A4C400353563 /* MalloryCond-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-BoldItalic.otf"; sourceTree = "<group>"; };
 		5D0FC22A24A2A5C300353563 /* UPSpellSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellSettings.h; sourceTree = "<group>"; };
 		5D0FC22B24A2A5C300353563 /* UPSpellSettings.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellSettings.mm; sourceTree = "<group>"; };
 		5D0FC23124A50E3B00353563 /* UPChoice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPChoice.mm; sourceTree = "<group>"; };
@@ -1180,7 +1178,6 @@
 				5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */,
 				5D5EA14A24870128006264D2 /* MalloryCond-BlackItalic.otf */,
 				5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */,
-				5D0FC22824A2A4C400353563 /* MalloryCond-BoldItalic.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -1956,7 +1953,6 @@
 				5DBAD5C724E2297400471ABF /* up-games-icon-015-20@2x.png in Resources */,
 				5DBAD5E124E2297400471ABF /* up-games-icon-195-60@3x.png in Resources */,
 				5DBAD61324E2297400471ABF /* up-games-icon-180-20.png in Resources */,
-				5D0FC22924A2A4C400353563 /* MalloryCond-BoldItalic.otf in Resources */,
 				5DBAD62924E2297400471ABF /* up-games-icon-315-60@2x.png in Resources */,
 				5DBAD57124E2297400471ABF /* up-games-icon-195-76@2x.png in Resources */,
 				5DBAD5EA24E2297400471ABF /* up-games-icon-030-40.png in Resources */,
