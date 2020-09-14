@@ -3,8 +3,6 @@
 //  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
-#import <CommonCrypto/CommonCryptor.h>
-
 #import <string>
 #import <arpa/inet.h>
 
@@ -64,9 +62,9 @@ using UP::cpp_str;
 
 - (void)_setURLFromComponents
 {
-    NSString *pathString = [self _encryptedPath];
-    LOG(General, "encrypt: %@/%d => %@", self.gameKey.string, self.score, pathString);
-    LOG(General, "decrypt: %@", [UPChallenge _decryptPath:pathString]);
+    NSString *pathString = [self _obfuscatedPath];
+    LOG(General, "obfucate: %@/%d => %@", self.gameKey.string, self.score, pathString);
+    LOG(General, "clarify:  %@", [UPChallenge _clarifiedPath:pathString]);
     NSString *URLString = [NSString stringWithFormat:@"%@%@", UPChallengeURLPrefix, pathString];
     self.URL = [NSURL URLWithString:URLString];
 }
@@ -82,18 +80,18 @@ using UP::cpp_str;
     }
     
     NSString *pathString = pathComponents[2];
-    NSString *decryptedString = [UPChallenge _decryptPath:pathString];
-    LOG(General, "decrypt: %@ => %@", pathString, decryptedString);
-    if (!decryptedString) {
+    NSString *clarifiedString = [UPChallenge _clarifiedPath:pathString];
+    LOG(General, "clarify: %@ => %@", pathString, clarifiedString);
+    if (!clarifiedString) {
         return;
     }
     
-    NSArray *decryptedComponents = [decryptedString componentsSeparatedByString:@"/"];
-    if (decryptedComponents.count != 2) {
+    NSArray *clarifiedComponents = [clarifiedString componentsSeparatedByString:@"/"];
+    if (clarifiedComponents.count != 2) {
         return;
     }
-    NSString *gameKeyString = decryptedComponents[0];
-    NSString *scoreString = decryptedComponents[1];
+    NSString *gameKeyString = clarifiedComponents[0];
+    NSString *scoreString = clarifiedComponents[1];
 
     if (![UPGameKey isWellFormedGameKeyString:gameKeyString]) {
         return;
@@ -121,14 +119,11 @@ using UP::cpp_str;
     return result;
 }
 
-static const uint8_t UPPepper[] = {
-    0x5B, 0x54, 0x5D, 0x68, 0x61, 0x74, 0x20, 0x77, 0x65, 0x20, 0x68, 0x65, 0x72, 0x65, 0x20, 0x68,
-    0x69, 0x67, 0x68, 0x6C, 0x79, 0x20, 0x72, 0x65, 0x73, 0x6F, 0x6C, 0x76, 0x65, 0x20, 0x74, 0x68
-};
+static constexpr size_t UPChallengeSaltLength = 1;
+static constexpr size_t UPChalengeVersionLength = 1;
+static constexpr size_t UPChalengeDataLength = UPChallengeSaltLength + UPChalengeVersionLength + sizeof(uint32_t) + sizeof(uint16_t);
 
-static constexpr size_t UPSaltLength = 2;
-
-- (NSString *)_encryptedPath
+- (NSString *)_obfuscatedPath
 {
     if (!self.valid) {
         return @"";
@@ -140,13 +135,14 @@ static constexpr size_t UPSaltLength = 2;
     slash[0] = '/';
 
     UP::Random &r = UP::Random::instance();
-    uint8_t salt[UPSaltLength];
-    salt[0] = r.byte();
-    salt[1] = r.byte();
-    [input appendBytes:salt length:UPSaltLength];
+    uint8_t saltByte = r.byte();
+    uint8_t salt[UPChallengeSaltLength];
+    salt[0] = saltByte;
+    [input appendBytes:salt length:UPChallengeSaltLength];
 
+    uint8_t versionByte = 1;
     uint8_t version[1];
-    version[0] = 0;
+    version[0] = versionByte;
     [input appendBytes:version length:1];
 
     uint32_t gameKeyValue = htonl(self.gameKey.value);
@@ -155,62 +151,59 @@ static constexpr size_t UPSaltLength = 2;
     uint16_t gameScore = htons(self.score);
     [input appendBytes:&gameScore length:sizeof(uint16_t)];
 
-    size_t actualOutputLength;
-    size_t outputLength = ((input.length / kCCBlockSizeAES128) + 1) * kCCBlockSizeAES128;
-    uint8_t output[outputLength];
-    NSString *result = nil;
+    uint8_t inputBytes[UPChalengeDataLength];
+    [input getBytes:inputBytes range:NSMakeRange(0, UPChalengeDataLength)];
     
-    uint8_t iv[kCCBlockSizeAES128];
-    memset(iv, 0, sizeof(iv));
-    
-    CCCryptorStatus status = CCCrypt(kCCEncrypt, kCCAlgorithmAES, kCCOptionPKCS7Padding,
-                                     static_cast<const void *>(UPPepper), kCCKeySizeAES256, static_cast<const void *>(iv),
-                                     static_cast<const void *>(input.bytes), input.length,
-                                     output, outputLength, &actualOutputLength);
-    if (status == kCCSuccess) {
-        NSData *outputData = [NSData dataWithBytesNoCopy:output length:actualOutputLength freeWhenDone:NO];
-        NSString *base64String = [outputData base64EncodedStringWithOptions:0];
-        base64String = [base64String stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
-        base64String = [base64String stringByReplacingOccurrencesOfString:@"+" withString:@"_"];
-        result = [base64String substringToIndex:22];
+    uint8_t output[UPChalengeDataLength];
+    output[0] = saltByte;
+    output[1] = versionByte;
+    for (size_t i = 2; i < UPChalengeDataLength; i++) {
+        output[i] = inputBytes[i] ^ saltByte;
     }
+
+    NSData *outputData = [NSData dataWithBytesNoCopy:output length:UPChalengeDataLength freeWhenDone:NO];
+    NSString *base64String = [outputData base64EncodedStringWithOptions:0];
+    base64String = [base64String stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+    base64String = [base64String stringByReplacingOccurrencesOfString:@"+" withString:@"_"];
+    NSString *result = [base64String substringToIndex:11];
     
     return result;
 }
 
-+ (NSString *)_decryptPath:(NSString *)encryptedPath
++ (NSString *)_clarifiedPath:(NSString *)obfuscatedPath
 {
-    if (encryptedPath.length != 22) {
+    if (obfuscatedPath.length != 11) {
         return nil;
     }
 
-    NSMutableString *base64String = [NSMutableString stringWithString:encryptedPath];
+    NSMutableString *base64String = [NSMutableString stringWithString:obfuscatedPath];
     [base64String replaceOccurrencesOfString:@"-" withString:@"/" options:NSLiteralSearch range:NSMakeRange(0, base64String.length)];
     [base64String replaceOccurrencesOfString:@"_" withString:@"+" options:NSLiteralSearch range:NSMakeRange(0, base64String.length)];
-    [base64String appendString:@"=="];
+    [base64String appendString:@"="];
     NSData *input = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
-    size_t actualOutputLength;
-    size_t outputLength = (size_t)(4 * ceil(((double)input.length / 3)));
-    uint8_t output[outputLength];
-    NSString *result = nil;
-    
-    uint8_t iv[kCCBlockSizeAES128];
-    memset(iv, 0, sizeof(iv));
-    
-    CCCryptorStatus status = CCCrypt(kCCDecrypt, kCCAlgorithmAES, kCCOptionPKCS7Padding,
-                                     static_cast<const void *>(UPPepper), kCCKeySizeAES256, static_cast<const void *>(iv),
-                                     static_cast<const void *>(input.bytes), input.length,
-                                     output, outputLength, &actualOutputLength);
-    if (status == kCCSuccess) {
-        uint8_t version = output[UPSaltLength];
-        if (version == 0) {
-            uint32_t gameKeyValue = ntohl(*(reinterpret_cast<uint32_t *>(output + UPSaltLength + 1)));
-            UPGameKey *gameKey = [UPGameKey gameKeyWithValue:gameKeyValue];
-            uint16_t gameScore = ntohs(*(reinterpret_cast<uint16_t *>(output + UPSaltLength + 1 + sizeof(uint32_t))));
-            result = [NSString stringWithFormat:@"%@/%d", gameKey.string, gameScore];
-        }
+    if (!input) {
+        return nil;
     }
-    
+    uint8_t inputBytes[UPChalengeDataLength];
+    [input getBytes:inputBytes range:NSMakeRange(0, UPChalengeDataLength)];
+
+    uint8_t output[UPChalengeDataLength];
+    uint8_t saltByte = inputBytes[0];
+    uint8_t versionByte = inputBytes[1];
+
+    output[0] = saltByte;
+    output[1] = versionByte;
+    NSString *result = nil;
+    if (versionByte == 1) {
+        for (size_t i = 2; i < UPChalengeDataLength; i++) {
+            output[i] = inputBytes[i] ^ saltByte;
+        }
+        uint32_t gameKeyValue = ntohl(*(reinterpret_cast<uint32_t *>(output + UPChallengeSaltLength + UPChalengeVersionLength)));
+        UPGameKey *gameKey = [UPGameKey gameKeyWithValue:gameKeyValue];
+        uint16_t gameScore = ntohs(*(reinterpret_cast<uint16_t *>(output + UPChallengeSaltLength + UPChalengeVersionLength + sizeof(uint32_t))));
+        result = [NSString stringWithFormat:@"%@/%d", gameKey.string, gameScore];
+    }
+
     return result;
 }
 
