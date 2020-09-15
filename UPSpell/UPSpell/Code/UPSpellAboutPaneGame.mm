@@ -74,22 +74,28 @@ using Role = UP::SpellLayout::Role;
 {
     [self.subviews makeObjectsPerformSelector:@selector(updateThemeColors)];
 
+    SpellLayout &layout = SpellLayout::instance();
+
     self.aboutGameDescription.linkTextAttributes = @{ NSForegroundColorAttributeName: [UIColor themeColorWithCategory:UPColorCategoryControlText] };
 
-    NSMutableAttributedString *attributedAtring = [[NSMutableAttributedString alloc] initWithString:@"by Ken Kocienda\n"];
-    
+    NSMutableAttributedString *attributedAtring = [[NSMutableAttributedString alloc] initWithString:@"by Up Games\n"];
+
     NSMutableAttributedString *URLString = [[NSMutableAttributedString alloc] initWithString:@"https://upgames.dev/upspell\n"];
     [URLString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"https://upgames.dev/upspell"] range:NSMakeRange(0, URLString.length)];
     [URLString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, URLString.length)];
     [URLString addAttribute:NSUnderlineColorAttributeName value:[UIColor themeColorWithCategory:UPColorCategoryControlText] range:NSMakeRange(0, URLString.length)];
     [attributedAtring appendAttributedString:URLString];
     
-    NSString *versionString = [NSString stringWithFormat:@"v%@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+    NSString *versionString = [NSString stringWithFormat:@"v%@\n", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
     NSMutableAttributedString *versionAttributedString = [[NSMutableAttributedString alloc] initWithString:versionString];
     [attributedAtring appendAttributedString:versionAttributedString];
-    
-    SpellLayout &layout = SpellLayout::instance();
+
     attributedAtring.font = layout.about_font();
+
+    NSMutableAttributedString *madeInString = [[NSMutableAttributedString alloc] initWithString:@"Copyright ©2020 Ken Kocienda. Made in California.\n"];
+    madeInString.font = layout.legal_font();
+    [attributedAtring appendAttributedString:madeInString];
+
     [attributedAtring setTextAlignment:NSTextAlignmentCenter];
     attributedAtring.textColor = [UIColor themeColorWithCategory:UPColorCategoryControlText];
     self.aboutGameDescription.attributedText = attributedAtring;

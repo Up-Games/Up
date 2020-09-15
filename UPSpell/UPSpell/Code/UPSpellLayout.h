@@ -219,9 +219,9 @@ public:
     static inline constexpr CGRect CanonicalDialogShareHelpOKButtonFrame = { 429.5, 386, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
     static inline constexpr CGFloat CanonicalDialogTitleCapHeight = 35;
 
-    static inline constexpr CGRect CanonicalAboutLogoFrame = { 245, 60, 160, 160 };
-    static inline constexpr CGRect CanonicalAboutWordMarkFrame = { 235, 223, 180, 140 };
-    static inline constexpr CGRect CanonicalAboutGameDescriptionFrame = { 160, 304, 335, 150 };
+    static inline constexpr CGRect CanonicalAboutLogoFrame = { 245, 54, 160, 160 };
+    static inline constexpr CGRect CanonicalAboutWordMarkFrame = { 235, 217, 180, 140 };
+    static inline constexpr CGRect CanonicalAboutGameDescriptionFrame = { 60, 281, 535, 150 };
     static inline constexpr CGFloat CanonicalSettingsAboutFontCapHeight = 19;
     static inline constexpr CGFloat CanonicalLegalFontCapHeight = 16;
 
