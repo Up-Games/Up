@@ -80,7 +80,7 @@ using Role = UP::SpellLayout::Role;
 
     NSMutableAttributedString *attributedAtring = [[NSMutableAttributedString alloc] init];
 
-    NSString *versionString = [NSString stringWithFormat:@"v%@\n", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+    NSString *versionString = [NSString stringWithFormat:@"1.0 (build %@)\n", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
     NSMutableAttributedString *versionAttributedString = [[NSMutableAttributedString alloc] initWithString:versionString];
     [attributedAtring appendAttributedString:versionAttributedString];
     
