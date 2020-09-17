@@ -714,7 +714,7 @@ static UPSpellGameController *_Instance;
     UPControl *wordTrayControl = self.gameView.wordTrayControl;
     CGPoint wordTrayControlPoint = [wordTrayControl convertPoint:point fromView:self.gameView.window];
     if (wordTrayControl.userInteractionEnabled && [wordTrayControl pointInside:wordTrayControlPoint withEvent:event] &&
-        m_spell_model->word().length() > 0) {
+        m_spell_model->word().length() > 1) {
         return wordTrayControl;
     }
     
@@ -754,7 +754,7 @@ static UPSpellGameController *_Instance;
     if (self.gameView.wordTrayControl.active) {
         [self applyActionSubmit];
     }
-    else if (!m_spell_model || m_spell_model->word().length() == 0) {
+    else if (!m_spell_model || m_spell_model->word().length() < 2) {
         // Don't penalize. In the case it's a stray tap, let the player off the hook.
     }
     else {
@@ -1263,7 +1263,7 @@ static UPSpellGameController *_Instance;
     }
     
     const Word &word = m_spell_model->word();
-    if (word.in_lexicon<false>() || word.length() == 0 || word.key() == word.string()) {
+    if (word.in_lexicon<false>() || word.length() < 2 || word.key() == word.string()) {
         [self viewUndecorateAllTiles];
         return;
     }
