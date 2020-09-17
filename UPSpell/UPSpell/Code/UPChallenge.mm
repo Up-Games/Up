@@ -63,8 +63,8 @@ using UP::cpp_str;
 - (void)_setURLFromComponents
 {
     NSString *pathString = [self _obfuscatedPath];
-    LOG(General, "obfucate: %@/%d => %@", self.gameKey.string, self.score, pathString);
-    LOG(General, "clarify:  %@", [UPChallenge _clarifiedPath:pathString]);
+    LOG(General, "obfuscate: %@/%d => %@", self.gameKey.string, self.score, pathString);
+    LOG(General, "clarify:   %@", [UPChallenge _clarifiedPath:pathString]);
     NSString *URLString = [NSString stringWithFormat:@"%@%@", UPChallengeURLPrefix, pathString];
     self.URL = [NSURL URLWithString:URLString];
 }
