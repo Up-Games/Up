@@ -54,7 +54,7 @@ using Spot = UP::SpellLayout::Spot;
     self.pulseView.alpha = 0;
     [self addSubview:self.pulseView];
 
-    self.pauseControl = [UPControl roundGameControlMinusSign];
+    self.pauseControl = [UPControl roundGameControlPause];
     self.pauseControl.band = BandGameUI;
     self.pauseControl.frame = layout.frame_for(Role::ControlButtonLeft);
     self.pauseControl.chargeOutsets = layout.game_controls_button_charge_outsets();

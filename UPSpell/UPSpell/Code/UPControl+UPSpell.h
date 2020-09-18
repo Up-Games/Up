@@ -14,7 +14,7 @@ UIBezierPath *RoundGameButtonFillPath();
 UIBezierPath *RoundGameButtonStrokePath();
 UIBezierPath *RoundBackButtonFillPath();
 UIBezierPath *RoundBackButtonStrokePath();
-UIBezierPath *RoundGameButtonMinusSignIconPath();
+UIBezierPath *RoundGameButtonPauseIconPath();
 UIBezierPath *RoundGameButtonTrashIconPath();
 UIBezierPath *RoundGameButtonDownArrowIconPath();
 UIBezierPath *RoundBackButtonLeftArrowIconPath();
@@ -31,7 +31,7 @@ UIBezierPath *ChoiceRightFillPathSelected();
 @interface UPControl (UPSpell)
 
 + (UPControl *)roundGameControl;
-+ (UPControl *)roundGameControlMinusSign;
++ (UPControl *)roundGameControlPause;
 + (UPControl *)wordTrayControl;
 
 @end
