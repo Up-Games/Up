@@ -926,7 +926,7 @@ using UP::TimeSpanning::start;
             delay(BandAboutPlayingDelay, 1, ^{
                 [UIView animateWithDuration:0.3 animations:^{
                     self.botSpot.backgroundColor = [UIColor clearColor];
-                    self.botSpot.transform = CGAffineTransformMakeScale(3, 3);
+                    self.botSpot.transform = CGAffineTransformMakeScale(2.5, 2.5);
                 } completion:^(BOOL finished) {
                     [UIView animateWithDuration:0.3 animations:^{
                         SpellLayout &layout = SpellLayout::instance();
