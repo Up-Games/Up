@@ -9,6 +9,7 @@ typedef NS_ENUM(NSInteger, UPShareType) {
     UPShareTypeDefault,
     UPShareTypeLastGameScore,
     UPShareTypeHighScore,
+    UPShareTypeChallengeReply,
 };
 
 @interface UPActivityViewController : UIActivityViewController

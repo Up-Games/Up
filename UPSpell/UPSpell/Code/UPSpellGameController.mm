@@ -2444,7 +2444,7 @@ static UPSpellGameController *_Instance;
     self.dialogChallenge.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark);
     self.dialogChallenge.challengePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Spot::OffBottomFar);
     self.dialogChallenge.scorePromptLabel.frame = layout.frame_for(Role::ChallengeScore, Spot::OffBottomFar);
-    self.dialogChallenge.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Spot::OffBottomFar);
+    self.dialogChallenge.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Spot::OffBottomNear);
     self.dialogChallenge.cancelButton.frame = layout.frame_for(cancelRole, Spot::OffBottomNear);
     self.dialogChallenge.helpButton.frame = layout.frame_for(Role::DialogHelpButton, Spot::OffBottomNear);
     
@@ -3111,7 +3111,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)presentShareSheet
 {
-    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithShareType:UPShareTypeLastGameScore];
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    UPShareType shareType = dossier.lastGameWasChallenge ? UPShareTypeChallengeReply : UPShareTypeLastGameScore;
+    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithShareType:shareType];
     __weak UPActivityViewController *weakActivityViewController = activityViewController;
     activityViewController.completionWithItemsHandler = ^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         [self shareSheetDismissed];

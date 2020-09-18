@@ -43,7 +43,24 @@
 
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(UIActivityType)activityType
 {
-    return [self shareURL];
+    if ([activityType isEqualToString:UIActivityTypeMessage]) {
+        return [self shareURL];
+    }
+    else if ([activityType isEqualToString:UIActivityTypeMail]) {
+        return [NSString stringWithFormat:@"%@ %@", [self _makeMailMessage], [self shareURL]];
+    }
+    return [NSString stringWithFormat:@"%@ %@", [self shareString], [self shareURL]];
+}
+
+- (id)activityViewController:(UIActivityViewController *)activityViewController subjectForActivityType:(UIActivityType)activityType
+{
+    if ([activityType isEqualToString:UIActivityTypeMessage]) {
+        return nil;
+    }
+    else if ([activityType isEqualToString:UIActivityTypeMail]) {
+        return [self _makeMailSubject];
+    }
+    return [self shareString];
 }
 
 - (LPLinkMetadata *)activityViewControllerLinkMetadata:(UIActivityViewController *)activityViewController
@@ -74,35 +91,120 @@
     int score = 0;
     switch (self.shareType) {
         case UPShareTypeDefault:
-        case UPShareTypeLastGameScore:
+        case UPShareTypeLastGameScore: {
             gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
             score = dossier.lastScore;
             break;
-        case UPShareTypeHighScore:
+        }
+        case UPShareTypeHighScore: {
             gameKey = [UPGameKey gameKeyWithValue:dossier.highScoreGameKeyValue];
             score = dossier.highScore;
             break;
+        }
+        case UPShareTypeChallengeReply: {
+            UPSpellDossier *dossier = [UPSpellDossier instance];
+            ASSERT(dossier.lastGameWasChallenge);
+            score = dossier.lastScore;
+            if (score >= dossier.lastGameChallengeScore) {
+                gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
+            }
+            else {
+                gameKey = [UPGameKey randomGameKey];
+            }
+            break;
+        }
     }
     
     UPChallenge *challenge = [UPChallenge challengeWithGameKey:gameKey score:score];
     return challenge.URL;
 }
 
-- (NSString *)_makeShareString
+- (NSString *)_makeMailSubject
 {
     UPSpellDossier *dossier = [UPSpellDossier instance];
-    int score = 0;
     switch (self.shareType) {
         case UPShareTypeDefault:
         case UPShareTypeLastGameScore:
-            score = dossier.lastScore;
+        case UPShareTypeHighScore: {
+            return [NSString stringWithFormat:@"I scored %d in Up Spell!", dossier.lastScore];
+        }
+        case UPShareTypeChallengeReply: {
+            ASSERT(dossier.lastGameWasChallenge);
+            int challengeScore = dossier.lastGameChallengeScore;
+            int score = dossier.lastScore;
+            if (score > challengeScore) {
+                return [NSString stringWithFormat:@"I beat you in Up Spell!"];
+            }
+            else if (score == challengeScore) {
+                return [NSString stringWithFormat:@"We tied in Up Spell!"];
+            }
+            else {
+                return [NSString stringWithFormat:@"You beat me in Up Spell."];
+            }
             break;
-            break;
-        case UPShareTypeHighScore:
-            score = dossier.highScore;
-            break;
+        }
     }
-    return [NSString stringWithFormat:@"I scored %d in Up Spell. Top that!", score];
+    return nil;
+}
+
+- (NSString *)_makeMailMessage
+{
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    switch (self.shareType) {
+        case UPShareTypeDefault:
+        case UPShareTypeLastGameScore: {
+            return @"Top that!";
+        }
+        case UPShareTypeHighScore: {
+            return @"Top that!";
+        }
+        case UPShareTypeChallengeReply: {
+            ASSERT(dossier.lastGameWasChallenge);
+            int challengeScore = dossier.lastGameChallengeScore;
+            int score = dossier.lastScore;
+            if (score > challengeScore) {
+                return [NSString stringWithFormat:@"You scored %d. I got %d! Back at you!", challengeScore, score];
+            }
+            else if (score == challengeScore) {
+                return [NSString stringWithFormat:@"Both of us got %d. Try to break the tie!", score];
+            }
+            else {
+                return [NSString stringWithFormat:@"You scored %d. I got %d. Top my score in a new game!", challengeScore, score];
+            }
+            break;
+        }
+    }
+    return nil;
+}
+
+- (NSString *)_makeShareString
+{
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    switch (self.shareType) {
+        case UPShareTypeDefault:
+        case UPShareTypeLastGameScore: {
+            return [NSString stringWithFormat:@"I scored %d in Up Spell. Top that!", dossier.lastScore];
+        }
+        case UPShareTypeHighScore: {
+            return [NSString stringWithFormat:@"My high score in Up Spell is %d. Top that!", dossier.highScore];
+        }
+        case UPShareTypeChallengeReply: {
+            ASSERT(dossier.lastGameWasChallenge);
+            int challengeScore = dossier.lastGameChallengeScore;
+            int score = dossier.lastScore;
+            if (score > challengeScore) {
+                return [NSString stringWithFormat:@"I beat you in Up Spell %d to %d. Back at you!", score, challengeScore];
+            }
+            else if (score == challengeScore) {
+                return [NSString stringWithFormat:@"We both scored %d in Up Spell. Try to break the tie!", score];
+            }
+            else {
+                return [NSString stringWithFormat:@"You beat me in Up Spell %d to %d. Top my score in a new game!", challengeScore, score];
+            }
+            break;
+        }
+    }
+    return nil;
 }
 
 @end
@@ -129,7 +231,8 @@
         UIActivityTypePostToVimeo,
         UIActivityTypeMarkupAsPDF,
         UIActivityTypeAddToReadingList,
-        UIActivityTypeOpenInIBooks
+        UIActivityTypeOpenInIBooks,
+        UIActivityTypePostToFacebook,
     ];
 
     return self;
