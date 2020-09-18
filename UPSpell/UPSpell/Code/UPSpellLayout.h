@@ -229,7 +229,7 @@ public:
     static inline constexpr CGRect CanonicalAboutThanksDescriptionFrame = { 40, 44, 600, 400 };
 
     static inline constexpr CGRect CanonicalAboutPlayingGameViewFrame = { -160, -132, 1000, 500 };
-    static inline constexpr CGRect CanonicalAboutPlayingGameBottomPromptFrame = { 60, 410, 560, 80 };
+    static inline constexpr CGRect CanonicalAboutPlayingGameBottomPromptFrame = { 20, 410, 640, 80 };
     static inline constexpr CGRect CanonicalAboutPlaying2xCalloutFrame = { 676, 243, 46, 46 };
 
     static inline constexpr CGSize CanonicalBotSpotSize = { 92, 92 };

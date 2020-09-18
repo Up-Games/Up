@@ -734,7 +734,7 @@ using UP::TimeSpanning::start;
     UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
     start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
         [self nextStep];
-        self.bottomPromptLabel.string = @"TAP TO PAUSE GAME";
+        self.bottomPromptLabel.string = @"TAP PAUSE BUTTON TO PAUSE A GAME";
         UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
         start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, nil));
     }));
@@ -747,7 +747,7 @@ using UP::TimeSpanning::start;
     }
     
     UPViewMove *botSpotMove1 = UPViewMoveMake(self.botSpot, Role::AboutPlayingTopLeftButtonClick);
-    start(ease(BandAboutPlayingUI, @[ botSpotMove1 ], 0.8, ^(UIViewAnimatingPosition) {
+    start(ease(BandAboutPlayingUI, @[ botSpotMove1 ], 1.5, ^(UIViewAnimatingPosition) {
         delay(BandAboutPlayingDelay, 0.2, ^{
             delay(BandAboutPlayingDelay, 1.25, ^{
                 UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
@@ -924,11 +924,11 @@ using UP::TimeSpanning::start;
         UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
         start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
             delay(BandAboutPlayingDelay, 1, ^{
-                [UIView animateWithDuration:0.2 animations:^{
+                [UIView animateWithDuration:0.3 animations:^{
                     self.botSpot.backgroundColor = [UIColor clearColor];
-                    self.botSpot.transform = CGAffineTransformMakeScale(4, 4);
+                    self.botSpot.transform = CGAffineTransformMakeScale(3, 3);
                 } completion:^(BOOL finished) {
-                    [UIView animateWithDuration:0.2 animations:^{
+                    [UIView animateWithDuration:0.3 animations:^{
                         SpellLayout &layout = SpellLayout::instance();
                         self.botSpot.transform = CGAffineTransformIdentity;
                         self.botSpot.frame = layout.frame_for(Role::AboutPlaying2xCallout);
@@ -950,27 +950,53 @@ using UP::TimeSpanning::start;
     if (!self.active) {
         return;
     }
-
+    
     [UIView animateWithDuration:0.75 animations:^{
         self.botSpot.transform = CGAffineTransformMakeScale(7, 7);
-        self.botSpot.alpha = 0;
     } completion:^(BOOL finished) {
-        delay(BandAboutPlayingDelay, 0.5, ^{
-            if (!self.active) {
-                return;
-            }
-            UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
-            start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
-                self.bottomPromptLabel.string = @"GOOD LUCK & HAVE FUN!";
-                UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
-                start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
-                    delay(BandAboutPlayingDelay, 1.25, ^{
-                        [self nextStep];
-                    });
-                }));
-            }));
-        });
+        [UIView animateWithDuration:0.75 animations:^{
+            self.botSpot.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.75 animations:^{
+                self.botSpot.transform = CGAffineTransformMakeScale(7, 7);
+                self.botSpot.alpha = 0;
+            } completion:^(BOOL finished) {
+                delay(BandAboutPlayingDelay, 0.5, ^{
+                    if (!self.active) {
+                        return;
+                    }
+                    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
+                    start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
+                        self.bottomPromptLabel.string = @"SPELL ALL YOU CAN IN TWO MINUTES!";
+                        UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
+                        start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
+                            delay(BandAboutPlayingDelay, 2.25, ^{
+                                [self nextStep];
+                            });
+                        }));
+                    }));
+                });
+            }];
+        }];
     }];
+}
+
+- (void)animateToStepTwentyTwo
+{
+    if (!self.active) {
+        return;
+    }
+    
+    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt, Spot::OffBottomNear);
+    start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
+        self.bottomPromptLabel.string = @"GOOD LUCK & HAVE FUN!";
+        UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, Role::AboutPlayingBottomPrompt);
+        start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
+            delay(BandAboutPlayingDelay, 1.25, ^{
+                [self nextStep];
+            });
+        }));
+    }));
 }
 
 - (void)animateToStepTwentyX
@@ -1067,6 +1093,9 @@ using UP::TimeSpanning::start;
             [self animateToStepTwentyOne];
             break;
         case 22:
+            [self animateToStepTwentyTwo];
+            break;
+        case 23:
             [self animateToStepTwentyX];
             break;
     }
