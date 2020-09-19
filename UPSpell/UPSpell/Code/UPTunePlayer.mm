@@ -47,6 +47,14 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
     self = [super init];
     
     self.volume = 1.0;
+    
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *error = nil;
+    BOOL result = [audioSession setCategory:AVAudioSessionCategoryAmbient mode:AVAudioSessionModeDefault
+                      options:AVAudioSessionCategoryOptionMixWithOthers error:&error];
+    if (!result || error) {
+        LOG(General, "Can't set audio session category: %@", error);
+    }
         
     return self;
 }

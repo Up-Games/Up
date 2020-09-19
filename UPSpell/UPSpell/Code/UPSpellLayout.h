@@ -195,11 +195,11 @@ public:
     static inline constexpr CGRect CanonicalExtrasColorsIconPromptFrame =       { 384, 282, 572, 76 };
     static inline constexpr CGRect CanonicalExtrasColorsIconButtonLayoutFrame = { 460, 381, 440, 76 };
 
-    static inline constexpr CGRect CanonicalExtrasSoundEffectsCheckboxFrame =  { 400, 64, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasSoundEffectsSliderFrame =  { 423, 124, up_size_width(CanonicalSliderSize), up_size_height(CanonicalSliderSize) };
-    static inline constexpr CGRect CanonicalExtrasSoundTunesCheckboxFrame =  { 400, 216, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
-    static inline constexpr CGRect CanonicalExtrasSoundTunesSliderFrame =  { 423, 276, up_size_width(CanonicalSliderSize), up_size_height(CanonicalSliderSize) };
-    static inline constexpr CGRect CanonicalExtrasSoundDescriptionFrame = { 384, 368, 572, 300 };
+    static inline constexpr CGRect CanonicalExtrasSoundEffectsCheckboxFrame =  { 400, 44, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasSoundEffectsSliderFrame =  { 423, 114, up_size_width(CanonicalSliderSize), up_size_height(CanonicalSliderSize) };
+    static inline constexpr CGRect CanonicalExtrasSoundTunesCheckboxFrame =  { 400, 190, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
+    static inline constexpr CGRect CanonicalExtrasSoundTunesSliderFrame =  { 423, 250, up_size_width(CanonicalSliderSize), up_size_height(CanonicalSliderSize) };
+    static inline constexpr CGRect CanonicalExtrasSoundDescriptionFrame = { 384, 322, 572, 300 };
 
     static inline constexpr CGRect CanonicalExtrasRetryCheckboxFrame =  { 540, 354, up_size_width(CanonicalBallotSize), up_size_height(CanonicalBallotSize) };
     static inline constexpr CGRect CanonicalExtrasRetryDescriptionFrame = { 384, 88, 572, 300 };

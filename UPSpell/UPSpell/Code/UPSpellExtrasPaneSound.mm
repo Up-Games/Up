@@ -92,7 +92,11 @@ using Role = UP::SpellLayout::Role;
     self.soundDescription.font = layout.description_font();
     self.soundDescription.colorCategory = UPColorCategoryControlText;
     self.soundDescription.textAlignment = NSTextAlignmentLeft;
-    self.soundDescription.string = @"EFFECTS play in response to your actions and to\nthe game timer. TUNES are the in-game music.";
+    self.soundDescription.string =
+        @"EFFECTS play in response to your actions and to\n"
+        @"the game timer. TUNES are the in-game music.\n"
+        @"TUNES don’t play if you’re listening to music\n"
+        @"or podcasts from other apps. EFFECTS do.";
     [self.soundDescriptionContainer addSubview:self.soundDescription];
 
     self.effectsCheckbox = [UPBallot ballotWithType:UPBallotTypeCheckbox];

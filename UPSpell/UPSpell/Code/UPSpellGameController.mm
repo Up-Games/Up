@@ -7,6 +7,7 @@
 #import <memory>
 #import <vector>
 
+#import <AVFoundation/AVFoundation.h>
 #import <CoreText/CoreText.h>
 #import <QuartzCore/QuartzCore.h>
 #import <UpKit/UpKit.h>
@@ -3279,7 +3280,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 {
     self.tuneNumber = [self pickNextTune];
     [self configureTunesForTuneNumber:self.tuneNumber];
-    if (self.tunesEnabled) {
+    if ([self tunesShouldPlay] && self.tunesEnabled) {
         UPTunePlayer *tunePlayer = [UPTunePlayer instance];
         [tunePlayer playTuneID:UPTuneID(self.tuneNumber) segment:UPTuneSegmentIntro properties:{ 1.0, NO, 0, 0, 0 }];
     }
@@ -3288,14 +3289,14 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (void)sequenceTuneWithDelay:(CFTimeInterval)delay gameTimeElapsed:(CFTimeInterval)gameTimeElapsed
 {
     CFTimeInterval effectiveGameTimeElapsed = UPClampT(CFTimeInterval, gameTimeElapsed, 0, UPGameTimerDefaultDuration);
-    
+
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
     
     static constexpr CFTimeInterval UPGameTimerCanonicalDuration = 120;
     
     UPTuneID tuneID = UPTuneID(self.tuneNumber);
     
-    if (self.tunesEnabled && UPGameTimerDefaultDuration - effectiveGameTimeElapsed > GameOverOutroDuration) {
+    if ([self tunesShouldPlay] && self.tunesEnabled && UPGameTimerDefaultDuration - effectiveGameTimeElapsed > GameOverOutroDuration) {
         CFTimeInterval tuneBeginTime = delay;
         CFTimeInterval tuneTimeOffset = (UPGameTimerCanonicalDuration - UPGameTimerDefaultDuration) + effectiveGameTimeElapsed;
         [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, tuneBeginTime, tuneTimeOffset }];
@@ -3323,6 +3324,14 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     CFTimeInterval now = CACurrentMediaTime();
     BOOL result = now - self.tapSoundTimestamp > TapToTubInterval && now - self.tubSoundTimestamp > TubToTubInterval;
     self.tubSoundTimestamp = now;
+    return result;
+}
+
+- (BOOL)tunesShouldPlay
+{
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    BOOL result = ![audioSession isOtherAudioPlaying] && ![audioSession secondaryAudioShouldBeSilencedHint];
+    LOG(General, "tunesShouldPlay: %@", result ? @"Y" : @"N");
     return result;
 }
 

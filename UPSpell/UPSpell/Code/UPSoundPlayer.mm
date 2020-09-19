@@ -53,7 +53,15 @@
 - (instancetype)_init
 {
     self = [super init];
-    
+
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *error = nil;
+    BOOL result = [audioSession setCategory:AVAudioSessionCategoryAmbient mode:AVAudioSessionModeDefault
+                                    options:AVAudioSessionCategoryOptionMixWithOthers error:&error];
+    if (!result || error) {
+        LOG(General, "Can't set audio session category: %@", error);
+    }
+
     self.volume = 0.5;
     self.engine = [[AVAudioEngine alloc] init];
 
