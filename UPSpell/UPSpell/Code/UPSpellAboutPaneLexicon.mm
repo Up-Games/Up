@@ -31,7 +31,7 @@ using Role = UP::SpellLayout::Role;
     self = [super initWithFrame:frame];
 
     SpellLayout &layout = SpellLayout::instance();
-    self.lexiconDescription = [[UITextView alloc] initWithFrame:layout.frame_for(Role::AboutThanksDescription)];
+    self.lexiconDescription = [[UITextView alloc] initWithFrame:layout.frame_for(Role::AboutLexiconDescription)];
     self.lexiconDescription.editable = NO;
     self.lexiconDescription.opaque = NO;
     self.lexiconDescription.backgroundColor = [UIColor clearColor];

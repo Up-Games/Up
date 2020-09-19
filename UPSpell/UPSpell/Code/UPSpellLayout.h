@@ -226,7 +226,7 @@ public:
     static inline constexpr CGFloat CanonicalLegalFontCapHeight = 16;
 
     static inline constexpr CGRect CanonicalAboutLexiconDescriptionFrame = { 40, 44, 600, 400 };
-    static inline constexpr CGRect CanonicalAboutThanksDescriptionFrame = { 40, 44, 600, 400 };
+    static inline constexpr CGRect CanonicalAboutThanksDescriptionFrame = { 40, 0, 600, 500 };
 
     static inline constexpr CGRect CanonicalAboutPlayingGameViewFrame = { -160, -132, 1000, 500 };
     static inline constexpr CGRect CanonicalAboutPlayingGameBottomPromptFrame = { 20, 410, 640, 80 };

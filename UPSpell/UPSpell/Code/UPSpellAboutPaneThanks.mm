@@ -36,6 +36,7 @@ using Role = UP::SpellLayout::Role;
     self.thanksDescription.editable = NO;
     self.thanksDescription.opaque = NO;
     self.thanksDescription.backgroundColor = [UIColor clearColor];
+    self.thanksDescription.contentInset = UIEdgeInsetsMake(16, 0, 0, 0);
     [self addSubview:self.thanksDescription];
 
     return self;
@@ -43,7 +44,7 @@ using Role = UP::SpellLayout::Role;
 
 - (void)prepare
 {
-    self.thanksDescription.contentOffset = CGPointZero;
+    self.thanksDescription.contentOffset = CGPointMake(0, -16);
     self.thanksDescription.userInteractionEnabled = YES;
     [self updateThemeColors];
 }
