@@ -57,6 +57,9 @@ extern NSString * const UPGameInformationFontName;
 + (UIFont *)legalFontOfSize:(CGFloat)fontSize;
 + (UIFont *)legalFontWithCapHeight:(CGFloat)capHeight;
 
++ (UIFont *)helpPromptFontOfSize:(CGFloat)fontSize;
++ (UIFont *)helpPromptFontWithCapHeight:(CGFloat)capHeight;
+
 + (UIFont *)dingbatsFontOfSize:(CGFloat)fontSize;
 + (UIFont *)dingbatsFontWithCapHeight:(CGFloat)capHeight;
 

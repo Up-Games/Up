@@ -1504,6 +1504,29 @@ static UPSpellGameController *_Instance;
     });
 }
 
+- (void)viewShowHelpPromptInWordScoreLabel
+{
+    UIColor *wordScoreColor = [UIColor themeColorWithCategory:self.gameView.wordScoreLabel.colorCategory];
+    
+    SpellLayout &layout = SpellLayout::instance();
+    NSString *string = @"TAP LETTERS TO SPELL A WORD,\nTHEN TAP THE WORD TO SCORE POINTS.";
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
+    NSRange range = NSMakeRange(0, string.length);
+    [attrString addAttribute:NSFontAttributeName value:layout.help_prompt_font() range:range];
+    [attrString addAttribute:NSForegroundColorAttributeName value:wordScoreColor range:range];
+
+    self.gameView.wordScoreLabel.frame = layout.frame_for(Role::WordScore, Spot::OffBottomFar);
+    self.gameView.wordScoreLabel.hidden = NO;
+    self.gameView.wordScoreLabel.attributedString = attrString;
+    self.gameView.wordScoreLabel.alpha = 1;
+
+    UPViewMove *wordScoreInMove = UPViewMoveMake(self.gameView.wordScoreLabel, Location(Role::WordScore, Spot::Default));
+    
+    self.showingWordScoreLabel = YES;
+    start(bloop_in(BandWordScore, @[wordScoreInMove], 0.3, ^(UIViewAnimatingPosition) {
+    }));
+}
+
 - (void)viewUpdateWordScoreLabel
 {
     UIColor *wordScoreColor = [UIColor themeColorWithCategory:self.gameView.wordScoreLabel.colorCategory];
@@ -3909,6 +3932,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     delay(BandModeDelay, 0.4, ^{
         [self viewEnsureUnlocked];
         [self viewFillPlayerTrayWithCompletion:nil];
+        
+        UPSpellDossier *dossier = [UPSpellDossier instance];
+        if (dossier.totalGamesPlayed == 0 || dossier.highScore == 0) {
+            [self viewShowHelpPromptInWordScoreLabel];
+        }
     });
 }
 

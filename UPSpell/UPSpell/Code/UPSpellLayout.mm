@@ -316,6 +316,7 @@ void SpellLayout::calculate()
     calculate_placard_description_font_metrics();
     calculate_word_mark_font_metrics();
     calculate_legal_font_metrics();
+    calculate_help_prompt_font_metrics();
     calculate_game_controls_button_charge_outsets();
     calculate_help_button_charge_outsets();
 
@@ -557,6 +558,13 @@ void SpellLayout::calculate_legal_font_metrics()
     CGFloat cap_height = CanonicalLegalFontCapHeight * layout_scale();
     UIFont *font = [UIFont legalFontWithCapHeight:cap_height];
     set_legal_font(font);
+}
+
+void SpellLayout::calculate_help_prompt_font_metrics()
+{
+    CGFloat cap_height = CanonicalHelpPromptFontCapHeight * layout_scale();
+    UIFont *font = [UIFont helpPromptFontWithCapHeight:cap_height];
+    set_help_prompt_font(font);
 }
 
 void SpellLayout::calculate_word_tray_layout_frame()
