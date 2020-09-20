@@ -116,7 +116,7 @@
             }
             break;
         }
-        case UPShareTypeInvite: {
+        case UPShareTypeDuel: {
             score = -1;
             gameKey = self.inviteGameKey;
             break;
@@ -151,7 +151,7 @@
             }
             break;
         }
-        case UPShareTypeInvite: {
+        case UPShareTypeDuel: {
             return @"Let’s play Up Spell.";
         }
     }
@@ -184,7 +184,7 @@
             }
             break;
         }
-        case UPShareTypeInvite: {
+        case UPShareTypeDuel: {
             return @"Tap the link to play!";
         }
     }
@@ -217,7 +217,7 @@
             }
             break;
         }
-        case UPShareTypeInvite: {
+        case UPShareTypeDuel: {
             return @"Let’s play Up Spell!";
         }
     }
@@ -233,9 +233,9 @@
 
 @implementation UPActivityViewController
 
-- (instancetype)initWithInviteGameKey:(UPGameKey *)inviteGameKey
+- (instancetype)initWithDuelGameKey:(UPGameKey *)inviteGameKey
 {
-    return [self initWithShareType:UPShareTypeInvite inviteGameKey:inviteGameKey];
+    return [self initWithShareType:UPShareTypeDuel inviteGameKey:inviteGameKey];
 }
 
 - (instancetype)initWithShareType:(UPShareType)shareType

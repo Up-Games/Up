@@ -26,7 +26,7 @@ using Spot = SpellLayout::Spot;
 @property (nonatomic, readwrite) UPBezierPathView *readyMessagePathView;
 @property (nonatomic, readwrite) UPTextButton *extrasButton;
 @property (nonatomic, readwrite) UPTextButton *playButton;
-@property (nonatomic, readwrite) UPTextButton *inviteButton;
+@property (nonatomic, readwrite) UPTextButton *duelButton;
 @end
 
 @implementation UPDialogTopMenu
@@ -65,10 +65,10 @@ using Spot = SpellLayout::Spot;
         self.playButton.behavior = UPTextButtonBehaviorModeButton;
     }
     
-    self.inviteButton = [UPTextButton textButton];
-    self.inviteButton.behavior = UPTextButtonBehaviorPushButton;
-    self.inviteButton.labelString = @"INVITE";
-    self.inviteButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopRight);
+    self.duelButton = [UPTextButton textButton];
+    self.duelButton.behavior = UPTextButtonBehaviorPushButton;
+    self.duelButton.labelString = @"DUEL";
+    self.duelButton.frame = layout.frame_for(SpellLayout::Role::DialogButtonTopRight);
     
     [self updateThemeColors];
 
@@ -82,7 +82,7 @@ using Spot = SpellLayout::Spot;
     self.readyMessagePathView.fillColor = [UIColor themeColorWithCategory:UPColorCategoryInformation];
     [self.extrasButton updateThemeColors];
     [self.playButton updateThemeColors];
-    [self.inviteButton updateThemeColors];
+    [self.duelButton updateThemeColors];
 }
 
 @end

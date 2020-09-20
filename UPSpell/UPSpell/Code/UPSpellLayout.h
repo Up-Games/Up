@@ -53,7 +53,7 @@ public:
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse, DialogButtonCenterResponse,
         DialogHelpButton, DialogHelpTitle, DialogHelpText, DialogHelpOKButton,
-        DialogInviteHelpTitle, DialogInviteHelpText, DialogInviteHelpOKButton,
+        DialogDuelHelpTitle, DialogDuelHelpText, DialogDuelHelpOKButton,
         ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
         ChoiceBackRight, ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
         ChoiceBackCenter, ChoiceTitleCenter, ChoiceItem1Center, ChoiceItem2Center, ChoiceItem3Center, ChoiceGoButtonCenter, ChoiceItemTopCenter,
@@ -219,9 +219,9 @@ public:
     static inline constexpr CGRect CanonicalDialogShareHelpTextFrame = { 250, 220, 500, 200 };
     static inline constexpr CGRect CanonicalDialogShareHelpOKButtonFrame = { 429.5, 386, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
-    static inline constexpr CGRect CanonicalDialogInviteHelpTitleFrame = { 272, 42, 460, 200 };
-    static inline constexpr CGRect CanonicalDialogInviteHelpTextFrame = { 250, 120, 500, 200 };
-    static inline constexpr CGRect CanonicalDialogInviteHelpOKButtonFrame = { 429.5, 405, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGRect CanonicalDialogDuelHelpTitleFrame = { 272, 42, 460, 200 };
+    static inline constexpr CGRect CanonicalDialogDuelHelpTextFrame = { 250, 120, 500, 200 };
+    static inline constexpr CGRect CanonicalDialogDuelHelpOKButtonFrame = { 429.5, 405, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGFloat CanonicalDialogTitleCapHeight = 35;
 

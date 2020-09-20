@@ -27,7 +27,7 @@ enum class Mode {
     About,
     Extras,
     PlayMenu,
-    InviteHelp,
+    DuelHelp,
     ShareHelp,
     Challenge,
     ChallengeHelp,
@@ -52,8 +52,8 @@ UP_STATIC_INLINE const char *cstr_for(Mode mode)
             return "Extras";
         case Mode::PlayMenu:
             return "PlayMenu";
-        case Mode::InviteHelp:
-            return "InviteHelp";
+        case Mode::DuelHelp:
+            return "DuelHelp";
         case Mode::ShareHelp:
             return "ShareHelp";
         case Mode::Challenge:

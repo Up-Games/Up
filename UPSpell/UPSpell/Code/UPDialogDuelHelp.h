@@ -1,5 +1,5 @@
 //
-//  UPDialogInviteHelp.h
+//  UPDialogDuelHelp.h
 //  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
@@ -8,13 +8,13 @@
 @class UPButton;
 @class UPLabel;
 
-@interface UPDialogInviteHelp : UIView
+@interface UPDialogDuelHelp : UIView
 
 @property (nonatomic, readonly) UPLabel *titleLabel;
 @property (nonatomic, readonly) UIView *helpLabelContainer;
 @property (nonatomic, readonly) UPButton *okButton;
 
-+ (UPDialogInviteHelp *)instance;
++ (UPDialogDuelHelp *)instance;
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 

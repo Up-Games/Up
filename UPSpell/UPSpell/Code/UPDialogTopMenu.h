@@ -14,7 +14,7 @@
 @property (nonatomic, readonly) UPBezierPathView *readyMessagePathView;
 @property (nonatomic, readonly) UPTextButton *extrasButton;
 @property (nonatomic, readonly) UPTextButton *playButton;
-@property (nonatomic, readonly) UPTextButton *inviteButton;
+@property (nonatomic, readonly) UPTextButton *duelButton;
 
 + (UPDialogTopMenu *)instance;
 

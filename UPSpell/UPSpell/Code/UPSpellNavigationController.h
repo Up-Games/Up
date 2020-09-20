@@ -17,7 +17,7 @@
 
 - (void)dialogMenuPlayButtonTapped;
 - (void)dialogMenuExtrasButtonTapped;
-- (void)dialogMenuInviteButtonTapped;
+- (void)dialogMenuDuelButtonTapped;
 
 @end
 

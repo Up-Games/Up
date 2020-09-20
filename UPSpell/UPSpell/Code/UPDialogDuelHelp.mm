@@ -1,5 +1,5 @@
 //
-//  UPDialogInviteHelp.mm
+//  UPDialogDuelHelp.mm
 //  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
@@ -11,28 +11,28 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
-#import "UPDialogInviteHelp.h"
+#import "UPDialogDuelHelp.h"
 #import "UPSpellLayout.h"
 #import "UPTextButton.h"
 
 using UP::SpellLayout;
 using Role = SpellLayout::Role;
 
-@interface UPDialogInviteHelp ()
+@interface UPDialogDuelHelp ()
 @property (nonatomic, readwrite) UPLabel *titleLabel;
 @property (nonatomic, readwrite) UIView *helpLabelContainer;
 @property (nonatomic, readwrite) UPLabel *helpLabel;
 @property (nonatomic, readwrite) UPButton *okButton;
 @end
 
-@implementation UPDialogInviteHelp
+@implementation UPDialogDuelHelp
 
-+ (UPDialogInviteHelp *)instance
++ (UPDialogDuelHelp *)instance
 {
     static dispatch_once_t onceToken;
-    static UPDialogInviteHelp *_Instance;
+    static UPDialogDuelHelp *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPDialogInviteHelp alloc] _init];
+        _Instance = [[UPDialogDuelHelp alloc] _init];
     });
     return _Instance;
 }
@@ -43,33 +43,32 @@ using Role = SpellLayout::Role;
     self = [super initWithFrame:layout.canvas_frame()];
 
     self.titleLabel = [UPLabel label];
-    self.titleLabel.string = @"ABOUT INVITE";
+    self.titleLabel.string = @"DUEL";
     self.titleLabel.font = layout.dialog_title_font();
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.titleLabel.frame = layout.frame_for(Role::DialogInviteHelpTitle);
+    self.titleLabel.frame = layout.frame_for(Role::DialogDuelHelpTitle);
     [self addSubview:self.titleLabel];
 
     self.helpLabelContainer = [[UIView alloc] initWithFrame:CGRectZero];
-    self.helpLabelContainer.frame = layout.frame_for(Role::DialogInviteHelpText);
+    self.helpLabelContainer.frame = layout.frame_for(Role::DialogDuelHelpText);
     [self addSubview:self.helpLabelContainer];
 
     self.helpLabel = [UPLabel label];
     self.helpLabel.string =
-        @"Invite a friend to play a game with you. Tap OK, then\n"
-         "use the share sheet to send your friend a link. When your\n"
-         "friend taps the link, Up Spell will open for them, and\n"
-         "you’ll both get a game with the same letters.\n\n"
+        @"Challenge a friend to a duel! Tap OK, then use the share sheet\n"
+         "to send your friend a link. When your friend taps the link,\n"
+         "Up Spell will open. You’ll both get a game with the same letters.\n\n"
          "May the better speller win! Tap the PLAY button at the\n"
          "same time for extra drama!";
     self.helpLabel.font = layout.description_font();
     self.helpLabel.textAlignment = NSTextAlignmentLeft;
-    self.helpLabel.frame = layout.frame_for(Role::DialogInviteHelpText);
+    self.helpLabel.frame = layout.frame_for(Role::DialogDuelHelpText);
     [self.helpLabelContainer addSubview:self.helpLabel];
 
     self.okButton = [UPTextButton smallTextButton];
     self.okButton.labelString = @"OK";
     [self.okButton setLabelColorCategory:UPColorCategoryContent];
-    self.okButton.frame = layout.frame_for(Role::DialogInviteHelpOKButton);
+    self.okButton.frame = layout.frame_for(Role::DialogDuelHelpOKButton);
     [self addSubview:self.okButton];
 
     [self updateThemeColors];
