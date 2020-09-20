@@ -19,6 +19,7 @@
 @dynamic soundEffectsEnabled;
 @dynamic soundEffectsLevel;
 @dynamic showShareHelp;
+@dynamic showInviteHelp;
 
 + (UPSpellSettings *)instance
 {
@@ -50,6 +51,7 @@
     self.soundEffectsEnabled = YES;
     self.soundEffectsLevel = 4;
     self.showShareHelp = YES;
+    self.showInviteHelp = YES;
 }
 
 @end

@@ -201,7 +201,8 @@ static constexpr size_t UPChalengeDataLength = UPChallengeSaltLength + UPChaleng
         uint32_t gameKeyValue = ntohl(*(reinterpret_cast<uint32_t *>(output + UPChallengeSaltLength + UPChalengeVersionLength)));
         UPGameKey *gameKey = [UPGameKey gameKeyWithValue:gameKeyValue];
         uint16_t gameScore = ntohs(*(reinterpret_cast<uint16_t *>(output + UPChallengeSaltLength + UPChalengeVersionLength + sizeof(uint32_t))));
-        result = [NSString stringWithFormat:@"%@/%d", gameKey.string, gameScore];
+        int effectiveGameScore = gameScore == 65535 ? -1 : gameScore;
+        result = [NSString stringWithFormat:@"%@/%d", gameKey.string, effectiveGameScore];
     }
 
     return result;

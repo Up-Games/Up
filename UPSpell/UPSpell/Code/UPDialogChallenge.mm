@@ -98,14 +98,22 @@ using Role = SpellLayout::Role;
 - (void)updateWithChallenge:(UPChallenge *)challenge
 {
     if (challenge.valid) {
-        self.challengePromptLabel.string = @"CHALLENGE!";
-        self.scorePromptLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", challenge.score];
-        self.cancelButton.labelString = @"CANCEL";
-        self.confirmButton.hidden = NO;
+        if (challenge.score < 0) {
+            self.challengePromptLabel.string = @"INVITE";
+            self.scorePromptLabel.string = @"GOOD LUCK & HAVE FUN!";
+            self.cancelButton.labelString = @"CANCEL";
+            self.confirmButton.hidden = NO;
+        }
+        else {
+            self.challengePromptLabel.string = @"CHALLENGE!";
+            self.scorePromptLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", challenge.score];
+            self.cancelButton.labelString = @"CANCEL";
+            self.confirmButton.hidden = NO;
+        }
     }
     else {
         self.challengePromptLabel.string = @"OOPS!";
-        self.scorePromptLabel.string = @"CHALLENGE LINK IS BAD. SORRY!";
+        self.scorePromptLabel.string = @"LINK IS BAD. SORRY!";
         self.cancelButton.labelString = @"OK";
         self.confirmButton.hidden = YES;
     }

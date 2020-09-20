@@ -10,11 +10,15 @@ typedef NS_ENUM(NSInteger, UPShareType) {
     UPShareTypeLastGameScore,
     UPShareTypeHighScore,
     UPShareTypeChallengeReply,
+    UPShareTypeInvite,
 };
+
+@class UPGameKey;
 
 @interface UPActivityViewController : UIActivityViewController
 
 - (instancetype)initWithShareType:(UPShareType)shareType;
+- (instancetype)initWithInviteGameKey:(UPGameKey *)inviteGameKey;
 
 - (instancetype)initWithActivityItems:(NSArray *)activityItems NS_UNAVAILABLE;
 

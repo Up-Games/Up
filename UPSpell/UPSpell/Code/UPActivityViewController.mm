@@ -6,6 +6,7 @@
 #import <LinkPresentation/LinkPresentation.h>
 
 #import <UpKit/UIColor+UP.h>
+#import <UpKit/UPGameKey.h>
 
 #import "UPActivityViewController.h"
 #import "UPChallenge.h"
@@ -18,14 +19,16 @@
 @property (nonatomic) NSString *shareString;
 @property (nonatomic) NSString *shareURLString;
 @property (nonatomic) NSURL *shareURL;
+@property (nonatomic) UPGameKey *inviteGameKey;
 @end
 
 @implementation UPActivityViewItemSource
 
-- (instancetype)initWithShareType:(UPShareType)shareType
+- (instancetype)initWithShareType:(UPShareType)shareType inviteGameKey:(UPGameKey *)inviteGameKey
 {
     self = [super init];
     self.shareType = shareType;
+    self.inviteGameKey = inviteGameKey;
     self.shareString = [self _makeShareString];
     self.shareURL = [self _makeShareURL];
     self.shareURLString = [self _makeShareURLString];
@@ -113,6 +116,11 @@
             }
             break;
         }
+        case UPShareTypeInvite: {
+            score = -1;
+            gameKey = self.inviteGameKey;
+            break;
+        }
     }
     
     UPChallenge *challenge = [UPChallenge challengeWithGameKey:gameKey score:score];
@@ -142,6 +150,9 @@
                 return [NSString stringWithFormat:@"You beat me in Up Spell."];
             }
             break;
+        }
+        case UPShareTypeInvite: {
+            return @"Let’s play Up Spell.";
         }
     }
     return nil;
@@ -173,6 +184,9 @@
             }
             break;
         }
+        case UPShareTypeInvite: {
+            return @"Tap the link to play!";
+        }
     }
     return nil;
 }
@@ -203,6 +217,9 @@
             }
             break;
         }
+        case UPShareTypeInvite: {
+            return @"Let’s play Up Spell!";
+        }
     }
     return nil;
 }
@@ -216,11 +233,21 @@
 
 @implementation UPActivityViewController
 
+- (instancetype)initWithInviteGameKey:(UPGameKey *)inviteGameKey
+{
+    return [self initWithShareType:UPShareTypeInvite inviteGameKey:inviteGameKey];
+}
+
 - (instancetype)initWithShareType:(UPShareType)shareType
 {
-    UPActivityViewItemSource *itemSource = [[UPActivityViewItemSource alloc] initWithShareType:shareType];
-    self = [super initWithActivityItems:@[ itemSource ] applicationActivities:nil];
+    return [self initWithShareType:shareType inviteGameKey:nil];
+}
 
+- (instancetype)initWithShareType:(UPShareType)shareType inviteGameKey:(UPGameKey *)inviteGameKey
+{
+    UPActivityViewItemSource *itemSource = [[UPActivityViewItemSource alloc] initWithShareType:shareType inviteGameKey:inviteGameKey];
+    self = [super initWithActivityItems:@[ itemSource ] applicationActivities:nil];
+    
     self.excludedActivityTypes = @[
         UIActivityTypeAirDrop,
         UIActivityTypePrint,
@@ -234,7 +261,7 @@
         UIActivityTypeOpenInIBooks,
         UIActivityTypePostToFacebook,
     ];
-
+    
     return self;
 }
 

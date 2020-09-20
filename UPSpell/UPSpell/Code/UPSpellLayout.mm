@@ -753,6 +753,10 @@ void SpellLayout::calculate_dialog_locations()
     calculate_and_set_locations(Role::DialogHelpTitle, layout_relative_aspect_rect(CanonicalDialogShareHelpTitleFrame));
     calculate_and_set_locations(Role::DialogHelpText, layout_relative_aspect_rect(CanonicalDialogShareHelpTextFrame));
     calculate_and_set_locations(Role::DialogHelpOKButton, layout_relative_aspect_rect(CanonicalDialogShareHelpOKButtonFrame));
+
+    calculate_and_set_locations(Role::DialogInviteHelpTitle, layout_relative_aspect_rect(CanonicalDialogInviteHelpTitleFrame));
+    calculate_and_set_locations(Role::DialogInviteHelpText, layout_relative_aspect_rect(CanonicalDialogInviteHelpTextFrame));
+    calculate_and_set_locations(Role::DialogInviteHelpOKButton, layout_relative_aspect_rect(CanonicalDialogInviteHelpOKButtonFrame));
 }
 
 void SpellLayout::calculate_game_locations()

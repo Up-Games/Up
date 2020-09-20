@@ -17,6 +17,7 @@
 @property (nonatomic) NSUInteger tunesLevel;
 @property (nonatomic) BOOL soundEffectsEnabled;
 @property (nonatomic) NSUInteger soundEffectsLevel;
+@property (nonatomic) BOOL showInviteHelp;
 @property (nonatomic) BOOL showShareHelp;
 
 + (UPSpellSettings *)instance;

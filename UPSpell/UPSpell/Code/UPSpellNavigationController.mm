@@ -109,7 +109,7 @@ using UP::TimeSpanning::start;
         [self.aboutController.backButton setTarget:self action:@selector(dismissPresentedController)];
         [self.extrasController.backButton setTarget:self action:@selector(dismissPresentedController)];
         self.dialogTopMenu.extrasButton.userInteractionEnabled = YES;
-        self.dialogTopMenu.aboutButton.userInteractionEnabled = YES;
+        self.dialogTopMenu.inviteButton.userInteractionEnabled = YES;
     });
 }
 
@@ -142,9 +142,9 @@ using UP::TimeSpanning::start;
     [self presentExtrasController];
 }
 
-- (void)dialogMenuAboutButtonTapped
+- (void)dialogMenuInviteButtonTapped
 {
-    [self presentAboutController];
+    
 }
 
 - (void)presentExtrasController
@@ -163,7 +163,7 @@ using UP::TimeSpanning::start;
 {
     [self dismissViewControllerAnimated:YES completion:^{
         self.dialogTopMenu.extrasButton.selected = NO;
-        self.dialogTopMenu.aboutButton.selected = NO;
+        self.dialogTopMenu.inviteButton.selected = NO;
         self.gameController.retry = nil;
         [self.gameController setMode:Mode::Init];
     }];
@@ -202,7 +202,7 @@ using UP::TimeSpanning::start;
     self.gameController.retry = nil;
     [self.gameController setMode:Mode::Init transitionScenario:UPModeTransitionScenarioWillEnterForeground];
     self.dialogTopMenu.extrasButton.selected = NO;
-    self.dialogTopMenu.aboutButton.selected = NO;
+    self.dialogTopMenu.inviteButton.selected = NO;
 }
 
 // =========================================================================================================================================
