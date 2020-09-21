@@ -61,10 +61,10 @@ public:
         ExtrasShareHighScoreValue, ExtrasShareHighScoreDescription, ExtrasShareHighScoreButton,
         ExtrasShareLastGameValue, ExtrasShareLastGameDescription, ExtrasShareLastGameButton,
         ExtrasShareDescription, ExtrasShareLastGameHighScoreEqualDescription,
-        GameLinkTitle, GameLinkDetail,
         ExtrasHowToGameView, ExtrasHowToBottomPrompt, ExtrasHowToTopLeftButtonClick, ExtrasHowToTopRightButtonClick, ExtrasHowTo2xCallout,
         ExtrasAbout,
         HeroLogo, HeroWordMark,
+        GameLinkTitle, GameLinkDetail,
     };
 
     enum class Spot {

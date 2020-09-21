@@ -141,7 +141,7 @@
         case UPShareTypeLastGameScore:
         case UPShareTypeHighScore: {
             UPGameKey *gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
-            return [NSString stringWithFormat:@"I scored %d in Up Spell! (Game ID: %@)", dossier.lastScore, gameKey.string];
+            return [NSString stringWithFormat:@"I scored %d in Up Spell! (Game Key: %@)", dossier.lastScore, gameKey.string];
         }
         case UPShareTypeChallengeReply: {
             ASSERT(dossier.lastGameWasChallenge);
@@ -158,12 +158,12 @@
             }
         }
         case UPShareTypeDuel: {
-            return [NSString stringWithFormat:@"Let’s play Up Spell! (Game ID: %@)", self.gameKey.string];
+            return [NSString stringWithFormat:@"Let’s play Up Spell! (Game Key: %@)", self.gameKey.string];
         }
         case UPShareTypeDuelReply: {
             ASSERT(dossier.lastGameWasDuel);
             int score = dossier.lastScore;
-            return [NSString stringWithFormat:@"I scored %d in Up Spell! (Game ID: %@)", score, self.gameKey.string];
+            return [NSString stringWithFormat:@"I scored %d in Up Spell! (Game Key: %@)", score, self.gameKey.string];
         }
     }
     return nil;
@@ -186,13 +186,13 @@
             int challengeScore = dossier.lastGameChallengeScore;
             int score = dossier.lastScore;
             if (score > challengeScore) {
-                return [NSString stringWithFormat:@"I won %d–%d! (Game ID: %@)", score, challengeScore, gameKey.string];
+                return [NSString stringWithFormat:@"I won %d–%d! (Game Key: %@)", score, challengeScore, gameKey.string];
             }
             else if (score == challengeScore) {
-                return [NSString stringWithFormat:@"I tied %d–%d! (Game ID: %@)", score, score, gameKey.string];
+                return [NSString stringWithFormat:@"I tied %d–%d! (Game Key: %@)", score, score, gameKey.string];
             }
             else {
-                return [NSString stringWithFormat:@"I lost %d–%d. (Game ID: %@)", challengeScore, score, gameKey.string];
+                return [NSString stringWithFormat:@"I lost %d–%d. (Game Key: %@)", challengeScore, score, gameKey.string];
             }
             break;
         }
@@ -213,11 +213,11 @@
         case UPShareTypeDefault:
         case UPShareTypeLastGameScore: {
             UPGameKey *gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
-            return [NSString stringWithFormat:@"I scored %d in Up Spell. Top that! (Game ID: %@)", dossier.lastScore, gameKey.string];
+            return [NSString stringWithFormat:@"I scored %d in Up Spell. Top that! (Game Key: %@)", dossier.lastScore, gameKey.string];
         }
         case UPShareTypeHighScore: {
             UPGameKey *gameKey = [UPGameKey gameKeyWithValue:dossier.highScoreGameKeyValue];
-            return [NSString stringWithFormat:@"My Up Spell high score is %d. Top that! (Game ID: %@)", dossier.highScore, gameKey.string];
+            return [NSString stringWithFormat:@"My Up Spell high score is %d. Top that! (Game Key: %@)", dossier.highScore, gameKey.string];
         }
         case UPShareTypeChallengeReply: {
             ASSERT(dossier.lastGameWasChallenge);
@@ -225,23 +225,23 @@
             int challengeScore = dossier.lastGameChallengeScore;
             int score = dossier.lastScore;
             if (score > challengeScore) {
-                return [NSString stringWithFormat:@"I won an Up Spell challenge %d–%d! (Game ID: %@)", score, challengeScore, gameKey.string];
+                return [NSString stringWithFormat:@"I won an Up Spell challenge %d–%d! (Game Key: %@)", score, challengeScore, gameKey.string];
             }
             else if (score == challengeScore) {
-                return [NSString stringWithFormat:@"I tied an Up Spell challenge %d–%d! (Game ID: %@)", score, score, gameKey.string];
+                return [NSString stringWithFormat:@"I tied an Up Spell challenge %d–%d! (Game Key: %@)", score, score, gameKey.string];
             }
             else {
-                return [NSString stringWithFormat:@"I lost an Up Spell challenge %d–%d. (Game ID: %@)", challengeScore, score, gameKey.string];
+                return [NSString stringWithFormat:@"I lost an Up Spell challenge %d–%d. (Game Key: %@)", challengeScore, score, gameKey.string];
             }
             break;
         }
         case UPShareTypeDuel: {
-            return [NSString stringWithFormat:@"Let’s play Up Spell! (Game ID: %@)", self.gameKey.string];
+            return [NSString stringWithFormat:@"Let’s play Up Spell! (Game Key: %@)", self.gameKey.string];
         }
         case UPShareTypeDuelReply: {
             ASSERT(dossier.lastGameWasDuel);
             int score = dossier.lastScore;
-            return [NSString stringWithFormat:@"I scored %d. Top that! (Game ID: %@)", score, self.gameKey.string];
+            return [NSString stringWithFormat:@"I scored %d. (Game Key: %@)", score, self.gameKey.string];
         }
     }
     return nil;

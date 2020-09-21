@@ -76,7 +76,7 @@ using Role = SpellLayout::Role;
         case UPGameLinkTypeDuel:
             self.titleLabel.string = @"ABOUT DUELING";
             self.helpLabel.string =
-                @"A DUEL is a game you play against a friend. The shared Game ID\n"
+                @"A DUEL is a game you play against a friend. The shared Game Key\n"
                 "gives both of you a game with the same letters. After you play,\n"
                 "share your score to see who won. Good luck and have fun!";
             break;
@@ -84,7 +84,7 @@ using Role = SpellLayout::Role;
             self.titleLabel.string = @"ABOUT CHALLENGES";
             self.helpLabel.string =
                 @"A CHALLENGE is a new game with the same letters as a game already\n"
-                "played (it uses the same Game ID). Try to top the challenge score,\n"
+                "played (it uses the same Game Key). Try to top the challenge score,\n"
                 "then share your results. Good luck and have fun!";
             break;
     }

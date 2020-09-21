@@ -56,7 +56,7 @@ using Role = SpellLayout::Role;
     self.helpLabel = [UPLabel label];
     self.helpLabel.string =
         @"A DUEL is a game you play against a friend. Tap OK, then use the\n"
-        "share sheet to send your friend a game link. The shared Game ID\n"
+        "share sheet to send your friend a game link. The shared Game Key\n"
         "gives both of you a game with the same letters. After you play,\n"
         "share your score to see who won. Good luck and have fun!";
     self.helpLabel.font = layout.description_font();
