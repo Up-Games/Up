@@ -310,8 +310,8 @@ void SpellLayout::calculate()
     calculate_description_font_metrics();
     calculate_about_font_metrics();
     calculate_dialog_title_font_metrics();
-    calculate_challenge_prompt_font_metrics();
-    calculate_challenge_score_font_font_metrics();
+    calculate_game_link_title_font_metrics();
+    calculate_game_link_detail_font_metrics();
     calculate_placard_value_font_metrics();
     calculate_placard_description_font_metrics();
     calculate_word_mark_font_metrics();
@@ -327,7 +327,6 @@ void SpellLayout::calculate()
     calculate_game_locations();
     calculate_choice_locations();
     calculate_extras_locations();
-    calculate_about_locations();
 }
 
 CGRect SpellLayout::frame_for(const Location &loc)
@@ -516,18 +515,18 @@ void SpellLayout::calculate_dialog_title_font_metrics()
     set_dialog_title_font(font);
 }
 
-void SpellLayout::calculate_challenge_prompt_font_metrics()
+void SpellLayout::calculate_game_link_title_font_metrics()
 {
-    CGFloat cap_height = CanonicalChallengePromptFontCapHeight * layout_scale();
-    UIFont *font = [UIFont challengeFontWithCapHeight:cap_height];
-    set_challenge_prompt_font(font);
+    CGFloat cap_height = CanonicalGameLinkTitleFontCapHeight * layout_scale();
+    UIFont *font = [UIFont gameLinkFontWithCapHeight:cap_height];
+    set_game_link_title_font(font);
 }
 
-void SpellLayout::calculate_challenge_score_font_font_metrics()
+void SpellLayout::calculate_game_link_detail_font_metrics()
 {
-    CGFloat cap_height = CanonicalChallengeScoreFontCapHeight * layout_scale();
-    UIFont *font = [UIFont challengeFontWithCapHeight:cap_height];
-    set_challenge_score_font_font(font);
+    CGFloat cap_height = CanonicalGameLinkDetailFontCapHeight * layout_scale();
+    UIFont *font = [UIFont gameLinkFontWithCapHeight:cap_height];
+    set_game_link_detail_font(font);
 }
 
 void SpellLayout::calculate_placard_value_font_metrics()
@@ -736,8 +735,8 @@ void SpellLayout::calculate_dialog_locations()
 
     calculate_and_set_locations(Role::DialogHelpButton, layout_relative_aspect_rect(CanonicalDialogHelpButtonFrame));
 
-    calculate_and_set_locations(Role::ChallengePrompt, layout_relative_aspect_rect(CanonicalChallengePromptFrame));
-    calculate_and_set_locations(Role::ChallengeScore, layout_relative_aspect_rect(CanonicalChallengeScoreFrame));
+    calculate_and_set_locations(Role::GameLinkTitle, layout_relative_aspect_rect(CanonicalGameLinkPromptFrame));
+    calculate_and_set_locations(Role::GameLinkDetail, layout_relative_aspect_rect(CanonicalGameLinkScoreFrame));
     calculate_and_set_locations(Role::HeroLogo, layout_relative_aspect_rect(CanonicalHeroLogoFrame));
     calculate_and_set_locations(Role::HeroLogo, layout_relative_aspect_rect(CanonicalHeroLogoFrame));
     calculate_and_set_locations(Role::HeroWordMark, layout_relative_aspect_rect(CanonicalHeroWordMarkFrame));
@@ -792,6 +791,19 @@ void SpellLayout::calculate_game_locations()
 
 void SpellLayout::calculate_extras_locations()
 {
+    calculate_and_set_locations(Role::ExtrasHowToGameView, layout_relative_aspect_rect(CanonicalExtrasHowToGameViewFrame));
+    calculate_and_set_locations(Role::ExtrasHowToBottomPrompt, layout_relative_aspect_rect(CanonicalExtrasHowToBottomPromptFrame));
+    calculate_and_set_locations(Role::ExtrasHowTo2xCallout, layout_relative_aspect_rect(CanonicalExtrasHowTo2xCalloutFrame));
+    
+    CGRect controls_button_left_frame = frame_for(Role::ControlButtonLeft);
+    controls_button_left_frame.origin.x += 20;
+    controls_button_left_frame.origin.y += 10;
+    CGRect controls_button_right_frame = frame_for(Role::ControlButtonRight);
+    controls_button_right_frame.origin.x -= 20;
+    controls_button_right_frame.origin.y += 10;
+    calculate_and_set_locations(Role::ExtrasHowToTopLeftButtonClick, controls_button_left_frame);
+    calculate_and_set_locations(Role::ExtrasHowToTopRightButtonClick, controls_button_right_frame);
+
     calculate_and_set_locations(Role::ExtrasColorsThemeRotor, layout_relative_aspect_rect(CanonicalExtrasColorsThemeRotorFrame));
     calculate_and_set_locations(Role::ExtrasColorsDescription, layout_relative_aspect_rect(CanonicalExtrasColorsDescriptionFrame));
     calculate_and_set_locations(Role::ExtrasColorsExample, layout_relative_aspect_rect(CanonicalExtrasColorsExampleFrame));
@@ -817,23 +829,7 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasShareLastGameDescription, layout_relative_aspect_rect(CanonicalExtrasShareLastGameDescriptionFrame));
     calculate_and_set_locations(Role::ExtrasShareLastGameHighScoreEqualDescription, layout_relative_aspect_rect(CanonicalExtrasShareLastGameHighScoreEqualDescription));
 
-    calculate_and_set_locations(Role::ExtrasThanks, layout_relative_aspect_rect(CanonicalExtrasThanksFrame));
-}
-
-void SpellLayout::calculate_about_locations()
-{
-    calculate_and_set_locations(Role::AboutPlayingGameView, layout_relative_aspect_rect(CanonicalAboutPlayingGameViewFrame));
-    calculate_and_set_locations(Role::AboutPlayingBottomPrompt, layout_relative_aspect_rect(CanonicalAboutPlayingGameBottomPromptFrame));
-    calculate_and_set_locations(Role::AboutPlaying2xCallout, layout_relative_aspect_rect(CanonicalAboutPlaying2xCalloutFrame));
-
-    CGRect controls_button_left_frame = frame_for(Role::ControlButtonLeft);
-    controls_button_left_frame.origin.x += 20;
-    controls_button_left_frame.origin.y += 10;
-    CGRect controls_button_right_frame = frame_for(Role::ControlButtonRight);
-    controls_button_right_frame.origin.x -= 20;
-    controls_button_right_frame.origin.y += 10;
-    calculate_and_set_locations(Role::AboutPlayingTopLeftButtonClick, controls_button_left_frame);
-    calculate_and_set_locations(Role::AboutPlayingTopRightButtonClick, controls_button_right_frame);
+    calculate_and_set_locations(Role::ExtrasAbout, layout_relative_aspect_rect(CanonicalExtrasThanksFrame));
 }
 
 void SpellLayout::calculate_choice_locations()

@@ -20,7 +20,7 @@ NSString * const UPRotorControlFontName = @"MalloryCondensed-Black";
 NSString * const UPDialogTitleFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPDescriptionFontName = @"MalloryCondensed-Bold";
 NSString * const UPAboutFontName = @"MalloryCondensed-Bold";
-NSString * const UPShareFontName = @"MalloryCondensed-BlackItalic";
+NSString * const UPGameLinkFontName = @"MalloryCondensed-BlackItalic";
 NSString * const UPPlacardValueFontName = @"MalloryCondensed-Black";
 NSString * const UPPlacardDescriptionFontName = @"MalloryCondensed-Black";
 NSString * const UPWordMarkFontName = @"MalloryCondensed-Black";
@@ -291,9 +291,9 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     return [UIFont aboutFontOfSize:pointSize];
 }
 
-+ (UIFont *)challengeFontOfSize:(CGFloat)fontSize
++ (UIFont *)gameLinkFontOfSize:(CGFloat)fontSize
 {
-    UIFont *font = [UIFont fontWithName:UPShareFontName size:fontSize];
+    UIFont *font = [UIFont fontWithName:UPGameLinkFontName size:fontSize];
     UIFontDescriptor *descriptor = [font fontDescriptor];
     NSDictionary *attributes = @{
         UIFontDescriptorFeatureSettingsAttribute: @[
@@ -307,12 +307,12 @@ NSString * const UPDingbatsFontName = @"ZapfDingbatsITC";
     return [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
 }
 
-+ (UIFont *)challengeFontWithCapHeight:(CGFloat)capHeight
++ (UIFont *)gameLinkFontWithCapHeight:(CGFloat)capHeight
 {
-    UIFont *canonicalFont = [UIFont fontWithName:UPShareFontName size:1];
+    UIFont *canonicalFont = [UIFont fontWithName:UPGameLinkFontName size:1];
     CGFloat factor = capHeight / canonicalFont.capHeight;
     CGFloat pointSize = canonicalFont.pointSize * factor;
-    return [UIFont challengeFontOfSize:pointSize];
+    return [UIFont gameLinkFontOfSize:pointSize];
 }
 
 + (UIFont *)placardValueFontOfSize:(CGFloat)fontSize

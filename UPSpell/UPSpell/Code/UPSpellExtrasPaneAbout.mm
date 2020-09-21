@@ -32,7 +32,7 @@ using Role = UP::SpellLayout::Role;
     self = [super initWithFrame:frame];
 
     SpellLayout &layout = SpellLayout::instance();
-    self.thanksDescription = [[UITextView alloc] initWithFrame:layout.frame_for(Role::ExtrasThanks)];
+    self.thanksDescription = [[UITextView alloc] initWithFrame:layout.frame_for(Role::ExtrasAbout)];
     self.thanksDescription.editable = NO;
     self.thanksDescription.opaque = NO;
     self.thanksDescription.backgroundColor = [UIColor clearColor];

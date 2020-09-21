@@ -62,15 +62,15 @@ using Role = SpellLayout::Role;
     
     self.titlePromptLabel = [UPLabel label];
     self.titlePromptLabel.string = @"CHALLENGE!";
-    self.titlePromptLabel.font = layout.challenge_prompt_font();
+    self.titlePromptLabel.font = layout.game_link_title_font();
     self.titlePromptLabel.textAlignment = NSTextAlignmentCenter;
-    self.titlePromptLabel.frame = layout.frame_for(Role::ChallengePrompt);
+    self.titlePromptLabel.frame = layout.frame_for(Role::GameLinkTitle);
     [self addSubview:self.titlePromptLabel];
 
     self.detailPromptLabel = [UPLabel label];
-    self.detailPromptLabel.font = layout.challenge_score_font_font();
+    self.detailPromptLabel.font = layout.game_link_detail_font();
     self.detailPromptLabel.textAlignment = NSTextAlignmentCenter;
-    self.detailPromptLabel.frame = layout.frame_for(Role::ChallengeScore);
+    self.detailPromptLabel.frame = layout.frame_for(Role::GameLinkDetail);
     [self addSubview:self.detailPromptLabel];
 
     self.cancelButton = [UPTextButton textButton];

@@ -61,11 +61,9 @@ public:
         ExtrasShareHighScoreValue, ExtrasShareHighScoreDescription, ExtrasShareHighScoreButton,
         ExtrasShareLastGameValue, ExtrasShareLastGameDescription, ExtrasShareLastGameButton,
         ExtrasShareDescription, ExtrasShareLastGameHighScoreEqualDescription,
-        ChallengePrompt, ChallengeScore,
-        ExtrasThanks,
-        AboutPlayingGameView, AboutPlayingBottomPrompt,
-        AboutPlayingTopLeftButtonClick, AboutPlayingTopRightButtonClick, AboutPlaying2xCallout,
-        AboutLogo, AboutWordMark,
+        GameLinkTitle, GameLinkDetail,
+        ExtrasHowToGameView, ExtrasHowToBottomPrompt, ExtrasHowToTopLeftButtonClick, ExtrasHowToTopRightButtonClick, ExtrasHowTo2xCallout,
+        ExtrasAbout,
         HeroLogo, HeroWordMark,
     };
 
@@ -225,9 +223,9 @@ public:
     static inline constexpr CGFloat CanonicalSettingsAboutFontCapHeight = 19;
     static inline constexpr CGFloat CanonicalLegalFontCapHeight = 16;
 
-    static inline constexpr CGRect CanonicalAboutPlayingGameViewFrame = { 160, -132, 1000, 500 };
-    static inline constexpr CGRect CanonicalAboutPlayingGameBottomPromptFrame = { 340, 410, 640, 80 };
-    static inline constexpr CGRect CanonicalAboutPlaying2xCalloutFrame = { 676, 243, 46, 46 };
+    static inline constexpr CGRect CanonicalExtrasHowToGameViewFrame = { 160, -132, 1000, 500 };
+    static inline constexpr CGRect CanonicalExtrasHowToBottomPromptFrame = { 340, 410, 640, 80 };
+    static inline constexpr CGRect CanonicalExtrasHowTo2xCalloutFrame = { 676, 243, 46, 46 };
 
     static inline constexpr CGSize CanonicalBotSpotSize = { 92, 92 };
 
@@ -235,10 +233,10 @@ public:
     static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 416, 295, 180, 300 };
     static inline constexpr CGFloat CanonicalHeroWordMarkCapHeight = 31;
 
-    static inline constexpr CGRect CanonicalChallengePromptFrame = { 200, 112, 600, 300 };
-    static inline constexpr CGRect CanonicalChallengeScoreFrame = { 100, 228, 800, 300 };
-    static inline constexpr CGFloat CanonicalChallengePromptFontCapHeight = 62;
-    static inline constexpr CGFloat CanonicalChallengeScoreFontCapHeight = 34;
+    static inline constexpr CGRect CanonicalGameLinkPromptFrame = { 200, 112, 600, 300 };
+    static inline constexpr CGRect CanonicalGameLinkScoreFrame = { 100, 228, 800, 300 };
+    static inline constexpr CGFloat CanonicalGameLinkTitleFontCapHeight = 62;
+    static inline constexpr CGFloat CanonicalGameLinkDetailFontCapHeight = 34;
 
     static inline constexpr CGFloat CanonicalHelpPromptFontCapHeight = 27;
     
@@ -309,8 +307,8 @@ public:
     UIFont *description_font() const { return m_description_font; }
     UIFont *dialog_title_font() const { return m_dialog_title_font; }
     UIFont *about_font() const { return m_about_font; }
-    UIFont *challenge_prompt_font() const { return m_challenge_prompt_font; }
-    UIFont *challenge_score_font_font() const { return m_challenge_score_font_font; }
+    UIFont *game_link_title_font() const { return m_game_link_title_font; }
+    UIFont *game_link_detail_font() const { return m_game_link_detail_font; }
     UIFont *placard_value_font() const { return m_placard_value_font; }
     UIFont *placard_description_font() const { return m_placard_description_font; }
     UIFont *word_mark_font() const { return m_word_mark_font; }
@@ -371,8 +369,8 @@ private:
     void set_description_font(UIFont *font) { m_description_font = font; }
     void set_about_font(UIFont *font) { m_about_font = font; }
     void set_dialog_title_font(UIFont *font) { m_dialog_title_font = font; }
-    void set_challenge_prompt_font(UIFont *font) { m_challenge_prompt_font = font; }
-    void set_challenge_score_font_font(UIFont *font) { m_challenge_score_font_font = font; }
+    void set_game_link_title_font(UIFont *font) { m_game_link_title_font = font; }
+    void set_game_link_detail_font(UIFont *font) { m_game_link_detail_font = font; }
     void set_placard_value_font(UIFont *font) { m_placard_value_font = font; }
     void set_placard_description_font(UIFont *font) { m_placard_description_font = font; }
     void set_word_mark_font(UIFont *font) { m_word_mark_font = font; }
@@ -407,8 +405,8 @@ private:
     void calculate_description_font_metrics();
     void calculate_about_font_metrics();
     void calculate_dialog_title_font_metrics();
-    void calculate_challenge_prompt_font_metrics();
-    void calculate_challenge_score_font_font_metrics();
+    void calculate_game_link_title_font_metrics();
+    void calculate_game_link_detail_font_metrics();
     void calculate_placard_value_font_metrics();
     void calculate_placard_description_font_metrics();
     void calculate_word_mark_font_metrics();
@@ -420,7 +418,6 @@ private:
     void calculate_game_locations();
     void calculate_choice_locations();
     void calculate_extras_locations();
-    void calculate_about_locations();
     void calculate_game_controls_button_charge_outsets();
     void calculate_help_button_charge_outsets();
     void calculate_and_set_locations(const Role role, const CGRect &frame, CGFloat near_factor = CanonicalOffscreenNearFrameFactor);
@@ -474,8 +471,8 @@ private:
     __strong UIFont *m_description_font;
     __strong UIFont *m_about_font;
     __strong UIFont *m_dialog_title_font;
-    __strong UIFont *m_challenge_prompt_font;
-    __strong UIFont *m_challenge_score_font_font;
+    __strong UIFont *m_game_link_title_font;
+    __strong UIFont *m_game_link_detail_font;
     __strong UIFont *m_placard_value_font;
     __strong UIFont *m_placard_description_font;
     __strong UIFont *m_word_mark_font;

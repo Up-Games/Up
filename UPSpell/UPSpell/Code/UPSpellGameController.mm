@@ -2422,8 +2422,8 @@ static UPSpellGameController *_Instance;
         self.dialogGameLink.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark);
     }
     
-    self.dialogGameLink.titlePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Spot::OffBottomFar);
-    self.dialogGameLink.detailPromptLabel.frame = layout.frame_for(Role::ChallengeScore, Spot::OffBottomFar);
+    self.dialogGameLink.titlePromptLabel.frame = layout.frame_for(Role::GameLinkTitle, Spot::OffBottomFar);
+    self.dialogGameLink.detailPromptLabel.frame = layout.frame_for(Role::GameLinkDetail, Spot::OffBottomFar);
     self.dialogGameLink.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Spot::OffBottomNear);
     self.dialogGameLink.cancelButton.frame = layout.frame_for(cancelRole, Spot::OffBottomNear);
     self.dialogGameLink.helpButton.frame = layout.frame_for(Role::DialogHelpButton, Spot::OffBottomNear);
@@ -2431,8 +2431,8 @@ static UPSpellGameController *_Instance;
     void (^bottomHalf)(void) = ^{
         // Move the challenge dialog in
         NSArray<UPViewMove *> *commonShareMoves = @[
-            UPViewMoveMake(self.dialogGameLink.titlePromptLabel, Location(Role::ChallengePrompt)),
-            UPViewMoveMake(self.dialogGameLink.detailPromptLabel, Location(Role::ChallengeScore)),
+            UPViewMoveMake(self.dialogGameLink.titlePromptLabel, Location(Role::GameLinkTitle)),
+            UPViewMoveMake(self.dialogGameLink.detailPromptLabel, Location(Role::GameLinkDetail)),
             UPViewMoveMake(self.dialogGameLink.confirmButton, Location(Role::DialogButtonDefaultResponse)),
             UPViewMoveMake(self.dialogGameLink.cancelButton, cancelRole)
         ];
@@ -2739,8 +2739,8 @@ static UPSpellGameController *_Instance;
 
     self.dialogGameLink.logoView.frame = layout.frame_for(Role::HeroLogo, Spot::OffBottomNear);
     self.dialogGameLink.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark, Spot::OffBottomNear);
-    self.dialogGameLink.titlePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Spot::OffBottomFar);
-    self.dialogGameLink.detailPromptLabel.frame = layout.frame_for(Role::ChallengeScore, Spot::OffBottomNear);
+    self.dialogGameLink.titlePromptLabel.frame = layout.frame_for(Role::GameLinkTitle, Spot::OffBottomFar);
+    self.dialogGameLink.detailPromptLabel.frame = layout.frame_for(Role::GameLinkDetail, Spot::OffBottomNear);
     self.dialogGameLink.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Spot::OffBottomNear);
     self.dialogGameLink.cancelButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomNear);
     self.dialogGameLink.helpButton.frame = layout.frame_for(Role::DialogHelpButton, Spot::OffBottomNear);
@@ -3874,8 +3874,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     Role cancelRole = self.dialogGameLink.confirmButton.hidden ? Role::DialogButtonCenterResponse : Role::DialogButtonAlternativeResponse;
     
     NSArray<UPViewMove *> *buttonOutMoves = @[
-        UPViewMoveMake(self.dialogGameLink.titlePromptLabel, Location(Role::ChallengePrompt, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogGameLink.detailPromptLabel, Location(Role::ChallengeScore, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogGameLink.titlePromptLabel, Location(Role::GameLinkTitle, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogGameLink.detailPromptLabel, Location(Role::GameLinkDetail, Spot::OffBottomFar)),
         UPViewMoveMake(self.dialogGameLink.cancelButton, Location(cancelRole, Spot::OffBottomFar)),
         UPViewMoveMake(self.dialogGameLink.confirmButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
         UPViewMoveMake(self.dialogGameLink.helpButton, Location(Role::GameShareButton, Spot::OffBottomFar)),
@@ -3916,8 +3916,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffTopNear)),
             UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffTopNear)),
             UPViewMoveMake(self.dialogTopMenu.duelButton, Location(Role::DialogButtonTopRight, Spot::OffTopNear)),
-            UPViewMoveMake(self.dialogGameLink.titlePromptLabel, Location(Role::ChallengePrompt, Spot::OffBottomFar)),
-            UPViewMoveMake(self.dialogGameLink.detailPromptLabel, Location(Role::ChallengeScore, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogGameLink.titlePromptLabel, Location(Role::GameLinkTitle, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogGameLink.detailPromptLabel, Location(Role::GameLinkDetail, Spot::OffBottomFar)),
             UPViewMoveMake(self.dialogGameLink.cancelButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
             UPViewMoveMake(self.dialogGameLink.confirmButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
             UPViewMoveMake(self.dialogGameLink.helpButton, Location(Role::GameShareButton, Spot::OffBottomFar)),
