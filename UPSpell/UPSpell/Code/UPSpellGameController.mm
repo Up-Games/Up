@@ -20,8 +20,8 @@
 #import "UPDialogTopMenu.h"
 #import "UPDialogPause.h"
 #import "UPDialogPlayMenu.h"
-#import "UPDialogChallenge.h"
-#import "UPDialogChallengeHelp.h"
+#import "UPDialogGameLink.h"
+#import "UPDialogGameLinkHelp.h"
 #import "UPDialogShareHelp.h"
 #import "UPDialogDuelHelp.h"
 #import "UPSceneDelegate.h"
@@ -38,7 +38,7 @@
 #import "UPTileView.h"
 #import "UPTilePaths.h"
 #import "UPTunePlayer.h"
-#import "UPChallenge.h"
+#import "UPGameLink.h"
 #import "UPPulseView.h"
 #import "UPViewMove+UPSpell.h"
 
@@ -108,12 +108,10 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
     UPSpellGameAlphaStateReasonDefault,
     UPSpellGameAlphaStateReasonInit,
     UPSpellGameAlphaStateReasonPlayMenu,
-    UPSpellGameAlphaStateReasonChallenge,
-    UPSpellGameAlphaStateReasonChallengeHelp,
+    UPSpellGameAlphaStateReasonGameLink,
+    UPSpellGameAlphaStateReasonGameLinkHelp,
     UPSpellGameAlphaStateReasonShareHelp,
-    UPSpellGameAlphaStateReasonDuelHelpFromInit,
-    UPSpellGameAlphaStateReasonDuelHelpFromEnd,
-    UPSpellGameAlphaStateReasonDuelHelpToInit,
+    UPSpellGameAlphaStateReasonDuelHelp,
     UPSpellGameAlphaStateReasonReady,
     UPSpellGameAlphaStateReasonPrePlay,
     UPSpellGameAlphaStateReasonPlay,
@@ -125,7 +123,6 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
     UPSpellGameAlphaStateReasonQuitToEnd,
     UPSpellGameAlphaStateReasonOverToEnd,
     UPSpellGameAlphaStateReasonShareHelpToEnd,
-    UPSpellGameAlphaStateReasonDuelHelpToEnd,
     UPSpellGameAlphaStateReasonOrderOutGameEnd,
 };
 
@@ -145,8 +142,8 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) UPDialogGameOver *dialogGameOver;
 @property (nonatomic) UPDialogPause *dialogPause;
 @property (nonatomic) UPDialogPlayMenu *dialogPlayMenu;
-@property (nonatomic) UPDialogChallenge *dialogChallenge;
-@property (nonatomic) UPDialogChallengeHelp *dialogChallengeHelp;
+@property (nonatomic) UPDialogGameLink *dialogGameLink;
+@property (nonatomic) UPDialogGameLinkHelp *dialogGameLinkHelp;
 @property (nonatomic) UPDialogShareHelp *dialogShareHelp;
 @property (nonatomic) UPDialogDuelHelp *dialogDuelHelp;
 @property (nonatomic) UPDialogTopMenu *dialogTopMenu;
@@ -154,7 +151,8 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) NSInteger lockCount;
 @property (nonatomic) UPChoice *playMenuChoice;
 @property (nonatomic) int endGameScore;
-@property (nonatomic) UPChallenge *challenge;
+@property (nonatomic) UPGameLink *gameLink;
+@property (nonatomic) BOOL gameLinkSender;
 @property (nonatomic) Mode duelHelpReturnMode;
 
 @property (nonatomic) UITouch *activeTouch;
@@ -254,13 +252,13 @@ static UPSpellGameController *_Instance;
     self.dialogPlayMenu.hidden = YES;
     self.dialogPlayMenu.frame = layout.screen_bounds();
     
-    self.dialogChallenge = [UPDialogChallenge instance];
-    [self.view addSubview:self.dialogChallenge];
-    [self.dialogChallenge.cancelButton setTarget:self action:@selector(dialogChallengeCancelButtonTapped:)];
-    [self.dialogChallenge.confirmButton setTarget:self action:@selector(dialogChallengeGoButtonTapped:)];
-    [self.dialogChallenge.helpButton setTarget:self action:@selector(dialogChallengeHelpButtonTapped:)];
-    self.dialogChallenge.hidden = YES;
-    self.dialogChallenge.frame = layout.screen_bounds();
+    self.dialogGameLink = [UPDialogGameLink instance];
+    [self.view addSubview:self.dialogGameLink];
+    [self.dialogGameLink.cancelButton setTarget:self action:@selector(dialogChallengeCancelButtonTapped:)];
+    [self.dialogGameLink.confirmButton setTarget:self action:@selector(dialogChallengeGoButtonTapped:)];
+    [self.dialogGameLink.helpButton setTarget:self action:@selector(dialogGameLinkHelpButtonTapped:)];
+    self.dialogGameLink.hidden = YES;
+    self.dialogGameLink.frame = layout.screen_bounds();
     
     self.dialogShareHelp = [UPDialogShareHelp instance];
     [self.view addSubview:self.dialogShareHelp];
@@ -274,11 +272,11 @@ static UPSpellGameController *_Instance;
     self.dialogDuelHelp.hidden = YES;
     self.dialogDuelHelp.frame = layout.screen_bounds();
 
-    self.dialogChallengeHelp = [UPDialogChallengeHelp instance];
-    [self.view addSubview:self.dialogChallengeHelp];
-    [self.dialogChallengeHelp.okButton setTarget:self action:@selector(dialogChallengeHelpOKButtonTapped:)];
-    self.dialogChallengeHelp.hidden = YES;
-    self.dialogChallengeHelp.frame = layout.screen_bounds();
+    self.dialogGameLinkHelp = [UPDialogGameLinkHelp instance];
+    [self.view addSubview:self.dialogGameLinkHelp];
+    [self.dialogGameLinkHelp.okButton setTarget:self action:@selector(dialogGameLinkHelpOKButtonTapped:)];
+    self.dialogGameLinkHelp.hidden = YES;
+    self.dialogGameLinkHelp.frame = layout.screen_bounds();
     
     self.touchedTileView = nil;
     self.pickedTileView = nil;
@@ -302,9 +300,9 @@ static UPSpellGameController *_Instance;
     
     UPSceneDelegate *sceneDelegate = [UPSceneDelegate instance];
     if (sceneDelegate.challenge) {
-        self.challenge = sceneDelegate.challenge;
+        self.gameLink = sceneDelegate.challenge;
         sceneDelegate.challenge = nil;
-        [self setMode:Mode::Challenge];
+        [self setMode:Mode::GameLink];
     }
 }
 
@@ -802,8 +800,8 @@ static UPSpellGameController *_Instance;
             case UP::Mode::PlayMenu:
             case UP::Mode::ShareHelp:
             case UP::Mode::DuelHelp:
-            case UP::Mode::Challenge:
-            case UP::Mode::ChallengeHelp:
+            case UP::Mode::GameLink:
+            case UP::Mode::GameLinkHelp:
             case UP::Mode::Ready:
             case UP::Mode::Play:
             case UP::Mode::Pause:
@@ -845,20 +843,20 @@ static UPSpellGameController *_Instance;
 
 - (void)dialogChallengeCancelButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
-    ASSERT(self.mode == Mode::Challenge);
+    ASSERT(self.mode == Mode::GameLink);
     [self setMode:Mode::Init];
 }
 
 - (void)dialogChallengeGoButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
-    ASSERT(self.mode == Mode::Challenge);
+    ASSERT(self.mode == Mode::GameLink);
     [self setMode:Mode::Ready];
 }
 
-- (void)dialogChallengeHelpButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+- (void)dialogGameLinkHelpButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
-    ASSERT(self.mode == Mode::Challenge);
-    [self setMode:Mode::ChallengeHelp];
+    ASSERT(self.mode == Mode::GameLink);
+    [self setMode:Mode::GameLinkHelp];
 }
 
 - (void)roundButtonPauseTapped
@@ -946,10 +944,10 @@ static UPSpellGameController *_Instance;
     settings.showDuelHelp = NO;
 }
 
-- (void)dialogChallengeHelpOKButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+- (void)dialogGameLinkHelpOKButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
-    ASSERT(self.mode == Mode::ChallengeHelp);
-    [self setMode:Mode::Challenge];
+    ASSERT(self.mode == Mode::GameLinkHelp);
+    [self setMode:Mode::GameLink];
 }
 
 #pragma mark - Actions
@@ -1787,8 +1785,7 @@ static UPSpellGameController *_Instance;
     ASSERT(self.lockCount > 0);
     
     switch (reason) {
-        case UPSpellGameAlphaStateReasonInit:
-        case UPSpellGameAlphaStateReasonDuelHelpToInit: {
+        case UPSpellGameAlphaStateReasonInit: {
             CGFloat alpha = [UIColor themeDisabledAlpha];
             for (UIView *view in self.gameView.interactiveSubviews) {
                 view.alpha = alpha;
@@ -1848,7 +1845,22 @@ static UPSpellGameController *_Instance;
             m_alpha_reason_stack.clear();
             break;
         }
-        case UPSpellGameAlphaStateReasonDuelHelpFromInit: {
+        case UPSpellGameAlphaStateReasonDuelHelp: {
+            CGFloat alpha = 0.03;
+            for (UIView *view in self.gameView.interactiveSubviews) {
+                view.alpha = alpha;
+            }
+            for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.duelButton ]) {
+                view.alpha = alpha;
+            }
+            for (UIView *view in @[ self.dialogGameOver.noteLabel, self.dialogGameOver.messagePathView ]) {
+                view.alpha = 0;
+            }
+            self.dialogGameOver.shareButton.alpha = [UIColor themeDisabledAlpha];
+            m_alpha_reason_stack.clear();
+            break;
+        }
+        case UPSpellGameAlphaStateReasonShareHelp: {
             CGFloat alpha = 0.03;
             for (UIView *view in self.gameView.interactiveSubviews) {
                 if (view == self.gameView.timerLabel && self.gameView.timerLabel.alpha == 0) {
@@ -1866,26 +1878,7 @@ static UPSpellGameController *_Instance;
             m_alpha_reason_stack.clear();
             break;
         }
-        case UPSpellGameAlphaStateReasonDuelHelpFromEnd:
-        case UPSpellGameAlphaStateReasonShareHelp: {
-            CGFloat alpha = 0.03;
-            for (UIView *view in self.gameView.interactiveSubviews) {
-                if (view == self.gameView.timerLabel) {
-                    continue;
-                }
-                view.alpha = alpha;
-            }
-            for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.duelButton ]) {
-                view.alpha = alpha;
-            }
-            for (UIView *view in @[ self.dialogGameOver.noteLabel, self.dialogGameOver.messagePathView ]) {
-                view.alpha = 0;
-            }
-            self.dialogGameOver.shareButton.alpha = [UIColor themeDisabledAlpha];
-            m_alpha_reason_stack.clear();
-            break;
-        }
-        case UPSpellGameAlphaStateReasonChallenge: {
+        case UPSpellGameAlphaStateReasonGameLink: {
             CGFloat alpha = 0.03;
             for (UIView *view in self.gameView.interactiveSubviews) {
                 view.alpha = alpha;
@@ -1893,12 +1886,12 @@ static UPSpellGameController *_Instance;
             for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.duelButton ]) {
                 view.alpha = alpha;
             }
-            self.dialogChallenge.alpha = 1;
+            self.dialogGameLink.alpha = 1;
             m_alpha_reason_stack.clear();
             break;
         }
-        case UPSpellGameAlphaStateReasonChallengeHelp: {
-            self.dialogChallenge.alpha = 0;
+        case UPSpellGameAlphaStateReasonGameLinkHelp: {
+            self.dialogGameLink.alpha = 0;
             m_alpha_reason_stack.clear();
             break;
         }
@@ -1974,7 +1967,6 @@ static UPSpellGameController *_Instance;
             m_alpha_reason_stack.clear();
             break;
         }
-        case UPSpellGameAlphaStateReasonDuelHelpToEnd:
         case UPSpellGameAlphaStateReasonShareHelpToEnd:
         case UPSpellGameAlphaStateReasonOverToEnd: {
             CGFloat alpha = [UIColor themeModalBackgroundAlpha];
@@ -2476,9 +2468,9 @@ static UPSpellGameController *_Instance;
     });
 }
 
-- (void)viewOrderInChallengeFromMode:(Mode)mode
+- (void)viewOrderInGameLinkFromMode:(Mode)mode
 {
-    ASSERT(self.challenge);
+    ASSERT(self.gameLink);
     
     [self viewLock];
     
@@ -2514,45 +2506,71 @@ static UPSpellGameController *_Instance;
     self.dialogTopMenuUserInteractionEnabled = NO;
     
     // Show the logo interstitial
-    [self.dialogChallenge updateThemeColors];
-    [self.dialogChallenge updateWithChallenge:self.challenge];
-    self.dialogChallenge.hidden = NO;
-    self.dialogChallenge.alpha = 1;
-    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonChallenge];
+    [self.dialogGameLink updateThemeColors];
+    [self.dialogGameLink updateWithGameLink:self.gameLink];
+    self.dialogGameLink.hidden = NO;
+    self.dialogGameLink.alpha = 1;
     
-    Role cancelRole = self.challenge.valid ? Role::DialogButtonAlternativeResponse : Role::DialogButtonCenterResponse;
-    if (!self.challenge.valid) {
-        self.challenge = nil;
+    Role cancelRole = self.gameLink.valid ? Role::DialogButtonAlternativeResponse : Role::DialogButtonCenterResponse;
+    if (!self.gameLink.valid) {
+        self.gameLink = nil;
     }
 
-    self.dialogChallenge.logoView.frame = layout.frame_for(Role::HeroLogo);
-    self.dialogChallenge.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark);
-    self.dialogChallenge.challengePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Spot::OffBottomFar);
-    self.dialogChallenge.scorePromptLabel.frame = layout.frame_for(Role::ChallengeScore, Spot::OffBottomFar);
-    self.dialogChallenge.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Spot::OffBottomNear);
-    self.dialogChallenge.cancelButton.frame = layout.frame_for(cancelRole, Spot::OffBottomNear);
-    self.dialogChallenge.helpButton.frame = layout.frame_for(Role::DialogHelpButton, Spot::OffBottomNear);
+    if (self.gameLinkSender) {
+        self.dialogGameLink.logoView.frame = layout.frame_for(Role::HeroLogo, Spot::OffBottomFar);
+        self.dialogGameLink.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark, Spot::OffBottomFar);
+    }
+    else {
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGameLink];
+        self.dialogGameLink.logoView.frame = layout.frame_for(Role::HeroLogo);
+        self.dialogGameLink.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark);
+    }
     
-    delay(BandModeDelay, 1.1, ^{
-        // Move the logo interstitial out
-        NSArray<UPViewMove *> *logoMoves = @[
-            UPViewMoveMake(self.dialogChallenge.logoView, Location(Role::HeroLogo, Spot::OffBottomFar)),
-            UPViewMoveMake(self.dialogChallenge.wordMarkLabel, Location(Role::HeroWordMark, Spot::OffBottomFar)),
+    self.dialogGameLink.titlePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Spot::OffBottomFar);
+    self.dialogGameLink.detailPromptLabel.frame = layout.frame_for(Role::ChallengeScore, Spot::OffBottomFar);
+    self.dialogGameLink.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Spot::OffBottomNear);
+    self.dialogGameLink.cancelButton.frame = layout.frame_for(cancelRole, Spot::OffBottomNear);
+    self.dialogGameLink.helpButton.frame = layout.frame_for(Role::DialogHelpButton, Spot::OffBottomNear);
+
+    void (^bottomHalf)(void) = ^{
+        // Move the challenge dialog in
+        NSArray<UPViewMove *> *commonShareMoves = @[
+            UPViewMoveMake(self.dialogGameLink.titlePromptLabel, Location(Role::ChallengePrompt)),
+            UPViewMoveMake(self.dialogGameLink.detailPromptLabel, Location(Role::ChallengeScore)),
+            UPViewMoveMake(self.dialogGameLink.confirmButton, Location(Role::DialogButtonDefaultResponse)),
+            UPViewMoveMake(self.dialogGameLink.cancelButton, cancelRole)
         ];
-        start(bloop_out(BandModeUI, logoMoves, 0.4,  ^(UIViewAnimatingPosition) {
-            // Move the challenge dialog in
-            NSArray<UPViewMove *> *shareMoves = @[
-                UPViewMoveMake(self.dialogChallenge.challengePromptLabel, Location(Role::ChallengePrompt)),
-                UPViewMoveMake(self.dialogChallenge.scorePromptLabel, Location(Role::ChallengeScore)),
-                UPViewMoveMake(self.dialogChallenge.confirmButton, Location(Role::DialogButtonDefaultResponse)),
-                UPViewMoveMake(self.dialogChallenge.cancelButton, cancelRole),
-                UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::DialogHelpButton)),
-            ];
-            start(bloop_in(BandModeUI, shareMoves, 0.4,  ^(UIViewAnimatingPosition) {
-                [self viewUnlock];
-            }));
+        UPViewMove *helpButtonMove = UPViewMoveMake(self.dialogGameLink.helpButton, Location(Role::DialogHelpButton));
+        NSMutableArray<UPViewMove *> *shareMoves = [NSMutableArray array];
+        [shareMoves addObjectsFromArray:commonShareMoves];
+        if (!self.gameLinkSender) {
+            [shareMoves addObject:helpButtonMove];
+        }
+        start(bloop_in(BandModeUI, shareMoves, 0.4,  ^(UIViewAnimatingPosition) {
+            [self viewUnlock];
         }));
-    });
+    };
+    
+    if (!self.gameLinkSender) {
+        delay(BandModeDelay, 1.1, ^{
+            // Move the logo interstitial out
+            NSArray<UPViewMove *> *logoMoves = @[
+                UPViewMoveMake(self.dialogGameLink.logoView, Location(Role::HeroLogo, Spot::OffBottomFar)),
+                UPViewMoveMake(self.dialogGameLink.wordMarkLabel, Location(Role::HeroWordMark, Spot::OffBottomFar)),
+            ];
+            start(bloop_out(BandModeUI, logoMoves, 0.4,  ^(UIViewAnimatingPosition) {
+                bottomHalf();
+            }));
+        });
+    }
+    else {
+//        delay(BandModeDelay, 0.25, ^{
+            [UIView animateWithDuration:0.4 animations:^{
+                [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGameLink];
+            }];
+            bottomHalf();
+//        });
+    }
 }
 
 - (void)viewOrderOutGameEnd
@@ -2577,9 +2595,9 @@ static UPSpellGameController *_Instance;
     self.dialogShareHelp.titleLabel.center = layout.center_for(Role::DialogHelpTitle, Spot::OffBottomFar);
     self.dialogShareHelp.helpLabelContainer.center = layout.center_for(Role::DialogHelpText, Spot::OffBottomFar);
     self.dialogShareHelp.okButton.center = layout.center_for(Role::DialogHelpOKButton, Spot::OffBottomNear);
-    self.dialogChallengeHelp.titleLabel.center = layout.center_for(Role::DialogHelpTitle, Spot::OffBottomFar);
-    self.dialogChallengeHelp.helpLabelContainer.center = layout.center_for(Role::DialogHelpText, Spot::OffBottomFar);
-    self.dialogChallengeHelp.okButton.center = layout.center_for(Role::DialogHelpOKButton, Spot::OffBottomNear);
+    self.dialogGameLinkHelp.titleLabel.center = layout.center_for(Role::DialogHelpTitle, Spot::OffBottomFar);
+    self.dialogGameLinkHelp.helpLabelContainer.center = layout.center_for(Role::DialogHelpText, Spot::OffBottomFar);
+    self.dialogGameLinkHelp.okButton.center = layout.center_for(Role::DialogHelpOKButton, Spot::OffBottomNear);
 }
 
 - (void)viewOrderInDialogShareHelp
@@ -2624,12 +2642,7 @@ static UPSpellGameController *_Instance;
     self.dialogTopMenu.duelButton.highlighted = YES;
     
     [UIView animateWithDuration:0.3 animations:^{
-        if (self.duelHelpReturnMode == Mode::End) {
-            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonDuelHelpFromEnd];
-        }
-        else {
-            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonDuelHelpFromInit];
-        }
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonDuelHelp];
     } completion:nil];
     
     SpellLayout &layout = SpellLayout::instance();
@@ -2640,13 +2653,41 @@ static UPSpellGameController *_Instance;
     self.dialogDuelHelp.alpha = 1;
     
     self.dialogTopMenuUserInteractionEnabled = NO;
-    
+
+    [UIView animateWithDuration:0.2 animations:^{
+        self.dialogGameOver.messagePathView.alpha = 0;
+        self.dialogGameOver.noteLabel.alpha = 0;
+        self.dialogGameOver.shareButton.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.dialogGameOver.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
+        self.dialogGameOver.noteLabel.frame = layout.frame_for(Role::DialogGameNote, Spot::OffBottomFar);
+        self.dialogGameOver.shareButton.frame = layout.frame_for(Role::GameShareButton, Spot::OffBottomFar);
+        self.dialogGameOver.shareButton.highlightedLocked = NO;
+        self.dialogGameOver.shareButton.highlighted = NO;
+    }];
+
     NSArray<UPViewMove *> *moves = @[
-        UPViewMoveMake(self.dialogDuelHelp.titleLabel, Location(Role::DialogDuelHelpTitle)),
-        UPViewMoveMake(self.dialogDuelHelp.helpLabelContainer, Location(Role::DialogDuelHelpText)),
-        UPViewMoveMake(self.dialogDuelHelp.okButton, Location(Role::DialogDuelHelpOKButton)),
+        UPViewMoveMake(self.dialogDuelHelp.titleLabel, Role::DialogDuelHelpTitle),
+        UPViewMoveMake(self.dialogDuelHelp.helpLabelContainer, Role::DialogDuelHelpText),
+        UPViewMoveMake(self.dialogDuelHelp.okButton, Role::DialogDuelHelpOKButton),
     ];
     start(bloop_in(BandModeUI, moves, 0.4,  ^(UIViewAnimatingPosition) {
+        [self.gameTimer reset];
+        [self viewUpdateGameControls];
+        [self viewFillUpSpellTileViews];
+        
+        self.dialogGameOver.messagePathView.alpha = 1;
+        self.dialogGameOver.noteLabel.alpha = 1;
+        self.dialogGameOver.shareButton.alpha = 1;
+        self.dialogGameOver.shareButton.highlightedLocked = NO;
+        self.dialogGameOver.shareButton.highlighted = NO;
+        [self setGameOverViewsHidden:YES];
+        
+        self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
+        self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
+        
+        self.gameLinkSender = NO;
+
         [self viewEnsureUnlocked];
     }));
 }
@@ -2683,12 +2724,7 @@ static UPSpellGameController *_Instance;
     self.dialogTopMenuUserInteractionEnabled = YES;
     
     [UIView animateWithDuration:0.3 delay:0.3 options:0 animations:^{
-        if (self.duelHelpReturnMode == Mode::End) {
-            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonDuelHelpToEnd];
-        }
-        else {
-            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonDuelHelpToInit];
-        }
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
     } completion:nil];
     
     NSArray<UPViewMove *> *moves = @[
@@ -2706,58 +2742,59 @@ static UPSpellGameController *_Instance;
     }));
 }
 
-- (void)viewOrderInDialogChallengeHelp
+- (void)viewOrderInDialogGameLinkHelp
 {
     [self viewLock];
     
-    [self.dialogChallengeHelp updateThemeColors];
+    [self.dialogGameLinkHelp updateWithGameLink:self.gameLink];
+    [self.dialogGameLinkHelp updateThemeColors];
     
-    self.dialogChallenge.helpButton.highlightedLocked = YES;
-    self.dialogChallenge.helpButton.highlighted = YES;
+    self.dialogGameLink.helpButton.highlightedLocked = YES;
+    self.dialogGameLink.helpButton.highlighted = YES;
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonChallengeHelp];
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGameLinkHelp];
     } completion:nil];
     
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogChallengeHelp.titleLabel.center = layout.center_for(Role::DialogHelpTitle, Spot::OffBottomFar);
-    self.dialogChallengeHelp.helpLabelContainer.center = layout.center_for(Role::DialogHelpText, Spot::OffBottomFar);
-    self.dialogChallengeHelp.okButton.center = layout.center_for(Role::DialogHelpOKButton, Spot::OffBottomFar);
-    self.dialogChallengeHelp.hidden = NO;
-    self.dialogChallengeHelp.alpha = 1;
+    self.dialogGameLinkHelp.titleLabel.center = layout.center_for(Role::DialogHelpTitle, Spot::OffBottomFar);
+    self.dialogGameLinkHelp.helpLabelContainer.center = layout.center_for(Role::DialogHelpText, Spot::OffBottomFar);
+    self.dialogGameLinkHelp.okButton.center = layout.center_for(Role::DialogHelpOKButton, Spot::OffBottomFar);
+    self.dialogGameLinkHelp.hidden = NO;
+    self.dialogGameLinkHelp.alpha = 1;
     
     self.dialogTopMenuUserInteractionEnabled = NO;
     
     NSArray<UPViewMove *> *moves = @[
-        UPViewMoveMake(self.dialogChallengeHelp.titleLabel, Location(Role::DialogHelpTitle)),
-        UPViewMoveMake(self.dialogChallengeHelp.helpLabelContainer, Location(Role::DialogHelpText)),
-        UPViewMoveMake(self.dialogChallengeHelp.okButton, Location(Role::DialogHelpOKButton)),
+        UPViewMoveMake(self.dialogGameLinkHelp.titleLabel, Location(Role::DialogHelpTitle)),
+        UPViewMoveMake(self.dialogGameLinkHelp.helpLabelContainer, Location(Role::DialogHelpText)),
+        UPViewMoveMake(self.dialogGameLinkHelp.okButton, Location(Role::DialogHelpOKButton)),
     ];
     start(bloop_in(BandModeUI, moves, 0.4,  ^(UIViewAnimatingPosition) {
         [self viewEnsureUnlocked];
     }));
 }
 
-- (void)viewOrderOutDialogChallengeHelpWithCompletion:(void (^)(void))completion
+- (void)viewOrderOutDialogGameLinkHelpWithCompletion:(void (^)(void))completion
 {
     [self viewLock];
     
     self.dialogTopMenuUserInteractionEnabled = YES;
     
     [UIView animateWithDuration:0.3 delay:0.3 options:0 animations:^{
-        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonChallenge];
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGameLink];
     } completion:nil];
     
     NSArray<UPViewMove *> *moves = @[
-        UPViewMoveMake(self.dialogChallengeHelp.titleLabel, Location(Role::DialogHelpTitle, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogChallengeHelp.helpLabelContainer, Location(Role::DialogHelpText, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogChallengeHelp.okButton, Location(Role::DialogHelpOKButton, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogGameLinkHelp.titleLabel, Location(Role::DialogHelpTitle, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogGameLinkHelp.helpLabelContainer, Location(Role::DialogHelpText, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogGameLinkHelp.okButton, Location(Role::DialogHelpOKButton, Spot::OffBottomFar)),
     ];
     start(bloop_out(BandModeUI, moves, 0.4,  ^(UIViewAnimatingPosition) {
-        self.dialogChallengeHelp.hidden = YES;
-        self.dialogChallengeHelp.alpha = 1;
-        self.dialogChallenge.helpButton.highlightedLocked = NO;
-        self.dialogChallenge.helpButton.highlighted = NO;
+        self.dialogGameLinkHelp.hidden = YES;
+        self.dialogGameLinkHelp.alpha = 1;
+        self.dialogGameLink.helpButton.highlightedLocked = NO;
+        self.dialogGameLink.helpButton.highlighted = NO;
         [self viewEnsureUnlocked];
         if (completion) {
             completion();
@@ -2815,15 +2852,15 @@ static UPSpellGameController *_Instance;
     self.dialogPlayMenu.goButton.highlightedLocked = NO;
     self.dialogPlayMenu.goButton.highlighted = NO;
 
-    self.dialogChallenge.logoView.frame = layout.frame_for(Role::HeroLogo, Spot::OffBottomNear);
-    self.dialogChallenge.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark, Spot::OffBottomNear);
-    self.dialogChallenge.challengePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Spot::OffBottomFar);
-    self.dialogChallenge.scorePromptLabel.frame = layout.frame_for(Role::ChallengeScore, Spot::OffBottomNear);
-    self.dialogChallenge.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Spot::OffBottomNear);
-    self.dialogChallenge.cancelButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomNear);
-    self.dialogChallenge.helpButton.frame = layout.frame_for(Role::DialogHelpButton, Spot::OffBottomNear);
-    self.dialogChallenge.helpButton.highlightedLocked = NO;
-    self.dialogChallenge.helpButton.highlighted = NO;
+    self.dialogGameLink.logoView.frame = layout.frame_for(Role::HeroLogo, Spot::OffBottomNear);
+    self.dialogGameLink.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark, Spot::OffBottomNear);
+    self.dialogGameLink.titlePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Spot::OffBottomFar);
+    self.dialogGameLink.detailPromptLabel.frame = layout.frame_for(Role::ChallengeScore, Spot::OffBottomNear);
+    self.dialogGameLink.confirmButton.frame = layout.frame_for(Role::DialogButtonDefaultResponse, Spot::OffBottomNear);
+    self.dialogGameLink.cancelButton.frame = layout.frame_for(Role::DialogButtonAlternativeResponse, Spot::OffBottomNear);
+    self.dialogGameLink.helpButton.frame = layout.frame_for(Role::DialogHelpButton, Spot::OffBottomNear);
+    self.dialogGameLink.helpButton.highlightedLocked = NO;
+    self.dialogGameLink.helpButton.highlighted = NO;
 
     self.dialogShareHelp.titleLabel.frame = layout.frame_for(Role::DialogHelpTitle, Spot::OffBottomFar);
     self.dialogShareHelp.helpLabelContainer.frame = layout.frame_for(Role::DialogHelpText, Spot::OffBottomFar);
@@ -2833,18 +2870,18 @@ static UPSpellGameController *_Instance;
     self.dialogDuelHelp.helpLabelContainer.frame = layout.frame_for(Role::DialogHelpText, Spot::OffBottomFar);
     self.dialogDuelHelp.okButton.frame = layout.frame_for(Role::DialogHelpOKButton, Spot::OffBottomNear);
 
-    self.dialogChallengeHelp.titleLabel.frame = layout.frame_for(Role::DialogHelpTitle, Spot::OffBottomFar);
-    self.dialogChallengeHelp.helpLabelContainer.frame = layout.frame_for(Role::DialogHelpText, Spot::OffBottomFar);
-    self.dialogChallengeHelp.okButton.frame = layout.frame_for(Role::DialogHelpOKButton, Spot::OffBottomNear);
+    self.dialogGameLinkHelp.titleLabel.frame = layout.frame_for(Role::DialogHelpTitle, Spot::OffBottomFar);
+    self.dialogGameLinkHelp.helpLabelContainer.frame = layout.frame_for(Role::DialogHelpText, Spot::OffBottomFar);
+    self.dialogGameLinkHelp.okButton.frame = layout.frame_for(Role::DialogHelpOKButton, Spot::OffBottomNear);
     
-    self.dialogChallenge.alpha = 1;
-    self.dialogChallenge.hidden = YES;
+    self.dialogGameLink.alpha = 1;
+    self.dialogGameLink.hidden = YES;
     self.dialogShareHelp.alpha = 1;
     self.dialogShareHelp.hidden = YES;
     self.dialogDuelHelp.alpha = 1;
     self.dialogDuelHelp.hidden = YES;
-    self.dialogChallengeHelp.alpha = 1;
-    self.dialogChallengeHelp.hidden = YES;
+    self.dialogGameLinkHelp.alpha = 1;
+    self.dialogGameLinkHelp.hidden = YES;
     self.dialogPlayMenu.alpha = 1;
     self.dialogPlayMenu.hidden = YES;
 
@@ -2853,6 +2890,8 @@ static UPSpellGameController *_Instance;
     self.gameView.gameScoreLabel.alpha = 1;
     self.gameView.timerLabel.alpha = 1;
     self.gameView.pulseView.alpha = 0;
+    
+    self.gameLinkSender = NO;
     
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
     
@@ -2920,7 +2959,7 @@ static UPSpellGameController *_Instance;
         });
     };
     
-    BOOL comingFromPlayMenuOrChallenge = mode == Mode::PlayMenu || mode == Mode::Challenge;
+    BOOL comingFromPlayMenuOrChallenge = mode == Mode::PlayMenu || mode == Mode::GameLink;
     if (comingFromPlayMenuOrChallenge) {
         self.dialogGameOver.messagePathView.transform = CGAffineTransformIdentity;
         bottomHalf();
@@ -3129,9 +3168,15 @@ static UPSpellGameController *_Instance;
         return;
     }
     
-    if (self.challenge) {
-        m_spell_model = std::make_shared<SpellModel>(GameKey(self.challenge.gameKey.value), self.challenge.score);
-        self.challenge = nil;
+    if (self.gameLink) {
+        if (self.gameLink.type == UPGameLinkTypeChallenge) {
+            m_spell_model = std::make_shared<SpellModel>(GameKey(self.gameLink.gameKey.value), self.gameLink.score);
+        }
+        else {
+            m_spell_model = std::make_shared<SpellModel>(GameKey(self.gameLink.gameKey.value));
+        }
+        self.gameLink = nil;
+        self.gameLinkSender = NO;
     }
     else if (self.playMenuChoice && self.playMenuChoice.tag != UPDialogPlayMenuChoiceNewGame) {
         UPSpellDossier *dossier = [UPSpellDossier instance];
@@ -3273,26 +3318,63 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 {
     self.dialogTopMenu.duelButton.highlightedLocked = YES;
     self.dialogTopMenu.duelButton.highlighted = YES;
-    
-    UPGameKey *inviteGameKey = self.challenge ? self.challenge.gameKey : [UPGameKey randomGameKey];
-    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithDuelGameKey:inviteGameKey];
+
+    SpellLayout &layout = SpellLayout::instance();
+
+    [UIView animateWithDuration:0.35 animations:^{
+        self.dialogGameOver.messagePathView.alpha = 0;
+        self.dialogGameOver.noteLabel.alpha = 0;
+        self.dialogGameOver.shareButton.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.dialogGameOver.messagePathView.frame = layout.frame_for(Role::DialogMessageVerticallyCentered, Spot::OffBottomNear);
+        self.dialogGameOver.noteLabel.frame = layout.frame_for(Role::DialogGameNote, Spot::OffBottomFar);
+        self.dialogGameOver.shareButton.frame = layout.frame_for(Role::GameShareButton, Spot::OffBottomFar);
+        self.dialogGameOver.shareButton.highlightedLocked = NO;
+        self.dialogGameOver.shareButton.highlighted = NO;
+    }];
+
+    UPGameKey *duelGameKey = [UPGameKey randomGameKey];
+    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithDuelGameKey:duelGameKey];
     __weak UPActivityViewController *weakActivityViewController = activityViewController;
     activityViewController.completionWithItemsHandler = ^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         if (completed) {
-            self->_challenge = [UPChallenge challengeWithGameKey:inviteGameKey score:-1];
+            self.gameLinkSender = YES;
+            self.gameLink = [UPGameLink duelGameLinkWithGameKey:duelGameKey];
         }
-        [self inviteShareSheetDismissed];
+        else {
+            self.gameLinkSender = NO;
+        }
+        [self duelShareSheetDismissed];
         weakActivityViewController.completionWithItemsHandler = nil;
     };
-    [self presentViewController:activityViewController animated:YES completion:nil];
+    [self presentViewController:activityViewController animated:YES completion:^{
+        [self viewLock];
+        
+        [self.gameTimer reset];
+        [self viewUpdateGameControls];
+        [self viewFillUpSpellTileViews];
+        
+        self.dialogGameOver.messagePathView.alpha = 1;
+        self.dialogGameOver.noteLabel.alpha = 1;
+        self.dialogGameOver.shareButton.alpha = 1;
+        self.dialogGameOver.shareButton.highlightedLocked = NO;
+        self.dialogGameOver.shareButton.highlighted = NO;
+        [self setGameOverViewsHidden:YES];
+        
+        self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
+        self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
+
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
+
+        [self viewEnsureUnlocked];
+    }];
 }
 
-- (void)inviteShareSheetDismissed
+- (void)duelShareSheetDismissed
 {
     self.dialogTopMenu.duelButton.highlightedLocked = NO;
     self.dialogTopMenu.duelButton.highlighted = NO;
 }
-
 
 #pragma mark - Share
 
@@ -3318,17 +3400,17 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 #pragma mark - Challenges
 
-- (void)setChallenge:(UPChallenge *)challenge
+- (void)setGameLink:(UPGameLink *)gameLink
 {
-    BOOL requestValid = challenge != nil;
-    BOOL modeValid = self.mode == Mode::Init || self.mode == Mode::Pause || self.mode == Mode::Challenge;
+    BOOL requestValid = gameLink != nil;
+    BOOL modeValid = self.mode == Mode::Init || self.mode == Mode::Pause || self.mode == Mode::GameLink;
     
     if (requestValid && modeValid) {
-        _challenge = challenge;
-        [self setMode:Mode::Challenge];
+        _gameLink = gameLink;
+        [self setMode:Mode::GameLink];
     }
     else {
-        _challenge = nil;
+        _gameLink = nil;
     }
 }
 
@@ -3569,8 +3651,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             case UP::Mode::Ready:
             case UP::Mode::ShareHelp:
             case UP::Mode::DuelHelp:
-            case UP::Mode::Challenge:
-            case UP::Mode::ChallengeHelp:
+            case UP::Mode::GameLink:
+            case UP::Mode::GameLinkHelp:
             case UP::Mode::GameOver:
             case UP::Mode::Quit:
             case UP::Mode::End:
@@ -3590,33 +3672,33 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Init,          Mode::About,         @selector(modeTransitionFromInitToAbout) },
         { Mode::Init,          Mode::Extras,        @selector(modeTransitionFromInitToExtras) },
         { Mode::Init,          Mode::PlayMenu,      @selector(modeTransitionFromInitToPlayMenu) },
-        { Mode::Init,          Mode::Challenge,     @selector(modeTransitionFromInitToChallenge) },
+        { Mode::Init,          Mode::GameLink,      @selector(modeTransitionFromInitToGameLink) },
         { Mode::Init,          Mode::Ready,         @selector(modeTransitionFromInitToReady) },
-        { Mode::Init,          Mode::DuelHelp,    @selector(modeTransitionFromInitToDuelHelp) },
-        { Mode::DuelHelp,    Mode::Init,          @selector(modeTransitionFromDuelHelpToInit) },
+        { Mode::Init,          Mode::DuelHelp,      @selector(modeTransitionFromInitToDuelHelp) },
+        { Mode::DuelHelp,      Mode::Init,          @selector(modeTransitionFromDuelHelpToInit) },
         { Mode::About,         Mode::Init,          @selector(modeTransitionFromAboutToInit) },
         { Mode::Extras,        Mode::Init,          @selector(modeTransitionFromExtrasToInit) },
         { Mode::PlayMenu,      Mode::Init,          @selector(modeTransitionFromPlayMenuToInit) },
         { Mode::PlayMenu,      Mode::Ready,         @selector(modeTransitionFromPlayMenuToReady) },
-        { Mode::Challenge,     Mode::Init,          @selector(modeTransitionFromChallengeToInit) },
-        { Mode::Challenge,     Mode::ChallengeHelp, @selector(modeTransitionFromChallengeToChallengeHelp) },
-        { Mode::ChallengeHelp, Mode::Challenge,     @selector(modeTransitionFromChallengeHelpToChallenge) },
-        { Mode::Challenge,     Mode::Ready,         @selector(modeTransitionFromChallengeToReady) },
+        { Mode::GameLink,      Mode::Init,          @selector(modeTransitionFromGameLinkToInit) },
+        { Mode::GameLink,      Mode::GameLinkHelp,  @selector(modeTransitionFromGameLinkToGameLinkHelp) },
+        { Mode::GameLinkHelp,  Mode::GameLink,      @selector(modeTransitionFromGameLinkHelpToGameLink) },
+        { Mode::GameLink,      Mode::Ready,         @selector(modeTransitionFromChallengeToReady) },
         { Mode::Ready,         Mode::Play,          @selector(modeTransitionFromReadyToPlay) },
         { Mode::Play,          Mode::Pause,         @selector(modeTransitionFromPlayToPause) },
         { Mode::Play,          Mode::GameOver,      @selector(modeTransitionFromPlayToGameOver) },
-        { Mode::Pause,         Mode::Challenge,     @selector(modeTransitionFromPauseToChallenge) },
+        { Mode::Pause,         Mode::GameLink,      @selector(modeTransitionFromPauseToChallenge) },
         { Mode::Pause,         Mode::Play,          @selector(modeTransitionFromPauseToPlay) },
         { Mode::Pause,         Mode::Quit,          @selector(modeTransitionFromPauseToQuit) },
         { Mode::GameOver,      Mode::End,           @selector(modeTransitionFromOverToEnd) },
         { Mode::End,           Mode::About,         @selector(modeTransitionFromEndToAbout) },
-        { Mode::End,           Mode::DuelHelp,    @selector(modeTransitionFromEndToDuelHelp) },
+        { Mode::End,           Mode::DuelHelp,      @selector(modeTransitionFromEndToDuelHelp) },
         { Mode::End,           Mode::Extras,        @selector(modeTransitionFromEndToExtras) },
         { Mode::End,           Mode::PlayMenu,      @selector(modeTransitionFromEndToPlayMenu) },
         { Mode::End,           Mode::Ready,         @selector(modeTransitionFromEndToReady) },
         { Mode::End,           Mode::ShareHelp,     @selector(modeTransitionFromEndToShareHelp) },
         { Mode::ShareHelp,     Mode::End,           @selector(modeTransitionFromShareHelpToEnd) },
-        { Mode::DuelHelp,    Mode::End,           @selector(modeTransitionFromDuelHelpToEnd) },
+        { Mode::DuelHelp,      Mode::End,           @selector(modeTransitionFromDuelHelpToEnd) },
         { Mode::Quit,          Mode::End,           @selector(modeTransitionFromQuitToEnd) },
     };
     
@@ -3638,12 +3720,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     m_did_enter_background_transition_table = {
         { Mode::Play,          Mode::Pause, @selector(modeTransitionImmediateFromPlayToPause) },
-        { Mode::Challenge,     Mode::Init,  @selector(modeTransitionImmediateFromChallengeToInit) },
-        { Mode::ChallengeHelp, Mode::Init,  @selector(modeTransitionImmediateFromChallengeHelpToInit) },
+        { Mode::GameLink,      Mode::Init,  @selector(modeTransitionImmediateFromGameLinkToInit) },
+        { Mode::GameLinkHelp, Mode::Init,  @selector(modeTransitionImmediateFromGameLinkHelpToInit) },
         { Mode::GameOver,      Mode::Init,  @selector(modeTransitionImmediateFromGameOverToInit) },
         { Mode::Quit,          Mode::Init,  @selector(modeTransitionImmediateFromQuitToInit) },
         { Mode::ShareHelp,     Mode::Init,  @selector(modeTransitionImmediateFromShareHelpToInit) },
-        { Mode::DuelHelp,    Mode::Init,  @selector(modeTransitionImmediateFromDuelHelpToInit) },
+        { Mode::DuelHelp,      Mode::Init,  @selector(modeTransitionImmediateFromDuelHelpToInit) },
         { Mode::End,           Mode::Init,  @selector(modeTransitionImmediateFromEndToInit) },
     };
 }
@@ -3761,10 +3843,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewOrderInPlayMenuFromMode:Mode::Init];
 }
 
-- (void)modeTransitionFromInitToChallenge
+- (void)modeTransitionFromInitToGameLink
 {
-    ASSERT(self.challenge);
-    [self viewOrderInChallengeFromMode:Mode::Init];
+    ASSERT(self.gameLink);
+    [self viewOrderInGameLinkFromMode:Mode::Init];
 }
 
 - (void)modeTransitionFromInitToReady
@@ -3828,28 +3910,28 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     });
 }
 
-- (void)modeTransitionFromChallengeToChallengeHelp
+- (void)modeTransitionFromGameLinkToGameLinkHelp
 {
     [self viewLock];
-    [self viewOrderInDialogChallengeHelp];
+    [self viewOrderInDialogGameLinkHelp];
     [self viewEnsureUnlocked];
 }
 
-- (void)modeTransitionFromChallengeHelpToChallenge
+- (void)modeTransitionFromGameLinkHelpToGameLink
 {
     [self viewLock];
-    [self viewOrderOutDialogChallengeHelpWithCompletion:nil];
+    [self viewOrderOutDialogGameLinkHelpWithCompletion:nil];
     [self viewEnsureUnlocked];
 }
 
-- (void)modeTransitionImmediateFromChallengeToInit
+- (void)modeTransitionImmediateFromGameLinkToInit
 {
     [self viewLock];
     [self viewImmediateTransitionToInit];
     [self viewEnsureUnlocked];
 }
 
-- (void)modeTransitionImmediateFromChallengeHelpToInit
+- (void)modeTransitionImmediateFromGameLinkHelpToInit
 {
     [self viewLock];
     [self viewImmediateTransitionToInit];
@@ -3928,29 +4010,29 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
 }
 
-- (void)modeTransitionFromChallengeToInit
+- (void)modeTransitionFromGameLinkToInit
 {
     [self viewLock];
     
     [self clearGameModel];
 
     // This is tricky. If the challenge wasn't valid, the confirmButton will be hidden.
-    Role cancelRole = self.dialogChallenge.confirmButton.hidden ? Role::DialogButtonCenterResponse : Role::DialogButtonAlternativeResponse;
+    Role cancelRole = self.dialogGameLink.confirmButton.hidden ? Role::DialogButtonCenterResponse : Role::DialogButtonAlternativeResponse;
     
     NSArray<UPViewMove *> *buttonOutMoves = @[
-        UPViewMoveMake(self.dialogChallenge.challengePromptLabel, Location(Role::ChallengePrompt, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogChallenge.scorePromptLabel, Location(Role::ChallengeScore, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogChallenge.cancelButton, Location(cancelRole, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogChallenge.confirmButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::GameShareButton, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogGameLink.titlePromptLabel, Location(Role::ChallengePrompt, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogGameLink.detailPromptLabel, Location(Role::ChallengeScore, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogGameLink.cancelButton, Location(cancelRole, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogGameLink.confirmButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogGameLink.helpButton, Location(Role::GameShareButton, Spot::OffBottomFar)),
     ];
     start(bloop_out(BandModeUI, buttonOutMoves, 0.5, nil));
     
     [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
-        self.dialogChallenge.alpha = 0;
+        self.dialogGameLink.alpha = 0;
     } completion:^(BOOL finished) {
-        self.dialogChallenge.hidden = YES;
-        self.dialogChallenge.alpha = 1;
+        self.dialogGameLink.hidden = YES;
+        self.dialogGameLink.alpha = 1;
     }];
     [UIView animateWithDuration:0.3 delay:0.3 options:0 animations:^{
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
@@ -4025,8 +4107,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     ASSERT(self.lockCount == 0);
     [self viewLock];
     
-    self.dialogChallenge.confirmButton.highlightedLocked = YES;
-    self.dialogChallenge.confirmButton.highlighted = YES;
+    self.dialogGameLink.confirmButton.highlightedLocked = YES;
+    self.dialogGameLink.confirmButton.highlighted = YES;
     
     [self updateSoundAndTunesSettings];
     [self playTuneIntro];
@@ -4046,22 +4128,22 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffTopNear)),
             UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffTopNear)),
             UPViewMoveMake(self.dialogTopMenu.duelButton, Location(Role::DialogButtonTopRight, Spot::OffTopNear)),
-            UPViewMoveMake(self.dialogChallenge.challengePromptLabel, Location(Role::ChallengePrompt, Spot::OffBottomFar)),
-            UPViewMoveMake(self.dialogChallenge.scorePromptLabel, Location(Role::ChallengeScore, Spot::OffBottomFar)),
-            UPViewMoveMake(self.dialogChallenge.cancelButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
-            UPViewMoveMake(self.dialogChallenge.confirmButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
-            UPViewMoveMake(self.dialogChallenge.helpButton, Location(Role::GameShareButton, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogGameLink.titlePromptLabel, Location(Role::ChallengePrompt, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogGameLink.detailPromptLabel, Location(Role::ChallengeScore, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogGameLink.cancelButton, Location(Role::DialogButtonAlternativeResponse, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogGameLink.confirmButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogGameLink.helpButton, Location(Role::GameShareButton, Spot::OffBottomFar)),
         ];
         start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
-            self.dialogChallenge.confirmButton.highlightedLocked = NO;
-            self.dialogChallenge.confirmButton.highlighted = NO;
-            self.dialogChallenge.hidden = YES;
-            self.dialogChallenge.alpha = 1;
+            self.dialogGameLink.confirmButton.highlightedLocked = NO;
+            self.dialogGameLink.confirmButton.highlighted = NO;
+            self.dialogGameLink.hidden = YES;
+            self.dialogGameLink.alpha = 1;
         }));
         
         delay(BandModeDelay, 0.55, ^{
             [self viewFillUpSpellTileViews];
-            [self viewMakeReadyFromMode:Mode::Challenge completion:^{
+            [self viewMakeReadyFromMode:Mode::GameLink completion:^{
                 [self viewBloopOutExistingTileViewsWithCompletion:nil];
                 [self createGameModelIfNeeded];
                 [self setMode:Mode::Play];
@@ -4251,7 +4333,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromPauseToChallenge
 {
-    [self viewOrderInChallengeFromMode:Mode::Pause];
+    [self viewOrderInGameLinkFromMode:Mode::Pause];
 }
 
 - (void)modeTransitionFromPauseToQuit

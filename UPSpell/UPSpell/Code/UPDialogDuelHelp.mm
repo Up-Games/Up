@@ -43,7 +43,7 @@ using Role = SpellLayout::Role;
     self = [super initWithFrame:layout.canvas_frame()];
 
     self.titleLabel = [UPLabel label];
-    self.titleLabel.string = @"DUEL";
+    self.titleLabel.string = @"ABOUT DUELING";
     self.titleLabel.font = layout.dialog_title_font();
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.frame = layout.frame_for(Role::DialogDuelHelpTitle);
@@ -58,8 +58,7 @@ using Role = SpellLayout::Role;
         @"Challenge a friend to a duel! Tap OK, then use the share sheet\n"
          "to send your friend a link. When your friend taps the link,\n"
          "Up Spell will open. You’ll both get a game with the same letters.\n\n"
-         "May the better speller win! Tap the PLAY button at the\n"
-         "same time for extra drama!";
+         "May the better speller win!";
     self.helpLabel.font = layout.description_font();
     self.helpLabel.textAlignment = NSTextAlignmentLeft;
     self.helpLabel.frame = layout.frame_for(Role::DialogDuelHelpText);

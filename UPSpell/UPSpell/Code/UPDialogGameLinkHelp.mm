@@ -1,5 +1,5 @@
 //
-//  UPDialogChallengeHelp.mm
+//  UPDialogGameLinkHelp.mm
 //  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
@@ -11,28 +11,29 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
-#import "UPDialogChallengeHelp.h"
+#import "UPDialogGameLinkHelp.h"
+#import "UPGameLink.h"
 #import "UPSpellLayout.h"
 #import "UPTextButton.h"
 
 using UP::SpellLayout;
 using Role = SpellLayout::Role;
 
-@interface UPDialogChallengeHelp ()
+@interface UPDialogGameLinkHelp ()
 @property (nonatomic, readwrite) UPLabel *titleLabel;
 @property (nonatomic, readwrite) UIView *helpLabelContainer;
 @property (nonatomic, readwrite) UPLabel *helpLabel;
 @property (nonatomic, readwrite) UPButton *okButton;
 @end
 
-@implementation UPDialogChallengeHelp
+@implementation UPDialogGameLinkHelp
 
-+ (UPDialogChallengeHelp *)instance
++ (UPDialogGameLinkHelp *)instance
 {
     static dispatch_once_t onceToken;
-    static UPDialogChallengeHelp *_Instance;
+    static UPDialogGameLinkHelp *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPDialogChallengeHelp alloc] _init];
+        _Instance = [[UPDialogGameLinkHelp alloc] _init];
     });
     return _Instance;
 }
@@ -43,7 +44,6 @@ using Role = SpellLayout::Role;
     self = [super initWithFrame:layout.canvas_frame()];
 
     self.titleLabel = [UPLabel label];
-    self.titleLabel.string = @"ABOUT CHALLENGES";
     self.titleLabel.font = layout.dialog_title_font();
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.frame = layout.frame_for(Role::DialogHelpTitle);
@@ -54,9 +54,6 @@ using Role = SpellLayout::Role;
     [self addSubview:self.helpLabelContainer];
 
     self.helpLabel = [UPLabel label];
-    self.helpLabel.string = @"A CHALLENGE is a new game with the same\n"
-                             "letters someone else has already played.\n"
-                             "Try to beat their score.";
     self.helpLabel.font = layout.description_font();
     self.helpLabel.textAlignment = NSTextAlignmentLeft;
     self.helpLabel.frame = layout.frame_for(Role::DialogHelpText);
@@ -71,6 +68,26 @@ using Role = SpellLayout::Role;
     [self updateThemeColors];
 
     return self;
+}
+
+- (void)updateWithGameLink:(UPGameLink *)gameLink
+{
+    switch (gameLink.type) {
+        case UPGameLinkTypeDuel:
+            self.titleLabel.string = @"ABOUT DUELING";
+            self.helpLabel.string =
+                @"A DUEL is a game with the same\n"
+                "letters someone else is also playing.\n"
+                "Try to beat their score.";
+            break;
+        case UPGameLinkTypeChallenge:
+            self.titleLabel.string = @"ABOUT CHALLENGES";
+            self.helpLabel.string =
+                @"A CHALLENGE is a new game with the same\n"
+                "letters someone else has already played.\n"
+                "Try to beat their score.";
+            break;
+    }
 }
 
 #pragma mark - Layout

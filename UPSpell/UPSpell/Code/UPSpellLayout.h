@@ -219,9 +219,9 @@ public:
     static inline constexpr CGRect CanonicalDialogShareHelpTextFrame = { 250, 220, 500, 200 };
     static inline constexpr CGRect CanonicalDialogShareHelpOKButtonFrame = { 429.5, 386, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
-    static inline constexpr CGRect CanonicalDialogDuelHelpTitleFrame = { 272, 42, 460, 200 };
-    static inline constexpr CGRect CanonicalDialogDuelHelpTextFrame = { 250, 120, 500, 200 };
-    static inline constexpr CGRect CanonicalDialogDuelHelpOKButtonFrame = { 429.5, 405, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGRect CanonicalDialogDuelHelpTitleFrame = { 272, 80, 460, 200 };
+    static inline constexpr CGRect CanonicalDialogDuelHelpTextFrame = { 250, 158, 500, 200 };
+    static inline constexpr CGRect CanonicalDialogDuelHelpOKButtonFrame = { 429.5, 380, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGFloat CanonicalDialogTitleCapHeight = 35;
 

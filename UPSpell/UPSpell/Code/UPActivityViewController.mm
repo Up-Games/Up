@@ -9,7 +9,7 @@
 #import <UpKit/UPGameKey.h>
 
 #import "UPActivityViewController.h"
-#import "UPChallenge.h"
+#import "UPGameLink.h"
 #import "UPSpellDossier.h"
 
 // =========================================================================================================================================
@@ -90,41 +90,35 @@
 - (NSURL *)_makeShareURL
 {
     UPSpellDossier *dossier = [UPSpellDossier instance];
+    UPGameLink *gameLink = nil;
     UPGameKey *gameKey = nil;
-    int score = 0;
     switch (self.shareType) {
         case UPShareTypeDefault:
         case UPShareTypeLastGameScore: {
             gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
-            score = dossier.lastScore;
+            gameLink = [UPGameLink challengeGameLinkWithGameKey:gameKey score:dossier.lastScore];
             break;
         }
         case UPShareTypeHighScore: {
             gameKey = [UPGameKey gameKeyWithValue:dossier.highScoreGameKeyValue];
-            score = dossier.highScore;
+            gameLink = [UPGameLink challengeGameLinkWithGameKey:gameKey score:dossier.highScore];
             break;
         }
         case UPShareTypeChallengeReply: {
             UPSpellDossier *dossier = [UPSpellDossier instance];
             ASSERT(dossier.lastGameWasChallenge);
-            score = dossier.lastScore;
-            if (score >= dossier.lastGameChallengeScore) {
-                gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
-            }
-            else {
-                gameKey = [UPGameKey randomGameKey];
-            }
+            gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
+            gameLink = [UPGameLink challengeGameLinkWithGameKey:gameKey score:dossier.lastScore];
             break;
         }
         case UPShareTypeDuel: {
-            score = -1;
             gameKey = self.inviteGameKey;
+            gameLink = [UPGameLink duelGameLinkWithGameKey:gameKey];
             break;
         }
     }
     
-    UPChallenge *challenge = [UPChallenge challengeWithGameKey:gameKey score:score];
-    return challenge.URL;
+    return gameLink.URL;
 }
 
 - (NSString *)_makeMailSubject

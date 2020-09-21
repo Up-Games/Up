@@ -5,7 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class UPChallenge;
+@class UPGameLink;
 
 @interface UPSceneDelegate : UIResponder <UIWindowSceneDelegate>
 
@@ -14,7 +14,7 @@
 @property (nonatomic, readonly) CGRect canvasFrame;
 
 @property (nonatomic) UIWindow *window;
-@property (nonatomic) UPChallenge *challenge;
+@property (nonatomic) UPGameLink *challenge;
 
 @end
 

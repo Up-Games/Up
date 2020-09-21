@@ -1,5 +1,5 @@
 //
-//  UPDialogChallenge.mm
+//  UPDialogGameLink.mm
 //  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
@@ -12,8 +12,8 @@
 #import <UpKit/UPLogoView.h>
 
 #import "UPControl+UPSpell.h"
-#import "UPDialogChallenge.h"
-#import "UPChallenge.h"
+#import "UPDialogGameLink.h"
+#import "UPGameLink.h"
 #import "UPSpellLayout.h"
 #import "UPTextButton.h"
 #import "UPTextPaths.h"
@@ -21,24 +21,24 @@
 using UP::SpellLayout;
 using Role = SpellLayout::Role;
 
-@interface UPDialogChallenge ()
+@interface UPDialogGameLink ()
 @property (nonatomic, readwrite) UPLogoView *logoView;
 @property (nonatomic, readwrite) UPLabel *wordMarkLabel;
-@property (nonatomic, readwrite) UPLabel *challengePromptLabel;
-@property (nonatomic, readwrite) UPLabel *scorePromptLabel;
+@property (nonatomic, readwrite) UPLabel *titlePromptLabel;
+@property (nonatomic, readwrite) UPLabel *detailPromptLabel;
 @property (nonatomic, readwrite) UPButton *cancelButton;
 @property (nonatomic, readwrite) UPButton *confirmButton;
 @property (nonatomic, readwrite) UPButton *helpButton;
 @end
 
-@implementation UPDialogChallenge
+@implementation UPDialogGameLink
 
-+ (UPDialogChallenge *)instance
++ (UPDialogGameLink *)instance
 {
     static dispatch_once_t onceToken;
-    static UPDialogChallenge *_Instance;
+    static UPDialogGameLink *_Instance;
     dispatch_once(&onceToken, ^{
-        _Instance = [[UPDialogChallenge alloc] _init];
+        _Instance = [[UPDialogGameLink alloc] _init];
     });
     return _Instance;
 }
@@ -60,18 +60,18 @@ using Role = SpellLayout::Role;
     self.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark);
     [self addSubview:self.wordMarkLabel];
     
-    self.challengePromptLabel = [UPLabel label];
-    self.challengePromptLabel.string = @"CHALLENGE!";
-    self.challengePromptLabel.font = layout.challenge_prompt_font();
-    self.challengePromptLabel.textAlignment = NSTextAlignmentCenter;
-    self.challengePromptLabel.frame = layout.frame_for(Role::ChallengePrompt);
-    [self addSubview:self.challengePromptLabel];
+    self.titlePromptLabel = [UPLabel label];
+    self.titlePromptLabel.string = @"CHALLENGE!";
+    self.titlePromptLabel.font = layout.challenge_prompt_font();
+    self.titlePromptLabel.textAlignment = NSTextAlignmentCenter;
+    self.titlePromptLabel.frame = layout.frame_for(Role::ChallengePrompt);
+    [self addSubview:self.titlePromptLabel];
 
-    self.scorePromptLabel = [UPLabel label];
-    self.scorePromptLabel.font = layout.challenge_score_font_font();
-    self.scorePromptLabel.textAlignment = NSTextAlignmentCenter;
-    self.scorePromptLabel.frame = layout.frame_for(Role::ChallengeScore);
-    [self addSubview:self.scorePromptLabel];
+    self.detailPromptLabel = [UPLabel label];
+    self.detailPromptLabel.font = layout.challenge_score_font_font();
+    self.detailPromptLabel.textAlignment = NSTextAlignmentCenter;
+    self.detailPromptLabel.frame = layout.frame_for(Role::ChallengeScore);
+    [self addSubview:self.detailPromptLabel];
 
     self.cancelButton = [UPTextButton textButton];
     self.cancelButton.labelString = @"CANCEL";
@@ -95,25 +95,25 @@ using Role = SpellLayout::Role;
     return self;
 }
 
-- (void)updateWithChallenge:(UPChallenge *)challenge
+- (void)updateWithGameLink:(UPGameLink *)gameLink
 {
-    if (challenge.valid) {
-        if (challenge.score < 0) {
-            self.challengePromptLabel.string = @"INVITE";
-            self.scorePromptLabel.string = @"GOOD LUCK & HAVE FUN!";
+    if (gameLink.valid) {
+        if (gameLink.type == UPGameLinkTypeDuel) {
+            self.titlePromptLabel.string = @"DUEL!";
+            self.detailPromptLabel.string = @"GOOD LUCK & HAVE FUN";
             self.cancelButton.labelString = @"CANCEL";
             self.confirmButton.hidden = NO;
         }
         else {
-            self.challengePromptLabel.string = @"CHALLENGE!";
-            self.scorePromptLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", challenge.score];
+            self.titlePromptLabel.string = @"CHALLENGE!";
+            self.detailPromptLabel.string = [NSString stringWithFormat:@"SCORE TO BEAT: %d", gameLink.score];
             self.cancelButton.labelString = @"CANCEL";
             self.confirmButton.hidden = NO;
         }
     }
     else {
-        self.challengePromptLabel.string = @"OOPS!";
-        self.scorePromptLabel.string = @"LINK IS BAD. SORRY!";
+        self.titlePromptLabel.string = @"OOPS!";
+        self.detailPromptLabel.string = @"LINK IS BAD. SORRY!";
         self.cancelButton.labelString = @"OK";
         self.confirmButton.hidden = YES;
     }

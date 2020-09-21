@@ -1,5 +1,5 @@
 //
-//  UPDialogChallenge.h
+//  UPDialogGameLink.h
 //  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
@@ -13,8 +13,8 @@
 
 @property (nonatomic, readonly) UPLogoView *logoView;
 @property (nonatomic, readonly) UPLabel *wordMarkLabel;
+@property (nonatomic, readonly) UPLabel *titlePromptLabel;
 @property (nonatomic, readonly) UPLabel *detailPromptLabel;
-@property (nonatomic, readonly) UPLabel *scorePromptLabel;
 @property (nonatomic, readonly) UPButton *cancelButton;
 @property (nonatomic, readonly) UPButton *confirmButton;
 @property (nonatomic, readonly) UPButton *helpButton;

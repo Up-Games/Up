@@ -6,7 +6,7 @@
 #import <UpKit/UpKit.h>
 
 #import "UPSceneDelegate.h"
-#import "UPChallenge.h"
+#import "UPGameLink.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellGameController.h"
 #import "UPSpellNavigationController.h"
@@ -38,7 +38,7 @@ static UPSceneDelegate *_Instance;
         if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
             [[UPSpellNavigationController instance] dismissPresentedControllerImmediateIfNecessary];
             NSURL *incomingURL = userActivity.webpageURL;
-            self.challenge = [UPChallenge challengeWithURL:incomingURL];
+            self.challenge = [UPGameLink gameLinkWithURL:incomingURL];
         }
     }
 }
@@ -76,8 +76,8 @@ static UPSceneDelegate *_Instance;
     }
     
     NSURL *incomingURL = userActivity.webpageURL;
-    UPChallenge *challenge = [UPChallenge challengeWithURL:incomingURL];
-    [[UPSpellGameController instance] setChallenge:challenge];
+    UPGameLink *challenge = [UPGameLink gameLinkWithURL:incomingURL];
+    [[UPSpellGameController instance] setGameLink:challenge];
 }
 
 @end

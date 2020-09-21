@@ -29,7 +29,7 @@
 		5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */; };
 		5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogTopMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */; };
-		5D4ECE3824E4842700D1A310 /* UPDialogChallengeHelp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4ECE3724E4842700D1A310 /* UPDialogChallengeHelp.mm */; };
+		5D4ECE3824E4842700D1A310 /* UPDialogGameLinkHelp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4ECE3724E4842700D1A310 /* UPDialogGameLinkHelp.mm */; };
 		5D4ECE4B24E8966600D1A310 /* UPRotor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4ECE4924E8966600D1A310 /* UPRotor.mm */; };
 		5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */; };
 		5D54078424841631003F193D /* UPSpellNavigationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D54078324841631003F193D /* UPSpellNavigationController.mm */; };
@@ -71,8 +71,8 @@
 		5D6FB59124DB151E00CDC293 /* UPSpellExtrasPaneSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB58F24DB151E00CDC293 /* UPSpellExtrasPaneSound.mm */; };
 		5D6FB59324DB205200CDC293 /* None.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D6FB59224DB205200CDC293 /* None.aac */; };
 		5D6FB59724DB3F7500CDC293 /* Demo-Tune.aac in Resources */ = {isa = PBXBuildFile; fileRef = 5D6FB59624DB3F7500CDC293 /* Demo-Tune.aac */; };
-		5D6FB59A24DD989100CDC293 /* UPChallenge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59924DD989100CDC293 /* UPChallenge.mm */; };
-		5D6FB59D24DDC56100CDC293 /* UPDialogChallenge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59C24DDC56100CDC293 /* UPDialogChallenge.mm */; };
+		5D6FB59A24DD989100CDC293 /* UPGameLink.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59924DD989100CDC293 /* UPGameLink.mm */; };
+		5D6FB59D24DDC56100CDC293 /* UPDialogGameLink.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59C24DDC56100CDC293 /* UPDialogGameLink.mm */; };
 		5D6FB5A024DEF08800CDC293 /* UPSpellExtrasPaneShare.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59F24DEF08800CDC293 /* UPSpellExtrasPaneShare.mm */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.mm */; };
 		5D8D827224E03B08007B050C /* LinkPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D8D827124E03B08007B050C /* LinkPresentation.framework */; };
@@ -238,8 +238,8 @@
 		5D4AE826248BDF2300213904 /* UPSpellAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutController.h; sourceTree = "<group>"; };
 		5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutController.mm; sourceTree = "<group>"; };
 		5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogTopMenu.mm; sourceTree = "<group>"; };
-		5D4ECE3624E4842700D1A310 /* UPDialogChallengeHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogChallengeHelp.h; sourceTree = "<group>"; };
-		5D4ECE3724E4842700D1A310 /* UPDialogChallengeHelp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogChallengeHelp.mm; sourceTree = "<group>"; };
+		5D4ECE3624E4842700D1A310 /* UPDialogGameLinkHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogGameLinkHelp.h; sourceTree = "<group>"; };
+		5D4ECE3724E4842700D1A310 /* UPDialogGameLinkHelp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameLinkHelp.mm; sourceTree = "<group>"; };
 		5D4ECE4924E8966600D1A310 /* UPRotor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPRotor.mm; sourceTree = "<group>"; };
 		5D4ECE4A24E8966600D1A310 /* UPRotor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPRotor.h; sourceTree = "<group>"; };
 		5D5216E9246C7E9E005A2E9F /* UPSpellLayout.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellLayout.mm; sourceTree = "<group>"; };
@@ -297,10 +297,10 @@
 		5D6FB59024DB151E00CDC293 /* UPSpellExtrasPaneSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasPaneSound.h; sourceTree = "<group>"; };
 		5D6FB59224DB205200CDC293 /* None.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = None.aac; sourceTree = "<group>"; };
 		5D6FB59624DB3F7500CDC293 /* Demo-Tune.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Demo-Tune.aac"; sourceTree = "<group>"; };
-		5D6FB59824DD989100CDC293 /* UPChallenge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPChallenge.h; sourceTree = "<group>"; };
-		5D6FB59924DD989100CDC293 /* UPChallenge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPChallenge.mm; sourceTree = "<group>"; };
-		5D6FB59B24DDC56100CDC293 /* UPDialogChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogChallenge.h; sourceTree = "<group>"; };
-		5D6FB59C24DDC56100CDC293 /* UPDialogChallenge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogChallenge.mm; sourceTree = "<group>"; };
+		5D6FB59824DD989100CDC293 /* UPGameLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPGameLink.h; sourceTree = "<group>"; };
+		5D6FB59924DD989100CDC293 /* UPGameLink.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPGameLink.mm; sourceTree = "<group>"; };
+		5D6FB59B24DDC56100CDC293 /* UPDialogGameLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogGameLink.h; sourceTree = "<group>"; };
+		5D6FB59C24DDC56100CDC293 /* UPDialogGameLink.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameLink.mm; sourceTree = "<group>"; };
 		5D6FB59E24DEF08800CDC293 /* UPSpellExtrasPaneShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasPaneShare.h; sourceTree = "<group>"; };
 		5D6FB59F24DEF08800CDC293 /* UPSpellExtrasPaneShare.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasPaneShare.mm; sourceTree = "<group>"; };
 		5D723114246B34C0006027A3 /* UPTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileView.h; sourceTree = "<group>"; };
@@ -515,18 +515,16 @@
 				5DF9DF5B2466165700B2199D /* UPAppDelegate.mm */,
 				5D0FC21B24A125D000353563 /* UPBallot.h */,
 				5D0FC21A24A125D000353563 /* UPBallot.mm */,
-				5D6FB59824DD989100CDC293 /* UPChallenge.h */,
-				5D6FB59924DD989100CDC293 /* UPChallenge.mm */,
 				5D0FC23224A50E3B00353563 /* UPChoice.h */,
 				5D0FC23124A50E3B00353563 /* UPChoice.mm */,
 				5D57D1FA246DB97700705395 /* UPControl+UPSpell.h */,
 				5D57D1FB246DB9AF00705395 /* UPControl+UPSpell.mm */,
-				5D6FB59B24DDC56100CDC293 /* UPDialogChallenge.h */,
-				5D6FB59C24DDC56100CDC293 /* UPDialogChallenge.mm */,
-				5D4ECE3624E4842700D1A310 /* UPDialogChallengeHelp.h */,
-				5D4ECE3724E4842700D1A310 /* UPDialogChallengeHelp.mm */,
 				5D58ADCD2517E155001352F9 /* UPDialogDuelHelp.h */,
 				5D58ADCC2517E155001352F9 /* UPDialogDuelHelp.mm */,
+				5D6FB59B24DDC56100CDC293 /* UPDialogGameLink.h */,
+				5D6FB59C24DDC56100CDC293 /* UPDialogGameLink.mm */,
+				5D4ECE3624E4842700D1A310 /* UPDialogGameLinkHelp.h */,
+				5D4ECE3724E4842700D1A310 /* UPDialogGameLinkHelp.mm */,
 				5D5EA1462486A1D2006264D2 /* UPDialogGameOver.h */,
 				5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */,
 				5D5EA1402485B49E006264D2 /* UPDialogPause.h */,
@@ -537,6 +535,8 @@
 				5DBAD6E024E43FFF00471ABF /* UPDialogShareHelp.mm */,
 				5D544C0F248805F5001FA8DF /* UPDialogTopMenu.h */,
 				5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */,
+				5D6FB59824DD989100CDC293 /* UPGameLink.h */,
+				5D6FB59924DD989100CDC293 /* UPGameLink.mm */,
 				5DBC20C12497B9AD002A6ADC /* UPMode.h */,
 				5D29878924F2CC9600AA6E78 /* UPPulseView.h */,
 				5D29878A24F2CC9600AA6E78 /* UPPulseView.mm */,
@@ -962,7 +962,7 @@
 			files = (
 				5D4ECE4B24E8966600D1A310 /* UPRotor.mm in Sources */,
 				5D12E49C24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.mm in Sources */,
-				5D6FB59A24DD989100CDC293 /* UPChallenge.mm in Sources */,
+				5D6FB59A24DD989100CDC293 /* UPGameLink.mm in Sources */,
 				5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */,
 				5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */,
 				5D0FC22C24A2A5C300353563 /* UPSpellSettings.mm in Sources */,
@@ -976,7 +976,7 @@
 				5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */,
 				5DF9DF6D2466165800B2199D /* main.m in Sources */,
 				5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */,
-				5D4ECE3824E4842700D1A310 /* UPDialogChallengeHelp.mm in Sources */,
+				5D4ECE3824E4842700D1A310 /* UPDialogGameLinkHelp.mm in Sources */,
 				5D5B53F224CDCACD00FD50D4 /* UPSoundPlayer.mm in Sources */,
 				5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */,
 				5D29879124F5624800AA6E78 /* UPSpellAboutPaneGame.mm in Sources */,
@@ -989,7 +989,7 @@
 				5D4AE82A248ED25500213904 /* UPDialogTopMenu.mm in Sources */,
 				5D08E6EA24F74326007DBE44 /* UPSpellAboutPanePlaying.mm in Sources */,
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
-				5D6FB59D24DDC56100CDC293 /* UPDialogChallenge.mm in Sources */,
+				5D6FB59D24DDC56100CDC293 /* UPDialogGameLink.mm in Sources */,
 				5D0FC33624A65C0B00353563 /* UPSpellExtrasPaneColors.mm in Sources */,
 				5DBAD6E124E43FFF00471ABF /* UPDialogShareHelp.mm in Sources */,
 				5D6FB58A24DAFC2500CDC293 /* UPSlider.mm in Sources */,

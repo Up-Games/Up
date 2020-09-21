@@ -1,5 +1,5 @@
 //
-//  UPChallenge.mm
+//  UPGameLink.mm
 //  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
@@ -12,35 +12,42 @@
 #import <UPKit/UPRandom.h>
 #import <UPKit/UPStringTools.h>
 
-#import "UPChallenge.h"
+#import "UPGameLink.h"
 
-static NSString * const UPChallengeURLPrefix = @"https://upgames.dev/t/";
+static NSString * const UPGameLinkURLPrefix = @"https://upgames.dev/t/";
 
 using UP::GameKey;
 using UP::cpp_str;
 
-@interface UPChallenge ()
+@interface UPGameLink ()
+@property (nonatomic, readwrite) UPGameLinkType type;
 @property (nonatomic, readwrite) UPGameKey *gameKey;
 @property (nonatomic, readwrite) int score;
 @property (nonatomic, readwrite) NSURL *URL;
 @property (nonatomic, readwrite) BOOL valid;
 @end
 
-@implementation UPChallenge
+@implementation UPGameLink
 
-+ (UPChallenge *)challengeWithGameKey:(UPGameKey *)gameKey score:(int)score
++ (UPGameLink *)challengeGameLinkWithGameKey:(UPGameKey *)gameKey score:(int)score
 {
-    return [[self alloc] _initWithGameKey:gameKey score:score];
+    return [[self alloc] _initWithType:UPGameLinkTypeChallenge gameKey:gameKey score:score];
 }
 
-+ (UPChallenge *)challengeWithURL:(NSURL *)URL
++ (UPGameLink *)duelGameLinkWithGameKey:(UPGameKey *)gameKey
+{
+    return [[self alloc] _initWithType:UPGameLinkTypeDuel gameKey:gameKey score:0];
+}
+
++ (UPGameLink *)gameLinkWithURL:(NSURL *)URL
 {
     return [[self alloc] _initWithURL:URL];
 }
 
-- (instancetype)_initWithGameKey:(UPGameKey *)gameKey score:(int)score
+- (instancetype)_initWithType:(UPGameLinkType)type gameKey:(UPGameKey *)gameKey score:(int)score
 {
     self = [super init];
+    self.type = type;
     self.gameKey = gameKey;
     self.score = score;
     self.valid = YES;
@@ -64,8 +71,8 @@ using UP::cpp_str;
 {
     NSString *pathString = [self _obfuscatedPath];
     LOG(General, "obfuscate: %@/%d => %@", self.gameKey.string, self.score, pathString);
-    LOG(General, "clarify:   %@", [UPChallenge _clarifiedPath:pathString]);
-    NSString *URLString = [NSString stringWithFormat:@"%@%@", UPChallengeURLPrefix, pathString];
+    LOG(General, "clarify:   %@", [UPGameLink _clarifiedPath:pathString]);
+    NSString *URLString = [NSString stringWithFormat:@"%@%@", UPGameLinkURLPrefix, pathString];
     self.URL = [NSURL URLWithString:URLString];
 }
 
@@ -80,25 +87,44 @@ using UP::cpp_str;
     }
     
     NSString *pathString = pathComponents[2];
-    NSString *clarifiedString = [UPChallenge _clarifiedPath:pathString];
+    NSString *clarifiedString = [UPGameLink _clarifiedPath:pathString];
     LOG(General, "clarify: %@ => %@", pathString, clarifiedString);
     if (!clarifiedString) {
         return;
     }
     
     NSArray *clarifiedComponents = [clarifiedString componentsSeparatedByString:@"/"];
-    if (clarifiedComponents.count != 2) {
+    NSString *gameKeyString = nil;
+    NSString *scoreString = nil;
+    NSString *typeString = nil;
+    if (clarifiedComponents.count == 2) {
+        gameKeyString = clarifiedComponents[0];
+        scoreString = clarifiedComponents[1];
+        typeString = @"c";
+    }
+    else if (clarifiedComponents.count == 3) {
+        gameKeyString = clarifiedComponents[0];
+        scoreString = clarifiedComponents[1];
+        typeString = clarifiedComponents[2];
+    }
+
+    if ([typeString isEqualToString:@"c"]) {
+        self.type = UPGameLinkTypeChallenge;
+    }
+    else if ([typeString isEqualToString:@"d"]) {
+        self.type = UPGameLinkTypeDuel;
+    }
+    else {
         return;
     }
-    NSString *gameKeyString = clarifiedComponents[0];
-    NSString *scoreString = clarifiedComponents[1];
-
+    
     if (![UPGameKey isWellFormedGameKeyString:gameKeyString]) {
         return;
     }
 
     self.gameKey = [UPGameKey gameKeyWithString:gameKeyString];
     self.score = (int)UPClampT(NSInteger, [scoreString integerValue], 0, UP::GameKey::Permutations);
+        
     self.valid = YES;
 }
 
@@ -119,9 +145,11 @@ using UP::cpp_str;
     return result;
 }
 
-static constexpr size_t UPChallengeSaltLength = 1;
-static constexpr size_t UPChalengeVersionLength = 1;
-static constexpr size_t UPChalengeDataLength = UPChallengeSaltLength + UPChalengeVersionLength + sizeof(uint32_t) + sizeof(uint16_t);
+static constexpr size_t UPGameLinkSaltLength = 1;
+static constexpr size_t UPGameLinkVersionLength = 1;
+static constexpr size_t UPGameLinkTypeLength = 1;
+static constexpr size_t UPGameLinkDataLength =
+    UPGameLinkSaltLength + UPGameLinkVersionLength + sizeof(uint32_t) + sizeof(uint16_t) + UPGameLinkTypeLength;
 
 - (NSString *)_obfuscatedPath
 {
@@ -136,11 +164,11 @@ static constexpr size_t UPChalengeDataLength = UPChallengeSaltLength + UPChaleng
 
     UP::Random &r = UP::Random::instance();
     uint8_t saltByte = r.byte();
-    uint8_t salt[UPChallengeSaltLength];
+    uint8_t salt[UPGameLinkSaltLength];
     salt[0] = saltByte;
-    [input appendBytes:salt length:UPChallengeSaltLength];
+    [input appendBytes:salt length:UPGameLinkSaltLength];
 
-    uint8_t versionByte = 1;
+    uint8_t versionByte = 2;
     uint8_t version[1];
     version[0] = versionByte;
     [input appendBytes:version length:1];
@@ -151,58 +179,78 @@ static constexpr size_t UPChalengeDataLength = UPChallengeSaltLength + UPChaleng
     uint16_t gameScore = htons(self.score);
     [input appendBytes:&gameScore length:sizeof(uint16_t)];
 
-    uint8_t inputBytes[UPChalengeDataLength];
-    [input getBytes:inputBytes range:NSMakeRange(0, UPChalengeDataLength)];
+    uint8_t typeByte[1];
+    typeByte[0] = self.type;
+    [input appendBytes:typeByte length:1];
+
+    uint8_t inputBytes[UPGameLinkDataLength];
+    [input getBytes:inputBytes range:NSMakeRange(0, UPGameLinkDataLength)];
     
-    uint8_t output[UPChalengeDataLength];
+    uint8_t output[UPGameLinkDataLength];
     output[0] = saltByte;
     output[1] = versionByte;
-    for (size_t i = 2; i < UPChalengeDataLength; i++) {
+    for (size_t i = 2; i < UPGameLinkDataLength; i++) {
         output[i] = inputBytes[i] ^ saltByte;
     }
-
-    NSData *outputData = [NSData dataWithBytesNoCopy:output length:UPChalengeDataLength freeWhenDone:NO];
+    
+    NSData *outputData = [NSData dataWithBytesNoCopy:output length:UPGameLinkDataLength freeWhenDone:NO];
     NSString *base64String = [outputData base64EncodedStringWithOptions:0];
     base64String = [base64String stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
     base64String = [base64String stringByReplacingOccurrencesOfString:@"+" withString:@"_"];
-    NSString *result = [base64String substringToIndex:11];
+    NSString *result = base64String;
     
     return result;
 }
 
 + (NSString *)_clarifiedPath:(NSString *)obfuscatedPath
 {
-    if (obfuscatedPath.length != 11) {
+    if (obfuscatedPath.length != 11 && obfuscatedPath.length != 12) {
         return nil;
     }
 
     NSMutableString *base64String = [NSMutableString stringWithString:obfuscatedPath];
     [base64String replaceOccurrencesOfString:@"-" withString:@"/" options:NSLiteralSearch range:NSMakeRange(0, base64String.length)];
     [base64String replaceOccurrencesOfString:@"_" withString:@"+" options:NSLiteralSearch range:NSMakeRange(0, base64String.length)];
-    [base64String appendString:@"="];
+    if (obfuscatedPath.length == 11) {
+        [base64String appendString:@"="];
+    }
     NSData *input = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
     if (!input) {
         return nil;
     }
-    uint8_t inputBytes[UPChalengeDataLength];
-    [input getBytes:inputBytes range:NSMakeRange(0, UPChalengeDataLength)];
+    uint8_t inputBytes[UPGameLinkDataLength];
+    [input getBytes:inputBytes range:NSMakeRange(0, UPGameLinkDataLength)];
 
-    uint8_t output[UPChalengeDataLength];
+    uint8_t output[UPGameLinkDataLength];
     uint8_t saltByte = inputBytes[0];
     uint8_t versionByte = inputBytes[1];
 
     output[0] = saltByte;
     output[1] = versionByte;
     NSString *result = nil;
-    if (versionByte == 1) {
-        for (size_t i = 2; i < UPChalengeDataLength; i++) {
+    
+    UPGameKey *gameKey = nil;
+    uint16_t gameScore = 0;
+
+    if (versionByte == 1 || versionByte == 2) {
+        for (size_t i = 2; i < UPGameLinkDataLength; i++) {
             output[i] = inputBytes[i] ^ saltByte;
         }
-        uint32_t gameKeyValue = ntohl(*(reinterpret_cast<uint32_t *>(output + UPChallengeSaltLength + UPChalengeVersionLength)));
-        UPGameKey *gameKey = [UPGameKey gameKeyWithValue:gameKeyValue];
-        uint16_t gameScore = ntohs(*(reinterpret_cast<uint16_t *>(output + UPChallengeSaltLength + UPChalengeVersionLength + sizeof(uint32_t))));
-        int effectiveGameScore = gameScore == 65535 ? -1 : gameScore;
-        result = [NSString stringWithFormat:@"%@/%d", gameKey.string, effectiveGameScore];
+        uint32_t gameKeyValue = ntohl(*(reinterpret_cast<uint32_t *>(output + UPGameLinkSaltLength + UPGameLinkVersionLength)));
+        gameKey = [UPGameKey gameKeyWithValue:gameKeyValue];
+        gameScore = ntohs(*(reinterpret_cast<uint16_t *>(output + UPGameLinkSaltLength + UPGameLinkVersionLength + sizeof(uint32_t))));
+    }
+    if (versionByte == 1) {
+        result = [NSString stringWithFormat:@"%@/%d/c", gameKey.string, gameScore];
+    }
+    else if (versionByte == 2) {
+        uint8_t typeByte = output[UPGameLinkDataLength - 1];
+        if (typeByte == 0) {
+            result = [NSString stringWithFormat:@"%@/%d/c", gameKey.string, gameScore];
+        }
+        else if (typeByte == 1) {
+            result = [NSString stringWithFormat:@"%@/0/d", gameKey.string];
+        }
     }
 
     return result;
