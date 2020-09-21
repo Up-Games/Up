@@ -10,9 +10,6 @@
 @dynamic dataVersion;
 @dynamic theme;
 @dynamic extrasSelectedIndex;
-@dynamic aboutSelectedIndex;
-@dynamic retryMode;
-@dynamic playMenuSelectedIndex;
 @dynamic tuneHistory;
 @dynamic tunesEnabled;
 @dynamic tunesLevel;
@@ -42,9 +39,6 @@
     self.dataVersion = 0;
     self.theme = UPThemeBlueLight;
     self.extrasSelectedIndex = 0;
-    self.aboutSelectedIndex = 1;
-    self.retryMode = NO;
-    self.playMenuSelectedIndex = 2;
     self.tuneHistory = [NSArray array];
     self.tunesEnabled = YES;
     self.tunesLevel = 4;

@@ -60,11 +60,6 @@ using Spot = SpellLayout::Spot;
     self.playButton.labelString = @"PLAY";
     self.playButton.frame = layout.frame_for(Role::DialogButtonTopCenter);
 
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    if (settings.retryMode) {
-        self.playButton.behavior = UPTextButtonBehaviorModeButton;
-    }
-    
     self.duelButton = [UPTextButton textButton];
     self.duelButton.behavior = UPTextButtonBehaviorPushButton;
     self.duelButton.labelString = @"DUEL";

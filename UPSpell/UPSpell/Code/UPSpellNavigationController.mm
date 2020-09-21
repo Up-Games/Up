@@ -11,10 +11,8 @@
 #import "UPMode.h"
 #import "UPSceneDelegate.h"
 #import "UPSpellNavigationController.h"
-#import "UPSpellAboutController.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellGameController.h"
-#import "UPSpellGameRetry.h"
 #import "UPSpellLayout.h"
 #import "UPSpellSettings.h"
 #import "UPTextButton.h"
@@ -26,7 +24,6 @@
 @property (nonatomic) UPDialogTopMenu *dialogTopMenu;
 @property (nonatomic) UPSpellGameController *gameController;
 @property (nonatomic) UPSpellExtrasController *extrasController;
-@property (nonatomic) UPSpellAboutController *aboutController;
 @end
 
 static UPSpellNavigationController *_Instance;
@@ -92,9 +89,6 @@ using UP::TimeSpanning::start;
     
     self.gameController = [[UPSpellGameController alloc] initWithNibName:nil bundle:nil];
     
-    self.aboutController = [[UPSpellAboutController alloc] initWithNibName:nil bundle:nil];
-    self.aboutController.modalPresentationStyle = UIModalPresentationCustom;
-
     self.extrasController = [[UPSpellExtrasController alloc] initWithNibName:nil bundle:nil];
     self.extrasController.modalPresentationStyle = UIModalPresentationCustom;
 
@@ -104,9 +98,7 @@ using UP::TimeSpanning::start;
     [self setViewControllers:viewControllers animated:NO];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.aboutController delayedInit];
         [self.extrasController delayedInit];
-        [self.aboutController.backButton setTarget:self action:@selector(dismissPresentedController)];
         [self.extrasController.backButton setTarget:self action:@selector(dismissPresentedController)];
         self.dialogTopMenu.extrasButton.userInteractionEnabled = YES;
         self.dialogTopMenu.duelButton.userInteractionEnabled = YES;
@@ -119,7 +111,6 @@ using UP::TimeSpanning::start;
 {
     [self.gameController updateThemeColors];
     [self.extrasController updateThemeColors];
-    [self.aboutController updateThemeColors];
     [self.dialogTopMenu updateThemeColors];
     self.view.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryInfinity];
 }
@@ -128,13 +119,7 @@ using UP::TimeSpanning::start;
 
 - (void)dialogMenuPlayButtonTapped
 {
-    UPSpellSettings *settings = [UPSpellSettings instance];
-    if (settings.retryMode) {
-        [self.gameController setMode:Mode::PlayMenu];
-    }
-    else {
-        [self.gameController setMode:Mode::Ready];
-    }
+    [self.gameController setMode:Mode::Ready];
 }
 
 - (void)dialogMenuExtrasButtonTapped
@@ -142,21 +127,10 @@ using UP::TimeSpanning::start;
     [self presentExtrasController];
 }
 
-- (void)dialogMenuDuelButtonTapped
-{
-    
-}
-
 - (void)presentExtrasController
 {
     [self.gameController setMode:Mode::Extras];
     [self presentViewController:self.extrasController animated:YES completion:nil];
-}
-
-- (void)presentAboutController
-{
-    [self.gameController setMode:Mode::About];
-    [self presentViewController:self.aboutController animated:YES completion:nil];
 }
 
 - (void)dismissPresentedController
@@ -188,12 +162,6 @@ using UP::TimeSpanning::start;
         UPViewMoveMake(self.extrasController.choice3, Role::ChoiceItem3Left, Spot::OffLeftNear),
         UPViewMoveMake(self.extrasController.choice4, Role::ChoiceItem4Left, Spot::OffLeftNear),
         UPViewMoveMake(self.extrasController.selectedPane, Role::Screen, Spot::OffBottomFar),
-        UPViewMoveMake(self.aboutController.backButton, Role::ChoiceBackRight, Spot::OffRightNear),
-        UPViewMoveMake(self.aboutController.choice1, Role::ChoiceItem1Right, Spot::OffRightNear),
-        UPViewMoveMake(self.aboutController.choice2, Role::ChoiceItem2Right, Spot::OffRightNear),
-        UPViewMoveMake(self.aboutController.choice3, Role::ChoiceItem3Right, Spot::OffRightNear),
-        UPViewMoveMake(self.aboutController.choice4, Role::ChoiceItem4Right, Spot::OffRightNear),
-        UPViewMoveMake(self.aboutController.selectedPane, Role::Screen, Spot::OffBottomFar),
     ];
     for (UPViewMove *move in moves) {
         move.view.center = move.destination;
@@ -214,9 +182,6 @@ using UP::TimeSpanning::start;
     if (presented == self.extrasController) {
         return [[UPSpellExtrasPresentAnimationController alloc] init];
     }
-    else if (presented == self.aboutController) {
-        return [[UPSpellAboutPresentAnimationController alloc] init];
-    }
     return nil;
 }
 
@@ -224,9 +189,6 @@ using UP::TimeSpanning::start;
 {
     if (dismissed == self.extrasController) {
         return [[UPSpellExtrasDismissAnimationController alloc] init];
-    }
-    else if (dismissed == self.aboutController) {
-        return [[UPSpellAboutDismissAnimationController alloc] init];
     }
     return nil;
 }
@@ -321,95 +283,3 @@ using UP::TimeSpanning::start;
 }
 
 @end
-
-// =========================================================================================================================================
-
-@interface UPSpellAboutPresentAnimationController ()
-@end
-
-@implementation UPSpellAboutPresentAnimationController
-
-- (instancetype)init
-{
-    self = [super init];
-    return self;
-}
-
-- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
-{
-    UPSpellNavigationController *spellNavigationController = [UPSpellNavigationController instance];
-    UPSpellAboutController *aboutController = spellNavigationController.aboutController;
-    
-    SpellLayout &layout = SpellLayout::instance();
-    
-    [transitionContext.containerView addSubview:aboutController.view];
-    transitionContext.containerView.frame = layout.frame_for(Role::Screen);
-    
-    delay(BandModeDelay, 0.55, ^{
-        NSArray <UPViewMove *> *itemMoves = @[
-            UPViewMoveMake(aboutController.backButton, Role::ChoiceBackRight),
-            UPViewMoveMake(aboutController.choice1, Role::ChoiceItem1Right),
-            UPViewMoveMake(aboutController.choice2, Role::ChoiceItem2Right),
-            UPViewMoveMake(aboutController.choice3, Role::ChoiceItem3Right),
-            UPViewMoveMake(aboutController.choice4, Role::ChoiceItem4Right),
-        ];
-        start(bloop_in(BandModeUI, itemMoves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
-            [transitionContext completeTransition:YES];
-        }));
-        [aboutController setSelectedPaneFromSettingsWithDuration:[self transitionDuration:transitionContext]];
-    });
-}
-
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
-{
-    return 0.5;
-}
-
-@end
-
-// =========================================================================================================================================
-
-@interface UPSpellAboutDismissAnimationController ()
-@end
-
-@implementation UPSpellAboutDismissAnimationController
-
-- (instancetype)init
-{
-    self = [super init];
-    return self;
-}
-
-- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
-{
-    UPSpellNavigationController *spellNavigationController = [UPSpellNavigationController instance];
-    UPSpellAboutController *aboutController = spellNavigationController.aboutController;
-    [aboutController.selectedPane finish];
-    
-    SpellLayout &layout = SpellLayout::instance();
-    
-    [transitionContext.containerView addSubview:aboutController.view];
-    transitionContext.containerView.frame = layout.frame_for(Role::Screen);
-    
-    NSArray <UPViewMove *> *moves = @[
-        UPViewMoveMake(aboutController.backButton, Role::ChoiceBackRight, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choice1, Role::ChoiceItem1Right, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choice2, Role::ChoiceItem2Right, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choice3, Role::ChoiceItem3Right, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.choice4, Role::ChoiceItem4Right, Spot::OffRightNear),
-        UPViewMoveMake(aboutController.selectedPane, Role::Screen, Spot::OffBottomFar),
-    ];
-    start(bloop_out(BandModeUI, moves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
-        [transitionContext completeTransition:YES];
-    }));
-}
-
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
-{
-    return 0.5;
-}
-
-@end
-
-// =========================================================================================================================================
-

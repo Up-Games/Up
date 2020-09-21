@@ -12,12 +12,10 @@
 + (UPSpellNavigationController *)instance;
 
 - (void)presentExtrasController;
-- (void)presentAboutController;
 - (void)dismissPresentedControllerImmediateIfNecessary;
 
 - (void)dialogMenuPlayButtonTapped;
 - (void)dialogMenuExtrasButtonTapped;
-- (void)dialogMenuDuelButtonTapped;
 
 @end
 
@@ -25,10 +23,4 @@
 @end
 
 @interface UPSpellExtrasDismissAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
-@end
-
-@interface UPSpellAboutPresentAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
-@end
-
-@interface UPSpellAboutDismissAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
 @end

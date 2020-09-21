@@ -19,7 +19,6 @@
 #import "UPDialogGameOver.h"
 #import "UPDialogTopMenu.h"
 #import "UPDialogPause.h"
-#import "UPDialogPlayMenu.h"
 #import "UPDialogGameLink.h"
 #import "UPDialogGameLinkHelp.h"
 #import "UPDialogShareHelp.h"
@@ -107,7 +106,6 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
     UPSpellGameAlphaStateReasonDefault,
     UPSpellGameAlphaStateReasonInit,
-    UPSpellGameAlphaStateReasonPlayMenu,
     UPSpellGameAlphaStateReasonGameLink,
     UPSpellGameAlphaStateReasonGameLinkHelp,
     UPSpellGameAlphaStateReasonShareHelp,
@@ -141,7 +139,6 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) BOOL showingWordScoreLabel;
 @property (nonatomic) UPDialogGameOver *dialogGameOver;
 @property (nonatomic) UPDialogPause *dialogPause;
-@property (nonatomic) UPDialogPlayMenu *dialogPlayMenu;
 @property (nonatomic) UPDialogGameLink *dialogGameLink;
 @property (nonatomic) UPDialogGameLinkHelp *dialogGameLinkHelp;
 @property (nonatomic) UPDialogShareHelp *dialogShareHelp;
@@ -149,7 +146,6 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) UPDialogTopMenu *dialogTopMenu;
 @property (nonatomic) BOOL dialogTopMenuUserInteractionEnabled;
 @property (nonatomic) NSInteger lockCount;
-@property (nonatomic) UPChoice *playMenuChoice;
 @property (nonatomic) int endGameScore;
 @property (nonatomic) UPGameLink *gameLink;
 @property (nonatomic) BOOL gameLinkSender;
@@ -244,13 +240,6 @@ static UPSpellGameController *_Instance;
     [self.dialogPause.resumeButton setTarget:self action:@selector(dialogPauseResumeButtonTapped:)];
     self.dialogPause.hidden = YES;
     self.dialogPause.frame = layout.screen_bounds();
-    
-    self.dialogPlayMenu = [UPDialogPlayMenu instance];
-    [self.view addSubview:self.dialogPlayMenu];
-    [self.dialogPlayMenu.backButton setTarget:self action:@selector(playChoiceBackButtonTapped:)];
-    [self.dialogPlayMenu.goButton setTarget:self action:@selector(playChoiceGoButtonTapped:)];
-    self.dialogPlayMenu.hidden = YES;
-    self.dialogPlayMenu.frame = layout.screen_bounds();
     
     self.dialogGameLink = [UPDialogGameLink instance];
     [self.view addSubview:self.dialogGameLink];
@@ -797,7 +786,6 @@ static UPSpellGameController *_Instance;
             case UP::Mode::None:
             case UP::Mode::About:
             case UP::Mode::Extras:
-            case UP::Mode::PlayMenu:
             case UP::Mode::ShareHelp:
             case UP::Mode::DuelHelp:
             case UP::Mode::GameLink:
@@ -827,18 +815,6 @@ static UPSpellGameController *_Instance;
 {
     ASSERT(self.mode == Mode::Pause);
     [self setMode:Mode::Play];
-}
-
-- (void)playChoiceBackButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
-{
-    ASSERT(self.mode == Mode::PlayMenu);
-    [self setMode:Mode::Init];
-}
-
-- (void)playChoiceGoButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
-{
-    ASSERT(self.mode == Mode::PlayMenu);
-    [self setMode:Mode::Ready];
 }
 
 - (void)dialogChallengeCancelButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
@@ -1837,14 +1813,6 @@ static UPSpellGameController *_Instance;
             }
             break;
         }
-        case UPSpellGameAlphaStateReasonPlayMenu: {
-            CGFloat alpha = 0.02;
-            for (UIView *view in self.gameView.interactiveSubviews) {
-                view.alpha = alpha;
-            }
-            m_alpha_reason_stack.clear();
-            break;
-        }
         case UPSpellGameAlphaStateReasonDuelHelp: {
             CGFloat alpha = 0.03;
             for (UIView *view in self.gameView.interactiveSubviews) {
@@ -2396,78 +2364,6 @@ static UPSpellGameController *_Instance;
     });
 }
 
-- (void)viewOrderInPlayMenuFromMode:(Mode)mode
-{
-    [self viewLock];
-    [self viewFillUpSpellTileViews];
-    
-    [self.dialogPlayMenu updateChoiceLabels];
-    
-    self.dialogTopMenuUserInteractionEnabled = NO;
-    
-    SpellLayout &layout = SpellLayout::instance();
-    self.dialogPlayMenu.backButton.center = layout.center_for(Role::ChoiceBackCenter, Spot::OffTopNear);
-    self.dialogPlayMenu.goButton.center = layout.center_for(Role::ChoiceGoButtonCenter, Spot::OffBottomFar);
-    
-    Role choiceItemRoles[3] = { Role::ChoiceItem1Center, Role::ChoiceItem2Center, Role::ChoiceItem3Center };
-    for (UPChoice *choice in self.dialogPlayMenu.choices) {
-        [choice sizeToFit];
-        Location location(choiceItemRoles[choice.tag], Spot::OffBottomNear);
-        CGPoint center = layout.center_for(location);
-        CGSize defaultSize = layout.size_for(location);
-        CGSize effectiveSize = choice.bounds.size;
-        center.x += ((effectiveSize.width - defaultSize.width) * 0.5);
-        center.y += ((effectiveSize.height - defaultSize.height) * 0.5);
-        choice.center = center;
-    }
-    
-    NSMutableArray<UPViewMove *> *buttonOutMoves = [NSMutableArray arrayWithArray:@[
-        UPViewMoveMake(self.dialogTopMenu.extrasButton, Role::DialogButtonTopLeft, Spot::OffLeftNear),
-        UPViewMoveMake(self.dialogTopMenu.duelButton, Role::DialogButtonTopRight, Spot::OffRightNear),
-        UPViewMoveMake(self.dialogGameOver.messagePathView, Role::DialogMessageVerticallyCentered, Spot::OffBottomFar),
-        UPViewMoveMake(self.dialogGameOver.noteLabel, Role::DialogGameNote, Spot::OffBottomFar),
-        UPViewMoveMake(self.dialogGameOver.shareButton, Role::GameShareButton, Spot::OffBottomFar),
-    ]];
-    BOOL gameScoreLabelNeedsMove = (mode == Mode::End && !CGAffineTransformIsIdentity(self.gameView.gameScoreLabel.transform));
-    if (gameScoreLabelNeedsMove) {
-        Role role = role_for_score(self.endGameScore);
-        [buttonOutMoves addObject:UPViewMoveMake(self.gameView.gameScoreLabel, role, Spot::OffBottomFar)];
-    }
-    start(bloop_out(BandModeUI, buttonOutMoves, 0.4, ^(UIViewAnimatingPosition) {
-        [self.gameTimer reset];
-        [self clearGameModel];
-        [self viewUpdateGameControls];
-        self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
-        self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
-        [self setGameOverViewsHidden:YES];
-    }));
-    [UIView animateWithDuration:0.4 animations:^{
-        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlayMenu];
-    } completion:nil];
-    
-    
-    [self.dialogPlayMenu updateThemeColors];
-    self.dialogPlayMenu.hidden = NO;
-    self.dialogPlayMenu.alpha = 0;
-    [UIView animateWithDuration:0.15 animations:^{
-        self.dialogPlayMenu.alpha = 1;
-    }];
-    
-    delay(BandModeDelay, 0.4, ^{
-        NSArray<UPViewMove *> *buttonInMoves = @[
-            UPViewMoveMake(self.dialogTopMenu.playButton, Role::ChoiceTitleCenter),
-            UPViewMoveMake(self.dialogPlayMenu.backButton, Role::ChoiceBackCenter),
-            UPViewMoveMake(self.dialogPlayMenu.goButton, Role::ChoiceGoButtonCenter),
-            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice1, Role::ChoiceItem1Center),
-            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice2, Role::ChoiceItem2Center),
-            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice3, Role::ChoiceItem3Center),
-        ];
-        start(bloop_in(BandModeUI, buttonInMoves, 0.4, ^(UIViewAnimatingPosition) {
-            [self viewUnlock];
-        }));
-    });
-}
-
 - (void)viewOrderInGameLinkFromMode:(Mode)mode
 {
     ASSERT(self.gameLink);
@@ -2841,17 +2737,6 @@ static UPSpellGameController *_Instance;
     self.dialogGameOver.shareButton.highlighted = NO;
     [self setGameOverViewsHidden:YES];
 
-    self.dialogPlayMenu.backButton.frame = layout.frame_for(Role::ChoiceBackCenter, Spot::OffBottomNear);
-    self.dialogPlayMenu.goButton.frame = layout.frame_for(Role::ChoiceGoButtonCenter, Spot::OffBottomNear);
-    self.dialogPlayMenu.choice1.frame = layout.frame_for(Role::ChoiceItem1Center, Spot::OffBottomNear);
-    self.dialogPlayMenu.choice2.frame = layout.frame_for(Role::ChoiceItem2Center, Spot::OffBottomNear);
-    self.dialogPlayMenu.choice3.frame = layout.frame_for(Role::ChoiceItem3Center, Spot::OffBottomNear);
-    
-    self.dialogPlayMenu.backButton.highlightedLocked = NO;
-    self.dialogPlayMenu.backButton.highlighted = NO;
-    self.dialogPlayMenu.goButton.highlightedLocked = NO;
-    self.dialogPlayMenu.goButton.highlighted = NO;
-
     self.dialogGameLink.logoView.frame = layout.frame_for(Role::HeroLogo, Spot::OffBottomNear);
     self.dialogGameLink.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark, Spot::OffBottomNear);
     self.dialogGameLink.titlePromptLabel.frame = layout.frame_for(Role::ChallengePrompt, Spot::OffBottomFar);
@@ -2882,8 +2767,6 @@ static UPSpellGameController *_Instance;
     self.dialogDuelHelp.hidden = YES;
     self.dialogGameLinkHelp.alpha = 1;
     self.dialogGameLinkHelp.hidden = YES;
-    self.dialogPlayMenu.alpha = 1;
-    self.dialogPlayMenu.hidden = YES;
 
     self.gameView.gameScoreLabel.transform = CGAffineTransformIdentity;
     self.gameView.gameScoreLabel.frame = layout.frame_for(Role::GameScore);
@@ -2959,8 +2842,8 @@ static UPSpellGameController *_Instance;
         });
     };
     
-    BOOL comingFromPlayMenuOrChallenge = mode == Mode::PlayMenu || mode == Mode::GameLink;
-    if (comingFromPlayMenuOrChallenge) {
+    BOOL comingFromGameLink = mode == Mode::GameLink;
+    if (comingFromGameLink) {
         self.dialogGameOver.messagePathView.transform = CGAffineTransformIdentity;
         bottomHalf();
     }
@@ -3010,7 +2893,6 @@ static UPSpellGameController *_Instance;
                 // move play button
                 NSArray<UPViewMove *> *playMoves = @[
                     UPViewMoveMake(self.dialogTopMenu.playButton, Role::DialogButtonTopCenter, Spot::OffTopNear),
-                    UPViewMoveMake(self.playMenuChoice, Role::ChoiceItemTopCenter, Spot::OffTopNear),
                 ];
                 start(slide(BandModeUI, playMoves, 0.3, nil));
                 bottomHalf();
@@ -3225,26 +3107,6 @@ static UPSpellGameController *_Instance;
         }
         self.gameLink = nil;
         self.gameLinkSender = NO;
-    }
-    else if (self.playMenuChoice && self.playMenuChoice.tag != UPDialogPlayMenuChoiceNewGame) {
-        UPSpellDossier *dossier = [UPSpellDossier instance];
-        GameKey game_key;
-        if (self.playMenuChoice.tag == UPDialogPlayMenuChoiceRetryHighScore) {
-            game_key = GameKey(dossier.highScoreGameKeyValue);
-            m_spell_model = std::make_shared<SpellModel>(game_key);
-        }
-        else if (self.playMenuChoice.tag == UPDialogPlayMenuChoiceRetryLastGame) {
-            game_key = GameKey(dossier.lastGameKeyValue);
-            if (dossier.lastGameWasChallenge) {
-                m_spell_model = std::make_shared<SpellModel>(game_key, dossier.lastGameChallengeScore);
-            }
-            else {
-                m_spell_model = std::make_shared<SpellModel>(game_key);
-            }
-        }
-        else {
-            m_spell_model = std::make_shared<SpellModel>(game_key);
-        }
     }
     else {
         m_spell_model = std::make_shared<SpellModel>(GameKey::random());
@@ -3684,7 +3546,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         if (self.mode == Mode::Ready) {
             [self setMode:Mode::Init transitionScenario:UPModeTransitionScenarioWillResignActive];
         }
-        if (self.mode == Mode::Play || self.mode == Mode::PlayMenu) {
+        if (self.mode == Mode::Play) {
             if (self.gameTimer.isRunning) {
                 [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioWillResignActive];
             }
@@ -3701,7 +3563,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             case UP::Mode::Init:
             case UP::Mode::About:
             case UP::Mode::Extras:
-            case UP::Mode::PlayMenu:
             case UP::Mode::Pause:
                 break;
             case UP::Mode::Play:
@@ -3730,15 +3591,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::None,          Mode::Pause,         @selector(modeTransitionFromNoneToPause) },
         { Mode::Init,          Mode::About,         @selector(modeTransitionFromInitToAbout) },
         { Mode::Init,          Mode::Extras,        @selector(modeTransitionFromInitToExtras) },
-        { Mode::Init,          Mode::PlayMenu,      @selector(modeTransitionFromInitToPlayMenu) },
         { Mode::Init,          Mode::GameLink,      @selector(modeTransitionFromInitToGameLink) },
         { Mode::Init,          Mode::Ready,         @selector(modeTransitionFromInitToReady) },
         { Mode::Init,          Mode::DuelHelp,      @selector(modeTransitionFromInitToDuelHelp) },
         { Mode::DuelHelp,      Mode::Init,          @selector(modeTransitionFromDuelHelpToInit) },
         { Mode::About,         Mode::Init,          @selector(modeTransitionFromAboutToInit) },
         { Mode::Extras,        Mode::Init,          @selector(modeTransitionFromExtrasToInit) },
-        { Mode::PlayMenu,      Mode::Init,          @selector(modeTransitionFromPlayMenuToInit) },
-        { Mode::PlayMenu,      Mode::Ready,         @selector(modeTransitionFromPlayMenuToReady) },
         { Mode::GameLink,      Mode::Init,          @selector(modeTransitionFromGameLinkToInit) },
         { Mode::GameLink,      Mode::GameLinkHelp,  @selector(modeTransitionFromGameLinkToGameLinkHelp) },
         { Mode::GameLinkHelp,  Mode::GameLink,      @selector(modeTransitionFromGameLinkHelpToGameLink) },
@@ -3753,7 +3611,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::End,           Mode::About,         @selector(modeTransitionFromEndToAbout) },
         { Mode::End,           Mode::DuelHelp,      @selector(modeTransitionFromEndToDuelHelp) },
         { Mode::End,           Mode::Extras,        @selector(modeTransitionFromEndToExtras) },
-        { Mode::End,           Mode::PlayMenu,      @selector(modeTransitionFromEndToPlayMenu) },
         { Mode::End,           Mode::Ready,         @selector(modeTransitionFromEndToReady) },
         { Mode::End,           Mode::ShareHelp,     @selector(modeTransitionFromEndToShareHelp) },
         { Mode::ShareHelp,     Mode::End,           @selector(modeTransitionFromShareHelpToEnd) },
@@ -3773,7 +3630,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     m_will_resign_active_transition_table = {
         { Mode::Ready,    Mode::Init,   @selector(modeTransitionImmediateFromReadyToInit) },
         { Mode::Play,     Mode::Init,   @selector(modeTransitionImmediateFromPlayToInit) },
-        { Mode::PlayMenu, Mode::Init,   @selector(modeTransitionImmediateFromPlayMenuToInit) },
         { Mode::Play,     Mode::Pause,  @selector(modeTransitionImmediateFromPlayToPause) },
     };
     
@@ -3897,11 +3753,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }];
 }
 
-- (void)modeTransitionFromInitToPlayMenu
-{
-    [self viewOrderInPlayMenuFromMode:Mode::Init];
-}
-
 - (void)modeTransitionFromInitToGameLink
 {
     ASSERT(self.gameLink);
@@ -4013,62 +3864,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewUnlock];
 }
 
-- (void)modeTransitionFromPlayMenuToInit
-{
-    [self viewLock];
-        
-    self.dialogPlayMenu.backButton.highlightedLocked = YES;
-    self.dialogPlayMenu.backButton.highlighted = YES;
-
-    NSArray<UPViewMove *> *buttonOutMoves = @[
-        UPViewMoveMake(self.dialogPlayMenu.goButton, Location(Role::ChoiceGoButtonCenter, Spot::OffBottomFar)),
-        UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice1, Role::ChoiceItem1Center, Spot::OffBottomFar),
-        UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice2, Role::ChoiceItem2Center, Spot::OffBottomFar),
-        UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice3, Role::ChoiceItem3Center, Spot::OffBottomFar),
-    ];
-    start(bloop_out(BandModeUI, buttonOutMoves, 0.6, ^(UIViewAnimatingPosition) {
-        self.dialogPlayMenu.hidden = YES;
-        self.dialogPlayMenu.alpha = 1;
-    }));
-    
-    delay(BandModeDelay, 0.35, ^{
-        NSArray<UPViewMove *> *playMoves = @[
-            UPViewMoveMake(self.dialogTopMenu.playButton, Role::DialogButtonTopCenter),
-        ];
-        start(bloop_in(BandModeUI, playMoves, 0.5, ^(UIViewAnimatingPosition) {
-            self.dialogTopMenuUserInteractionEnabled = YES;
-        }));
-        self.dialogTopMenu.playButton.selected = NO;
-        NSArray<UPViewMove *> *buttonInMoves = @[
-            UPViewMoveMake(self.dialogTopMenu.extrasButton, Role::DialogButtonTopLeft),
-            UPViewMoveMake(self.dialogTopMenu.duelButton, Role::DialogButtonTopRight),
-        ];
-        start(bloop_in(BandModeUI, buttonInMoves, 0.5, nil));
-    });
-    
-    delay(BandModeDelay, 0.15, ^{
-        NSArray<UPViewMove *> *slideMoves = @[
-            UPViewMoveMake(self.dialogPlayMenu.backButton, Location(Role::ChoiceBackCenter, Spot::OffTopNear)),
-        ];
-        start(slide(BandModeUI, slideMoves, 0.2, nil));
-    });
-    
-    [UIView animateWithDuration:0.25 delay:0.45 options:0 animations:^{
-        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
-    } completion:^(BOOL finished) {
-        self.dialogPlayMenu.backButton.highlightedLocked = NO;
-        self.dialogPlayMenu.backButton.highlighted = NO;
-        for (UPChoice *choice in self.dialogPlayMenu.choices) {
-            choice.selected = NO;
-        }
-        [self viewUnlock];
-    }];
-    [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
-        self.dialogPlayMenu.alpha = 0;
-    } completion:nil];
-    
-}
-
 - (void)modeTransitionFromGameLinkToInit
 {
     [self viewLock];
@@ -4100,66 +3895,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }];
 }
 
-- (void)modeTransitionFromPlayMenuToReady
-{
-    ASSERT(!m_spell_model);
-    ASSERT(self.lockCount == 0);
-    [self viewLock];
-    
-    self.dialogPlayMenu.goButton.highlightedLocked = YES;
-    self.dialogPlayMenu.goButton.highlighted = YES;
-    
-    for (UPChoice *choice in self.dialogPlayMenu.choices) {
-        if (choice.selected) {
-            self.playMenuChoice = choice;
-            break;
-        }
-    }
-    
-    [self updateSoundAndTunesSettings];
-    [self playTuneIntro];
-          
-    delay(BandModeDelay, 0.1, ^{
-        SpellLayout &layout = SpellLayout::instance();
-        self.dialogTopMenu.extrasButton.center = layout.center_for(Role::DialogButtonTopLeft, Spot::OffTopNear);
-        self.dialogTopMenu.duelButton.center = layout.center_for(Role::DialogButtonTopRight, Spot::OffTopNear);
-        
-        [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
-            self.dialogPlayMenu.alpha = 0;
-        } completion:^(BOOL finished) {
-            self.dialogPlayMenu.alpha = 1;
-        }];
-        
-        [UIView animateWithDuration:0.3 delay:0.3 options:0 animations:^{
-            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonReady];
-        } completion:nil];
-        
-        NSArray<UPViewMove *> *buttonOutMoves = @[
-            UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::ChoiceTitleCenter, Spot::OffTopNear)),
-            UPViewMoveMake(self.dialogPlayMenu.backButton, Location(Role::ChoiceBackCenter, Spot::OffTopNear)),
-            UPViewMoveMake(self.dialogPlayMenu.goButton, Location(Role::ChoiceGoButtonCenter, Spot::OffBottomFar)),
-            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice1, Role::ChoiceItem1Center, Spot::OffBottomFar),
-            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice2, Role::ChoiceItem2Center, Spot::OffBottomFar),
-            UPViewVariableSizeMoveMake(self.dialogPlayMenu.choice3, Role::ChoiceItem3Center, Spot::OffBottomFar),
-        ];
-        
-        start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
-            self.dialogTopMenu.playButton.selected = NO;
-            self.dialogPlayMenu.goButton.highlightedLocked = NO;
-            self.dialogPlayMenu.goButton.highlighted = NO;
-        }));
-        delay(BandModeDelay, 0.55, ^{
-            [self viewFillUpSpellTileViews];
-            [self viewMakeReadyFromMode:Mode::PlayMenu completion:^{
-                [self viewBloopOutExistingTileViewsWithCompletion:nil];
-                [self createGameModelIfNeeded];
-                self.playMenuChoice = nil;
-                [self setMode:Mode::Play];
-            }];
-        });
-    });
-}
-
 - (void)modeTransitionFromChallengeToReady
 {
     ASSERT(!m_spell_model);
@@ -4173,12 +3908,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self playTuneIntro];
     
     delay(BandModeDelay, 0.1, ^{
-        [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
-            self.dialogPlayMenu.alpha = 0;
-        } completion:^(BOOL finished) {
-            self.dialogPlayMenu.alpha = 1;
-        }];
-        
         [UIView animateWithDuration:0.3 delay:0.3 options:0 animations:^{
             [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonReady];
         } completion:nil];
@@ -4303,13 +4032,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 }
 
 - (void)modeTransitionImmediateFromPlayToInit
-{
-    [self viewLock];
-    [self viewImmediateTransitionToInit];
-    [self viewEnsureUnlocked];
-}
-
-- (void)modeTransitionImmediateFromPlayMenuToInit
 {
     [self viewLock];
     [self viewImmediateTransitionToInit];
@@ -4584,13 +4306,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self viewFillUpSpellTileViews];
         [self viewUnlock];
     }];
-}
-
-- (void)modeTransitionFromEndToPlayMenu
-{
-    [self clearGameModel];
-    [self viewFillUpSpellTileViews];
-    [self viewOrderInPlayMenuFromMode:Mode::End];
 }
 
 - (void)modeTransitionFromEndToReady

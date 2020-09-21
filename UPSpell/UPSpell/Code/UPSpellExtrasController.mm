@@ -12,7 +12,6 @@
 #import "UPControl+UPSpell.h"
 #import "UPSpellExtrasController.h"
 #import "UPSpellExtrasPaneColors.h"
-#import "UPSpellExtrasPaneRetry.h"
 #import "UPSpellExtrasPaneSound.h"
 #import "UPSpellExtrasPaneShare.h"
 #import "UPSpellLayout.h"
@@ -21,7 +20,6 @@
 @interface UPSpellExtrasController ()
 @property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
 @property (nonatomic) UPSpellExtrasPaneSound *soundPane;
-@property (nonatomic) UPSpellExtrasPaneRetry *retryPane;
 @property (nonatomic) UPSpellExtrasPaneShare *sharePane;
 @end
 
@@ -74,7 +72,7 @@ static UPSpellExtrasController *_Instance;
     [self.view addSubview:self.choice2];
     
     self.choice3 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice3.labelString = @"RETRY";
+    self.choice3.labelString = @"SHARE";
     self.choice3.tag = 2;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice3.frame = layout.frame_for(Role::ChoiceItem3Left, Spot::OffLeftNear);
@@ -97,20 +95,16 @@ static UPSpellExtrasController *_Instance;
     self.soundPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.soundPane];
     
-    self.retryPane = [UPSpellExtrasPaneRetry pane];
-    self.retryPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
-    [self.view addSubview:self.retryPane];
-    
     self.sharePane = [UPSpellExtrasPaneShare pane];
     self.sharePane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.sharePane];
     
-    self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
-    
+//    self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
+    self.choices = @[ self.choice1, self.choice2, self.choice3 ];
+
     self.panes = @[
         self.colorsPane,
         self.soundPane,
-        self.retryPane,
         self.sharePane,
     ];
 }

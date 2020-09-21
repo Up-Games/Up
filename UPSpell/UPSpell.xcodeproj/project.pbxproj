@@ -17,7 +17,6 @@
 		5D0FC33324A65A6C00353563 /* UPAccessoryPane.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC33224A65A6C00353563 /* UPAccessoryPane.mm */; };
 		5D0FC33624A65C0B00353563 /* UPSpellExtrasPaneColors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC33524A65C0B00353563 /* UPSpellExtrasPaneColors.mm */; };
 		5D0FC33924A9410900353563 /* UPTextButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC33824A9410900353563 /* UPTextButton.mm */; };
-		5D12E49C24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D12E49B24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.mm */; };
 		5D29878B24F2CC9600AA6E78 /* UPPulseView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29878A24F2CC9600AA6E78 /* UPPulseView.mm */; };
 		5D29878E24F5561500AA6E78 /* UPAccessoryPaneController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29878C24F5561500AA6E78 /* UPAccessoryPaneController.mm */; };
 		5D29879124F5624800AA6E78 /* UPSpellAboutPaneGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29879024F5624800AA6E78 /* UPSpellAboutPaneGame.mm */; };
@@ -27,7 +26,6 @@
 		5D3EB45824F979AB003CF411 /* thanks-intro.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5D3EB45624F979AB003CF411 /* thanks-intro.rtf */; };
 		5D3EB45924F979AB003CF411 /* thanks-licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5D3EB45724F979AB003CF411 /* thanks-licenses.rtf */; };
 		5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */; };
-		5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogTopMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */; };
 		5D4ECE3824E4842700D1A310 /* UPDialogGameLinkHelp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4ECE3724E4842700D1A310 /* UPDialogGameLinkHelp.mm */; };
 		5D4ECE4B24E8966600D1A310 /* UPRotor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4ECE4924E8966600D1A310 /* UPRotor.mm */; };
@@ -76,8 +74,6 @@
 		5D6FB5A024DEF08800CDC293 /* UPSpellExtrasPaneShare.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59F24DEF08800CDC293 /* UPSpellExtrasPaneShare.mm */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.mm */; };
 		5D8D827224E03B08007B050C /* LinkPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D8D827124E03B08007B050C /* LinkPresentation.framework */; };
-		5DA0A06624BCD4EA0029CE0E /* UPSpellGameRetry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA0A06524BCD4EA0029CE0E /* UPSpellGameRetry.mm */; };
-		5DA0A06924BD08590029CE0E /* UPDialogPlayMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA0A06824BD08590029CE0E /* UPDialogPlayMenu.mm */; };
 		5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E0432476BF41008D3015 /* UPTileView.mm */; };
 		5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E078247D723A008D3015 /* UPSpellModel.mm */; };
 		5DB9B1A9248702D400A4AAA8 /* MalloryNrrw-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D5EA14B2487025F006264D2 /* MalloryNrrw-Bold.otf */; };
@@ -217,8 +213,6 @@
 		5D0FC33524A65C0B00353563 /* UPSpellExtrasPaneColors.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasPaneColors.mm; sourceTree = "<group>"; };
 		5D0FC33724A9410900353563 /* UPTextButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTextButton.h; sourceTree = "<group>"; };
 		5D0FC33824A9410900353563 /* UPTextButton.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTextButton.mm; sourceTree = "<group>"; };
-		5D12E49A24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasPaneRetry.h; sourceTree = "<group>"; };
-		5D12E49B24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasPaneRetry.mm; sourceTree = "<group>"; };
 		5D12E4A824BBF33200C73F64 /* UPSpellGameSummary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellGameSummary.h; sourceTree = "<group>"; };
 		5D29878924F2CC9600AA6E78 /* UPPulseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPPulseView.h; sourceTree = "<group>"; };
 		5D29878A24F2CC9600AA6E78 /* UPPulseView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPPulseView.mm; sourceTree = "<group>"; };
@@ -235,8 +229,6 @@
 		5D3EB45724F979AB003CF411 /* thanks-licenses.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "thanks-licenses.rtf"; sourceTree = "<group>"; };
 		5D4AE823248BDED200213904 /* UPSpellExtrasController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasController.h; sourceTree = "<group>"; };
 		5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasController.mm; sourceTree = "<group>"; };
-		5D4AE826248BDF2300213904 /* UPSpellAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutController.h; sourceTree = "<group>"; };
-		5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutController.mm; sourceTree = "<group>"; };
 		5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogTopMenu.mm; sourceTree = "<group>"; };
 		5D4ECE3624E4842700D1A310 /* UPDialogGameLinkHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogGameLinkHelp.h; sourceTree = "<group>"; };
 		5D4ECE3724E4842700D1A310 /* UPDialogGameLinkHelp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogGameLinkHelp.mm; sourceTree = "<group>"; };
@@ -309,10 +301,6 @@
 		5D8D826F24DF866D007B050C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5D8D827124E03B08007B050C /* LinkPresentation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkPresentation.framework; path = System/Library/Frameworks/LinkPresentation.framework; sourceTree = SDKROOT; };
 		5D8D827324E06853007B050C /* UP Spell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "UP Spell.entitlements"; sourceTree = "<group>"; };
-		5DA0A06424BCD4EA0029CE0E /* UPSpellGameRetry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellGameRetry.h; sourceTree = "<group>"; };
-		5DA0A06524BCD4EA0029CE0E /* UPSpellGameRetry.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellGameRetry.mm; sourceTree = "<group>"; };
-		5DA0A06724BD08590029CE0E /* UPDialogPlayMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogPlayMenu.h; sourceTree = "<group>"; };
-		5DA0A06824BD08590029CE0E /* UPDialogPlayMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogPlayMenu.mm; sourceTree = "<group>"; };
 		5DA8E0422476128C008D3015 /* UPTileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPTileModel.h; sourceTree = "<group>"; };
 		5DA8E0432476BF41008D3015 /* UPTileView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPTileView.mm; sourceTree = "<group>"; };
 		5DA8E04524775A2E008D3015 /* UPTileSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileSequence.h; sourceTree = "<group>"; };
@@ -529,8 +517,6 @@
 				5D5EA1472486A1D2006264D2 /* UPDialogGameOver.mm */,
 				5D5EA1402485B49E006264D2 /* UPDialogPause.h */,
 				5D5EA1412485B49E006264D2 /* UPDialogPause.mm */,
-				5DA0A06724BD08590029CE0E /* UPDialogPlayMenu.h */,
-				5DA0A06824BD08590029CE0E /* UPDialogPlayMenu.mm */,
 				5DBAD6DF24E43FFE00471ABF /* UPDialogShareHelp.h */,
 				5DBAD6E024E43FFF00471ABF /* UPDialogShareHelp.mm */,
 				5D544C0F248805F5001FA8DF /* UPDialogTopMenu.h */,
@@ -548,8 +534,6 @@
 				5D6FB58924DAFC2500CDC293 /* UPSlider.mm */,
 				5D5B53F024CDCACD00FD50D4 /* UPSoundPlayer.h */,
 				5D5B53F124CDCACD00FD50D4 /* UPSoundPlayer.mm */,
-				5D4AE826248BDF2300213904 /* UPSpellAboutController.h */,
-				5D4AE827248BDF2300213904 /* UPSpellAboutController.mm */,
 				5D29878F24F5624800AA6E78 /* UPSpellAboutPaneGame.h */,
 				5D29879024F5624800AA6E78 /* UPSpellAboutPaneGame.mm */,
 				5D29879424F57F8700AA6E78 /* UPSpellAboutPaneLexicon.h */,
@@ -564,16 +548,12 @@
 				5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */,
 				5D0FC33424A65C0B00353563 /* UPSpellExtrasPaneColors.h */,
 				5D0FC33524A65C0B00353563 /* UPSpellExtrasPaneColors.mm */,
-				5D12E49A24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.h */,
-				5D12E49B24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.mm */,
 				5D6FB59E24DEF08800CDC293 /* UPSpellExtrasPaneShare.h */,
 				5D6FB59F24DEF08800CDC293 /* UPSpellExtrasPaneShare.mm */,
 				5D6FB59024DB151E00CDC293 /* UPSpellExtrasPaneSound.h */,
 				5D6FB58F24DB151E00CDC293 /* UPSpellExtrasPaneSound.mm */,
 				5DF9DF602466165700B2199D /* UPSpellGameController.h */,
 				5DF9DF612466165700B2199D /* UPSpellGameController.mm */,
-				5DA0A06424BCD4EA0029CE0E /* UPSpellGameRetry.h */,
-				5DA0A06524BCD4EA0029CE0E /* UPSpellGameRetry.mm */,
 				5D12E4A824BBF33200C73F64 /* UPSpellGameSummary.h */,
 				5DB9B1AA248705FA00A4AAA8 /* UPSpellGameView.h */,
 				5DB9B1AB248705FA00A4AAA8 /* UPSpellGameView.mm */,
@@ -961,7 +941,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D4ECE4B24E8966600D1A310 /* UPRotor.mm in Sources */,
-				5D12E49C24B69F5C00C73F64 /* UPSpellExtrasPaneRetry.mm in Sources */,
 				5D6FB59A24DD989100CDC293 /* UPGameLink.mm in Sources */,
 				5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */,
 				5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */,
@@ -981,7 +960,6 @@
 				5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */,
 				5D29879124F5624800AA6E78 /* UPSpellAboutPaneGame.mm in Sources */,
 				5D29878B24F2CC9600AA6E78 /* UPPulseView.mm in Sources */,
-				5DA0A06624BCD4EA0029CE0E /* UPSpellGameRetry.mm in Sources */,
 				5D0FC23324A50E3B00353563 /* UPChoice.mm in Sources */,
 				5D08E6DC24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm in Sources */,
 				5D5B546B24D0A40500FD50D4 /* UPTunePlayer.mm in Sources */,
@@ -993,14 +971,12 @@
 				5D0FC33624A65C0B00353563 /* UPSpellExtrasPaneColors.mm in Sources */,
 				5DBAD6E124E43FFF00471ABF /* UPDialogShareHelp.mm in Sources */,
 				5D6FB58A24DAFC2500CDC293 /* UPSlider.mm in Sources */,
-				5DA0A06924BD08590029CE0E /* UPDialogPlayMenu.mm in Sources */,
 				5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */,
 				5D29879624F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm in Sources */,
 				5D0FC22724A278D300353563 /* UPStepper.mm in Sources */,
 				5DF74C4024DF80B50000F43D /* UPActivityViewController.mm in Sources */,
 				5D6FB5A024DEF08800CDC293 /* UPSpellExtrasPaneShare.mm in Sources */,
 				5D6261A324C0944600D19EEF /* UPSpellDossier.mm in Sources */,
-				5D4AE828248BDF2300213904 /* UPSpellAboutController.mm in Sources */,
 				5D5B546E24D0B0C900FD50D4 /* AVAudioPlayer+UPSpell.mm in Sources */,
 				5D5EA1452485B820006264D2 /* UPTextPaths.mm in Sources */,
 				5D57D1FC246DB9AF00705395 /* UPControl+UPSpell.mm in Sources */,

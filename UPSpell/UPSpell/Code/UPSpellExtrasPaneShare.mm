@@ -25,7 +25,6 @@
 #import "UPSlider.h"
 #import "UPSpellExtrasPaneShare.h"
 #import "UPSpellExtrasController.h"
-#import "UPSpellGameRetry.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
 #import "UPSpellNavigationController.h"
