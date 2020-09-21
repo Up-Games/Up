@@ -1,5 +1,5 @@
 //
-//  UPSpellAboutPanePlaying.mm
+//  UPSpellExtrasPaneHowTo.mm
 //  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
@@ -16,7 +16,7 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
-#import "UPSpellAboutPanePlaying.h"
+#import "UPSpellExtrasPaneHowTo.h"
 #import "UPSpellGameView.h"
 #import "UPSpellLayout.h"
 #import "UPSpellModel.h"
@@ -49,7 +49,7 @@ using UP::TimeSpanning::cancel;
 using UP::TimeSpanning::delay;
 using UP::TimeSpanning::start;
 
-@interface UPSpellAboutPanePlaying ()
+@interface UPSpellExtrasPaneHowTo ()
 @property (nonatomic) BOOL active;
 @property (nonatomic) int step;
 @property (nonatomic) UPSpellGameView *gameView;
@@ -59,9 +59,9 @@ using UP::TimeSpanning::start;
 @property (nonatomic) NSArray *tileViews;
 @end
 
-@implementation UPSpellAboutPanePlaying
+@implementation UPSpellExtrasPaneHowTo
 
-+ (UPSpellAboutPanePlaying *)pane
++ (UPSpellExtrasPaneHowTo *)pane
 {
     return [[self alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
 }

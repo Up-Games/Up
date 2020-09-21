@@ -1,5 +1,5 @@
 //
-//  UPSpellAboutPaneThanks.mm
+//  UPSpellExtrasPaneAbout.mm
 //  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
@@ -9,20 +9,20 @@
 
 #import "UIFont+UPSpell.h"
 #import "UPControl+UPSpell.h"
-#import "UPSpellAboutPaneThanks.h"
+#import "UPSpellExtrasPaneAbout.h"
 #import "UPSpellLayout.h"
 #import "UPSpellSettings.h"
 
 using UP::SpellLayout;
 using Role = UP::SpellLayout::Role;
 
-@interface UPSpellAboutPaneThanks () <WKNavigationDelegate>
+@interface UPSpellExtrasPaneAbout () <WKNavigationDelegate>
 @property (nonatomic) UITextView *thanksDescription;
 @end
 
-@implementation UPSpellAboutPaneThanks
+@implementation UPSpellExtrasPaneAbout
 
-+ (UPSpellAboutPaneThanks *)pane
++ (UPSpellExtrasPaneAbout *)pane
 {
     return [[self alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
 }
@@ -32,11 +32,11 @@ using Role = UP::SpellLayout::Role;
     self = [super initWithFrame:frame];
 
     SpellLayout &layout = SpellLayout::instance();
-    self.thanksDescription = [[UITextView alloc] initWithFrame:layout.frame_for(Role::AboutThanksDescription)];
+    self.thanksDescription = [[UITextView alloc] initWithFrame:layout.frame_for(Role::ExtrasThanks)];
     self.thanksDescription.editable = NO;
     self.thanksDescription.opaque = NO;
     self.thanksDescription.backgroundColor = [UIColor clearColor];
-    self.thanksDescription.contentInset = UIEdgeInsetsMake(16, 0, 0, 0);
+    self.thanksDescription.contentInset = UIEdgeInsetsMake(22, 0, 0, 0);
     [self addSubview:self.thanksDescription];
 
     return self;
@@ -44,7 +44,7 @@ using Role = UP::SpellLayout::Role;
 
 - (void)prepare
 {
-    self.thanksDescription.contentOffset = CGPointMake(0, -16);
+    self.thanksDescription.contentOffset = CGPointMake(0, -22);
     self.thanksDescription.userInteractionEnabled = YES;
     [self updateThemeColors];
 }
@@ -58,11 +58,11 @@ using Role = UP::SpellLayout::Role;
     SpellLayout &layout = SpellLayout::instance();
     
     NSBundle *bundle = [NSBundle mainBundle];
-    NSURL *introFileURL = [bundle URLForResource:@"thanks-intro" withExtension:@"rtf"];
+    NSURL *introFileURL = [bundle URLForResource:@"about-intro" withExtension:@"rtf"];
     NSMutableAttributedString *introAttrString = [[NSMutableAttributedString alloc] initWithURL:introFileURL options:@{
         NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType
     } documentAttributes:nil error:nil];
-    NSURL *licensesFileURL = [bundle URLForResource:@"thanks-licenses" withExtension:@"rtf"];
+    NSURL *licensesFileURL = [bundle URLForResource:@"about-licenses" withExtension:@"rtf"];
     NSMutableAttributedString *licensesAttrString = [[NSMutableAttributedString alloc] initWithURL:licensesFileURL options:@{
         NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType
     } documentAttributes:nil error:nil];

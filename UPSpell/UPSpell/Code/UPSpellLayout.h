@@ -54,20 +54,15 @@ public:
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse, DialogButtonCenterResponse,
         DialogHelpButton, DialogHelpTitle, DialogHelpText, DialogHelpOKButton,
         DialogDuelHelpTitle, DialogDuelHelpText, DialogDuelHelpOKButton,
-        ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left,
-        ChoiceBackRight, ChoiceTitleRight, ChoiceItem1Right, ChoiceItem2Right, ChoiceItem3Right, ChoiceItem4Right,
-        ChoiceBackCenter, ChoiceTitleCenter, ChoiceItem1Center, ChoiceItem2Center, ChoiceItem3Center, ChoiceGoButtonCenter, ChoiceItemTopCenter,
-        ExtrasColorsDarkMode, ExtrasColorsStarkMode, ExtrasColorsQuarkMode, ExtrasColorsHueWheel, ExtrasColorsThemeRotor,
-        ExtrasColorsHueStepMore, ExtrasColorsHueStepLess, ExtrasColorsDescription, ExtrasColorsExample,
+        ChoiceBackLeft, ChoiceTitleLeft, ChoiceItem1Left, ChoiceItem2Left, ChoiceItem3Left, ChoiceItem4Left, ChoiceItem5Left,
+        ExtrasColorsThemeRotor, ExtrasColorsDescription, ExtrasColorsExample,
         ExtrasColorsIconPrompt, ExtrasColorsIconButtonNope, ExtrasColorsIconButtonYep,
-        ExtrasStatsHeader, ExtrasStatsTable,
-        ExtrasRetryCheckbox, ExtrasRetryDescription,
         ExtrasSoundEffectsCheckbox, ExtrasSoundEffectsSlider, ExtrasSoundTunesCheckbox, ExtrasSoundTunesSlider, ExtrasSoundDescription,
         ExtrasShareHighScoreValue, ExtrasShareHighScoreDescription, ExtrasShareHighScoreButton,
         ExtrasShareLastGameValue, ExtrasShareLastGameDescription, ExtrasShareLastGameButton,
         ExtrasShareDescription, ExtrasShareLastGameHighScoreEqualDescription,
         ChallengePrompt, ChallengeScore,
-        AboutGameDescription, AboutLexiconDescription, AboutThanksDescription,
+        ExtrasThanks,
         AboutPlayingGameView, AboutPlayingBottomPrompt,
         AboutPlayingTopLeftButtonClick, AboutPlayingTopRightButtonClick, AboutPlaying2xCallout,
         AboutLogo, AboutWordMark,
@@ -138,10 +133,10 @@ public:
     static inline constexpr CGFloat CanonicalBallotLabelLeftMargin = 41;
     static inline constexpr CGFloat CanonicalSliderIconInset = 75;
 
-    static inline constexpr CGFloat CanonicalChoiceLabelCapHeight = 30;
-    static inline constexpr CGFloat CanonicalChoiceLabelBaselineAdjustment = -12;
+    static inline constexpr CGFloat CanonicalChoiceLabelCapHeight = 27;
+    static inline constexpr CGFloat CanonicalChoiceLabelBaselineAdjustment = -8;
     static inline constexpr CGFloat CanonicalChoiceLabelLeftMargin = 82;
-    static inline constexpr CGFloat CanonicalChoiceLabelRightMargin = 87;
+
     static inline constexpr CGFloat CanonicalRotorElementCapHeight = 36;
 
     static inline constexpr CGSize CanonicalTileSize = { 100, 120 };
@@ -175,12 +170,13 @@ public:
     static inline constexpr CGFloat CanonicalOffscreenNearFrameFactor = 1.2;
 
     static inline constexpr CGRect CanonicalChoiceBackButtonRowLayoutFrame = {  20,  30, 960, 64 };
-    static inline constexpr CGRect CanonicalChoiceTitleLayoutFrame =         {  83,  26, 834, 76 };
-    static inline constexpr CGRect CanonicalChoice1LayoutFrame =             {  30, 120, 940, 76 };
-    static inline constexpr CGRect CanonicalChoice2LayoutFrame =             {  30, 204, 940, 76 };
-    static inline constexpr CGRect CanonicalChoice3LayoutFrame =             {  30, 288, 940, 76 };
-    static inline constexpr CGRect CanonicalChoice4LayoutFrame =             {  30, 372, 940, 76 };
-    static inline constexpr CGSize CanonicalChoiceSize =                              {  280, 76 };
+    static inline constexpr CGRect CanonicalChoiceTitleLayoutFrame =         {  83,  25, 834, 70 };
+    static inline constexpr CGRect CanonicalChoice1LayoutFrame =             {  30, 108, 940, 70 };
+    static inline constexpr CGRect CanonicalChoice2LayoutFrame =             {  30, 182, 940, 70 };
+    static inline constexpr CGRect CanonicalChoice3LayoutFrame =             {  30, 256, 940, 70 };
+    static inline constexpr CGRect CanonicalChoice4LayoutFrame =             {  30, 330, 940, 70 };
+    static inline constexpr CGRect CanonicalChoice5LayoutFrame =             {  30, 404, 940, 70 };
+    static inline constexpr CGSize CanonicalChoiceSize =                              {  280, 70 };
 
     static inline constexpr CGFloat CanonicalChoiceCenterMargin = 136;
     static inline constexpr CGFloat CanonicalChoiceCenterTitleMargin =  115;
@@ -225,17 +221,12 @@ public:
 
     static inline constexpr CGFloat CanonicalDialogTitleCapHeight = 35;
 
-    static inline constexpr CGRect CanonicalAboutLogoFrame = { 245, 54, 160, 160 };
-    static inline constexpr CGRect CanonicalAboutWordMarkFrame = { 235, 217, 180, 140 };
-    static inline constexpr CGRect CanonicalAboutGameDescriptionFrame = { 60, 278, 535, 210 };
+    static inline constexpr CGRect CanonicalExtrasThanksFrame = { 360, 0, 620, 500 };
     static inline constexpr CGFloat CanonicalSettingsAboutFontCapHeight = 19;
     static inline constexpr CGFloat CanonicalLegalFontCapHeight = 16;
 
-    static inline constexpr CGRect CanonicalAboutLexiconDescriptionFrame = { 40, 44, 600, 400 };
-    static inline constexpr CGRect CanonicalAboutThanksDescriptionFrame = { 40, 0, 600, 500 };
-
-    static inline constexpr CGRect CanonicalAboutPlayingGameViewFrame = { -160, -132, 1000, 500 };
-    static inline constexpr CGRect CanonicalAboutPlayingGameBottomPromptFrame = { 20, 410, 640, 80 };
+    static inline constexpr CGRect CanonicalAboutPlayingGameViewFrame = { 160, -132, 1000, 500 };
+    static inline constexpr CGRect CanonicalAboutPlayingGameBottomPromptFrame = { 340, 410, 640, 80 };
     static inline constexpr CGRect CanonicalAboutPlaying2xCalloutFrame = { 676, 243, 46, 46 };
 
     static inline constexpr CGSize CanonicalBotSpotSize = { 92, 92 };

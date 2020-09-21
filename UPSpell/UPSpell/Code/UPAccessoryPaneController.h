@@ -17,6 +17,7 @@
 @property (nonatomic) UPChoice *choice2;
 @property (nonatomic) UPChoice *choice3;
 @property (nonatomic) UPChoice *choice4;
+@property (nonatomic) UPChoice *choice5;
 @property (nonatomic) UPAccessoryPane *selectedPane;
 @property (nonatomic) NSArray<UPChoice *> *choices;
 @property (nonatomic) NSArray<UPAccessoryPane *> *panes;

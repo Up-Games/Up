@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D08E6DC24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D08E6DB24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm */; };
-		5D08E6EA24F74326007DBE44 /* UPSpellAboutPanePlaying.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D08E6E824F74326007DBE44 /* UPSpellAboutPanePlaying.mm */; };
+		5D08E6DC24F6AABC007DBE44 /* UPSpellExtrasPaneAbout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D08E6DB24F6AABC007DBE44 /* UPSpellExtrasPaneAbout.mm */; };
+		5D08E6EA24F74326007DBE44 /* UPSpellExtrasPaneHowTo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D08E6E824F74326007DBE44 /* UPSpellExtrasPaneHowTo.mm */; };
 		5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC21A24A125D000353563 /* UPBallot.mm */; };
 		5D0FC21E24A130D700353563 /* MalloryCond-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */; };
 		5D0FC22724A278D300353563 /* UPStepper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC22624A278D300353563 /* UPStepper.mm */; };
@@ -19,12 +19,9 @@
 		5D0FC33924A9410900353563 /* UPTextButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC33824A9410900353563 /* UPTextButton.mm */; };
 		5D29878B24F2CC9600AA6E78 /* UPPulseView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29878A24F2CC9600AA6E78 /* UPPulseView.mm */; };
 		5D29878E24F5561500AA6E78 /* UPAccessoryPaneController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29878C24F5561500AA6E78 /* UPAccessoryPaneController.mm */; };
-		5D29879124F5624800AA6E78 /* UPSpellAboutPaneGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29879024F5624800AA6E78 /* UPSpellAboutPaneGame.mm */; };
 		5D29879324F5697C00AA6E78 /* MalloryCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D29879224F5697C00AA6E78 /* MalloryCond-Bold.otf */; };
-		5D29879624F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D29879524F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm */; };
-		5D3EB45524F9676B003CF411 /* lexicon.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5D3EB45424F9676B003CF411 /* lexicon.rtf */; };
-		5D3EB45824F979AB003CF411 /* thanks-intro.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5D3EB45624F979AB003CF411 /* thanks-intro.rtf */; };
-		5D3EB45924F979AB003CF411 /* thanks-licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5D3EB45724F979AB003CF411 /* thanks-licenses.rtf */; };
+		5D3EB45824F979AB003CF411 /* about-intro.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5D3EB45624F979AB003CF411 /* about-intro.rtf */; };
+		5D3EB45924F979AB003CF411 /* about-licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5D3EB45724F979AB003CF411 /* about-licenses.rtf */; };
 		5D4AE825248BDED200213904 /* UPSpellExtrasController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */; };
 		5D4AE82A248ED25500213904 /* UPDialogTopMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */; };
 		5D4ECE3824E4842700D1A310 /* UPDialogGameLinkHelp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D4ECE3724E4842700D1A310 /* UPDialogGameLinkHelp.mm */; };
@@ -193,11 +190,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5D08E6DA24F6AABB007DBE44 /* UPSpellAboutPaneThanks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutPaneThanks.h; sourceTree = "<group>"; };
-		5D08E6DB24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPaneThanks.mm; sourceTree = "<group>"; };
+		5D08E6DA24F6AABB007DBE44 /* UPSpellExtrasPaneAbout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasPaneAbout.h; sourceTree = "<group>"; };
+		5D08E6DB24F6AABC007DBE44 /* UPSpellExtrasPaneAbout.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasPaneAbout.mm; sourceTree = "<group>"; };
 		5D08E6E024F6B3DD007DBE44 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		5D08E6E824F74326007DBE44 /* UPSpellAboutPanePlaying.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPanePlaying.mm; sourceTree = "<group>"; };
-		5D08E6E924F74326007DBE44 /* UPSpellAboutPanePlaying.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutPanePlaying.h; sourceTree = "<group>"; };
+		5D08E6E824F74326007DBE44 /* UPSpellExtrasPaneHowTo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasPaneHowTo.mm; sourceTree = "<group>"; };
+		5D08E6E924F74326007DBE44 /* UPSpellExtrasPaneHowTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasPaneHowTo.h; sourceTree = "<group>"; };
 		5D0FC21A24A125D000353563 /* UPBallot.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPBallot.mm; sourceTree = "<group>"; };
 		5D0FC21B24A125D000353563 /* UPBallot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPBallot.h; sourceTree = "<group>"; };
 		5D0FC21D24A130D700353563 /* MalloryCond-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Black.otf"; sourceTree = "<group>"; };
@@ -218,15 +215,10 @@
 		5D29878A24F2CC9600AA6E78 /* UPPulseView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPPulseView.mm; sourceTree = "<group>"; };
 		5D29878C24F5561500AA6E78 /* UPAccessoryPaneController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPAccessoryPaneController.mm; sourceTree = "<group>"; };
 		5D29878D24F5561500AA6E78 /* UPAccessoryPaneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPAccessoryPaneController.h; sourceTree = "<group>"; };
-		5D29878F24F5624800AA6E78 /* UPSpellAboutPaneGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutPaneGame.h; sourceTree = "<group>"; };
-		5D29879024F5624800AA6E78 /* UPSpellAboutPaneGame.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPaneGame.mm; sourceTree = "<group>"; };
 		5D29879224F5697C00AA6E78 /* MalloryCond-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MalloryCond-Bold.otf"; sourceTree = "<group>"; };
-		5D29879424F57F8700AA6E78 /* UPSpellAboutPaneLexicon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPSpellAboutPaneLexicon.h; sourceTree = "<group>"; };
-		5D29879524F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellAboutPaneLexicon.mm; sourceTree = "<group>"; };
 		5D34613624887918009FB46D /* UPViewMove+UPSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UPViewMove+UPSpell.h"; sourceTree = "<group>"; };
-		5D3EB45424F9676B003CF411 /* lexicon.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = lexicon.rtf; sourceTree = "<group>"; };
-		5D3EB45624F979AB003CF411 /* thanks-intro.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "thanks-intro.rtf"; sourceTree = "<group>"; };
-		5D3EB45724F979AB003CF411 /* thanks-licenses.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "thanks-licenses.rtf"; sourceTree = "<group>"; };
+		5D3EB45624F979AB003CF411 /* about-intro.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "about-intro.rtf"; sourceTree = "<group>"; };
+		5D3EB45724F979AB003CF411 /* about-licenses.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "about-licenses.rtf"; sourceTree = "<group>"; };
 		5D4AE823248BDED200213904 /* UPSpellExtrasController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellExtrasController.h; sourceTree = "<group>"; };
 		5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellExtrasController.mm; sourceTree = "<group>"; };
 		5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogTopMenu.mm; sourceTree = "<group>"; };
@@ -434,9 +426,8 @@
 		5D08E6DD24F6AB05007DBE44 /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				5D3EB45424F9676B003CF411 /* lexicon.rtf */,
-				5D3EB45624F979AB003CF411 /* thanks-intro.rtf */,
-				5D3EB45724F979AB003CF411 /* thanks-licenses.rtf */,
+				5D3EB45624F979AB003CF411 /* about-intro.rtf */,
+				5D3EB45724F979AB003CF411 /* about-licenses.rtf */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -534,20 +525,16 @@
 				5D6FB58924DAFC2500CDC293 /* UPSlider.mm */,
 				5D5B53F024CDCACD00FD50D4 /* UPSoundPlayer.h */,
 				5D5B53F124CDCACD00FD50D4 /* UPSoundPlayer.mm */,
-				5D29878F24F5624800AA6E78 /* UPSpellAboutPaneGame.h */,
-				5D29879024F5624800AA6E78 /* UPSpellAboutPaneGame.mm */,
-				5D29879424F57F8700AA6E78 /* UPSpellAboutPaneLexicon.h */,
-				5D29879524F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm */,
-				5D08E6E924F74326007DBE44 /* UPSpellAboutPanePlaying.h */,
-				5D08E6E824F74326007DBE44 /* UPSpellAboutPanePlaying.mm */,
-				5D08E6DA24F6AABB007DBE44 /* UPSpellAboutPaneThanks.h */,
-				5D08E6DB24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm */,
 				5D6261A124C0944600D19EEF /* UPSpellDossier.h */,
 				5D6261A224C0944600D19EEF /* UPSpellDossier.mm */,
 				5D4AE823248BDED200213904 /* UPSpellExtrasController.h */,
 				5D4AE824248BDED200213904 /* UPSpellExtrasController.mm */,
+				5D08E6DA24F6AABB007DBE44 /* UPSpellExtrasPaneAbout.h */,
+				5D08E6DB24F6AABC007DBE44 /* UPSpellExtrasPaneAbout.mm */,
 				5D0FC33424A65C0B00353563 /* UPSpellExtrasPaneColors.h */,
 				5D0FC33524A65C0B00353563 /* UPSpellExtrasPaneColors.mm */,
+				5D08E6E924F74326007DBE44 /* UPSpellExtrasPaneHowTo.h */,
+				5D08E6E824F74326007DBE44 /* UPSpellExtrasPaneHowTo.mm */,
 				5D6FB59E24DEF08800CDC293 /* UPSpellExtrasPaneShare.h */,
 				5D6FB59F24DEF08800CDC293 /* UPSpellExtrasPaneShare.mm */,
 				5D6FB59024DB151E00CDC293 /* UPSpellExtrasPaneSound.h */,
@@ -823,7 +810,6 @@
 				5DF90B1E25104D06009000B9 /* up-games-icon-285-40@3x.png in Resources */,
 				5DF90AEB25104D06009000B9 /* up-games-icon-000-20@3x.png in Resources */,
 				5DF90AF025104D06009000B9 /* up-games-icon-045-20.png in Resources */,
-				5D3EB45524F9676B003CF411 /* lexicon.rtf in Resources */,
 				5D0FC21E24A130D700353563 /* MalloryCond-Black.otf in Resources */,
 				5DF90ADA25104D06009000B9 /* up-games-icon-000-40.png in Resources */,
 				5DF90AF725104D06009000B9 /* up-games-icon-285-20@2x.png in Resources */,
@@ -838,7 +824,7 @@
 				5D5B54AC24D863BC00FD50D4 /* Square-In-G.aac in Resources */,
 				5D6FB59324DB205200CDC293 /* None.aac in Resources */,
 				5DF90AE725104D06009000B9 /* up-games-icon-000-1024.png in Resources */,
-				5D3EB45824F979AB003CF411 /* thanks-intro.rtf in Resources */,
+				5D3EB45824F979AB003CF411 /* about-intro.rtf in Resources */,
 				5DF90B1C25104D06009000B9 /* up-games-icon-225-29@2x.png in Resources */,
 				5DF90B1325104D06009000B9 /* up-games-icon-120-83@2x.png in Resources */,
 				5DF90AFE25104D06009000B9 /* up-games-icon-045-40@3x.png in Resources */,
@@ -892,7 +878,7 @@
 				5DF90AF125104D06009000B9 /* up-games-icon-120-40.png in Resources */,
 				5D5B54BA24DA107B00FD50D4 /* Whoops.aac in Resources */,
 				5D5B549724D4F8E000FD50D4 /* Clock-Tock-Out.aac in Resources */,
-				5D3EB45924F979AB003CF411 /* thanks-licenses.rtf in Resources */,
+				5D3EB45924F979AB003CF411 /* about-licenses.rtf in Resources */,
 				5DF90B0625104D06009000B9 /* up-games-icon-000-29@3x.png in Resources */,
 				5DF90AE425104D06009000B9 /* up-games-icon-045-40.png in Resources */,
 				5DF90B1225104D06009000B9 /* up-games-icon-000-40@2x.png in Resources */,
@@ -958,21 +944,19 @@
 				5D4ECE3824E4842700D1A310 /* UPDialogGameLinkHelp.mm in Sources */,
 				5D5B53F224CDCACD00FD50D4 /* UPSoundPlayer.mm in Sources */,
 				5D5EA1482486A1D2006264D2 /* UPDialogGameOver.mm in Sources */,
-				5D29879124F5624800AA6E78 /* UPSpellAboutPaneGame.mm in Sources */,
 				5D29878B24F2CC9600AA6E78 /* UPPulseView.mm in Sources */,
 				5D0FC23324A50E3B00353563 /* UPChoice.mm in Sources */,
-				5D08E6DC24F6AABC007DBE44 /* UPSpellAboutPaneThanks.mm in Sources */,
+				5D08E6DC24F6AABC007DBE44 /* UPSpellExtrasPaneAbout.mm in Sources */,
 				5D5B546B24D0A40500FD50D4 /* UPTunePlayer.mm in Sources */,
 				5D5216EB246C7E9E005A2E9F /* UPSpellLayout.mm in Sources */,
 				5D4AE82A248ED25500213904 /* UPDialogTopMenu.mm in Sources */,
-				5D08E6EA24F74326007DBE44 /* UPSpellAboutPanePlaying.mm in Sources */,
+				5D08E6EA24F74326007DBE44 /* UPSpellExtrasPaneHowTo.mm in Sources */,
 				5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */,
 				5D6FB59D24DDC56100CDC293 /* UPDialogGameLink.mm in Sources */,
 				5D0FC33624A65C0B00353563 /* UPSpellExtrasPaneColors.mm in Sources */,
 				5DBAD6E124E43FFF00471ABF /* UPDialogShareHelp.mm in Sources */,
 				5D6FB58A24DAFC2500CDC293 /* UPSlider.mm in Sources */,
 				5D0FC21C24A125D000353563 /* UPBallot.mm in Sources */,
-				5D29879624F57F8700AA6E78 /* UPSpellAboutPaneLexicon.mm in Sources */,
 				5D0FC22724A278D300353563 /* UPStepper.mm in Sources */,
 				5DF74C4024DF80B50000F43D /* UPActivityViewController.mm in Sources */,
 				5D6FB5A024DEF08800CDC293 /* UPSpellExtrasPaneShare.mm in Sources */,

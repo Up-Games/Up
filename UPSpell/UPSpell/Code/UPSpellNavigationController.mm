@@ -161,6 +161,7 @@ using UP::TimeSpanning::start;
         UPViewMoveMake(self.extrasController.choice2, Role::ChoiceItem2Left, Spot::OffLeftNear),
         UPViewMoveMake(self.extrasController.choice3, Role::ChoiceItem3Left, Spot::OffLeftNear),
         UPViewMoveMake(self.extrasController.choice4, Role::ChoiceItem4Left, Spot::OffLeftNear),
+        UPViewMoveMake(self.extrasController.choice5, Role::ChoiceItem5Left, Spot::OffLeftNear),
         UPViewMoveMake(self.extrasController.selectedPane, Role::Screen, Spot::OffBottomFar),
     ];
     for (UPViewMove *move in moves) {
@@ -225,6 +226,7 @@ using UP::TimeSpanning::start;
             UPViewMoveMake(extrasController.choice2, Role::ChoiceItem2Left),
             UPViewMoveMake(extrasController.choice3, Role::ChoiceItem3Left),
             UPViewMoveMake(extrasController.choice4, Role::ChoiceItem4Left),
+            UPViewMoveMake(extrasController.choice5, Role::ChoiceItem5Left),
         ];
         start(bloop_in(BandModeUI, itemMoves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {
             [transitionContext completeTransition:YES];
@@ -270,6 +272,7 @@ using UP::TimeSpanning::start;
         UPViewMoveMake(extrasController.choice2, Role::ChoiceItem2Left, Spot::OffLeftNear),
         UPViewMoveMake(extrasController.choice3, Role::ChoiceItem3Left, Spot::OffLeftNear),
         UPViewMoveMake(extrasController.choice4, Role::ChoiceItem4Left, Spot::OffLeftNear),
+        UPViewMoveMake(extrasController.choice5, Role::ChoiceItem5Left, Spot::OffLeftNear),
         UPViewMoveMake(extrasController.selectedPane, Role::Screen, Spot::OffBottomFar),
     ];
     start(bloop_out(BandModeUI, moves, [self transitionDuration:transitionContext], ^(UIViewAnimatingPosition) {

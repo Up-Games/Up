@@ -11,16 +11,20 @@
 #import "UPChoice.h"
 #import "UPControl+UPSpell.h"
 #import "UPSpellExtrasController.h"
+#import "UPSpellExtrasPaneHowTo.h"
 #import "UPSpellExtrasPaneColors.h"
 #import "UPSpellExtrasPaneSound.h"
 #import "UPSpellExtrasPaneShare.h"
+#import "UPSpellExtrasPaneAbout.h"
 #import "UPSpellLayout.h"
 #import "UPSpellSettings.h"
 
 @interface UPSpellExtrasController ()
+@property (nonatomic) UPSpellExtrasPaneHowTo *howToPane;
 @property (nonatomic) UPSpellExtrasPaneColors *colorsPane;
 @property (nonatomic) UPSpellExtrasPaneSound *soundPane;
 @property (nonatomic) UPSpellExtrasPaneShare *sharePane;
+@property (nonatomic) UPSpellExtrasPaneAbout *aboutPane;
 @end
 
 using UP::SpellLayout;
@@ -56,7 +60,7 @@ static UPSpellExtrasController *_Instance;
     [self.view addSubview:self.backButton];
 
     self.choice1 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice1.labelString = @"THEME";
+    self.choice1.labelString = @"HOW-TO";
     self.choice1.tag = 0;
     self.choice1.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice1.frame = layout.frame_for(Role::ChoiceItem1Left, Spot::OffLeftNear);
@@ -64,7 +68,7 @@ static UPSpellExtrasController *_Instance;
     [self.view addSubview:self.choice1];
     
     self.choice2 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice2.labelString = @"SOUND";
+    self.choice2.labelString = @"THEME";
     self.choice2.tag = 1;
     self.choice2.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice2.frame = layout.frame_for(Role::ChoiceItem2Left, Spot::OffLeftNear);
@@ -72,7 +76,7 @@ static UPSpellExtrasController *_Instance;
     [self.view addSubview:self.choice2];
     
     self.choice3 = [UPChoice choiceWithSide:UPChoiceSideLeft];
-    self.choice3.labelString = @"SHARE";
+    self.choice3.labelString = @"SOUND";
     self.choice3.tag = 2;
     self.choice3.canonicalSize = SpellLayout::CanonicalChoiceSize;
     self.choice3.frame = layout.frame_for(Role::ChoiceItem3Left, Spot::OffLeftNear);
@@ -86,6 +90,18 @@ static UPSpellExtrasController *_Instance;
     self.choice4.frame = layout.frame_for(Role::ChoiceItem4Left, Spot::OffLeftNear);
     [self.choice4 setTarget:self action:@selector(choiceSelected:)];
     [self.view addSubview:self.choice4];
+    
+    self.choice5 = [UPChoice choiceWithSide:UPChoiceSideLeft];
+    self.choice5.labelString = @"ABOUT";
+    self.choice5.tag = 4;
+    self.choice5.canonicalSize = SpellLayout::CanonicalChoiceSize;
+    self.choice5.frame = layout.frame_for(Role::ChoiceItem5Left, Spot::OffLeftNear);
+    [self.choice5 setTarget:self action:@selector(choiceSelected:)];
+    [self.view addSubview:self.choice5];
+
+    self.howToPane = [UPSpellExtrasPaneHowTo pane];
+    self.howToPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
+    [self.view addSubview:self.howToPane];
 
     self.colorsPane = [UPSpellExtrasPaneColors pane];
     self.colorsPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
@@ -99,13 +115,18 @@ static UPSpellExtrasController *_Instance;
     self.sharePane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
     [self.view addSubview:self.sharePane];
     
-//    self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4 ];
-    self.choices = @[ self.choice1, self.choice2, self.choice3 ];
+    self.aboutPane = [UPSpellExtrasPaneAbout pane];
+    self.aboutPane.center = layout.center_for(Role::Screen, Spot::OffBottomFar);
+    [self.view addSubview:self.aboutPane];
+    
+    self.choices = @[ self.choice1, self.choice2, self.choice3, self.choice4, self.choice5 ];
 
     self.panes = @[
+        self.howToPane,
         self.colorsPane,
         self.soundPane,
         self.sharePane,
+        self.aboutPane,
     ];
 }
 
