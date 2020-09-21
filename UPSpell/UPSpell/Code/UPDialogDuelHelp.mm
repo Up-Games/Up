@@ -55,10 +55,10 @@ using Role = SpellLayout::Role;
 
     self.helpLabel = [UPLabel label];
     self.helpLabel.string =
-        @"Challenge a friend to a duel! Tap OK, then use the share sheet\n"
-         "to send your friend a link. When your friend taps the link,\n"
-         "Up Spell will open. You’ll both get a game with the same letters.\n\n"
-         "May the better speller win!";
+        @"A DUEL is a game you play against a friend. Tap OK, then use the\n"
+        "share sheet to send your friend a game link. The shared Game ID\n"
+        "gives both of you a game with the same letters. After you play,\n"
+        "share your score to see who won. Good luck and have fun!";
     self.helpLabel.font = layout.description_font();
     self.helpLabel.textAlignment = NSTextAlignmentLeft;
     self.helpLabel.frame = layout.frame_for(Role::DialogDuelHelpText);

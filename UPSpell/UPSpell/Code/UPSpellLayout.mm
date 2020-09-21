@@ -433,7 +433,6 @@ void SpellLayout::calculate_game_note_font_metrics()
 {
     CGFloat cap_height = CanonicalGameNoteFontCapHeight * layout_scale();
     UIFont *font = [UIFont gameNoteFontWithCapHeight:cap_height];
-//    font.baselineAdjustment = CanonicalGameNoteFontBaselineAdjustment * layout_scale();
     set_game_note_font(font);
 }
 

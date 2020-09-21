@@ -215,13 +215,13 @@ public:
     static inline constexpr CGRect CanonicalExtrasShareLastGameHighScoreEqualDescription = { 384, 270, 572, 300 };
     static inline constexpr CGFloat CanonicalExtrasShareLastGameHighScoreEqualGap = 28;
 
-    static inline constexpr CGRect CanonicalDialogShareHelpTitleFrame = { 272, 142, 460, 200 };
-    static inline constexpr CGRect CanonicalDialogShareHelpTextFrame = { 250, 220, 500, 200 };
+    static inline constexpr CGRect CanonicalDialogShareHelpTitleFrame = { 272, 136, 460, 200 };
+    static inline constexpr CGRect CanonicalDialogShareHelpTextFrame = { 250, 214, 500, 200 };
     static inline constexpr CGRect CanonicalDialogShareHelpOKButtonFrame = { 429.5, 386, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
-    static inline constexpr CGRect CanonicalDialogDuelHelpTitleFrame = { 272, 80, 460, 200 };
-    static inline constexpr CGRect CanonicalDialogDuelHelpTextFrame = { 250, 158, 500, 200 };
-    static inline constexpr CGRect CanonicalDialogDuelHelpOKButtonFrame = { 429.5, 380, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGRect CanonicalDialogDuelHelpTitleFrame = { 272, 112, 460, 200 };
+    static inline constexpr CGRect CanonicalDialogDuelHelpTextFrame = { 250, 190, 500, 200 };
+    static inline constexpr CGRect CanonicalDialogDuelHelpOKButtonFrame = { 429.5, 386, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGFloat CanonicalDialogTitleCapHeight = 35;
 
