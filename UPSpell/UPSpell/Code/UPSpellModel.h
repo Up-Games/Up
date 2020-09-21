@@ -258,6 +258,9 @@ public:
 
     template <bool B = true> bool is_challenge() const { return (m_challenge_score > NotAChallengeScore) == B; }
     int challenge_score() const { return m_challenge_score; }
+
+    template <bool B = true> bool is_duel() const { return m_duel == B; }
+    void set_duel(bool flag = true) { m_duel = flag; }
     
     const TileArray &tiles() const { return m_tiles; }
     TileArray &tiles() { return m_tiles; }
@@ -347,6 +350,7 @@ private:
     int m_game_score = 0;
     int m_challenge_score = 0;
     std::vector<Word> m_game_submitted_words;
+    bool m_duel = false;
 };
 
 using SpellModelPtr = std::shared_ptr<class SpellModel>;

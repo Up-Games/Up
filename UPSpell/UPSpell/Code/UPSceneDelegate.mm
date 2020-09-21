@@ -45,21 +45,6 @@ static UPSceneDelegate *_Instance;
 
 - (void)sceneDidEnterBackground:(UIScene *)scene
 {
-    UPSpellExtrasController *extrasController = [UPSpellExtrasController instance];
-    if (extrasController.presentedViewController) {
-        [extrasController dismissViewControllerAnimated:NO completion:nil];
-        if ([extrasController.selectedPane isKindOfClass:[UPSpellExtrasPaneShare class]]) {
-            UPSpellExtrasPaneShare *pane = (UPSpellExtrasPaneShare *)extrasController.selectedPane;
-            [pane shareSheetDismissed];
-        }
-    }
-
-    UPSpellGameController *gameController = [UPSpellGameController instance];
-    if ([gameController.presentedViewController isKindOfClass:[UIActivityViewController class]]) {
-        [gameController dismissViewControllerAnimated:NO completion:^{
-            [gameController shareSheetDismissed];
-        }];
-    }
 }
 
 - (void)scene:(UIScene *)scene willContinueUserActivityWithType:(NSString *)userActivityType
@@ -69,15 +54,38 @@ static UPSceneDelegate *_Instance;
     }
 }
 
+- (void)_setGameLinkWithURL:(NSURL *)gameLinkURL
+{
+    UPGameLink *gameLink = [UPGameLink gameLinkWithURL:gameLinkURL];
+    [[UPSpellGameController instance] setGameLink:gameLink];
+}
+
 - (void)scene:(UIScene *)scene continueUserActivity:(NSUserActivity *)userActivity
 {
     if (![userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
         return;
     }
     
-    NSURL *incomingURL = userActivity.webpageURL;
-    UPGameLink *challenge = [UPGameLink gameLinkWithURL:incomingURL];
-    [[UPSpellGameController instance] setGameLink:challenge];
+    UPSpellExtrasController *extrasController = [UPSpellExtrasController instance];
+    UPSpellGameController *gameController = [UPSpellGameController instance];
+    if (extrasController.presentedViewController) {
+        [extrasController dismissViewControllerAnimated:NO completion:^{
+            if ([extrasController.selectedPane isKindOfClass:[UPSpellExtrasPaneShare class]]) {
+                UPSpellExtrasPaneShare *pane = (UPSpellExtrasPaneShare *)extrasController.selectedPane;
+                [pane shareSheetDismissed];
+            }
+            [self _setGameLinkWithURL:userActivity.webpageURL];
+        }];
+    }
+    else if ([gameController.presentedViewController isKindOfClass:[UIActivityViewController class]]) {
+        [gameController dismissViewControllerAnimated:NO completion:^{
+            [gameController shareSheetDismissed];
+            [self _setGameLinkWithURL:userActivity.webpageURL];
+        }];
+    }
+    else {
+        [self _setGameLinkWithURL:userActivity.webpageURL];
+    }
 }
 
 @end

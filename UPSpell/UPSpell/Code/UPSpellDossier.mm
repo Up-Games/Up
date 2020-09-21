@@ -37,7 +37,8 @@
     self.lastScore = 0;
     self.lastGameKeyValue = 0;
     self.lastGameWasChallenge = NO;
-    
+    self.lastGameWasDuel = NO;
+
     self.totalGamesPlayed = 0;
     self.totalGameScore = 0;
     self.totalWordsSubmitted = 0;
@@ -56,6 +57,7 @@
     UP_DECODE(coder, lastGameChallengeScore, Int);
     UP_DECODE(coder, lastGameKeyValue, Int32);
     UP_DECODE(coder, lastGameWasChallenge, Bool);
+    UP_DECODE(coder, lastGameWasDuel, Bool);
 
     UP_DECODE(coder, totalGamesPlayed, Integer);
     UP_DECODE(coder, totalGameScore, Integer);
@@ -73,6 +75,7 @@
     UP_ENCODE(coder, lastGameChallengeScore, Int);
     UP_ENCODE(coder, lastGameKeyValue, Int32);
     UP_ENCODE(coder, lastGameWasChallenge, Bool);
+    UP_ENCODE(coder, lastGameWasDuel, Bool);
 
     UP_ENCODE(coder, totalGamesPlayed, Integer);
     UP_ENCODE(coder, totalGameScore, Integer);
@@ -102,10 +105,17 @@
     if (model->is_challenge()) {
         dossier.lastGameWasChallenge = YES;
         dossier.lastGameChallengeScore = model->challenge_score();
+        dossier.lastGameWasDuel = NO;
+    }
+    else if (model->is_duel()) {
+        dossier.lastGameWasChallenge = NO;
+        dossier.lastGameChallengeScore = 0;
+        dossier.lastGameWasDuel = YES;
     }
     else {
         dossier.lastGameWasChallenge = NO;
         dossier.lastGameChallengeScore = 0;
+        dossier.lastGameWasDuel = NO;
     }
 
     dossier.totalGamesPlayed++;

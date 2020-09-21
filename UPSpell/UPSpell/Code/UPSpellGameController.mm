@@ -3024,25 +3024,32 @@ static UPSpellGameController *_Instance;
     ASSERT(self.mode == Mode::End);
     
     NSMutableString *labelString = [NSMutableString string];
-    
+
     if (labelString.length == 0) {
-        NSString *challengeString = [self gameNoteGameChallenge];
-        if (challengeString) {
-            [labelString appendString:challengeString];
+        NSString *string = [self gameNoteGameDuel];
+        if (string) {
+            [labelString appendString:string];
+        }
+    }
+
+    if (labelString.length == 0) {
+        NSString *string = [self gameNoteGameChallenge];
+        if (string) {
+            [labelString appendString:string];
         }
     }
     
     if (labelString.length == 0) {
-        NSString *highScoreString = [self gameNoteGameHighScore];
-        if (highScoreString) {
-            [labelString appendString:highScoreString];
+        NSString *string = [self gameNoteGameHighScore];
+        if (string) {
+            [labelString appendString:string];
         }
     }
     
     if (labelString.length == 0) {
-        NSString *bestWordString = [self gameNoteBestWordInGame];
-        if (bestWordString) {
-            [labelString appendString:bestWordString];
+        NSString *string = [self gameNoteBestWordInGame];
+        if (string) {
+            [labelString appendString:string];
         }
     }
     
@@ -3062,7 +3069,7 @@ static UPSpellGameController *_Instance;
         NSMutableAttributedString *bottomString = [[NSMutableAttributedString alloc] initWithString:components[1]];
         NSRange bottomRange = NSMakeRange(0, bottomString.length);
         [bottomString addAttribute:NSFontAttributeName value:layout.game_note_font() range:bottomRange];
-        CGFloat baselineAdjustment = layout.game_note_font().baselineAdjustment;
+        CGFloat baselineAdjustment = SpellLayout::CanonicalGameNoteFontBaselineAdjustment * layout.layout_scale();
         [bottomString addAttribute:(NSString *)kCTBaselineOffsetAttributeName value:@(baselineAdjustment) range:bottomRange];
         
         [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
@@ -3077,6 +3084,46 @@ static UPSpellGameController *_Instance;
 
 #pragma mark - Game note strings
 
+- (NSString *)gameNoteGameDuel
+{
+    ASSERT(self.mode == Mode::End);
+    ASSERT(m_spell_model);
+    
+    NSString *result = nil;
+    
+    if (m_spell_model->is_duel<false>()) {
+        return result;
+    }
+    
+    int score = m_spell_model->game_score();
+    
+    NSString *highScoreNote = nil;
+    UPSpellDossier *dossier = [UPSpellDossier instance];
+    if (score > dossier.highScore) {
+        highScoreNote = @"NEW HIGH SCORE!";
+    }
+    else if (score == dossier.highScore) {
+        highScoreNote = @"TIED HIGH SCORE!";
+    }
+    
+    if (highScoreNote) {
+        result = [NSString stringWithFormat:@"DID YOU WIN? SHARE YOUR SCORE!\n%@", highScoreNote];
+    }
+    else {
+        std::vector<Word> words = m_spell_model->game_best_word();
+        if (words.size() > 0) {
+            const Word &word = words[0];
+            NSString *wordString = ns_str(word.string());
+            result = [NSString stringWithFormat:@"DID YOU WIN? SHARE YOUR SCORE!\nBEST WORD: %@ +%d", wordString, word.total_score()];
+        }
+        else {
+            result = @"DID YOU WIN?\nSHARE YOUR SCORE!";
+        }
+    }
+    
+    return result;
+}
+
 - (NSString *)gameNoteGameChallenge
 {
     ASSERT(self.mode == Mode::End);
@@ -3084,7 +3131,7 @@ static UPSpellGameController *_Instance;
     
     NSString *result = nil;
     
-    if (m_spell_model->is_challenge<false>() || m_spell_model->challenge_score() < 0) {
+    if (m_spell_model->is_challenge<false>()) {
         return result;
     }
     
@@ -3100,13 +3147,13 @@ static UPSpellGameController *_Instance;
     }
 
     if (score < m_spell_model->challenge_score()) {
-        result = [NSString stringWithFormat:@"%@CHALLENGE LOST!\nSCORE TO BEAT WAS %d", highScoreNote, m_spell_model->challenge_score()];
+        result = [NSString stringWithFormat:@"%@CHALLENGE LOST!\nSCORE TO BEAT WAS %d.", highScoreNote, m_spell_model->challenge_score()];
     }
     else if (score == m_spell_model->challenge_score()) {
-        result = [NSString stringWithFormat:@"%@CHALLENGE TIED!\nSCORE TO BEAT WAS %d", highScoreNote, m_spell_model->challenge_score()];
+        result = [NSString stringWithFormat:@"%@CHALLENGE TIED!\nSCORE TO BEAT WAS %d.", highScoreNote, m_spell_model->challenge_score()];
     }
     else {
-        result = [NSString stringWithFormat:@"%@CHALLENGE WON!\nSCORE TO BEAT WAS %d", highScoreNote, m_spell_model->challenge_score()];
+        result = [NSString stringWithFormat:@"CHALLENGE WON! SHARE YOUR SCORE!\nSCORE TO BEAT WAS %d.", m_spell_model->challenge_score()];
     }
     
     return result;
@@ -3174,6 +3221,7 @@ static UPSpellGameController *_Instance;
         }
         else {
             m_spell_model = std::make_shared<SpellModel>(GameKey(self.gameLink.gameKey.value));
+            m_spell_model->set_duel();
         }
         self.gameLink = nil;
         self.gameLinkSender = NO;
@@ -3334,7 +3382,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     }];
 
     UPGameKey *duelGameKey = [UPGameKey randomGameKey];
-    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithDuelGameKey:duelGameKey];
+    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithShareType:UPShareTypeDuel gameKey:duelGameKey];
     __weak UPActivityViewController *weakActivityViewController = activityViewController;
     activityViewController.completionWithItemsHandler = ^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         if (completed) {
@@ -3381,8 +3429,16 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (void)presentShareSheet
 {
     UPSpellDossier *dossier = [UPSpellDossier instance];
-    UPShareType shareType = dossier.lastGameWasChallenge ? UPShareTypeChallengeReply : UPShareTypeLastGameScore;
-    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithShareType:shareType];
+    UPShareType shareType = UPShareTypeLastGameScore;
+    UPGameKey *duelGameKey = nil;
+    if (dossier.lastGameWasChallenge) {
+        shareType = UPShareTypeChallengeReply;
+    }
+    else if (dossier.lastGameWasDuel) {
+        shareType = UPShareTypeDuelReply;
+        duelGameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
+    }
+    UPActivityViewController *activityViewController = [[UPActivityViewController alloc] initWithShareType:shareType gameKey:duelGameKey];
     __weak UPActivityViewController *weakActivityViewController = activityViewController;
     activityViewController.completionWithItemsHandler = ^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         [self shareSheetDismissed];
@@ -3396,6 +3452,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.dialogGameOver.shareButton.highlightedLocked = NO;
     self.dialogGameOver.shareButton.highlighted = NO;
     self.dialogGameOver.shareButton.alpha = 1;
+
+    self.dialogTopMenu.duelButton.highlightedLocked = NO;
+    self.dialogTopMenu.duelButton.highlighted = NO;
 }
 
 #pragma mark - Challenges
@@ -4449,6 +4508,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     
     BOOL wasChallenge = m_spell_model->is_challenge();
+    BOOL wasDuel = m_spell_model->is_duel();
     [self removeInProgressGameFileLogErrors:NO];
     
     UPSpellDossier *dossier = [UPSpellDossier instance];
@@ -4487,7 +4547,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             self.dialogTopMenu.playButton.highlightedLocked = NO;
             self.dialogTopMenu.playButton.highlighted = NO;
 
-            Role gameNoteRole = wasChallenge ? Role::DialogChallengeGameNote : Role::DialogGameNote;
+            Role gameNoteRole = wasChallenge || wasDuel ? Role::DialogTwoLineGameNote : Role::DialogGameNote;
             self.dialogGameOver.noteLabel.frame = layout.frame_for(Location(gameNoteRole, Spot::OffBottomNear));
             self.dialogGameOver.shareButton.frame = layout.frame_for(Location(Role::GameShareButton, Spot::OffBottomNear));
             NSArray<UPViewMove *> *buttonMoves = @[

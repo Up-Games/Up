@@ -100,7 +100,7 @@ using Role = SpellLayout::Role;
     if (gameLink.valid) {
         if (gameLink.type == UPGameLinkTypeDuel) {
             self.titlePromptLabel.string = @"DUEL!";
-            self.detailPromptLabel.string = @"GOOD LUCK & HAVE FUN";
+            self.detailPromptLabel.string = [NSString stringWithFormat:@"GAME ID: %@", gameLink.gameKey.string];
             self.cancelButton.labelString = @"CANCEL";
             self.confirmButton.hidden = NO;
         }

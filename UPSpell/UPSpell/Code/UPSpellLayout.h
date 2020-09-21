@@ -49,7 +49,7 @@ public:
         GameScoreGameOver1, GameScoreGameOver2, GameScoreGameOver3, GameScoreGameOver4,
         WordScore, WordScoreBonus,
         DialogMessageCenteredInWordTray, DialogMessageVerticallyCentered, DialogMessagePlay,
-        DialogGameNote, DialogChallengeGameNote,
+        DialogGameNote, DialogTwoLineGameNote,
         DialogButtonTopLeft, DialogButtonTopCenter, DialogButtonTopRight,
         DialogButtonDefaultResponse, DialogButtonAlternativeResponse, DialogButtonCenterResponse,
         DialogHelpButton, DialogHelpTitle, DialogHelpText, DialogHelpOKButton,
@@ -165,8 +165,8 @@ public:
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
     static inline constexpr CGRect CanonicalDialogHelpButtonFrame = { 853, 382,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
-    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 384, 1000, 116 };
-    static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 32;
+    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 387, 1000, 116 };
+    static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 29;
     static inline constexpr CGFloat CanonicalGameNoteFontBaselineAdjustment = 6;
     static inline constexpr CGRect CanonicalGameShareButtonFrame = { 853, 382,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 

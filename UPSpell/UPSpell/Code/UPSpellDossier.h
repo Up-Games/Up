@@ -17,6 +17,7 @@
 @property (nonatomic) int lastGameChallengeScore;
 @property (nonatomic) uint32_t lastGameKeyValue;
 @property (nonatomic) BOOL lastGameWasChallenge;
+@property (nonatomic) BOOL lastGameWasDuel;
 
 @property (nonatomic) size_t totalGamesPlayed;
 @property (nonatomic) size_t totalGameScore;

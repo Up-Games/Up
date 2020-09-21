@@ -19,16 +19,16 @@
 @property (nonatomic) NSString *shareString;
 @property (nonatomic) NSString *shareURLString;
 @property (nonatomic) NSURL *shareURL;
-@property (nonatomic) UPGameKey *inviteGameKey;
+@property (nonatomic) UPGameKey *gameKey;
 @end
 
 @implementation UPActivityViewItemSource
 
-- (instancetype)initWithShareType:(UPShareType)shareType inviteGameKey:(UPGameKey *)inviteGameKey
+- (instancetype)initWithShareType:(UPShareType)shareType gameKey:(UPGameKey *)gameKey
 {
     self = [super init];
     self.shareType = shareType;
-    self.inviteGameKey = inviteGameKey;
+    self.gameKey = gameKey;
     self.shareString = [self _makeShareString];
     self.shareURL = [self _makeShareURL];
     self.shareURLString = [self _makeShareURLString];
@@ -107,13 +107,25 @@
         case UPShareTypeChallengeReply: {
             UPSpellDossier *dossier = [UPSpellDossier instance];
             ASSERT(dossier.lastGameWasChallenge);
-            gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
-            gameLink = [UPGameLink challengeGameLinkWithGameKey:gameKey score:dossier.lastScore];
+            UPGameKey *gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
+            int challengeScore = dossier.lastGameChallengeScore;
+            int score = dossier.lastScore;
+            if (score >= challengeScore) {
+                gameLink = [UPGameLink challengeGameLinkWithGameKey:gameKey score:score];
+            }
+            else {
+                gameLink = [UPGameLink challengeGameLinkWithGameKey:gameKey score:challengeScore];
+            }
             break;
         }
         case UPShareTypeDuel: {
-            gameKey = self.inviteGameKey;
+            gameKey = self.gameKey;
             gameLink = [UPGameLink duelGameLinkWithGameKey:gameKey];
+            break;
+        }
+        case UPShareTypeDuelReply: {
+            gameKey = self.gameKey;
+            gameLink = [UPGameLink challengeGameLinkWithGameKey:gameKey score:dossier.lastScore];
             break;
         }
     }
@@ -128,25 +140,30 @@
         case UPShareTypeDefault:
         case UPShareTypeLastGameScore:
         case UPShareTypeHighScore: {
-            return [NSString stringWithFormat:@"I scored %d in Up Spell!", dossier.lastScore];
+            UPGameKey *gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
+            return [NSString stringWithFormat:@"I scored %d in Up Spell! (Game ID: %@)", dossier.lastScore, gameKey.string];
         }
         case UPShareTypeChallengeReply: {
             ASSERT(dossier.lastGameWasChallenge);
             int challengeScore = dossier.lastGameChallengeScore;
             int score = dossier.lastScore;
             if (score > challengeScore) {
-                return [NSString stringWithFormat:@"I beat you in Up Spell!"];
+                return [NSString stringWithFormat:@"I won an Up Spell challenge!"];
             }
             else if (score == challengeScore) {
-                return [NSString stringWithFormat:@"We tied in Up Spell!"];
+                return [NSString stringWithFormat:@"I tied an Up Spell challenge!"];
             }
             else {
-                return [NSString stringWithFormat:@"You beat me in Up Spell."];
+                return [NSString stringWithFormat:@"I lost an Up Spell challenge."];
             }
-            break;
         }
         case UPShareTypeDuel: {
-            return @"Let’s play Up Spell.";
+            return [NSString stringWithFormat:@"Let’s play Up Spell! (Game ID: %@)", self.gameKey.string];
+        }
+        case UPShareTypeDuelReply: {
+            ASSERT(dossier.lastGameWasDuel);
+            int score = dossier.lastScore;
+            return [NSString stringWithFormat:@"I scored %d in Up Spell! (Game ID: %@)", score, self.gameKey.string];
         }
     }
     return nil;
@@ -165,21 +182,25 @@
         }
         case UPShareTypeChallengeReply: {
             ASSERT(dossier.lastGameWasChallenge);
+            UPGameKey *gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
             int challengeScore = dossier.lastGameChallengeScore;
             int score = dossier.lastScore;
             if (score > challengeScore) {
-                return [NSString stringWithFormat:@"You scored %d. I got %d! Back at you!", challengeScore, score];
+                return [NSString stringWithFormat:@"I won %d–%d! (Game ID: %@)", score, challengeScore, gameKey.string];
             }
             else if (score == challengeScore) {
-                return [NSString stringWithFormat:@"Both of us got %d. Try to break the tie!", score];
+                return [NSString stringWithFormat:@"I tied %d–%d! (Game ID: %@)", score, score, gameKey.string];
             }
             else {
-                return [NSString stringWithFormat:@"You scored %d. I got %d. Top my score in a new game!", challengeScore, score];
+                return [NSString stringWithFormat:@"I lost %d–%d. (Game ID: %@)", challengeScore, score, gameKey.string];
             }
             break;
         }
         case UPShareTypeDuel: {
             return @"Tap the link to play!";
+        }
+        case UPShareTypeDuelReply: {
+            return @"Top that!";
         }
     }
     return nil;
@@ -191,28 +212,36 @@
     switch (self.shareType) {
         case UPShareTypeDefault:
         case UPShareTypeLastGameScore: {
-            return [NSString stringWithFormat:@"I scored %d in Up Spell. Top that!", dossier.lastScore];
+            UPGameKey *gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
+            return [NSString stringWithFormat:@"I scored %d in Up Spell. Top that! (Game ID: %@)", dossier.lastScore, gameKey.string];
         }
         case UPShareTypeHighScore: {
-            return [NSString stringWithFormat:@"My high score in Up Spell is %d. Top that!", dossier.highScore];
+            UPGameKey *gameKey = [UPGameKey gameKeyWithValue:dossier.highScoreGameKeyValue];
+            return [NSString stringWithFormat:@"My Up Spell high score is %d. Top that! (Game ID: %@)", dossier.highScore, gameKey.string];
         }
         case UPShareTypeChallengeReply: {
             ASSERT(dossier.lastGameWasChallenge);
+            UPGameKey *gameKey = [UPGameKey gameKeyWithValue:dossier.lastGameKeyValue];
             int challengeScore = dossier.lastGameChallengeScore;
             int score = dossier.lastScore;
             if (score > challengeScore) {
-                return [NSString stringWithFormat:@"I beat you in Up Spell %d to %d. Back at you!", score, challengeScore];
+                return [NSString stringWithFormat:@"I won an Up Spell challenge %d–%d! (Game ID: %@)", score, challengeScore, gameKey.string];
             }
             else if (score == challengeScore) {
-                return [NSString stringWithFormat:@"We both scored %d in Up Spell. Try to break the tie!", score];
+                return [NSString stringWithFormat:@"I tied an Up Spell challenge %d–%d! (Game ID: %@)", score, score, gameKey.string];
             }
             else {
-                return [NSString stringWithFormat:@"You beat me in Up Spell %d to %d. Top my score in a new game!", challengeScore, score];
+                return [NSString stringWithFormat:@"I lost an Up Spell challenge %d–%d. (Game ID: %@)", challengeScore, score, gameKey.string];
             }
             break;
         }
         case UPShareTypeDuel: {
-            return @"Let’s play Up Spell!";
+            return [NSString stringWithFormat:@"Let’s play Up Spell! (Game ID: %@)", self.gameKey.string];
+        }
+        case UPShareTypeDuelReply: {
+            ASSERT(dossier.lastGameWasDuel);
+            int score = dossier.lastScore;
+            return [NSString stringWithFormat:@"I scored %d. Top that! (Game ID: %@)", score, self.gameKey.string];
         }
     }
     return nil;
@@ -227,19 +256,14 @@
 
 @implementation UPActivityViewController
 
-- (instancetype)initWithDuelGameKey:(UPGameKey *)inviteGameKey
-{
-    return [self initWithShareType:UPShareTypeDuel inviteGameKey:inviteGameKey];
-}
-
 - (instancetype)initWithShareType:(UPShareType)shareType
 {
-    return [self initWithShareType:shareType inviteGameKey:nil];
+    return [self initWithShareType:shareType gameKey:nil];
 }
 
-- (instancetype)initWithShareType:(UPShareType)shareType inviteGameKey:(UPGameKey *)inviteGameKey
+- (instancetype)initWithShareType:(UPShareType)shareType gameKey:(UPGameKey *)gameKey
 {
-    UPActivityViewItemSource *itemSource = [[UPActivityViewItemSource alloc] initWithShareType:shareType inviteGameKey:inviteGameKey];
+    UPActivityViewItemSource *itemSource = [[UPActivityViewItemSource alloc] initWithShareType:shareType gameKey:gameKey];
     self = [super initWithActivityItems:@[ itemSource ] applicationActivities:nil];
     
     self.excludedActivityTypes = @[

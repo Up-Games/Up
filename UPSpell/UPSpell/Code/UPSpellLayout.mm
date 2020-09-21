@@ -433,7 +433,7 @@ void SpellLayout::calculate_game_note_font_metrics()
 {
     CGFloat cap_height = CanonicalGameNoteFontCapHeight * layout_scale();
     UIFont *font = [UIFont gameNoteFontWithCapHeight:cap_height];
-    font.baselineAdjustment = CanonicalGameNoteFontBaselineAdjustment * layout_scale();
+//    font.baselineAdjustment = CanonicalGameNoteFontBaselineAdjustment * layout_scale();
     set_game_note_font(font);
 }
 
@@ -725,12 +725,6 @@ void SpellLayout::calculate_dialog_locations()
     v_centered_message_frame.origin.y = up_rect_min_y(v_centered_message_frame) - (up_rect_height(v_centered_message_frame) * 0.12);
     calculate_and_set_locations(Role::DialogMessageVerticallyCentered, v_centered_message_frame);
 
-    calculate_and_set_locations(Role::DialogGameNote, layout_centered_x_aspect_rect(CanonicalGameNoteLayoutFrame));
-
-    CGRect challenge_game_note_frame = frame_for(Role::DialogGameNote);
-    challenge_game_note_frame.origin.y = up_rect_min_y(challenge_game_note_frame) - (up_rect_height(challenge_game_note_frame) * 0.25);
-    calculate_and_set_locations(Role::DialogChallengeGameNote, challenge_game_note_frame);
-
     CGSize button_size = up_size_scaled(CanonicalTextButtonSize, layout_scale());
     CGRect top_buttons_layout_frame = layout_centered_x_aspect_rect(CanonicalDialogTopButtonsLayoutFrame);
     calculate_and_set_locations(Role::DialogButtonTopLeft, up_left_aligned_rect(button_size, top_buttons_layout_frame));
@@ -757,6 +751,13 @@ void SpellLayout::calculate_dialog_locations()
     calculate_and_set_locations(Role::DialogDuelHelpTitle, layout_relative_aspect_rect(CanonicalDialogDuelHelpTitleFrame));
     calculate_and_set_locations(Role::DialogDuelHelpText, layout_relative_aspect_rect(CanonicalDialogDuelHelpTextFrame));
     calculate_and_set_locations(Role::DialogDuelHelpOKButton, layout_relative_aspect_rect(CanonicalDialogDuelHelpOKButtonFrame));
+
+    calculate_and_set_locations(Role::DialogGameNote, layout_centered_x_aspect_rect(CanonicalGameNoteLayoutFrame));
+    
+    CGRect two_line_game_note_frame = frame_for(Role::DialogGameNote);
+    two_line_game_note_frame.origin.y = up_rect_min_y(two_line_game_note_frame) - (up_rect_height(two_line_game_note_frame) * 0.25);
+    calculate_and_set_locations(Role::DialogTwoLineGameNote, two_line_game_note_frame);
+    
 }
 
 void SpellLayout::calculate_game_locations()
