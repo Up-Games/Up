@@ -2428,12 +2428,10 @@ static UPSpellGameController *_Instance;
         });
     }
     else {
-//        delay(BandModeDelay, 0.25, ^{
-            [UIView animateWithDuration:0.4 animations:^{
-                [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGameLink];
-            }];
-            bottomHalf();
-//        });
+        [UIView animateWithDuration:0.4 animations:^{
+            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGameLink];
+        }];
+        bottomHalf();
     }
 }
 

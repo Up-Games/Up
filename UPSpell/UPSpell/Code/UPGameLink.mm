@@ -131,7 +131,7 @@ using UP::cpp_str;
 - (NSString *)description
 {
     NSMutableString *result = [NSMutableString string];
-    [result appendString:@"<UPChallenge: "];
+    [result appendString:@"<UPGameLink: "];
     [result appendString:[NSString stringWithFormat:@"%p: ", self]];
     if (!self.valid) {
         [result appendString:@"invalid>"];
@@ -219,7 +219,7 @@ static constexpr size_t UPGameLinkDataLength =
         return nil;
     }
     uint8_t inputBytes[UPGameLinkDataLength];
-    [input getBytes:inputBytes range:NSMakeRange(0, UPGameLinkDataLength)];
+    [input getBytes:inputBytes range:NSMakeRange(0, input.length)];
 
     uint8_t output[UPGameLinkDataLength];
     uint8_t saltByte = inputBytes[0];
