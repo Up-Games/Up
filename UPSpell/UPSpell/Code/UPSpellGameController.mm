@@ -3552,6 +3552,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
                 LOG(General, "AVAudioSessionInterruptionTypeEnded");
                 NSUInteger option = [note.userInfo[AVAudioSessionInterruptionOptionKey] unsignedIntegerValue];
                 if (option == AVAudioSessionInterruptionOptionShouldResume) {
+                    // if only this worked reliably…
                 }
                 break;
             }
