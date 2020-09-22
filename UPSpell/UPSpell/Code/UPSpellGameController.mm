@@ -4115,6 +4115,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1;
         
+        self.audioInterrupted = NO;
         [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
         delay(BandModeDelay, 0.3, ^{
             [self.gameTimer start];
