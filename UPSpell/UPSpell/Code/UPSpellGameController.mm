@@ -3448,6 +3448,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)sequenceTuneWithDelay:(CFTimeInterval)delay gameTimeElapsed:(CFTimeInterval)gameTimeElapsed
 {
+    if (self.audioInterrupted) {
+        return;
+    }
+    
     CFTimeInterval effectiveGameTimeElapsed = UPClampT(CFTimeInterval, gameTimeElapsed, 0, UPGameTimerDefaultDuration);
 
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
@@ -3501,8 +3505,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         return;
     }
     
-    if (self.tunesEnabled && [self tunesShouldPlay] && (self.mode == Mode::Ready || self.mode == Mode::Play)) {
+    if (self.tunesEnabled && [self tunesShouldPlay] && self.mode == Mode::Play) {
         self.audioInterrupted = NO;
+        LOG(General, "restart tune");
         [self sequenceTuneWithDelay:0.25 gameTimeElapsed:self.gameTimer.elapsedTime];
     }
 }
