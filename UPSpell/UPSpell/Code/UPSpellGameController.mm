@@ -3508,7 +3508,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     if (self.tunesEnabled && [self tunesShouldPlay] && self.mode == Mode::Play) {
         self.audioInterrupted = NO;
         LOG(General, "restart tune");
-        [self sequenceTuneWithDelay:0.25 gameTimeElapsed:self.gameTimer.elapsedTime];
+        [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
     }
 }
 
@@ -4115,8 +4115,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1;
         
-        self.audioInterrupted = NO;
-        [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
+        if (self.audioInterrupted) {
+            [self restartTuneIfNeeded];
+        }
+        else {
+            [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
+        }
         delay(BandModeDelay, 0.3, ^{
             [self.gameTimer start];
             start(BandGameAll);
