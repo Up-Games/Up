@@ -43,7 +43,7 @@ using Role = SpellLayout::Role;
     self = [super initWithFrame:layout.canvas_frame()];
 
     self.titleLabel = [UPLabel label];
-    self.titleLabel.string = @"ABOUT DUELING";
+    self.titleLabel.string = @"ABOUT DUELS";
     self.titleLabel.font = layout.dialog_title_font();
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.frame = layout.frame_for(Role::DialogDuelHelpTitle);

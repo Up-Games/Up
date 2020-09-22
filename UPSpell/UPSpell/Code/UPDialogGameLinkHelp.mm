@@ -74,7 +74,7 @@ using Role = SpellLayout::Role;
 {
     switch (gameLink.type) {
         case UPGameLinkTypeDuel:
-            self.titleLabel.string = @"ABOUT DUELING";
+            self.titleLabel.string = @"ABOUT DUELS";
             self.helpLabel.string =
                 @"A DUEL is a game you play against a friend. The shared Game Key\n"
                 "gives both of you a game with the same letters. After you play,\n"
