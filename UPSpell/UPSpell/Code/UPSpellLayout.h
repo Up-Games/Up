@@ -132,7 +132,7 @@ public:
     static inline constexpr CGFloat CanonicalSliderIconInset = 75;
 
     static inline constexpr CGFloat CanonicalChoiceLabelCapHeight = 27;
-    static inline constexpr CGFloat CanonicalChoiceLabelBaselineAdjustment = -8;
+    static inline constexpr CGFloat CanonicalChoiceLabelBaselineAdjustment = -8.5;
     static inline constexpr CGFloat CanonicalChoiceLabelLeftMargin = 82;
 
     static inline constexpr CGFloat CanonicalRotorElementCapHeight = 36;
@@ -158,7 +158,7 @@ public:
     static inline constexpr CGSize CanonicalDialogTitleSize = {  875, 182 };
     static inline constexpr CGRect CanonicalDialogHelpButtonFrame = { 853, 382,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
 
-    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 387, 1000, 116 };
+    static inline constexpr CGRect CanonicalGameNoteLayoutFrame = { 0, 386, 1000, 116 };
     static inline constexpr CGFloat CanonicalGameNoteFontCapHeight = 29;
     static inline constexpr CGFloat CanonicalGameNoteFontBaselineAdjustment = 6;
     static inline constexpr CGRect CanonicalGameShareButtonFrame = { 853, 382,  up_size_width(CanonicalRoundHelpButtonSize), up_size_height(CanonicalRoundHelpButtonSize) };
@@ -168,7 +168,7 @@ public:
     static inline constexpr CGFloat CanonicalOffscreenNearFrameFactor = 1.2;
 
     static inline constexpr CGRect CanonicalChoiceBackButtonRowLayoutFrame = {  20,  30, 960, 64 };
-    static inline constexpr CGRect CanonicalChoiceTitleLayoutFrame =         {  83,  25, 834, 70 };
+    static inline constexpr CGRect CanonicalChoiceTitleLayoutFrame =         {  83,  24, 834, 70 };
     static inline constexpr CGRect CanonicalChoice1LayoutFrame =             {  30, 108, 940, 70 };
     static inline constexpr CGRect CanonicalChoice2LayoutFrame =             {  30, 182, 940, 70 };
     static inline constexpr CGRect CanonicalChoice3LayoutFrame =             {  30, 256, 940, 70 };
