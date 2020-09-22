@@ -243,8 +243,8 @@ static UPSpellGameController *_Instance;
     
     self.dialogGameLink = [UPDialogGameLink instance];
     [self.view addSubview:self.dialogGameLink];
-    [self.dialogGameLink.cancelButton setTarget:self action:@selector(dialogChallengeCancelButtonTapped:)];
-    [self.dialogGameLink.confirmButton setTarget:self action:@selector(dialogChallengeGoButtonTapped:)];
+    [self.dialogGameLink.cancelButton setTarget:self action:@selector(dialogGameLinkCancelButtonTapped:)];
+    [self.dialogGameLink.confirmButton setTarget:self action:@selector(dialogGameLinkGoButtonTapped:)];
     [self.dialogGameLink.helpButton setTarget:self action:@selector(dialogGameLinkHelpButtonTapped:)];
     self.dialogGameLink.hidden = YES;
     self.dialogGameLink.frame = layout.screen_bounds();
@@ -817,13 +817,15 @@ static UPSpellGameController *_Instance;
     [self setMode:Mode::Play];
 }
 
-- (void)dialogChallengeCancelButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+- (void)dialogGameLinkCancelButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
     ASSERT(self.mode == Mode::GameLink);
+    self.gameLink = nil;
+    self.gameLinkSender = NO;
     [self setMode:Mode::Init];
 }
 
-- (void)dialogChallengeGoButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+- (void)dialogGameLinkGoButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
     ASSERT(self.mode == Mode::GameLink);
     [self setMode:Mode::Ready];
@@ -3253,6 +3255,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         }
         else {
             self.gameLinkSender = NO;
+            self.gameLink = nil;
         }
         [self duelShareSheetDismissed];
         weakActivityViewController.completionWithItemsHandler = nil;
@@ -3324,7 +3327,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (void)setGameLink:(UPGameLink *)gameLink
 {
     BOOL requestValid = gameLink != nil;
-    BOOL modeValid = self.mode == Mode::Init || self.mode == Mode::Pause || self.mode == Mode::GameLink;
+    BOOL modeValid = self.mode == Mode::Init || self.mode == Mode::Pause || self.mode == Mode::GameLink || self.mode == Mode::End;
     
     if (requestValid && modeValid) {
         _gameLink = gameLink;
@@ -3609,6 +3612,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Pause,         Mode::Quit,          @selector(modeTransitionFromPauseToQuit) },
         { Mode::GameOver,      Mode::End,           @selector(modeTransitionFromOverToEnd) },
         { Mode::End,           Mode::About,         @selector(modeTransitionFromEndToAbout) },
+        { Mode::End,           Mode::GameLink,      @selector(modeTransitionFromEndToGameLink) },
         { Mode::End,           Mode::DuelHelp,      @selector(modeTransitionFromEndToDuelHelp) },
         { Mode::End,           Mode::Extras,        @selector(modeTransitionFromEndToExtras) },
         { Mode::End,           Mode::Ready,         @selector(modeTransitionFromEndToReady) },
@@ -3759,6 +3763,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewOrderInGameLinkFromMode:Mode::Init];
 }
 
+- (void)modeTransitionFromEndToGameLink
+{
+    ASSERT(self.gameLink);
+    [self viewOrderInGameLinkFromMode:Mode::End];
+}
+
 - (void)modeTransitionFromInitToReady
 {
     ASSERT(!m_spell_model);
@@ -3870,7 +3880,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     [self clearGameModel];
 
-    // This is tricky. If the challenge wasn't valid, the confirmButton will be hidden.
+    // This is tricky. If the gameLink wasn't valid, the confirmButton will be hidden.
     Role cancelRole = self.dialogGameLink.confirmButton.hidden ? Role::DialogButtonCenterResponse : Role::DialogButtonAlternativeResponse;
     
     NSArray<UPViewMove *> *buttonOutMoves = @[
