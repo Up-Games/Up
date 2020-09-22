@@ -784,7 +784,6 @@ static UPSpellGameController *_Instance;
     if (view == self.dialogTopMenu.extrasButton || view == self.dialogTopMenu.playButton || view == self.dialogTopMenu.duelButton) {
         switch (self.mode) {
             case UP::Mode::None:
-            case UP::Mode::About:
             case UP::Mode::Extras:
             case UP::Mode::ShareHelp:
             case UP::Mode::DuelHelp:
@@ -2297,39 +2296,6 @@ static UPSpellGameController *_Instance;
     }
 }
 
-
-- (void)viewOrderInAboutWithCompletion:(void (^)(void))completion
-{
-    [self viewLock];
-    
-    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter, Spot::OffLeftFar));
-    UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft, Spot::OffLeftFar));
-    UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Location(Role::Screen, Spot::OffLeftFar));
-    UPViewMove *dialogGameOverMesageMove = UPViewMoveMake(self.dialogGameOver.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffLeftFar));
-    UPViewMove *dialogGameOverNoteLabelMove = UPViewMoveMake(self.dialogGameOver.noteLabel, Location(Role::DialogGameNote, Spot::OffLeftFar));
-    UPViewMove *dialogGameOverShareButtonMove = UPViewMoveMake(self.dialogGameOver.shareButton, Location(Role::GameShareButton, Spot::OffLeftFar));
-
-    CFTimeInterval duration = 0.75;
-    CFTimeInterval stagger = 0.075;
-    
-    start(bloop_out(BandModeUI, @[extrasButtonMove], duration, nil));
-    delay(BandModeDelay, stagger, ^{
-        start(bloop_out(BandModeUI, @[playButtonMove], duration - stagger, nil));
-    });
-    delay(BandModeDelay, (1.5 * stagger), ^{
-        NSArray<UPViewMove *> *moves = @[gameViewMove, dialogGameOverMesageMove, dialogGameOverNoteLabelMove, dialogGameOverShareButtonMove];
-        start(bloop_out(BandModeUI, moves, duration - (1.5 * stagger),
-                        ^(UIViewAnimatingPosition) {
-            [self viewUnlock];
-            [self setGameOverViewsHidden:YES];
-            self.dialogTopMenuUserInteractionEnabled = NO;
-            if (completion) {
-                completion();
-            }
-        }));
-    });
-}
-
 - (void)viewOrderInExtrasWithCompletion:(void (^)(void))completion
 {
     cancel_all();
@@ -3564,7 +3530,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         switch (self.mode) {
             case UP::Mode::None:
             case UP::Mode::Init:
-            case UP::Mode::About:
             case UP::Mode::Extras:
             case UP::Mode::Pause:
                 break;
@@ -3592,13 +3557,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     m_default_transition_table = {
         { Mode::None,          Mode::Init,          @selector(modeTransitionFromNoneToInit) },
         { Mode::None,          Mode::Pause,         @selector(modeTransitionFromNoneToPause) },
-        { Mode::Init,          Mode::About,         @selector(modeTransitionFromInitToAbout) },
         { Mode::Init,          Mode::Extras,        @selector(modeTransitionFromInitToExtras) },
         { Mode::Init,          Mode::GameLink,      @selector(modeTransitionFromInitToGameLink) },
         { Mode::Init,          Mode::Ready,         @selector(modeTransitionFromInitToReady) },
         { Mode::Init,          Mode::DuelHelp,      @selector(modeTransitionFromInitToDuelHelp) },
         { Mode::DuelHelp,      Mode::Init,          @selector(modeTransitionFromDuelHelpToInit) },
-        { Mode::About,         Mode::Init,          @selector(modeTransitionFromAboutToInit) },
         { Mode::Extras,        Mode::Init,          @selector(modeTransitionFromExtrasToInit) },
         { Mode::GameLink,      Mode::Init,          @selector(modeTransitionFromGameLinkToInit) },
         { Mode::GameLink,      Mode::GameLinkHelp,  @selector(modeTransitionFromGameLinkToGameLinkHelp) },
@@ -3611,7 +3574,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         { Mode::Pause,         Mode::Play,          @selector(modeTransitionFromPauseToPlay) },
         { Mode::Pause,         Mode::Quit,          @selector(modeTransitionFromPauseToQuit) },
         { Mode::GameOver,      Mode::End,           @selector(modeTransitionFromOverToEnd) },
-        { Mode::End,           Mode::About,         @selector(modeTransitionFromEndToAbout) },
         { Mode::End,           Mode::GameLink,      @selector(modeTransitionFromEndToGameLink) },
         { Mode::End,           Mode::DuelHelp,      @selector(modeTransitionFromEndToDuelHelp) },
         { Mode::End,           Mode::Extras,        @selector(modeTransitionFromEndToExtras) },
@@ -3627,7 +3589,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     };
     
     m_will_enter_foreground_transition_table = {
-        { Mode::About,    Mode::Init,   @selector(modeTransitionImmediateFromAboutToInit) },
         { Mode::Extras,   Mode::Init,   @selector(modeTransitionImmediateFromExtrasToInit) },
     };
     
@@ -3640,7 +3601,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     m_did_enter_background_transition_table = {
         { Mode::Play,          Mode::Pause, @selector(modeTransitionImmediateFromPlayToPause) },
         { Mode::GameLink,      Mode::Init,  @selector(modeTransitionImmediateFromGameLinkToInit) },
-        { Mode::GameLinkHelp, Mode::Init,  @selector(modeTransitionImmediateFromGameLinkHelpToInit) },
+        { Mode::GameLinkHelp,  Mode::Init,  @selector(modeTransitionImmediateFromGameLinkHelpToInit) },
         { Mode::GameOver,      Mode::Init,  @selector(modeTransitionImmediateFromGameOverToInit) },
         { Mode::Quit,          Mode::Init,  @selector(modeTransitionImmediateFromQuitToInit) },
         { Mode::ShareHelp,     Mode::Init,  @selector(modeTransitionImmediateFromShareHelpToInit) },
@@ -3739,15 +3700,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewUnlock];
 }
 
-- (void)modeTransitionFromInitToAbout
-{
-    ASSERT(self.lockCount == 0);
-    [self viewLock];
-    [self viewOrderInAboutWithCompletion:^{
-        [self viewUnlock];
-    }];
-}
-
 - (void)modeTransitionFromInitToExtras
 {
     ASSERT(self.lockCount == 0);
@@ -3779,31 +3731,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self createGameModelIfNeeded];
         [self setMode:Mode::Play];
     }];
-}
-
-- (void)modeTransitionFromAboutToInit
-{
-    ASSERT(self.lockCount == 0);
-    [self viewLock];
-    
-    UPViewMove *playButtonMove = UPViewMoveMake(self.dialogTopMenu.playButton, Role::DialogButtonTopCenter);
-    UPViewMove *extrasButtonMove = UPViewMoveMake(self.dialogTopMenu.extrasButton, Role::DialogButtonTopLeft);
-    UPViewMove *gameViewMove = UPViewMoveMake(self.gameView, Role::Screen);
-    
-    CFTimeInterval duration = 0.5;
-    CFTimeInterval stagger = 0.075;
-    
-    start(bloop_in(BandModeUI, @[gameViewMove], duration, nil));
-    delay(BandModeDelay, stagger, ^{
-        start(bloop_in(BandModeUI, @[playButtonMove], duration - stagger, ^(UIViewAnimatingPosition) {
-        }));
-    });
-    delay(BandModeDelay, (1.5 * stagger), ^{
-        start(bloop_in(BandModeUI, @[extrasButtonMove], duration - (1.5 * stagger), ^(UIViewAnimatingPosition) {
-            self.dialogTopMenuUserInteractionEnabled = YES;
-            [self viewUnlock];
-        }));
-    });
 }
 
 - (void)modeTransitionFromExtrasToInit
@@ -3859,14 +3786,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 }
 
 - (void)modeTransitionImmediateFromExtrasToInit
-{
-    ASSERT(self.lockCount == 0);
-    [self viewLock];
-    [self viewImmediateTransitionToInit];
-    [self viewUnlock];
-}
-
-- (void)modeTransitionImmediateFromAboutToInit
 {
     ASSERT(self.lockCount == 0);
     [self viewLock];
@@ -4294,17 +4213,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             }));
         }];
     });
-}
-
-- (void)modeTransitionFromEndToAbout
-{
-    ASSERT(self.lockCount == 0);
-    [self viewLock];
-    [self viewOrderInAboutWithCompletion:^{
-        [self viewOrderOutGameEnd];
-        [self viewFillUpSpellTileViews];
-        [self viewUnlock];
-    }];
 }
 
 - (void)modeTransitionFromEndToExtras

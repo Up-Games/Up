@@ -146,7 +146,7 @@ using UP::TimeSpanning::start;
 - (void)dismissPresentedControllerImmediateIfNecessary
 {
     Mode mode = self.gameController.mode;
-    if (mode != Mode::Extras && mode != Mode::About) {
+    if (mode != Mode::Extras) {
         return;
     }
     
