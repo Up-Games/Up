@@ -235,7 +235,7 @@ using Role = UP::SpellLayout::Role;
     if (selected) {
         [tunePlayer setVolumeFromLevel:self.previousSoundEffectsLevel];
         delay(BandSettingsUpdateDelay, 0.1, ^{
-            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, 0, 0 }];
+            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, 0, 0, 0 }];
         });
     }
     else {
@@ -258,7 +258,7 @@ using Role = UP::SpellLayout::Role;
         self.tunesCheckbox.userInteractionEnabled = NO;
         self.previousTunesLevel = NO;
         if (![tunePlayer isPlayingTuneID:UPTuneIDDemo segment:UPTuneSegmentMain]) {
-            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, 0, 0 }];
+            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, 0, 0, 0 }];
         }
     }
     
@@ -294,7 +294,7 @@ using Role = UP::SpellLayout::Role;
         dispatch_async(dispatch_get_main_queue(), ^{
             UPTunePlayer *tunePlayer = [UPTunePlayer instance];
             [tunePlayer stop];
-            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, 0, 0 }];
+            [tunePlayer playTuneID:UPTuneIDDemo segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, 0, 0, 0 }];
         });
     }
 }

@@ -98,6 +98,13 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
         else {
             [player play];
         }
+        if (properties.fadeDuration > 0) {
+            float volume = player.volume;
+            player.volume = 0;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [player setVolume:volume fadeDuration:properties.fadeDuration + properties.beginTimeOffset];
+            });
+        }
     }
     
     return error;
@@ -141,7 +148,7 @@ UP_STATIC_INLINE NSUInteger up_tune_player_key(UPTuneID tuneID, UPTuneSegment se
     }
 }
 
-- (void)clear
+- (void)reset
 {
     [self stop];
     

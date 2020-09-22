@@ -63,9 +63,15 @@
     }
 
     self.volume = 0.5;
-    self.engine = [[AVAudioEngine alloc] init];
+
+    [self reset];
 
     return self;
+}
+
+- (void)reset
+{
+    self.engine = [[AVAudioEngine alloc] init];
 }
 
 - (void)setVolume:(float)volume
@@ -98,6 +104,8 @@
         return;
     }
     
+    [self prepare];
+    
     BOOL played = NO;
     auto range = m_map.equal_range(soundID);
     for (auto it = range.first; it != range.second; ++it) {
@@ -122,23 +130,33 @@
 
 - (void)prepare
 {
-    if (!self.engine.isRunning) {
-        NSError *error = nil;
-        [self.engine startAndReturnError:&error];
-        if (error) {
-            LOG(Sound, "error preparing audio engine: %@", error);
+    @try {
+        if (!self.engine.isRunning) {
+            NSError *error = nil;
+            [self.engine startAndReturnError:&error];
+            if (error) {
+                LOG(Sound, "error preparing audio engine: %@", error);
+            }
         }
+    }
+    @catch (NSException *exception) {
+        LOG(General, "exception preparing sound player: %@", exception);
     }
 }
 
 - (void)stop
 {
-    for (auto it = m_map.begin(); it != m_map.end(); ++it) {
-        UPSound *sound = it->second;
-        sound.playing = NO;
-        [sound.player pause];
+    @try {
+        for (auto it = m_map.begin(); it != m_map.end(); ++it) {
+            UPSound *sound = it->second;
+            sound.playing = NO;
+            [sound.player pause];
+        }
+        [self.engine stop];
     }
-    [self.engine stop];
+    @catch (NSException *exception) {
+        LOG(General, "exception stopping sound player: %@", exception);
+    }
 }
 
 - (void)setVolumeFromLevel:(NSUInteger)level
@@ -182,7 +200,13 @@
         sound.playing = NO;
     }];
     sound.playing = YES;
-    [player play];
+    @try {
+        [player play];
+    }
+    @catch (NSException *exception) {
+        sound.playing = NO;
+        LOG(General, "exception playing sound: %@", exception);
+    }
 }
 
 - (UPSound *)_createSoundWithFilePath:(NSString *)filePath error:(NSError **)error

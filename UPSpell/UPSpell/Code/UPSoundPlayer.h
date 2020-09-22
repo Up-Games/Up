@@ -29,6 +29,8 @@ typedef NS_ENUM(NSInteger, UPSoundID) {
 
 - (instancetype)init NS_UNAVAILABLE;
 
+- (void)reset;
+
 - (NSError *)setFilePath:(NSString *)filePath forSoundID:(UPSoundID)soundID volume:(float)volume playerCount:(NSUInteger)playerCount;
 
 - (void)playSoundID:(UPSoundID)soundID;

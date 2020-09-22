@@ -35,6 +35,7 @@ struct UPTuneProperties {
     NSInteger numberOfLoops;
     CFTimeInterval beginTimeOffset;
     CFTimeInterval soundTimeOffset;
+    CFTimeInterval fadeDuration;
 };
 
 extern NSString * const UPTunePlayerFinishedPlayingNotification;
@@ -55,7 +56,7 @@ extern NSString * const UPTunePlayerFinishedPlayingNotification;
 
 - (void)fade;
 - (void)stop;
-- (void)clear;
+- (void)reset;
 
 - (void)setVolumeFromLevel:(NSUInteger)level;
 
