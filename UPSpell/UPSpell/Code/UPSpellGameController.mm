@@ -3499,10 +3499,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     NSError *error;
     BOOL ok = [[AVAudioSession sharedInstance] setActive:NO error:&error];
     if (error) {
-        LOG(General, "stopAudio error: %@", error);
+        LOG(Sound, "stopAudio error: %@", error);
     }
     else if (ok) {
-        LOG(General, "audio stopped");
+        LOG(Sound, "audio stopped");
     }
 }
 
@@ -3515,13 +3515,13 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         NSInteger type = [note.userInfo[AVAudioSessionInterruptionTypeKey] unsignedIntegerValue];
         switch (type) {
             case AVAudioSessionInterruptionTypeBegan: {
-                LOG(General, "AVAudioSessionInterruptionTypeBegan");
+                LOG(Sound, "AVAudioSessionInterruptionTypeBegan");
                 [self stopAudio];
                 break;
             }
             case AVAudioSessionInterruptionTypeEnded: {
                 // if only this notification came in reliably…
-                LOG(General, "AVAudioSessionInterruptionTypeEnded");
+                LOG(Sound, "AVAudioSessionInterruptionTypeEnded");
                 NSUInteger option = [note.userInfo[AVAudioSessionInterruptionOptionKey] unsignedIntegerValue];
                 if (option == AVAudioSessionInterruptionOptionShouldResume) {
                     // if only this worked reliably…
