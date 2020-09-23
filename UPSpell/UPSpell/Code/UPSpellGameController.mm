@@ -3458,7 +3458,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         CFTimeInterval tuneTimeOffset = (UPGameTimerCanonicalDuration - UPGameTimerDefaultDuration) + effectiveGameTimeElapsed;
         CFTimeInterval fadeDuration = up_is_fuzzy_zero(tuneTimeOffset) ? 0 : 1;
         [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, tuneBeginTime, tuneTimeOffset, fadeDuration }];
-        LOG(General, "play tune: %d : %d", self.tuneNumber, tuneID);
     }
     
     if (self.soundEffectsEnabled) {
