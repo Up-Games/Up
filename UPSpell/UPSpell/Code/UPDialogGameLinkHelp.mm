@@ -84,8 +84,8 @@ using Role = SpellLayout::Role;
             self.titleLabel.string = @"ABOUT CHALLENGES";
             self.helpLabel.string =
                 @"A CHALLENGE is a new game with the same letters as a game already\n"
-                "played (it uses the same Game Key). Try to top the challenge score,\n"
-                "then share your results. Good luck and have fun!";
+                "played. Try to top the challenge score, then share your results.\n"
+                "Good luck and have fun!";
             break;
     }
 }
