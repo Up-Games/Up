@@ -150,7 +150,6 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) UPGameLink *gameLink;
 @property (nonatomic) BOOL gameLinkSender;
 @property (nonatomic) Mode duelHelpReturnMode;
-@property (nonatomic) BOOL audioInterrupted;
 
 @property (nonatomic) UITouch *activeTouch;
 @property (nonatomic) UPControl *touchedControl;
@@ -2676,8 +2675,7 @@ static UPSpellGameController *_Instance;
 
     [[UPSoundPlayer instance] stop];
     [[UPTunePlayer instance] fade];
-    self.audioInterrupted = NO;
-
+    
     [self.gameTimer reset];
     m_spell_model = std::make_shared<SpellModel>();
     [self viewUpdateGameControls];
@@ -2998,13 +2996,13 @@ static UPSpellGameController *_Instance;
     }
 
     if (score < m_spell_model->challenge_score()) {
-        result = [NSString stringWithFormat:@"%@CHALLENGE LOST!\nSCORE TO BEAT WAS %d.", highScoreNote, m_spell_model->challenge_score()];
+        result = [NSString stringWithFormat:@"%@CHALLENGE LOST!\nSCORE TO BEAT WAS %d", highScoreNote, m_spell_model->challenge_score()];
     }
     else if (score == m_spell_model->challenge_score()) {
-        result = [NSString stringWithFormat:@"%@CHALLENGE TIED!\nSCORE TO BEAT WAS %d.", highScoreNote, m_spell_model->challenge_score()];
+        result = [NSString stringWithFormat:@"%@CHALLENGE TIED!\nSCORE TO BEAT WAS %d", highScoreNote, m_spell_model->challenge_score()];
     }
     else {
-        result = [NSString stringWithFormat:@"CHALLENGE WON! SHARE YOUR SCORE!\nSCORE TO BEAT WAS %d.", m_spell_model->challenge_score()];
+        result = [NSString stringWithFormat:@"CHALLENGE WON! SHARE YOUR SCORE!\nSCORE TO BEAT WAS %d", m_spell_model->challenge_score()];
     }
     
     return result;
@@ -3348,7 +3346,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     if (self.soundEffectsEnabled) {
         UPSoundPlayer *soundPlayer = [UPSoundPlayer instance];
         [soundPlayer playSoundID:soundID];
-        [self restartTuneIfNeeded];
     }
 }
 
@@ -3448,10 +3445,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)sequenceTuneWithDelay:(CFTimeInterval)delay gameTimeElapsed:(CFTimeInterval)gameTimeElapsed
 {
-    if (self.audioInterrupted) {
-        return;
-    }
-    
     CFTimeInterval effectiveGameTimeElapsed = UPClampT(CFTimeInterval, gameTimeElapsed, 0, UPGameTimerDefaultDuration);
 
     UPTunePlayer *tunePlayer = [UPTunePlayer instance];
@@ -3465,6 +3458,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         CFTimeInterval tuneTimeOffset = (UPGameTimerCanonicalDuration - UPGameTimerDefaultDuration) + effectiveGameTimeElapsed;
         CFTimeInterval fadeDuration = up_is_fuzzy_zero(tuneTimeOffset) ? 0 : 1;
         [tunePlayer playTuneID:tuneID segment:UPTuneSegmentMain properties:{ 1.0, NO, 0, tuneBeginTime, tuneTimeOffset, fadeDuration }];
+        LOG(General, "play tune: %d : %d", self.tuneNumber, tuneID);
     }
     
     if (self.soundEffectsEnabled) {
@@ -3499,36 +3493,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     return result;
 }
 
-- (void)restartTuneIfNeeded
-{
-    if (!self.audioInterrupted) {
-        return;
-    }
-    
-    if (self.tunesEnabled && [self tunesShouldPlay] && self.mode == Mode::Play) {
-        self.audioInterrupted = NO;
-        LOG(General, "restart tune");
-        [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
-    }
-}
-
-- (void)startAudio
-{
-    NSError *error;
-    BOOL ok = [[AVAudioSession sharedInstance] setActive:YES error:&error];
-    if (error) {
-        LOG(General, "stopAudio startAudio: %@", error);
-    }
-    else if (ok) {
-        LOG(General, "audio started");
-    }
-}
-
 - (void)stopAudio
 {
     [[UPTunePlayer instance] stop];
     [[UPSoundPlayer instance] stop];
-    self.audioInterrupted = NO;
     NSError *error;
     BOOL ok = [[AVAudioSession sharedInstance] setActive:NO error:&error];
     if (error) {
@@ -3550,14 +3518,21 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             case AVAudioSessionInterruptionTypeBegan: {
                 LOG(General, "AVAudioSessionInterruptionTypeBegan");
                 [self stopAudio];
-                self.audioInterrupted = YES;
                 break;
             }
             case AVAudioSessionInterruptionTypeEnded: {
+                // if only this notification came in reliably…
                 LOG(General, "AVAudioSessionInterruptionTypeEnded");
                 NSUInteger option = [note.userInfo[AVAudioSessionInterruptionOptionKey] unsignedIntegerValue];
                 if (option == AVAudioSessionInterruptionOptionShouldResume) {
                     // if only this worked reliably…
+                    if (self.mode == Mode::Play) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            if (self.mode == Mode::Play) {
+                                [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
+                            }
+                        });
+                    }
                 }
                 break;
             }
@@ -3569,18 +3544,13 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self stopAudio];
         [[UPSoundPlayer instance] reset];
         [[UPTunePlayer instance] reset];
-        [self startAudio];
-        delay(BandGameDelay, 1.0, ^{
-            [self configureSounds];
-            [self configureTunesForTuneNumber:self.tuneNumber];
-            if (self.mode == Mode::Play) {
-                [self sequenceTuneWithDelay:0.1 gameTimeElapsed:self.gameTimer.elapsedTime];
-            }
-        });
+        [self configureSounds];
+        [self configureTunesForTuneNumber:self.tuneNumber];
+        if (self.mode == Mode::Play) {
+            [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
+        }
     }];
 }
-
-
 
 #pragma mark - Lifecycle notifications
 
@@ -4008,7 +3978,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     pause(BandGameAll);
     [[UPSoundPlayer instance] stop];
     [[UPTunePlayer instance] fade];
-    self.audioInterrupted = NO;
     [self viewLock];
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPause];
     
@@ -4067,7 +4036,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     pause(BandGameAll);
     [[UPSoundPlayer instance] stop];
     [[UPTunePlayer instance] fade];
-    self.audioInterrupted = NO;
     [self viewLock];
     
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPause];
@@ -4115,12 +4083,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1;
         
-        if (self.audioInterrupted) {
-            [self restartTuneIfNeeded];
-        }
-        else {
-            [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
-        }
+        [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
         delay(BandModeDelay, 0.3, ^{
             [self.gameTimer start];
             start(BandGameAll);
@@ -4157,7 +4120,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self cancelActiveTouch];
     [[UPSoundPlayer instance] stop];
     [[UPTunePlayer instance] stop];
-    self.audioInterrupted = NO;
 
     [self.gameTimer resetTo:0];
     [self viewUpdateGameControls];
