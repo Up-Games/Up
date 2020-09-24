@@ -317,6 +317,7 @@ void SpellLayout::calculate()
     calculate_word_mark_font_metrics();
     calculate_legal_font_metrics();
     calculate_help_prompt_font_metrics();
+    calculate_tutorial_prompt_font_metrics();
     calculate_game_controls_button_charge_outsets();
     calculate_help_button_charge_outsets();
 
@@ -564,6 +565,13 @@ void SpellLayout::calculate_help_prompt_font_metrics()
     set_help_prompt_font(font);
 }
 
+void SpellLayout::calculate_tutorial_prompt_font_metrics()
+{
+    CGFloat cap_height = CanonicalTutorialPromptFontCapHeight * layout_scale();
+    UIFont *font = [UIFont placardDescriptionFontWithCapHeight:cap_height];
+    set_tutorial_prompt_font(font);
+}
+
 void SpellLayout::calculate_word_tray_layout_frame()
 {
     set_word_tray_layout_frame(layout_centered_x_aspect_rect(CanonicalWordTrayFrame));
@@ -738,8 +746,13 @@ void SpellLayout::calculate_dialog_locations()
     calculate_and_set_locations(Role::GameLinkTitle, layout_relative_aspect_rect(CanonicalGameLinkPromptFrame));
     calculate_and_set_locations(Role::GameLinkDetail, layout_relative_aspect_rect(CanonicalGameLinkScoreFrame));
     calculate_and_set_locations(Role::HeroLogo, layout_relative_aspect_rect(CanonicalHeroLogoFrame));
-    calculate_and_set_locations(Role::HeroLogo, layout_relative_aspect_rect(CanonicalHeroLogoFrame));
     calculate_and_set_locations(Role::HeroWordMark, layout_relative_aspect_rect(CanonicalHeroWordMarkFrame));
+
+    calculate_and_set_locations(Role::WelcomeLogo, layout_relative_aspect_rect(CanonicalWelcomeLogoFrame));
+    calculate_and_set_locations(Role::WelcomeWordMark, layout_relative_aspect_rect(CanonicalWelcomeWordMarkFrame));
+    calculate_and_set_locations(Role::WelcomeMessage, layout_relative_aspect_rect(CanonicalWelcomeMessageFrame));
+    calculate_and_set_locations(Role::TutorialDonePrompt, layout_relative_aspect_rect(CanonicalTutorialDonePromptFrame));
+    calculate_and_set_locations(Role::TutorialDoneButton, layout_relative_aspect_rect(CanonicalTutorialDoneButtonFrame));
 
     calculate_and_set_locations(Role::DialogHelpTitle, layout_relative_aspect_rect(CanonicalDialogShareHelpTitleFrame));
     calculate_and_set_locations(Role::DialogHelpText, layout_relative_aspect_rect(CanonicalDialogShareHelpTextFrame));
@@ -793,6 +806,7 @@ void SpellLayout::calculate_extras_locations()
 {
     calculate_and_set_locations(Role::ExtrasHowToGameView, layout_relative_aspect_rect(CanonicalExtrasHowToGameViewFrame));
     calculate_and_set_locations(Role::ExtrasHowToBottomPrompt, layout_relative_aspect_rect(CanonicalExtrasHowToBottomPromptFrame));
+    calculate_and_set_locations(Role::ExtrasHowToBottomPromptTutorial, layout_relative_aspect_rect(CanonicalExtrasHowToBottomPromptTutorialFrame));
     calculate_and_set_locations(Role::ExtrasHowTo2xCallout, layout_relative_aspect_rect(CanonicalExtrasHowTo2xCalloutFrame));
     
     CGRect controls_button_left_frame = frame_for(Role::ControlButtonLeft);

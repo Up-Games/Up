@@ -23,8 +23,10 @@
 #import "UPDialogGameLinkHelp.h"
 #import "UPDialogShareHelp.h"
 #import "UPDialogDuelHelp.h"
+#import "UPDialogTutorialHelp.h"
 #import "UPSceneDelegate.h"
 #import "UPSoundPlayer.h"
+#import "UPSpellExtrasPaneHowTo.h"
 #import "UPSpellGameController.h"
 #import "UPSpellGameSummary.h"
 #import "UPSpellGameView.h"
@@ -144,6 +146,8 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) UPDialogShareHelp *dialogShareHelp;
 @property (nonatomic) UPDialogDuelHelp *dialogDuelHelp;
 @property (nonatomic) UPDialogTopMenu *dialogTopMenu;
+@property (nonatomic) UPDialogTutorialHelp *dialogTutorialHelp;
+@property (nonatomic) UPSpellExtrasPaneHowTo *howToPane;
 @property (nonatomic) BOOL dialogTopMenuUserInteractionEnabled;
 @property (nonatomic) NSInteger lockCount;
 @property (nonatomic) int endGameScore;
@@ -3726,16 +3730,53 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromNoneToTutorial
 {
-    LOG(General, "modeTransitionFromNoneToTutorial");
+    SpellLayout &layout = SpellLayout::instance();
 
-    // Welcome
-    
+    self.dialogTutorialHelp = [UPDialogTutorialHelp instance];
+    [self.view addSubview:self.dialogTutorialHelp];
+//    [self.dialogTutorialHelp.okButton setTarget:self action:@selector(dialogGameLinkHelpOKButtonTapped:)];
+    self.dialogTutorialHelp.frame = layout.screen_bounds();
+    self.dialogTutorialHelp.okButton.alpha = 0;
+    self.dialogTutorialHelp.helpLabel.alpha = 0;
+
+    // Hide post-tutorial UI
     self.dialogTopMenu.extrasButton.hidden = YES;
     self.dialogTopMenu.playButton.hidden = YES;
     self.dialogTopMenu.duelButton.hidden = YES;
     self.dialogTopMenu.readyMessagePathView.hidden = YES;
     self.gameView.hidden = YES;
 
+    // Welcome
+    self.dialogTutorialHelp.logoView.frame = layout.frame_for(Role::WelcomeLogo);
+    self.dialogTutorialHelp.wordMarkLabel.frame = layout.frame_for(Role::WelcomeWordMark);
+    self.dialogTutorialHelp.welcomeLabel.frame = layout.frame_for(Role::WelcomeMessage);
+    self.dialogTutorialHelp.hidden = NO;
+    self.dialogTutorialHelp.alpha = 1;
+    
+    NSArray<UPViewMove *> *splashOutMoves = @[
+        UPViewMoveMake(self.dialogTutorialHelp.logoView, Role::WelcomeLogo, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogTutorialHelp.wordMarkLabel, Role::WelcomeWordMark, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogTutorialHelp.welcomeLabel, Role::WelcomeMessage, Spot::OffBottomFar),
+    ];
+
+    self.howToPane = [[UPSpellExtrasPaneHowTo alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
+    [self.view addSubview:self.howToPane];
+    [self.view sendSubviewToBack:self.howToPane];
+    [self.howToPane configureForFullScreenTutorial];
+    self.howToPane.alpha = 0;
+    
+
+    delay(BandModeDelay, 2, ^{
+        start(bloop_out(BandModeUI, splashOutMoves, 0.5, ^(UIViewAnimatingPosition) {
+            [self.howToPane prepare];
+            [UIView animateWithDuration:0.75 animations:^{
+                self.dialogTutorialHelp.okButton.alpha = 1;
+                self.dialogTutorialHelp.helpLabel.alpha = 1;
+                self.howToPane.alpha = 1;
+            }];
+        }));
+    });
+    
 }
 
 - (void)modeTransitionFromTutorialToGraduation
@@ -3899,11 +3940,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     Role cancelRole = self.dialogGameLink.confirmButton.hidden ? Role::DialogButtonCenterResponse : Role::DialogButtonAlternativeResponse;
     
     NSArray<UPViewMove *> *buttonOutMoves = @[
-        UPViewMoveMake(self.dialogGameLink.titlePromptLabel, Location(Role::GameLinkTitle, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogGameLink.detailPromptLabel, Location(Role::GameLinkDetail, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogGameLink.cancelButton, Location(cancelRole, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogGameLink.confirmButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
-        UPViewMoveMake(self.dialogGameLink.helpButton, Location(Role::GameShareButton, Spot::OffBottomFar)),
+        UPViewMoveMake(self.dialogGameLink.titlePromptLabel, Role::GameLinkTitle, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogGameLink.detailPromptLabel, Role::GameLinkDetail, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogGameLink.cancelButton, cancelRole, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogGameLink.confirmButton, Role::DialogButtonDefaultResponse, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogGameLink.helpButton, Role::GameShareButton, Spot::OffBottomFar),
     ];
     start(bloop_out(BandModeUI, buttonOutMoves, 0.5, nil));
     

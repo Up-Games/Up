@@ -61,10 +61,13 @@ public:
         ExtrasShareHighScoreValue, ExtrasShareHighScoreDescription, ExtrasShareHighScoreButton,
         ExtrasShareLastGameValue, ExtrasShareLastGameDescription, ExtrasShareLastGameButton,
         ExtrasShareDescription, ExtrasShareLastGameHighScoreEqualDescription,
-        ExtrasHowToGameView, ExtrasHowToBottomPrompt, ExtrasHowToTopLeftButtonClick, ExtrasHowToTopRightButtonClick, ExtrasHowTo2xCallout,
+        ExtrasHowToGameView, ExtrasHowToBottomPrompt, ExtrasHowToBottomPromptTutorial,
+        ExtrasHowToTopLeftButtonClick, ExtrasHowToTopRightButtonClick, ExtrasHowTo2xCallout,
         ExtrasAbout,
         HeroLogo, HeroWordMark,
+        WelcomeLogo, WelcomeWordMark, WelcomeMessage,
         GameLinkTitle, GameLinkDetail,
+        TutorialDonePrompt, TutorialDoneButton,
     };
 
     enum class Spot {
@@ -225,13 +228,22 @@ public:
 
     static inline constexpr CGRect CanonicalExtrasHowToGameViewFrame = { 160, -132, 1000, 500 };
     static inline constexpr CGRect CanonicalExtrasHowToBottomPromptFrame = { 340, 410, 640, 80 };
+    static inline constexpr CGRect CanonicalExtrasHowToBottomPromptTutorialFrame = { 0, 430, 775, 80 };
     static inline constexpr CGRect CanonicalExtrasHowTo2xCalloutFrame = { 676, 243, 46, 46 };
+    
+    static inline constexpr CGFloat CanonicalTutorialPromptFontCapHeight = 28;
+    static inline constexpr CGRect CanonicalTutorialDonePromptFrame = { 790, 144, 190, 120 };
+    static inline constexpr CGRect CanonicalTutorialDoneButtonFrame = { 794, 282, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGSize CanonicalBotSpotSize = { 92, 92 };
 
     static inline constexpr CGRect CanonicalHeroLogoFrame = { 426, 132, 160, 160 };
     static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 416, 295, 180, 300 };
     static inline constexpr CGFloat CanonicalHeroWordMarkCapHeight = 31;
+
+    static inline constexpr CGRect CanonicalWelcomeLogoFrame = { 426, 102, 160, 160 };
+    static inline constexpr CGRect CanonicalWelcomeWordMarkFrame = { 416, 265, 180, 100 };
+    static inline constexpr CGRect CanonicalWelcomeMessageFrame = { 0, 330, 1000, 300 };
 
     static inline constexpr CGRect CanonicalGameLinkPromptFrame = { 200, 112, 600, 300 };
     static inline constexpr CGRect CanonicalGameLinkScoreFrame = { 100, 228, 800, 300 };
@@ -314,6 +326,7 @@ public:
     UIFont *word_mark_font() const { return m_word_mark_font; }
     UIFont *legal_font() const { return m_legal_font; }
     UIFont *help_prompt_font() const { return m_help_prompt_font; }
+    UIFont *tutorial_prompt_font() const { return m_tutorial_prompt_font; }
 
     CGFloat ballot_control_label_left_margin() const { return m_ballot_control_label_left_margin; }
     CGFloat choice_control_label_left_margin() const { return m_choice_control_label_left_margin; }
@@ -376,6 +389,7 @@ private:
     void set_word_mark_font(UIFont *font) { m_word_mark_font = font; }
     void set_legal_font(UIFont *font) { m_legal_font = font; }
     void set_help_prompt_font(UIFont *font) { m_help_prompt_font = font; }
+    void set_tutorial_prompt_font(UIFont *font) { m_tutorial_prompt_font = font; }
     void set_game_controls_button_charge_outsets(UPOutsets outsets) { m_game_controls_button_charge_outsets = outsets; }
     void set_help_button_charge_outsets(UPOutsets outsets) { m_help_button_charge_outsets = outsets; }
     void set_game_timer_frame(CGRect rect) { m_game_timer_frame = rect; }
@@ -412,6 +426,7 @@ private:
     void calculate_word_mark_font_metrics();
     void calculate_legal_font_metrics();
     void calculate_help_prompt_font_metrics();
+    void calculate_tutorial_prompt_font_metrics();
     void calculate_player_tile_locations();
     void calculate_word_tile_locations();
     void calculate_dialog_locations();
@@ -478,6 +493,7 @@ private:
     __strong UIFont *m_word_mark_font;
     __strong UIFont *m_legal_font;
     __strong UIFont *m_help_prompt_font;
+    __strong UIFont *m_tutorial_prompt_font;
 
     CGFloat m_ballot_control_label_left_margin = 0.0;
     CGFloat m_choice_control_label_left_margin = 0.0;
