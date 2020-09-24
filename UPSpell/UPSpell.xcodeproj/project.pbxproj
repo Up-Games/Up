@@ -70,6 +70,7 @@
 		5D6FB59D24DDC56100CDC293 /* UPDialogGameLink.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59C24DDC56100CDC293 /* UPDialogGameLink.mm */; };
 		5D6FB5A024DEF08800CDC293 /* UPSpellExtrasPaneShare.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59F24DEF08800CDC293 /* UPSpellExtrasPaneShare.mm */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.mm */; };
+		5D845FEF251D2DF7000FB2F4 /* UPHowToViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D845FEE251D2DF7000FB2F4 /* UPHowToViewController.mm */; };
 		5D8D827224E03B08007B050C /* LinkPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D8D827124E03B08007B050C /* LinkPresentation.framework */; };
 		5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E0432476BF41008D3015 /* UPTileView.mm */; };
 		5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E078247D723A008D3015 /* UPSpellModel.mm */; };
@@ -290,6 +291,8 @@
 		5D723114246B34C0006027A3 /* UPTileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTileView.h; sourceTree = "<group>"; };
 		5D72311F246B3917006027A3 /* UIFont+UPSpell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+UPSpell.h"; sourceTree = "<group>"; };
 		5D723120246B3996006027A3 /* UIFont+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIFont+UPSpell.mm"; sourceTree = "<group>"; };
+		5D845FED251D2DF7000FB2F4 /* UPHowToViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPHowToViewController.h; sourceTree = "<group>"; };
+		5D845FEE251D2DF7000FB2F4 /* UPHowToViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPHowToViewController.mm; sourceTree = "<group>"; };
 		5D8D826F24DF866D007B050C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5D8D827124E03B08007B050C /* LinkPresentation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkPresentation.framework; path = System/Library/Frameworks/LinkPresentation.framework; sourceTree = SDKROOT; };
 		5D8D827324E06853007B050C /* UP Spell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "UP Spell.entitlements"; sourceTree = "<group>"; };
@@ -514,6 +517,8 @@
 				5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */,
 				5D6FB59824DD989100CDC293 /* UPGameLink.h */,
 				5D6FB59924DD989100CDC293 /* UPGameLink.mm */,
+				5D845FED251D2DF7000FB2F4 /* UPHowToViewController.h */,
+				5D845FEE251D2DF7000FB2F4 /* UPHowToViewController.mm */,
 				5DBC20C12497B9AD002A6ADC /* UPMode.h */,
 				5D29878924F2CC9600AA6E78 /* UPPulseView.h */,
 				5D29878A24F2CC9600AA6E78 /* UPPulseView.mm */,
@@ -968,6 +973,7 @@
 				5DF9DF5F2466165700B2199D /* UPSceneDelegate.mm in Sources */,
 				5D6FB59124DB151E00CDC293 /* UPSpellExtrasPaneSound.mm in Sources */,
 				5D0FC33924A9410900353563 /* UPTextButton.mm in Sources */,
+				5D845FEF251D2DF7000FB2F4 /* UPHowToViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
