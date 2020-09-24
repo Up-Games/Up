@@ -19,7 +19,7 @@
 
     self.pane = [[UPSpellExtrasPaneHowTo alloc] initWithFrame:CGRectZero];
     [self.view addSubview:self.pane];
-    [self.pane configureForAppPreviewCapture];
+    [self.pane configureForFullScreenTutorial];
 }
 
 - (void)viewDidLayoutSubviews

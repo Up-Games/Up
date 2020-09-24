@@ -23,6 +23,8 @@ namespace UP {
 
 enum class Mode {
     None,
+    Tutorial,
+    Graduation,
     Init,
     Extras,
     DuelHelp,
@@ -42,6 +44,10 @@ UP_STATIC_INLINE const char *cstr_for(Mode mode)
     switch (mode) {
         case Mode::None:
             return "None";
+        case Mode::Tutorial:
+            return "Tutorial";
+        case Mode::Graduation:
+            return "Graduation";
         case Mode::Init:
             return "Init";
         case Mode::Extras:

@@ -96,6 +96,14 @@ using UP::TimeSpanning::start;
     return self;
 }
 
+- (void)configureForFullScreenTutorial
+{
+    SpellLayout &layout = SpellLayout::instance();
+    self.gameView.center = layout.center_for(Role::Screen);
+    self.gameView.transform = CGAffineTransformTranslate(CGAffineTransformMakeScale(0.9, 0.9), 0, -18);
+    [self prepare];
+}
+
 - (void)prepare
 {
     SpellLayout &layout = SpellLayout::instance();

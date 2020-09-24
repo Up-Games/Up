@@ -278,12 +278,19 @@ static UPSpellGameController *_Instance;
     
     [UPSpellDossier instance]; // restores data from disk
     
-    m_spell_model = [self restoreInProgressGameIfExists];
-    if (m_spell_model) {
-        [self setMode:Mode::Pause];
+    UPSpellSettings *settings = [UPSpellSettings instance];
+    BOOL showTutorial = settings.showTutorial;
+    if (showTutorial) {
+        [self setMode:Mode::Tutorial];
     }
     else {
-        [self setMode:Mode::Init];
+        m_spell_model = [self restoreInProgressGameIfExists];
+        if (m_spell_model) {
+            [self setMode:Mode::Pause];
+        }
+        else {
+            [self setMode:Mode::Init];
+        }
     }
     
     self.duelHelpReturnMode = Mode::Init;
@@ -292,7 +299,9 @@ static UPSpellGameController *_Instance;
     if (sceneDelegate.challenge) {
         self.gameLink = sceneDelegate.challenge;
         sceneDelegate.challenge = nil;
-        [self setMode:Mode::GameLink];
+        if (!showTutorial) {
+            [self setMode:Mode::GameLink];
+        }
     }
 }
 
@@ -785,6 +794,8 @@ static UPSpellGameController *_Instance;
     if (view == self.dialogTopMenu.extrasButton || view == self.dialogTopMenu.playButton || view == self.dialogTopMenu.duelButton) {
         switch (self.mode) {
             case UP::Mode::None:
+            case UP::Mode::Tutorial:
+            case UP::Mode::Graduation:
             case UP::Mode::Extras:
             case UP::Mode::ShareHelp:
             case UP::Mode::DuelHelp:
@@ -3587,6 +3598,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
                 usingBlock:^(NSNotification *note) {
         switch (self.mode) {
             case UP::Mode::None:
+            case UP::Mode::Tutorial:
+            case UP::Mode::Graduation:
             case UP::Mode::Init:
             case UP::Mode::Extras:
             case UP::Mode::Pause:
@@ -3613,8 +3626,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (void)configureModeTransitionTables
 {
     m_default_transition_table = {
+        { Mode::None,          Mode::Tutorial,      @selector(modeTransitionFromNoneToTutorial) },
         { Mode::None,          Mode::Init,          @selector(modeTransitionFromNoneToInit) },
         { Mode::None,          Mode::Pause,         @selector(modeTransitionFromNoneToPause) },
+        { Mode::Tutorial,      Mode::Graduation,    @selector(modeTransitionFromTutorialToGraduation) },
+        { Mode::Graduation,    Mode::Init,          @selector(modeTransitionFromGraduationToInit) },
         { Mode::Init,          Mode::Extras,        @selector(modeTransitionFromInitToExtras) },
         { Mode::Init,          Mode::GameLink,      @selector(modeTransitionFromInitToGameLink) },
         { Mode::Init,          Mode::Ready,         @selector(modeTransitionFromInitToReady) },
@@ -3706,6 +3722,28 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (void)setMode:(Mode)mode
 {
     [self setMode:mode transitionScenario:UPModeTransitionScenarioDefault];
+}
+
+- (void)modeTransitionFromNoneToTutorial
+{
+    LOG(General, "modeTransitionFromNoneToTutorial");
+
+    // Welcome
+    
+    self.dialogTopMenu.extrasButton.hidden = YES;
+    self.dialogTopMenu.playButton.hidden = YES;
+    self.dialogTopMenu.duelButton.hidden = YES;
+    self.dialogTopMenu.readyMessagePathView.hidden = YES;
+    self.gameView.hidden = YES;
+
+}
+
+- (void)modeTransitionFromTutorialToGraduation
+{
+}
+
+- (void)modeTransitionFromGraduationToInit
+{
 }
 
 - (void)modeTransitionFromNoneToInit
