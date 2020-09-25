@@ -228,7 +228,7 @@ public:
 
     static inline constexpr CGRect CanonicalExtrasHowToGameViewFrame = { 160, -132, 1000, 500 };
     static inline constexpr CGRect CanonicalExtrasHowToBottomPromptFrame = { 340, 410, 640, 80 };
-    static inline constexpr CGRect CanonicalExtrasHowToBottomPromptTutorialFrame = { 0, 430, 775, 80 };
+    static inline constexpr CGRect CanonicalExtrasHowToBottomPromptTutorialFrame = { 0, 428, 775, 80 };
     static inline constexpr CGRect CanonicalExtrasHowTo2xCalloutFrame = { 676, 243, 46, 46 };
     
     static inline constexpr CGFloat CanonicalTutorialPromptFontCapHeight = 28;
