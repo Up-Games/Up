@@ -50,15 +50,15 @@ using Role = SpellLayout::Role;
     self.logoView.center = layout.center_for(Role::WelcomeLogo);
     
     self.wordMarkLabel = [UPLabel label];
-    self.wordMarkLabel.string = @"UP SPELL";
+    self.wordMarkLabel.string = @"WELCOME";
     self.wordMarkLabel.font = layout.word_mark_font();
     self.wordMarkLabel.textAlignment = NSTextAlignmentCenter;
     self.wordMarkLabel.frame = layout.frame_for(Role::WelcomeWordMark);
     [self addSubview:self.wordMarkLabel];
     
     self.welcomeLabel = [UPLabel label];
-    self.welcomeLabel.string = @"HERE’S HOW TO PLAY";
-    self.welcomeLabel.font = layout.choice_control_font();
+    self.welcomeLabel.string = @"HOW TO PLAY UP SPELL\n";
+    self.welcomeLabel.font = layout.text_button_font();
     self.welcomeLabel.textAlignment = NSTextAlignmentCenter;
     self.welcomeLabel.frame = layout.frame_for(Role::GameLinkTitle);
     [self addSubview:self.welcomeLabel];
@@ -66,6 +66,7 @@ using Role = SpellLayout::Role;
     self.helpLabel = [UPLabel label];
     self.helpLabel.string =
         @"This how-to loops.\n"
+         "It takes 1 minute.\n"
          "To start playing,\n"
          "tap OK.";
     self.helpLabel.font = layout.description_font();

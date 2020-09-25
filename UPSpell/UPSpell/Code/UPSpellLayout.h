@@ -232,8 +232,8 @@ public:
     static inline constexpr CGRect CanonicalExtrasHowTo2xCalloutFrame = { 676, 243, 46, 46 };
     
     static inline constexpr CGFloat CanonicalTutorialPromptFontCapHeight = 28;
-    static inline constexpr CGRect CanonicalTutorialDonePromptFrame = { 790, 144, 190, 120 };
-    static inline constexpr CGRect CanonicalTutorialDoneButtonFrame = { 794, 282, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGRect CanonicalTutorialDonePromptFrame = { 790, 134, 190, 160 };
+    static inline constexpr CGRect CanonicalTutorialDoneButtonFrame = { 794, 304, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGSize CanonicalBotSpotSize = { 92, 92 };
 
