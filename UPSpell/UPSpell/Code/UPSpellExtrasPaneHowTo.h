@@ -10,5 +10,6 @@
 + (UPSpellExtrasPaneHowTo *)pane;
 
 - (void)configureForFullScreenTutorial;
+- (void)finish;
 
 @end

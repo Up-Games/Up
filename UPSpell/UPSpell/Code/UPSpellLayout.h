@@ -68,6 +68,7 @@ public:
         WelcomeLogo, WelcomeWordMark, WelcomeMessage,
         GameLinkTitle, GameLinkDetail,
         TutorialDonePrompt, TutorialDoneButton,
+        GraduationPrompt, GraduationDoneButton,
     };
 
     enum class Spot {
@@ -232,8 +233,11 @@ public:
     static inline constexpr CGRect CanonicalExtrasHowTo2xCalloutFrame = { 676, 243, 46, 46 };
     
     static inline constexpr CGFloat CanonicalTutorialPromptFontCapHeight = 28;
-    static inline constexpr CGRect CanonicalTutorialDonePromptFrame = { 790, 134, 190, 160 };
-    static inline constexpr CGRect CanonicalTutorialDoneButtonFrame = { 794, 304, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGRect CanonicalTutorialDonePromptFrame = { 785, 134, 196, 160 };
+    static inline constexpr CGRect CanonicalTutorialDoneButtonFrame = { 803, 304, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+
+    static inline constexpr CGRect CanonicalGraduationPromptTextFrame = { 250, 200, 500, 200 };
+    static inline constexpr CGRect CanonicalGraduationDoneButtonFrame = { 429.5, 310, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGSize CanonicalBotSpotSize = { 92, 92 };
 

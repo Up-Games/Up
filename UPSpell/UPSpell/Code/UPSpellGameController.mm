@@ -107,6 +107,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 
 typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
     UPSpellGameAlphaStateReasonDefault,
+    UPSpellGameAlphaStateReasonGraduation,
     UPSpellGameAlphaStateReasonInit,
     UPSpellGameAlphaStateReasonGameLink,
     UPSpellGameAlphaStateReasonGameLinkHelp,
@@ -941,6 +942,19 @@ static UPSpellGameController *_Instance;
 {
     ASSERT(self.mode == Mode::GameLinkHelp);
     [self setMode:Mode::GameLink];
+}
+
+- (void)dialogTutorialOKButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+{
+    ASSERT(self.mode == Mode::Tutorial);
+    [self setMode:Mode::Graduation];
+    self.dialogTutorialHelp.okButton.userInteractionEnabled = NO;
+}
+
+- (void)dialogGraduationOKButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+{
+    ASSERT(self.mode == Mode::Graduation);
+    [self setMode:Mode::Init];
 }
 
 #pragma mark - Actions
@@ -1778,6 +1792,18 @@ static UPSpellGameController *_Instance;
     ASSERT(self.lockCount > 0);
     
     switch (reason) {
+        case UPSpellGameAlphaStateReasonGraduation: {
+            CGFloat modalAlpha = [UIColor themeModalBackgroundAlpha];
+            for (UIView *view in self.gameView.interactiveSubviews) {
+                view.alpha = modalAlpha;
+            }
+            CGFloat disabledAlpha = [UIColor themeDisabledAlpha];
+            for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.duelButton ]) {
+                view.alpha = disabledAlpha;
+            }
+            m_alpha_reason_stack.clear();
+            break;
+        }
         case UPSpellGameAlphaStateReasonInit: {
             CGFloat alpha = [UIColor themeDisabledAlpha];
             for (UIView *view in self.gameView.interactiveSubviews) {
@@ -3734,10 +3760,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
     self.dialogTutorialHelp = [UPDialogTutorialHelp instance];
     [self.view addSubview:self.dialogTutorialHelp];
-//    [self.dialogTutorialHelp.okButton setTarget:self action:@selector(dialogGameLinkHelpOKButtonTapped:)];
+    [self.dialogTutorialHelp.okButton setTarget:self action:@selector(dialogTutorialOKButtonTapped:)];
     self.dialogTutorialHelp.frame = layout.screen_bounds();
     self.dialogTutorialHelp.okButton.alpha = 0;
-    self.dialogTutorialHelp.helpLabel.alpha = 0;
+    self.dialogTutorialHelp.okButton.label.string = @"DONE";
+    self.dialogTutorialHelp.tutorialLabel.alpha = 0;
 
     // Hide post-tutorial UI
     self.dialogTopMenu.extrasButton.hidden = YES;
@@ -3771,7 +3798,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             [self.howToPane prepare];
             [UIView animateWithDuration:0.75 animations:^{
                 self.dialogTutorialHelp.okButton.alpha = 1;
-                self.dialogTutorialHelp.helpLabel.alpha = 1;
+                self.dialogTutorialHelp.tutorialLabel.alpha = 1;
                 self.howToPane.alpha = 1;
             }];
         }));
@@ -3781,10 +3808,93 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromTutorialToGraduation
 {
+    SpellLayout &layout = SpellLayout::instance();
+
+    self.dialogTutorialHelp.okButton.highlightedLocked = YES;
+    self.dialogTutorialHelp.okButton.highlighted = YES;
+
+    [UIView animateWithDuration:1.5 animations:^{
+        self.howToPane.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.howToPane finish];
+
+        delay(BandModeDelay, 0.5, ^{
+            NSArray<UPViewMove *> *buttonOutMoves = @[
+                UPViewMoveMake(self.dialogTutorialHelp.tutorialLabel, Location(Role::TutorialDonePrompt, Spot::OffBottomFar)),
+                UPViewMoveMake(self.dialogTutorialHelp.okButton, Location(Role::TutorialDoneButton, Spot::OffBottomFar)),
+            ];
+            start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
+
+                self.dialogTutorialHelp.okButton.highlightedLocked = NO;
+                self.dialogTutorialHelp.okButton.highlighted = NO;
+
+                delay(BandModeDelay, 0.5, ^{
+                    [self viewLock];
+                    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGraduation];
+                    [self viewEnsureUnlocked];
+
+                    self.dialogTopMenu.extrasButton.hidden = NO;
+                    self.dialogTopMenu.playButton.hidden = NO;
+                    self.dialogTopMenu.duelButton.hidden = NO;
+                    self.dialogTopMenu.readyMessagePathView.hidden = NO;
+
+                    self.dialogTopMenu.extrasButton.center = layout.center_for(Role::DialogButtonTopLeft, Spot::OffTopNear);
+                    self.dialogTopMenu.playButton.center = layout.center_for(Role::DialogButtonTopCenter, Spot::OffTopNear);
+                    self.dialogTopMenu.duelButton.center = layout.center_for(Role::DialogButtonTopRight, Spot::OffTopNear);
+                    self.dialogTopMenu.readyMessagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
+                    [self setDialogTopMenuUserInteractionEnabled:NO];
+
+                    self.gameView.hidden = NO;
+                    self.gameView.center = layout.center_for(Role::Screen, Spot::OffBottomNear);
+                    self.gameView.transform = layout.menu_game_view_transform();
+                    [self viewUpdateGameControls];
+                    [self viewFillUpSpellTileViews];
+
+                    self.dialogTutorialHelp.graduationLabelContainer.hidden = NO;
+                    self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomNear);
+                    self.dialogTutorialHelp.okButton.frame = layout.frame_for(Role::GraduationDoneButton, Spot::OffBottomNear);
+                    self.dialogTutorialHelp.okButton.labelString = @"OK";
+
+                    NSArray<UPViewMove *> *buttonInMoves = @[
+                        UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
+                        UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter)),
+                        UPViewMoveMake(self.dialogTopMenu.duelButton, Location(Role::DialogButtonTopRight)),
+                        UPViewMoveMake(self.gameView, Location(Role::Screen)),
+                        UPViewMoveMake(self.dialogTutorialHelp.graduationLabelContainer, Location(Role::GraduationPrompt)),
+                        UPViewMoveMake(self.dialogTutorialHelp.okButton, Location(Role::GraduationDoneButton)),
+                    ];
+                    start(bloop_in(BandModeUI, buttonInMoves, 0.5, ^(UIViewAnimatingPosition) {
+                        [self.dialogTutorialHelp.okButton setTarget:self action:@selector(dialogGraduationOKButtonTapped:)];
+                        self.dialogTutorialHelp.okButton.userInteractionEnabled = YES;
+                    }));
+                });
+            }));
+        });
+    }];
+
 }
 
 - (void)modeTransitionFromGraduationToInit
 {
+    delay(BandModeDelay, 0.5, ^{
+        NSArray<UPViewMove *> *buttonOutMoves = @[
+            UPViewMoveMake(self.dialogTutorialHelp.graduationLabelContainer, Location(Role::GraduationPrompt, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogTutorialHelp.okButton, Location(Role::GraduationDoneButton, Spot::OffBottomFar)),
+        ];
+        start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
+            [self.dialogTutorialHelp removeFromSuperview];
+            self.dialogTutorialHelp = nil;
+
+            [self viewLock];
+            [UIView animateWithDuration:0.5 animations:^{
+                [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
+            } completion:^(BOOL finished) {
+                [self viewEnsureUnlocked];
+                [self setDialogTopMenuUserInteractionEnabled:YES];
+            }];
+        }));
+    });
+            
 }
 
 - (void)modeTransitionFromNoneToInit
