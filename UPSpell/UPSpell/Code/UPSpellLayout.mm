@@ -754,9 +754,7 @@ void SpellLayout::calculate_dialog_locations()
     calculate_and_set_locations(Role::TutorialDonePrompt, layout_relative_aspect_rect(CanonicalTutorialDonePromptFrame));
     calculate_and_set_locations(Role::TutorialDoneButton, layout_relative_aspect_rect(CanonicalTutorialDoneButtonFrame));
     calculate_and_set_locations(Role::GraduationPrompt, layout_relative_aspect_rect(CanonicalGraduationPromptTextFrame));
-    calculate_and_set_locations(Role::GraduationDoneButton, layout_relative_aspect_rect(CanonicalGraduationDoneButtonFrame));
-
-    
+    calculate_and_set_locations(Role::GraduationOKButton, layout_relative_aspect_rect(CanonicalGraduationOKButtonFrame));    
     
     calculate_and_set_locations(Role::DialogHelpTitle, layout_relative_aspect_rect(CanonicalDialogShareHelpTitleFrame));
     calculate_and_set_locations(Role::DialogHelpText, layout_relative_aspect_rect(CanonicalDialogShareHelpTextFrame));

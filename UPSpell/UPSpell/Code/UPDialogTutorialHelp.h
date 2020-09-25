@@ -16,7 +16,8 @@
 @property (nonatomic, readonly) UPLabel *welcomeLabel;
 @property (nonatomic, readonly) UPLabel *tutorialLabel;
 @property (nonatomic, readonly) UIView *graduationLabelContainer;
-@property (nonatomic, readonly) UPTextButton *okButton;
+@property (nonatomic, readonly) UPTextButton *tutorialDoneButton;
+@property (nonatomic, readonly) UPTextButton *graduationOKButton;
 
 + (UPDialogTutorialHelp *)instance;
 

@@ -68,7 +68,7 @@ public:
         WelcomeLogo, WelcomeWordMark, WelcomeMessage,
         GameLinkTitle, GameLinkDetail,
         TutorialDonePrompt, TutorialDoneButton,
-        GraduationPrompt, GraduationDoneButton,
+        GraduationPrompt, GraduationOKButton,
     };
 
     enum class Spot {
@@ -237,7 +237,7 @@ public:
     static inline constexpr CGRect CanonicalTutorialDoneButtonFrame = { 803, 304, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGRect CanonicalGraduationPromptTextFrame = { 250, 200, 500, 200 };
-    static inline constexpr CGRect CanonicalGraduationDoneButtonFrame = { 429.5, 310, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGRect CanonicalGraduationOKButtonFrame = { 429.5, 310, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGSize CanonicalBotSpotSize = { 92, 92 };
 

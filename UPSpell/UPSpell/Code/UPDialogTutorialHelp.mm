@@ -26,7 +26,8 @@ using Role = SpellLayout::Role;
 @property (nonatomic, readwrite) UPLabel *tutorialLabel;
 @property (nonatomic, readwrite) UIView *graduationLabelContainer;
 @property (nonatomic, readwrite) UPLabel *graduationLabel;
-@property (nonatomic, readwrite) UPTextButton *okButton;
+@property (nonatomic, readwrite) UPTextButton *tutorialDoneButton;
+@property (nonatomic, readwrite) UPTextButton *graduationOKButton;
 @end
 
 @implementation UPDialogTutorialHelp
@@ -69,8 +70,8 @@ using Role = SpellLayout::Role;
     self.tutorialLabel.string =
         @"This How-To loops.\n"
          "It takes 1 minute.\n"
-         "When you’re ready,\n"
-         "tap DONE.\n";
+         "Get how to play?\n"
+         "Tap DONE.\n";
     self.tutorialLabel.font = layout.description_font();
     self.tutorialLabel.textAlignment = NSTextAlignmentLeft;
     self.tutorialLabel.frame = layout.frame_for(Role::TutorialDonePrompt);
@@ -82,19 +83,25 @@ using Role = SpellLayout::Role;
     
     self.graduationLabel = [UPLabel label];
     self.graduationLabel.string =
-    @"You can watch the How-To again later by\n"
-    "tapping EXTRAS. Tap OK to start playing!";
+    @"Later on, you can watch the How-To again by\n"
+     "tapping EXTRAS. Tap OK to start playing!";
     self.graduationLabel.font = layout.description_font();
     self.graduationLabel.textAlignment = NSTextAlignmentLeft;
     self.graduationLabel.frame = layout.frame_for(Role::DialogHelpText);
     [self.graduationLabelContainer addSubview:self.graduationLabel];
     self.graduationLabelContainer.hidden = YES;
     
-    self.okButton = [UPTextButton smallTextButton];
-    self.okButton.labelString = @"DONE";
-    [self.okButton setLabelColorCategory:UPColorCategoryContent];
-    self.okButton.frame = layout.frame_for(Role::TutorialDoneButton);
-    [self addSubview:self.okButton];
+    self.tutorialDoneButton = [UPTextButton smallTextButton];
+    self.tutorialDoneButton.labelString = @"DONE";
+    [self.tutorialDoneButton setLabelColorCategory:UPColorCategoryContent];
+    self.tutorialDoneButton.frame = layout.frame_for(Role::TutorialDoneButton);
+    [self addSubview:self.tutorialDoneButton];
+
+    self.graduationOKButton = [UPTextButton smallTextButton];
+    self.graduationOKButton.labelString = @"OK";
+    [self.graduationOKButton setLabelColorCategory:UPColorCategoryContent];
+    self.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton);
+    [self addSubview:self.graduationOKButton];
 
     [self updateThemeColors];
 
