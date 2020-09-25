@@ -178,22 +178,16 @@ using Role = UP::SpellLayout::Role;
         self.lastGameScoreDescriptionLabel.alpha = 1;
         self.lastGameScoreShareButton.alpha = 1;
         self.shareDescription.string =
-        @"SHARE a link to a new game with the same\n"
+        @"Share a link to a new game with the same\n"
         "letters as one of your previous games.\n"
         "Challenge friends to beat your score.";
-        
+
         if ([dossier lastGameIsHighScore]) {
             self.highScoreEqualsLastGameDescription.hidden = NO;
             CGRect frame = layout.frame_for(Role::ExtrasShareDescription);
             frame.origin.y += up_float_scaled(SpellLayout::CanonicalExtrasShareLastGameHighScoreEqualGap, layout.layout_scale());
             self.shareDescriptionContainer.frame = frame;
             [self.shareDescription centerInSuperview];
-
-            self.lastGameScoreShareButton.userInteractionEnabled = NO;
-            CGFloat alpha = [UIColor themeDisabledAlpha];
-            self.lastGameScoreLabel.alpha = alpha;
-            self.lastGameScoreDescriptionLabel.alpha = alpha;
-            self.lastGameScoreShareButton.alpha = alpha;
         }
         else {
             self.highScoreEqualsLastGameDescription.hidden = YES;
@@ -214,7 +208,7 @@ using Role = UP::SpellLayout::Role;
         self.lastGameScoreDescriptionLabel.alpha = alpha;
         self.lastGameScoreShareButton.alpha = alpha;
         self.shareDescription.string =
-        @"Play some games, then return here to SHARE\n"
+        @"Play some games, then return here to share\n"
         "links to new games with the same letters.\n"
         "Challenge friends to beat your score.";
         self.shareDescriptionContainer.frame = layout.frame_for(Role::ExtrasShareDescription);
