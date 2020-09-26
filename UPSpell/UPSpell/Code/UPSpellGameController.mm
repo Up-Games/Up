@@ -4356,7 +4356,14 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.gameView.pauseControl.alpha = [UIColor themeModalBackgroundAlpha];
     [self.gameView.pauseControl setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
     [self.gameView.pauseControl setStrokeColorAnimationDuration:0 fromState:UPControlStateHighlighted toState:UPControlStateNormal];
-    
+
+    [UIView animateWithDuration:0.2 animations:^{
+        self.gameView.wordTrayControl.transform = CGAffineTransformIdentity;
+        for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
+            tileView.transform = CGAffineTransformIdentity;
+        }
+    }];
+
     [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
         self.dialogPause.alpha = 0;
     } completion:nil];
