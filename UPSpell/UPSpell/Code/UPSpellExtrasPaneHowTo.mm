@@ -162,6 +162,8 @@ using UP::TimeSpanning::start;
     }
 
     self.tileViews = self.gameView.tileContainerView.subviews;
+
+    [self.gameView.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
     
     [self updateThemeColors];
 
@@ -176,7 +178,7 @@ using UP::TimeSpanning::start;
 
     [self.gameTimer resetTo:60];
     [self.gameTimer start];
-
+    
     delay(BandAboutPlayingDelay, 1.5, ^{
         [self nextStep];
     });
