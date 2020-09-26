@@ -1675,6 +1675,7 @@ static UPSpellGameController *_Instance;
     for (const auto idx : idxs) {
         UPTileView *tileView = playerTrayTileViews[idx];
         Location location(role_in_player_tray(TilePosition(TileTray::Player, idx)), Spot::OffBottomNear);
+        tileView.dumpLocation = location;
         UPAnimator *animator = slide(BandGameUI, @[UPViewMoveMake(tileView, location)], 1.1, ^(UIViewAnimatingPosition) {
             [tileView removeFromSuperview];
         });
@@ -1685,6 +1686,18 @@ static UPSpellGameController *_Instance;
         });
         count++;
     }
+}
+
+- (void)viewDumpTilesFromDumpLocation:(NSArray *)tileViews
+{
+    NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
+    for (UPTileView *tileView in tileViews) {
+        Location location = tileView.dumpLocation;
+        [moves addObject:UPViewMoveMake(tileView, location)];
+    }
+    start(slide(BandGameUI, moves, 0.6, ^(UIViewAnimatingPosition) {
+        [tileViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    }));
 }
 
 - (void)viewFillPlayerTrayImmediate
@@ -4300,6 +4313,23 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromPauseToQuit
 {
+    if (self.gameView.clearControl.highlightedLocked) {
+        // in the middle of a dump penalty
+        ASSERT(self.lockCount > 0);
+        self.gameView.clearControl.highlightedLocked = NO;
+        self.gameView.clearControl.highlighted = NO;
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPause];
+        [self viewEnsureUnlocked];
+    }
+    else if (self.gameView.wordTrayControl.highlightedLocked) {
+        // in the middle of a reject penalty
+        ASSERT(self.lockCount > 0);
+        self.gameView.wordTrayControl.highlightedLocked = NO;
+        self.gameView.wordTrayControl.highlighted = NO;
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPause];
+        [self viewEnsureUnlocked];
+    }
+    
     ASSERT(self.lockCount == 0);
     
     if (@available(iOS 11.0, *)) {
@@ -4532,6 +4562,18 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     TileArray incoming_tiles = m_spell_model->tiles();
     size_t incoming_word_length = m_spell_model->word().length();
+
+    bool dump_from_current_position = true;
+
+    // need a special case dump if tiles are already being dumped
+    const auto &states = m_spell_model->states();
+    if (states.size() > 2) {
+        const State &check_dump_state = states.at(states.size() - 2);
+        if (check_dump_state.action().opcode() == Opcode::DUMP) {
+            dump_from_current_position = false;
+        }
+    }
+        
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::END));
     
     [self removeInProgressGameFileLogErrors:NO];
@@ -4542,7 +4584,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self clearGameModel];
     
     delay(BandModeDelay, 0.35, ^{
-        [self viewDumpAllTilesFromCurrentPosition:incoming_tiles wordLength:incoming_word_length];
+        if (dump_from_current_position) {
+            [self viewDumpAllTilesFromCurrentPosition:incoming_tiles wordLength:incoming_word_length];
+        }
+        else {
+            [self viewDumpTilesFromDumpLocation:self.gameView.tileContainerView.subviews];
+        }
         SpellLayout &layout = SpellLayout::instance();
         
         [UIView animateWithDuration:1.2 animations:^{

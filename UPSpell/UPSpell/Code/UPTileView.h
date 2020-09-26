@@ -18,6 +18,7 @@
 @property (nonatomic) BOOL hasTrailingApostrophe;
 
 @property (nonatomic) UP::SpellLayout::Location submitLocation;
+@property (nonatomic) UP::SpellLayout::Location dumpLocation;
 
 + (UPTileView *)viewWithGlyph:(char32_t)glyph score:(int)score multiplier:(int)multiplier;
 
