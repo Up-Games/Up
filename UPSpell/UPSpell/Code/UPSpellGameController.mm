@@ -3846,49 +3846,45 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             UPViewMoveMake(self.dialogTutorialHelp.tutorialLabel, Location(Role::TutorialDonePrompt, Spot::OffBottomFar)),
             UPViewMoveMake(self.dialogTutorialHelp.tutorialDoneButton, Location(Role::TutorialDoneButton, Spot::OffBottomFar)),
         ];
-        start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
-            
-            self.dialogTutorialHelp.tutorialDoneButton.highlightedLocked = NO;
-            self.dialogTutorialHelp.tutorialDoneButton.highlighted = NO;
-            
-            delay(BandModeDelay, 0.5, ^{
-                [self viewLock];
-                [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGraduation];
-                [self viewEnsureUnlocked];
-                
-                self.dialogTopMenu.extrasButton.hidden = NO;
-                self.dialogTopMenu.playButton.hidden = NO;
-                self.dialogTopMenu.duelButton.hidden = NO;
-                self.dialogTopMenu.readyMessagePathView.hidden = NO;
-                
-                self.dialogTopMenu.extrasButton.center = layout.center_for(Role::DialogButtonTopLeft, Spot::OffTopNear);
-                self.dialogTopMenu.playButton.center = layout.center_for(Role::DialogButtonTopCenter, Spot::OffTopNear);
-                self.dialogTopMenu.duelButton.center = layout.center_for(Role::DialogButtonTopRight, Spot::OffTopNear);
-                self.dialogTopMenu.readyMessagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
-                [self setDialogTopMenuUserInteractionEnabled:NO];
-                
-                self.gameView.hidden = NO;
-                self.gameView.center = layout.center_for(Role::Screen, Spot::OffBottomNear);
-                self.gameView.transform = layout.menu_game_view_transform();
-                [self viewUpdateGameControls];
-                [self viewFillUpSpellTileViews];
-                
-                self.dialogTutorialHelp.graduationLabelContainer.hidden = NO;
-                self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomNear);
-                self.dialogTutorialHelp.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton, Spot::OffBottomNear);
-                
-                NSArray<UPViewMove *> *buttonInMoves = @[
-                    UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
-                    UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter)),
-                    UPViewMoveMake(self.dialogTopMenu.duelButton, Location(Role::DialogButtonTopRight)),
-                    UPViewMoveMake(self.gameView, Location(Role::Screen)),
-                    UPViewMoveMake(self.dialogTutorialHelp.graduationLabelContainer, Location(Role::GraduationPrompt)),
-                    UPViewMoveMake(self.dialogTutorialHelp.graduationOKButton, Location(Role::GraduationOKButton)),
-                ];
-                start(bloop_in(BandModeUI, buttonInMoves, 0.5, ^(UIViewAnimatingPosition) {
-                    self.dialogTutorialHelp.graduationOKButton.userInteractionEnabled = YES;
-                }));
-            });
+        start(bloop_out(BandModeUI, buttonOutMoves, 0.5, nil));
+    });
+
+    delay(BandModeDelay, 1.5, ^{
+        [self viewLock];
+        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGraduation];
+        [self viewEnsureUnlocked];
+        
+        self.dialogTopMenu.extrasButton.hidden = NO;
+        self.dialogTopMenu.playButton.hidden = NO;
+        self.dialogTopMenu.duelButton.hidden = NO;
+        self.dialogTopMenu.readyMessagePathView.hidden = NO;
+        
+        self.dialogTopMenu.extrasButton.center = layout.center_for(Role::DialogButtonTopLeft, Spot::OffTopNear);
+        self.dialogTopMenu.playButton.center = layout.center_for(Role::DialogButtonTopCenter, Spot::OffTopNear);
+        self.dialogTopMenu.duelButton.center = layout.center_for(Role::DialogButtonTopRight, Spot::OffTopNear);
+        self.dialogTopMenu.readyMessagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
+        [self setDialogTopMenuUserInteractionEnabled:NO];
+        
+        self.gameView.hidden = NO;
+        self.gameView.center = layout.center_for(Role::Screen, Spot::OffBottomNear);
+        self.gameView.transform = layout.menu_game_view_transform();
+        [self viewUpdateGameControls];
+        [self viewFillUpSpellTileViews];
+        
+        self.dialogTutorialHelp.graduationLabelContainer.hidden = NO;
+        self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomNear);
+        self.dialogTutorialHelp.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton, Spot::OffBottomNear);
+        
+        NSArray<UPViewMove *> *buttonInMoves = @[
+            UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
+            UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter)),
+            UPViewMoveMake(self.dialogTopMenu.duelButton, Location(Role::DialogButtonTopRight)),
+            UPViewMoveMake(self.gameView, Location(Role::Screen)),
+            UPViewMoveMake(self.dialogTutorialHelp.graduationLabelContainer, Location(Role::GraduationPrompt)),
+            UPViewMoveMake(self.dialogTutorialHelp.graduationOKButton, Location(Role::GraduationOKButton)),
+        ];
+        start(bloop_in(BandModeUI, buttonInMoves, 0.5, ^(UIViewAnimatingPosition) {
+            self.dialogTutorialHelp.graduationOKButton.userInteractionEnabled = YES;
         }));
     });
 

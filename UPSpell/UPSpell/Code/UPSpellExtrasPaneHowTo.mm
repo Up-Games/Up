@@ -94,7 +94,7 @@ using UP::TimeSpanning::start;
     self.bottomPromptLabelOffscreenSpot = Spot::OffBottomNear;
     self.bottomPromptLabel.frame = layout.frame_for(self.bottomPromptLabelRole);
     self.bottomPromptLabel.font = layout.placard_description_font();
-    self.bottomPromptLabel.colorCategory = UPColorCategoryControlText;
+    self.bottomPromptLabel.colorCategory = UPColorCategoryInformation;
     self.bottomPromptLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.bottomPromptLabel];
     
@@ -333,7 +333,7 @@ using UP::TimeSpanning::start;
             return;
         }
         
-        self.bottomPromptLabel.string = @"WHEN YOU SPELL A WORD…";
+        self.bottomPromptLabel.string = @"WHEN YOU’VE SPELLED A WORD…";
         UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, self.bottomPromptLabelRole);
         start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
             
