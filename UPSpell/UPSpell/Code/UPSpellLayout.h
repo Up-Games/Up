@@ -233,8 +233,8 @@ public:
     static inline constexpr CGRect CanonicalExtrasHowTo2xCalloutFrame = { 676, 243, 46, 46 };
     
     static inline constexpr CGFloat CanonicalTutorialPromptFontCapHeight = 28;
-    static inline constexpr CGRect CanonicalTutorialDonePromptFrame = { 785, 134, 196, 160 };
-    static inline constexpr CGRect CanonicalTutorialDoneButtonFrame = { 803, 304, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGRect CanonicalTutorialDonePromptFrame = { 782, 134, 196, 160 };
+    static inline constexpr CGRect CanonicalTutorialDoneButtonFrame = { 801, 304, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGRect CanonicalGraduationPromptTextFrame = { 250, 142, 500, 200 };
     static inline constexpr CGRect CanonicalGraduationOKButtonFrame = { 429.5, 398, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
