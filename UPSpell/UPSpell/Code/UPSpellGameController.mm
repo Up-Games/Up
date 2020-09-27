@@ -4660,8 +4660,15 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
     cancel(BandModeAll);
 
-    [self.dialogTutorialHelp removeFromSuperview];
-    self.dialogTutorialHelp = nil;
+    SpellLayout &layout = SpellLayout::instance();
+    self.dialogTutorialHelp.logoView.frame = layout.frame_for(Role::WelcomeLogo);
+    self.dialogTutorialHelp.wordMarkLabel.frame = layout.frame_for(Role::WelcomeWordMark);
+    self.dialogTutorialHelp.welcomeLabel.frame = layout.frame_for(Role::WelcomeMessage);
+    self.dialogTutorialHelp.tutorialDoneButton.frame = layout.frame_for(Role::TutorialDoneButton, Spot::OffBottomFar);
+    self.dialogTutorialHelp.tutorialLabel.frame = layout.frame_for(Role::TutorialDonePrompt, Spot::OffBottomFar);
+    self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomFar);
+    self.dialogTutorialHelp.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton, Spot::OffBottomFar);
+    
     [self.howToPane removeFromSuperview];
     self.howToPane = nil;
 
@@ -4674,8 +4681,21 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     cancel(BandModeAll);
 
-    [self.dialogTutorialHelp removeFromSuperview];
-    self.dialogTutorialHelp = nil;
+    self.dialogTopMenu.extrasButton.hidden = YES;
+    self.dialogTopMenu.playButton.hidden = YES;
+    self.dialogTopMenu.duelButton.hidden = YES;
+    self.dialogTopMenu.readyMessagePathView.hidden = YES;
+    self.gameView.hidden = YES;
+
+    SpellLayout &layout = SpellLayout::instance();
+    self.dialogTutorialHelp.logoView.frame = layout.frame_for(Role::WelcomeLogo);
+    self.dialogTutorialHelp.wordMarkLabel.frame = layout.frame_for(Role::WelcomeWordMark);
+    self.dialogTutorialHelp.welcomeLabel.frame = layout.frame_for(Role::WelcomeMessage);
+    self.dialogTutorialHelp.tutorialDoneButton.frame = layout.frame_for(Role::TutorialDoneButton, Spot::OffBottomFar);
+    self.dialogTutorialHelp.tutorialLabel.frame = layout.frame_for(Role::TutorialDonePrompt, Spot::OffBottomFar);
+    self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomFar);
+    self.dialogTutorialHelp.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton, Spot::OffBottomFar);
+
     [self.howToPane removeFromSuperview];
     self.howToPane = nil;
 
