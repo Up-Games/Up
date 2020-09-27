@@ -58,7 +58,7 @@
 - (id)activityViewController:(UIActivityViewController *)activityViewController subjectForActivityType:(UIActivityType)activityType
 {
     if ([activityType isEqualToString:UIActivityTypeMessage]) {
-        return nil;
+        return @"";
     }
     else if ([activityType isEqualToString:UIActivityTypeMail]) {
         return [self _makeMailSubject];
