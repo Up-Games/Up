@@ -3841,7 +3841,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self.howToPane finish];
     }];
 
-    delay(BandModeDelay, 0.5, ^{
+    delay(BandModeDelay, 0.65, ^{
         NSArray<UPViewMove *> *buttonOutMoves = @[
             UPViewMoveMake(self.dialogTutorialHelp.tutorialLabel, Location(Role::TutorialDonePrompt, Spot::OffBottomFar)),
             UPViewMoveMake(self.dialogTutorialHelp.tutorialDoneButton, Location(Role::TutorialDoneButton, Spot::OffBottomFar)),
@@ -3849,7 +3849,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         start(bloop_out(BandModeUI, buttonOutMoves, 0.5, nil));
     });
 
-    delay(BandModeDelay, 1.25, ^{
+    delay(BandModeDelay, 1.35, ^{
         [self viewLock];
         [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGraduation];
         [self viewEnsureUnlocked];
