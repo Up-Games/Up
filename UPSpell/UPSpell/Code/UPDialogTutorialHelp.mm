@@ -68,7 +68,7 @@ using Role = SpellLayout::Role;
     
     self.tutorialLabel = [UPLabel label];
     self.tutorialLabel.string =
-        @"This How-To loops\n"
+        @"The How-To loops\n"
          "until you tap DONE.\n"
          "Each loop takes\n"
          "one minute.\n";
@@ -83,13 +83,9 @@ using Role = SpellLayout::Role;
     
     self.graduationLabel = [UPLabel label];
     self.graduationLabel.string =
-    @"The two most important UP SPELL basics:\n"
-     " • Tap letters to spell words.\n"
-     " • Tap a lit-up word tray to score points.\n\n"
-    "Later on, you can watch the How-To again by\n"
-    "tapping EXTRAS. Tap OK to start playing!"
+    @"Later on, you can watch the How-To again by\n"
+    "tapping EXTRAS. Tap OK to start playing!";
     
-    ;
     self.graduationLabel.font = layout.description_font();
     self.graduationLabel.textAlignment = NSTextAlignmentLeft;
     self.graduationLabel.frame = layout.frame_for(Role::DialogHelpText);
