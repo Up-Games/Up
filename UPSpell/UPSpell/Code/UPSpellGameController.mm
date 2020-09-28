@@ -94,6 +94,9 @@ using UP::BandGameUITileSlide;
 using UP::BandModeAll;
 using UP::BandModeDelay;
 using UP::BandModeUI;
+using UP::BandResumeAll;
+using UP::BandResumeDelay;
+using UP::BandResumeUI;
 using UP::BandWordScore;
 
 using UP::role_in_player_tray;
@@ -1768,13 +1771,14 @@ static UPSpellGameController *_Instance;
 
 - (void)viewPenaltyFinished
 {
-    ASSERT(self.lockCount > 0);
+    [self viewLock];
     self.gameView.wordTrayControl.highlightedLocked = NO;
     self.gameView.wordTrayControl.highlighted = NO;
     self.gameView.clearControl.highlightedLocked = NO;
     self.gameView.clearControl.highlighted = NO;
     m_alpha_reason_stack.clear();
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
+    [self viewUnlock];
 }
 
 - (void)viewSetGameAlphaWithReason:(UPSpellGameAlphaStateReason)reason
@@ -2030,15 +2034,8 @@ static UPSpellGameController *_Instance;
     if (self.lockCount > 0) {
         return;
     }
-    
-    self.dialogTopMenuUserInteractionEnabled = YES;
-    
-    for (UIView *view in self.gameView.interactiveSubviews) {
-        view.userInteractionEnabled = YES;
-    }
-    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
-        tileView.userInteractionEnabled = YES;
-    }
+
+    [self viewEnableInteractiveViews];
 }
 
 - (void)viewEnsureUnlocked
@@ -2046,6 +2043,19 @@ static UPSpellGameController *_Instance;
     if (self.lockCount > 0) {
         [self viewUnlock];
         self.lockCount = 0;
+        [self viewEnableInteractiveViews];
+    }
+}
+
+- (void)viewEnableInteractiveViews
+{
+    self.dialogTopMenuUserInteractionEnabled = YES;
+    
+    for (UIView *view in self.gameView.interactiveSubviews) {
+        view.userInteractionEnabled = YES;
+    }
+    for (UPTileView *tileView in self.gameView.tileContainerView.subviews) {
+        tileView.userInteractionEnabled = YES;
     }
 }
 
@@ -2771,7 +2781,11 @@ static UPSpellGameController *_Instance;
     self.gameView.gameScoreLabel.alpha = 1;
     self.gameView.timerLabel.alpha = 1;
     self.gameView.pulseView.alpha = 0;
-    
+    self.gameView.pauseControl.highlightedLocked = NO;
+    self.gameView.pauseControl.highlighted = NO;
+    self.gameView.clearControl.highlightedLocked = NO;
+    self.gameView.clearControl.highlighted = NO;
+
     self.gameLinkSender = NO;
     
     [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
@@ -3624,7 +3638,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             [self setMode:Mode::Init transitionScenario:UPModeTransitionScenarioWillResignActive];
         }
         if (self.mode == Mode::Play) {
-            if (self.gameTimer.isRunning) {
+            if (self.gameTimer.isRunning || self.gameTimer.elapsedTime > 2) {
                 [self setMode:Mode::Pause transitionScenario:UPModeTransitionScenarioWillResignActive];
             }
             else {
@@ -4174,7 +4188,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     if (@available(iOS 11.0, *)) {
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
     }
-    
+
+    cancel(BandResumeAll);
+
     [self cancelActiveTouch];
     [self.gameTimer stop];
     pause(BandGameAll);
@@ -4234,6 +4250,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
     }
 
+    cancel(BandResumeAll);
+
+    [self cancelActiveTouch];
     [self.gameTimer stop];
     pause(BandGameAll);
     [[UPSoundPlayer instance] stop];
@@ -4264,6 +4283,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
     }
     
+    cancel(BandResumeAll);
+    
     [self viewLock];
     [[UPSoundPlayer instance] prepare];
     
@@ -4279,27 +4300,33 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         UPViewMoveMake(self.dialogPause.resumeButton, Location(Role::DialogButtonDefaultResponse, Spot::OffBottomFar)),
     ];
     
-    start(bloop_out(BandModeUI, farMoves, 0.35, nil));
+    start(bloop_out(BandResumeUI, farMoves, 0.35, nil));
     
     start(bloop_out(BandModeUI, nearMoves, 0.3, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1;
-        
-        [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
-        delay(BandModeDelay, 0.3, ^{
+    }));
+    
+    delay(BandResumeDelay, 0.3, ^{
+        if (self.mode == Mode::Play) {
+            [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
+            [UIView animateWithDuration:0.3 animations:^{
+                [self viewLock];
+                self.gameView.pauseControl.highlightedLocked = NO;
+                self.gameView.pauseControl.highlighted = NO;
+                [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
+                [self viewUnlock];
+            } completion:^(BOOL finished) {
+            }];
+        }
+    });
+    delay(BandResumeDelay, 0.6, ^{
+        if (self.mode == Mode::Play) {
             [self.gameTimer start];
             start(BandGameAll);
-        });
-        [UIView animateWithDuration:0.3 animations:^{
-            self.gameView.pauseControl.highlightedLocked = NO;
-            self.gameView.pauseControl.highlighted = NO;
-            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonPlay];
-        } completion:^(BOOL finished) {
-            self.gameView.pauseControl.highlightedLocked = NO;
-            self.gameView.pauseControl.highlighted = NO;
-            [self viewUnlock];
-        }];
-    }));
+            [self viewEnsureUnlocked];
+        }
+    });
 }
 
 - (void)modeTransitionFromPauseToChallenge
