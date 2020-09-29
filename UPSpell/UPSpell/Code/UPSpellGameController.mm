@@ -867,7 +867,10 @@ static UPSpellGameController *_Instance;
         [self applyActionClear];
     }
     else {
-        [self applyActionDump];
+        NSArray *playerTrayTileViews = m_spell_model->player_tray_tile_views();
+        if (playerTrayTileViews.count == TileCount) {
+            [self applyActionDump];
+        }
     }
 }
 
