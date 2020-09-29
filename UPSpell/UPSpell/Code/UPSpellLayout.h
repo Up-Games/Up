@@ -65,10 +65,7 @@ public:
         ExtrasHowToTopLeftButtonClick, ExtrasHowToTopRightButtonClick, ExtrasHowTo2xCallout,
         ExtrasAbout,
         HeroLogo, HeroWordMark,
-        WelcomeLogo, WelcomeWordMark, WelcomeMessage,
         GameLinkTitle, GameLinkDetail,
-        TutorialPrompt, TutorialStartButton, TutorialDoneButton,
-        GraduationPrompt, GraduationOKButton,
     };
 
     enum class Spot {
@@ -214,7 +211,7 @@ public:
     static inline constexpr CGFloat CanonicalExtrasShareLastGameHighScoreEqualGap = 28;
 
     static inline constexpr CGRect CanonicalDialogShareHelpTitleFrame = { 272, 136, 460, 200 };
-    static inline constexpr CGRect CanonicalDialogShareHelpTextFrame = { 250, 214, 500, 200 };
+    static inline constexpr CGRect CanonicalDialogShareHelpTextFrame = { 200, 214, 600, 200 };
     static inline constexpr CGRect CanonicalDialogShareHelpOKButtonFrame = { 429.5, 386, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGRect CanonicalDialogDuelHelpTitleFrame = { 272, 112, 460, 200 };
@@ -231,24 +228,13 @@ public:
     static inline constexpr CGRect CanonicalExtrasHowToBottomPromptFrame = { 340, 410, 640, 80 };
     static inline constexpr CGRect CanonicalExtrasHowToBottomPromptTutorialFrame = { 0, 428, 775, 80 };
     static inline constexpr CGRect CanonicalExtrasHowTo2xCalloutFrame = { 676, 243, 46, 46 };
-    
     static inline constexpr CGFloat CanonicalTutorialPromptFontCapHeight = 28;
-    static inline constexpr CGRect CanonicalTutorialStartButtonFrame = { 785, 48, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
-    static inline constexpr CGRect CanonicalTutorialDonePromptFrame = { 782, 137, 196, 220 };
-    static inline constexpr CGRect CanonicalTutorialDoneButtonFrame = { 785, 395, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
-
-    static inline constexpr CGRect CanonicalGraduationPromptTextFrame = { 250, 204, 500, 200 };
-    static inline constexpr CGRect CanonicalGraduationOKButtonFrame = { 429.5, 304, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGSize CanonicalBotSpotSize = { 92, 92 };
 
     static inline constexpr CGRect CanonicalHeroLogoFrame = { 420, 132, 160, 160 };
     static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 200, 295, 600, 300 };
     static inline constexpr CGFloat CanonicalHeroWordMarkCapHeight = 31;
-
-    static inline constexpr CGRect CanonicalWelcomeLogoFrame = { 420, 102, 160, 160 };
-    static inline constexpr CGRect CanonicalWelcomeWordMarkFrame = { 200, 265, 600, 100 };
-    static inline constexpr CGRect CanonicalWelcomeMessageFrame = { 0, 330, 1000, 300 };
 
     static inline constexpr CGRect CanonicalGameLinkPromptFrame = { 200, 112, 600, 300 };
     static inline constexpr CGRect CanonicalGameLinkScoreFrame = { 100, 228, 800, 300 };

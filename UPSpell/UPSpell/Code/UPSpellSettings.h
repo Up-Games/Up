@@ -16,7 +16,7 @@
 @property (nonatomic) NSUInteger soundEffectsLevel;
 @property (nonatomic) BOOL showDuelHelp;
 @property (nonatomic) BOOL showShareHelp;
-@property (nonatomic) BOOL showTutorial;
+@property (nonatomic) BOOL showWelcome;
 
 + (UPSpellSettings *)instance;
 - (instancetype)init NS_UNAVAILABLE;

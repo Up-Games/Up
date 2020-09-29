@@ -71,7 +71,7 @@
 		5D6FB5A024DEF08800CDC293 /* UPSpellExtrasPaneShare.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D6FB59F24DEF08800CDC293 /* UPSpellExtrasPaneShare.mm */; };
 		5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D723120246B3996006027A3 /* UIFont+UPSpell.mm */; };
 		5D845FEF251D2DF7000FB2F4 /* UPHowToViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D845FEE251D2DF7000FB2F4 /* UPHowToViewController.mm */; };
-		5D845FFC251D4675000FB2F4 /* UPDialogTutorialHelp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D845FFB251D4674000FB2F4 /* UPDialogTutorialHelp.mm */; };
+		5D845FFC251D4675000FB2F4 /* UPDialogWelcome.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D845FFB251D4674000FB2F4 /* UPDialogWelcome.mm */; };
 		5D8D827224E03B08007B050C /* LinkPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D8D827124E03B08007B050C /* LinkPresentation.framework */; };
 		5DA8E0442476BF41008D3015 /* UPTileView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E0432476BF41008D3015 /* UPTileView.mm */; };
 		5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8E078247D723A008D3015 /* UPSpellModel.mm */; };
@@ -294,8 +294,8 @@
 		5D723120246B3996006027A3 /* UIFont+UPSpell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIFont+UPSpell.mm"; sourceTree = "<group>"; };
 		5D845FED251D2DF7000FB2F4 /* UPHowToViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPHowToViewController.h; sourceTree = "<group>"; };
 		5D845FEE251D2DF7000FB2F4 /* UPHowToViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPHowToViewController.mm; sourceTree = "<group>"; };
-		5D845FFA251D4674000FB2F4 /* UPDialogTutorialHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogTutorialHelp.h; sourceTree = "<group>"; };
-		5D845FFB251D4674000FB2F4 /* UPDialogTutorialHelp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogTutorialHelp.mm; sourceTree = "<group>"; };
+		5D845FFA251D4674000FB2F4 /* UPDialogWelcome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPDialogWelcome.h; sourceTree = "<group>"; };
+		5D845FFB251D4674000FB2F4 /* UPDialogWelcome.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPDialogWelcome.mm; sourceTree = "<group>"; };
 		5D8D826F24DF866D007B050C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5D8D827124E03B08007B050C /* LinkPresentation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkPresentation.framework; path = System/Library/Frameworks/LinkPresentation.framework; sourceTree = SDKROOT; };
 		5D8D827324E06853007B050C /* UP Spell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "UP Spell.entitlements"; sourceTree = "<group>"; };
@@ -518,8 +518,8 @@
 				5DBAD6E024E43FFF00471ABF /* UPDialogShareHelp.mm */,
 				5D544C0F248805F5001FA8DF /* UPDialogTopMenu.h */,
 				5D4AE829248ED25500213904 /* UPDialogTopMenu.mm */,
-				5D845FFA251D4674000FB2F4 /* UPDialogTutorialHelp.h */,
-				5D845FFB251D4674000FB2F4 /* UPDialogTutorialHelp.mm */,
+				5D845FFA251D4674000FB2F4 /* UPDialogWelcome.h */,
+				5D845FFB251D4674000FB2F4 /* UPDialogWelcome.mm */,
 				5D6FB59824DD989100CDC293 /* UPGameLink.h */,
 				5D6FB59924DD989100CDC293 /* UPGameLink.mm */,
 				5D845FED251D2DF7000FB2F4 /* UPHowToViewController.h */,
@@ -949,7 +949,7 @@
 				5D54078424841631003F193D /* UPSpellNavigationController.mm in Sources */,
 				5DB9B1AC248705FA00A4AAA8 /* UPSpellGameView.mm in Sources */,
 				5D5EA1422485B49E006264D2 /* UPDialogPause.mm in Sources */,
-				5D845FFC251D4675000FB2F4 /* UPDialogTutorialHelp.mm in Sources */,
+				5D845FFC251D4675000FB2F4 /* UPDialogWelcome.mm in Sources */,
 				5DF9DF6D2466165800B2199D /* main.m in Sources */,
 				5DA8E079247D723A008D3015 /* UPSpellModel.mm in Sources */,
 				5D4ECE3824E4842700D1A310 /* UPDialogGameLinkHelp.mm in Sources */,

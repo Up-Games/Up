@@ -23,10 +23,9 @@
 #import "UPDialogGameLinkHelp.h"
 #import "UPDialogShareHelp.h"
 #import "UPDialogDuelHelp.h"
-#import "UPDialogTutorialHelp.h"
+#import "UPDialogWelcome.h"
 #import "UPSceneDelegate.h"
 #import "UPSoundPlayer.h"
-#import "UPSpellExtrasPaneHowTo.h"
 #import "UPSpellGameController.h"
 #import "UPSpellGameSummary.h"
 #import "UPSpellGameView.h"
@@ -110,6 +109,7 @@ using ModeTransitionTable = UP::ModeTransitionTable;
 
 typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
     UPSpellGameAlphaStateReasonDefault,
+    UPSpellGameAlphaStateReasonWelcome,
     UPSpellGameAlphaStateReasonGraduation,
     UPSpellGameAlphaStateReasonInit,
     UPSpellGameAlphaStateReasonGameLink,
@@ -150,8 +150,7 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) UPDialogShareHelp *dialogShareHelp;
 @property (nonatomic) UPDialogDuelHelp *dialogDuelHelp;
 @property (nonatomic) UPDialogTopMenu *dialogTopMenu;
-@property (nonatomic) UPDialogTutorialHelp *dialogTutorialHelp;
-@property (nonatomic) UPSpellExtrasPaneHowTo *howToPane;
+@property (nonatomic) UPDialogWelcome *dialogWelcome;
 @property (nonatomic) BOOL dialogTopMenuUserInteractionEnabled;
 @property (nonatomic) NSInteger lockCount;
 @property (nonatomic) int endGameScore;
@@ -287,9 +286,9 @@ static UPSpellGameController *_Instance;
     [UPSpellDossier instance]; // restores data from disk
     
     UPSpellSettings *settings = [UPSpellSettings instance];
-    BOOL showTutorial = settings.showTutorial;
-    if (showTutorial) {
-        [self setMode:Mode::Tutorial];
+    BOOL showWelcome = settings.showWelcome;
+    if (showWelcome) {
+        [self setMode:Mode::Welcome];
     }
     else {
         m_spell_model = [self restoreInProgressGameIfExists];
@@ -307,7 +306,7 @@ static UPSpellGameController *_Instance;
     if (sceneDelegate.challenge) {
         self.gameLink = sceneDelegate.challenge;
         sceneDelegate.challenge = nil;
-        if (!showTutorial) {
+        if (!showWelcome) {
             [self setMode:Mode::GameLink];
         }
     }
@@ -802,8 +801,7 @@ static UPSpellGameController *_Instance;
     if (view == self.dialogTopMenu.extrasButton || view == self.dialogTopMenu.playButton || view == self.dialogTopMenu.duelButton) {
         switch (self.mode) {
             case UP::Mode::None:
-            case UP::Mode::Tutorial:
-            case UP::Mode::Graduation:
+            case UP::Mode::Welcome:
             case UP::Mode::Extras:
             case UP::Mode::ShareHelp:
             case UP::Mode::DuelHelp:
@@ -947,26 +945,11 @@ static UPSpellGameController *_Instance;
     [self setMode:Mode::GameLink];
 }
 
-- (void)dialogTutorialDoneButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+- (void)dialogWelcomeOKButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
-    ASSERT(self.mode == Mode::Tutorial);
-    [self setMode:Mode::Graduation];
-    self.dialogTutorialHelp.tutorialStartButton.userInteractionEnabled = NO;
-    self.dialogTutorialHelp.tutorialDoneButton.userInteractionEnabled = NO;
-}
-
-- (void)dialogTutorialStartButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
-{
-    ASSERT(self.mode == Mode::Tutorial);
-    self.dialogTutorialHelp.tutorialStartButton.userInteractionEnabled = NO;
-    self.dialogTutorialHelp.tutorialStartButton.alpha = [UIColor themeDisabledAlpha];
-    [self.howToPane startTutorial];
-}
-
-- (void)dialogGraduationOKButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
-{
-    ASSERT(self.mode == Mode::Graduation);
+    ASSERT(self.mode == Mode::Welcome);
     [self setMode:Mode::Init];
+    self.dialogWelcome.welcomeOKButton.userInteractionEnabled = NO;
 }
 
 #pragma mark - Actions
@@ -1795,6 +1778,17 @@ static UPSpellGameController *_Instance;
     ASSERT(self.lockCount > 0);
     
     switch (reason) {
+        case UPSpellGameAlphaStateReasonWelcome: {
+            CGFloat modalAlpha = [UIColor themeModalBackgroundAlpha];
+            for (UIView *view in self.gameView.interactiveSubviews) {
+                view.alpha = modalAlpha;
+            }
+            for (UIView *view in @[ self.dialogTopMenu.extrasButton, self.dialogTopMenu.playButton, self.dialogTopMenu.duelButton ]) {
+                view.alpha = modalAlpha;
+            }
+            m_alpha_reason_stack.clear();
+            break;
+        }
         case UPSpellGameAlphaStateReasonGraduation: {
             CGFloat modalAlpha = [UIColor themeModalBackgroundAlpha];
             for (UIView *view in self.gameView.interactiveSubviews) {
@@ -3622,12 +3616,11 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
         [self removeInProgressGameFileLogErrors:NO];
         switch (self.mode) {
             case UP::Mode::None:
-                [self setMode:Mode::Tutorial transitionScenario:UPModeTransitionScenarioWillEnterForeground];
+                [self setMode:Mode::Welcome transitionScenario:UPModeTransitionScenarioWillEnterForeground];
             case UP::Mode::Init:
             case UP::Mode::Extras:
             case UP::Mode::Pause:
-            case UP::Mode::Tutorial:
-            case UP::Mode::Graduation:
+            case UP::Mode::Welcome:
             case UP::Mode::Play:
             case UP::Mode::Ready:
             case UP::Mode::ShareHelp:
@@ -3664,8 +3657,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
             case UP::Mode::Extras:
             case UP::Mode::Pause:
                 break;
-            case UP::Mode::Tutorial:
-            case UP::Mode::Graduation:
+            case UP::Mode::Welcome:
                 [self setMode:Mode::None transitionScenario:UPModeTransitionScenarioDidEnterBackground];
                 break;
             case UP::Mode::Play:
@@ -3690,11 +3682,10 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 - (void)configureModeTransitionTables
 {
     m_default_transition_table = {
-        { Mode::None,          Mode::Tutorial,      @selector(modeTransitionFromNoneToTutorial) },
+        { Mode::None,          Mode::Welcome,       @selector(modeTransitionFromNoneToWelcome) },
         { Mode::None,          Mode::Init,          @selector(modeTransitionFromNoneToInit) },
         { Mode::None,          Mode::Pause,         @selector(modeTransitionFromNoneToPause) },
-        { Mode::Tutorial,      Mode::Graduation,    @selector(modeTransitionFromTutorialToGraduation) },
-        { Mode::Graduation,    Mode::Init,          @selector(modeTransitionFromGraduationToInit) },
+        { Mode::Welcome,       Mode::Init,          @selector(modeTransitionFromWelcomeToInit) },
         { Mode::Init,          Mode::Extras,        @selector(modeTransitionFromInitToExtras) },
         { Mode::Init,          Mode::GameLink,      @selector(modeTransitionFromInitToGameLink) },
         { Mode::Init,          Mode::Ready,         @selector(modeTransitionFromInitToReady) },
@@ -3727,7 +3718,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     };
     
     m_will_enter_foreground_transition_table = {
-        { Mode::None,     Mode::Tutorial, @selector(modeTransitionFromNoneToTutorial) },
+        { Mode::None,     Mode::Welcome, @selector(modeTransitionFromNoneToWelcome) },
         { Mode::Extras,   Mode::Init,     @selector(modeTransitionImmediateFromExtrasToInit) },
     };
     
@@ -3738,16 +3729,15 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     };
     
     m_did_enter_background_transition_table = {
-        { Mode::Tutorial,      Mode::None,  @selector(modeTransitionImmediateFromTutorialToNone) },
-        { Mode::Graduation,    Mode::None,  @selector(modeTransitionImmediateFromGraduationToNone) },
-        { Mode::Play,          Mode::Pause, @selector(modeTransitionImmediateFromPlayToPause) },
-        { Mode::GameLink,      Mode::Init,  @selector(modeTransitionImmediateFromGameLinkToInit) },
-        { Mode::GameLinkHelp,  Mode::Init,  @selector(modeTransitionImmediateFromGameLinkHelpToInit) },
-        { Mode::GameOver,      Mode::Init,  @selector(modeTransitionImmediateFromGameOverToInit) },
-        { Mode::Quit,          Mode::Init,  @selector(modeTransitionImmediateFromQuitToInit) },
-        { Mode::ShareHelp,     Mode::Init,  @selector(modeTransitionImmediateFromShareHelpToInit) },
-        { Mode::DuelHelp,      Mode::Init,  @selector(modeTransitionImmediateFromDuelHelpToInit) },
-        { Mode::End,           Mode::Init,  @selector(modeTransitionImmediateFromEndToInit) },
+        { Mode::Welcome,      Mode::None,  @selector(modeTransitionImmediateFromWelcomeToNone) },
+        { Mode::Play,         Mode::Pause, @selector(modeTransitionImmediateFromPlayToPause) },
+        { Mode::GameLink,     Mode::Init,  @selector(modeTransitionImmediateFromGameLinkToInit) },
+        { Mode::GameLinkHelp, Mode::Init,  @selector(modeTransitionImmediateFromGameLinkHelpToInit) },
+        { Mode::GameOver,     Mode::Init,  @selector(modeTransitionImmediateFromGameOverToInit) },
+        { Mode::Quit,         Mode::Init,  @selector(modeTransitionImmediateFromQuitToInit) },
+        { Mode::ShareHelp,    Mode::Init,  @selector(modeTransitionImmediateFromShareHelpToInit) },
+        { Mode::DuelHelp,     Mode::Init,  @selector(modeTransitionImmediateFromDuelHelpToInit) },
+        { Mode::End,          Mode::Init,  @selector(modeTransitionImmediateFromEndToInit) },
     };
 }
 
@@ -3791,161 +3781,87 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self setMode:mode transitionScenario:UPModeTransitionScenarioDefault];
 }
 
-- (void)modeTransitionFromNoneToTutorial
+- (void)modeTransitionFromNoneToWelcome
 {
     cancel(BandModeAll);
 
     SpellLayout &layout = SpellLayout::instance();
 
-    self.dialogTutorialHelp = [UPDialogTutorialHelp instance];
-    [self.view addSubview:self.dialogTutorialHelp];
-    [self.dialogTutorialHelp.tutorialStartButton setTarget:self action:@selector(dialogTutorialStartButtonTapped:)];
-    [self.dialogTutorialHelp.tutorialDoneButton setTarget:self action:@selector(dialogTutorialDoneButtonTapped:)];
-    self.dialogTutorialHelp.frame = layout.screen_bounds();
-    [self.dialogTutorialHelp.tutorialStartButton setDisabled:NO];
-    self.dialogTutorialHelp.tutorialStartButton.userInteractionEnabled = YES;
-    self.dialogTutorialHelp.tutorialStartButton.highlightedLocked = NO;
-    self.dialogTutorialHelp.tutorialStartButton.highlighted = NO;
-    self.dialogTutorialHelp.tutorialStartButton.frame = layout.frame_for(Role::TutorialStartButton);
-    self.dialogTutorialHelp.tutorialDoneButton.userInteractionEnabled = YES;
-    self.dialogTutorialHelp.tutorialDoneButton.highlightedLocked = NO;
-    self.dialogTutorialHelp.tutorialDoneButton.highlighted = NO;
-    self.dialogTutorialHelp.tutorialDoneButton.frame = layout.frame_for(Role::TutorialDoneButton);
-    self.dialogTutorialHelp.tutorialPromptLabel.frame = layout.frame_for(Role::TutorialPrompt);
-    self.dialogTutorialHelp.tutorialStartButton.alpha = 0;
-    self.dialogTutorialHelp.tutorialDoneButton.alpha = 0;
-    self.dialogTutorialHelp.tutorialPromptLabel.alpha = 0;
-    self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomFar);
-    self.dialogTutorialHelp.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton, Spot::OffBottomFar);
-    [self.dialogTutorialHelp.graduationOKButton setTarget:self action:@selector(dialogGraduationOKButtonTapped:)];
+    self.dialogWelcome = [UPDialogWelcome instance];
+    [self.view addSubview:self.dialogWelcome];
+    [self.dialogWelcome.welcomeOKButton setTarget:self action:@selector(dialogWelcomeOKButtonTapped:)];
+    self.dialogWelcome.frame = layout.screen_bounds();
+    self.dialogWelcome.welcomeOKButton.userInteractionEnabled = YES;
+    self.dialogWelcome.welcomeOKButton.highlightedLocked = NO;
+    self.dialogWelcome.welcomeOKButton.highlighted = NO;
+    self.dialogWelcome.welcomeTitleLabel.frame = layout.frame_for(Role::DialogHelpTitle);
+    self.dialogWelcome.welcomeDetailLabel.frame = layout.frame_for(Role::DialogHelpText);
+    self.dialogWelcome.welcomeOKButton.frame = layout.frame_for(Role::DialogHelpOKButton);
+    self.dialogWelcome.welcomeTitleLabel.alpha = 0;
+    self.dialogWelcome.welcomeOKButton.alpha = 0;
+    self.dialogWelcome.welcomeDetailLabel.alpha = 0;
 
-    // Hide post-tutorial UI
-    self.dialogTopMenu.extrasButton.hidden = YES;
-    self.dialogTopMenu.playButton.hidden = YES;
-    self.dialogTopMenu.duelButton.hidden = YES;
-    self.dialogTopMenu.readyMessagePathView.hidden = YES;
-    self.gameView.hidden = YES;
-
-    // Welcome
-    self.dialogTutorialHelp.logoView.frame = layout.frame_for(Role::WelcomeLogo);
-    self.dialogTutorialHelp.wordMarkLabel.frame = layout.frame_for(Role::WelcomeWordMark);
-    self.dialogTutorialHelp.welcomeLabel.frame = layout.frame_for(Role::WelcomeMessage);
-    self.dialogTutorialHelp.hidden = NO;
-    self.dialogTutorialHelp.alpha = 1;
+    self.gameView.transform = layout.menu_game_view_transform();
+    [self viewUpdateGameControls];
+    [self viewFillUpSpellTileViews];
+    [self viewLock];
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonWelcome];
+    [self viewUnlock];
+    
+    self.dialogWelcome.logoView.frame = layout.frame_for(Role::HeroLogo);
+    self.dialogWelcome.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark);
+    self.dialogWelcome.hidden = NO;
+    self.dialogWelcome.alpha = 1;
     
     NSArray<UPViewMove *> *splashOutMoves = @[
-        UPViewMoveMake(self.dialogTutorialHelp.logoView, Role::WelcomeLogo, Spot::OffBottomFar),
-        UPViewMoveMake(self.dialogTutorialHelp.wordMarkLabel, Role::WelcomeWordMark, Spot::OffBottomFar),
-        UPViewMoveMake(self.dialogTutorialHelp.welcomeLabel, Role::WelcomeMessage, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogWelcome.logoView, Role::HeroLogo, Spot::OffBottomFar),
+        UPViewMoveMake(self.dialogWelcome.wordMarkLabel, Role::HeroWordMark, Spot::OffBottomFar),
     ];
 
-    self.howToPane = [[UPSpellExtrasPaneHowTo alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
-    [self.view addSubview:self.howToPane];
-    [self.view sendSubviewToBack:self.howToPane];
-    [self.howToPane commonConfigure];
-    [self.howToPane configureForFullScreenTutorial];
-    self.howToPane.alpha = 0;
-    
     delay(BandModeDelay, 2, ^{
         start(bloop_out(BandModeUI, splashOutMoves, 0.5, ^(UIViewAnimatingPosition) {
             [UIView animateWithDuration:0.75 animations:^{
-                self.dialogTutorialHelp.tutorialStartButton.alpha = 1;
-                self.dialogTutorialHelp.tutorialDoneButton.alpha = 1;
-                self.dialogTutorialHelp.tutorialPromptLabel.alpha = 1;
-                self.howToPane.alpha = 1;
+                [self viewLock];
+                [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGraduation];
+                [self viewUnlock];
+                self.dialogWelcome.welcomeTitleLabel.alpha = 1;
+                self.dialogWelcome.welcomeDetailLabel.alpha = 1;
+                self.dialogWelcome.welcomeOKButton.alpha = 1;
             }];
         }));
     });
+}
+
+- (void)modeTransitionFromWelcomeToInit
+{
+    [self viewLock];
     
-}
-
-- (void)modeTransitionFromTutorialToGraduation
-{
-    SpellLayout &layout = SpellLayout::instance();
-
-    self.dialogTutorialHelp.tutorialDoneButton.highlightedLocked = YES;
-    self.dialogTutorialHelp.tutorialDoneButton.highlighted = YES;
-
-    [UIView animateWithDuration:0.5 animations:^{
-        self.howToPane.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.howToPane finish];
-    }];
-
-    delay(BandModeDelay, 0.65, ^{
-        NSArray<UPViewMove *> *buttonOutMoves = @[
-            UPViewMoveMake(self.dialogTutorialHelp.tutorialPromptLabel, Location(Role::TutorialPrompt, Spot::OffBottomFar)),
-            UPViewMoveMake(self.dialogTutorialHelp.tutorialStartButton, Location(Role::TutorialStartButton, Spot::OffBottomFar)),
-            UPViewMoveMake(self.dialogTutorialHelp.tutorialDoneButton, Location(Role::TutorialDoneButton, Spot::OffBottomFar)),
-        ];
-        start(bloop_out(BandModeUI, buttonOutMoves, 0.5, nil));
-    });
-
-    delay(BandModeDelay, 1.35, ^{
-        [self viewLock];
-        [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonGraduation];
-        [self viewEnsureUnlocked];
-        
-        self.dialogTopMenu.extrasButton.hidden = NO;
-        self.dialogTopMenu.playButton.hidden = NO;
-        self.dialogTopMenu.duelButton.hidden = NO;
-        self.dialogTopMenu.readyMessagePathView.hidden = NO;
-        
-        self.dialogTopMenu.extrasButton.center = layout.center_for(Role::DialogButtonTopLeft, Spot::OffTopNear);
-        self.dialogTopMenu.playButton.center = layout.center_for(Role::DialogButtonTopCenter, Spot::OffTopNear);
-        self.dialogTopMenu.duelButton.center = layout.center_for(Role::DialogButtonTopRight, Spot::OffTopNear);
-        self.dialogTopMenu.readyMessagePathView.center = layout.center_for(Role::DialogMessageCenteredInWordTray, Spot::OffBottomNear);
-        [self setDialogTopMenuUserInteractionEnabled:NO];
-        
-        self.gameView.hidden = NO;
-        self.gameView.center = layout.center_for(Role::Screen, Spot::OffBottomNear);
-        self.gameView.transform = layout.menu_game_view_transform();
-        [self viewUpdateGameControls];
-        [self viewFillUpSpellTileViews];
-        
-        self.dialogTutorialHelp.graduationLabelContainer.hidden = NO;
-        self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomNear);
-        self.dialogTutorialHelp.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton, Spot::OffBottomNear);
-        
-        NSArray<UPViewMove *> *buttonInMoves = @[
-            UPViewMoveMake(self.dialogTopMenu.extrasButton, Location(Role::DialogButtonTopLeft)),
-            UPViewMoveMake(self.dialogTopMenu.playButton, Location(Role::DialogButtonTopCenter)),
-            UPViewMoveMake(self.dialogTopMenu.duelButton, Location(Role::DialogButtonTopRight)),
-            UPViewMoveMake(self.gameView, Location(Role::Screen)),
-            UPViewMoveMake(self.dialogTutorialHelp.graduationLabelContainer, Location(Role::GraduationPrompt)),
-            UPViewMoveMake(self.dialogTutorialHelp.graduationOKButton, Location(Role::GraduationOKButton)),
-        ];
-        start(bloop_in(BandModeUI, buttonInMoves, 0.5, ^(UIViewAnimatingPosition) {
-            self.dialogTutorialHelp.graduationOKButton.userInteractionEnabled = YES;
-        }));
-    });
-
-}
-
-- (void)modeTransitionFromGraduationToInit
-{
     UPSpellSettings *settings = [UPSpellSettings instance];
-    settings.showTutorial = NO;
-    
-    delay(BandModeDelay, 0.35, ^{
+    settings.showWelcome = NO;
+
+    self.dialogWelcome.welcomeOKButton.highlightedLocked = YES;
+    self.dialogWelcome.welcomeOKButton.highlighted = YES;
+
+    delay(BandModeDelay, 0.4, ^{
         NSArray<UPViewMove *> *buttonOutMoves = @[
-            UPViewMoveMake(self.dialogTutorialHelp.graduationLabelContainer, Location(Role::GraduationPrompt, Spot::OffBottomFar)),
-            UPViewMoveMake(self.dialogTutorialHelp.graduationOKButton, Location(Role::GraduationOKButton, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogWelcome.welcomeTitleLabel, Location(Role::DialogHelpTitle, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogWelcome.welcomeDetailLabel, Location(Role::DialogHelpText, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogWelcome.welcomeOKButton, Location(Role::DialogHelpOKButton, Spot::OffBottomFar)),
         ];
         start(bloop_out(BandModeUI, buttonOutMoves, 0.5, ^(UIViewAnimatingPosition) {
-            [self.dialogTutorialHelp removeFromSuperview];
-            self.dialogTutorialHelp = nil;
-
-            [self viewLock];
-            [UIView animateWithDuration:0.5 animations:^{
-                [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
-            } completion:^(BOOL finished) {
-                [self viewEnsureUnlocked];
-                [self setDialogTopMenuUserInteractionEnabled:YES];
-            }];
         }));
     });
-            
+    delay(BandModeDelay, 0.9, ^{
+        [self.dialogWelcome removeFromSuperview];
+        self.dialogWelcome = nil;
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonInit];
+        } completion:^(BOOL finished) {
+            [self viewEnsureUnlocked];
+            [self setDialogTopMenuUserInteractionEnabled:YES];
+        }];
+    });
 }
 
 - (void)modeTransitionFromNoneToInit
@@ -4698,52 +4614,20 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewEnsureUnlocked];
 }
 
-- (void)modeTransitionImmediateFromTutorialToNone
+- (void)modeTransitionImmediateFromWelcomeToNone
 {
     [self viewLock];
 
     cancel(BandModeAll);
 
-    SpellLayout &layout = SpellLayout::instance();
-    self.dialogTutorialHelp.logoView.frame = layout.frame_for(Role::WelcomeLogo);
-    self.dialogTutorialHelp.wordMarkLabel.frame = layout.frame_for(Role::WelcomeWordMark);
-    self.dialogTutorialHelp.welcomeLabel.frame = layout.frame_for(Role::WelcomeMessage);
-    self.dialogTutorialHelp.tutorialStartButton.frame = layout.frame_for(Role::TutorialStartButton, Spot::OffBottomFar);
-    self.dialogTutorialHelp.tutorialDoneButton.frame = layout.frame_for(Role::TutorialDoneButton, Spot::OffBottomFar);
-    self.dialogTutorialHelp.tutorialPromptLabel.frame = layout.frame_for(Role::TutorialPrompt, Spot::OffBottomFar);
-    self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomFar);
-    self.dialogTutorialHelp.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton, Spot::OffBottomFar);
-    
-    [self.howToPane removeFromSuperview];
-    self.howToPane = nil;
-
-    [self viewEnsureUnlocked];
-}
-
-- (void)modeTransitionImmediateFromGraduationToNone
-{
-    [self viewLock];
-    
-    cancel(BandModeAll);
-
-    self.dialogTopMenu.extrasButton.hidden = YES;
-    self.dialogTopMenu.playButton.hidden = YES;
-    self.dialogTopMenu.duelButton.hidden = YES;
-    self.dialogTopMenu.readyMessagePathView.hidden = YES;
-    self.gameView.hidden = YES;
+    [self viewSetGameAlphaWithReason:UPSpellGameAlphaStateReasonWelcome];
 
     SpellLayout &layout = SpellLayout::instance();
-    self.dialogTutorialHelp.logoView.frame = layout.frame_for(Role::WelcomeLogo);
-    self.dialogTutorialHelp.wordMarkLabel.frame = layout.frame_for(Role::WelcomeWordMark);
-    self.dialogTutorialHelp.welcomeLabel.frame = layout.frame_for(Role::WelcomeMessage);
-    self.dialogTutorialHelp.tutorialStartButton.frame = layout.frame_for(Role::TutorialStartButton, Spot::OffBottomFar);
-    self.dialogTutorialHelp.tutorialDoneButton.frame = layout.frame_for(Role::TutorialDoneButton, Spot::OffBottomFar);
-    self.dialogTutorialHelp.tutorialPromptLabel.frame = layout.frame_for(Role::TutorialPrompt, Spot::OffBottomFar);
-    self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomFar);
-    self.dialogTutorialHelp.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton, Spot::OffBottomFar);
-
-    [self.howToPane removeFromSuperview];
-    self.howToPane = nil;
+    self.dialogWelcome.logoView.frame = layout.frame_for(Role::HeroLogo);
+    self.dialogWelcome.wordMarkLabel.frame = layout.frame_for(Role::HeroWordMark);
+    self.dialogWelcome.welcomeTitleLabel.frame = layout.frame_for(Role::DialogHelpTitle, Spot::OffBottomFar);
+    self.dialogWelcome.welcomeDetailLabel.frame = layout.frame_for(Role::DialogHelpText, Spot::OffBottomFar);
+    self.dialogWelcome.welcomeOKButton.frame = layout.frame_for(Role::DialogHelpOKButton, Spot::OffBottomFar);
 
     [self viewEnsureUnlocked];
 }

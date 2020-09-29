@@ -748,15 +748,6 @@ void SpellLayout::calculate_dialog_locations()
     calculate_and_set_locations(Role::HeroLogo, layout_relative_aspect_rect(CanonicalHeroLogoFrame));
     calculate_and_set_locations(Role::HeroWordMark, layout_relative_aspect_rect(CanonicalHeroWordMarkFrame));
 
-    calculate_and_set_locations(Role::WelcomeLogo, layout_relative_aspect_rect(CanonicalWelcomeLogoFrame));
-    calculate_and_set_locations(Role::WelcomeWordMark, layout_relative_aspect_rect(CanonicalWelcomeWordMarkFrame));
-    calculate_and_set_locations(Role::WelcomeMessage, layout_relative_aspect_rect(CanonicalWelcomeMessageFrame));
-    calculate_and_set_locations(Role::TutorialPrompt, layout_relative_aspect_rect(CanonicalTutorialDonePromptFrame));
-    calculate_and_set_locations(Role::TutorialStartButton, layout_relative_aspect_rect(CanonicalTutorialStartButtonFrame));
-    calculate_and_set_locations(Role::TutorialDoneButton, layout_relative_aspect_rect(CanonicalTutorialDoneButtonFrame));
-    calculate_and_set_locations(Role::GraduationPrompt, layout_relative_aspect_rect(CanonicalGraduationPromptTextFrame));
-    calculate_and_set_locations(Role::GraduationOKButton, layout_relative_aspect_rect(CanonicalGraduationOKButtonFrame));    
-    
     calculate_and_set_locations(Role::DialogHelpTitle, layout_relative_aspect_rect(CanonicalDialogShareHelpTitleFrame));
     calculate_and_set_locations(Role::DialogHelpText, layout_relative_aspect_rect(CanonicalDialogShareHelpTextFrame));
     calculate_and_set_locations(Role::DialogHelpOKButton, layout_relative_aspect_rect(CanonicalDialogShareHelpOKButtonFrame));
