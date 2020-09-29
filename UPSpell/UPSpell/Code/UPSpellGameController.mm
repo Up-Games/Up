@@ -951,7 +951,16 @@ static UPSpellGameController *_Instance;
 {
     ASSERT(self.mode == Mode::Tutorial);
     [self setMode:Mode::Graduation];
+    self.dialogTutorialHelp.tutorialStartButton.userInteractionEnabled = NO;
     self.dialogTutorialHelp.tutorialDoneButton.userInteractionEnabled = NO;
+}
+
+- (void)dialogTutorialStartButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
+{
+    ASSERT(self.mode == Mode::Tutorial);
+    self.dialogTutorialHelp.tutorialStartButton.userInteractionEnabled = NO;
+    self.dialogTutorialHelp.tutorialStartButton.alpha = [UIColor themeDisabledAlpha];
+    [self.howToPane startTutorial];
 }
 
 - (void)dialogGraduationOKButtonTapped:(UITapGestureRecognizer *)gestureRecognizer
@@ -3790,15 +3799,22 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
     self.dialogTutorialHelp = [UPDialogTutorialHelp instance];
     [self.view addSubview:self.dialogTutorialHelp];
+    [self.dialogTutorialHelp.tutorialStartButton setTarget:self action:@selector(dialogTutorialStartButtonTapped:)];
     [self.dialogTutorialHelp.tutorialDoneButton setTarget:self action:@selector(dialogTutorialDoneButtonTapped:)];
     self.dialogTutorialHelp.frame = layout.screen_bounds();
+    [self.dialogTutorialHelp.tutorialStartButton setDisabled:NO];
+    self.dialogTutorialHelp.tutorialStartButton.userInteractionEnabled = YES;
+    self.dialogTutorialHelp.tutorialStartButton.highlightedLocked = NO;
+    self.dialogTutorialHelp.tutorialStartButton.highlighted = NO;
+    self.dialogTutorialHelp.tutorialStartButton.frame = layout.frame_for(Role::TutorialStartButton);
     self.dialogTutorialHelp.tutorialDoneButton.userInteractionEnabled = YES;
     self.dialogTutorialHelp.tutorialDoneButton.highlightedLocked = NO;
     self.dialogTutorialHelp.tutorialDoneButton.highlighted = NO;
     self.dialogTutorialHelp.tutorialDoneButton.frame = layout.frame_for(Role::TutorialDoneButton);
-    self.dialogTutorialHelp.tutorialLabel.frame = layout.frame_for(Role::TutorialDonePrompt);
+    self.dialogTutorialHelp.tutorialPromptLabel.frame = layout.frame_for(Role::TutorialPrompt);
+    self.dialogTutorialHelp.tutorialStartButton.alpha = 0;
     self.dialogTutorialHelp.tutorialDoneButton.alpha = 0;
-    self.dialogTutorialHelp.tutorialLabel.alpha = 0;
+    self.dialogTutorialHelp.tutorialPromptLabel.alpha = 0;
     self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomFar);
     self.dialogTutorialHelp.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton, Spot::OffBottomFar);
     [self.dialogTutorialHelp.graduationOKButton setTarget:self action:@selector(dialogGraduationOKButtonTapped:)];
@@ -3826,15 +3842,16 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.howToPane = [[UPSpellExtrasPaneHowTo alloc] initWithFrame:SpellLayout::instance().screen_bounds()];
     [self.view addSubview:self.howToPane];
     [self.view sendSubviewToBack:self.howToPane];
+    [self.howToPane commonConfigure];
     [self.howToPane configureForFullScreenTutorial];
     self.howToPane.alpha = 0;
     
     delay(BandModeDelay, 2, ^{
         start(bloop_out(BandModeUI, splashOutMoves, 0.5, ^(UIViewAnimatingPosition) {
-            [self.howToPane prepare];
             [UIView animateWithDuration:0.75 animations:^{
+                self.dialogTutorialHelp.tutorialStartButton.alpha = 1;
                 self.dialogTutorialHelp.tutorialDoneButton.alpha = 1;
-                self.dialogTutorialHelp.tutorialLabel.alpha = 1;
+                self.dialogTutorialHelp.tutorialPromptLabel.alpha = 1;
                 self.howToPane.alpha = 1;
             }];
         }));
@@ -3857,7 +3874,8 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
     delay(BandModeDelay, 0.65, ^{
         NSArray<UPViewMove *> *buttonOutMoves = @[
-            UPViewMoveMake(self.dialogTutorialHelp.tutorialLabel, Location(Role::TutorialDonePrompt, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogTutorialHelp.tutorialPromptLabel, Location(Role::TutorialPrompt, Spot::OffBottomFar)),
+            UPViewMoveMake(self.dialogTutorialHelp.tutorialStartButton, Location(Role::TutorialStartButton, Spot::OffBottomFar)),
             UPViewMoveMake(self.dialogTutorialHelp.tutorialDoneButton, Location(Role::TutorialDoneButton, Spot::OffBottomFar)),
         ];
         start(bloop_out(BandModeUI, buttonOutMoves, 0.5, nil));
@@ -4691,8 +4709,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.dialogTutorialHelp.logoView.frame = layout.frame_for(Role::WelcomeLogo);
     self.dialogTutorialHelp.wordMarkLabel.frame = layout.frame_for(Role::WelcomeWordMark);
     self.dialogTutorialHelp.welcomeLabel.frame = layout.frame_for(Role::WelcomeMessage);
+    self.dialogTutorialHelp.tutorialStartButton.frame = layout.frame_for(Role::TutorialStartButton, Spot::OffBottomFar);
     self.dialogTutorialHelp.tutorialDoneButton.frame = layout.frame_for(Role::TutorialDoneButton, Spot::OffBottomFar);
-    self.dialogTutorialHelp.tutorialLabel.frame = layout.frame_for(Role::TutorialDonePrompt, Spot::OffBottomFar);
+    self.dialogTutorialHelp.tutorialPromptLabel.frame = layout.frame_for(Role::TutorialPrompt, Spot::OffBottomFar);
     self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomFar);
     self.dialogTutorialHelp.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton, Spot::OffBottomFar);
     
@@ -4718,8 +4737,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.dialogTutorialHelp.logoView.frame = layout.frame_for(Role::WelcomeLogo);
     self.dialogTutorialHelp.wordMarkLabel.frame = layout.frame_for(Role::WelcomeWordMark);
     self.dialogTutorialHelp.welcomeLabel.frame = layout.frame_for(Role::WelcomeMessage);
+    self.dialogTutorialHelp.tutorialStartButton.frame = layout.frame_for(Role::TutorialStartButton, Spot::OffBottomFar);
     self.dialogTutorialHelp.tutorialDoneButton.frame = layout.frame_for(Role::TutorialDoneButton, Spot::OffBottomFar);
-    self.dialogTutorialHelp.tutorialLabel.frame = layout.frame_for(Role::TutorialDonePrompt, Spot::OffBottomFar);
+    self.dialogTutorialHelp.tutorialPromptLabel.frame = layout.frame_for(Role::TutorialPrompt, Spot::OffBottomFar);
     self.dialogTutorialHelp.graduationLabelContainer.frame = layout.frame_for(Role::GraduationPrompt, Spot::OffBottomFar);
     self.dialogTutorialHelp.graduationOKButton.frame = layout.frame_for(Role::GraduationOKButton, Spot::OffBottomFar);
 

@@ -112,12 +112,14 @@ using UP::TimeSpanning::start;
     self.bottomPromptLabelOffscreenSpot = Spot::OffBottomNear;
     self.bottomPromptLabel.frame = layout.frame_for(self.bottomPromptLabelRole);
     self.bottomPromptLabel.font = layout.tutorial_prompt_font();
+    self.bottomPromptLabel.string = @"TAP START TO LEARN HOW TO PLAY";
+    self.step = 0;
 }
 
-- (void)prepare
+- (void)commonConfigure
 {
     SpellLayout &layout = SpellLayout::instance();
-
+    
     self.gameView.alpha = 1;
     self.bottomPromptLabel.alpha = 1;
     self.botSpot.alpha = 1;
@@ -127,7 +129,7 @@ using UP::TimeSpanning::start;
     self.botSpot.borderWidth = up_float_scaled(6, layout.layout_scale());
     self.gameView.wordTrayControl.active = NO;
     self.step = 1;
-
+    
     [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (TileIndex idx = 0; idx < TileCount; idx++) {
         TileModel model;
@@ -160,23 +162,38 @@ using UP::TimeSpanning::start;
         tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, idx)));
         [self.gameView.tileContainerView addSubview:tileView];
     }
-
+    
     self.tileViews = self.gameView.tileContainerView.subviews;
-
+    
     [self.gameView.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
     
     [self updateThemeColors];
-
+    
     self.active = YES;
-        
+    
     self.bottomPromptLabel.string = @"";
     self.bottomPromptLabel.frame = layout.frame_for(self.bottomPromptLabelRole, self.bottomPromptLabelOffscreenSpot);
     self.botSpot.center = layout.center_for(Role::DialogMessageCenteredInWordTray);
-
+    
     self.gameView.wordScoreLabel.hidden = YES;
     self.gameView.gameScoreLabel.string = @"0";
-
+    
     [self.gameTimer resetTo:60];
+}
+
+- (void)startTutorial
+{
+    [self.gameTimer start];
+    
+    self.step = 0;
+    delay(BandAboutPlayingDelay, 1.5, ^{
+        [self nextStep];
+    });
+}
+
+- (void)prepare
+{
+    [self commonConfigure];
     [self.gameTimer start];
     
     delay(BandAboutPlayingDelay, 1.5, ^{
@@ -202,6 +219,21 @@ using UP::TimeSpanning::start;
 - (void)botSpotRelease
 {
     self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+}
+
+- (void)animateToStepOne
+{
+    if (!self.active) {
+        return;
+    }
+    
+    NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
+    [moves addObject:UPViewMoveMake(self.bottomPromptLabel, self.bottomPromptLabelRole, self.bottomPromptLabelOffscreenSpot)];
+    start(bloop_out(BandAboutPlayingUI, moves, 0.3, ^(UIViewAnimatingPosition) {
+        if (self.active) {
+            [self nextStep];
+        }
+    }));
 }
 
 - (void)animateToStepTwo
@@ -1337,6 +1369,9 @@ using UP::TimeSpanning::start;
     self.step++;
     
     switch (self.step) {
+        case 1:
+            [self animateToStepOne];
+            break;
         case 2:
             [self animateToStepTwo];
             break;

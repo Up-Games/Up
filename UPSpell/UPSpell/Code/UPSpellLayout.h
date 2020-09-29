@@ -67,7 +67,7 @@ public:
         HeroLogo, HeroWordMark,
         WelcomeLogo, WelcomeWordMark, WelcomeMessage,
         GameLinkTitle, GameLinkDetail,
-        TutorialDonePrompt, TutorialDoneButton,
+        TutorialPrompt, TutorialStartButton, TutorialDoneButton,
         GraduationPrompt, GraduationOKButton,
     };
 
@@ -233,20 +233,21 @@ public:
     static inline constexpr CGRect CanonicalExtrasHowTo2xCalloutFrame = { 676, 243, 46, 46 };
     
     static inline constexpr CGFloat CanonicalTutorialPromptFontCapHeight = 28;
-    static inline constexpr CGRect CanonicalTutorialDonePromptFrame = { 782, 134, 196, 160 };
-    static inline constexpr CGRect CanonicalTutorialDoneButtonFrame = { 801, 304, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGRect CanonicalTutorialStartButtonFrame = { 801, 60, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
+    static inline constexpr CGRect CanonicalTutorialDonePromptFrame = { 782, 148, 196, 220 };
+    static inline constexpr CGRect CanonicalTutorialDoneButtonFrame = { 801, 372, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGRect CanonicalGraduationPromptTextFrame = { 250, 204, 500, 200 };
     static inline constexpr CGRect CanonicalGraduationOKButtonFrame = { 429.5, 304, up_size_width(CanonicalSmallTextButtonSize), up_size_height(CanonicalSmallTextButtonSize) };
 
     static inline constexpr CGSize CanonicalBotSpotSize = { 92, 92 };
 
-    static inline constexpr CGRect CanonicalHeroLogoFrame = { 426, 132, 160, 160 };
-    static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 416, 295, 180, 300 };
+    static inline constexpr CGRect CanonicalHeroLogoFrame = { 420, 132, 160, 160 };
+    static inline constexpr CGRect CanonicalHeroWordMarkFrame = { 200, 295, 600, 300 };
     static inline constexpr CGFloat CanonicalHeroWordMarkCapHeight = 31;
 
-    static inline constexpr CGRect CanonicalWelcomeLogoFrame = { 426, 102, 160, 160 };
-    static inline constexpr CGRect CanonicalWelcomeWordMarkFrame = { 416, 265, 180, 100 };
+    static inline constexpr CGRect CanonicalWelcomeLogoFrame = { 420, 102, 160, 160 };
+    static inline constexpr CGRect CanonicalWelcomeWordMarkFrame = { 200, 265, 600, 100 };
     static inline constexpr CGRect CanonicalWelcomeMessageFrame = { 0, 330, 1000, 300 };
 
     static inline constexpr CGRect CanonicalGameLinkPromptFrame = { 200, 112, 600, 300 };

@@ -14,8 +14,9 @@
 @property (nonatomic, readonly) UPLogoView *logoView;
 @property (nonatomic, readonly) UPLabel *wordMarkLabel;
 @property (nonatomic, readonly) UPLabel *welcomeLabel;
-@property (nonatomic, readonly) UPLabel *tutorialLabel;
+@property (nonatomic, readonly) UPLabel *tutorialPromptLabel;
 @property (nonatomic, readonly) UIView *graduationLabelContainer;
+@property (nonatomic, readonly) UPTextButton *tutorialStartButton;
 @property (nonatomic, readonly) UPTextButton *tutorialDoneButton;
 @property (nonatomic, readonly) UPTextButton *graduationOKButton;
 

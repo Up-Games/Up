@@ -9,7 +9,9 @@
 
 + (UPSpellExtrasPaneHowTo *)pane;
 
+- (void)commonConfigure;
 - (void)configureForFullScreenTutorial;
+- (void)startTutorial;
 - (void)finish;
 
 @end

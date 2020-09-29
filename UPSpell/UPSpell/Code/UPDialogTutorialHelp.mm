@@ -23,10 +23,11 @@ using Role = SpellLayout::Role;
 @property (nonatomic, readwrite) UPLogoView *logoView;
 @property (nonatomic, readwrite) UPLabel *wordMarkLabel;
 @property (nonatomic, readwrite) UPLabel *welcomeLabel;
-@property (nonatomic, readwrite) UPLabel *tutorialLabel;
+@property (nonatomic, readwrite) UPLabel *tutorialPromptLabel;
 @property (nonatomic, readwrite) UIView *graduationLabelContainer;
 @property (nonatomic, readwrite) UPLabel *graduationLabel;
 @property (nonatomic, readwrite) UPTextButton *tutorialDoneButton;
+@property (nonatomic, readwrite) UPTextButton *tutorialStartButton;
 @property (nonatomic, readwrite) UPTextButton *graduationOKButton;
 @end
 
@@ -60,22 +61,23 @@ using Role = SpellLayout::Role;
     [self addSubview:self.wordMarkLabel];
     
     self.welcomeLabel = [UPLabel label];
-    self.welcomeLabel.string = @"HERE’S HOW TO PLAY\n";
+    self.welcomeLabel.string = @"WELCOME\n";
     self.welcomeLabel.font = layout.text_button_font();
     self.welcomeLabel.textAlignment = NSTextAlignmentCenter;
     self.welcomeLabel.frame = layout.frame_for(Role::GameLinkTitle);
     [self addSubview:self.welcomeLabel];
     
-    self.tutorialLabel = [UPLabel label];
-    self.tutorialLabel.string =
-        @"The How-To loops\n"
-         "until you tap DONE.\n"
-         "Each loop takes\n"
-         "one minute.\n";
-    self.tutorialLabel.font = layout.description_font();
-    self.tutorialLabel.textAlignment = NSTextAlignmentLeft;
-    self.tutorialLabel.frame = layout.frame_for(Role::TutorialDonePrompt);
-    [self addSubview:self.tutorialLabel];
+    self.tutorialPromptLabel = [UPLabel label];
+    self.tutorialPromptLabel.string =
+        @"After you tap\n"
+         "START, the How-To\n"
+         "loops. Each loop\n"
+         "takes one minute.\n"
+         "Tap DONE anytime.";
+    self.tutorialPromptLabel.font = layout.description_font();
+    self.tutorialPromptLabel.textAlignment = NSTextAlignmentLeft;
+    self.tutorialPromptLabel.frame = layout.frame_for(Role::TutorialPrompt);
+    [self addSubview:self.tutorialPromptLabel];
 
     self.graduationLabelContainer = [[UIView alloc] initWithFrame:CGRectZero];
     self.graduationLabelContainer.frame = layout.frame_for(Role::DialogHelpText);
@@ -91,7 +93,13 @@ using Role = SpellLayout::Role;
     self.graduationLabel.frame = layout.frame_for(Role::DialogHelpText);
     [self.graduationLabelContainer addSubview:self.graduationLabel];
     self.graduationLabelContainer.hidden = YES;
-    
+
+    self.tutorialStartButton = [UPTextButton smallTextButton];
+    self.tutorialStartButton.labelString = @"START";
+    [self.tutorialStartButton setLabelColorCategory:UPColorCategoryContent];
+    self.tutorialStartButton.frame = layout.frame_for(Role::TutorialStartButton);
+    [self addSubview:self.tutorialStartButton];
+
     self.tutorialDoneButton = [UPTextButton smallTextButton];
     self.tutorialDoneButton.labelString = @"DONE";
     [self.tutorialDoneButton setLabelColorCategory:UPColorCategoryContent];
