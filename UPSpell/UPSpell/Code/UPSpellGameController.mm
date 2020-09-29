@@ -4291,7 +4291,7 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     self.dialogPause.resumeButton.center = layout.center_for(Role::DialogButtonDefaultResponse);
     self.dialogPause.hidden = NO;
     self.dialogPause.alpha = 1;
-    
+
     [self viewEnsureUnlocked];
 }
 
@@ -4306,10 +4306,6 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     [self viewLock];
     [[UPSoundPlayer instance] prepare];
     
-    [UIView animateWithDuration:0.4 delay:0.3 options:0 animations:^{
-        self.dialogPause.alpha = 0;
-    } completion:nil];
-    
     NSArray<UPViewMove *> *nearMoves = @[
         UPViewMoveMake(self.dialogPause.messagePathView, Location(Role::DialogMessageCenteredInWordTray, Spot::OffBottomFar)),
     ];
@@ -4320,12 +4316,15 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     
     start(bloop_out(BandResumeUI, farMoves, 0.35, nil));
     
-    start(bloop_out(BandModeUI, nearMoves, 0.3, ^(UIViewAnimatingPosition) {
+    start(bloop_out(BandResumeUI, nearMoves, 0.3, ^(UIViewAnimatingPosition) {
         self.dialogPause.hidden = YES;
         self.dialogPause.alpha = 1;
     }));
     
     delay(BandResumeDelay, 0.3, ^{
+        [UIView animateWithDuration:0.4 animations:^{
+            self.dialogPause.alpha = 0;
+        }];
         if (self.mode == Mode::Play) {
             [self sequenceTuneWithDelay:0.3 gameTimeElapsed:self.gameTimer.elapsedTime];
             [UIView animateWithDuration:0.3 animations:^{
