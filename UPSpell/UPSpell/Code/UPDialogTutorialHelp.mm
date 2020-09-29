@@ -73,6 +73,7 @@ using Role = SpellLayout::Role;
          "START, the How-To\n"
          "loops. Each loop\n"
          "takes one minute.\n"
+         "Seen enough?\n"
          "Tap DONE anytime.";
     self.tutorialPromptLabel.font = layout.description_font();
     self.tutorialPromptLabel.textAlignment = NSTextAlignmentLeft;
