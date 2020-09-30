@@ -790,7 +790,7 @@ static UPSpellGameController *_Instance;
     else if (!m_spell_model || m_spell_model->word().length() < 2) {
         // Don't penalize. In the case it's a stray tap, let the player off the hook.
     }
-    else {
+    else if (!self.gameView.wordTrayControl.highlightedLocked) {
         [self applyActionReject];
     }
 }
