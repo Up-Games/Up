@@ -256,16 +256,7 @@ using UP::TimeSpanning::start;
     start(bloop_in(BandAboutPlayingUI, moves, 0.3, nil));
 }
 
-//WordTile1of1,
-//WordTile1of2, WordTile2of2,
-//WordTile1of3, WordTile2of3, WordTile3of3,
-//WordTile1of4, WordTile2of4, WordTile3of4, WordTile4of4,
-//WordTile1of5, WordTile2of5, WordTile3of5, WordTile4of5, WordTile5of5,
-//WordTile1of6, WordTile2of6, WordTile3of6, WordTile4of6, WordTile5of6, WordTile6of6,
-//WordTile1of7, WordTile2of7, WordTile3of7, WordTile4of7, WordTile5of7, WordTile6of7, WordTile7of7,
-
-
-- (void)_botSpellWordWithWordTiles:(NSMutableArray *)wordTiles remainingTiles:(NSMutableArray *)remainingTiles wordLength:(int)wordLength
+- (void)_botSpellWordWithWordTiles:(NSMutableArray *)wordTiles remainingTiles:(NSMutableArray *)remainingTiles wordLength:(int)wordLength completion:(void (^)(void))completion
 {
     if (remainingTiles.count == 0) {
         return;
@@ -450,13 +441,18 @@ using UP::TimeSpanning::start;
         });
 
         if (remainingTiles.count) {
-            [self _botSpellWordWithWordTiles:wordTiles remainingTiles:remainingTiles wordLength:wordLength + 1];
+            [self _botSpellWordWithWordTiles:wordTiles remainingTiles:remainingTiles wordLength:wordLength + 1 completion:completion];
+        }
+        else {
+            if (completion) {
+                completion();
+            }
         }
         
     }));
 }
 
-- (void)botSpellWord:(NSString *)string
+- (void)botSpellWord:(NSString *)string completion:(void (^)(void))completion
 {
     std::map<NSInteger, TilePosition> letter_tray_positions;
     for (UPTileView *tileView in self.tileViews) {
@@ -484,7 +480,7 @@ using UP::TimeSpanning::start;
         LOG(General, "found tile: %c => %ld", c, foundTileView.tag);
     }
 
-    [self _botSpellWordWithWordTiles:[NSMutableArray array] remainingTiles:tapTiles wordLength:0];
+    [self _botSpellWordWithWordTiles:[NSMutableArray array] remainingTiles:tapTiles wordLength:0 completion:completion];
 }
 
 - (void)submitWordReplacingWithTilesFromString:(NSString *)string
@@ -527,7 +523,7 @@ using UP::TimeSpanning::start;
     [attrString addAttribute:NSFontAttributeName value:layout.word_score_font() range:range];
     [attrString addAttribute:NSForegroundColorAttributeName value:wordScoreColor range:range];
     self.gameView.wordScoreLabel.attributedString = attrString;
-
+    
     UPViewMove *botSpotMove = UPViewMoveMake(self.botSpot, Role::WordTile2of6);
     start(ease(BandAboutPlayingUI, @[ botSpotMove ], 0.4, ^(UIViewAnimatingPosition) {
         
@@ -536,10 +532,49 @@ using UP::TimeSpanning::start;
             [self botSpotTap];
             [self.gameView.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
 
+            int gameScore = [self.gameView.gameScoreLabel.string intValue];
+            gameScore += score * multiplier;
+            self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", gameScore];
+
             start(bloop_out(BandAboutPlayingUI, tileMoves, 0.3, ^(UIViewAnimatingPosition) {
                 for (UPViewMove *move in tileMoves) {
                     [move.view removeFromSuperview];
                 }
+                self.tileViews = self.gameView.tileContainerView.subviews;
+                NSMutableSet *partialTileViewsIndexes = [NSMutableSet set];
+                for (UPTileView *tileView in self.tileViews) {
+                    [partialTileViewsIndexes addObject:@(tileView.tag)];
+                }
+                int sidx = 0;
+                NSMutableArray *newTiles = [NSMutableArray array];
+                for (size_t tidx = 0; tidx < TileCount; tidx++) {
+                    if ([partialTileViewsIndexes containsObject:@(tidx)]) {
+                        continue;
+                    }
+                    char32_t c = [string characterAtIndex:sidx];
+                    sidx++;
+                    TileModel model(c);
+                    UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
+                    tileView.tag = tidx;
+                    tileView.band = BandAboutPlayingUI;
+                    tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, tidx)));
+                    [self.gameView.tileContainerView addSubview:tileView];
+                    [newTiles addObject:tileView];
+                }
+                self.tileViews = self.gameView.tileContainerView.subviews;
+                
+                for (UPTileView *tileView in newTiles) {
+                    tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, tileView.tag)), Spot::OffBottomNear);
+                }
+                
+                NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
+                for (UPTileView *tileView in newTiles) {
+                    UPViewMove *move = UPViewMoveMake(tileView, role_in_player_tray(TilePosition(TileTray::Player, tileView.tag)));
+                    [moves addObject:move];
+                }
+                
+                start(bloop_in(BandAboutPlayingUI, moves, 0.3, nil));
+                
             }));
 
             delay(BandAboutPlayingDelay, 0.2, ^{

@@ -30,11 +30,18 @@
         [self.pane bloopInTilesFromString:@"KIEDCLP"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.pane.gameTimer start];
-            [self.pane botSpellWord:@"PICKLED"];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.pane submitWordReplacingWithTilesFromString:@""];
-            });
+            [self.pane botSpellWord:@"PICK" completion:^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.pane submitWordReplacingWithTilesFromString:@"WXYZ"];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.pane botSpellWord:@"DEW" completion:^{
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                [self.pane submitWordReplacingWithTilesFromString:@"NPA"];
+                            });
+                        }];
+                    });
+                });
+            }];
         });
     });
 }

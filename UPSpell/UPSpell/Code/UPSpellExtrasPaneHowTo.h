@@ -22,7 +22,7 @@
 - (void)centerBotSpotWithDuration:(CFTimeInterval)duration;
 - (void)setTilesFromString:(NSString *)string;
 - (void)bloopInTilesFromString:(NSString *)string;
-- (void)botSpellWord:(NSString *)string;
+- (void)botSpellWord:(NSString *)string completion:(void (^)(void))completion;
 - (void)submitWordReplacingWithTilesFromString:(NSString *)string;
 
 @end
