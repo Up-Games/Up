@@ -25,21 +25,21 @@
     [self.pane configureForBot];
     [self.pane centerBotSpotWithDuration:0.0];
 
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self teaser1];
+    });
+}
+
+- (void)teaser1
+{
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.pane.gameTimer start];
-        [self.pane bloopInTilesFromString:@"KIEDCLP"];
+        [self.pane bloopInTilesFromString:@"MODXGLO"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.pane.gameTimer start];
-            [self.pane botSpellWord:@"PICK" completion:^{
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self.pane submitWordReplacingWithTilesFromString:@"WXYZ"];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [self.pane botSpellWord:@"DEW" completion:^{
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                [self.pane submitWordReplacingWithTilesFromString:@"NPA"];
-                            });
-                        }];
-                    });
+            [self.pane botSpellWord:@"GOOD" completion:^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.pane submitWordReplacingWithTilesFromString:@"IBEP"];
                 });
             }];
         });

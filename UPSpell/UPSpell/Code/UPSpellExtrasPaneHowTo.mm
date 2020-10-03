@@ -466,7 +466,7 @@ using UP::TimeSpanning::start;
         UPTileView *foundTileView = nil;
         for (UPTileView *tileView in self.tileViews) {
             TilePosition position = letter_tray_positions[tileView.tag];
-            if (position.in_word_tray() || tileView.glyph != c) {
+            if (position.in_word_tray() || tileView.glyph != c || [tapTiles containsObject:tileView]) {
                 continue;
             }
             foundTileView = tileView;
