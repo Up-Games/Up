@@ -59,6 +59,7 @@ using UP::TimeSpanning::start;
 @property (nonatomic) UPSpellGameView *gameView;
 @property (nonatomic) UPLabel *bottomPromptLabel;
 @property (nonatomic) UIView *botSpot;
+@property (nonatomic) UIView *botSpotTapIndicator;
 @property (nonatomic) NSArray *tileViews;
 @property (nonatomic) Role bottomPromptLabelRole;
 @property (nonatomic) Spot bottomPromptLabelOffscreenSpot;
@@ -85,6 +86,11 @@ using UP::TimeSpanning::start;
 
     CGRect botSpotFrame = up_rect_scaled(CGRectMake(0, 0, 92, 92), layout.layout_scale());
     self.botSpot = [[UIView alloc] initWithFrame:botSpotFrame];
+
+    CGRect botSpotTapIndicatorFrame = up_rect_scaled(CGRectMake(15, 15, 62, 62), layout.layout_scale());
+    self.botSpotTapIndicator = [[UIView alloc] initWithFrame:botSpotTapIndicatorFrame];
+    self.botSpotTapIndicator.layer.cornerRadius = up_float_scaled(31, layout.layout_scale());
+    [self.botSpot addSubview:self.botSpotTapIndicator];
     [self.gameView addSubview:self.botSpot];
 
     self.gameTimer = [[UPGameTimer alloc] initWithDuration:UPGameTimerDefaultDuration];
@@ -552,8 +558,14 @@ using UP::TimeSpanning::start;
                         continue;
                     }
                     char32_t c = [string characterAtIndex:sidx];
+                    TileModel model;
+                    if (sidx == 0) {
+                        model = TileModel(c, 2);
+                    }
+                    else {
+                        model = TileModel(c);
+                    }
                     sidx++;
-                    TileModel model(c);
                     UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
                     tileView.tag = tidx;
                     tileView.band = BandAboutPlayingUI;
@@ -633,12 +645,40 @@ using UP::TimeSpanning::start;
 
 - (void)botSpotTap
 {
-    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.55];
+    self.botSpotTapIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    self.botSpotTapIndicator.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
+    self.botSpotTapIndicator.alpha = 0.7;
+
+    [UIView animateWithDuration:0.15 animations:^{
+        self.botSpotTapIndicator.transform = CGAffineTransformIdentity;
+        self.botSpotTapIndicator.alpha = 0;
+    }];
 }
 
 - (void)botSpotRelease
 {
-    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+//    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+}
+
+- (void)highlight2XLetterFive
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        SpellLayout &layout = SpellLayout::instance();
+        self.botSpot.transform = CGAffineTransformIdentity;
+        self.botSpot.backgroundColor = [UIColor clearColor];
+        self.botSpot.frame = layout.frame_for(Role::ExtrasHowTo2xCallout);
+        self.botSpot.cornerRadius = up_rect_width(self.botSpot.frame) * 0.5;
+        self.botSpot.borderWidth = up_float_scaled(4, layout.layout_scale());
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:1.0 animations:^{
+            self.botSpot.transform = CGAffineTransformMakeScale(7, 7);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.75 animations:^{
+                self.botSpot.transform = CGAffineTransformIdentity;
+            } completion:^(BOOL finished) {
+            }];
+        }];
+    }];
 }
 
 - (void)animateToStepOne

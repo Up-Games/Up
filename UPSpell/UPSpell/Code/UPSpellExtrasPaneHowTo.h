@@ -25,4 +25,7 @@
 - (void)botSpellWord:(NSString *)string completion:(void (^)(void))completion;
 - (void)submitWordReplacingWithTilesFromString:(NSString *)string;
 
+- (void)botSpotTap;
+- (void)highlight2XLetterFive;
+
 @end

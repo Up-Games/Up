@@ -13,6 +13,7 @@
 @property (nonatomic) UPSpellExtrasPaneHowTo *pane;
 @end
 
+
 @implementation UPHowToViewController
 
 - (void)viewDidLoad
@@ -25,8 +26,16 @@
     [self.pane configureForBot];
     [self.pane centerBotSpotWithDuration:0.0];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self teaser1];
+    });
+}
+
+- (void)tap
+{
+    [self.pane botSpotTap];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self tap];
     });
 }
 
@@ -34,12 +43,19 @@
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.pane.gameTimer start];
-        [self.pane bloopInTilesFromString:@"MODXGLO"];
+        [self.pane bloopInTilesFromString:@"NODGGBO"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.pane.gameTimer start];
             [self.pane botSpellWord:@"GOOD" completion:^{
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self.pane submitWordReplacingWithTilesFromString:@"IBEP"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.pane submitWordReplacingWithTilesFromString:@"GIOS"];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.pane botSpellWord:@"GOING" completion:^{
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                [self.pane highlight2XLetterFive];
+                            });
+                        }];
+                    });
                 });
             }];
         });
@@ -53,7 +69,7 @@
 
 - (UIRectEdge)preferredScreenEdgesDeferringSystemGestures
 {
-    return UIRectEdgeAll;
+    return UIRectEdgeNone;
 }
 
 @end
