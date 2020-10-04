@@ -676,6 +676,9 @@ using UP::TimeSpanning::start;
             [UIView animateWithDuration:0.75 animations:^{
                 self.botSpot.transform = CGAffineTransformIdentity;
             } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.botSpot.alpha = 0;
+                }];
             }];
         }];
     }];
