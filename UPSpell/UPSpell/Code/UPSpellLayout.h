@@ -61,7 +61,7 @@ public:
         ExtrasShareHighScoreValue, ExtrasShareHighScoreDescription, ExtrasShareHighScoreButton,
         ExtrasShareLastGameValue, ExtrasShareLastGameDescription, ExtrasShareLastGameButton,
         ExtrasShareDescription, ExtrasShareLastGameHighScoreEqualDescription,
-        ExtrasHowToGameView, ExtrasHowToBottomPrompt, ExtrasHowToBottomPromptTutorial,
+        ExtrasHowToGameView, ExtrasHowToBottomPrompt, ExtrasHowToBottomPromptTutorial, ExtrasHowToBottomPromptFullScreen,
         ExtrasHowToTopLeftButtonClick, ExtrasHowToTopRightButtonClick, ExtrasHowTo2xCallout,
         ExtrasAbout,
         HeroLogo, HeroWordMark,
@@ -227,8 +227,9 @@ public:
     static inline constexpr CGRect CanonicalExtrasHowToGameViewFrame = { 160, -132, 1000, 500 };
     static inline constexpr CGRect CanonicalExtrasHowToBottomPromptFrame = { 340, 410, 640, 80 };
     static inline constexpr CGRect CanonicalExtrasHowToBottomPromptTutorialFrame = { 0, 428, 775, 80 };
+    static inline constexpr CGRect CanonicalExtrasHowToBottomPromptFullScreen = { 0, 435, 1000, 80 };
     static inline constexpr CGRect CanonicalExtrasHowTo2xCalloutFrame = { 676, 243, 46, 46 };
-    static inline constexpr CGFloat CanonicalTutorialPromptFontCapHeight = 28;
+    static inline constexpr CGFloat CanonicalTutorialPromptFontCapHeight = 31;
 
     static inline constexpr CGSize CanonicalBotSpotSize = { 92, 92 };
 

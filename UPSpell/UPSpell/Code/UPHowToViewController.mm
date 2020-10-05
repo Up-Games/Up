@@ -22,13 +22,14 @@
 
     self.pane = [[UPSpellExtrasPaneHowTo alloc] initWithFrame:CGRectZero];
     [self.view addSubview:self.pane];
-    [self.pane configureForFullScreen];
+//    [self.pane configureForFullScreen];
 //    [self.pane configureForBot];
 //    [self.pane centerBotSpotWithDuration:0.0];
     [self.pane commonConfigure];
+    [self.pane configureForAppPreviewCapture];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.pane prepare];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.pane startTutorial];
     });
 }
 

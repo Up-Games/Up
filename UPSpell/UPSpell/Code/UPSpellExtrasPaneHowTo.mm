@@ -116,6 +116,16 @@ using UP::TimeSpanning::start;
     self.gameView.transform = CGAffineTransformIdentity;
 }
 
+- (void)configureForAppPreviewCapture
+{
+    SpellLayout &layout = SpellLayout::instance();
+    self.gameView.center = layout.center_for(Role::Screen);
+    self.gameView.transform = CGAffineTransformTranslate(CGAffineTransformMakeScale(0.9, 0.9), 0, -18);
+    self.bottomPromptLabelRole = Role::ExtrasHowToBottomPromptFullScreen;
+    self.bottomPromptLabel.frame = layout.frame_for(self.bottomPromptLabelRole);
+    self.bottomPromptLabel.font = layout.tutorial_prompt_font();
+}
+
 - (void)commonConfigure
 {
     SpellLayout &layout = SpellLayout::instance();
@@ -645,14 +655,35 @@ using UP::TimeSpanning::start;
 
 - (void)botSpotTap
 {
-    self.botSpotTapIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8);
+//    self.botSpotTapIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8);
+//    self.botSpotTapIndicator.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
+//    self.botSpotTapIndicator.alpha = 0.7;
+//
+//    [UIView animateWithDuration:0.15 animations:^{
+//        self.botSpotTapIndicator.transform = CGAffineTransformIdentity;
+//        self.botSpotTapIndicator.alpha = 0;
+//    }];
+
     self.botSpotTapIndicator.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
-    self.botSpotTapIndicator.alpha = 0.7;
+    self.botSpotTapIndicator.alpha = 0.2;
 
     [UIView animateWithDuration:0.15 animations:^{
         self.botSpotTapIndicator.transform = CGAffineTransformIdentity;
         self.botSpotTapIndicator.alpha = 0;
     }];
+
+}
+
+- (void)botSpotDrag
+{
+    self.botSpotTapIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    self.botSpotTapIndicator.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
+    self.botSpotTapIndicator.alpha = 0.2;
+    
+    [UIView animateWithDuration:0.15 delay:0.75 options:0 animations:^{
+        self.botSpotTapIndicator.transform = CGAffineTransformIdentity;
+        self.botSpotTapIndicator.alpha = 0;
+    } completion:nil];
 }
 
 - (void)botSpotRelease
@@ -1704,7 +1735,7 @@ using UP::TimeSpanning::start;
             UPTileView *tileView2 = self.tileViews[6];
             UPViewMove *tileMove1 = UPViewMoveMake(tileView1, Role::WordTile4of5);
             UPViewMove *tileMove2 = UPViewMoveMake(tileView2, Role::WordTile5of5);
-            [self botSpotTap];
+            [self botSpotDrag];
             start(ease(BandAboutPlayingUI, @[ botSpotMove2, tileMove1, tileMove2 ], 0.3, ^(UIViewAnimatingPosition) {
                 [self botSpotRelease];
                 self.gameView.wordTrayControl.active = YES;

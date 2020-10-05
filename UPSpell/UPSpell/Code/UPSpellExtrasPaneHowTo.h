@@ -15,6 +15,7 @@
 
 - (void)commonConfigure;
 - (void)configureForFullScreen;
+- (void)configureForAppPreviewCapture;
 - (void)startTutorial;
 - (void)finish;
 
