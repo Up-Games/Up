@@ -598,7 +598,7 @@ using UP::TimeSpanning::start;
 
         delay(BandAboutPlayingDelay, 0.75, ^{
             start(bloop_in(BandAboutPlayingUI, @[wordScoreInMove], 0.3, ^(UIViewAnimatingPosition) {
-                delay(BandAboutPlayingUI, 1.2, ^{
+                delay(BandAboutPlayingUI, 0.75 , ^{
                     UPViewMove *wordScoreOutMove = UPViewMoveMake(self.gameView.wordScoreLabel, Role::WordScore, Spot::OffTopNear);
                     start(bloop_out(BandAboutPlayingUI, @[wordScoreOutMove], 0.2, ^(UIViewAnimatingPosition) {
                         self.gameView.wordScoreLabel.hidden = YES;
