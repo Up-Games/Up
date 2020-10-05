@@ -124,6 +124,7 @@ using UP::TimeSpanning::start;
     self.bottomPromptLabelRole = Role::ExtrasHowToBottomPromptFullScreen;
     self.bottomPromptLabel.frame = layout.frame_for(self.bottomPromptLabelRole);
     self.bottomPromptLabel.font = layout.tutorial_prompt_font();
+    [self.gameTimer resetTo:120];
 }
 
 - (void)commonConfigure
@@ -628,7 +629,7 @@ using UP::TimeSpanning::start;
     [self.gameTimer start];
     
     self.step = 0;
-    delay(BandAboutPlayingDelay, 1.5, ^{
+    delay(BandAboutPlayingDelay, 0.5, ^{
         [self nextStep];
     });
 }
@@ -979,16 +980,16 @@ using UP::TimeSpanning::start;
                 case 5:
                     continue;
                 case 1:
-                    model = TileModel(U'Z');
+                    model = TileModel(U'E');
                     break;
                 case 2:
-                    model = TileModel(U'W');
+                    model = TileModel(U'M');
                     break;
                 case 4:
-                    model = TileModel(U'J');
+                    model = TileModel(U'A');
                     break;
                 case 6:
-                    model = TileModel(U'X');
+                    model = TileModel(U'U');
                     break;
             }
             UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
@@ -1033,7 +1034,9 @@ using UP::TimeSpanning::start;
     });
 
     delay(BandAboutPlayingDelay, 2, ^{
-        [self animateToStepSixB];
+//        [self animateToStepSixB];
+        self.step = 21;
+        [self animateToStepTwentyOneA];
     });
 
 }
@@ -1796,20 +1799,25 @@ using UP::TimeSpanning::start;
                     if (!self.active) {
                         return;
                     }
-                    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, self.bottomPromptLabelRole, self.bottomPromptLabelOffscreenSpot);
-                    start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
-                        self.bottomPromptLabel.string = @"SPELL ALL YOU CAN IN TWO MINUTES!";
-                        UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, self.bottomPromptLabelRole);
-                        start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
-                            delay(BandAboutPlayingDelay, 2.5, ^{
-                                [self nextStep];
-                            });
-                        }));
-                    }));
+                    [self animateToStepTwentyOneA];
                 });
             }];
         }];
     }];
+}
+
+- (void)animateToStepTwentyOneA
+{
+    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, self.bottomPromptLabelRole, self.bottomPromptLabelOffscreenSpot);
+    start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
+        self.bottomPromptLabel.string = @"SPELL ALL YOU CAN IN TWO MINUTES!";
+        UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, self.bottomPromptLabelRole);
+        start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
+            delay(BandAboutPlayingDelay, 2.5, ^{
+                [self nextStep];
+            });
+        }));
+    }));
 }
 
 - (void)animateToStepTwentyTwo
