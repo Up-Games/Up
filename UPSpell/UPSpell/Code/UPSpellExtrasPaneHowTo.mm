@@ -193,6 +193,9 @@ using UP::TimeSpanning::start;
 
 - (void)prepare
 {
+    UIApplication *app = [UIApplication sharedApplication];
+    app.idleTimerDisabled = YES;
+    
     [self commonConfigure];
     [self.gameTimer start];
     
@@ -203,6 +206,9 @@ using UP::TimeSpanning::start;
 
 - (void)finish
 {
+    UIApplication *app = [UIApplication sharedApplication];
+    app.idleTimerDisabled = NO;
+
     cancel(BandAboutPlaying);
     SpellLayout &layout = SpellLayout::instance();
     self.bottomPromptLabel.string = @"";
