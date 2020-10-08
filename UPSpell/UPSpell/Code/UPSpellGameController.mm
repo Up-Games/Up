@@ -303,9 +303,9 @@ static UPSpellGameController *_Instance;
     self.duelHelpReturnMode = Mode::Init;
     
     UPSceneDelegate *sceneDelegate = [UPSceneDelegate instance];
-    if (sceneDelegate.challenge) {
-        self.gameLink = sceneDelegate.challenge;
-        sceneDelegate.challenge = nil;
+    if (sceneDelegate.gameLink) {
+        self.gameLink = sceneDelegate.gameLink;
+        sceneDelegate.gameLink = nil;
         if (!showWelcome) {
             [self setMode:Mode::GameLink];
         }

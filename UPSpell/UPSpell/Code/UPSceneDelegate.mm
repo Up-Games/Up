@@ -33,12 +33,36 @@ static UPSceneDelegate *_Instance;
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions
 {
     _Instance = self;
-    self.challenge = nil;
+    self.gameLink = nil;
     for (NSUserActivity *userActivity in connectionOptions.userActivities) {
         if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
             [[UPSpellNavigationController instance] dismissPresentedControllerImmediateIfNecessary];
             NSURL *incomingURL = userActivity.webpageURL;
-            self.challenge = [UPGameLink gameLinkWithURL:incomingURL];
+            self.gameLink = [UPGameLink gameLinkWithURL:incomingURL];
+            if (self.gameLink) {
+                break;
+            }
+        }
+    }
+    if (self.gameLink == nil) {
+        for (UIOpenURLContext *ctx in connectionOptions.URLContexts) {
+            self.gameLink = [UPGameLink gameLinkWithURL:ctx.URL];
+            if (self.gameLink) {
+                [[UPSpellGameController instance] setGameLink:self.gameLink];
+                break;
+            }
+        }
+    }
+}
+
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
+{
+    [[UPSpellNavigationController instance] dismissPresentedControllerImmediateIfNecessary];
+    for (UIOpenURLContext *ctx in URLContexts) {
+        self.gameLink = [UPGameLink gameLinkWithURL:ctx.URL];
+        if (self.gameLink) {
+            [[UPSpellGameController instance] setGameLink:self.gameLink];
+            break;
         }
     }
 }

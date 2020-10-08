@@ -14,7 +14,7 @@
 @property (nonatomic, readonly) CGRect canvasFrame;
 
 @property (nonatomic) UIWindow *window;
-@property (nonatomic) UPGameLink *challenge;
+@property (nonatomic) UPGameLink *gameLink;
 
 @end
 
