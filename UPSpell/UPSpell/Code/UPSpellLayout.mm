@@ -801,6 +801,7 @@ void SpellLayout::calculate_extras_locations()
     calculate_and_set_locations(Role::ExtrasHowToGameView, layout_relative_aspect_rect(CanonicalExtrasHowToGameViewFrame));
     calculate_and_set_locations(Role::ExtrasHowToBottomPrompt, layout_relative_aspect_rect(CanonicalExtrasHowToBottomPromptFrame));
     calculate_and_set_locations(Role::ExtrasHowToBottomPromptTutorial, layout_relative_aspect_rect(CanonicalExtrasHowToBottomPromptTutorialFrame));
+    calculate_and_set_locations(Role::ExtrasHowToBottomPromptFullScreen, layout_relative_aspect_rect(CanonicalExtrasHowToBottomPromptFullScreen));
     calculate_and_set_locations(Role::ExtrasHowTo2xCallout, layout_relative_aspect_rect(CanonicalExtrasHowTo2xCalloutFrame));
     
     CGRect controls_button_left_frame = frame_for(Role::ControlButtonLeft);

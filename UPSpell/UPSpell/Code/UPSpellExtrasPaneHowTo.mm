@@ -3,6 +3,9 @@
 //  Copyright © 2020 Ken Kocienda. All rights reserved.
 //
 
+#import <map>
+#import <vector>
+
 #import <UpKit/NSMutableAttributedString+UP.h>
 #import <UpKit/UIColor+UP.h>
 #import <UpKit/UIView+UP.h>
@@ -54,9 +57,9 @@ using UP::TimeSpanning::start;
 @property (nonatomic) BOOL active;
 @property (nonatomic) int step;
 @property (nonatomic) UPSpellGameView *gameView;
-@property (nonatomic) UPGameTimer *gameTimer;
 @property (nonatomic) UPLabel *bottomPromptLabel;
 @property (nonatomic) UIView *botSpot;
+@property (nonatomic) UIView *botSpotTapIndicator;
 @property (nonatomic) NSArray *tileViews;
 @property (nonatomic) Role bottomPromptLabelRole;
 @property (nonatomic) Spot bottomPromptLabelOffscreenSpot;
@@ -83,6 +86,11 @@ using UP::TimeSpanning::start;
 
     CGRect botSpotFrame = up_rect_scaled(CGRectMake(0, 0, 92, 92), layout.layout_scale());
     self.botSpot = [[UIView alloc] initWithFrame:botSpotFrame];
+
+    CGRect botSpotTapIndicatorFrame = up_rect_scaled(CGRectMake(15, 15, 62, 62), layout.layout_scale());
+    self.botSpotTapIndicator = [[UIView alloc] initWithFrame:botSpotTapIndicatorFrame];
+    self.botSpotTapIndicator.layer.cornerRadius = up_float_scaled(31, layout.layout_scale());
+    [self.botSpot addSubview:self.botSpotTapIndicator];
     [self.gameView addSubview:self.botSpot];
 
     self.gameTimer = [[UPGameTimer alloc] initWithDuration:UPGameTimerDefaultDuration];
@@ -101,19 +109,22 @@ using UP::TimeSpanning::start;
     return self;
 }
 
-- (void)configureForFullScreenTutorial
+- (void)configureForFullScreen
 {
     SpellLayout &layout = SpellLayout::instance();
     self.gameView.center = layout.center_for(Role::Screen);
-    CGFloat translationX = -150 * layout.layout_scale();
-    CGFloat translationY = -30 * layout.layout_scale();
-    self.gameView.transform = CGAffineTransformTranslate(CGAffineTransformMakeScale(0.8, 0.8), translationX, translationY);
-    self.bottomPromptLabelRole = Role::ExtrasHowToBottomPromptTutorial;
-    self.bottomPromptLabelOffscreenSpot = Spot::OffBottomNear;
+    self.gameView.transform = CGAffineTransformIdentity;
+}
+
+- (void)configureForAppPreviewCapture
+{
+    SpellLayout &layout = SpellLayout::instance();
+    self.gameView.center = layout.center_for(Role::Screen);
+    self.gameView.transform = CGAffineTransformTranslate(CGAffineTransformMakeScale(0.9, 0.9), 0, -18);
+    self.bottomPromptLabelRole = Role::ExtrasHowToBottomPromptFullScreen;
     self.bottomPromptLabel.frame = layout.frame_for(self.bottomPromptLabelRole);
     self.bottomPromptLabel.font = layout.tutorial_prompt_font();
-    self.bottomPromptLabel.string = @"TAP START TO LEARN HOW TO PLAY";
-    self.step = 0;
+    [self.gameTimer resetTo:120];
 }
 
 - (void)commonConfigure
@@ -181,12 +192,444 @@ using UP::TimeSpanning::start;
     [self.gameTimer resetTo:60];
 }
 
+// =========================================================================================================================================
+
+- (void)configureForBot
+{
+    SpellLayout &layout = SpellLayout::instance();
+    
+    self.gameView.alpha = 1;
+    self.botSpot.alpha = 1;
+    self.botSpot.transform = CGAffineTransformIdentity;
+    self.botSpot.frame = up_rect_scaled(CGRectMake(0, 0, 92, 92), layout.layout_scale());
+    self.botSpot.cornerRadius = up_rect_width(self.botSpot.frame) * 0.5;
+    self.botSpot.borderWidth = up_float_scaled(6, layout.layout_scale());
+    self.gameView.wordTrayControl.active = NO;
+    
+    [self.gameView.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
+    
+    [self updateThemeColors];
+    
+    self.gameView.wordScoreLabel.hidden = YES;
+    self.gameView.gameScoreLabel.string = @"0";
+    
+    [self.gameTimer resetTo:120];
+}
+
+- (void)centerBotSpotWithDuration:(CFTimeInterval)duration
+{
+    if (duration == 0) {
+        SpellLayout &layout = SpellLayout::instance();
+        self.botSpot.center = layout.center_for(Role::DialogMessageCenteredInWordTray);
+    }
+    else {
+        UPViewMove *move = UPViewMoveMake(self.botSpot, Role::DialogMessageCenteredInWordTray);
+        start(ease(BandAboutPlayingUI, @[ move ], duration, nil));
+    }
+}
+
+- (void)setTilesFromString:(NSString *)string
+{
+    if (string.length != TileCount) {
+        LOG(General, "setTilesFromString requires a string of 7 letters; got: %@", string);
+        return;
+    }
+    
+    SpellLayout &layout = SpellLayout::instance();
+    
+    [self.gameView.tileContainerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    for (TileIndex idx = 0; idx < TileCount; idx++) {
+        char32_t c = [string characterAtIndex:idx];
+        TileModel model(c);
+        UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
+        tileView.tag = idx;
+        tileView.band = BandAboutPlayingUI;
+        tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, idx)));
+        [self.gameView.tileContainerView addSubview:tileView];
+    }
+    self.tileViews = self.gameView.tileContainerView.subviews;
+}
+
+- (void)bloopInTilesFromString:(NSString *)string
+{
+    if (string.length != TileCount) {
+        LOG(General, "bloopInTilesFromString requires a string of 7 letters; got: %@", string);
+        return;
+    }
+    
+    [self setTilesFromString:string];
+    
+    SpellLayout &layout = SpellLayout::instance();
+    for (UPTileView *tileView in self.tileViews) {
+        tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, tileView.tag)), Spot::OffBottomNear);
+    }
+
+    NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
+    for (UPTileView *tileView in self.tileViews) {
+        UPViewMove *move = UPViewMoveMake(tileView, role_in_player_tray(TilePosition(TileTray::Player, tileView.tag)));
+        [moves addObject:move];
+    }
+
+    start(bloop_in(BandAboutPlayingUI, moves, 0.3, nil));
+}
+
+- (void)_botSpellWordWithWordTiles:(NSMutableArray *)wordTiles remainingTiles:(NSMutableArray *)remainingTiles wordLength:(int)wordLength completion:(void (^)(void))completion
+{
+    if (remainingTiles.count == 0) {
+        return;
+    }
+    
+    UPTileView *tileView = remainingTiles.firstObject;
+    [remainingTiles removeObjectAtIndex:0];
+    
+    // move the bot spot
+    UPViewMove *botSpotMove = UPViewMoveMake(self.botSpot, role_in_player_tray(TilePosition(TileTray::Player, tileView.tag)));
+    start(ease(BandAboutPlayingUI, @[ botSpotMove ], 0.4, ^(UIViewAnimatingPosition) {
+        // tap
+        [self botSpotTap];
+        
+        // shift existing word tiles
+        NSMutableArray<UPViewMove *> *tileShifts = [NSMutableArray array];
+        int wordIdx = 1;
+        for (UPTileView *wordTile in wordTiles) {
+            Role wordTileRole = Role::WordTile1of1;
+            switch (wordLength) {
+                case 0: {
+                    wordTileRole = Role::WordTile1of1;
+                    break;
+                }
+                case 1: {
+                    switch (wordIdx) {
+                        case 1:
+                            wordTileRole = Role::WordTile1of2;
+                            break;
+                        case 2:
+                            wordTileRole = Role::WordTile2of2;
+                            break;
+                    }
+                    break;
+                }
+                case 2: {
+                    switch (wordIdx) {
+                        case 1:
+                            wordTileRole = Role::WordTile1of3;
+                            break;
+                        case 2:
+                            wordTileRole = Role::WordTile2of3;
+                            break;
+                        case 3:
+                            wordTileRole = Role::WordTile3of3;
+                            break;
+                    }
+                    break;
+                }
+                case 3: {
+                    switch (wordIdx) {
+                        case 1:
+                            wordTileRole = Role::WordTile1of4;
+                            break;
+                        case 2:
+                            wordTileRole = Role::WordTile2of4;
+                            break;
+                        case 3:
+                            wordTileRole = Role::WordTile3of4;
+                            break;
+                        case 4:
+                            wordTileRole = Role::WordTile4of4;
+                            break;
+                    }
+                    break;
+                }
+                case 4: {
+                    switch (wordIdx) {
+                        case 1:
+                            wordTileRole = Role::WordTile1of5;
+                            break;
+                        case 2:
+                            wordTileRole = Role::WordTile2of5;
+                            break;
+                        case 3:
+                            wordTileRole = Role::WordTile3of5;
+                            break;
+                        case 4:
+                            wordTileRole = Role::WordTile4of5;
+                            break;
+                        case 5:
+                            wordTileRole = Role::WordTile5of5;
+                            break;
+                    }
+                    break;
+                }
+                case 5: {
+                    switch (wordIdx) {
+                        case 1:
+                            wordTileRole = Role::WordTile1of6;
+                            break;
+                        case 2:
+                            wordTileRole = Role::WordTile2of6;
+                            break;
+                        case 3:
+                            wordTileRole = Role::WordTile3of6;
+                            break;
+                        case 4:
+                            wordTileRole = Role::WordTile4of6;
+                            break;
+                        case 5:
+                            wordTileRole = Role::WordTile5of6;
+                            break;
+                        case 6:
+                            wordTileRole = Role::WordTile6of6;
+                            break;
+                    }
+                    break;
+                }
+                case 6: {
+                    switch (wordIdx) {
+                        case 1:
+                            wordTileRole = Role::WordTile1of7;
+                            break;
+                        case 2:
+                            wordTileRole = Role::WordTile2of7;
+                            break;
+                        case 3:
+                            wordTileRole = Role::WordTile3of7;
+                            break;
+                        case 4:
+                            wordTileRole = Role::WordTile4of7;
+                            break;
+                        case 5:
+                            wordTileRole = Role::WordTile5of7;
+                            break;
+                        case 6:
+                            wordTileRole = Role::WordTile6of7;
+                            break;
+                        case 7:
+                            wordTileRole = Role::WordTile7of7;
+                            break;
+                    }
+                    break;
+                }
+            }
+            wordTile.submitLocation = Location(wordTileRole);
+            UPViewMove *tileShift = UPViewMoveMake(wordTile, wordTileRole);
+            [tileShifts addObject:tileShift];
+            wordIdx++;
+        }
+        start(slide(BandAboutPlayingUI, tileShifts, 0.1, nil));
+
+        [wordTiles addObject:tileView];
+        
+        Role tapTileRole = Role::WordTile1of1;
+        switch (wordIdx) {
+            case 1:
+                tapTileRole = Role::WordTile1of1;
+                break;
+            case 2:
+                tapTileRole = Role::WordTile2of2;
+                break;
+            case 3:
+                tapTileRole = Role::WordTile3of3;
+                break;
+            case 4:
+                tapTileRole = Role::WordTile4of4;
+                break;
+            case 5:
+                tapTileRole = Role::WordTile5of5;
+                break;
+            case 6:
+                tapTileRole = Role::WordTile6of6;
+                break;
+            case 7:
+                tapTileRole = Role::WordTile7of7;
+                break;
+
+        }
+
+        // move tapped tile
+        UPViewMove *tileMove = UPViewMoveMake(tileView, tapTileRole);
+        tileView.submitLocation = Location(tapTileRole);
+        tileView.highlighted = YES;
+        [self botSpotTap];
+        [self.gameView.clearControl setContentPath:UP::RoundGameButtonDownArrowIconPath() forState:UPControlStateNormal];
+        start(bloop_in(BandAboutPlayingUI, @[ tileMove ], 0.3, nil));
+        delay(BandAboutPlayingDelay, 0.2, ^{
+            [self botSpotRelease];
+            tileView.highlighted = NO;
+        });
+
+        if (remainingTiles.count) {
+            [self _botSpellWordWithWordTiles:wordTiles remainingTiles:remainingTiles wordLength:wordLength + 1 completion:completion];
+        }
+        else {
+            if (completion) {
+                completion();
+            }
+        }
+        
+    }));
+}
+
+- (void)botSpellWord:(NSString *)string completion:(void (^)(void))completion
+{
+    std::map<NSInteger, TilePosition> letter_tray_positions;
+    for (UPTileView *tileView in self.tileViews) {
+        letter_tray_positions[tileView.tag] = TilePosition(TileTray::Player, tileView.tag);
+    }
+    
+    NSMutableArray *tapTiles = [NSMutableArray array];
+    
+    for (int idx = 0; idx < string.length; idx++) {
+        char32_t c = [string characterAtIndex:idx];
+        UPTileView *foundTileView = nil;
+        for (UPTileView *tileView in self.tileViews) {
+            TilePosition position = letter_tray_positions[tileView.tag];
+            if (position.in_word_tray() || tileView.glyph != c || [tapTiles containsObject:tileView]) {
+                continue;
+            }
+            foundTileView = tileView;
+            break;
+        }
+        if (!foundTileView) {
+            LOG(General, "botSpellWord can't spell: %@", string);
+            return;
+        }
+        [tapTiles addObject:foundTileView];
+        LOG(General, "found tile: %c => %ld", c, foundTileView.tag);
+    }
+
+    [self _botSpellWordWithWordTiles:[NSMutableArray array] remainingTiles:tapTiles wordLength:0 completion:completion];
+}
+
+- (void)submitWordReplacingWithTilesFromString:(NSString *)string
+{
+    NSMutableArray<UPViewMove *> *tileMoves = [NSMutableArray array];
+    NSMutableArray<UPTileView *> *remainingTiles = [NSMutableArray array];
+    [remainingTiles addObjectsFromArray:self.tileViews];
+    
+    int score = 0;
+    int multiplier = 1;
+
+    for (UPTileView *tileView in self.tileViews) {
+        Location location = tileView.submitLocation;
+        Role role = location.role();
+        if (role == Role::WordTile1of1 ||
+            role == Role::WordTile1of2 || role == Role::WordTile2of2 ||
+            role == Role::WordTile1of3 || role == Role::WordTile2of3 || role == Role::WordTile3of3 ||
+            role == Role::WordTile1of4 || role == Role::WordTile2of4 || role == Role::WordTile3of4 || role == Role::WordTile4of4 ||
+            role == Role::WordTile1of5 || role == Role::WordTile2of5 || role == Role::WordTile3of5 || role ==  Role::WordTile4of5 || role ==  Role::WordTile5of5 ||
+            role == Role::WordTile1of6 || role == Role::WordTile2of6 || role == Role::WordTile3of6 || role ==  Role::WordTile4of6 || role ==  Role::WordTile5of6 || role ==  Role::WordTile6of6 ||
+            role == Role::WordTile1of7 || role == Role::WordTile2of7 || role == Role::WordTile3of7 || role ==  Role::WordTile4of7 || role ==  Role::WordTile5of7 || role ==  Role::WordTile6of7 || role ==  Role::WordTile7of7) {
+            Location location(role, Spot::OffTopNear);
+            [tileMoves addObject:UPViewMoveMake(tileView, location)];
+            [remainingTiles removeObject:tileView];
+            score += tileView.score;
+            multiplier *= tileView.multiplier;
+            LOG(General, "found tile: %@", tileView);
+        }
+    }
+
+    SpellLayout &layout = SpellLayout::instance();
+    self.gameView.wordScoreLabel.frame = layout.frame_for(Role::WordScore, Spot::OffBottomFar);
+    self.gameView.wordScoreLabel.hidden = NO;
+
+    UPViewMove *wordScoreInMove = UPViewMoveMake(self.gameView.wordScoreLabel, Role::WordScore);
+    UIColor *wordScoreColor = [UIColor themeColorWithCategory:self.gameView.wordScoreLabel.colorCategory];
+    NSString *scoreString = [NSString stringWithFormat:@"+%d", score * multiplier];
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:scoreString];
+    NSRange range = NSMakeRange(0, scoreString.length);
+    [attrString addAttribute:NSFontAttributeName value:layout.word_score_font() range:range];
+    [attrString addAttribute:NSForegroundColorAttributeName value:wordScoreColor range:range];
+    self.gameView.wordScoreLabel.attributedString = attrString;
+    
+    UPViewMove *botSpotMove = UPViewMoveMake(self.botSpot, Role::WordTile2of6);
+    start(ease(BandAboutPlayingUI, @[ botSpotMove ], 0.4, ^(UIViewAnimatingPosition) {
+        
+        delay(BandAboutPlayingDelay, 0.5, ^{
+            self.gameView.wordTrayControl.highlighted = YES;
+            [self botSpotTap];
+            [self.gameView.clearControl setContentPath:UP::RoundGameButtonTrashIconPath() forState:UPControlStateNormal];
+
+            int gameScore = [self.gameView.gameScoreLabel.string intValue];
+            gameScore += score * multiplier;
+            self.gameView.gameScoreLabel.string = [NSString stringWithFormat:@"%d", gameScore];
+
+            start(bloop_out(BandAboutPlayingUI, tileMoves, 0.3, ^(UIViewAnimatingPosition) {
+                for (UPViewMove *move in tileMoves) {
+                    [move.view removeFromSuperview];
+                }
+                self.tileViews = self.gameView.tileContainerView.subviews;
+                NSMutableSet *partialTileViewsIndexes = [NSMutableSet set];
+                for (UPTileView *tileView in self.tileViews) {
+                    [partialTileViewsIndexes addObject:@(tileView.tag)];
+                }
+                int sidx = 0;
+                NSMutableArray *newTiles = [NSMutableArray array];
+                for (size_t tidx = 0; tidx < TileCount; tidx++) {
+                    if ([partialTileViewsIndexes containsObject:@(tidx)]) {
+                        continue;
+                    }
+                    char32_t c = [string characterAtIndex:sidx];
+                    TileModel model;
+                    if (sidx == 0) {
+                        model = TileModel(c, 2);
+                    }
+                    else {
+                        model = TileModel(c);
+                    }
+                    sidx++;
+                    UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
+                    tileView.tag = tidx;
+                    tileView.band = BandAboutPlayingUI;
+                    tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, tidx)));
+                    [self.gameView.tileContainerView addSubview:tileView];
+                    [newTiles addObject:tileView];
+                }
+                self.tileViews = self.gameView.tileContainerView.subviews;
+                
+                for (UPTileView *tileView in newTiles) {
+                    tileView.frame = layout.frame_for(role_in_player_tray(TilePosition(TileTray::Player, tileView.tag)), Spot::OffBottomNear);
+                }
+                
+                NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
+                for (UPTileView *tileView in newTiles) {
+                    UPViewMove *move = UPViewMoveMake(tileView, role_in_player_tray(TilePosition(TileTray::Player, tileView.tag)));
+                    [moves addObject:move];
+                }
+                
+                start(bloop_in(BandAboutPlayingUI, moves, 0.3, nil));
+                
+            }));
+
+            delay(BandAboutPlayingDelay, 0.2, ^{
+                self.gameView.wordTrayControl.highlighted = NO;
+                self.gameView.wordTrayControl.active = NO;
+                [self botSpotRelease];
+            });
+        });
+
+        delay(BandAboutPlayingDelay, 0.75, ^{
+            start(bloop_in(BandAboutPlayingUI, @[wordScoreInMove], 0.3, ^(UIViewAnimatingPosition) {
+                delay(BandAboutPlayingUI, 0.75 , ^{
+                    UPViewMove *wordScoreOutMove = UPViewMoveMake(self.gameView.wordScoreLabel, Role::WordScore, Spot::OffTopNear);
+                    start(bloop_out(BandAboutPlayingUI, @[wordScoreOutMove], 0.2, ^(UIViewAnimatingPosition) {
+                        self.gameView.wordScoreLabel.hidden = YES;
+                    }));
+                });
+            }));
+        });
+    }));
+
+    
+}
+
+// =========================================================================================================================================
+
 - (void)startTutorial
 {
     [self.gameTimer start];
     
     self.step = 0;
-    delay(BandAboutPlayingDelay, 1.5, ^{
+    delay(BandAboutPlayingDelay, 0.5, ^{
         [self nextStep];
     });
 }
@@ -219,12 +662,64 @@ using UP::TimeSpanning::start;
 
 - (void)botSpotTap
 {
-    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.55];
+//    self.botSpotTapIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8);
+//    self.botSpotTapIndicator.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
+//    self.botSpotTapIndicator.alpha = 0.7;
+//
+//    [UIView animateWithDuration:0.15 animations:^{
+//        self.botSpotTapIndicator.transform = CGAffineTransformIdentity;
+//        self.botSpotTapIndicator.alpha = 0;
+//    }];
+
+    self.botSpotTapIndicator.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
+    self.botSpotTapIndicator.alpha = 0.2;
+
+    [UIView animateWithDuration:0.15 animations:^{
+        self.botSpotTapIndicator.transform = CGAffineTransformIdentity;
+        self.botSpotTapIndicator.alpha = 0;
+    }];
+
+}
+
+- (void)botSpotDrag
+{
+    self.botSpotTapIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    self.botSpotTapIndicator.backgroundColor = [UIColor themeColorWithCategory:UPColorCategoryCanonical];
+    self.botSpotTapIndicator.alpha = 0.2;
+    
+    [UIView animateWithDuration:0.15 delay:0.75 options:0 animations:^{
+        self.botSpotTapIndicator.transform = CGAffineTransformIdentity;
+        self.botSpotTapIndicator.alpha = 0;
+    } completion:nil];
 }
 
 - (void)botSpotRelease
 {
-    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+//    self.botSpot.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+}
+
+- (void)highlight2XLetterFive
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        SpellLayout &layout = SpellLayout::instance();
+        self.botSpot.transform = CGAffineTransformIdentity;
+        self.botSpot.backgroundColor = [UIColor clearColor];
+        self.botSpot.frame = layout.frame_for(Role::ExtrasHowTo2xCallout);
+        self.botSpot.cornerRadius = up_rect_width(self.botSpot.frame) * 0.5;
+        self.botSpot.borderWidth = up_float_scaled(4, layout.layout_scale());
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:1.0 animations:^{
+            self.botSpot.transform = CGAffineTransformMakeScale(7, 7);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.75 animations:^{
+                self.botSpot.transform = CGAffineTransformIdentity;
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.botSpot.alpha = 0;
+                }];
+            }];
+        }];
+    }];
 }
 
 - (void)animateToStepOne
@@ -491,16 +986,16 @@ using UP::TimeSpanning::start;
                 case 5:
                     continue;
                 case 1:
-                    model = TileModel(U'Z');
+                    model = TileModel(U'E');
                     break;
                 case 2:
-                    model = TileModel(U'W');
+                    model = TileModel(U'M');
                     break;
                 case 4:
-                    model = TileModel(U'J');
+                    model = TileModel(U'A');
                     break;
                 case 6:
-                    model = TileModel(U'X');
+                    model = TileModel(U'U');
                     break;
             }
             UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
@@ -545,7 +1040,9 @@ using UP::TimeSpanning::start;
     });
 
     delay(BandAboutPlayingDelay, 2, ^{
-        [self animateToStepSixB];
+//        [self animateToStepSixB];
+        self.step = 21;
+        [self animateToStepTwentyOneA];
     });
 
 }
@@ -1247,7 +1744,7 @@ using UP::TimeSpanning::start;
             UPTileView *tileView2 = self.tileViews[6];
             UPViewMove *tileMove1 = UPViewMoveMake(tileView1, Role::WordTile4of5);
             UPViewMove *tileMove2 = UPViewMoveMake(tileView2, Role::WordTile5of5);
-            [self botSpotTap];
+            [self botSpotDrag];
             start(ease(BandAboutPlayingUI, @[ botSpotMove2, tileMove1, tileMove2 ], 0.3, ^(UIViewAnimatingPosition) {
                 [self botSpotRelease];
                 self.gameView.wordTrayControl.active = YES;
@@ -1308,20 +1805,25 @@ using UP::TimeSpanning::start;
                     if (!self.active) {
                         return;
                     }
-                    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, self.bottomPromptLabelRole, self.bottomPromptLabelOffscreenSpot);
-                    start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
-                        self.bottomPromptLabel.string = @"SPELL ALL YOU CAN IN TWO MINUTES!";
-                        UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, self.bottomPromptLabelRole);
-                        start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
-                            delay(BandAboutPlayingDelay, 2.5, ^{
-                                [self nextStep];
-                            });
-                        }));
-                    }));
+                    [self animateToStepTwentyOneA];
                 });
             }];
         }];
     }];
+}
+
+- (void)animateToStepTwentyOneA
+{
+    UPViewMove *moveOut = UPViewMoveMake(self.bottomPromptLabel, self.bottomPromptLabelRole, self.bottomPromptLabelOffscreenSpot);
+    start(bloop_out(BandAboutPlayingUI, @[ moveOut ], 0.3, ^(UIViewAnimatingPosition) {
+        self.bottomPromptLabel.string = @"SPELL ALL YOU CAN IN TWO MINUTES!";
+        UPViewMove *moveIn = UPViewMoveMake(self.bottomPromptLabel, self.bottomPromptLabelRole);
+        start(bloop_in(BandAboutPlayingUI, @[ moveIn ], 0.3, ^(UIViewAnimatingPosition) {
+            delay(BandAboutPlayingDelay, 2.5, ^{
+                [self nextStep];
+            });
+        }));
+    }));
 }
 
 - (void)animateToStepTwentyTwo

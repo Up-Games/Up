@@ -8,6 +8,7 @@
 #import "UPAccessoryPane.h"
 #import "UPChoice.h"
 #import "UPDialogTopMenu.h"
+#import "UPHowToViewController.h"
 #import "UPMode.h"
 #import "UPSceneDelegate.h"
 #import "UPSpellNavigationController.h"
@@ -24,6 +25,7 @@
 @property (nonatomic) UPDialogTopMenu *dialogTopMenu;
 @property (nonatomic) UPSpellGameController *gameController;
 @property (nonatomic) UPSpellExtrasController *extrasController;
+@property (nonatomic) UPHowToViewController *howToController;
 @end
 
 static UPSpellNavigationController *_Instance;
@@ -92,8 +94,10 @@ using UP::TimeSpanning::start;
     self.extrasController = [[UPSpellExtrasController alloc] initWithNibName:nil bundle:nil];
     self.extrasController.modalPresentationStyle = UIModalPresentationCustom;
 
+    self.howToController = [[UPHowToViewController alloc] initWithNibName:nil bundle:nil];
+
     NSArray<UIViewController *> *viewControllers = @[
-        self.gameController
+        self.howToController
     ];
     [self setViewControllers:viewControllers animated:NO];
     
