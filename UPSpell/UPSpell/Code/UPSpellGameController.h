@@ -11,6 +11,10 @@
 @class UPSpellGameRetry;
 @class UPGameLink;
 
+namespace UP {
+class Tile;
+};
+
 @interface UPSpellGameController : UIViewController
 
 + (UPSpellGameController *)instance;
@@ -21,5 +25,9 @@
 - (void)setMode:(UP::Mode)mode transitionScenario:(UPModeTransitionScenario)transitionScenario;
 - (void)setGameLink:(UPGameLink *)share;
 - (void)shareSheetDismissed;
+
+- (void)botPickTile:(const UP::Tile &)tile;
+- (void)botSubmitWord;
+- (void)botDump;
 
 @end

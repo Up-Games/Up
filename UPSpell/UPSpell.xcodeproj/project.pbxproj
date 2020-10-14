@@ -79,6 +79,7 @@
 		5DB9B1AC248705FA00A4AAA8 /* UPSpellGameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9B1AB248705FA00A4AAA8 /* UPSpellGameView.mm */; };
 		5DBAD6E124E43FFF00471ABF /* UPDialogShareHelp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAD6E024E43FFF00471ABF /* UPDialogShareHelp.mm */; };
 		5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DC67DF02472FDCB009BCDBB /* UPTilePaths.mm */; };
+		5DD8999F253743A2008C4C7F /* UPSpellBot.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8999E253743A2008C4C7F /* UPSpellBot.mm */; };
 		5DF74C4024DF80B50000F43D /* UPActivityViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DF74C3E24DF80B50000F43D /* UPActivityViewController.mm */; };
 		5DF90AD925104D06009000B9 /* up-games-icon-045-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DF90A8E25104D06009000B9 /* up-games-icon-045-20@2x.png */; };
 		5DF90ADA25104D06009000B9 /* up-games-icon-000-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DF90A8F25104D06009000B9 /* up-games-icon-000-40.png */; };
@@ -313,6 +314,8 @@
 		5DC67DF12472FDCB009BCDBB /* UPTilePaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPTilePaths.h; sourceTree = "<group>"; };
 		5DC67DF32473001B009BCDBB /* UPTilePaths-private.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "UPTilePaths-private.mm"; sourceTree = "<group>"; };
 		5DC67DF424730207009BCDBB /* UPSpellMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellMacros.h; sourceTree = "<group>"; };
+		5DD8999D253743A2008C4C7F /* UPSpellBot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPSpellBot.h; sourceTree = "<group>"; };
+		5DD8999E253743A2008C4C7F /* UPSpellBot.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UPSpellBot.mm; sourceTree = "<group>"; };
 		5DF74C3E24DF80B50000F43D /* UPActivityViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UPActivityViewController.mm; sourceTree = "<group>"; };
 		5DF74C3F24DF80B50000F43D /* UPActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPActivityViewController.h; sourceTree = "<group>"; };
 		5DF90A8E25104D06009000B9 /* up-games-icon-045-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-games-icon-045-20@2x.png"; sourceTree = "<group>"; };
@@ -535,6 +538,8 @@
 				5D6FB58924DAFC2500CDC293 /* UPSlider.mm */,
 				5D5B53F024CDCACD00FD50D4 /* UPSoundPlayer.h */,
 				5D5B53F124CDCACD00FD50D4 /* UPSoundPlayer.mm */,
+				5DD8999D253743A2008C4C7F /* UPSpellBot.h */,
+				5DD8999E253743A2008C4C7F /* UPSpellBot.mm */,
 				5D6261A124C0944600D19EEF /* UPSpellDossier.h */,
 				5D6261A224C0944600D19EEF /* UPSpellDossier.mm */,
 				5D4AE823248BDED200213904 /* UPSpellExtrasController.h */,
@@ -940,6 +945,7 @@
 				5D6FB59A24DD989100CDC293 /* UPGameLink.mm in Sources */,
 				5DC67DF22472FDCB009BCDBB /* UPTilePaths.mm in Sources */,
 				5D723121246B3996006027A3 /* UIFont+UPSpell.mm in Sources */,
+				5DD8999F253743A2008C4C7F /* UPSpellBot.mm in Sources */,
 				5D0FC22C24A2A5C300353563 /* UPSpellSettings.mm in Sources */,
 				5DF9DF622466165700B2199D /* UPSpellGameController.mm in Sources */,
 				5DF9DF5C2466165700B2199D /* UPAppDelegate.mm in Sources */,

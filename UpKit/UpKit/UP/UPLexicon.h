@@ -53,6 +53,8 @@ public:
         return std::u32string(m_keys[idx]);
     }
 
+    const std::vector<std::u32string_view> &keys() { return m_keys; }
+    
     static bool is_vowel(char32_t c);
     static bool not_vowel(char32_t c) { return !is_vowel(c); }
 

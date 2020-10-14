@@ -169,7 +169,7 @@ public:
     enum class Opcode: uint8_t {
         NOP,    // no-op
         START,  // the start state for every game
-        PLAY,   // start playing a game
+        PLAY,   // begin playing a game
         ADD,    // move a player tray to the word tray
         REMOVE, // remove a tile from the word tray, tightening up the remaining tiles (if any)
         MOVE,   // move a word tray tile to a new word tray position

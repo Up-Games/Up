@@ -26,6 +26,7 @@
 #import "UPDialogWelcome.h"
 #import "UPSceneDelegate.h"
 #import "UPSoundPlayer.h"
+#import "UPSpellBot.h"
 #import "UPSpellGameController.h"
 #import "UPSpellGameSummary.h"
 #import "UPSpellGameView.h"
@@ -182,6 +183,8 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) CFTimeInterval tubSoundTimestamp;
 @property (nonatomic) BOOL soundEffectsEnabled;
 @property (nonatomic) BOOL tunesEnabled;
+
+@property (nonatomic) UPSpellBot *bot;
 
 @end
 
@@ -955,6 +958,32 @@ static UPSpellGameController *_Instance;
     self.dialogWelcome.welcomeOKButton.userInteractionEnabled = NO;
 }
 
+#pragma mark - Bot
+
+- (void)botTakeTurn
+{
+    if (!self.bot) {
+        self.bot = [[UPSpellBot alloc] init];
+    }
+    
+    [self.bot takeTurn:m_spell_model];
+}
+
+- (void)botPickTile:(const Tile &)tile
+{
+    [self applyActionAdd:tile];
+}
+
+- (void)botSubmitWord
+{
+    [self applyActionSubmit];
+}
+
+- (void)botDump
+{
+    [self applyActionDump];
+}
+
 #pragma mark - Actions
 
 - (void)applyActionAdd:(const Tile &)tile
@@ -1182,6 +1211,9 @@ static UPSpellGameController *_Instance;
     delay(BandGameDelay, 0.25, ^{
         [self viewFillPlayerTray];
         [self viewUpdateGameControls];
+        delay(BandGameDelay, 1, ^{
+            [self botTakeTurn];
+        });
     });
 }
 
@@ -4117,6 +4149,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     delay(BandModeDelay, 0.4, ^{
         [self viewEnsureUnlocked];
         [self viewFillPlayerTrayWithCompletion:nil];
+        delay(BandGameDelay, 1.5, ^{
+            [self botTakeTurn];
+        });
     });
 }
 

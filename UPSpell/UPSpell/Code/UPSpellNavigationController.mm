@@ -97,7 +97,7 @@ using UP::TimeSpanning::start;
     self.howToController = [[UPHowToViewController alloc] initWithNibName:nil bundle:nil];
 
     NSArray<UIViewController *> *viewControllers = @[
-        self.howToController
+        self.gameController
     ];
     [self setViewControllers:viewControllers animated:NO];
     
