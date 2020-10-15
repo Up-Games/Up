@@ -314,7 +314,7 @@ static UPSpellGameController *_Instance;
         }
     }
 
-    self.bot = [[UPSpellBot alloc] init];
+    //self.bot = [[UPSpellBot alloc] init];
 }
 
 - (UIRectEdge)preferredScreenEdgesDeferringSystemGestures
@@ -964,22 +964,30 @@ static UPSpellGameController *_Instance;
 
 - (void)botTakeTurn
 {
-    [self.bot takeTurn:m_spell_model];
+    if (self.bot) {
+        [self.bot takeTurn:m_spell_model];
+    }
 }
 
 - (void)botPickTile:(const Tile &)tile
 {
-    [self applyActionAdd:tile];
+    if (self.bot) {
+        [self applyActionAdd:tile];
+    }
 }
 
 - (void)botSubmitWord
 {
-    [self applyActionSubmit];
+    if (self.bot) {
+        [self applyActionSubmit];
+    }
 }
 
 - (void)botDump
 {
-    [self applyActionDump];
+    if (self.bot) {
+        [self applyActionDump];
+    }
 }
 
 #pragma mark - Actions
@@ -1209,9 +1217,11 @@ static UPSpellGameController *_Instance;
     delay(BandGameDelay, 0.25, ^{
         [self viewFillPlayerTray];
         [self viewUpdateGameControls];
-        delay(BandGameDelay, 1, ^{
-            [self botTakeTurn];
-        });
+        if (self.bot) {
+            delay(BandGameDelay, 1, ^{
+                [self botTakeTurn];
+            });
+        }
     });
 }
 
@@ -4147,10 +4157,12 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
     delay(BandModeDelay, 0.4, ^{
         [self viewEnsureUnlocked];
         [self viewFillPlayerTrayWithCompletion:nil];
-        delay(BandGameDelay, 1.0, ^{
-            [self.bot start];
-            [self botTakeTurn];
-        });
+        if (self.bot) {
+            delay(BandGameDelay, 1.0, ^{
+                [self.bot start];
+                [self botTakeTurn];
+            });
+        }
     });
 }
 
@@ -4162,7 +4174,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
     cancel(BandResumeAll);
 
-    [self.bot stop];
+    if (self.bot) {
+        [self.bot stop];
+    }
     [self cancelActiveTouch];
     [self.gameTimer stop];
     pause(BandGameAll);
@@ -4224,7 +4238,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
     cancel(BandResumeAll);
 
-    [self.bot stop];
+    if (self.bot) {
+        [self.bot stop];
+    }
     [self cancelActiveTouch];
     [self.gameTimer stop];
     pause(BandGameAll);
@@ -4380,7 +4396,9 @@ static NSString * const UPSpellInProgressGameFileName = @"up-spell-in-progress-g
 
 - (void)modeTransitionFromPlayToGameOver
 {
-    [self.bot stop];
+    if (self.bot) {
+        [self.bot stop];
+    }
     cancel(BandGameAll);
     while (self.lockCount > 0) {
         [self viewUnlock];
