@@ -9,9 +9,9 @@
 
 @interface UPSpellBot : NSObject
 
-@property (nonatomic) UIView *botSpot;
-
 - (void)takeTurn:(std::shared_ptr<UP::SpellModel>)model;
+
+- (void)start;
 - (void)stop;
 
 @end

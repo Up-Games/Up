@@ -68,18 +68,6 @@ using UP::TimeSpanning::start;
 
 @implementation UPSpellBot
 
-- (instancetype)init
-{
-    self = [super init];
-    
-    SpellLayout &layout = SpellLayout::instance();
-    
-    CGRect botSpotFrame = up_rect_scaled(CGRectMake(0, 0, 92, 92), layout.layout_scale());
-    self.botSpot = [[UIView alloc] initWithFrame:botSpotFrame];
-    
-    return self;
-}
-
 - (void)start
 {
     self.running = YES;
@@ -132,7 +120,16 @@ static std::u32string best_word(std::shared_ptr<SpellModel> model)
 
 - (void)takeTurn:(std::shared_ptr<SpellModel>)model
 {
+    if (!self.running) {
+        return;
+    }
+
     self.pickedWord = best_word(model);
+
+    if (!self.running) {
+        return;
+    }
+
     if (self.pickedWord.length()) {
         self.wordIndex = 0;
         [self pickNextTile:model];
@@ -144,15 +141,17 @@ static std::u32string best_word(std::shared_ptr<SpellModel> model)
 
 - (void)pickNextTile:(std::shared_ptr<SpellModel>)model
 {
+    if (!self.running) {
+        return;
+    }
+    
     UPSpellGameController *controller = [UPSpellGameController instance];
-    SpellLayout &layout = SpellLayout::instance();
     const std::u32string &key = self.pickedWord;
     
     char32_t c = key[self.wordIndex];
     size_t idx = 0;
     for (const Tile &tile : model->tiles()) {
         if (tile.model().glyph() == c && tile.in_player_tray()) {
-            self.botSpot.center = layout.center_for(role_in_player_tray(TilePosition(TileTray::Player, idx)));
             [controller botPickTile:tile];
             break;
         }
@@ -160,13 +159,17 @@ static std::u32string best_word(std::shared_ptr<SpellModel> model)
     }
     self.wordIndex++;
     if (self.wordIndex == self.pickedWord.length()) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [controller botSubmitWord];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (self.running) {
+                [controller botSubmitWord];
+            }
         });
     }
     else {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.075 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self pickNextTile:model];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (self.running) {
+                [self pickNextTile:model];
+            }
         });
     }
 }
