@@ -625,6 +625,45 @@ std::vector<Word> SpellModel::game_best_word() const
     return result;
 }
 
+std::u32string SpellModel::best_possible_word_for_tiles() const
+{
+    std::u32string bp_word;
+    int bp_score = 0;
+    Lexicon &lexicon = Lexicon::instance();
+    for (const std::u32string_view &key : lexicon.keys()) {
+        std::u32string try_key = std::u32string(key);
+        TileArray word_tiles = tiles();
+        size_t found = 0;
+        int score = 0;
+        int multiplier = 1;
+        bool found_letter = false;
+        for (size_t idx = 0; idx < try_key.length(); idx++) {
+            char32_t c = key[idx];
+            for (Tile &tile : word_tiles) {
+                if (tile.model().glyph() == c && tile.in_player_tray()) {
+                    tile.set_position(TilePosition(TileTray::Word, found));
+                    found_letter = true;
+                    found++;
+                    score += tile.model().score();
+                    multiplier *= tile.model().multiplier();
+                    break;
+                }
+            }
+            if (!found_letter) {
+                break;
+            }
+        }
+        if (found > 0 && found == key.length()) {
+            int total_score = score * multiplier;
+            if (total_score > bp_score) {
+                bp_word = std::u32string(key);
+                bp_score = total_score;
+            }
+        }
+    }
+    return bp_word;
+}
+
 // =========================================================================================================================================
 # pragma mark - Apply
 

@@ -310,6 +310,8 @@ public:
     size_t game_tiles_submitted() const;
     std::vector<Word> game_best_word() const;
 
+    std::u32string best_possible_word_for_tiles() const;
+    
 private:
     std::string tiles_description() const;
     void fill_player_tray();

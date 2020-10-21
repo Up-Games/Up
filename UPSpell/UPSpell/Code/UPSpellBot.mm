@@ -78,53 +78,13 @@ using UP::TimeSpanning::start;
     self.running = NO;
 }
 
-static std::u32string best_word(std::shared_ptr<SpellModel> model)
-{
-    std::u32string picked_word;
-    int picked_score = 0;
-    Lexicon &lexicon = Lexicon::instance();
-    for (const std::u32string_view &key : lexicon.keys()) {
-        std::u32string try_key = std::u32string(key);
-        TileArray word_tiles = model->tiles();
-        size_t found = 0;
-        int score = 0;
-        int multiplier = 1;
-        bool found_letter = false;
-        for (size_t idx = 0; idx < try_key.length(); idx++) {
-            char32_t c = key[idx];
-            for (Tile &tile : word_tiles) {
-                if (tile.model().glyph() == c && tile.in_player_tray()) {
-                    tile.set_position(TilePosition(TileTray::Word, found));
-                    found_letter = true;
-                    found++;
-                    score += tile.model().score();
-                    multiplier *= tile.model().multiplier();
-                    break;
-                }
-            }
-            if (!found_letter) {
-                break;
-            }
-        }
-        if (found > 0 && found == key.length()) {
-            int total_score = score * multiplier;
-            if (total_score > picked_score) {
-                picked_word = std::u32string(key);
-                picked_score = total_score;
-            }
-        }
-    }
-    
-    return picked_word;
-}
-
 - (void)takeTurn:(std::shared_ptr<SpellModel>)model
 {
     if (!self.running) {
         return;
     }
 
-    self.pickedWord = best_word(model);
+    self.pickedWord = model->best_possible_word_for_tiles();
 
     if (!self.running) {
         return;

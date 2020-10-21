@@ -185,6 +185,7 @@ typedef NS_ENUM(NSInteger, UPSpellGameAlphaStateReason) {
 @property (nonatomic) BOOL tunesEnabled;
 
 @property (nonatomic) UPSpellBot *bot;
+@property (nonatomic) BOOL savesBestPossibleWordImages;
 
 @end
 
@@ -315,6 +316,7 @@ static UPSpellGameController *_Instance;
     }
 
     //self.bot = [[UPSpellBot alloc] init];
+    //self.savesBestPossibleWordImages = YES;
 }
 
 - (UIRectEdge)preferredScreenEdgesDeferringSystemGestures
@@ -988,6 +990,44 @@ static UPSpellGameController *_Instance;
     if (self.bot) {
         [self applyActionDump];
     }
+}
+
+- (void)saveBestPossibleWordImage
+{
+    std::u32string bp_word = m_spell_model->best_possible_word_for_tiles();
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1000, 500)];
+
+    CGRect tilesFrame = CGRectMake(0, 0, SpellLayout::CanonicalTilesLayoutWidth, up_size_height(SpellLayout::CanonicalTileSize));
+    UPContainerView *tilesContainer = [[UPContainerView alloc] initWithFrame:tilesFrame];
+    [view addSubview:tilesContainer];
+    
+    CGFloat tileX = 0;
+    for (TileIndex idx = 0; idx < bp_word.length(); idx++) {
+        TileModel model(bp_word[idx]);
+        UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
+        tileView.band = UP::BandSettingsUI;
+        tileView.frame = CGRectMake(tileX, 0, up_size_width(SpellLayout::CanonicalTileSize), up_size_height(SpellLayout::CanonicalTileSize));
+        [tilesContainer addSubview:tileView];
+        tileX += up_size_width(SpellLayout::CanonicalTileSize) + SpellLayout::CanonicalTileGap;
+    }
+    tilesContainer.center = CGPointMake(420, 300);
+
+    [self.view addSubview:view];
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(1000, 500), NO, 2.0);
+    BOOL ok = [view drawViewHierarchyInRect:CGRectMake(0, 0, 1000, 500) afterScreenUpdates:YES];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [view removeFromSuperview];
+    
+    NSData *data = UIImagePNGRepresentation(image);
+    
+    static int count = 0;
+    count++;
+    NSString *path = [NSString stringWithFormat:@"%@/up-spell-word-%d-%@", NSTemporaryDirectory(), count, ns_str(bp_word)];
+    NSError *error;
+    [data writeToFile:path options:NSDataWritingAtomic error:&error];
+    LOG(General, "saved word: %@ => %@ : %@ : %@", ns_str(bp_word), path, error, ok ? @"Y" : @"N");
 }
 
 #pragma mark - Actions
@@ -1784,6 +1824,9 @@ static UPSpellGameController *_Instance;
     start(bloop_in(BandGameUI, moves, 0.25, ^(UIViewAnimatingPosition) {
         if (completion) {
             completion();
+        }
+        if (self.savesBestPossibleWordImages) {
+            [self saveBestPossibleWordImage];
         }
     }));
 }
