@@ -1015,7 +1015,7 @@ static UPSpellGameController *_Instance;
 
     [self.view addSubview:view];
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(1000, 500), NO, 2.0);
-    BOOL ok = [view drawViewHierarchyInRect:CGRectMake(0, 0, 1000, 500) afterScreenUpdates:YES];
+    [view drawViewHierarchyInRect:CGRectMake(0, 0, 1000, 500) afterScreenUpdates:YES];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     [view removeFromSuperview];
@@ -1038,6 +1038,7 @@ static UPSpellGameController *_Instance;
     ASSERT(tile.in_player_tray());
     
     cancel(BandGameDelay);
+    [self viewFillPlayerTray];
     [self viewOrderOutWordScoreLabel];
     
     NSArray *wordTrayTileViews = [self wordTrayTileViews];
@@ -1149,7 +1150,9 @@ static UPSpellGameController *_Instance;
     
     cancel(BandGameDelay);
     cancel(@[tile.view()], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
-    
+    [self viewFillPlayerTray];
+    [self viewUpdateGameControls];
+
     TilePosition hover_position = [self calculateHoverPosition:tile];
     ASSERT_POS(hover_position);
     
@@ -1175,7 +1178,9 @@ static UPSpellGameController *_Instance;
     
     cancel(BandGameDelay);
     cancel(@[tile.view()], (UPAnimatorTypeBloopIn | UPAnimatorTypeSlide));
-    
+    [self viewFillPlayerTray];
+    [self viewUpdateGameControls];
+
     if (m_spell_model->back_opcode() != SpellModel::Opcode::HOVER) {
         return;
     }
@@ -1196,7 +1201,8 @@ static UPSpellGameController *_Instance;
     ASSERT_POS(self.pickedTilePosition);
     
     cancel(BandGameDelay);
-    
+    [self viewFillPlayerTray];
+
     UPTileView *tileView = tile.view();
     
     m_spell_model->apply(Action(self.gameTimer.remainingTime, Opcode::DROP, self.pickedTilePosition));
@@ -1806,10 +1812,12 @@ static UPSpellGameController *_Instance;
 {
     SpellLayout &layout = SpellLayout::instance();
     
-    NSMutableArray<UPViewMove *> *moves = [NSMutableArray array];
+    NSMutableArray<UPViewMove *> *moves = nil;
     TileIndex idx = 0;
+    BOOL needsStart = NO;
     for (auto &tile : m_spell_model->tiles()) {
         if (tile.has_view<false>()) {
+            needsStart = YES;
             const TileModel &model = tile.model();
             UPTileView *tileView = [UPTileView viewWithGlyph:model.glyph() score:model.score() multiplier:model.multiplier()];
             tile.set_view(tileView);
@@ -1817,18 +1825,29 @@ static UPSpellGameController *_Instance;
             Role role = role_in_player_tray(TilePosition(TileTray::Player, idx));
             tileView.frame = layout.frame_for(Location(role, Spot::OffBottomNear));
             [self.gameView.tileContainerView addSubview:tileView];
+            [self.gameView.tileContainerView sendSubviewToBack:tileView];
+            if (!moves) {
+                moves = [NSMutableArray array];
+            }
             [moves addObject:UPViewMoveMake(tileView, Location(role, Spot::Default))];
         }
         idx++;
     }
-    start(bloop_in(BandGameUI, moves, 0.25, ^(UIViewAnimatingPosition) {
+    if (needsStart) {
+        start(bloop_in(BandGameUI, moves, 0.25, ^(UIViewAnimatingPosition) {
+            if (completion) {
+                completion();
+            }
+            if (self.savesBestPossibleWordImages) {
+                [self saveBestPossibleWordImage];
+            }
+        }));
+    }
+    else {
         if (completion) {
             completion();
         }
-        if (self.savesBestPossibleWordImages) {
-            [self saveBestPossibleWordImage];
-        }
-    }));
+    }
 }
 
 - (void)viewPenaltyForDump
